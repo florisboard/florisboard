@@ -222,11 +222,11 @@ class TextKeyData(
             label = "shift"
         )
 
-        /** Predefined key data for [KeyCode.SHIFT_LOCK] */
-        val SHIFT_LOCK = TextKeyData(
+        /** Predefined key data for [KeyCode.CAPS_LOCK] */
+        val CAPS_LOCK = TextKeyData(
             type = KeyType.MODIFIER,
-            code = KeyCode.SHIFT_LOCK,
-            label = "shift_lock"
+            code = KeyCode.CAPS_LOCK,
+            label = "caps_lock"
         )
 
         /** Predefined key data for [KeyCode.SPACE] */

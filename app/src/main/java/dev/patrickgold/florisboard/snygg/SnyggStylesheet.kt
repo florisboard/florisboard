@@ -18,8 +18,12 @@ package dev.patrickgold.florisboard.snygg
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.snygg.value.isInherit
+import dev.patrickgold.florisboard.snygg.value.isNotInherit
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.MapSerializer
@@ -28,10 +32,53 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = SnyggStylesheetSerializer::class)
-class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
+class SnyggStylesheet(
+    val rules: Map<SnyggRule, SnyggPropertySet>,
+    val isFullyQualified: Boolean = false,
+) {
     companion object {
         private const val Unspecified = Int.MIN_VALUE
         private val FallbackPropertySet = SnyggPropertySet(mapOf())
+
+        fun getPropertySets(
+            rules: Map<SnyggRule, SnyggPropertySet>,
+            referenceRule: SnyggRule,
+        ): List<SnyggPropertySet> {
+            return rules.keys.filter { rule ->
+                rule.element == referenceRule.element
+                    && (rule.codes.isEmpty() || referenceRule.codes.isEmpty() || rule.codes.any { it in referenceRule.codes })
+                    && (rule.groups.isEmpty() || referenceRule.groups.isEmpty() || rule.groups.any { it in referenceRule.groups })
+                    && (rule.modes.isEmpty() || referenceRule.modes.isEmpty() || rule.modes.any { it in referenceRule.modes })
+                    && ((referenceRule.hoverSelector == rule.hoverSelector) || !rule.hoverSelector)
+                    && ((referenceRule.focusSelector == rule.focusSelector) || !rule.focusSelector)
+                    && ((referenceRule.pressedSelector == rule.pressedSelector) || !rule.pressedSelector)
+            }.sortedDescending().map { rules[it]!! }
+        }
+
+        fun getPropertySet(
+            rules: Map<SnyggRule, SnyggPropertySet>,
+            element: String,
+            code: Int = Unspecified,
+            group: Int = Unspecified,
+            mode: Int = Unspecified,
+            isHover: Boolean = false,
+            isFocus: Boolean = false,
+            isPressed: Boolean = false,
+        ): SnyggPropertySet {
+            val possibleRules = rules.keys.filter { it.element == element }.sortedDescending()
+            possibleRules.forEach { rule ->
+                val match = (code == Unspecified || rule.codes.isEmpty() || rule.codes.contains(code))
+                    && (group == Unspecified || rule.groups.isEmpty() || rule.groups.contains(group))
+                    && (mode == Unspecified || rule.modes.isEmpty() || rule.modes.contains(mode))
+                    && (isHover == rule.hoverSelector || !rule.hoverSelector)
+                    && (isFocus == rule.focusSelector || !rule.focusSelector)
+                    && (isPressed == rule.pressedSelector || !rule.pressedSelector)
+                if (match) {
+                    return rules[rule]!!
+                }
+            }
+            return rules[possibleRules.lastOrNull()] ?: FallbackPropertySet
+        }
     }
 
     @Composable
@@ -44,42 +91,30 @@ class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
         isFocus: Boolean = false,
         isPressed: Boolean = false,
     ) = remember(element, code, group, mode, isHover, isFocus, isPressed) {
-        getStatic(element, code, group, mode, isHover, isFocus, isPressed)
-    }
-
-    fun getStatic(
-        element: String,
-        code: Int = Unspecified,
-        group: Int = Unspecified,
-        mode: Int = Unspecified,
-        isHover: Boolean = false,
-        isFocus: Boolean = false,
-        isPressed: Boolean = false,
-    ): SnyggPropertySet {
-        val possibleRules = rules.filter { (rule, _) -> rule.element == element }
-        possibleRules.keys.find { rule ->
-            (code == Unspecified || rule.codes.contains(code))
-                && (group == Unspecified || rule.groups.contains(group))
-                && (mode == Unspecified || rule.modes.contains(mode))
-                && (isHover == rule.hoverSelector)
-                && (isFocus == rule.focusSelector)
-                && (isPressed == rule.pressedSelector)
-        }?.let { return possibleRules[it]!! }
-        possibleRules.keys.find { rule ->
-            (isHover == rule.hoverSelector)
-                && (isFocus == rule.focusSelector)
-                && (isPressed == rule.pressedSelector)
-        }?.let { return possibleRules[it]!! }
-        possibleRules.keys.find { rule ->
-            (code == Unspecified || rule.codes.contains(code))
-                && (group == Unspecified || rule.groups.contains(group))
-                && (mode == Unspecified || rule.modes.contains(mode))
-        }?.let { return possibleRules[it]!! }
-        return possibleRules.values.firstOrNull() ?: FallbackPropertySet
+        getPropertySet(rules, element, code, group, mode, isHover, isFocus, isPressed)
     }
 
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
         TODO()
+    }
+
+    fun compileToFullyQualified(stylesheetSpec: SnyggSpec): SnyggStylesheet {
+        val newRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
+        for (rule in rules.keys.sorted()) {
+            val editor = rules[rule]!!.edit()
+            val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
+            val possiblePropertySets = getPropertySets(rules, rule) + getPropertySets(newRules, rule)
+            propertySetSpec.supportedProperties.forEach { supportedProperty ->
+                if (!editor.properties.containsKey(supportedProperty.name)) {
+                    val value = possiblePropertySets.first {
+                        it.properties.containsKey(supportedProperty.name)
+                    }.properties[supportedProperty.name]
+                    editor.properties[supportedProperty.name] = value ?: SnyggImplicitInheritValue
+                }
+            }
+            newRules[rule] = editor.build()
+        }
+        return SnyggStylesheet(newRules, isFullyQualified = true)
     }
 
     fun edit(): SnyggStylesheetEditor {
@@ -128,11 +163,11 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
         rules[ruleEditor] = propertySetEditor
     }
 
-    fun build(): SnyggStylesheet {
+    fun build(isFullyQualified: Boolean = false): SnyggStylesheet {
         val rulesMap = rules
             .mapKeys { (ruleEditor, _) -> ruleEditor.build() }
             .mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
-        return SnyggStylesheet(rulesMap)
+        return SnyggStylesheet(rulesMap, isFullyQualified)
     }
 }
 

@@ -33,7 +33,7 @@ object KeyCode {
     const val SHIFT =                         -1
     const val ALT =                           -6
     const val CTRL =                         -11
-    const val SHIFT_LOCK =                   -14
+    const val CAPS_LOCK =                    -14
     const val CTRL_LOCK =                    -15
 
     const val ARROW_LEFT =                   -20

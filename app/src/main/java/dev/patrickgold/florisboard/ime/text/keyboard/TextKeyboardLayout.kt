@@ -150,9 +150,11 @@ private fun TextKeyButton(
     key: TextKey,
     fontSizeMultiplier: Float,
 ) = with(LocalDensity.current) {
+    val keyboardManager by LocalContext.current.keyboardManager()
     val keyStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.Key,
         code = key.computedData.code,
+        mode = keyboardManager.activeState.inputMode.value,
         isPressed = key.isPressed,
     )
     val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {
@@ -414,7 +416,7 @@ private class TextKeyboardLayoutController(
                     }
                     KeyCode.SHIFT -> {
                         delay((delayMillis * 2.5f).toLong())
-                        inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHIFT_LOCK))
+                        inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.CAPS_LOCK))
                         inputFeedbackController?.keyLongPress(key.computedData)
                     }
                     KeyCode.LANGUAGE_SWITCH -> {

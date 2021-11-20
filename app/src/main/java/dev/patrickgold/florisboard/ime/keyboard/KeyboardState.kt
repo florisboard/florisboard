@@ -20,6 +20,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
+import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import java.util.concurrent.atomic.AtomicInteger
@@ -40,7 +41,7 @@ import kotlin.properties.Delegates
  * ---------|----------|----------|----------|---------------------------------
  *          |          |          |     1111 | Active [KeyboardMode]
  *          |          |          | 1111     | Active [KeyVariation]
- *          |          |        1 |          | Caps flag
+ *          |          |        1 |          | Shift lock flag (shift and caps combined is InputMode id)
  *          |          |       1  |          | Caps lock flag
  *          |          |      1   |          | Is selection active (length > 0)
  *          |          |     1    |          | Is manual selection mode
@@ -94,6 +95,8 @@ class KeyboardState private constructor(
         const val O_KEYBOARD_MODE: Int =                    0
         const val M_KEY_VARIATION: ULong =                  0x0Fu
         const val O_KEY_VARIATION: Int =                    4
+        const val M_INPUT_MODE: ULong =                     0x03u
+        const val O_INPUT_MODE: Int =                       8
 
         const val F_CAPS: ULong =                           0x00000100u
         const val F_CAPS_LOCK: ULong =                      0x00000200u
@@ -272,7 +275,11 @@ class KeyboardState private constructor(
         get() = KeyboardMode.fromInt(getRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE))
         set(v) { setRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE, v.toInt()) }
 
-    var caps: Boolean
+    var inputMode: InputMode
+        get() = InputMode.fromInt(getRegion(M_INPUT_MODE, O_INPUT_MODE))
+        set(v) { setRegion(M_INPUT_MODE, O_INPUT_MODE, v.toInt()) }
+
+    var shiftLock: Boolean
         get() = getFlag(F_CAPS)
         set(v) { setFlag(F_CAPS, v) }
 

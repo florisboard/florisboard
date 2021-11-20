@@ -85,17 +85,17 @@ abstract class Key(open val data: AbstractKeyData) {
      * The computed UI label of this key. This value is used by the keyboard view to temporarily save the label string
      * for UI rendering and should not be set manually.
      */
-    open var label: String? = null
+    open var label: String? by mutableStateOf(null)
 
     /**
      * The computed UI hint label of this key. This value is used by the keyboard view to temporarily save the hint
      * label string for UI rendering and should not be set manually.
      */
-    open var hintedLabel: String? = null
+    open var hintedLabel: String? by mutableStateOf(null)
 
     /**
      * The computed UI drawable ID of this key. This value is used by the keyboard view to temporarily save the
      * drawable ID for UI rendering and should not be set manually.
      */
-    open var foregroundDrawableId: Int? = null
+    open var foregroundDrawableId: Int? by mutableStateOf(null)
 }

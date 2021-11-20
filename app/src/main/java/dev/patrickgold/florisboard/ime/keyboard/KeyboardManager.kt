@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -67,7 +68,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val _activeKeyboard = MutableLiveData(PlaceholderLoadingKeyboard)
     val activeKeyboard: LiveData<TextKeyboard> get() = _activeKeyboard
     val activeState = KeyboardState.new()
-    private var newCapsState: Boolean = false
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -181,13 +181,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     private fun handleShiftDown(ev: InputKeyEvent) {
         if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.get().toLong())) {
-            newCapsState = true
-            activeState.caps = true
-            activeState.capsLock = true
+            activeState.inputMode = InputMode.CAPS_LOCK
         } else {
-            newCapsState = !activeState.caps
-            activeState.caps = true
-            activeState.capsLock = false
+            if (activeState.inputMode == InputMode.NORMAL) {
+                activeState.inputMode = InputMode.SHIFT_LOCK
+            } else {
+                activeState.inputMode = InputMode.NORMAL
+            }
         }
     }
 
@@ -195,20 +195,16 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] up event.
      */
     private fun handleShiftUp() {
-        activeState.caps = newCapsState
+        //activeState.shiftLock = newCapsState
     }
 
     /**
-     * Handles a [KeyCode.SHIFT] up event.
+     * Handles a [KeyCode.CAPS_LOCK] event.
      */
-    private fun handleShiftLock() {
+    private fun handleCapsLock() {
         val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
         if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
-            newCapsState = true
-            activeState.batchEdit {
-                it.caps = true
-                it.capsLock = true
-            }
+            activeState.inputMode = InputMode.CAPS_LOCK
         }
     }
 
@@ -216,8 +212,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] cancel event.
      */
     private fun handleShiftCancel() {
-        activeState.caps = false
-        activeState.capsLock = false
+        activeState.inputMode = InputMode.NORMAL
     }
 
     override fun onInputKeyDown(ev: InputKeyEvent) {
@@ -226,13 +221,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    override fun onInputKeyUp(ev: InputKeyEvent) {
+    override fun onInputKeyUp(ev: InputKeyEvent) = activeState.batchEdit {
         when (ev.data.code) {
             KeyCode.DELETE -> handleDelete()
             KeyCode.DELETE_WORD -> handleDeleteWord()
             KeyCode.ENTER -> handleEnter()
             KeyCode.SHIFT -> handleShiftUp()
-            KeyCode.SHIFT_LOCK -> handleShiftLock()
+            KeyCode.CAPS_LOCK -> handleCapsLock()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
             KeyCode.VIEW_NUMERIC_ADVANCED -> activeState.keyboardMode = KeyboardMode.NUMERIC_ADVANCED
@@ -240,32 +235,37 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_PHONE2 -> activeState.keyboardMode = KeyboardMode.PHONE2
             KeyCode.VIEW_SYMBOLS -> activeState.keyboardMode = KeyboardMode.SYMBOLS
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
-            else -> when (activeState.keyboardMode) {
-                KeyboardMode.NUMERIC,
-                KeyboardMode.NUMERIC_ADVANCED,
-                KeyboardMode.PHONE,
-                KeyboardMode.PHONE2 -> when (ev.data.type) {
-                    KeyType.CHARACTER,
-                    KeyType.NUMERIC -> {
-                        val text = ev.data.asString(isForDisplay = false)
-                        activeEditorInstance?.commitText(text)
-                    }
-                    else -> when (ev.data.code) {
-                        KeyCode.PHONE_PAUSE,
-                        KeyCode.PHONE_WAIT -> {
+            else -> {
+                when (activeState.keyboardMode) {
+                    KeyboardMode.NUMERIC,
+                    KeyboardMode.NUMERIC_ADVANCED,
+                    KeyboardMode.PHONE,
+                    KeyboardMode.PHONE2 -> when (ev.data.type) {
+                        KeyType.CHARACTER,
+                        KeyType.NUMERIC -> {
                             val text = ev.data.asString(isForDisplay = false)
                             activeEditorInstance?.commitText(text)
                         }
+                        else -> when (ev.data.code) {
+                            KeyCode.PHONE_PAUSE,
+                            KeyCode.PHONE_WAIT -> {
+                                val text = ev.data.asString(isForDisplay = false)
+                                activeEditorInstance?.commitText(text)
+                            }
+                        }
+                    }
+                    else -> when (ev.data.type) {
+                        KeyType.CHARACTER, KeyType.NUMERIC ->{
+                            val text = ev.data.asString(isForDisplay = false)
+                            activeEditorInstance?.commitText(text)
+                        }
+                        else -> {
+                            flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $ev.data" }
+                        }
                     }
                 }
-                else -> when (ev.data.type) {
-                    KeyType.CHARACTER, KeyType.NUMERIC ->{
-                        val text = ev.data.asString(isForDisplay = false)
-                        activeEditorInstance?.commitText(text)
-                    }
-                    else -> {
-                        flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $ev.data" }
-                    }
+                if (activeState.inputMode != InputMode.CAPS_LOCK) {
+                    activeState.inputMode = InputMode.NORMAL
                 }
             }
         }
@@ -333,7 +333,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     private inner class KeyboardManagerComputingEvaluator : ComputingEvaluator {
         override fun evaluateCaps(): Boolean {
-            return activeState.caps || activeState.capsLock
+            return activeState.inputMode != InputMode.NORMAL
         }
 
         override fun evaluateCaps(data: KeyData): Boolean {

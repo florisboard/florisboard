@@ -78,7 +78,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-beta01"
+        kotlinCompilerExtensionVersion = "1.1.0-beta03"
     }
 
     externalNativeBuild {

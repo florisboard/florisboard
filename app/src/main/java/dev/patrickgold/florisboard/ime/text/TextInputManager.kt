@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.text
 
 import android.view.KeyEvent
-import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -27,7 +26,6 @@ import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
@@ -36,16 +34,11 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.TextProcessor
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
-import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -372,7 +365,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun updateCapsState() {
         if (!activeState.capsLock) {
-            activeState.caps = prefs.correction.autoCapitalization.get() &&
+            activeState.shiftLock = prefs.correction.autoCapitalization.get() &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
         }
     }
@@ -541,11 +534,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleShiftDown(ev: InputKeyEvent) {
         if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.get().toLong())) {
             newCapsState = true
-            activeState.caps = true
+            activeState.shiftLock = true
             activeState.capsLock = true
         } else {
-            newCapsState = !activeState.caps
-            activeState.caps = true
+            newCapsState = !activeState.shiftLock
+            activeState.shiftLock = true
             activeState.capsLock = false
         }
     }
@@ -554,14 +547,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.SHIFT] up event.
      */
     private fun handleShiftUp() {
-        activeState.caps = newCapsState
+        activeState.shiftLock = newCapsState
     }
 
     /**
      * Handles a [KeyCode.SHIFT] cancel event.
      */
     private fun handleShiftCancel() {
-        activeState.caps = false
+        activeState.shiftLock = false
         activeState.capsLock = false
     }
 
@@ -572,7 +565,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
         if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
             newCapsState = true
-            activeState.caps = true
+            activeState.shiftLock = true
             activeState.capsLock = true
         }
     }
@@ -790,7 +783,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.REDO -> activeEditorInstance.performRedo()
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
-            KeyCode.SHIFT_LOCK -> handleShiftLock()
+            KeyCode.CAPS_LOCK -> handleShiftLock()
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
@@ -883,7 +876,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     fun fixCase(word: String): String {
         return when {
             activeState.capsLock -> word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
-            activeState.caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(subtypeManager.activeSubtype().primaryLocale.base) else it.toString() }
+            activeState.shiftLock -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(subtypeManager.activeSubtype().primaryLocale.base) else it.toString() }
             else -> word
         }
     }

@@ -22,6 +22,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.sp
+import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 
@@ -42,26 +43,25 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.Key(pressedSelector = true) {
         background = rgbaColor(97, 97, 97)
         foreground = rgbaColor(255, 255, 255)
-        fontSize = size(22.sp)
-        shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
         background = rgbaColor(76, 175, 80)
         foreground = rgbaColor(255, 255, 255)
-        fontSize = size(22.sp)
-        shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER), pressedSelector = true) {
         background = rgbaColor(56, 142, 60)
         foreground = rgbaColor(255, 255, 255)
-        fontSize = size(22.sp)
-        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.Key(
+        codes = listOf(KeyCode.SHIFT),
+        modes = listOf(InputMode.CAPS_LOCK.value),
+    ) {
+        foreground = rgbaColor(255, 152, 0)
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.SPACE)) {
         background = rgbaColor(66, 66, 66)
         foreground = rgbaColor(144, 144, 144)
         fontSize = size(12.sp)
-        shape = roundedCornerShape(20)
     }
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
@@ -93,7 +93,9 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val activeConfig = remember {
         ThemeExtensionConfig(stylesheet = "")
     }
-    val activeStyle = FlorisImeThemeBaseStyle
+    val activeStyle = remember {
+        FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec)
+    }
     CompositionLocalProvider(LocalConfig provides activeConfig, LocalStyle provides activeStyle) {
         content()
     }
