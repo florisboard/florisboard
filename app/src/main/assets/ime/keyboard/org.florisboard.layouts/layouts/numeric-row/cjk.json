@@ -1,0 +1,101 @@
+[
+  [
+    { "code": 19968, "label": "一", "type": "numeric", "popup": {
+      "main": { "code":   49, "label": "1" },
+      "relevant": [
+        { "code": 22769, "label": "壱" },
+        { "code": 22777, "label": "壹" },
+        { "code": 24332, "label": "弌" },
+        { "code": 65297, "label": "１" }
+      ]
+    } },
+    { "code": 20108, "label": "二", "type": "numeric", "popup": {
+      "main": { "code":   50, "label": "2" },
+      "relevant": [
+        { "code": 24336, "label": "弐" },
+        { "code": 36019, "label": "貳" },
+        { "code": 36014, "label": "貮" },
+        { "code": 65298, "label": "２" }
+      ]
+    } },
+    { "code": 19977, "label": "三", "type": "numeric", "popup": {
+      "main": { "code":   51, "label": "3" },
+      "relevant": [
+        { "code": 21442, "label": "参" },
+        { "code": 21443, "label": "參" },
+        { "code": 24334, "label": "弎" },
+        { "code": 65299, "label": "３" }
+      ]
+    } },
+    { "code": 22235, "label": "四", "type": "numeric", "popup": {
+      "main": { "code":   52, "label": "4" },
+      "relevant": [
+        { "code": 32902, "label": "肆" },
+        { "code": 18825, "label": "䦉" },
+        { "code": 20118, "label": "亖" },
+        { "code": 65300, "label": "３" }
+      ]
+    } },
+    { "code": 20116, "label": "五", "type": "numeric", "popup": {
+      "main": { "code":   53, "label": "5" },
+      "relevant": [
+        { "code": 20237, "label": "伍" },
+        { "code": 65301, "label": "５" }
+      ]
+    } },
+    { "code": 20845, "label": "六", "type": "numeric", "popup": {
+      "main": { "code":   54, "label": "6" },
+      "relevant": [
+        { "code": 38520, "label": "陸" },
+        { "code": 65302, "label": "６" }
+      ]
+    } },
+    { "code": 19971, "label": "七", "type": "numeric", "popup": {
+      "main": { "code":   55, "label": "7" },
+      "relevant": [
+        { "code": 28422, "label": "漆" },
+        { "code": 26578, "label": "柒" },
+        { "code": 65303, "label": "７" }
+      ]
+    } },
+    { "code": 20843, "label": "八", "type": "numeric", "popup": {
+      "main": { "code":   56, "label": "8" },
+      "relevant": [
+        { "code": 25420, "label": "捌" },
+        { "code": 65304, "label": "８" }
+      ]
+    } },
+    { "code": 20061, "label": "九", "type": "numeric", "popup": {
+      "main": {"code":   57, "label": "9" },
+      "relevant": [
+        { "code": 29590, "label": "玖" },
+        { "code": 65305, "label": "９" }
+      ]
+    } },
+    { "code": 38646, "label": "零", "type": "numeric", "popup": {
+      "main": { "code":   48, "label": "0" },
+      "relevant": [
+        { "code": 12295, "label": "〇" },
+        { "code": 65296, "label": "０" }
+      ]
+    } },
+    { "code": 21313, "label": "十", "type": "numeric", "popup": {
+      "main": { "code": 25342, "label": "拾" },
+      "relevant": [
+        { "code": 20160, "label": "什" }
+      ]
+    } },
+    { "code": 30334, "label": "百", "type": "numeric", "popup": {
+      "main": { "code": 20336, "label": "佰" },
+      "relevant": [
+        { "code": 38476, "label": "陌" }
+      ]
+    } },
+    { "code": 21315, "label": "千", "type": "numeric", "popup": {
+      "main": { "code": 20191, "label": "仟" },
+      "relevant": [
+        { "code": 38433, "label": "阡" }
+      ]
+    } }
+  ]
+]

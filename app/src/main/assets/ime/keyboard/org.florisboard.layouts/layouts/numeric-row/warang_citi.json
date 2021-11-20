@@ -1,0 +1,84 @@
+[
+  [
+    { "code": 71905, "label": "𑣡", "type": "numeric", "popup": {
+      "main": { "code":   49, "label": "1" },
+      "relevant": [
+        { "code": 8537, "label": "⅙" },
+        { "code": 8528, "label": "⅐" },
+        { "code": 8539, "label": "⅛" },
+        { "code": 8529, "label": "⅑" },
+        { "code": 8530, "label": "⅒" },
+        { "code":  185, "label": "¹" },
+        { "code":  189, "label": "½" },
+        { "code": 8531, "label": "⅓" },
+        { "code":  188, "label": "¼" },
+        { "code": 8533, "label": "⅕" }
+      ]
+    } },
+    { "code": 71906, "label": "𑣢", "type": "numeric", "popup": {
+      "main": { "code":   50, "label": "2" },
+      "relevant": [
+        { "code": 8532, "label": "⅔" },
+        { "code":  178, "label": "²" },
+        { "code": 8534, "label": "⅖" }
+      ]
+    } },
+    { "code": 71907, "label": "𑣣", "type": "numeric", "popup": {
+      "main": { "code":   51, "label": "3" },
+      "relevant": [
+        { "code": 8535, "label": "⅗" },
+        { "code":  190, "label": "¾" },
+        { "code":  179, "label": "³" },
+        { "code": 8540, "label": "⅜" }
+      ]
+    } },
+    { "code": 71908, "label": "𑣤", "type": "numeric", "popup": {
+      "main": { "code":   52, "label": "4" },
+      "relevant": [
+        { "code": 8536, "label": "⅘" },
+        { "code": 8308, "label": "⁴" }
+      ]
+    } },
+    { "code": 71909, "label": "𑣥", "type": "numeric", "popup": {
+      "main": { "code":   53, "label": "5" },
+      "relevant": [
+        { "code": 8538, "label": "⅚" },
+        { "code": 8309, "label": "⁵" },
+        { "code": 8541, "label": "⅝" }
+      ]
+    } },
+    { "code": 71910, "label": "𑣦", "type": "numeric", "popup": {
+      "main": { "code":   54, "label": "6" },
+      "relevant": [
+        { "code": 8310, "label": "⁶" }
+      ]
+    } },
+    { "code": 71911, "label": "𑣧", "type": "numeric", "popup": {
+      "main": { "code":   55, "label": "7" },
+      "relevant": [
+        { "code": 8542, "label": "⅞" },
+        { "code": 8311, "label": "⁷" }
+      ]
+    } },
+    { "code": 71912, "label": "𑣨", "type": "numeric", "popup": {
+      "main": { "code":   56, "label": "8" },
+      "relevant": [
+        { "code": 8312, "label": "⁸" }
+      ]
+    } },
+    { "code": 71913, "label": "𑣩", "type": "numeric", "popup": {
+      "main": { "code":   57, "label": "9" },
+      "relevant": [
+        { "code": 8313, "label": "⁹" }
+      ]
+    } },
+    { "code": 71904, "label": "𑣠", "type": "numeric", "popup": {
+      "main": { "code":   48, "label": "0" },
+      "relevant": [
+        { "code": 8319, "label": "ⁿ" },
+        { "code": 8709, "label": "∅" },
+        { "code": 8304, "label": "⁰" }
+      ]
+    } }
+  ]
+]

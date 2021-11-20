@@ -31,6 +31,132 @@
         "direction": "ltr"
       }
     ],
+    "numeric": [
+      {
+        "id": "western_arabic",
+        "label": "Western Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_arabic_pc",
+        "label": "Western Arabic (PC)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "numeric-advanced": [
+      {
+        "id": "western_arabic",
+        "label": "Western Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_arabic_pc",
+        "label": "Western Arabic (PC)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "numeric-row": [
+      {
+        "id": "bengali",
+        "label": "Bengali",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "devanagari",
+        "label": "Devanagari",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "eastern_arabic",
+        "label": "Eastern Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "gujarati",
+        "label": "Gujarati",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "gurmukhi",
+        "label": "Gurmukhi",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kannada",
+        "label": "Kannada",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "malayalam",
+        "label": "Malayalam",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "oriya",
+        "label": "Odia",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "tamil",
+        "label": "Tamil",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "telugu",
+        "label": "Telugu",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "thai",
+        "label": "Thai",
+        "authors": [ "mrdeck4rd" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "warang_citi",
+        "label": "Warang Citi",
+        "authors": [ "Singkiring57" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_arabic",
+        "label": "Western Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
     "phone": [
       {
         "id": "telpad",
