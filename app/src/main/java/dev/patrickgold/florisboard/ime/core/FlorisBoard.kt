@@ -384,7 +384,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
         } else {
             ResponseState.RESET
         }
-        activeEditorInstance.startInput(attribute)
+        activeEditorInstance.startInput(attribute!!)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -396,7 +396,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
             keyboardManager.activeState.update(info)
             keyboardManager.activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
         }
-        activeEditorInstance.startInputView(info)
+        activeEditorInstance.startInputView(info!!)
         themeManager.updateRemoteColorValues(activeEditorInstance.packageName ?: "")
         eventListeners.toList().forEach {
             it?.onStartInputView(activeEditorInstance, restarting)

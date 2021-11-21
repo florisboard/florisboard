@@ -222,10 +222,8 @@ class KeyboardState private constructor(
      *  to the info this object provides.
      */
     fun update(editorInfo: EditorInfo) {
-        beginBatchEdit()
         imeOptions.update(editorInfo)
         inputAttributes.update(editorInfo)
-        endBatchEdit()
     }
 
     internal fun getFlag(f: ULong): Boolean {
@@ -265,6 +263,10 @@ class KeyboardState private constructor(
         if (rawValue != other.rawValue) return false
 
         return true
+    }
+
+    override fun toString(): String {
+        return "0x" + rawValue.toString(16).padStart(16, '0')
     }
 
     var keyVariation: KeyVariation

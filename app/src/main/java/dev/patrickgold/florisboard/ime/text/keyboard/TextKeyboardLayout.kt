@@ -31,7 +31,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -58,6 +57,7 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupManagerStub
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
@@ -86,12 +86,13 @@ import kotlin.math.abs
 @Composable
 fun TextKeyboardLayout(
     modifier: Modifier = Modifier,
-    keyboard: TextKeyboard,
+    renderInfo: RenderInfo,
     isPreview: Boolean,
 ): Unit = with(LocalDensity.current) {
     val context = LocalContext.current
     val prefs by florisPreferenceModel()
 
+    val keyboard = renderInfo.keyboard
     val controller = remember(context) { TextKeyboardLayoutController(context) }
     controller.keyboard = keyboard
     val touchEventChannel = remember { Channel<MotionEvent>(64) }
@@ -130,10 +131,8 @@ fun TextKeyboardLayout(
         keyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
-        for ((n, textKey) in keyboard.keys().withIndex()) {
-            key(keyboard.uniqueComposeUuid, n) {
-                TextKeyButton(textKey, fontSizeMultiplier)
-            }
+        for (textKey in keyboard.keys()) {
+            TextKeyButton(textKey, renderInfo, fontSizeMultiplier)
         }
     }
 
@@ -148,13 +147,13 @@ fun TextKeyboardLayout(
 @Composable
 private fun TextKeyButton(
     key: TextKey,
+    renderInfo: RenderInfo,
     fontSizeMultiplier: Float,
 ) = with(LocalDensity.current) {
-    val keyboardManager by LocalContext.current.keyboardManager()
     val keyStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.Key,
         code = key.computedData.code,
-        mode = keyboardManager.activeState.inputMode.value,
+        mode = renderInfo.state.inputMode.value,
         isPressed = key.isPressed,
     )
     val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {

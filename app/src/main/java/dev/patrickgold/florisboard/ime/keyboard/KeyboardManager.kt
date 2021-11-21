@@ -50,6 +50,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
+data class RenderInfo(
+    val version: Int = 0,
+    val keyboard: TextKeyboard = PlaceholderLoadingKeyboard,
+    val state: KeyboardState = KeyboardState.new(),
+)
+
+private val DefaultRenderInfo = RenderInfo()
+
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
@@ -64,10 +72,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val resources = KeyboardManagerResources()
 
     private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
-    private val activeKeyboardGuard = Mutex(locked = false)
-    private val _activeKeyboard = MutableLiveData(PlaceholderLoadingKeyboard)
-    val activeKeyboard: LiveData<TextKeyboard> get() = _activeKeyboard
     val activeState = KeyboardState.new()
+    private val renderInfoGuard = Mutex(locked = false)
+    private var renderInfoVersion: Int = 1
+    private val _renderInfo = MutableLiveData(DefaultRenderInfo)
+    val renderInfo: LiveData<RenderInfo> get() = _renderInfo
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -82,20 +91,20 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     init {
         resources.anyChanged.observeForever {
-            updateActiveKeyboard {
+            updateRenderInfo {
                 keyboardCache.clear()
             }
         }
         activeState.observeForever {
-            updateActiveKeyboard()
+            updateRenderInfo()
         }
         subtypeManager.activeSubtype.observeForever {
-            updateActiveKeyboard()
+            updateRenderInfo()
         }
     }
 
-    private fun updateActiveKeyboard(action: () -> Unit = { }) = scope.launch {
-        activeKeyboardGuard.withLock {
+    private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
+        renderInfoGuard.withLock {
             action()
             val subtype = subtypeManager.activeSubtype()
             val mode = activeState.keyboardMode
@@ -109,7 +118,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 key.compute(computedKeyboard, computingEvaluator)
                 key.computeLabelsAndDrawables(appContext, computedKeyboard, computingEvaluator)
             }
-            _activeKeyboard.postValue(computedKeyboard)
+            _renderInfo.postValue(RenderInfo(renderInfoVersion++, computedKeyboard, activeState))
         }
     }
 

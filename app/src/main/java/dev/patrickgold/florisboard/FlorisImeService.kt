@@ -132,18 +132,18 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
+        if (attribute == null) return
         activeEditorInstance.startInput(attribute)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
-        if (info != null) {
-            activeState.batchEdit {
-                it.update(info)
-                it.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
-            }
+        if (info == null) return
+        activeState.batchEdit {
+            it.update(info)
+            it.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
+            activeEditorInstance.startInputView(info)
         }
-        activeEditorInstance.startInputView(info)
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {

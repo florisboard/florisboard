@@ -30,11 +30,11 @@ fun TextInputLayout() = Column {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val activeKeyboard by keyboardManager.activeKeyboard.observeAsNonNullState()
+    val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
 
     Smartbar()
     TextKeyboardLayout(
-        keyboard = activeKeyboard,
+        renderInfo = renderInfo,
         isPreview = false,
     )
 }

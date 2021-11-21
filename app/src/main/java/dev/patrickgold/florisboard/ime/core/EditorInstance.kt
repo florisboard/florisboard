@@ -32,6 +32,7 @@ import android.view.inputmethod.InputConnection
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.stringBuilder
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -43,9 +44,12 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Appender
-import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.util.debugSummarize
 
@@ -60,6 +64,7 @@ class EditorInstance(private val ims: InputMethodService) {
         private const val CURSOR_UPDATE_DISABLED: Int = 0
     }
 
+    private val prefs by florisPreferenceModel()
     private val keyboardManager by ims.keyboardManager()
 
     private val activeState get() = keyboardManager.activeState
@@ -154,10 +159,10 @@ class EditorInstance(private val ims: InputMethodService) {
         isInputBindingActive = true
     }
 
-    fun startInput(ei: EditorInfo?) {
-        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${ei?.debugSummarize()}" }
-        if (ei != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            contentMimeTypes = ei.contentMimeTypes
+    fun startInput(info: EditorInfo) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            contentMimeTypes = info.contentMimeTypes
         }
         val ic = inputConnection ?: return
         ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
@@ -173,8 +178,61 @@ class EditorInstance(private val ims: InputMethodService) {
         }
     }
 
-    fun startInputView(ei: EditorInfo?) {
-        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${ei?.debugSummarize()}" }
+    fun startInputView(info: EditorInfo) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        val keyboardMode = when (activeState.inputAttributes.type) {
+            InputAttributes.Type.NUMBER -> {
+                activeState.keyVariation = KeyVariation.NORMAL
+                KeyboardMode.NUMERIC
+            }
+            InputAttributes.Type.PHONE -> {
+                activeState.keyVariation = KeyVariation.NORMAL
+                KeyboardMode.PHONE
+            }
+            InputAttributes.Type.TEXT -> {
+                activeState.keyVariation = when (activeState.inputAttributes.variation) {
+                    InputAttributes.Variation.EMAIL_ADDRESS,
+                    InputAttributes.Variation.WEB_EMAIL_ADDRESS -> {
+                        KeyVariation.EMAIL_ADDRESS
+                    }
+                    InputAttributes.Variation.PASSWORD,
+                    InputAttributes.Variation.VISIBLE_PASSWORD,
+                    InputAttributes.Variation.WEB_PASSWORD -> {
+                        KeyVariation.PASSWORD
+                    }
+                    InputAttributes.Variation.URI -> {
+                        KeyVariation.URI
+                    }
+                    else -> {
+                        KeyVariation.NORMAL
+                    }
+                }
+                KeyboardMode.CHARACTERS
+            }
+            else -> {
+                activeState.keyVariation = KeyVariation.NORMAL
+                KeyboardMode.CHARACTERS
+            }
+        }
+        activeState.keyboardMode = keyboardMode
+        activeState.isComposingEnabled = when (keyboardMode) {
+            KeyboardMode.NUMERIC,
+            KeyboardMode.PHONE,
+            KeyboardMode.PHONE2 -> false
+            else -> activeState.keyVariation != KeyVariation.PASSWORD &&
+                prefs.suggestion.enabled.get()// &&
+            //!instance.inputAttributes.flagTextAutoComplete &&
+            //!instance.inputAttributes.flagTextNoSuggestions
+        }
+        composingEnabledChanged()
+        activeState.updateIsPrivate()
+        if (!prefs.correction.rememberCapsLockState.get()) {
+            activeState.inputMode = InputMode.NORMAL
+        }
+    }
+
+    private fun KeyboardState.updateIsPrivate(force: Boolean = prefs.advanced.forcePrivateMode.get()) {
+        this.isPrivateMode = force || this.imeOptions.flagNoPersonalizedLearning
     }
 
     fun finishInputView() {
