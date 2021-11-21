@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Icon
@@ -43,6 +44,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.FlorisImeService
@@ -68,6 +70,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
+import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -173,9 +176,7 @@ private fun TextKeyButton(
     ) {
         key.label?.let { label ->
             Text(
-                modifier = Modifier
-                    .wrapContentSize()
-                    .align(Alignment.Center),
+                modifier = Modifier.wrapContentSize(Alignment.Center),
                 text = label,
                 color = keyStyle.foreground.solidColor(),
                 fontSize = fontSize,
@@ -185,6 +186,28 @@ private fun TextKeyButton(
                     KeyCode.SPACE -> TextOverflow.Ellipsis
                     else -> TextOverflow.Visible
                 },
+            )
+        }
+        key.hintedLabel?.let { hintedLabel ->
+            val keyHintStyle = FlorisImeTheme.style.get(
+                element = FlorisImeUi.KeyHint,
+                code = key.computedHintData.code,
+                mode = renderInfo.state.inputMode.value,
+                isPressed = key.isPressed,
+            )
+            val hintFontSize = keyHintStyle.fontSize.spSize() * fontSizeMultiplier
+            Text(
+                modifier = Modifier
+                    .padding(end = (key.visibleBounds.width / 12f).toDp())
+                    .wrapContentSize(Alignment.TopEnd)
+                    .snyggBackground(keyHintStyle.background, keyHintStyle.shape),
+                text = hintedLabel,
+                color = keyHintStyle.foreground.solidColor(),
+                fontFamily = FontFamily.Monospace,
+                fontSize = hintFontSize,
+                maxLines = 1,
+                softWrap = false,
+                overflow = TextOverflow.Visible,
             )
         }
         key.foregroundDrawableId?.let { drawableId ->

@@ -30,11 +30,14 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
 fun Modifier.snyggBackground(
-    value: SnyggValue,
-    shape: Shape = RectangleShape,
+    background: SnyggValue,
+    shape: SnyggValue? = null,
 ): Modifier {
-    return when (value) {
-        is SnyggSolidColorValue -> this.background(value.color, shape)
+    return when (background) {
+        is SnyggSolidColorValue -> this.background(
+            color = background.color,
+            shape = shape?.shape() ?: RectangleShape,
+        )
         else -> this
     }
 }
@@ -42,7 +45,7 @@ fun Modifier.snyggBackground(
 fun SnyggValue.solidColor(): Color {
     return when (this) {
         is SnyggSolidColorValue -> this.color
-        else -> Color.Unspecified
+        else -> Color.Transparent
     }
 }
 

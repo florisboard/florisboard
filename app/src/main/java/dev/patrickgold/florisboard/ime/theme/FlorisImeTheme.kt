@@ -63,13 +63,21 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = rgbaColor(144, 144, 144)
         fontSize = size(12.sp)
     }
+    FlorisImeUi.KeyHint {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(184, 184, 184)
+        fontSize = size(12.sp)
+    }
+
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)
     }
+
     FlorisImeUi.Smartbar {
         background = rgbaColor(0, 0, 0, 0f)
     }
+
     FlorisImeUi.SystemNavBar {
         background = rgbaColor(33, 33, 33)
     }

@@ -342,6 +342,9 @@ class LayoutManager(context: Context) {
             KeyboardMode.SMARTBAR_NUMBER_ROW -> {
                 extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
             }
+            else -> {
+                // Default values are already provided
+            }
         }
 
         return@async mergeLayouts(keyboardMode, subtype, main, modifier, extension)

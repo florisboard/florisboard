@@ -36,6 +36,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     val computedPopups: MutablePopupSet<KeyData> = MutablePopupSet()
     var computedSymbolHint: KeyData? = null
     var computedNumberHint: KeyData? = null
+    var computedHintData: KeyData = TextKeyData.UNSPECIFIED
 
     fun compute(keyboard: TextKeyboard, evaluator: ComputingEvaluator) {
         val keyboardMode = keyboard.mode
@@ -234,8 +235,9 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
         ) {
             val prefs by florisPreferenceModel()
             label = data.asString(isForDisplay = true)
-            computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint?.asString(isForDisplay = true).let {
-                hintedLabel = it
+            computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let {
+                hintedLabel = it?.asString(isForDisplay = true)
+                computedHintData = it ?: TextKeyData.UNSPECIFIED
             }
         } else {
             when (data.code) {

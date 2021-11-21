@@ -103,10 +103,10 @@ class SnyggStylesheet(
             val possiblePropertySets = getPropertySets(newRules, rule)
             propertySetSpec.supportedProperties.forEach { supportedProperty ->
                 if (!editor.properties.containsKey(supportedProperty.name)) {
-                    val value = possiblePropertySets.first {
-                        it.properties.containsKey(supportedProperty.name)
-                    }.properties[supportedProperty.name]
-                    editor.properties[supportedProperty.name] = value ?: SnyggImplicitInheritValue
+                    val value = possiblePropertySets.firstNotNullOfOrNull {
+                        it.properties[supportedProperty.name]
+                    } ?: SnyggImplicitInheritValue
+                    editor.properties[supportedProperty.name] = value
                 }
             }
             newRules[rule] = editor.build()
