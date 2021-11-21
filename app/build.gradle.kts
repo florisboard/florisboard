@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdk = 31
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "31.0.0"
     ndkVersion = "22.1.7171670"
 
     compileOptions {

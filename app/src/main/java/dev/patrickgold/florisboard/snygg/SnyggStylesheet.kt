@@ -18,12 +18,8 @@ package dev.patrickgold.florisboard.snygg
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValue
-import dev.patrickgold.florisboard.snygg.value.isInherit
-import dev.patrickgold.florisboard.snygg.value.isNotInherit
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.MapSerializer
@@ -98,12 +94,13 @@ class SnyggStylesheet(
         TODO()
     }
 
+    // TODO: divide in smaller, testable sections
     fun compileToFullyQualified(stylesheetSpec: SnyggSpec): SnyggStylesheet {
         val newRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
         for (rule in rules.keys.sorted()) {
             val editor = rules[rule]!!.edit()
             val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
-            val possiblePropertySets = getPropertySets(rules, rule) + getPropertySets(newRules, rule)
+            val possiblePropertySets = getPropertySets(newRules, rule)
             propertySetSpec.supportedProperties.forEach { supportedProperty ->
                 if (!editor.properties.containsKey(supportedProperty.name)) {
                     val value = possiblePropertySets.first {
@@ -114,7 +111,28 @@ class SnyggStylesheet(
             }
             newRules[rule] = editor.build()
         }
-        return SnyggStylesheet(newRules, isFullyQualified = true)
+        val newRulesWithPressed = mutableMapOf<SnyggRule, SnyggPropertySet>()
+        for ((rule, propSet) in newRules) {
+            newRulesWithPressed[rule] = propSet
+            if (!rule.pressedSelector) {
+                val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
+                val pressedRule = rule.copy(pressedSelector = true)
+                if (!newRules.containsKey(pressedRule)) {
+                    val editor = SnyggPropertySetEditor()
+                    val possiblePropertySets = getPropertySets(rules, pressedRule) + getPropertySets(newRules, pressedRule)
+                    propertySetSpec.supportedProperties.forEach { supportedProperty ->
+                        if (!editor.properties.containsKey(supportedProperty.name)) {
+                            val value = possiblePropertySets.firstNotNullOfOrNull {
+                                it.properties[supportedProperty.name]
+                            } ?: SnyggImplicitInheritValue
+                            editor.properties[supportedProperty.name] = value
+                        }
+                    }
+                    newRulesWithPressed[pressedRule] = editor.build()
+                }
+            }
+        }
+        return SnyggStylesheet(newRulesWithPressed, isFullyQualified = true)
     }
 
     fun edit(): SnyggStylesheetEditor {
