@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.launchActivity
+import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.oldsettings.UdmActivity
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
@@ -38,7 +38,7 @@ fun DictionaryScreen() = FlorisScreen(title = stringRes(R.string.settings__dicti
     Preference(
         title = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__label),
         summary = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__summary),
-        onClick = { launchActivity(context, UdmActivity::class) {
+        onClick = { context.launchActivity(UdmActivity::class) {
             it.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_SYSTEM)
         } },
         enabledIf = { prefs.dictionary.enableSystemUserDictionary isEqualTo true },
@@ -51,7 +51,7 @@ fun DictionaryScreen() = FlorisScreen(title = stringRes(R.string.settings__dicti
     Preference(
         title = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__label),
         summary = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__summary),
-        onClick = { launchActivity(context, UdmActivity::class) {
+        onClick = { context.launchActivity(UdmActivity::class) {
             it.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_FLORIS)
         } },
         enabledIf = { prefs.dictionary.enableFlorisUserDictionary isEqualTo true },

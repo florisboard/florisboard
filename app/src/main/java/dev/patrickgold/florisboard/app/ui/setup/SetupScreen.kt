@@ -51,9 +51,9 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisStep
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepLayout
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepState
 import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.launchActivity
-import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.util.AndroidSettings
+import dev.patrickgold.florisboard.common.android.AndroidSettings
+import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.common.android.launchUrl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
@@ -107,7 +107,7 @@ fun SetupScreen() = FlorisScreen(
                 !isFlorisBoardSelected &&
                 isEnabled
             ) {
-                launchActivity(context, FlorisAppActivity::class) {
+                context.launchActivity(FlorisAppActivity::class) {
                     it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                         or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         or Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -169,7 +169,7 @@ fun SetupScreen() = FlorisScreen(
                 horizontalArrangement = Arrangement.Center,
             ) {
                 val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
-                TextButton(onClick = { launchUrl(context, privacyPolicyUrl)}) {
+                TextButton(onClick = { context.launchUrl(privacyPolicyUrl)}) {
                     Text(text = stringRes(R.string.setup__footer__privacy_policy))
                 }
                 Box(
@@ -180,7 +180,7 @@ fun SetupScreen() = FlorisScreen(
                         .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
                 )
                 val repositoryUrl = stringRes(R.string.florisboard__repo_url)
-                TextButton(onClick = { launchUrl(context, repositoryUrl) }) {
+                TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
                     Text(text = stringRes(R.string.setup__footer__repository))
                 }
             }

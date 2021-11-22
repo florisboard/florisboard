@@ -17,9 +17,9 @@
 package dev.patrickgold.florisboard.debug
 
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import java.lang.ref.WeakReference
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -286,7 +286,7 @@ object Flog {
         var tag = element.className
         tag = tag.substring(tag.lastIndexOf('.') + 1)
         // Tag length limit was removed in API 24.
-        return if (tag.length <= MAX_TAG_LENGTH || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return if (tag.length <= MAX_TAG_LENGTH || AndroidVersion.ATLEAST_API24_N) {
             tag
         } else {
             tag.substring(0, MAX_TAG_LENGTH)

@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.common.android.launchUrl
 
 @Composable
 fun FlorisHyperlinkText(
@@ -39,7 +39,7 @@ fun FlorisHyperlinkText(
     Text(
         modifier = modifier
             .clickable(enabled = enabled) {
-                launchUrl(context, url)
+                context.launchUrl(url)
             },
         text = text,
         color = color,

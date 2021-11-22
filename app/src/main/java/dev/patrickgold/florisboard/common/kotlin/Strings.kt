@@ -16,8 +16,9 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package dev.patrickgold.florisboard.common
+package dev.patrickgold.florisboard.common.kotlin
 
+import dev.patrickgold.florisboard.common.FlorisLocale
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

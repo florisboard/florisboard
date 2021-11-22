@@ -36,7 +36,7 @@ import com.google.accompanist.systemuicontroller.SystemUiController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.solidColor
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 
 @Composable
 fun SystemUiApp() {
@@ -49,7 +49,7 @@ fun SystemUiApp() {
             color = backgroundColor,
             darkIcons = useDarkIcons,
         )
-        if (AndroidVersion.ATLEAST_O) {
+        if (AndroidVersion.ATLEAST_API26_O) {
             systemUiController.setNavigationBarColor(
                 color = backgroundColor,
                 darkIcons = useDarkIcons,
@@ -70,7 +70,7 @@ fun SystemUiIme() {
             color = backgroundColor,
             darkIcons = useDarkIcons,
         )
-        if (AndroidVersion.ATLEAST_O) {
+        if (AndroidVersion.ATLEAST_API26_O) {
             systemUiController.setNavigationBarColor(
                 color = backgroundColor,
                 darkIcons = useDarkIcons,
@@ -180,9 +180,9 @@ private class FlorisSystemUiController(
         }
 
     override var isNavigationBarContrastEnforced: Boolean
-        get() = AndroidVersion.ATLEAST_Q && window.isNavigationBarContrastEnforced
+        get() = AndroidVersion.ATLEAST_API29_Q && window.isNavigationBarContrastEnforced
         set(value) {
-            if (AndroidVersion.ATLEAST_Q) {
+            if (AndroidVersion.ATLEAST_API29_Q) {
                 window.isNavigationBarContrastEnforced = value
             }
         }

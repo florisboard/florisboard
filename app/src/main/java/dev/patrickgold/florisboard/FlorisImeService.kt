@@ -48,11 +48,11 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
 import dev.patrickgold.florisboard.common.ViewUtils
-import dev.patrickgold.florisboard.common.isOrientationLandscape
-import dev.patrickgold.florisboard.common.isOrientationPortrait
-import dev.patrickgold.florisboard.common.launchActivity
+import dev.patrickgold.florisboard.common.android.isOrientationLandscape
+import dev.patrickgold.florisboard.common.android.isOrientationPortrait
+import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import dev.patrickgold.florisboard.common.observeAsTransformingState
-import dev.patrickgold.florisboard.common.systemServiceOrNull
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
@@ -65,7 +65,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -102,7 +102,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         fun launchSettings() {
             val ims = FlorisImeServiceReference.get() ?: return
             ims.requestHideSelf(0)
-            launchActivity(ims, FlorisAppActivity::class) {
+            ims.launchActivity(FlorisAppActivity::class) {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                     Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -110,7 +110,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
 
         fun showUi() {
-            if (AndroidVersion.ATLEAST_P) {
+            if (AndroidVersion.ATLEAST_API28_P) {
                 FlorisImeServiceReference.get()?.requestShowSelf(0)
             }
         }
@@ -123,7 +123,7 @@ class FlorisImeService : LifecycleInputMethodService() {
             val ims = FlorisImeServiceReference.get() ?: return false
             val imm = ims.systemServiceOrNull(InputMethodManager::class)
             try {
-                if (AndroidVersion.ATLEAST_P) {
+                if (AndroidVersion.ATLEAST_API28_P) {
                     return ims.switchToPreviousInputMethod()
                 } else {
                     ims.window.window?.let { window ->
@@ -142,7 +142,7 @@ class FlorisImeService : LifecycleInputMethodService() {
             val ims = FlorisImeServiceReference.get() ?: return false
             val imm = ims.systemServiceOrNull(InputMethodManager::class)
             try {
-                if (AndroidVersion.ATLEAST_P) {
+                if (AndroidVersion.ATLEAST_API28_P) {
                     return ims.switchToNextInputMethod(false)
                 } else {
                     ims.window.window?.let { window ->

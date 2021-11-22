@@ -23,10 +23,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.launchActivity
+import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.oldsettings.ThemeManagerActivity
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.LocalTimePickerPreference
@@ -60,13 +60,13 @@ fun ThemeScreen() = FlorisScreen(title = stringRes(R.string.settings__theme__tit
             summary = dayThemeRef.toString(),
             onClick = {
                 // TODO: this currently launches the old UI for theme manager
-                launchActivity(context, ThemeManagerActivity::class) {
+                context.launchActivity(ThemeManagerActivity::class) {
                     it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.dayThemeRef.key)
                     it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.dayThemeRef.default.toString())
                 }
             },
         )
-        if (AndroidVersion.ATLEAST_O) {
+        if (AndroidVersion.ATLEAST_API26_O) {
             LocalTimePickerPreference(
                 prefs.theme.sunriseTime,
                 iconId = R.drawable.ic_schedule,
@@ -92,13 +92,13 @@ fun ThemeScreen() = FlorisScreen(title = stringRes(R.string.settings__theme__tit
             summary = nightThemeRef.toString(),
             onClick = {
                 // TODO: this currently launches the old UI for theme manager
-                launchActivity(context, ThemeManagerActivity::class) {
+                context.launchActivity(ThemeManagerActivity::class) {
                     it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.nightThemeRef.key)
                     it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.nightThemeRef.default.toString())
                 }
             },
         )
-        if (AndroidVersion.ATLEAST_O) {
+        if (AndroidVersion.ATLEAST_API26_O) {
             LocalTimePickerPreference(
                 prefs.theme.sunsetTime,
                 iconId = R.drawable.ic_schedule,

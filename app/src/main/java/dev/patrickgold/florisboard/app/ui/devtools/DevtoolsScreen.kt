@@ -26,9 +26,9 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.common.android.AndroidSettings
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
-import dev.patrickgold.florisboard.util.AndroidSettings
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 import dev.patrickgold.jetpref.ui.compose.Preference

@@ -18,8 +18,8 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.os.Build
 import android.view.inputmethod.EditorInfo
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 
 /**
  * Class which holds the same information as an [EditorInfo.imeOptions] int but more accessible and
@@ -84,7 +84,7 @@ value class ImeOptions(val state: KeyboardState) {
         flagNoEnterAction = imeOptionsRaw and EditorInfo.IME_FLAG_NO_ENTER_ACTION != 0
         flagNoExtractUi = imeOptionsRaw and EditorInfo.IME_FLAG_NO_EXTRACT_UI != 0
         flagNoFullscreen = imeOptionsRaw and EditorInfo.IME_FLAG_NO_FULLSCREEN != 0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (AndroidVersion.ATLEAST_API26_O) {
             flagNoPersonalizedLearning = imeOptionsRaw and EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING != 0
         }
     }

@@ -71,7 +71,7 @@ import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
 import kotlinx.coroutines.Dispatchers
@@ -737,7 +737,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     fun switchToPrevKeyboard(){
         try {
-            if (AndroidVersion.ATLEAST_P) {
+            if (AndroidVersion.ATLEAST_API28_P) {
                 switchToPreviousInputMethod()
             } else {
                 window.window?.let { window ->
@@ -753,7 +753,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     fun switchToNextKeyboard(){
         try {
-            if (AndroidVersion.ATLEAST_P) {
+            if (AndroidVersion.ATLEAST_API28_P) {
                 switchToNextInputMethod(false)
             } else {
                 window.window?.let { window ->

@@ -24,7 +24,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
 
@@ -35,12 +35,12 @@ fun TypingScreen() = FlorisScreen(title = stringRes(R.string.settings__typing__t
             prefs.suggestion.api30InlineSuggestionsEnabled,
             title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
             summary = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__summary),
-            visibleIf = { AndroidVersion.ATLEAST_R },
+            visibleIf = { AndroidVersion.ATLEAST_API30_R },
         )
         // This card is temporary and is therefore not using a string resource
         FlorisInfoCard(
             modifier = Modifier.padding(8.dp),
-            text = if (AndroidVersion.ATLEAST_R) {
+            text = if (AndroidVersion.ATLEAST_API30_R) {
                 "Suggestions (except autofill) are not available in this beta release"
             } else {
                 "Suggestions are not available in this beta release"

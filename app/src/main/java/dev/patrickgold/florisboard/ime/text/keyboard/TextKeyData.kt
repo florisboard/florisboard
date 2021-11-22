@@ -17,9 +17,9 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.lowercase
-import dev.patrickgold.florisboard.common.stringBuilder
-import dev.patrickgold.florisboard.common.uppercase
+import dev.patrickgold.florisboard.common.kotlin.lowercase
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
+import dev.patrickgold.florisboard.common.kotlin.uppercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData

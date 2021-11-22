@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
-import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 
@@ -68,7 +68,7 @@ fun ExtensionMaintainerChip(
             Column {
                 if (maintainer.email != null) {
                     FlorisChip(
-                        onClick = { launchUrl(context, "mailto:${maintainer.email}") },
+                        onClick = { context.launchUrl("mailto:${maintainer.email}") },
                         text = maintainer.email,
                         leadingIcons = listOf(R.drawable.ic_email),
                         shape = RoundedCornerShape(4.dp),
@@ -76,7 +76,7 @@ fun ExtensionMaintainerChip(
                 }
                 if (maintainer.url != null) {
                     FlorisChip(
-                        onClick = { launchUrl(context, maintainer.url.toString()) },
+                        onClick = { context.launchUrl(maintainer.url.toString()) },
                         text = maintainer.url.toString(),
                         leadingIcons = listOf(R.drawable.ic_link),
                         shape = RoundedCornerShape(4.dp),

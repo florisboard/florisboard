@@ -44,8 +44,8 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.launchActivity
-import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.Preference
@@ -102,7 +102,7 @@ fun HomeScreen() = FlorisScreen(
                 Text("Especially in the first few beta releases the Settings are completely split up and some UI controls (especially sliders!!) behave buggy. With each beta release preferences will be ported until everything is re-written, then the UI and the code base will get polished.\n")
                 Text("If you want to give feedback on the development of the new prefs, please do so in below linked feedback thread:\n")
                 Button(onClick = {
-                    launchUrl(context, "https://github.com/florisboard/florisboard/discussions/1235")
+                    context.launchUrl("https://github.com/florisboard/florisboard/discussions/1235")
                 }) {
                     Text("Open Feedback Thread")
                 }
@@ -112,7 +112,7 @@ fun HomeScreen() = FlorisScreen(
     }
     Preference(
         title = "Localization (old UI)",
-        onClick = { launchActivity(context, SettingsMainActivity::class) },
+        onClick = { context.launchActivity(SettingsMainActivity::class) },
     )
     Preference(
         iconId = R.drawable.ic_language,

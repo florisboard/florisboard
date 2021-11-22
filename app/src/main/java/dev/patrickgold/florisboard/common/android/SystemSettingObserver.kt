@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.common
+package dev.patrickgold.florisboard.common.android
 
 import android.content.Context
 import android.database.ContentObserver

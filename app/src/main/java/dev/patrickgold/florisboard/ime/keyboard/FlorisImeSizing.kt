@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.ViewUtils
-import dev.patrickgold.florisboard.common.isOrientationLandscape
 import dev.patrickgold.florisboard.common.observeAsTransformingState
+import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 

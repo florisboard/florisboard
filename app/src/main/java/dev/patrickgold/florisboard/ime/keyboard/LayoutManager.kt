@@ -20,8 +20,8 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.common.DeferredResult
-import dev.patrickgold.florisboard.common.runCatchingAsync
+import dev.patrickgold.florisboard.common.kotlin.DeferredResult
+import dev.patrickgold.florisboard.common.kotlin.runCatchingAsync
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning

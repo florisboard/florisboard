@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.util
+package dev.patrickgold.florisboard.common.android
 
 import android.content.Context
 import android.net.Uri
@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
 

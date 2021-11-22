@@ -23,8 +23,9 @@ import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import dev.patrickgold.florisboard.common.android.AndroidSettings
+import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.util.AndroidSettings
 
 private const val DELIMITER = ':'
 private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisImeService"

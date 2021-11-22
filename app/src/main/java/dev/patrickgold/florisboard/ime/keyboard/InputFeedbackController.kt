@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
@@ -33,7 +32,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -53,7 +52,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
         fun hasAmplitudeControl(): Boolean {
             val vibrator = LocalContext.current.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
             return when {
-                AndroidVersion.ATLEAST_O -> vibrator?.hasAmplitudeControl() ?: false
+                AndroidVersion.ATLEAST_API26_O -> vibrator?.hasAmplitudeControl() ?: false
                 else -> false
             }
         }
@@ -62,7 +61,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
         fun generateVibrationStrengthErrorSummary(): String? {
             val vibrator = LocalContext.current.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
             return when {
-                AndroidVersion.ATLEAST_O -> when {
+                AndroidVersion.ATLEAST_API26_O -> when {
                     !(vibrator?.hasAmplitudeControl() ?: false) -> {
                         stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
                     }
@@ -146,7 +145,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
         scope.launch {
             if (!prefs.inputFeedback.hapticUseVibrator.get()) {
                 val view = ims.window?.window?.decorView ?: return@launch
-                val hfc = if (factor < 1.0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                val hfc = if (factor < 1.0 && AndroidVersion.ATLEAST_API27_O_MR1) {
                     HapticFeedbackConstants.TEXT_HANDLE_MOVE
                 } else {
                     HapticFeedbackConstants.KEYBOARD_TAP
@@ -162,7 +161,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
             val duration = prefs.inputFeedback.hapticVibrationDuration.get()
             if (duration != 0) {
                 val effectiveDuration = (duration * factor).toLong().coerceAtLeast(1L)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (AndroidVersion.ATLEAST_API26_O) {
                     val strength = when {
                         vibrator.hasAmplitudeControl() -> prefs.inputFeedback.hapticVibrationStrength.get()
                         else -> VibrationEffect.DEFAULT_AMPLITUDE

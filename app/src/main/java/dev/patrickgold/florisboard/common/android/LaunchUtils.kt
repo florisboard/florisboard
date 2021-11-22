@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.common
+package dev.patrickgold.florisboard.common.android
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -23,6 +23,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.annotation.StringRes
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.common.kotlin.CurlyArg
 import dev.patrickgold.florisboard.debug.flogError
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -32,7 +33,7 @@ private const val URL_HTTP_PREFIX = "http://"
 private const val URL_HTTPS_PREFIX = "https://"
 private const val URL_MAILTO_PREFIX = "mailto:"
 
-fun launchUrl(context: Context, url: String) {
+fun Context.launchUrl(url: String) {
     val link = when {
         url.startsWith(URL_HTTP_PREFIX) ||
             url.startsWith(URL_HTTPS_PREFIX) ||
@@ -42,49 +43,49 @@ fun launchUrl(context: Context, url: String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     try {
-        context.startActivity(intent)
+        this.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
         flogError { e.toString() }
         Toast.makeText(
-            context,
-            context.getString(R.string.general__no_browser_app_found_for_url).curlyFormat("url" to url),
+            this,
+            this.stringRes(R.string.general__no_browser_app_found_for_url, "url" to url),
             Toast.LENGTH_LONG,
         ).show()
     }
 }
 
-fun launchUrl(context: Context, @StringRes url: Int) {
-    launchUrl(context, context.getString(url))
+fun Context.launchUrl(@StringRes url: Int) {
+    launchUrl(this.stringRes(url))
 }
 
-fun launchUrl(context: Context, @StringRes url: Int, vararg args: CurlyArg) {
-    launchUrl(context, context.getString(url).curlyFormat(*args))
+fun Context.launchUrl(@StringRes url: Int, vararg args: CurlyArg) {
+    launchUrl(this.stringRes(url, *args))
 }
 
-inline fun <T : Any> launchActivity(context: Context, kClass: KClass<T>, intentModifier: (Intent) -> Unit = { }) {
+inline fun <T : Any> Context.launchActivity(kClass: KClass<T>, intentModifier: (Intent) -> Unit = { }) {
     contract {
         callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
     }
     try {
-        val intent = Intent(context, kClass.java)
+        val intent = Intent(this, kClass.java)
         intentModifier(intent)
-        context.startActivity(intent)
+        this.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
         flogError { e.toString() }
-        Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
     }
 }
 
-inline fun launchActivity(context: Context, intentModifier: (Intent) -> Unit) {
+inline fun Context.launchActivity(intentModifier: (Intent) -> Unit) {
     contract {
         callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
     }
     try {
         val intent = Intent()
         intentModifier(intent)
-        context.startActivity(intent)
+        this.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
         flogError { e.toString() }
-        Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
     }
 }

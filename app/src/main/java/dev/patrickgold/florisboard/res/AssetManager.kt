@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.res
 import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.common.resultErr
-import dev.patrickgold.florisboard.common.resultErrStr
-import dev.patrickgold.florisboard.common.resultOk
+import dev.patrickgold.florisboard.common.kotlin.resultErr
+import dev.patrickgold.florisboard.common.kotlin.resultErrStr
+import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData

@@ -52,7 +52,7 @@ import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.Pointer
 import dev.patrickgold.florisboard.common.PointerMap
-import dev.patrickgold.florisboard.common.isOrientationPortrait
+import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.debug.LogTopic

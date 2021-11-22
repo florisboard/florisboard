@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind

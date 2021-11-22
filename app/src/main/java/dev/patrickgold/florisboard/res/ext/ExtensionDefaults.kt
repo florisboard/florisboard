@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import dev.patrickgold.florisboard.common.curlyFormat
+import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 
 object ExtensionDefaults {
     private const val ID_IMPORT = "local.imported.{groupName}.{extensionName}"

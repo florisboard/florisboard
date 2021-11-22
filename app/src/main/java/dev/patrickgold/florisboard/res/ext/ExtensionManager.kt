@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.DefaultJsonConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -120,7 +120,7 @@ class ExtensionManager(context: Context) {
         private val fileObserverMask =
             FileObserver.CLOSE_WRITE or FileObserver.DELETE or
             FileObserver.MOVED_FROM or FileObserver.MOVED_TO
-        private val fileObserver = if (AndroidVersion.ATLEAST_Q) {
+        private val fileObserver = if (AndroidVersion.ATLEAST_API29_Q) {
             object : FileObserver(internalModuleDir, fileObserverMask) {
                 override fun onEvent(event: Int, path: String?) = onEventCallback(event, path)
             }

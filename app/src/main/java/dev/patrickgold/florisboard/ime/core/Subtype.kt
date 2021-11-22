@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
 import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet

@@ -16,8 +16,8 @@
 
 package dev.patrickgold.florisboard.snygg
 
-import dev.patrickgold.florisboard.common.curlyFormat
-import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
