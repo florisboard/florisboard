@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard
 
+import android.content.Intent
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -42,12 +43,14 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.isOrientationLandscape
 import dev.patrickgold.florisboard.common.isOrientationPortrait
+import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.systemServiceOrNull
 import dev.patrickgold.florisboard.debug.flogError
@@ -69,14 +72,11 @@ import java.lang.ref.WeakReference
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
  * another input method, getting the editor instance / input connection, etc.) can only be performed by an IME
- * service class and no context-bound managers.
- *
- * Consider using this reference only if absolutely needed. This reference must **never** be used to access state, only
- * to trigger an action. This reference is weak and will not prevent GC of the service class, thus expect that this
- * reference's value can be null at any time given.
+ * service class and no context-bound managers. This reference is exclusively used by the companion helper methods
+ * of [FlorisImeService], which provide a safe and memory-leak-free way of performing certain actions on the Floris
+ * input method service instance.
  */
-var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
-    private set
+private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
 
 /**
  * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
@@ -94,6 +94,19 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         fun inputFeedbackController(): InputFeedbackController? {
             return FlorisImeServiceReference.get()?.inputFeedbackController
+        }
+
+        /**
+         * Hides the IME and launches [FlorisAppActivity].
+         */
+        fun launchSettings() {
+            val ims = FlorisImeServiceReference.get() ?: return
+            ims.requestHideSelf(0)
+            launchActivity(ims, FlorisAppActivity::class) {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
         }
 
         fun showUi() {
@@ -196,6 +209,23 @@ class FlorisImeService : LifecycleInputMethodService() {
             it.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
             activeEditorInstance.startInputView(info)
         }
+    }
+
+    override fun onUpdateSelection(
+        oldSelStart: Int,
+        oldSelEnd: Int,
+        newSelStart: Int,
+        newSelEnd: Int,
+        candidatesStart: Int,
+        candidatesEnd: Int
+    ) {
+        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
+        activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
+        activeEditorInstance.updateSelection(
+            oldSelStart, oldSelEnd,
+            newSelStart, newSelEnd,
+            candidatesStart, candidatesEnd,
+        )
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {

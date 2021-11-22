@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.view.KeyEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
@@ -179,6 +180,87 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
+     */
+    private fun handleArrow(code: Int, count: Int) = activeEditorInstance?.apply {
+        val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
+        when (code) {
+            KeyCode.ARROW_DOWN -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = false
+                    activeState.isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
+            }
+            KeyCode.ARROW_LEFT -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = true
+                    activeState.isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(shift = isShiftPressed), count)
+            }
+            KeyCode.ARROW_RIGHT -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = false
+                    activeState.isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(shift = isShiftPressed), count)
+            }
+            KeyCode.ARROW_UP -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = true
+                    activeState.isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isShiftPressed), count)
+            }
+            KeyCode.MOVE_START_OF_PAGE -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = true
+                    activeState.isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(alt = true, shift = isShiftPressed), count)
+            }
+            KeyCode.MOVE_END_OF_PAGE -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = false
+                    activeState.isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(alt = true, shift = isShiftPressed), count)
+            }
+            KeyCode.MOVE_START_OF_LINE -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = true
+                    activeState.isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(alt = true, shift = isShiftPressed), count)
+            }
+            KeyCode.MOVE_END_OF_LINE -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = false
+                    activeState.isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(alt = true, shift = isShiftPressed), count)
+            }
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.CLIPBOARD_SELECT] event.
+     */
+    private fun handleClipboardSelect() = activeEditorInstance?.apply {
+        activeState.isManualSelectionMode = if (selection.isSelectionMode) {
+            if (activeState.isManualSelectionMode && activeState.isManualSelectionModeStart) {
+                selection.updateAndNotify(selection.start, selection.start)
+            } else {
+                selection.updateAndNotify(selection.end, selection.end)
+            }
+            false
+        } else {
+            !activeState.isManualSelectionMode
+        }
+    }
+
+    /**
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
@@ -224,6 +306,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * Handles a [KeyCode.LANGUAGE_SWITCH] event. Also handles if the language switch should cycle
+     * FlorisBoard internal or system-wide.
+     */
+    private fun handleLanguageSwitch() {
+        when (prefs.keyboard.utilityKeyAction.get()) {
+            UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
+            UtilityKeyAction.SWITCH_LANGUAGE -> subtypeManager.switchToNextSubtype()
+            else -> FlorisImeService.switchToNextInputMethod()
+        }
+    }
+
+    /**
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(ev: InputKeyEvent) {
@@ -262,6 +356,87 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         activeState.inputMode = InputMode.NORMAL
     }
 
+    /**
+     * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
+     * enabled by the user.
+     */
+    private fun handleSpace(ev: InputKeyEvent) = activeEditorInstance?.apply {
+        if (prefs.keyboard.spaceBarSwitchesToCharacters.get() && activeState.keyboardMode != KeyboardMode.CHARACTERS) {
+            activeState.keyboardMode = KeyboardMode.CHARACTERS
+        }
+        if (prefs.correction.doubleSpacePeriod.get()) {
+            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
+                val text = getTextBeforeCursor(2)
+                if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
+                    deleteBackwards()
+                    commitText(".")
+                }
+            }
+        }
+        commitText(KeyCode.SPACE.toChar().toString())
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_SWITCHER] event
+     */
+    private fun handleKanaSwitch() {
+        activeState.batchEdit {
+            it.isKanaKata = !it.isKanaKata
+            it.isCharHalfWidth = false
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_HIRA] event
+     */
+    private fun handleKanaHira() {
+        activeState.batchEdit {
+            it.isKanaKata = false
+            it.isCharHalfWidth = false
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_KATA] event
+     */
+    private fun handleKanaKata() {
+        activeState.batchEdit {
+            it.isKanaKata = true
+            it.isCharHalfWidth = false
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_HALF_KATA] event
+     */
+    private fun handleKanaHalfKata() {
+        activeState.batchEdit {
+            it.isKanaKata = true
+            it.isCharHalfWidth = true
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthSwitch() {
+        activeState.isCharHalfWidth = !activeState.isCharHalfWidth
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthFull() {
+        activeState.isCharHalfWidth = false
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthHalf() {
+        activeState.isCharHalfWidth = true
+    }
+
     override fun onInputKeyDown(ev: InputKeyEvent) {
         when (ev.data.code) {
             KeyCode.SHIFT -> handleShiftDown(ev)
@@ -270,20 +445,56 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     override fun onInputKeyUp(ev: InputKeyEvent) = activeState.batchEdit {
         when (ev.data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> handleArrow(
+                code = ev.data.code,
+                count = when (ev.action) {
+                    InputKeyEvent.Action.DOWN_UP,
+                    InputKeyEvent.Action.REPEAT -> ev.count
+                    else -> 1
+                },
+            )
+            KeyCode.CAPS_LOCK -> handleCapsLock()
+            KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
+            KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
+            KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
+            KeyCode.CLIPBOARD_CUT -> activeEditorInstance?.performClipboardCut()
+            KeyCode.CLIPBOARD_COPY -> activeEditorInstance?.performClipboardCopy()
+            KeyCode.CLIPBOARD_PASTE -> activeEditorInstance?.performClipboardPaste()
+            KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
+            KeyCode.CLIPBOARD_SELECT_ALL -> activeEditorInstance?.performClipboardSelectAll()
+            KeyCode.CLIPBOARD_CLEAR_HISTORY -> {}//florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode(isRight = false)
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> toggleOneHandedMode(isRight = true)
             KeyCode.DELETE -> handleDelete()
             KeyCode.DELETE_WORD -> handleDeleteWord()
             KeyCode.ENTER -> handleEnter()
-            KeyCode.SHIFT -> handleShiftUp()
-            KeyCode.CAPS_LOCK -> handleCapsLock()
             KeyCode.IME_SHOW_UI -> FlorisImeService.showUi()
             KeyCode.IME_HIDE_UI -> FlorisImeService.hideUi()
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
             KeyCode.IME_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
+            KeyCode.IME_UI_MODE_TEXT -> {} // TODO
+            KeyCode.IME_UI_MODE_MEDIA -> {} // TODO
+            KeyCode.IME_UI_MODE_CLIPBOARD -> {} // TODO
+            KeyCode.KANA_SWITCHER -> handleKanaSwitch()
+            KeyCode.KANA_HIRA -> handleKanaHira()
+            KeyCode.KANA_KATA -> handleKanaKata()
+            KeyCode.KANA_HALF_KATA -> handleKanaHalfKata()
+            KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
+            KeyCode.REDO -> activeEditorInstance?.performRedo()
+            KeyCode.SETTINGS -> FlorisImeService.launchSettings()
+            KeyCode.SHIFT -> handleShiftUp()
+            KeyCode.SPACE -> handleSpace(ev)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
+            KeyCode.UNDO -> activeEditorInstance?.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
             KeyCode.VIEW_NUMERIC_ADVANCED -> activeState.keyboardMode = KeyboardMode.NUMERIC_ADVANCED
@@ -334,6 +545,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyRepeat(ev: InputKeyEvent) {
+        FlorisImeService.inputFeedbackController()?.keyRepeatedAction(ev.data)
+        onInputKeyUp(ev)
     }
 
     inner class KeyboardManagerResources {
