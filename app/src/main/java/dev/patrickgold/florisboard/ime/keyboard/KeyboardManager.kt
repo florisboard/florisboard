@@ -232,6 +232,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     override fun onInputKeyUp(ev: InputKeyEvent) = activeState.batchEdit {
         when (ev.data.code) {
+            KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode(isRight = false)
+            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> toggleOneHandedMode(isRight = true)
             KeyCode.DELETE -> handleDelete()
             KeyCode.DELETE_WORD -> handleDeleteWord()
             KeyCode.ENTER -> handleEnter()
@@ -373,7 +375,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     activeState.isRichInputEditor
                 }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                KeyCode.IME_UI_MODE_CLIPBOARD -> {
                     prefs.clipboard.enableHistory.get()
                 }
                 else -> true
@@ -382,8 +384,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
         override fun evaluateVisible(data: KeyData): Boolean {
             return when (data.code) {
-                KeyCode.SWITCH_TO_TEXT_CONTEXT,
-                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                KeyCode.IME_UI_MODE_TEXT,
+                KeyCode.IME_UI_MODE_MEDIA -> {
                     val tempUtilityKeyAction = when {
                         prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
                         else -> UtilityKeyAction.DISABLED
@@ -396,7 +398,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !shouldShowLanguageSwitch()
                     }
                 }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory.get()
+                KeyCode.IME_UI_MODE_CLIPBOARD -> prefs.clipboard.enableHistory.get()
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
                         prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()

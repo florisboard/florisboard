@@ -15,7 +15,7 @@
     { "code":   49, "label": "1", "type": "numeric" },
     { "code":   50, "label": "2", "type": "numeric" },
     { "code":   51, "label": "3", "type": "numeric" },
-    { "code":   -5, "label": "delete", "type": "enter_editing" }
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
   ],
   [
     { "code":   44, "label": "," },

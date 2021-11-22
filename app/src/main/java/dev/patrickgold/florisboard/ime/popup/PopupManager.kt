@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
-import android.content.res.Configuration
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -46,9 +45,9 @@ class PopupManager<V : View>(
     private val exceptionsForKeyCodes = listOf(
         KeyCode.ENTER,
         KeyCode.LANGUAGE_SWITCH,
-        KeyCode.SWITCH_TO_TEXT_CONTEXT,
-        KeyCode.SWITCH_TO_MEDIA_CONTEXT,
-        KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT,
+        KeyCode.IME_UI_MODE_TEXT,
+        KeyCode.IME_UI_MODE_MEDIA,
+        KeyCode.IME_UI_MODE_CLIPBOARD,
         KeyCode.KANA_SWITCHER,
         KeyCode.CHAR_WIDTH_SWITCHER
     )
@@ -99,17 +98,17 @@ class PopupManager<V : View>(
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
-                    KeyCode.SWITCH_TO_TEXT_CONTEXT -> {
+                    KeyCode.IME_UI_MODE_TEXT -> {
                         PopupExtendedView.Element.Label(
                             keyboardView.resources.getString(R.string.key__view_characters), adjustedIndex
                         )
                     }
-                    KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                    KeyCode.IME_UI_MODE_MEDIA -> {
                         getDrawable(keyboardView.context, R.drawable.ic_sentiment_satisfied)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
-                    KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    KeyCode.IME_UI_MODE_CLIPBOARD -> {
                         getDrawable(keyboardView.context, R.drawable.ic_assignment)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
@@ -119,8 +118,8 @@ class PopupManager<V : View>(
                             popupKey.asString(isForDisplay = true), adjustedIndex
                         )
                     }
-                    KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT,
-                    KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> {
+                    KeyCode.COMPACT_LAYOUT_TO_LEFT,
+                    KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
                         getDrawable(keyboardView.context, R.drawable.ic_smartphone)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined

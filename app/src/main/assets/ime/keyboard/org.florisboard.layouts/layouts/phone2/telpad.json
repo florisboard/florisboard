@@ -15,7 +15,7 @@
     { "code":   42, "label": "*" },
     { "code":   59, "label": "wait", "type": "system_gui" },
     { "code":   35, "label": "#" },
-    { "code":   -5, "label": "delete", "type": "enter_editing" }
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
   ],
   [
     { "code": -206, "label": "view_phone", "type": "system_gui" },

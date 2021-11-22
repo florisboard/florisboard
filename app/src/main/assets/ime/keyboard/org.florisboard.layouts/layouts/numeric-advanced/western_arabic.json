@@ -34,7 +34,7 @@
     { "code":   55, "label": "7", "type": "numeric" },
     { "code":   56, "label": "8", "type": "numeric" },
     { "code":   57, "label": "9", "type": "numeric" },
-    { "code":   -5, "label": "delete", "type": "enter_editing" }
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
   ],
   [
     { "code": -201, "label": "view_characters", "type": "system_gui" },

@@ -127,7 +127,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     private fun onBottomButtonEvent(view: View, event: MotionEvent?): Boolean {
         event ?: return false
         val data = when (view.id) {
-            R.id.media_input_switch_to_text_input_button -> TextKeyData.SWITCH_TO_TEXT_CONTEXT
+            R.id.media_input_switch_to_text_input_button -> TextKeyData.IME_UI_MODE_TEXT
             R.id.media_input_backspace_button -> TextKeyData.DELETE
             else -> return false
         }

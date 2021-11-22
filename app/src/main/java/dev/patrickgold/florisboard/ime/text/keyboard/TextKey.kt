@@ -304,10 +304,10 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                         }
                     }
                 }
-                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                KeyCode.IME_UI_MODE_MEDIA -> {
                     foregroundDrawableId = R.drawable.ic_sentiment_satisfied
                 }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                KeyCode.IME_UI_MODE_CLIPBOARD -> {
                     foregroundDrawableId = R.drawable.ic_assignment
                 }
                 KeyCode.KANA_SWITCHER -> {
@@ -330,7 +330,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 KeyCode.CHAR_WIDTH_HALF -> {
                     foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_half
                 }
-                KeyCode.SWITCH_TO_TEXT_CONTEXT,
+                KeyCode.IME_UI_MODE_TEXT,
                 KeyCode.VIEW_CHARACTERS -> {
                     label = context.getString(R.string.key__view_characters)
                 }

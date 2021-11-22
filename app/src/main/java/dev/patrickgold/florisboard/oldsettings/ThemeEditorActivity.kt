@@ -31,13 +31,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -63,7 +61,7 @@ class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
     private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
         override fun evaluateVisible(data: KeyData): Boolean {
-            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+            return data.code != KeyCode.IME_UI_MODE_MEDIA
         }
 
         override fun isSlot(data: KeyData): Boolean {

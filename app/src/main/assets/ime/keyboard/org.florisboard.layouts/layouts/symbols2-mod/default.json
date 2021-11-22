@@ -2,7 +2,7 @@
   [
     { "code": -202, "label": "view_symbols", "type": "system_gui" },
     { "code":    0, "type": "placeholder" },
-    { "code":   -5, "label": "delete", "type": "enter_editing" }
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
   ],
   [
     { "code": -201, "label": "view_characters", "type": "system_gui" },

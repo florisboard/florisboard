@@ -444,7 +444,7 @@ private class TextKeyboardLayoutController(
                     KeyCode.LANGUAGE_SWITCH -> {
                         delay((delayMillis * 2.0f).toLong())
                         pointer.shouldBlockNextUp = true
-                        inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHOW_INPUT_METHOD_PICKER))
+                        inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SYSTEM_INPUT_METHOD_PICKER))
                     }
                     else -> {
                         delay(delayMillis)

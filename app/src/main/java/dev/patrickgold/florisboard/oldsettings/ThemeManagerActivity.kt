@@ -37,7 +37,6 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -59,7 +58,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
     private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
         override fun evaluateVisible(data: KeyData): Boolean {
-            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+            return data.code != KeyCode.IME_UI_MODE_MEDIA
         }
 
         override fun isSlot(data: KeyData): Boolean {

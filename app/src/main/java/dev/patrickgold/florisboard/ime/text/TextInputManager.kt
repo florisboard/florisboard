@@ -401,8 +401,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             SwipeAction.SHIFT -> TextKeyData.SHIFT
             SwipeAction.REDO -> TextKeyData.REDO
             SwipeAction.UNDO -> TextKeyData.UNDO
-            SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> TextKeyData.SWITCH_TO_CLIPBOARD_CONTEXT
-            SwipeAction.SHOW_INPUT_METHOD_PICKER -> TextKeyData.SHOW_INPUT_METHOD_PICKER
+            SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> TextKeyData.IME_UI_MODE_CLIPBOARD
+            SwipeAction.SHOW_INPUT_METHOD_PICKER -> TextKeyData.SYSTEM_INPUT_METHOD_PICKER
             else -> null
         }
         if (keyData != null) {
@@ -766,7 +766,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
             KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
-            KeyCode.CLEAR_CLIPBOARD_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
+            KeyCode.CLIPBOARD_CLEAR_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
             KeyCode.CLIPBOARD_PASTE -> activeEditorInstance.performClipboardPaste()
@@ -788,13 +788,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
             KeyCode.KANA_HALF_KATA -> handleKanaHalfKata()
-            KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
+            KeyCode.SYSTEM_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SPACE -> handleSpace(ev)
-            KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
-            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> florisboard.setActiveInput(R.id.clip_input)
-            KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input, forceSwitchToCharacters = true)
-            KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT -> florisboard.toggleOneHandedMode(isRight = false)
-            KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> florisboard.toggleOneHandedMode(isRight = true)
+            KeyCode.IME_UI_MODE_MEDIA -> florisboard.setActiveInput(R.id.media_input)
+            KeyCode.IME_UI_MODE_CLIPBOARD -> florisboard.setActiveInput(R.id.clip_input)
+            KeyCode.IME_UI_MODE_TEXT -> florisboard.setActiveInput(R.id.text_input, forceSwitchToCharacters = true)
+            //KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT -> florisboard.toggleOneHandedMode(isRight = false)
+            //KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> florisboard.toggleOneHandedMode(isRight = true)
             KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
             KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
             KeyCode.VIEW_NUMERIC_ADVANCED -> setActiveKeyboardMode(KeyboardMode.NUMERIC_ADVANCED)
