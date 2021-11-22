@@ -71,7 +71,7 @@ object InputMethodUtils {
     }
 
     fun showImePicker(context: Context): Boolean {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val imm = context.systemServiceOrNull(InputMethodManager::class)
         return if (imm != null) {
             imm.showInputMethodPicker()
             true

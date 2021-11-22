@@ -25,12 +25,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.FlorisImeServiceReference
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.util.AndroidVersion
 import java.io.File
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
@@ -399,21 +397,7 @@ abstract class CrashUtility private constructor() {
                 setLastCrashTimestamp(application, timestamp)
                 if (timestamp - lastTimestamp < 5000) {
                     pushCrashMultipleNotification(application)
-                    val florisImeService = FlorisImeServiceReference.get()
-                    if (florisImeService != null) {
-                        if (AndroidVersion.ATLEAST_P) {
-                            florisImeService.switchToPreviousInputMethod()
-                        } else {
-                            val imm = application.getSystemService(Context.INPUT_METHOD_SERVICE)
-                            if (imm != null && imm is InputMethodManager) {
-                                @Suppress("DEPRECATION")
-                                imm.switchToNextInputMethod(
-                                    florisImeService.window?.window?.attributes?.token,
-                                    false
-                                )
-                            }
-                        }
-                    }
+                    FlorisImeService.switchToPrevInputMethod() || FlorisImeService.switchToNextInputMethod()
                 } else {
                     pushCrashOnceNotification(application)
                 }

@@ -20,6 +20,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -48,6 +49,8 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.isOrientationLandscape
 import dev.patrickgold.florisboard.common.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
+import dev.patrickgold.florisboard.common.systemServiceOrNull
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
@@ -59,6 +62,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
+import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -90,6 +94,54 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         fun inputFeedbackController(): InputFeedbackController? {
             return FlorisImeServiceReference.get()?.inputFeedbackController
+        }
+
+        fun showUi() {
+            if (AndroidVersion.ATLEAST_P) {
+                FlorisImeServiceReference.get()?.requestShowSelf(0)
+            }
+        }
+
+        fun hideUi() {
+            FlorisImeServiceReference.get()?.requestHideSelf(0)
+        }
+
+        fun switchToPrevInputMethod(): Boolean {
+            val ims = FlorisImeServiceReference.get() ?: return false
+            val imm = ims.systemServiceOrNull(InputMethodManager::class)
+            try {
+                if (AndroidVersion.ATLEAST_P) {
+                    return ims.switchToPreviousInputMethod()
+                } else {
+                    ims.window.window?.let { window ->
+                        @Suppress("DEPRECATION")
+                        return imm?.switchToLastInputMethod(window.attributes.token) == true
+                    }
+                }
+            } catch (e: Exception) {
+                flogError { "Unable to switch to the previous IME" }
+                imm?.showInputMethodPicker()
+            }
+            return false
+        }
+
+        fun switchToNextInputMethod(): Boolean {
+            val ims = FlorisImeServiceReference.get() ?: return false
+            val imm = ims.systemServiceOrNull(InputMethodManager::class)
+            try {
+                if (AndroidVersion.ATLEAST_P) {
+                    return ims.switchToNextInputMethod(false)
+                } else {
+                    ims.window.window?.let { window ->
+                        @Suppress("DEPRECATION")
+                        return imm?.switchToNextInputMethod(window.attributes.token, false) == true
+                    }
+                }
+            } catch (e: Exception) {
+                flogError { "Unable to switch to the next IME" }
+                imm?.showInputMethodPicker()
+            }
+            return false
         }
     }
 
