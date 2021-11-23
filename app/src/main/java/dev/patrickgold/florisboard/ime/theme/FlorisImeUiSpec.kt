@@ -77,6 +77,28 @@ object FlorisImeUiSpec : SnyggSpec({
             supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
         )
     }
+    element(FlorisImeUi.KeyPopup) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.FontSize,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggSpSizeValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
+        )
+    }
 
     element(FlorisImeUi.OneHandedPanel) {
         property(

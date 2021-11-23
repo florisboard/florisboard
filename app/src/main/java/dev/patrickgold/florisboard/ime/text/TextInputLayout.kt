@@ -35,6 +35,5 @@ fun TextInputLayout() = Column {
     Smartbar()
     TextKeyboardLayout(
         renderInfo = renderInfo,
-        isPreview = false,
     )
 }

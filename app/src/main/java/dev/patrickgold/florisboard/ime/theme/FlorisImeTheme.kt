@@ -68,6 +68,18 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = rgbaColor(184, 184, 184)
         fontSize = size(12.sp)
     }
+    FlorisImeUi.KeyPopup {
+        background = rgbaColor(117, 117, 117)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.KeyPopup(focusSelector = true) {
+        background = rgbaColor(189, 189, 189)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
 
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)

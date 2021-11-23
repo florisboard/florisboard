@@ -44,6 +44,7 @@ fun SnyggSurface(
     background: SnyggValue,
     shape: SnyggValue? = null,
     border: BorderStroke? = null,
+    clip: Boolean = false,
     elevation: Dp = 0.dp,
     clickAndSemanticsModifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
@@ -66,13 +67,13 @@ fun SnyggSurface(
             modifier
                 .shadow(elevation, shapeValue, clip = false)
                 .then(if (border != null) Modifier.border(border, shapeValue) else Modifier)
+                .then(if (clip) Modifier.clip(shapeValue) else Modifier)
                 .background(
                     color = backgroundColor,
                     shape = shapeValue,
                 )
-                .clip(shapeValue)
                 .then(clickAndSemanticsModifier),
-            propagateMinConstraints = true,
+            propagateMinConstraints = false,
             content = content,
         )
     }

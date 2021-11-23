@@ -50,8 +50,10 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.common.Pointer
 import dev.patrickgold.florisboard.common.PointerMap
+import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.toIntOffset
@@ -61,7 +63,8 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.popup.PopupManagerStub
+import dev.patrickgold.florisboard.ime.popup.PopupUiController
+import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
@@ -90,14 +93,17 @@ import kotlin.math.abs
 fun TextKeyboardLayout(
     modifier: Modifier = Modifier,
     renderInfo: RenderInfo,
-    isPreview: Boolean,
+    isPreview: Boolean = false,
+    isSmartbarKeyboard: Boolean = false,
 ): Unit = with(LocalDensity.current) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val prefs by florisPreferenceModel()
 
     val keyboard = renderInfo.keyboard
-    val controller = remember(context) { TextKeyboardLayoutController(context) }
-    controller.keyboard = keyboard
+    val controller = remember { TextKeyboardLayoutController(context) }.also {
+        it.keyboard = keyboard
+    }
     val touchEventChannel = remember { Channel<MotionEvent>(64) }
 
     BoxWithConstraints(
@@ -134,9 +140,45 @@ fun TextKeyboardLayout(
         keyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
+        val popupUiController = rememberPopupUiController(
+            boundsProvider = { key ->
+                val keyPopupWidth: Float
+                val keyPopupHeight: Float
+                when {
+                    configuration.isOrientationLandscape() -> {
+                        if (isSmartbarKeyboard) {
+                            keyPopupWidth = key.visibleBounds.width * 1.0f
+                            keyPopupHeight = desiredKey.visibleBounds.height * 3.0f * 1.2f
+                        } else {
+                            keyPopupWidth = desiredKey.visibleBounds.width * 1.0f
+                            keyPopupHeight = desiredKey.visibleBounds.height * 3.0f
+                        }
+                    }
+                    else -> {
+                        if (isSmartbarKeyboard) {
+                            keyPopupWidth = key.visibleBounds.width * 1.1f
+                            keyPopupHeight = desiredKey.visibleBounds.height * 2.5f * 1.2f
+                        } else {
+                            keyPopupWidth = desiredKey.visibleBounds.width * 1.1f
+                            keyPopupHeight = desiredKey.visibleBounds.height * 2.5f
+                        }
+                    }
+                }
+                val keyPopupDiffX = (key.visibleBounds.width - keyPopupWidth) / 2.0f
+                FlorisRect.new().apply {
+                    left = key.visibleBounds.left + keyPopupDiffX
+                    top = key.visibleBounds.bottom - keyPopupHeight
+                    right = left + keyPopupWidth
+                    bottom = top + keyPopupHeight
+                }
+            },
+        )
+        controller.popupUiController = popupUiController
         for (textKey in keyboard.keys()) {
             TextKeyButton(textKey, renderInfo, fontSizeMultiplier)
         }
+
+        popupUiController.RenderPopups()
     }
 
     LaunchedEffect(Unit) {
@@ -172,11 +214,14 @@ private fun TextKeyButton(
             .requiredSize(key.visibleBounds.size.toDpSize())
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
         background = keyStyle.background,
+        clip = true,
         shape = keyStyle.shape,
     ) {
         key.label?.let { label ->
             Text(
-                modifier = Modifier.wrapContentSize(Alignment.Center),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.Center),
                 text = label,
                 color = keyStyle.foreground.solidColor(),
                 fontSize = fontSize,
@@ -199,7 +244,8 @@ private fun TextKeyButton(
             Text(
                 modifier = Modifier
                     .padding(end = (key.visibleBounds.width / 12f).toDp())
-                    .wrapContentSize(Alignment.TopEnd)
+                    .wrapContentSize()
+                    .align(Alignment.TopEnd)
                     .snyggBackground(keyHintStyle.background, keyHintStyle.shape),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),
@@ -228,7 +274,6 @@ private class TextKeyboardLayoutController(
 ) : SwipeGesture.Listener, GlideTypingGesture.Listener {
     private val prefs by florisPreferenceModel()
     private val keyboardManager by context.keyboardManager()
-    private val popupManager = PopupManagerStub()
 
     private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
     private val activeState get() = keyboardManager.activeState
@@ -237,6 +282,7 @@ private class TextKeyboardLayoutController(
     private val keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
     private val pointerMap: PointerMap<TouchPointer> = PointerMap { TouchPointer() }
     private val scope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
+    lateinit var popupUiController: PopupUiController
 
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
@@ -294,7 +340,7 @@ private class TextKeyboardLayoutController(
                 // Search for active character keys and cancel them
                 for (pointer in pointerMap) {
                     val activeKey = pointer.activeKey
-                    if (activeKey != null && popupManager.isSuitableForPopups(activeKey)) {
+                    if (activeKey != null && popupUiController.isSuitableForPopups(activeKey)) {
                         swipeGestureDetector.onTouchCancel(event, pointer)
                         onTouchUpInternal(event, pointer)
                     }
@@ -408,8 +454,8 @@ private class TextKeyboardLayoutController(
         flogDebug { key.toString() }
         if (key != null && key.isEnabled) {
             inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
-            if (prefs.keyboard.popupEnabled.get() && popupManager.isSuitableForPopups(key)) {
-                popupManager.show(key, keyHintConfiguration)
+            if (prefs.keyboard.popupEnabled.get() && popupUiController.isSuitableForPopups(key)) {
+                popupUiController.show(key)
             }
             inputFeedbackController?.keyPress(key.computedData)
             key.isPressed = true
@@ -448,11 +494,11 @@ private class TextKeyboardLayoutController(
                     }
                     else -> {
                         delay(delayMillis)
-                        if (popupManager.isSuitableForPopups(key) && key.computedPopups.getPopupKeys(
+                        if (popupUiController.isSuitableForPopups(key) && key.computedPopups.getPopupKeys(
                                 keyHintConfiguration
                             ).isNotEmpty()
                         ) {
-                            popupManager.extend(key, keyHintConfiguration)
+                            popupUiController.extend(key)
                             inputFeedbackController?.keyLongPress(key.computedData)
                         }
                     }
@@ -469,8 +515,8 @@ private class TextKeyboardLayoutController(
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
-            if (popupManager.isShowingExtendedPopup) {
-                if (!popupManager.propagateMotionEvent(activeKey, event, pointer.index)) {
+            if (popupUiController.isShowingExtendedPopup) {
+                if (!popupUiController.propagateMotionEvent(activeKey, event, pointer.index)) {
                     onTouchCancelInternal(event, pointer)
                     onTouchDownInternal(event, pointer)
                 }
@@ -496,8 +542,8 @@ private class TextKeyboardLayoutController(
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
             activeKey.isPressed = false
-            if (popupManager.isSuitableForPopups(activeKey)) {
-                val retData = popupManager.getActiveKeyData(activeKey, keyHintConfiguration)
+            if (popupUiController.isSuitableForPopups(activeKey)) {
+                val retData = popupUiController.getActiveKeyData(activeKey)
                 if (retData != null && !pointer.hasTriggeredGestureMove) {
                     if (retData == activeKey.computedData) {
                         inputEventDispatcher.send(InputKeyEvent.up(activeKey.computedData))
@@ -512,7 +558,7 @@ private class TextKeyboardLayoutController(
                         inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
                     }
                 }
-                popupManager.hide()
+                popupUiController.hide()
             } else {
                 if (pointer.hasTriggeredGestureMove) {
                     inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
@@ -535,8 +581,8 @@ private class TextKeyboardLayoutController(
         if (activeKey != null) {
             activeKey.isPressed = false
             inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
-            if (popupManager.isSuitableForPopups(activeKey)) {
-                popupManager.hide()
+            if (popupUiController.isSuitableForPopups(activeKey)) {
+                popupUiController.hide()
             }
             pointer.activeKey = null
         }
@@ -561,13 +607,13 @@ private class TextKeyboardLayoutController(
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
                     activeKey?.let {
                         inputEventDispatcher.send(
-                            InputKeyEvent.up(popupManager.getActiveKeyData(it, keyHintConfiguration) ?: it.computedData)
+                            InputKeyEvent.up(popupUiController.getActiveKeyData(it) ?: it.computedData)
                         )
                     }
                     inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
                     true
                 }
-                initialKey.computedData.code > KeyCode.SPACE && !popupManager.isShowingExtendedPopup -> when {
+                initialKey.computedData.code > KeyCode.SPACE && !popupUiController.isShowingExtendedPopup -> when {
                     !prefs.glide.enabled.get() && !pointer.hasTriggeredGestureMove -> when (event.type) {
                         SwipeGesture.Type.TOUCH_UP -> {
                             val swipeAction = when (event.direction) {
