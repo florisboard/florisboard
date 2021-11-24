@@ -180,6 +180,7 @@ fun TextKeyboardLayout(
             },
         )
         popupUiController.evaluator = renderInfo.evaluator
+        popupUiController.fontSizeMultiplier = fontSizeMultiplier
         popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
         for (textKey in keyboard.keys()) {
@@ -233,8 +234,8 @@ private fun TextKeyButton(
                 text = label,
                 color = keyStyle.foreground.solidColor(),
                 fontSize = fontSize,
-                maxLines = 1,
-                softWrap = false,
+                maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
+                softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
                 overflow = when (key.computedData.code) {
                     KeyCode.SPACE -> TextOverflow.Ellipsis
                     else -> TextOverflow.Visible
