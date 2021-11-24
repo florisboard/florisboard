@@ -16,7 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -27,17 +33,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
+import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 
 @Composable
-fun PopupBox(
+fun PopupBaseBox(
     modifier: Modifier = Modifier,
     key: Key,
     fontSizeMultiplier: Float,
@@ -75,6 +84,78 @@ fun PopupBox(
                 contentDescription = null,
                 tint = popupStyle.foreground.solidColor(),
             )
+        }
+    }
+}
+
+@Composable
+fun PopupExtBox(
+    modifier: Modifier = Modifier,
+    elements: List<List<PopupUiController.Element>>,
+    fontSizeMultiplier: Float,
+    elemArrangement: Arrangement.Horizontal,
+    elemWidth: Dp,
+    elemHeight: Dp,
+    activeElementIndex: Int,
+): Unit = with(LocalDensity.current) {
+    val popupStyle = FlorisImeTheme.style.get(
+        element = FlorisImeUi.KeyPopup,
+        isFocus = false,
+    )
+    Column(
+        modifier = modifier
+            .snyggBackground(popupStyle.background, popupStyle.shape),
+    ) {
+        for (row in elements.reversed()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .requiredHeight(elemHeight),
+                horizontalArrangement = elemArrangement,
+            ) {
+                for (element in row) {
+                    val elemStyle = if (activeElementIndex == element.orderedIndex) {
+                        FlorisImeTheme.style.get(
+                            element = FlorisImeUi.KeyPopup,
+                            isFocus = true,
+                        )
+                    } else {
+                        popupStyle
+                    }
+                    val elemFontSize = elemStyle.fontSize.spSize() * fontSizeMultiplier *
+                        if (element.data.code == KeyCode.URI_COMPONENT_TLD) { 0.6f } else { 1.0f }
+                    Box(
+                        modifier = Modifier
+                            .size(elemWidth, elemHeight)
+                            .run {
+                                if (activeElementIndex == element.orderedIndex) {
+                                    snyggBackground(elemStyle.background, elemStyle.shape)
+                                } else {
+                                    this
+                                }
+                            },
+                    ) {
+                        element.label?.let { label ->
+                            Text(
+                                modifier = Modifier.align(Alignment.Center),
+                                text = label,
+                                color = elemStyle.foreground.solidColor(),
+                                fontSize = elemFontSize,
+                                maxLines = 1,
+                                softWrap = false,
+                            )
+                        }
+                        element.iconResId?.let { iconResId ->
+                            Icon(
+                                modifier = Modifier.align(Alignment.Center),
+                                painter = painterResource(iconResId),
+                                contentDescription = null,
+                                tint = elemStyle.foreground.solidColor(),
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

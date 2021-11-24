@@ -50,7 +50,7 @@ class TextKeyData(
 ) : KeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.getSlotData(this)
+            evaluator.slotData(this)
         } else {
             this
         }
@@ -382,9 +382,9 @@ class AutoTextKeyData(
 
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.getSlotData(this)
+            evaluator.slotData(this)
         } else {
-            if (evaluator.evaluateCaps(this)) { upper } else { lower }
+            if (evaluator.activeState().isUppercase) { upper } else { lower }
         }
     }
 

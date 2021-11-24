@@ -215,6 +215,13 @@ class KeyboardState private constructor(
         rawValue = newState.rawValue
     }
 
+    fun snapshot(): KeyboardState {
+        //return new(rawValue, maskOfInterest)
+        // FIXME: above line somehow calls [setValue] which leads to a crash.
+        //  Temporary return this instance as a fallback
+        return this
+    }
+
     /**
      * Updates this state based on the info passed from [editorInfo].
      *
@@ -240,14 +247,6 @@ class KeyboardState private constructor(
 
     internal fun setRegion(m: ULong, o: Int, v: Int) {
         rawValue = (rawValue and (m shl o).inv()) or ((v.toULong() and m) shl o)
-    }
-
-    fun isEqualTo(other: KeyboardState): Boolean {
-        return (other.rawValue and maskOfInterest) == (rawValue and maskOfInterest)
-    }
-
-    fun isDifferentTo(other: KeyboardState): Boolean {
-        return !isEqualTo(other)
     }
 
     override fun hashCode(): Int {
@@ -281,13 +280,21 @@ class KeyboardState private constructor(
         get() = InputMode.fromInt(getRegion(M_INPUT_MODE, O_INPUT_MODE))
         set(v) { setRegion(M_INPUT_MODE, O_INPUT_MODE, v.toInt()) }
 
+    @Deprecated("Use inputMode and/or isLowercase/isUppercase")
     var shiftLock: Boolean
         get() = getFlag(F_CAPS)
         set(v) { setFlag(F_CAPS, v) }
 
+    @Deprecated("Use inputMode and/or isLowercase/isUppercase")
     var capsLock: Boolean
         get() = getFlag(F_CAPS_LOCK)
         set(v) { setFlag(F_CAPS_LOCK, v) }
+
+    val isLowercase: Boolean
+        get() = inputMode == InputMode.NORMAL
+
+    val isUppercase: Boolean
+        get() = inputMode != InputMode.NORMAL
 
     var isSelectionMode: Boolean
         get() = getFlag(F_IS_SELECTION_MODE)

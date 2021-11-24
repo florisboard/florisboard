@@ -38,7 +38,6 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -57,6 +56,7 @@ data class RenderInfo(
     val version: Int = 0,
     val keyboard: TextKeyboard = PlaceholderLoadingKeyboard,
     val state: KeyboardState = KeyboardState.new(),
+    val evaluator: ComputingEvaluator = DefaultComputingEvaluator,
 )
 
 private val DefaultRenderInfo = RenderInfo()
@@ -71,7 +71,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val layoutManager = LayoutManager(context)
     private val keyboardCache = TextKeyboardCache()
 
-    val computingEvaluator: ComputingEvaluator = KeyboardManagerComputingEvaluator()
     val resources = KeyboardManagerResources()
 
     private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
@@ -109,6 +108,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
         renderInfoGuard.withLock {
             action()
+            val state = activeState.snapshot()
             val subtype = subtypeManager.activeSubtype()
             val mode = activeState.keyboardMode
             val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
@@ -117,11 +117,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     subtype = subtype,
                 ).await()
             }.await()
+            val computingEvaluator = KeyboardComputingEvaluator(
+                keyboard = computedKeyboard,
+                state = state,
+                subtype = subtype,
+            )
             for (key in computedKeyboard.keys()) {
-                key.compute(computedKeyboard, computingEvaluator)
-                key.computeLabelsAndDrawables(appContext, computedKeyboard, computingEvaluator)
+                key.compute(computingEvaluator)
+                key.computeLabelsAndDrawables(computingEvaluator)
             }
-            _renderInfo.postValue(RenderInfo(renderInfoVersion++, computedKeyboard, activeState))
+            _renderInfo.postValue(RenderInfo(
+                version = renderInfoVersion++,
+                keyboard = computedKeyboard,
+                state = state,
+                evaluator = computingEvaluator,
+            ))
         }
     }
 
@@ -600,26 +610,23 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    private inner class KeyboardManagerComputingEvaluator : ComputingEvaluator {
-        override fun evaluateCaps(): Boolean {
-            return activeState.inputMode != InputMode.NORMAL
-        }
+    private inner class KeyboardComputingEvaluator(
+        val keyboard: Keyboard,
+        val state: KeyboardState,
+        val subtype: Subtype,
+    ) : ComputingEvaluator {
 
-        override fun evaluateCaps(data: KeyData): Boolean {
-            return evaluateCaps() && data.code >= KeyCode.SPACE
-        }
+        override fun activeState(): KeyboardState = state
 
-        override fun evaluateCharHalfWidth(): Boolean = activeState.isCharHalfWidth
+        override fun activeSubtype(): Subtype = subtype
 
-        override fun evaluateKanaKata(): Boolean = activeState.isKanaKata
-
-        override fun evaluateKanaSmall(): Boolean = activeState.isKanaSmall
+        override fun context(): Context = appContext
 
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
                 KeyCode.CLIPBOARD_COPY,
                 KeyCode.CLIPBOARD_CUT -> {
-                    activeState.isSelectionMode && activeState.isRichInputEditor
+                    state.isSelectionMode && state.isRichInputEditor
                 }
                 KeyCode.CLIPBOARD_PASTE -> {
                     // such gore. checks
@@ -631,7 +638,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     false
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
-                    activeState.isRichInputEditor
+                    state.isRichInputEditor
                 }
                 KeyCode.IME_UI_MODE_CLIPBOARD -> {
                     prefs.clipboard.enableHistory.get()
@@ -674,24 +681,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
         }
 
-        override fun getActiveState(): KeyboardState {
-            return activeState
-        }
-
-        override fun getActiveSubtype(): Subtype {
-            return subtypeManager.activeSubtype.value!!
-        }
-
-        override fun getKeyVariation(): KeyVariation {
-            return activeState.keyVariation
-        }
+        override fun keyboard(): Keyboard = keyboard
 
         override fun isSlot(data: KeyData): Boolean {
             return CurrencySet.isCurrencySlot(data.code)
         }
 
-        override fun getSlotData(data: KeyData): KeyData? {
-            return subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
+        override fun slotData(data: KeyData): KeyData? {
+            return subtypeManager.getCurrencySet(activeSubtype()).getSlot(data.code)
         }
     }
 }

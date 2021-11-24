@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
@@ -47,6 +48,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -110,7 +112,10 @@ fun TextKeyboardLayout(
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount)
-            .onGloballyPositioned { coords -> controller.offset = coords.positionInWindow() }
+            .onGloballyPositioned { coords ->
+                controller.offset = coords.positionInWindow()
+                controller.size = coords.size.toSize()
+            }
             .pointerInteropFilter { event ->
                 if (isPreview) return@pointerInteropFilter false
                 when (event.actionMasked) {
@@ -173,6 +178,8 @@ fun TextKeyboardLayout(
                 }
             },
         )
+        popupUiController.evaluator = renderInfo.evaluator
+        popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
         for (textKey in keyboard.keys()) {
             TextKeyButton(textKey, renderInfo, fontSizeMultiplier)
@@ -296,6 +303,7 @@ private class TextKeyboardLayoutController(
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
     lateinit var keyboard: TextKeyboard
+    var size = Size.Zero
     var offset = Offset.Zero
 
     fun onTouchEventInternal(event: MotionEvent) {
@@ -498,7 +506,7 @@ private class TextKeyboardLayoutController(
                                 keyHintConfiguration
                             ).isNotEmpty()
                         ) {
-                            popupUiController.extend(key)
+                            popupUiController.extend(key, size)
                             inputFeedbackController?.keyLongPress(key.computedData)
                         }
                     }
@@ -516,7 +524,9 @@ private class TextKeyboardLayoutController(
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
             if (popupUiController.isShowingExtendedPopup) {
-                if (!popupUiController.propagateMotionEvent(activeKey, event, pointer.index)) {
+                val x = event.getLocalX(pointer.index)
+                val y = event.getLocalY(pointer.index)
+                if (!popupUiController.propagateMotionEvent(activeKey, x, y)) {
                     onTouchCancelInternal(event, pointer)
                     onTouchDownInternal(event, pointer)
                 }

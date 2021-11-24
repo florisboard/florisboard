@@ -16,15 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.content.Context
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.kotlin.lowercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupSet
@@ -38,7 +37,8 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     var computedNumberHint: KeyData? = null
     var computedHintData: KeyData = TextKeyData.UNSPECIFIED
 
-    fun compute(keyboard: TextKeyboard, evaluator: ComputingEvaluator) {
+    fun compute(evaluator: ComputingEvaluator) {
+        val keyboard = evaluator.keyboard() as? TextKeyboard ?: return
         val keyboardMode = keyboard.mode
         val computed = data.compute(evaluator)
 
@@ -57,7 +57,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
-                val computedLabel = computed.label.lowercase(evaluator.getActiveSubtype().primaryLocale)
+                val computedLabel = computed.label.lowercase(evaluator.activeSubtype().primaryLocale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
                         "~enter"
@@ -78,7 +78,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 val extendedPopupsDefault = keyboard.extendedPopupMappingDefault
                 val extendedPopups = keyboard.extendedPopupMapping
                 var popupSet: PopupSet<AbstractKeyData>? = null
-                val kv = evaluator.getKeyVariation()
+                val kv = evaluator.activeState().keyVariation
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
                     popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
                         extendedPopupsDefault?.get(KeyVariation.PASSWORD)?.get(extLabel)
@@ -217,145 +217,21 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     }
 
     /**
-     * Computes the labels and drawables needed to draw the
+     * Computes the label, hintedLabel and iconResId for [computedData] based on given [evaluator].
      */
-    fun computeLabelsAndDrawables(
-        context: Context,
-        keyboard: TextKeyboard,
-        evaluator: ComputingEvaluator,
-    ) {
-        // Reset attributes first to avoid invalid states if not updated
-        label = null
+    fun computeLabelsAndDrawables(evaluator: ComputingEvaluator) {
+        label = evaluator.computeLabel(computedData)
         hintedLabel = null
-        foregroundDrawableId = null
+        foregroundDrawableId = evaluator.computeIconResId(computedData)
 
         val data = computedData
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             val prefs by florisPreferenceModel()
-            label = data.asString(isForDisplay = true)
             computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let {
                 hintedLabel = it?.asString(isForDisplay = true)
                 computedHintData = it ?: TextKeyData.UNSPECIFIED
-            }
-        } else {
-            when (data.code) {
-                KeyCode.ARROW_LEFT -> {
-                    foregroundDrawableId = R.drawable.ic_keyboard_arrow_left
-                }
-                KeyCode.ARROW_RIGHT -> {
-                    foregroundDrawableId = R.drawable.ic_keyboard_arrow_right
-                }
-                KeyCode.CLIPBOARD_COPY -> {
-                    foregroundDrawableId = R.drawable.ic_content_copy
-                }
-                KeyCode.CLIPBOARD_CUT -> {
-                    foregroundDrawableId = R.drawable.ic_content_cut
-                }
-                KeyCode.CLIPBOARD_PASTE -> {
-                    foregroundDrawableId = R.drawable.ic_content_paste
-                }
-                KeyCode.CLIPBOARD_SELECT_ALL -> {
-                    foregroundDrawableId = R.drawable.ic_select_all
-                }
-                KeyCode.DELETE -> {
-                    foregroundDrawableId = R.drawable.ic_backspace
-                }
-                KeyCode.ENTER -> {
-                    val imeOptions = evaluator.getActiveState().imeOptions
-                    foregroundDrawableId = when (imeOptions.enterAction) {
-                        ImeOptions.EnterAction.DONE -> R.drawable.ic_done
-                        ImeOptions.EnterAction.GO -> R.drawable.ic_arrow_right_alt
-                        ImeOptions.EnterAction.NEXT -> R.drawable.ic_arrow_right_alt
-                        ImeOptions.EnterAction.NONE -> R.drawable.ic_keyboard_return
-                        ImeOptions.EnterAction.PREVIOUS -> R.drawable.ic_arrow_right_alt
-                        ImeOptions.EnterAction.SEARCH -> R.drawable.ic_search
-                        ImeOptions.EnterAction.SEND -> R.drawable.ic_send
-                        ImeOptions.EnterAction.UNSPECIFIED -> R.drawable.ic_keyboard_return
-                    }
-                    if (imeOptions.flagNoEnterAction) {
-                        foregroundDrawableId = R.drawable.ic_keyboard_return
-                    }
-                }
-                KeyCode.LANGUAGE_SWITCH -> {
-                    foregroundDrawableId = R.drawable.ic_language
-                }
-                KeyCode.PHONE_PAUSE -> label = context.getString(R.string.key__phone_pause)
-                KeyCode.PHONE_WAIT -> label = context.getString(R.string.key__phone_wait)
-                KeyCode.SHIFT -> {
-                    foregroundDrawableId = when (evaluator.evaluateCaps()) {
-                        true -> R.drawable.ic_keyboard_capslock
-                        else -> R.drawable.ic_keyboard_arrow_up
-                    }
-                }
-                KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                    when (keyboard.mode) {
-                        KeyboardMode.NUMERIC,
-                        KeyboardMode.NUMERIC_ADVANCED,
-                        KeyboardMode.PHONE,
-                        KeyboardMode.PHONE2 -> {
-                            foregroundDrawableId = R.drawable.ic_space_bar
-                        }
-                        KeyboardMode.CHARACTERS -> {
-                            label = evaluator.getActiveSubtype().primaryLocale.let { it.displayName() }
-                        }
-                        else -> {
-                        }
-                    }
-                }
-                KeyCode.IME_UI_MODE_MEDIA -> {
-                    foregroundDrawableId = R.drawable.ic_sentiment_satisfied
-                }
-                KeyCode.IME_UI_MODE_CLIPBOARD -> {
-                    foregroundDrawableId = R.drawable.ic_assignment
-                }
-                KeyCode.KANA_SWITCHER -> {
-                    foregroundDrawableId = if (evaluator.evaluateKanaKata()) {
-                        R.drawable.ic_keyboard_kana_switcher_kata
-                    } else {
-                        R.drawable.ic_keyboard_kana_switcher_hira
-                    }
-                }
-                KeyCode.CHAR_WIDTH_SWITCHER -> {
-                    foregroundDrawableId = if (evaluator.evaluateCharHalfWidth()) {
-                        R.drawable.ic_keyboard_char_width_switcher_full
-                    } else {
-                        R.drawable.ic_keyboard_char_width_switcher_half
-                    }
-                }
-                KeyCode.CHAR_WIDTH_FULL -> {
-                    foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_full
-                }
-                KeyCode.CHAR_WIDTH_HALF -> {
-                    foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_half
-                }
-                KeyCode.IME_UI_MODE_TEXT,
-                KeyCode.VIEW_CHARACTERS -> {
-                    label = context.getString(R.string.key__view_characters)
-                }
-                KeyCode.VIEW_NUMERIC,
-                KeyCode.VIEW_NUMERIC_ADVANCED -> {
-                    label = context.getString(R.string.key__view_numeric)
-                }
-                KeyCode.VIEW_PHONE -> {
-                    label = context.getString(R.string.key__view_phone)
-                }
-                KeyCode.VIEW_PHONE2 -> {
-                    label = context.getString(R.string.key__view_phone2)
-                }
-                KeyCode.VIEW_SYMBOLS -> {
-                    label = context.getString(R.string.key__view_symbols)
-                }
-                KeyCode.VIEW_SYMBOLS2 -> {
-                    label = context.getString(R.string.key__view_symbols2)
-                }
-                KeyCode.HALF_SPACE -> {
-                    label = context.getString(R.string.key__view_half_space)
-                }
-                KeyCode.KESHIDA -> {
-                    label = context.getString(R.string.key__view_keshida)
-                }
             }
         }
     }

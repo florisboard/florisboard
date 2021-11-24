@@ -68,7 +68,7 @@ class ThemeEditorActivity : AppCompatActivity() {
             return CurrencySet.isCurrencySlot(data.code)
         }
 
-        override fun getSlotData(data: KeyData): KeyData {
+        override fun slotData(data: KeyData): KeyData {
             return TextKeyData(label = "$")
         }
     }
