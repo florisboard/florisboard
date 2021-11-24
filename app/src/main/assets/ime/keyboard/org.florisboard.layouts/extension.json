@@ -31,6 +31,14 @@
         "direction": "ltr"
       }
     ],
+    "extension": [
+      {
+        "id": "clipboard_cursor_row",
+        "label": "Clipboard Cursor Row",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
     "numeric": [
       {
         "id": "western_arabic",
@@ -175,8 +183,46 @@
     ],
     "symbols": [
       {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:cjk"
+      },
+      {
+        "id": "eastern",
+        "label": "Eastern",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "ipa",
+        "label": "International Phonetic Alphabet",
+        "authors": [ "Huy-Ngo" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:neo2"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
         "id": "western",
         "label": "Western",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_additional_symbols",
+        "label": "Western (Additional symbols)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
       }
@@ -187,9 +233,46 @@
         "label": "Default",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr"
       }
     ],
     "symbols2": [
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:cjk"
+      },
+      {
+        "id": "eastern",
+        "label": "Eastern",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "ipa",
+        "label": "International Phonetic Alphabet",
+        "authors": [ "Huy-Ngo" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
       {
         "id": "western",
         "label": "Western",
@@ -202,6 +285,12 @@
         "id": "default",
         "label": "Default",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
         "direction": "ltr"
       }
     ]
