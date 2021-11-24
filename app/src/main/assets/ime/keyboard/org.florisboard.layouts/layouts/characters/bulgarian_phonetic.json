@@ -1,0 +1,38 @@
+[
+  [
+    { "$": "auto_text_key", "code": 1103, "label": "я" },
+    { "$": "auto_text_key", "code": 1074, "label": "в" },
+    { "$": "auto_text_key", "code": 1077, "label": "е" },
+    { "$": "auto_text_key", "code": 1088, "label": "р" },
+    { "$": "auto_text_key", "code": 1090, "label": "т" },
+    { "$": "auto_text_key", "code": 1098, "label": "ъ" },
+    { "$": "auto_text_key", "code": 1091, "label": "у" },
+    { "$": "auto_text_key", "code": 1080, "label": "и" },
+    { "$": "auto_text_key", "code": 1086, "label": "о" },
+    { "$": "auto_text_key", "code": 1087, "label": "п" },
+    { "$": "auto_text_key", "code": 1095, "label": "ч" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 1072, "label": "а" },
+    { "$": "auto_text_key", "code": 1089, "label": "с" },
+    { "$": "auto_text_key", "code": 1076, "label": "д" },
+    { "$": "auto_text_key", "code": 1092, "label": "ф" },
+    { "$": "auto_text_key", "code": 1075, "label": "г" },
+    { "$": "auto_text_key", "code": 1093, "label": "х" },
+    { "$": "auto_text_key", "code": 1081, "label": "й" },
+    { "$": "auto_text_key", "code": 1082, "label": "к" },
+    { "$": "auto_text_key", "code": 1083, "label": "л" },
+    { "$": "auto_text_key", "code": 1096, "label": "ш" },
+    { "$": "auto_text_key", "code": 1097, "label": "щ" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 1079, "label": "з" },
+    { "$": "auto_text_key", "code": 1100, "label": "ь" },
+    { "$": "auto_text_key", "code": 1094, "label": "ц" },
+    { "$": "auto_text_key", "code": 1078, "label": "ж" },
+    { "$": "auto_text_key", "code": 1073, "label": "б" },
+    { "$": "auto_text_key", "code": 1085, "label": "н" },
+    { "$": "auto_text_key", "code": 1084, "label": "м" },
+    { "$": "auto_text_key", "code": 1102, "label": "ю" }
+  ]
+]

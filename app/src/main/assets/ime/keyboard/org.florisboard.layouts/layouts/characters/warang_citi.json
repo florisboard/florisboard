@@ -1,0 +1,50 @@
+[
+  [
+    { "$": "auto_text_key", "code":  71876, "label": "𑣄" },
+    { "$": "auto_text_key", "code":  71878, "label": "𑣆" },
+    { "$": "auto_text_key", "code":  71880, "label": "𑣈" },
+    { "$": "auto_text_key", "code":  71900, "label": "𑣜" },
+    { "$": "auto_text_key", "code":  71899, "label": "𑣛" },
+    { "$": "auto_text_key", "code":  71890, "label": "𑣒" },
+    { "$": "auto_text_key", "code":  71877, "label": "𑣅" },
+    { "$": "auto_text_key", "code":  71875, "label": "𑣃" },
+    { "$": "auto_text_key", "code":  71874, "label": "𑣂" },
+    { "$": "auto_text_key", "code":  71881, "label": "𑣉" },
+    { "$": "auto_text_key", "code":  71896, "label": "𑣘" }
+  ],
+  [
+    { "$": "auto_text_key", "code":  71873, "label": "𑣁" },
+    { "$": "auto_text_key", "code": 71902, "label": "𑣞", "popup": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  71901, "label": "𑣝" }
+      ]
+    } },
+    { "$": "auto_text_key", "code":  71889, "label": "𑣑" },
+    { "$": "auto_text_key", "code":  71892, "label": "𑣔" },
+    { "$": "auto_text_key", "code":  71883, "label": "𑣋" },
+    { "$": "auto_text_key", "code":  71882, "label": "𑣊" },
+    { "$": "auto_text_key", "code":  71897, "label": "𑣙" },
+    { "$": "auto_text_key", "code":  71886, "label": "𑣎" },
+    { "$": "auto_text_key", "code":  71884, "label": "𑣌" },
+    { "$": "auto_text_key", "code":  71898, "label": "𑣚" }
+  ],
+  [
+    { "$": "auto_text_key", "code":  71893, "label": "𑣕" },
+    { "$": "auto_text_key", "code":  71879, "label": "𑣇" },
+    { "$": "auto_text_key", "code":  71887, "label": "𑣏" },
+    { "$": "auto_text_key", "code":  71872, "label": "𑣀" },
+    { "$": "auto_text_key", "code":  71885, "label": "𑣍" },
+    { "$": "auto_text_key", "code":  71888, "label": "𑣐" },
+    { "$": "auto_text_key", "code":  71895, "label": "𑣗", "popup": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  71903, "label": "𑣟" }
+      ]
+    } },
+    { "$": "auto_text_key", "code":  71891, "label": "𑣓" },
+    { "$": "auto_text_key", "code":  71894, "label": "𑣖", "popup": {
+      "relevant": [
+        { "code":  71935, "label": "𑣿" }
+      ]
+    } }
+  ]
+]

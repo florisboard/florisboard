@@ -1,0 +1,22 @@
+[
+  [
+    { "code":     0, "type": "placeholder" },
+    { "code":    -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code":  -202, "label": "view_symbols", "type": "system_gui" },
+    { "$": "char_width_selector",
+      "full": { "code": 12289, "label": "、", "groupId": 1 },
+      "half": { "code": 65380, "label": "､", "groupId": 1 }
+    },
+    { "code":  -227, "label": "language_switch", "type": "system_gui" },
+    { "code":  -212, "label": "ime_ui_mode_media", "type": "system_gui" },
+    { "code": 12288, "label": "空白" },
+    { "code": -9710, "label": "かな", "groupId": 97, "type": "system_gui" },
+    { "$": "char_width_selector",
+      "full": { "code": 12290, "label": "。", "groupId": 2 },
+      "half": { "code": 65377, "label": "｡", "groupId": 2 }
+    },
+    { "code":    10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+  ]
+]

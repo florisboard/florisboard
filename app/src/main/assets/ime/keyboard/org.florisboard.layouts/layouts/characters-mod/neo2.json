@@ -1,0 +1,46 @@
+[
+  [
+    { "code":  -11, "label": "shift", "type": "modifier" },
+    { "code":    0, "type": "placeholder" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code": -202, "label": "view_symbols", "type": "system_gui" },
+    { "code": -227, "label": "language_switch", "type": "system_gui" },
+    { "code": -212, "label": "ime_ui_mode_media", "type": "system_gui" },
+    { "code":   32, "label": "space" },
+    { "$": "variation_selector",
+      "default":  { "code":   44, "label": ",", "groupId": 1,
+        "popup": {
+          "main": { "code":   34, "label": "\"" },
+          "relevant": [
+            { "code": 8211, "label": "–" }
+          ]
+        } },
+      "email": { "code":   64, "label": "@", "groupId": 1,
+        "popup": {
+          "relevant": [
+            { "code": 44, "label": "," }
+          ]
+        } },
+      "uri": { "code":   47, "label": "/", "groupId": 1,
+        "popup": {
+          "relevant": [
+            { "code": 44, "label": "," }
+          ]
+        } }
+    },
+    { "$": "variation_selector",
+      "default": { "code":   46, "label": ".", "groupId": 2,
+        "popup": {
+          "relevant": [
+            { "code":  183, "label": "·" },
+            { "code":   39, "label": "'" }
+          ]
+        } },
+      "email": { "code":   46, "label": ".", "groupId": 2 },
+      "uri": { "code":   46, "label": ".", "groupId": 2 }
+    },
+    { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+  ]
+]
