@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
@@ -78,6 +77,12 @@ val PlaceholderLoadingKeyboard = TextKeyboard(
  * structure can vary quite much between different subclasses.
  */
 abstract class Keyboard {
+    /**
+     * The mode of this keyboard, used to let computers and the layout process behave differently based on different
+     * modes.
+     */
+    abstract val mode: KeyboardMode
+
     /**
      * Returns the key for given [pointerX] and [pointerY] coords or null if no key touch hit box is defined at the
      * given coords.

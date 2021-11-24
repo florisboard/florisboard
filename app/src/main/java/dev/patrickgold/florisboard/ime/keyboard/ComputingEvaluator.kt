@@ -22,8 +22,6 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 
 interface ComputingEvaluator {
     fun activeState(): KeyboardState
@@ -63,7 +61,6 @@ object DefaultComputingEvaluator : ComputingEvaluator {
 
 fun ComputingEvaluator.computeLabel(data: KeyData): String? {
     val evaluator = this
-    val keyboard = evaluator.keyboard() as? TextKeyboard ?: return null
     return if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
         && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
     ) {
@@ -73,7 +70,7 @@ fun ComputingEvaluator.computeLabel(data: KeyData): String? {
             KeyCode.PHONE_PAUSE -> evaluator.context()?.getString(R.string.key__phone_pause)
             KeyCode.PHONE_WAIT -> evaluator.context()?.getString(R.string.key__phone_wait)
             KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                when (keyboard.mode) {
+                when (evaluator.keyboard().mode) {
                     KeyboardMode.CHARACTERS -> {
                         evaluator.activeSubtype().primaryLocale.let { it.displayName() }
                     }
@@ -113,7 +110,6 @@ fun ComputingEvaluator.computeLabel(data: KeyData): String? {
 
 fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
     val evaluator = this
-    val keyboard = evaluator.keyboard() as? TextKeyboard ?: return null
     return when (data.code) {
         KeyCode.ARROW_LEFT -> {
             R.drawable.ic_keyboard_arrow_left
@@ -177,7 +173,7 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             }
         }
         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-            when (keyboard.mode) {
+            when (evaluator.keyboard().mode) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.NUMERIC_ADVANCED,
                 KeyboardMode.PHONE,

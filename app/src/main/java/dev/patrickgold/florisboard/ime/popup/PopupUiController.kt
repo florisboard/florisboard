@@ -60,6 +60,7 @@ private val ExceptionsForKeyCodes = listOf(
     KeyCode.CHAR_WIDTH_SWITCHER,
 )
 
+@Suppress("unused")
 class PopupUiController(
     val context: Context,
     val boundsProvider: (key: Key) -> FlorisRect,

@@ -20,6 +20,7 @@ import androidx.collection.SparseArrayCompat
 import androidx.collection.set
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import kotlinx.coroutines.*
 import java.util.*
 import kotlin.contracts.InvocationKind

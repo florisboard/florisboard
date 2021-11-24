@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.keyboard
+package dev.patrickgold.florisboard.ime.keyboard
 
 enum class KeyboardMode(val value: Int) {
     UNSPECIFIED(-1),
