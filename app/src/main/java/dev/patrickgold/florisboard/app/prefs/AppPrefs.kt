@@ -419,7 +419,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     val localization = Localization()
     inner class Localization {
-        val activeSubtypeId = int(
+        val activeSubtypeId = long(
             key = "localization__active_subtype_id",
             default = Subtype.DEFAULT.id,
         )

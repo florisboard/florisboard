@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.jetpref.ui.compose.PreferenceLayout
 import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
 
+@Deprecated("Deprecated in favor of FlorisScreen DSL.")
 @Composable
 fun FlorisScreen(
     title: String,
@@ -55,6 +56,88 @@ fun FlorisScreen(
                 iconSpaceReserved = iconSpaceReserved,
             ) {
                 content(this)
+            }
+        }
+    }
+}
+
+@Composable
+fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
+    val scope = FlorisScreenScopeImpl()
+    builder(scope)
+    scope.Render()
+}
+
+typealias FlorisScreenActions = @Composable RowScope.() -> Unit
+typealias FlorisScreenBottomBar = @Composable () -> Unit
+typealias FlorisScreenContent = PreferenceUiContent<AppPrefs>
+typealias FlorisScreenFab = @Composable () -> Unit
+
+interface FlorisScreenScope {
+    var title: String
+
+    var backArrowVisible: Boolean
+
+    var scrollable: Boolean
+
+    var iconSpaceReserved: Boolean
+
+    fun actions(actions: FlorisScreenActions)
+
+    fun bottomBar(bottomBar: FlorisScreenBottomBar)
+
+    fun floatingActionButton(fab: FlorisScreenFab)
+
+    fun content(content: FlorisScreenContent)
+}
+
+private class FlorisScreenScopeImpl : FlorisScreenScope {
+    override var title: String = ""
+    override var backArrowVisible: Boolean = true
+    override var scrollable: Boolean = true
+    override var iconSpaceReserved: Boolean = true
+
+    private var actions: FlorisScreenActions = { }
+    private var bottomBar: FlorisScreenBottomBar = { }
+    private var content: FlorisScreenContent = { }
+    private var fab: FlorisScreenFab = { }
+
+    override fun actions(actions: FlorisScreenActions) {
+        this.actions = actions
+    }
+
+    override fun bottomBar(bottomBar: FlorisScreenBottomBar) {
+        this.bottomBar = bottomBar
+    }
+
+    override fun content(content: FlorisScreenContent) {
+        this.content = content
+    }
+
+    override fun floatingActionButton(fab: FlorisScreenFab) {
+        this.fab = fab
+    }
+
+    @Composable
+    fun Render() {
+        Scaffold(
+            topBar = { FlorisAppBar(title, backArrowVisible, actions) },
+            bottomBar = bottomBar,
+            floatingActionButton = fab,
+        ) { innerPadding ->
+            val modifier = if (scrollable) {
+                Modifier.florisVerticalScroll()
+            } else {
+                Modifier
+            }
+            Box(modifier = modifier.padding(innerPadding)) {
+                PreferenceLayout(
+                    florisPreferenceModel(),
+                    scrollable = false,
+                    iconSpaceReserved = iconSpaceReserved,
+                ) {
+                    content(this)
+                }
             }
         }
     }

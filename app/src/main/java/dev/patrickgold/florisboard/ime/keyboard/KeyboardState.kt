@@ -20,6 +20,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import java.util.concurrent.atomic.AtomicInteger
@@ -116,8 +117,8 @@ class KeyboardState private constructor(
 
         const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
         const val INTEREST_NONE: ULong =                    0uL
-        const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
-        const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
+        //const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
+        //const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
 
         const val BATCH_ZERO: Int =                         0
 
@@ -138,11 +139,11 @@ class KeyboardState private constructor(
     }
 
     override fun setValue(value: KeyboardState?) {
-        error("Do not use setValue() directly")
+        flogError { "Do not use setValue() directly" }
     }
 
     override fun postValue(value: KeyboardState?) {
-        error("Do not use postValue() directly")
+        flogError { "Do not use postValue() directly" }
     }
 
     /**

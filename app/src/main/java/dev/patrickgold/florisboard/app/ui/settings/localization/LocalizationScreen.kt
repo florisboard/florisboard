@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -63,7 +64,7 @@ fun LocalizationScreen() = FlorisScreen(
     val subtypeManager by context.subtypeManager()
 
     PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
-        val subtypes by subtypeManager.subtypes.observeAsState()
+        val subtypes by subtypeManager.subtypes.observeAsNonNullState()
         if (subtypes.isNullOrEmpty()) {
             FlorisWarningCard(
                 modifier = Modifier.padding(all = 8.dp),
@@ -71,14 +72,14 @@ fun LocalizationScreen() = FlorisScreen(
             )
         } else {
             val layouts by keyboardManager.resources.layouts.observeAsState()
-            for (subtype in subtypes!!) {
+            for (subtype in subtypes) {
                 val layoutMeta = layouts?.get(LayoutType.CHARACTERS)?.get(subtype.layoutMap.characters)
                 val summary = layoutMeta?.label ?: stringRes(
                     R.string.settings__localization__subtype_error_layout_not_installed,
                     "layout_id" to subtype.layoutMap.characters,
                 )
                 Preference(
-                    title = subtype.primaryLocale.displayName(),
+                    title = subtype.primaryLocale.displayName(subtype.primaryLocale),
                     summary = summary,
                     onClick = { navController.navigate(
                         Routes.Settings.SubtypeEdit(subtype.id)

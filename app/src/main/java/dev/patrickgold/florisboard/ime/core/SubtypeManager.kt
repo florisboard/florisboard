@@ -34,6 +34,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 val SubtypeJsonConfig = Json {
+    encodeDefaults = true
     isLenient = false
 }
 
@@ -67,6 +68,7 @@ class SubtypeManager(
         imeConfig = loadImeConfig("ime/config.json", packageName)
 
         prefs.localization.subtypes.observeForever { listRaw ->
+            flogDebug { listRaw }
             val list = if (listRaw.isNotBlank()) {
                 SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
             } else {
@@ -116,13 +118,14 @@ class SubtypeManager(
     }
 
     /**
-     * Adds a given [subtypeToAdd] to the subtype list, if it does not exist.
+     * Adds a given [subtype] to the subtype list, if it does not exist.
      *
-     * @param subtypeToAdd The subtype which should be added.
+     * @param subtype The subtype which should be added.
      * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
-    private fun addSubtype(subtypeToAdd: Subtype): Boolean {
+    fun addSubtype(subtype: Subtype): Boolean {
+        val subtypeToAdd = subtype.copy(id = System.currentTimeMillis())
         val subtypeList = _subtypes.value!!
         if (subtypeList.contains(subtypeToAdd)) {
             return false
@@ -130,38 +133,6 @@ class SubtypeManager(
         val newSubtypeList = subtypeList + subtypeToAdd
         persistNewSubtypeList(newSubtypeList)
         return true
-    }
-
-    /**
-     * Creates a [Subtype] from the given [locale] and [layoutMap] and adds it to the subtype
-     * list, if it does not exist.
-     *
-     * @param locale The locale of the subtype to be added.
-     * @param composer The composer name of the subtype to be added.
-     * @param currencySet The currency set name of the subtype to be added.
-     * @param popupMapping The popup mapping name of the subtype to be added.
-     * @param layoutMap The layout map of the subtype to be added.
-     * @return True if the subtype was added, false otherwise. A return value of false indicates
-     *  that the subtype already exists.
-     */
-    fun addSubtype(
-        locale: FlorisLocale,
-        composer: ExtensionComponentName,
-        currencySet: ExtensionComponentName,
-        popupMapping: ExtensionComponentName,
-        layoutMap: SubtypeLayoutMap,
-    ): Boolean {
-        return addSubtype(
-            Subtype(
-                (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySet.hashCode()),
-                locale,
-                emptyList(),
-                composer,
-                currencySet,
-                popupMapping,
-                layoutMap
-            )
-        )
     }
 
     /**
@@ -180,7 +151,7 @@ class SubtypeManager(
      * @param id The id of the subtype you want to get.
      * @return The subtype or null, if no matching subtype could be found.
      */
-    fun getSubtypeById(id: Int): Subtype? {
+    fun getSubtypeById(id: Long): Subtype? {
         val subtypeList = _subtypes.value!!
         return subtypeList.find { it.id == id }
     }

@@ -64,7 +64,7 @@ object Routes {
         const val Localization = "settings/localization"
         const val SubtypeAdd = "settings/localization/subtype/add"
         const val SubtypeEdit = "settings/localization/subtype/edit/{id}"
-        fun SubtypeEdit(id: Int) = SubtypeEdit.curlyFormat("id" to id)
+        fun SubtypeEdit(id: Long) = SubtypeEdit.curlyFormat("id" to id)
 
         const val Theme = "settings/theme"
 
@@ -127,7 +127,7 @@ object Routes {
             composable(Settings.Localization) { LocalizationScreen() }
             composable(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
             composable(Settings.SubtypeEdit) { navBackStack ->
-                val id = navBackStack.arguments?.getInt("id")
+                val id = navBackStack.arguments?.getString("id")?.toLongOrNull()
                 SubtypeEditorScreen(id)
             }
 

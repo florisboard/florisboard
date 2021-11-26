@@ -40,7 +40,7 @@ import kotlinx.serialization.*
  */
 @Serializable
 data class Subtype(
-    val id: Int,
+    val id: Long,
     val primaryLocale: FlorisLocale,
     val secondaryLocales: List<FlorisLocale>,
     val composer: ExtensionComponentName,
@@ -139,6 +139,20 @@ data class SubtypeLayoutMap(
             LayoutType.NUMERIC_ROW -> numericRow
             LayoutType.PHONE -> phone
             LayoutType.PHONE2 -> phone2
+            else -> null
+        }
+    }
+
+    fun copy(layoutType: LayoutType, componentName: ExtensionComponentName): SubtypeLayoutMap? {
+        return when (layoutType) {
+            LayoutType.CHARACTERS -> copy(characters = componentName)
+            LayoutType.SYMBOLS -> copy(symbols = componentName)
+            LayoutType.SYMBOLS2 -> copy(symbols2 = componentName)
+            LayoutType.NUMERIC -> copy(numeric = componentName)
+            LayoutType.NUMERIC_ADVANCED -> copy(numericAdvanced = componentName)
+            LayoutType.NUMERIC_ROW -> copy(numericRow = componentName)
+            LayoutType.PHONE -> copy(phone = componentName)
+            LayoutType.PHONE2 -> copy(phone2 = componentName)
             else -> null
         }
     }

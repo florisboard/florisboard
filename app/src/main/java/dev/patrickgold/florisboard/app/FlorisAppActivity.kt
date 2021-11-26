@@ -175,7 +175,8 @@ class FlorisAppActivity : ComponentActivity() {
                         Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
                         Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
                         Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View,
-                        Routes.Splash.Screen -> false
+                        Routes.Splash.Screen, Routes.Settings.SubtypeAdd,
+                        Routes.Settings.SubtypeEdit -> false
                         else -> true
                     }
                     AnimatedVisibility(visible = previewVisible) {
