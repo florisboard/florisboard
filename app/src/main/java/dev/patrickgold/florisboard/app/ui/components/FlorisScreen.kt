@@ -21,13 +21,14 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.jetpref.ui.compose.PreferenceLayout
 import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
 
-@Deprecated("Deprecated in favor of FlorisScreen DSL.")
+@Deprecated("Deprecated in favor of FlorisScreen DSL. When writing new screens make sure to use the new DSL version of this composable. Old code can continue using this version for now.")
 @Composable
 fun FlorisScreen(
     title: String,
@@ -63,7 +64,7 @@ fun FlorisScreen(
 
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
-    val scope = FlorisScreenScopeImpl()
+    val scope = remember { FlorisScreenScopeImpl() }
     builder(scope)
     scope.Render()
 }

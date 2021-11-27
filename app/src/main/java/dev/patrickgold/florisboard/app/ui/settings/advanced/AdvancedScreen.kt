@@ -28,99 +28,102 @@ import dev.patrickgold.jetpref.ui.compose.ListPreferenceEntry
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
 import dev.patrickgold.jetpref.ui.compose.entry
 
-
 @Composable
-fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advanced__title)) {
-    ListPreference(
-        prefs.advanced.settingsTheme,
-        title = stringRes(R.string.pref__advanced__settings_theme__label),
-        entries = listOf(
-            entry(
-                key = AppTheme.AUTO,
-                label = stringRes(R.string.settings__system_default),
-            ),
-            entry(
-                key = AppTheme.LIGHT,
-                label = stringRes(R.string.pref__advanced__settings_theme__light),
-            ),
-            entry(
-                key = AppTheme.DARK,
-                label = stringRes(R.string.pref__advanced__settings_theme__dark),
-            ),
-            entry(
-                key = AppTheme.AMOLED_DARK,
-                label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
-            ),
-        ),
-    )
-    ListPreference(
-        prefs.advanced.settingsLanguage,
-        title = stringRes(R.string.pref__advanced__settings_language__label),
-        entries = listOf(
-            "auto",
-            "ar",
-            "bg",
-            "bs",
-            "ca",
-            "ckb-IR",
-            "cs",
-            "da",
-            "de",
-            "el",
-            "en",
-            "eo",
-            "es",
-            "fa",
-            "fi",
-            "fr",
-            "hr",
-            "hu",
-            "in",
-            "it",
-            "iw",
-            "kmr-TR",
-            "ko-KR",
-            "lv-LV",
-            "mk",
-            "nds-DE",
-            "nl",
-            "no",
-            "pl",
-            "pt",
-            "pt-BR",
-            "ru",
-            "sk",
-            "sl",
-            "sr",
-            "sv",
-            "tr",
-            "uk",
-            "zgh",
-        ).map {
-            if (it == "auto") {
+fun AdvancedScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__advanced__title)
+
+    content {
+        ListPreference(
+            prefs.advanced.settingsTheme,
+            title = stringRes(R.string.pref__advanced__settings_theme__label),
+            entries = listOf(
                 entry(
-                    key = "auto",
+                    key = AppTheme.AUTO,
                     label = stringRes(R.string.settings__system_default),
-                )
-            } else {
-                FlorisLocale.fromTag(it).listEntry()
-            }
-        },
-    )
-    SwitchPreference(
-        prefs.advanced.showAppIcon,
-        title = stringRes(R.string.pref__advanced__show_app_icon__label),
-        summary = when {
-            AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__advanced__show_app_icon__summary_atleast_q)
-            else -> null
-        },
-        enabledIf = { AndroidVersion.ATMOST_API28_P },
-    )
-    SwitchPreference(
-        prefs.advanced.forcePrivateMode,
-        title = stringRes(R.string.pref__advanced__force_private_mode__label),
-        summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
-    )
+                ),
+                entry(
+                    key = AppTheme.LIGHT,
+                    label = stringRes(R.string.pref__advanced__settings_theme__light),
+                ),
+                entry(
+                    key = AppTheme.DARK,
+                    label = stringRes(R.string.pref__advanced__settings_theme__dark),
+                ),
+                entry(
+                    key = AppTheme.AMOLED_DARK,
+                    label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
+                ),
+            ),
+        )
+        ListPreference(
+            prefs.advanced.settingsLanguage,
+            title = stringRes(R.string.pref__advanced__settings_language__label),
+            entries = listOf(
+                "auto",
+                "ar",
+                "bg",
+                "bs",
+                "ca",
+                "ckb-IR",
+                "cs",
+                "da",
+                "de",
+                "el",
+                "en",
+                "eo",
+                "es",
+                "fa",
+                "fi",
+                "fr",
+                "hr",
+                "hu",
+                "in",
+                "it",
+                "iw",
+                "kmr-TR",
+                "ko-KR",
+                "lv-LV",
+                "mk",
+                "nds-DE",
+                "nl",
+                "no",
+                "pl",
+                "pt",
+                "pt-BR",
+                "ru",
+                "sk",
+                "sl",
+                "sr",
+                "sv",
+                "tr",
+                "uk",
+                "zgh",
+            ).map {
+                if (it == "auto") {
+                    entry(
+                        key = "auto",
+                        label = stringRes(R.string.settings__system_default),
+                    )
+                } else {
+                    FlorisLocale.fromTag(it).listEntry()
+                }
+            },
+        )
+        SwitchPreference(
+            prefs.advanced.showAppIcon,
+            title = stringRes(R.string.pref__advanced__show_app_icon__label),
+            summary = when {
+                AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__advanced__show_app_icon__summary_atleast_q)
+                else -> null
+            },
+            enabledIf = { AndroidVersion.ATMOST_API28_P },
+        )
+        SwitchPreference(
+            prefs.advanced.forcePrivateMode,
+            title = stringRes(R.string.pref__advanced__force_private_mode__label),
+            summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
+        )
+    }
 }
 
 private fun FlorisLocale.listEntry(): ListPreferenceEntry<String> {
