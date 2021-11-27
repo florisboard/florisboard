@@ -18,10 +18,14 @@ package dev.patrickgold.florisboard.app.ui.settings.localization
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -30,12 +34,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -51,6 +55,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
@@ -66,7 +71,7 @@ import dev.patrickgold.jetpref.ui.compose.JetPrefListItem
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
-private val SelectComponentName = ExtensionComponentName("-", "-")
+private val SelectComponentName = ExtensionComponentName("00", "00")
 private val SelectLayoutMap = SubtypeLayoutMap(
     characters = SelectComponentName,
     symbols = SelectComponentName,
@@ -155,10 +160,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
-    val currencySets by keyboardManager.resources.currencySets.observeAsState()
-    val layoutExtensions by keyboardManager.resources.layouts.observeAsState()
-    val popupMappings by keyboardManager.resources.popupMappings.observeAsState()
-    val subtypePresets by keyboardManager.resources.subtypePresets.observeAsState()
+    val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
+    val layoutExtensions by keyboardManager.resources.layouts.observeAsNonNullState()
+    val popupMappings by keyboardManager.resources.popupMappings.observeAsNonNullState()
+    val subtypePresets by keyboardManager.resources.subtypePresets.observeAsNonNullState()
 
     val subtypeEditor = rememberSaveable(saver = SubtypeEditorState.Saver) {
         val subtype = id?.let { subtypeManager.getSubtypeById(id) }
@@ -171,6 +176,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     var popupMapping by subtypeEditor.popupMapping
     var layoutMap by subtypeEditor.layoutMap
 
+    var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(false) }
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var errorDialogStrId by rememberSaveable { mutableStateOf<Int?>(null) }
 
@@ -248,7 +254,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                         val suggestedPresets = remember(subtypePresets) {
                             val presets = mutableListOf<SubtypePreset>()
                             for (systemLocale in systemLocales) {
-                                subtypePresets?.find { it.locale == systemLocale }?.let { presets.add(it) }
+                                subtypePresets.find { it.locale == systemLocale }?.let { presets.add(it) }
                             }
                             presets
                         }
@@ -262,6 +268,19 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                                     secondaryText = suggestedPreset.preferred.characters.componentId,
                                 )
                             }
+                        } else {
+                            Text(
+                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                                text = stringRes(R.string.settings__localization__suggested_subtype_presets_none_found),
+                            )
+                        }
+                        Button(
+                            modifier = Modifier.padding(horizontal = 16.dp).align(Alignment.End),
+                            onClick = { showSubtypePresetsDialog = true },
+                        ) {
+                            Text(
+                                text = stringRes(R.string.settings__localization__subtype_presets_view_all)
+                            )
                         }
                     }
                 }
@@ -269,10 +288,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_locale)) {
                 val languageCodes = remember(subtypePresets) {
-                    listOf(SelectLocale.languageTag()) + (subtypePresets?.map { it.locale.languageTag() } ?: listOf())
+                    listOf(SelectLocale.languageTag()) + subtypePresets.map { it.locale.languageTag() }
                 }
                 val languageNames = remember(subtypePresets) {
-                    SelectListValues + (subtypePresets?.map { it.locale.displayName() } ?: listOf())
+                    SelectListValues + subtypePresets.map { it.locale.displayName() }
                 }
                 var expanded by remember { mutableStateOf(false) }
                 val selectedIndex = languageCodes.indexOf(primaryLocale.languageTag()).coerceAtLeast(0)
@@ -294,10 +313,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
             }
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_popup_mapping)) {
                 val popupMappingIds = remember(popupMappings) {
-                    SelectListKeys + (popupMappings?.keys ?: listOf())
+                    SelectListKeys + popupMappings.keys
                 }
                 val popupMappingLabels = remember(popupMappings) {
-                    SelectListValues + (popupMappings?.values?.map { it.label } ?: listOf())
+                    SelectListValues + popupMappings.values.map { it.label }
                 }
                 var expanded by remember { mutableStateOf(false) }
                 val selectedIndex = popupMappingIds.indexOf(popupMapping).coerceAtLeast(0)
@@ -315,7 +334,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.CHARACTERS
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -328,7 +347,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.SYMBOLS
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -338,7 +357,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.SYMBOLS2
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -346,10 +365,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
             }
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_currency_set)) {
                 val currencySetIds = remember(currencySets) {
-                    SelectListKeys + (currencySets?.keys ?: listOf())
+                    SelectListKeys + currencySets.keys
                 }
                 val currencySetNames = remember(currencySets) {
-                    SelectListValues + (currencySets?.values?.map { it.label } ?: listOf())
+                    SelectListValues + currencySets.values.map { it.label }
                 }
                 var expanded by remember { mutableStateOf(false) }
                 FlorisDropdownMenu(
@@ -369,7 +388,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.NUMERIC
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -379,7 +398,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.NUMERIC_ADVANCED
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -389,7 +408,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.NUMERIC_ROW
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -402,7 +421,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.PHONE
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
@@ -412,11 +431,40 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val layoutType = LayoutType.PHONE2
                 SubtypeLayoutDropdown(
                     layoutType = layoutType,
-                    layouts = layoutExtensions?.get(layoutType) ?: mapOf(),
+                    layouts = layoutExtensions[layoutType] ?: mapOf(),
                     showSelectAsError = showSelectAsError,
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
                 )
+            }
+        }
+
+        if (showSubtypePresetsDialog) {
+            JetPrefAlertDialog(
+                title = stringRes(R.string.settings__localization__subtype_presets),
+                dismissLabel = stringRes(android.R.string.cancel),
+                contentPadding = PaddingValues(horizontal = 8.dp),
+                onDismiss = {
+                    showSubtypePresetsDialog = false
+                },
+            ) {
+                // TODO: make this LazyColumn once JetPref dialog is updated to disallow integrated scrolling
+                //LazyColumn {
+                //    items(subtypePresets) { subtypePreset ->
+                Column {
+                    for (subtypePreset in subtypePresets) {
+                        JetPrefListItem(
+                            modifier = Modifier.clickable {
+                                subtypeEditor.applySubtype(subtypePreset.toSubtype())
+                                showSubtypePresetsDialog = false
+                            },
+                            text = subtypePreset.locale.displayName(),
+                            secondaryText = subtypePreset.preferred.characters.componentId,
+                        )
+                    }
+                }
+                //    }
+                //}
             }
         }
 

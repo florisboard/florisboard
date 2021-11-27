@@ -559,10 +559,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     inner class KeyboardManagerResources {
-        val currencySets = MutableLiveData<Map<ExtensionComponentName, CurrencySet>>()
-        val layouts = MutableLiveData<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>()
-        val popupMappings = MutableLiveData<Map<ExtensionComponentName, PopupMappingComponent>>()
-        val subtypePresets = MutableLiveData<List<SubtypePreset>>()
+        val currencySets = MutableLiveData<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
+        val layouts = MutableLiveData<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
+        val popupMappings = MutableLiveData<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
+        val subtypePresets = MutableLiveData<List<SubtypePreset>>(emptyList())
 
         val anyChanged = MutableLiveData(Unit)
 

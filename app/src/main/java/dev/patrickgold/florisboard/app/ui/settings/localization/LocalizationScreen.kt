@@ -22,7 +22,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -41,11 +40,16 @@ import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 
 @Composable
-fun LocalizationScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__localization__title),
-    iconSpaceReserved = false,
-    floatingActionButton = {
-        val navController = LocalNavController.current
+fun LocalizationScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__localization__title)
+    iconSpaceReserved = false
+
+    val navController = LocalNavController.current
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+    val subtypeManager by context.subtypeManager()
+
+    floatingActionButton {
         ExtendedFloatingActionButton(
             icon = { Icon(
                 painter = painterResource(R.drawable.ic_add),
@@ -56,40 +60,41 @@ fun LocalizationScreen() = FlorisScreen(
             ) },
             onClick = { navController.navigate(Routes.Settings.SubtypeAdd) },
         )
-    },
-) {
-    val navController = LocalNavController.current
-    val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
-    val subtypeManager by context.subtypeManager()
-
-    PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
-        val subtypes by subtypeManager.subtypes.observeAsNonNullState()
-        if (subtypes.isNullOrEmpty()) {
-            FlorisWarningCard(
-                modifier = Modifier.padding(all = 8.dp),
-                text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),
-            )
-        } else {
-            val layouts by keyboardManager.resources.layouts.observeAsState()
-            for (subtype in subtypes) {
-                val layoutMeta = layouts?.get(LayoutType.CHARACTERS)?.get(subtype.layoutMap.characters)
-                val summary = layoutMeta?.label ?: stringRes(
-                    R.string.settings__localization__subtype_error_layout_not_installed,
-                    "layout_id" to subtype.layoutMap.characters,
-                )
-                Preference(
-                    title = subtype.primaryLocale.displayName(subtype.primaryLocale),
-                    summary = summary,
-                    onClick = { navController.navigate(
-                        Routes.Settings.SubtypeEdit(subtype.id)
-                    ) },
-                )
-            }
-        }
     }
 
-    PreferenceGroup(title = stringRes(R.string.settings__localization__group_layouts__label)) {
+    content {
+        PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
+            val subtypes by subtypeManager.subtypes.observeAsNonNullState()
+            if (subtypes.isNullOrEmpty()) {
+                FlorisWarningCard(
+                    modifier = Modifier.padding(all = 8.dp),
+                    text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),
+                )
+            } else {
+                val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
+                val layouts by keyboardManager.resources.layouts.observeAsNonNullState()
+                for (subtype in subtypes) {
+                    val cMeta = layouts[LayoutType.CHARACTERS]?.get(subtype.layoutMap.characters)
+                    val sMeta = layouts[LayoutType.SYMBOLS]?.get(subtype.layoutMap.symbols)
+                    val currMeta = currencySets[subtype.currencySet]
+                    val summary = stringRes(
+                        id = R.string.settings__localization__subtype_summary,
+                        "characters_name" to (cMeta?.label ?: "null"),
+                        "symbols_name" to (sMeta?.label ?: "null"),
+                        "currency_set_name" to (currMeta?.label ?: "null"),
+                    )
+                    Preference(
+                        title = subtype.primaryLocale.displayName(),
+                        summary = summary,
+                        onClick = { navController.navigate(
+                            Routes.Settings.SubtypeEdit(subtype.id)
+                        ) },
+                    )
+                }
+            }
+        }
 
+        //PreferenceGroup(title = stringRes(R.string.settings__localization__group_layouts__label)) {
+        //}
     }
 }
