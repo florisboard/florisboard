@@ -44,9 +44,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.common.android.launchUrl
-import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.Preference
 
@@ -110,10 +108,6 @@ fun HomeScreen() = FlorisScreen(
             }
         }
     }
-    Preference(
-        title = "Localization (old UI)",
-        onClick = { context.launchActivity(SettingsMainActivity::class) },
-    )
     Preference(
         iconId = R.drawable.ic_language,
         title = stringRes(R.string.settings__localization__title),
