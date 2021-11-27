@@ -216,10 +216,7 @@ class KeyboardState private constructor(
     }
 
     fun snapshot(): KeyboardState {
-        //return new(rawValue, maskOfInterest)
-        // FIXME: above line somehow calls [setValue] which leads to a crash.
-        //  Temporary return this instance as a fallback
-        return this
+        return new(rawValue, maskOfInterest)
     }
 
     /**

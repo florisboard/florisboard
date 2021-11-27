@@ -594,7 +594,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 localSubtypePresets.addAll(keyboardExtension.subtypePresets)
             }
-            localSubtypePresets.sortBy { it.locale.languageTag() }
+            localSubtypePresets.sortBy { it.locale.displayName() }
             for (languageCode in listOf("en-CA", "en-AU", "en-UK", "en-US")) {
                 val index: Int = localSubtypePresets.indexOfFirst { it.locale.languageTag() == languageCode }
                 if (index > 0) {

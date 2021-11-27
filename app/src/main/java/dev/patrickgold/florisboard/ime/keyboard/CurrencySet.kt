@@ -41,7 +41,7 @@ class CurrencySet(
         }
 
         fun default(): CurrencySet = CurrencySet(
-            id = "\$default",
+            id = "default",
             label = "Default",
             slots = listOf(
                 TextKeyData(code = 36, label = "$"),

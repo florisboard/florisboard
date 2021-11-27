@@ -48,7 +48,6 @@
     },
     {
       "id": "de-DE-neobone",
-      "label": "Neobone",
       "authors": [ "ostrya" ]
     },
     {
@@ -245,7 +244,7 @@
       }
     },
     {
-      "languageTag": "de-DE",
+      "languageTag": "de-DE-neobone",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
       "popupMapping": "org.florisboard.localization:de-DE-neobone",

@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
+import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
@@ -61,11 +62,21 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
 private val SelectComponentName = ExtensionComponentName("-", "-")
+private val SelectLayoutMap = SubtypeLayoutMap(
+    characters = SelectComponentName,
+    symbols = SelectComponentName,
+    symbols2 = SelectComponentName,
+    numeric = SelectComponentName,
+    numericAdvanced = SelectComponentName,
+    numericRow = SelectComponentName,
+    phone = SelectComponentName,
+    phone2 = SelectComponentName,
+)
 private val SelectLocale = FlorisLocale.from("00", "00")
 private val SelectListKeys = listOf(SelectComponentName)
 private val SelectListValues = listOf("- select -")
 
-private class SubtypeEditorState(init: Subtype) {
+private class SubtypeEditorState(init: Subtype?) {
     companion object {
         val Saver = Saver<SubtypeEditorState, String>(
             save = { editor ->
@@ -87,13 +98,13 @@ private class SubtypeEditorState(init: Subtype) {
         )
     }
 
-    val id: MutableState<Long> = mutableStateOf(init.id)
-    val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init.primaryLocale)
-    val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init.secondaryLocales)
-    val composer: MutableState<ExtensionComponentName> = mutableStateOf(init.composer)
-    val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init.currencySet)
-    val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init.popupMapping)
-    val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init.layoutMap)
+    val id: MutableState<Long> = mutableStateOf(init?.id ?: -1)
+    val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
+    val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
+    val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: Appender.name)
+    val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
+    val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
+    val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
     fun toSubtype() = runCatching<Subtype> {
         check(primaryLocale.value != SelectLocale)
@@ -130,10 +141,11 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
     val currencySets by keyboardManager.resources.currencySets.observeAsState()
     val layoutExtensions by keyboardManager.resources.layouts.observeAsState()
+    val popupMappings by keyboardManager.resources.popupMappings.observeAsState()
     val subtypePresets by keyboardManager.resources.subtypePresets.observeAsState()
 
     val subtypeEditor = rememberSaveable(saver = SubtypeEditorState.Saver) {
-        val subtype = id?.let { subtypeManager.getSubtypeById(id) } ?: Subtype.DEFAULT
+        val subtype = id?.let { subtypeManager.getSubtypeById(id) }
         SubtypeEditorState(subtype)
     }
     var primaryLocale by subtypeEditor.primaryLocale
@@ -218,7 +230,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     listOf(SelectLocale.languageTag()) + (subtypePresets?.map { it.locale.languageTag() } ?: listOf())
                 }
                 val languageNames = remember(subtypePresets) {
-                    SelectListValues + (subtypePresets?.map { it.locale.displayName(it.locale) } ?: listOf())
+                    SelectListValues + (subtypePresets?.map { it.locale.displayName() } ?: listOf())
                 }
                 var expanded by remember { mutableStateOf(false) }
                 val selectedIndex = languageCodes.indexOf(primaryLocale.languageTag()).coerceAtLeast(0)
@@ -227,7 +239,32 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     expanded = expanded,
                     selectedIndex = selectedIndex,
                     isError = showSelectAsError && selectedIndex == 0,
-                    onSelectItem = { primaryLocale = FlorisLocale.fromTag(languageCodes[it]) },
+                    onSelectItem = { index ->
+                        val locale = FlorisLocale.fromTag(languageCodes[index])
+                        primaryLocale = locale
+                        subtypeManager.getSubtypePresetForLocale(locale)?.let { preset ->
+                            preset.popupMapping?.let { popupMapping = it }
+                        }
+                    },
+                    onExpandRequest = { expanded = true },
+                    onDismissRequest = { expanded = false },
+                )
+            }
+            SubtypeProperty(stringRes(R.string.settings__localization__subtype_popup_mapping)) {
+                val popupMappingIds = remember(popupMappings) {
+                    SelectListKeys + (popupMappings?.keys ?: listOf())
+                }
+                val popupMappingLabels = remember(popupMappings) {
+                    SelectListValues + (popupMappings?.values?.map { it.label } ?: listOf())
+                }
+                var expanded by remember { mutableStateOf(false) }
+                val selectedIndex = popupMappingIds.indexOf(popupMapping).coerceAtLeast(0)
+                FlorisDropdownMenu(
+                    items = popupMappingLabels,
+                    expanded = expanded,
+                    selectedIndex = selectedIndex,
+                    isError = showSelectAsError && selectedIndex == 0,
+                    onSelectItem = { popupMapping = popupMappingIds[it] },
                     onExpandRequest = { expanded = true },
                     onDismissRequest = { expanded = false },
                 )
@@ -343,7 +380,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
         errorDialogStrId?.let { strId ->
             JetPrefAlertDialog(
-                title = "Error",
+                title = stringRes(R.string.assets__error__title),
                 confirmLabel = stringRes(android.R.string.ok),
                 onConfirm = {
                     errorDialogStrId = null

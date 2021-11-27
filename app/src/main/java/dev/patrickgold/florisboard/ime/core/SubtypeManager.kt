@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.serialization.decodeFromString
@@ -127,7 +126,7 @@ class SubtypeManager(
     fun addSubtype(subtype: Subtype): Boolean {
         val subtypeToAdd = subtype.copy(id = System.currentTimeMillis())
         val subtypeList = _subtypes.value!!
-        if (subtypeList.contains(subtypeToAdd)) {
+        if (subtypeList.find { it.equalsExcludingId(subtype) } != null) {
             return false
         }
         val newSubtypeList = subtypeList + subtypeToAdd
@@ -163,7 +162,7 @@ class SubtypeManager(
      * @return The default system locale or null, if no matching default system subtype could be
      *  found.
      */
-    fun getDefaultSubtypeForLocale(locale: FlorisLocale): SubtypePreset? {
+    fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
         return keyboardManager.resources.subtypePresets.value?.find { it.locale == locale }
     }
 
