@@ -51,11 +51,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">زبان ها &amp; چیدمان های صفحه کلید</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">به نظر میرسد که هیچگونه زیرگروه دیگری را انتخاب نکرده اید. به همین علت زیرگروه English/QWERTY استفاده خواهد شد!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">افزودن</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">افزودن زیر-نوعی</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">اعمال</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">لغو</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">منطقه</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">چیدمان کاراکتر ها</string>

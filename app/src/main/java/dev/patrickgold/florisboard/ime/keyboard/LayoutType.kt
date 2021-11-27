@@ -23,20 +23,35 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+object LayoutTypeId {
+    const val CHARACTERS =                  "characters"
+    const val CHARACTERS_MOD =              "charactersMod"
+    const val EXTENSION =                   "extension"
+    const val NUMERIC =                     "numeric"
+    const val NUMERIC_ADVANCED =            "numericAdvanced"
+    const val NUMERIC_ROW =                 "numericRow"
+    const val PHONE =                       "phone"
+    const val PHONE2 =                      "phone2"
+    const val SYMBOLS =                     "symbols"
+    const val SYMBOLS_MOD =                 "symbolsMod"
+    const val SYMBOLS2 =                    "symbols2"
+    const val SYMBOLS2_MOD =                "symbols2Mod"
+}
+
 @Serializable(with = LayoutTypeSerializer::class)
 enum class LayoutType(val id: String) {
-    CHARACTERS("characters"),
-    CHARACTERS_MOD("characters-mod"),
-    EXTENSION("extension"),
-    NUMERIC("numeric"),
-    NUMERIC_ADVANCED("numeric-advanced"),
-    NUMERIC_ROW("numeric-row"),
-    PHONE("phone"),
-    PHONE2("phone2"),
-    SYMBOLS("symbols"),
-    SYMBOLS_MOD("symbols-mod"),
-    SYMBOLS2("symbols2"),
-    SYMBOLS2_MOD("symbols2-mod");
+    CHARACTERS(LayoutTypeId.CHARACTERS),
+    CHARACTERS_MOD(LayoutTypeId.CHARACTERS_MOD),
+    EXTENSION(LayoutTypeId.EXTENSION),
+    NUMERIC(LayoutTypeId.NUMERIC),
+    NUMERIC_ADVANCED(LayoutTypeId.NUMERIC_ADVANCED),
+    NUMERIC_ROW(LayoutTypeId.NUMERIC_ROW),
+    PHONE(LayoutTypeId.PHONE),
+    PHONE2(LayoutTypeId.PHONE2),
+    SYMBOLS(LayoutTypeId.SYMBOLS),
+    SYMBOLS_MOD(LayoutTypeId.SYMBOLS_MOD),
+    SYMBOLS2(LayoutTypeId.SYMBOLS2),
+    SYMBOLS2_MOD(LayoutTypeId.SYMBOLS2_MOD);
 }
 
 private class LayoutTypeSerializer : KSerializer<LayoutType> {

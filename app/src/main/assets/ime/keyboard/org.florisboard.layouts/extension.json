@@ -327,7 +327,7 @@
         "direction": "ltr"
       }
     ],
-    "characters-mod": [
+    "charactersMod": [
       {
         "id": "default",
         "label": "Default character modifier layout",
@@ -399,7 +399,7 @@
         "direction": "ltr"
       }
     ],
-    "numeric-advanced": [
+    "numericAdvanced": [
       {
         "id": "western_arabic",
         "label": "Western Arabic",
@@ -413,7 +413,7 @@
         "direction": "ltr"
       }
     ],
-    "numeric-row": [
+    "numericRow": [
       {
         "id": "bengali",
         "label": "Bengali",
@@ -573,7 +573,7 @@
         "direction": "ltr"
       }
     ],
-    "symbols-mod": [
+    "symbolsMod": [
       {
         "id": "default",
         "label": "Default",
@@ -626,7 +626,7 @@
         "direction": "ltr"
       }
     ],
-    "symbols2-mod": [
+    "symbols2Mod": [
       {
         "id": "default",
         "label": "Default",

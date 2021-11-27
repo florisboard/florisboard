@@ -52,11 +52,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inputmetode. Klik her for at løse problemet.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Sprog &amp; Tastaturlayout</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Det ser ud til, at der ikke er konfigureret nogle undertastaturer. I dette tilfælde faldes der tilbage på Engelsk/QWERTY!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Tilføj</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tilføj undertastatur</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Anvend</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Annullér</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Slet</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Ændre undertastatur</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landestandard</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>

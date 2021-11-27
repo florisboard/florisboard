@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.localization
 
-import android.content.res.Resources
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,8 +37,11 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -47,6 +50,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
@@ -58,6 +62,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
+import dev.patrickgold.jetpref.ui.compose.JetPrefListItem
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
@@ -106,6 +111,16 @@ private class SubtypeEditorState(init: Subtype?) {
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
+    fun applySubtype(subtype: Subtype) {
+        id.value = subtype.id
+        primaryLocale.value = subtype.primaryLocale
+        secondaryLocales.value = subtype.secondaryLocales
+        composer.value = subtype.composer
+        currencySet.value = subtype.currencySet
+        popupMapping.value = subtype.popupMapping
+        layoutMap.value = subtype.layoutMap
+    }
+
     fun toSubtype() = runCatching<Subtype> {
         check(primaryLocale.value != SelectLocale)
         check(composer.value != SelectComponentName)
@@ -136,6 +151,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
     val navController = LocalNavController.current
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
@@ -149,8 +165,8 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
         SubtypeEditorState(subtype)
     }
     var primaryLocale by subtypeEditor.primaryLocale
-    var secondaryLocales by subtypeEditor.secondaryLocales
-    var composer by subtypeEditor.composer
+    //var secondaryLocales by subtypeEditor.secondaryLocales
+    //var composer by subtypeEditor.composer
     var currencySet by subtypeEditor.currencySet
     var popupMapping by subtypeEditor.popupMapping
     var layoutMap by subtypeEditor.layoutMap
@@ -202,24 +218,50 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
     content {
         Column(modifier = Modifier.padding(8.dp)) {
-            Card(modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            ) {
-                Column(modifier = Modifier.padding(8.dp)) {
-                    Text(text = "Sugg Presets")
-                    if (id == null) {
-                        val systemLocales = remember { Resources.getSystem().assets.locales }
+            if (id == null) {
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                ) {
+                    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                        Text(
+                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                            text = stringRes(R.string.settings__localization__suggested_subtype_presets),
+                            color = MaterialTheme.colors.primary,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        val systemLocales = remember {
+                            if (AndroidVersion.ATLEAST_API24_N) {
+                                val list = mutableListOf<FlorisLocale>()
+                                val localeList = configuration.locales
+                                for (n in 0 until localeList.size()) {
+                                    list.add(FlorisLocale.from(localeList.get(n)))
+                                }
+                                list
+                            } else {
+                                @Suppress("DEPRECATION")
+                                listOf(FlorisLocale.from(configuration.locale))
+                            }
+                        }
                         val suggestedPresets = remember(subtypePresets) {
                             val presets = mutableListOf<SubtypePreset>()
-                            for (systemLocaleStr in systemLocales) {
-                                val systemLocale = FlorisLocale.fromTag(systemLocaleStr)
+                            for (systemLocale in systemLocales) {
                                 subtypePresets?.find { it.locale == systemLocale }?.let { presets.add(it) }
                             }
                             presets
                         }
                         if (suggestedPresets.isNotEmpty()) {
-                            Text("got some")
+                            for (suggestedPreset in suggestedPresets) {
+                                JetPrefListItem(
+                                    modifier = Modifier.clickable {
+                                        subtypeEditor.applySubtype(suggestedPreset.toSubtype())
+                                    },
+                                    text = suggestedPreset.locale.displayName(),
+                                    secondaryText = suggestedPreset.preferred.characters.componentId,
+                                )
+                            }
                         }
                     }
                 }
@@ -243,7 +285,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                         val locale = FlorisLocale.fromTag(languageCodes[index])
                         primaryLocale = locale
                         subtypeManager.getSubtypePresetForLocale(locale)?.let { preset ->
-                            preset.popupMapping?.let { popupMapping = it }
+                            popupMapping = preset.popupMapping
                         }
                     },
                     onExpandRequest = { expanded = true },

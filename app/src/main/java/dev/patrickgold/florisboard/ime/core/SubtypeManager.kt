@@ -34,6 +34,7 @@ import kotlinx.serialization.json.Json
 
 val SubtypeJsonConfig = Json {
     encodeDefaults = true
+    ignoreUnknownKeys = true
     isLenient = false
 }
 

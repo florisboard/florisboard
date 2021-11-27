@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.core
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
+import dev.patrickgold.florisboard.ime.keyboard.LayoutTypeId
 import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
 import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
@@ -86,35 +87,26 @@ data class Subtype(
 
 @Serializable
 data class SubtypeLayoutMap(
-    @SerialName(CHARACTERS_CODE)
+    @SerialName(LayoutTypeId.CHARACTERS)
     val characters: ExtensionComponentName = CHARACTERS_DEFAULT,
-    @SerialName(SYMBOLS_CODE)
+    @SerialName(LayoutTypeId.SYMBOLS)
     val symbols: ExtensionComponentName = SYMBOLS_DEFAULT,
-    @SerialName(SYMBOLS2_CODE)
+    @SerialName(LayoutTypeId.SYMBOLS2)
     val symbols2: ExtensionComponentName = SYMBOLS2_DEFAULT,
-    @SerialName(NUMERIC_CODE)
+    @SerialName(LayoutTypeId.NUMERIC)
     val numeric: ExtensionComponentName = NUMERIC_DEFAULT,
-    @SerialName(NUMERIC_ADVANCED_CODE)
+    @SerialName(LayoutTypeId.NUMERIC_ADVANCED)
     val numericAdvanced: ExtensionComponentName = NUMERIC_ADVANCED_DEFAULT,
-    @SerialName(NUMERIC_ROW_CODE)
+    @SerialName(LayoutTypeId.NUMERIC_ROW)
     val numericRow: ExtensionComponentName = NUMERIC_ROW_DEFAULT,
-    @SerialName(PHONE_CODE)
+    @SerialName(LayoutTypeId.PHONE)
     val phone: ExtensionComponentName = PHONE_DEFAULT,
-    @SerialName(PHONE2_CODE)
+    @SerialName(LayoutTypeId.PHONE2)
     val phone2: ExtensionComponentName = PHONE2_DEFAULT,
 ) {
     @Transient private var _hashCode: Int = 0
 
     companion object {
-        private const val CHARACTERS_CODE =             "c"
-        private const val SYMBOLS_CODE =                "s"
-        private const val SYMBOLS2_CODE =               "s2"
-        private const val NUMERIC_CODE =                "n"
-        private const val NUMERIC_ADVANCED_CODE =       "na"
-        private const val NUMERIC_ROW_CODE =            "nr"
-        private const val PHONE_CODE =                  "p"
-        private const val PHONE2_CODE =                 "p2"
-
         private const val EQUALS =                      "="
         private const val DELIMITER =                   ","
 
@@ -169,49 +161,49 @@ data class SubtypeLayoutMap(
     }
 
     override fun toString() = stringBuilder(128) {
-        append(CHARACTERS_CODE)
+        append(LayoutTypeId.CHARACTERS)
         append(EQUALS)
         append(characters)
 
         append(DELIMITER)
 
-        append(SYMBOLS_CODE)
+        append(LayoutTypeId.SYMBOLS)
         append(EQUALS)
         append(symbols)
 
         append(DELIMITER)
 
-        append(SYMBOLS2_CODE)
+        append(LayoutTypeId.SYMBOLS2)
         append(EQUALS)
         append(symbols2)
 
         append(DELIMITER)
 
-        append(NUMERIC_ROW_CODE)
+        append(LayoutTypeId.NUMERIC_ROW)
         append(EQUALS)
         append(numericRow)
 
         append(DELIMITER)
 
-        append(NUMERIC_CODE)
+        append(LayoutTypeId.NUMERIC)
         append(EQUALS)
         append(numeric)
 
         append(DELIMITER)
 
-        append(NUMERIC_ADVANCED_CODE)
+        append(LayoutTypeId.NUMERIC_ADVANCED)
         append(EQUALS)
         append(numericAdvanced)
 
         append(DELIMITER)
 
-        append(PHONE_CODE)
+        append(LayoutTypeId.PHONE)
         append(EQUALS)
         append(phone)
 
         append(DELIMITER)
 
-        append(PHONE2_CODE)
+        append(LayoutTypeId.PHONE2)
         append(EQUALS)
         append(phone2)
     }
@@ -253,6 +245,18 @@ data class SubtypePreset(
     val locale: FlorisLocale,
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
-    val popupMapping: ExtensionComponentName? = null,
+    val popupMapping: ExtensionComponentName = extCorePopupMapping("default"),
     val preferred: SubtypeLayoutMap,
-)
+) {
+    fun toSubtype(): Subtype {
+        return Subtype(
+            id = -1,
+            primaryLocale = locale,
+            secondaryLocales = listOf(),
+            composer = composer,
+            currencySet = currencySet,
+            popupMapping = popupMapping,
+            layoutMap = preferred,
+        )
+    }
+}

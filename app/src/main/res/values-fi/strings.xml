@@ -51,11 +51,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Kielet &amp; näppäimistöasettelut</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Näyttää siltä, ettet ole määritellyt yhtään asetteluita. Sen vuoksi käytetään toistaiseksi Englanti/QWERTY-asettelua!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Lisää</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Lisää asettelu</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Käytä</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Peruuta</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Poista</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Muokkaa asettelua</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Kielialue</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Kirjainten asettelu</string>

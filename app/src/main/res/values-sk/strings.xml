@@ -29,10 +29,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie je vybraný, ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešite.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Jazyky a rozloženie klávesnice</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Zdá sa, že ste nenakonfigurovali žiadne podtypy. Ako náhradný sa použije podtyp Angličtina/QWERTY!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Pridať</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pridať podtyp</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Aplikovať</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Zrušiť</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočná téma</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Vybraná téma</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prispôsobenie farieb aplikácii</string>
