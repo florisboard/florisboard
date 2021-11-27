@@ -1,0 +1,34 @@
+[
+  [
+    { "$": "auto_text_key", "code":  894, "label": ";" },
+    { "$": "auto_text_key", "code":  962, "label": "ς" },
+    { "$": "auto_text_key", "code":  949, "label": "ε" },
+    { "$": "auto_text_key", "code":  961, "label": "ρ" },
+    { "$": "auto_text_key", "code":  964, "label": "τ" },
+    { "$": "auto_text_key", "code":  965, "label": "υ" },
+    { "$": "auto_text_key", "code":  952, "label": "θ" },
+    { "$": "auto_text_key", "code":  953, "label": "ι" },
+    { "$": "auto_text_key", "code":  959, "label": "ο" },
+    { "$": "auto_text_key", "code":  960, "label": "π" }
+  ],
+  [
+    { "$": "auto_text_key", "code":  945, "label": "α" },
+    { "$": "auto_text_key", "code":  963, "label": "σ" },
+    { "$": "auto_text_key", "code":  948, "label": "δ" },
+    { "$": "auto_text_key", "code":  966, "label": "φ" },
+    { "$": "auto_text_key", "code":  947, "label": "γ" },
+    { "$": "auto_text_key", "code":  951, "label": "η" },
+    { "$": "auto_text_key", "code":  958, "label": "ξ" },
+    { "$": "auto_text_key", "code":  954, "label": "κ" },
+    { "$": "auto_text_key", "code":  955, "label": "λ" }
+  ],
+  [
+    { "$": "auto_text_key", "code":  950, "label": "ζ" },
+    { "$": "auto_text_key", "code":  967, "label": "χ" },
+    { "$": "auto_text_key", "code":  968, "label": "ψ" },
+    { "$": "auto_text_key", "code":  969, "label": "ω" },
+    { "$": "auto_text_key", "code":  946, "label": "β" },
+    { "$": "auto_text_key", "code":  957, "label": "ν" },
+    { "$": "auto_text_key", "code":  956, "label": "μ" }
+  ]
+]

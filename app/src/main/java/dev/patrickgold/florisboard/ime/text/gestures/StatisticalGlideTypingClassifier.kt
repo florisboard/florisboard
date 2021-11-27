@@ -2,7 +2,6 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.util.SparseArray
 import androidx.collection.LruCache
-import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -107,7 +106,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             keys.add(it)
         }
         layoutSubtype = subtype
-        distanceThresholdSquared = (keyViews.first().visibleBounds.width() / 4)
+        distanceThresholdSquared = (keyViews.first().visibleBounds.width / 4).toInt()
         distanceThresholdSquared *= distanceThresholdSquared
 
         if (
@@ -180,7 +179,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         val candidates = arrayListOf<String>()
         val candidateWeights = arrayListOf<Float>()
         val key = keys.firstOrNull() ?: return listOf()
-        val radius = min(key.visibleBounds.height(), key.visibleBounds.width())
+        val radius = min(key.visibleBounds.height, key.visibleBounds.width)
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
         val userGesture = gesture.resample(SAMPLING_POINTS)
         val normalizedUserGesture: Gesture = userGesture.normalizeByBoxSide()
@@ -324,7 +323,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             val remainingWords = ArrayList<String>()
 
             val key = keys.firstOrNull() ?: return arrayListOf()
-            val radius = min(key.visibleBounds.height(), key.visibleBounds.width())
+            val radius = min(key.visibleBounds.height, key.visibleBounds.width)
             val userLength = userGesture.getLength()
             for (word in words) {
                 val idealGestures = Gesture.generateIdealGestures(word, keysByCharacter)
@@ -377,9 +376,10 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             ): Iterable<Int> {
                 val keyDistances = HashMap<TextKey, Float>()
                 for (key in keys) {
+                    val visibleBoundsCenter = key.visibleBounds.center
                     val distance = Gesture.distance(
-                        key.visibleBounds.centerX().toFloat(),
-                        key.visibleBounds.centerY().toFloat(),
+                        visibleBoundsCenter.x,
+                        visibleBoundsCenter.y,
                         x,
                         y
                     )
@@ -428,44 +428,45 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                             continue
                         }
                     }
+                    val visibleBoundsCenter = key.visibleBounds.center
 
                     // We adda little loop on  the key for duplicate letters
                     // so that we can differentiate words like pool and poll, lull and lul, etc...
                     if (previousLetter == lc) {
                         // bottom right
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() + key.visibleBounds.width() / 4.0f,
-                            key.visibleBounds.centerY() + key.visibleBounds.height() / 4.0f
+                            visibleBoundsCenter.x + key.visibleBounds.width / 4.0f,
+                            visibleBoundsCenter.y + key.visibleBounds.height / 4.0f
                         )
                         // top right
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() + key.visibleBounds.width() / 4.0f,
-                            key.visibleBounds.centerY() - key.visibleBounds.height() / 4.0f
+                            visibleBoundsCenter.x + key.visibleBounds.width / 4.0f,
+                            visibleBoundsCenter.y - key.visibleBounds.height / 4.0f
                         )
                         // top left
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() - key.visibleBounds.width() / 4.0f,
-                            key.visibleBounds.centerY() - key.visibleBounds.height() / 4.0f
+                            visibleBoundsCenter.x - key.visibleBounds.width / 4.0f,
+                            visibleBoundsCenter.y - key.visibleBounds.height / 4.0f
                         )
                         // bottom left
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() - key.visibleBounds.width() / 4.0f,
-                            key.visibleBounds.centerY() + key.visibleBounds.height() / 4.0f
+                            visibleBoundsCenter.x - key.visibleBounds.width / 4.0f,
+                            visibleBoundsCenter.y + key.visibleBounds.height / 4.0f
                         )
                         hasLoops = true
 
                         idealGesture.addPoint(
-                            key.visibleBounds.centerX().toFloat(),
-                            key.visibleBounds.centerY().toFloat()
+                            visibleBoundsCenter.x,
+                            visibleBoundsCenter.y
                         )
                     } else {
                         idealGesture.addPoint(
-                            key.visibleBounds.centerX().toFloat(),
-                            key.visibleBounds.centerY().toFloat()
+                            visibleBoundsCenter.x,
+                            visibleBoundsCenter.y
                         )
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX().toFloat(),
-                            key.visibleBounds.centerY().toFloat()
+                            visibleBoundsCenter.x,
+                            visibleBoundsCenter.y
                         )
                     }
                     previousLetter = lc

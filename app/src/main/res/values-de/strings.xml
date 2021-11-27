@@ -53,11 +53,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard ist nicht als Standard-Eingabemethode ausgewählt. Hier klicken, um dieses Problem zu lösen.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Sprachen &amp; Tastatur-Layout</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Es scheinen keine benutzerdefinierten Eingabestile konfiguriert zu sein. Als Ausweichlösung wird daher der Eingabestil English/QWERTY benutzt!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Hinzufügen</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Stil hinzufügen</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Übernehmen</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Abbrechen</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Entfernen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Benutzerdefinierten Eingabestil bearbeiten</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Gebietsschema</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Zeichenanordnung</string>
@@ -209,7 +205,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Tipperlebnis</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Wörterbuch</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Wörterbuch</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">System-Wörterbuch aktivieren</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Wörter vorschlagen, die im System-Benutzerwörterbuch gespeichert sind</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">System-Benutzerwörterbuch verwalten</string>
@@ -427,7 +423,7 @@
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test-Absturzbericht Ansicht</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug-Aktion, um absichtlich einen Absturz zu verursachen</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Ersteller</string>
+    <string name="ext__meta__maintainers">Ersteller</string>
     <string name="ext__meta__description">Beschreibung</string>
     <string name="ext__meta__homepage">Startseite</string>
     <string name="ext__meta__id">ID</string>

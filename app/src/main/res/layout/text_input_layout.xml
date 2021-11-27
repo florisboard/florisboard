@@ -6,8 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include android:id="@+id/smartbar" layout="@layout/smartbar"/>
-
     <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
         android:id="@+id/main_keyboard_view"
         android:layout_width="match_parent"

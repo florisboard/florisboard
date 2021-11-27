@@ -53,11 +53,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard wekî metoda têketê ya pêşdarazî nayê hilbijartin. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Ziman û klavye</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wusa dixuye ku te tu cureyên jêr ava nekirine. Wekî paşvekê wê subtype English/QWERTY were bikaranîn!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Zêdekirin</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Zêdekirina Ziman</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Pêkanîn</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Betal kirin</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Jêbirin</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Bin-tîp biguherîne</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Xwecihî</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rêza karakteran</string>
@@ -173,7 +169,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Serpêhatiya nivîsandinê</string>
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Ferheng</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Ferheng</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Li gorî konteksa têkevinê ya niha peyvan mezin bikin</string>

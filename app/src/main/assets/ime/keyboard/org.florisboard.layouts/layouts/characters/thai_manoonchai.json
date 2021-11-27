@@ -1,0 +1,144 @@
+[
+  [
+    { "$": "case_selector",
+      "lower": { "code":  3651, "label": "ใ" },
+      "upper": { "code":  3602, "label": "ฒ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3605, "label": "ต" },
+      "upper": { "code":  3599, "label": "ฏ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3627, "label": "ห" },
+      "upper": { "code":  3595, "label": "ซ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3621, "label": "ล" },
+      "upper": { "code":  3597, "label": "ญ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3626, "label": "ส" },
+      "upper": { "code":  3615, "label": "ฟ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3611, "label": "ป" },
+      "upper": { "code":  3593, "label": "ฉ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3633, "label": "ั" },
+      "upper": { "code":  3638, "label": "ึ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3585, "label": "ก" },
+      "upper": { "code":  3608, "label": "ธ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3636, "label": "ิ" },
+      "upper": { "code":  3600, "label": "ฐ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3610, "label": "บ" },
+      "upper": { "code":  3598, "label": "ฎ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3655, "label": "็" },
+      "upper": { "code":  3590, "label": "ฆ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3628, "label": "ฬ" },
+      "upper": { "code":  3601, "label": "ฑ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3631, "label": "ฯ" },
+      "upper": { "code":  3596, "label": "ฌ" }
+    }
+  ],
+  [
+    { "$": "case_selector",
+      "lower": { "code":  3591, "label": "ง" },
+      "upper": { "code":  3625, "label": "ษ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3648, "label": "เ" },
+      "upper": { "code":  3606, "label": "ถ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3619, "label": "ร" },
+      "upper": { "code":  3649, "label": "แ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3609, "label": "น" },
+      "upper": { "code":  3594, "label": "ช" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3617, "label": "ม" },
+      "upper": { "code":  3614, "label": "พ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3629, "label": "อ" },
+      "upper": { "code":  3612, "label": "ผ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3634, "label": "า" },
+      "upper": { "code":  3635, "label": "ำ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3656, "label": "่" },
+      "upper": { "code":  3586, "label": "ข" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3657, "label": "้" },
+      "upper": { "code":  3650, "label": "โ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3623, "label": "ว" },
+      "upper": { "code":  3616, "label": "ภ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3639, "label": "ื" },
+      "upper": { "code":    34, "label": "\"" }
+    }
+  ],
+  [
+    { "$": "case_selector",
+      "lower": { "code":  3640, "label": "ุ" },
+      "upper": { "code":  3620, "label": "ฤ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3652, "label": "ไ" },
+      "upper": { "code":  3613, "label": "ฝ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3607, "label": "ท" },
+      "upper": { "code":  3654, "label": "ๆ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3618, "label": "ย" },
+      "upper": { "code":  3603, "label": "ณ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3592, "label": "จ" },
+      "upper": { "code":  3658, "label": "๊" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3588, "label": "ค" },
+      "upper": { "code":  3659, "label": "๋" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3637, "label": "ี" },
+      "upper": { "code":  3660, "label": "์" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3604, "label": "ด" },
+      "upper": { "code":  3624, "label": "ศ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3632, "label": "ะ" },
+      "upper": { "code":  3630, "label": "ฮ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code":  3641, "label": "ู" },
+      "upper": { "code":    63, "label": "?" }
+    }
+  ]
+]

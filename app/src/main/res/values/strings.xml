@@ -55,19 +55,16 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">System default</string>
 
-    <string name="settings__home__title" comment="Title of the Home fragment">Welcome to {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Welcome to {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
 
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Languages &amp; Keyboard layouts</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Add</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Add subtype</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Apply</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Cancel</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Delete</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtype</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Locale</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primary locale</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup mapping</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Characters layout</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Symbols primary layout</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Symbols secondary layout</string>
@@ -78,8 +75,17 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Number row layout</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Phone primary layout</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Phone secondary layout</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; select &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Suggested subtype presets</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">No suggested presets available. Use below button to view all subtype presets.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Subtype presets</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Show all</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">This subtype already exists!</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (not installed)</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Undefined</string>
@@ -162,7 +168,7 @@
     <string name="settings__theme__attr_textColor"              comment="Theme attribute label">Text color</string>
     <string name="settings__theme__attr_custom"                 comment="Theme attribute label (%s is custom attribute name)">Custom attribute (%s)</string>
 
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Sounds &amp; Vibration</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Enable audio feedback</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Play sounds for input events, dependent on system settings</string>
@@ -221,12 +227,13 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
 
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
 
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Typing experience</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">Inline suggestions</string>
+    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
     <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[EXPERIMENTAL] Display suggestions while you type</string>
     <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently only English (US). May fail to load if insufficient heap size is available.</string>
@@ -241,15 +248,6 @@
     <string translatable="false" name="pref__suggestion__display_mode__classic" comment="Preference value">Classic (3 columns)</string>
     <string translatable="false" name="pref__suggestion__display_mode__dynamic" comment="Preference value">Dynamic width</string>
     <string translatable="false" name="pref__suggestion__display_mode__dynamic_scrollable" comment="Preference value">Dynamic width &amp; scrollable</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Dictionary</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Enable system user dictionary</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggest words stored in the system user dictionary</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Manage system user dictionary</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the system user dictionary</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Enable internal user dictionary</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggest words stored in the internal user dictionary</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -258,6 +256,15 @@
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
 
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">User dictionaries</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Enable system user dictionary</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggest words stored in the system user dictionary</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Manage system user dictionary</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the system user dictionary</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Enable internal user dictionary</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggest words stored in the internal user dictionary</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal User Dictionary</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System User Dictionary</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequency: %d</string>
@@ -399,6 +406,7 @@
     <string name="assets__action__select_dir">Select directory</string>
     <string name="assets__action__select_file">Select file</string>
     <string name="assets__action__yes">Yes</string>
+    <string name="assets__error__title">Error</string>
     <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Invalid</string>
     <string name="assets__error__snackbar_message">Something went wrong</string>
@@ -481,13 +489,13 @@
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">System locales</string>
 
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Homepage</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Issue tracker</string>
     <string name="ext__meta__keywords">Keywords</string>
     <string name="ext__meta__license">License</string>
+    <string name="ext__meta__maintainers">Maintainers</string>
     <string name="ext__meta__title">Title</string>
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension not found</string>
@@ -514,13 +522,17 @@
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
 
+    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
 
     <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Right-handed mode</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Left-handed mode</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>

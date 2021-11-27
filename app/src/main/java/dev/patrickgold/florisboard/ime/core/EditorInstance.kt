@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.ClipDescription
 import android.content.Intent
 import android.inputmethodservice.InputMethodService
-import android.os.Build
 import android.os.SystemClock
 import android.view.InputDevice
 import android.view.KeyCharacterMap
@@ -32,8 +31,10 @@ import android.view.inputmethod.InputConnection
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
@@ -45,10 +46,14 @@ import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.util.debugSummarize
 
-class EditorInstance(private val ims: InputMethodService, private val activeState: KeyboardState) {
+class EditorInstance(private val ims: InputMethodService) {
     companion object {
         private const val CAPACITY_CHARS: Int = 1000
         private const val CAPACITY_LINES: Int = 10
@@ -59,6 +64,10 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         private const val CURSOR_UPDATE_DISABLED: Int = 0
     }
 
+    private val prefs by florisPreferenceModel()
+    private val keyboardManager by ims.keyboardManager()
+
+    private val activeState get() = keyboardManager.activeState
     val cachedInput: CachedInput = CachedInput()
     internal var extractedToken: Int = 0
     private var lastReportedComposingBounds: Bounds = Bounds(-1, -1)
@@ -150,10 +159,10 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         isInputBindingActive = true
     }
 
-    fun startInput(ei: EditorInfo?) {
-        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${ei?.debugSummarize()}" }
-        if (ei != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            contentMimeTypes = ei.contentMimeTypes
+    fun startInput(info: EditorInfo) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        if (AndroidVersion.ATLEAST_API25_N_MR1) {
+            contentMimeTypes = info.contentMimeTypes
         }
         val ic = inputConnection ?: return
         ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
@@ -169,8 +178,61 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         }
     }
 
-    fun startInputView(ei: EditorInfo?) {
-        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${ei?.debugSummarize()}" }
+    fun startInputView(info: EditorInfo) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        val keyboardMode = when (activeState.inputAttributes.type) {
+            InputAttributes.Type.NUMBER -> {
+                activeState.keyVariation = KeyVariation.NORMAL
+                KeyboardMode.NUMERIC
+            }
+            InputAttributes.Type.PHONE -> {
+                activeState.keyVariation = KeyVariation.NORMAL
+                KeyboardMode.PHONE
+            }
+            InputAttributes.Type.TEXT -> {
+                activeState.keyVariation = when (activeState.inputAttributes.variation) {
+                    InputAttributes.Variation.EMAIL_ADDRESS,
+                    InputAttributes.Variation.WEB_EMAIL_ADDRESS -> {
+                        KeyVariation.EMAIL_ADDRESS
+                    }
+                    InputAttributes.Variation.PASSWORD,
+                    InputAttributes.Variation.VISIBLE_PASSWORD,
+                    InputAttributes.Variation.WEB_PASSWORD -> {
+                        KeyVariation.PASSWORD
+                    }
+                    InputAttributes.Variation.URI -> {
+                        KeyVariation.URI
+                    }
+                    else -> {
+                        KeyVariation.NORMAL
+                    }
+                }
+                KeyboardMode.CHARACTERS
+            }
+            else -> {
+                activeState.keyVariation = KeyVariation.NORMAL
+                KeyboardMode.CHARACTERS
+            }
+        }
+        activeState.keyboardMode = keyboardMode
+        activeState.isComposingEnabled = when (keyboardMode) {
+            KeyboardMode.NUMERIC,
+            KeyboardMode.PHONE,
+            KeyboardMode.PHONE2 -> false
+            else -> activeState.keyVariation != KeyVariation.PASSWORD &&
+                prefs.suggestion.enabled.get()// &&
+            //!instance.inputAttributes.flagTextAutoComplete &&
+            //!instance.inputAttributes.flagTextNoSuggestions
+        }
+        composingEnabledChanged()
+        activeState.updateIsPrivate()
+        if (!prefs.correction.rememberCapsLockState.get()) {
+            activeState.inputMode = InputMode.NORMAL
+        }
+    }
+
+    private fun KeyboardState.updateIsPrivate(force: Boolean = prefs.advanced.forcePrivateMode.get()) {
+        this.isPrivateMode = force || this.imeOptions.flagNoPersonalizedLearning
     }
 
     fun finishInputView() {
@@ -222,12 +284,13 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         }
     }
 
+    private val composer = Appender()
     /**
      * Internal helper, replacing a call to inputConnection.commitText with text composition in mind.
      */
     fun doCommitText(text: String): Pair<Boolean, String> {
         val ic = inputConnection ?: return Pair(false, "")
-        val composer: Composer = FlorisBoard.getInstance().composer
+        //val composer: Composer = FlorisBoard.getInstance().composer
         return if (text.length != 1) {
             Pair(ic.commitText(text, 1), text)
         } else {
@@ -336,7 +399,7 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
                 val ic = inputConnection ?: return false
                 ic.finishComposingText()
                 var flags = 0
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                if (AndroidVersion.ATLEAST_API25_N_MR1) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 } else {
                     FlorisBoard.getInstance().grantUriPermission(
@@ -797,23 +860,21 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
 
     internal fun ExtractedText.getTextStr() = (this.text ?: "").toString()
 
-    private fun ExtractedText.debugSummarize(): String {
-        return stringBuilder {
-            append("ExtractedText:")
-            appendLine()
-            append("text=\"${this@debugSummarize.text}\"")
-            appendLine()
-            append("startOffset=${this@debugSummarize.startOffset}")
-            appendLine()
-            append("partialStartOffset=${this@debugSummarize.partialStartOffset}")
-            appendLine()
-            append("partialEndOffset=${this@debugSummarize.partialEndOffset}")
-            appendLine()
-            append("selectionStart=${this@debugSummarize.selectionStart}")
-            appendLine()
-            append("selectionEnd=${this@debugSummarize.selectionEnd}")
-            appendLine()
-        }
+    private fun ExtractedText.debugSummarize() = stringBuilder {
+        append("ExtractedText:")
+        appendLine()
+        append("text=\"${this@debugSummarize.text}\"")
+        appendLine()
+        append("startOffset=${this@debugSummarize.startOffset}")
+        appendLine()
+        append("partialStartOffset=${this@debugSummarize.partialStartOffset}")
+        appendLine()
+        append("partialEndOffset=${this@debugSummarize.partialEndOffset}")
+        appendLine()
+        append("selectionStart=${this@debugSummarize.selectionStart}")
+        appendLine()
+        append("selectionEnd=${this@debugSummarize.selectionEnd}")
+        appendLine()
     }
 
     /**

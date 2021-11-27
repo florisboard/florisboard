@@ -52,11 +52,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard non è la tastiera predefinita. Clicca quì per risolvere questo problema.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Lingue &amp; Layout della tastiera</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Aggiungi</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Applica</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Annulla</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Elimina</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Localizzazione</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposizione caratteri</string>
@@ -198,7 +194,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Esperienza di digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Dizionario</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Dizionario</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Abilita il dizionario utente di sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggerisci le parole contenute nel dizionario utente di sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestisci il dizionario utente di sistema</string>

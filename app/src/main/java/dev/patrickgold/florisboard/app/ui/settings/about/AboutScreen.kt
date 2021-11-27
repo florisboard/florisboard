@@ -40,7 +40,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.jetpref.ui.compose.Preference
 
@@ -95,19 +95,19 @@ fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
         iconId = R.drawable.ic_history,
         title = stringRes(R.string.about__changelog__title),
         summary = stringRes(R.string.about__changelog__summary),
-        onClick = { launchUrl(context, R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
+        onClick = { context.launchUrl(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
     )
     Preference(
         iconId = R.drawable.ic_code,
         title = stringRes(R.string.about__repository__title),
         summary = stringRes(R.string.about__repository__summary),
-        onClick = { launchUrl(context, R.string.florisboard__repo_url) },
+        onClick = { context.launchUrl(R.string.florisboard__repo_url) },
     )
     Preference(
         iconId = R.drawable.ic_policy,
         title = stringRes(R.string.about__privacy_policy__title),
         summary = stringRes(R.string.about__privacy_policy__summary),
-        onClick = { launchUrl(context, R.string.florisboard__privacy_policy_url) },
+        onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
     )
     Preference(
         iconId = R.drawable.ic_description,

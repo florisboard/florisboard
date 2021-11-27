@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.jetpref.ui.compose.DialogSliderPreference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
@@ -112,13 +112,13 @@ fun InputFeedbackScreen() = FlorisScreen(title = stringRes(R.string.settings__in
         DialogSliderPreference(
             prefs.inputFeedback.hapticVibrationStrength,
             title = stringRes(R.string.pref__input_feedback__haptic_vibration_strength__label),
-            summary = InputFeedbackManager.generateVibrationStrengthErrorSummary() ?:
+            summary = InputFeedbackController.generateVibrationStrengthErrorSummary() ?:
                 stringRes(R.string.unit__percent__symbol),
             unit = stringRes(R.string.unit__percent__symbol),
             min = 1,
             max = 100,
             stepIncrement = 1,
-            enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true && prefs.inputFeedback.hapticUseVibrator isEqualTo true && InputFeedbackManager.hasAmplitudeControl() },
+            enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true && prefs.inputFeedback.hapticUseVibrator isEqualTo true && InputFeedbackController.hasAmplitudeControl() },
         )
         SwitchPreference(
             prefs.inputFeedback.hapticFeatKeyPress,

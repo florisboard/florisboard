@@ -16,13 +16,15 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.lowercase
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.common.kotlin.lowercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupSet
@@ -34,10 +36,11 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     val computedPopups: MutablePopupSet<KeyData> = MutablePopupSet()
     var computedSymbolHint: KeyData? = null
     var computedNumberHint: KeyData? = null
+    var computedHintData: KeyData = TextKeyData.UNSPECIFIED
 
     fun compute(evaluator: ComputingEvaluator) {
-        val keyboard = (evaluator.getKeyboard() as? TextKeyboard)
-        val keyboardMode = keyboard?.mode ?: KeyboardMode.CHARACTERS
+        val keyboard = evaluator.keyboard() as? TextKeyboard ?: return
+        val keyboardMode = keyboard.mode
         val computed = data.compute(evaluator)
 
         if (computed == null || !evaluator.evaluateVisible(computed)) {
@@ -46,16 +49,16 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             isEnabled = false
             isVisible = false
 
-            flayShrink = 0.0
-            flayGrow = 0.0
-            flayWidthFactor = 0.0
+            flayShrink = 0.0f
+            flayGrow = 0.0f
+            flayWidthFactor = 0.0f
         } else {
             computedData = computed
             computedPopups.clear()
             mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
-                val computedLabel = computed.label.lowercase(evaluator.getActiveSubtype().locale)
+                val computedLabel = computed.label.lowercase(evaluator.activeSubtype().primaryLocale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
                         "~enter"
@@ -73,10 +76,10 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                         computedLabel
                     }
                 }
-                val extendedPopupsDefault = keyboard?.extendedPopupMappingDefault
-                val extendedPopups = keyboard?.extendedPopupMapping
+                val extendedPopupsDefault = keyboard.extendedPopupMappingDefault
+                val extendedPopups = keyboard.extendedPopupMapping
                 var popupSet: PopupSet<AbstractKeyData>? = null
-                val kv = evaluator.getKeyVariation()
+                val kv = evaluator.activeState().keyVariation
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
                     popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
                         extendedPopupsDefault?.get(KeyVariation.PASSWORD)?.get(extLabel)
@@ -117,47 +120,47 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.NUMERIC_ADVANCED,
                 KeyboardMode.PHONE,
-                KeyboardMode.PHONE2 -> 1.0
+                KeyboardMode.PHONE2 -> 1.0f
                 else -> when (computed.code) {
                     KeyCode.SHIFT,
-                    KeyCode.DELETE -> 1.5
+                    KeyCode.DELETE -> 1.5f
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
                     KeyCode.VIEW_SYMBOLS2,
-                    KeyCode.ENTER -> 0.0
-                    else -> 1.0
+                    KeyCode.ENTER -> 0.0f
+                    else -> 1.0f
                 }
             }
             flayGrow = when (keyboardMode) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
-                KeyboardMode.PHONE2 -> 0.0
+                KeyboardMode.PHONE2 -> 0.0f
                 KeyboardMode.NUMERIC_ADVANCED -> when (computed.type) {
-                    KeyType.NUMERIC -> 1.0
-                    else -> 0.0
+                    KeyType.NUMERIC -> 1.0f
+                    else -> 0.0f
                 }
                 else -> when (computed.code) {
-                    KeyCode.SPACE, KeyCode.CJK_SPACE -> 1.0
-                    else -> 0.0
+                    KeyCode.SPACE, KeyCode.CJK_SPACE -> 1.0f
+                    else -> 0.0f
                 }
             }
             flayWidthFactor = when (keyboardMode) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
-                KeyboardMode.PHONE2 -> 2.68
+                KeyboardMode.PHONE2 -> 2.68f
                 KeyboardMode.NUMERIC_ADVANCED -> when (computed.code) {
-                    44, 46 -> 1.00
-                    KeyCode.VIEW_SYMBOLS, 61 -> 1.26
-                    else -> 1.56
+                    44, 46 -> 1.00f
+                    KeyCode.VIEW_SYMBOLS, 61 -> 1.26f
+                    else -> 1.56f
                 }
                 else -> when (computed.code) {
                     KeyCode.SHIFT,
-                    KeyCode.DELETE -> 1.56
+                    KeyCode.DELETE -> 1.56f
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
                     KeyCode.VIEW_SYMBOLS2,
-                    KeyCode.ENTER -> 1.56
-                    else -> 1.00
+                    KeyCode.ENTER -> 1.56f
+                    else -> 1.00f
                 }
             }
         }
@@ -207,10 +210,30 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     private fun mergePopups(
         keyData: KeyData?,
         evaluator: ComputingEvaluator,
-        merge: (popups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) -> Unit
+        merge: (popups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) -> Unit,
     ) {
         if (keyData?.popup != null) {
             merge(keyData.popup!!, evaluator)
+        }
+    }
+
+    /**
+     * Computes the label, hintedLabel and iconResId for [computedData] based on given [evaluator].
+     */
+    fun computeLabelsAndDrawables(evaluator: ComputingEvaluator) {
+        label = evaluator.computeLabel(computedData)
+        hintedLabel = null
+        foregroundDrawableId = evaluator.computeIconResId(computedData)
+
+        val data = computedData
+        if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
+            && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
+        ) {
+            val prefs by florisPreferenceModel()
+            computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let {
+                hintedLabel = it?.asString(isForDisplay = true)
+                computedHintData = it ?: TextKeyData.UNSPECIFIED
+            }
         }
     }
 }

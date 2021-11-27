@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 private const val Size = "size"
 private const val DpUnit = "dp"
 private const val SpUnit = "sp"
-private const val PercentageUnit = "%"
 
 sealed interface SnyggSizeValue : SnyggValue
 
@@ -77,7 +76,7 @@ data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
 data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = PercentageUnit, min = 0.0f, max = 100.0f)
+            percentageFloat(id = Size)
         }
 
         override fun serialize(v: SnyggValue) = runCatching<String> {

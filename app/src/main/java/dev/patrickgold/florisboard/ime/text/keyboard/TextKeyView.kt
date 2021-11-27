@@ -72,7 +72,7 @@ class TextKeyView : View {
         canvas ?: return
         canvas.save()
         canvas.translate(-x, -y)
-        parentKeyboardView?.onDrawComputedKey(canvas, key, this)
+        //parentKeyboardView?.onDrawComputedKey(canvas, key, this)
         canvas.restore()
     }
 }

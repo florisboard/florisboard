@@ -105,26 +105,26 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         val anchorCoords = IntArray(2)
         keyboardView.getLocationInWindow(anchorCoords)
         val anchorX = anchorCoords[0] + anchor.visibleBounds.left
-        val anchorY = anchorCoords[1] + anchor.visibleBounds.top + anchor.visibleBounds.height()
+        val anchorY = anchorCoords[1] + anchor.visibleBounds.top + anchor.visibleBounds.height
         when (val lp = layoutParams) {
             is FrameLayout.LayoutParams -> lp.apply {
                 width = properties.width
                 height = properties.height
-                setMargins(
-                    anchorX + properties.xOffset,
-                    anchorY + properties.yOffset,
-                    0,
-                    0
-                )
+                //setMargins(
+                //    anchorX + properties.xOffset,
+                //    anchorY + properties.yOffset,
+                //    0,
+                //    0
+                //)
             }
             else -> {
                 layoutParams = FrameLayout.LayoutParams(properties.width, properties.height).apply {
-                    setMargins(
-                        anchorX + properties.xOffset,
-                        anchorY + properties.yOffset,
-                        0,
-                        0
-                    )
+                    //setMargins(
+                    //    anchorX + properties.xOffset,
+                    //    anchorY + properties.yOffset,
+                    //    0,
+                    //    0
+                    //)
                 }
             }
         }

@@ -1,0 +1,275 @@
+[
+  [
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65312, "label": "＠", "popup": {
+          "main": { "code": 64, "label": "@" }
+        }
+      },
+      "half": { "code": 64, "label": "@" }
+    },
+    { "code": 12306, "label": "〒", "popup": {
+        "main": { "code": 12320, "label": "〠" }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65283, "label": "＃", "popup": {
+          "main": { "code": 35, "label": "#" },
+          "relevant": [
+            { "code": 8470, "label": "№" }
+          ]
+        }
+      },
+      "half": { "code": 35, "label": "#", "popup": {
+          "main": { "code": 65283, "label": "＃" },
+          "relevant": [
+            { "code": 8470, "label": "№" }
+          ]
+        }
+      }
+    },
+    { "code": -801, "label": "currency_slot_1", "popup": {
+        "main": { "code": -802, "label": "currency_slot_2" },
+        "relevant": [
+          { "code": -806, "label": "currency_slot_6" },
+          { "code": -803, "label": "currency_slot_3" },
+          { "code": -804, "label": "currency_slot_4" },
+          { "code": -805, "label": "currency_slot_5" }
+        ]
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65285, "label": "％", "popup": {
+          "main": { "code": 37, "label": "%" },
+          "relevant": [
+            { "code": 8240, "label": "‰" },
+            { "code": 8453, "label": "℅" }
+          ]
+        }
+      },
+      "half": { "code": 37, "label": "%", "popup": {
+          "main": { "code": 65285, "label": "％" },
+          "relevant": [
+            { "code": 8240, "label": "‰" },
+            { "code": 8453, "label": "℅" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65286, "label": "＆", "popup": {
+          "main": { "code": 38, "label": "&" }
+        }
+      },
+      "half": { "code": 38, "label": "&", "popup": {
+          "main": { "code": 65286, "label": "＆" }
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65293, "label": "－", "popup": {
+          "main": { "code": 65343, "label": "＿" },
+          "relevant": [
+            { "code": 45, "label": "-" },
+            { "code": 95, "label": "_" },
+            { "code": 8212, "label": "—" },
+            { "code": 8211, "label": "–" },
+            { "code": 183, "label": "·" }
+          ]
+        }
+      },
+      "half": { "code": 45, "label": "-", "popup": {
+          "main": { "code": 95, "label": "_" },
+          "relevant": [
+            { "code": 65293, "label": "－" },
+            { "code": 65343, "label": "＿" },
+            { "code": 8212, "label": "—" },
+            { "code": 8211, "label": "–" },
+            { "code": 183, "label": "·" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65291, "label": "＋", "popup": {
+          "main": { "code": 43, "label": "+" },
+          "relevant": [
+            { "code": 177, "label": "±" }
+          ]
+        }
+      },
+      "half": { "code": 43, "label": "+", "popup": {
+          "main": { "code": 65291, "label": "＋" },
+          "relevant": [
+            { "code": 177, "label": "±" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 12300, "label": "「", "popup": {
+          "main": { "code": 12302, "label": "『" },
+          "relevant": [
+            { "code": 12304, "label": "【" },
+            { "code": 12310, "label": "〖" }
+          ]
+        }
+      },
+      "half": { "code": 65378, "label": "｢", "popup": {
+          "main": { "code": 12301, "label": "」" },
+          "relevant": [
+            { "code": 12303, "label": "』" },
+            { "code": 12304, "label": "【" },
+            { "code": 12310, "label": "〖" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 12301, "label": "」", "popup": {
+          "main": { "code": 12303, "label": "』" },
+          "relevant": [
+            { "code": 12305, "label": "】" },
+            { "code": 12311, "label": "〗" }
+          ]
+        }
+      },
+      "half": { "code": 65379, "label": "｣", "popup": {
+          "main": { "code": 12301, "label": "」" },
+          "relevant": [
+            { "code": 12303, "label": "』" },
+            { "code": 12305, "label": "】" },
+            { "code": 12311, "label": "〗" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65295, "label": "／", "popup": {
+          "main": { "code": 47, "label": "/" }
+        }
+      },
+      "half": { "code": 47, "label": "/", "popup": {
+          "main": { "code": 65295, "label": "／" }
+        }
+      }
+    }
+  ],
+  [
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65290, "label": "＊", "popup": {
+          "main": { "code": 8251, "label": "※" },
+          "relevant": [
+            { "code": 42, "label": "*" },
+            { "code": 8224, "label": "†" },
+            { "code": 9733, "label": "★" },
+            { "code": 8225, "label": "‡" }
+          ]
+        }
+      },
+      "half": {  "code": 42, "label": "*", "popup": {
+          "main": { "code": 65290, "label": "＊" },
+          "relevant": [
+            { "code": 8251, "label": "※" },
+            { "code": 8224, "label": "†" },
+            { "code": 9733, "label": "★" },
+            { "code": 8225, "label": "‡" }
+          ]
+        }
+      }
+    },
+    { "code": 34, "label": "\"", "popup": {
+        "main": { "code": 8221, "label": "”" },
+        "relevant": [
+          { "code": 8222, "label": "„" },
+          { "code": 8220, "label": "“" },
+          { "code": 171, "label": "«" },
+          { "code": 187, "label": "»" }
+        ]
+      }
+    },
+    { "code": 39, "label": "'", "popup": {
+        "main": { "code": 8217, "label": "’" },
+        "relevant": [
+          { "code": 8218, "label": "‚" },
+          { "code": 8216, "label": "‘" },
+          { "code": 8249, "label": "‹" },
+          { "code": 8250, "label": "›" }
+        ]
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65306, "label": "：", "popup": {
+          "main": { "code": 58, "label": ":" },
+          "relevant": [
+            { "code": 8942, "label": "⋮" }
+          ]
+        }
+      },
+      "half": { "code": 58, "label": ":", "popup": {
+          "main": { "code": 65306, "label": "：" },
+          "relevant": [
+            { "code": 8942, "label": "⋮" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65307, "label": "；", "popup": {
+          "main": { "code": 59, "label": ";" }
+        }
+      },
+      "half": { "code": 59, "label": ";", "popup": {
+          "main": { "code": 65307, "label": "；" }
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65281, "label": "！", "popup": {
+          "main": { "code": 33, "label": "!" },
+          "relevant": [
+            { "code": 161, "label": "¡" }
+          ]
+        }
+      },
+      "half": { "code": 33, "label": "!", "popup": {
+          "main": { "code": 65281, "label": "！" },
+          "relevant": [
+            { "code": 161, "label": "¡" }
+          ]
+        }
+      }
+    },
+    {
+      "$": "char_width_selector",
+      "full": { "code": 65311, "label": "？", "popup": {
+          "main": { "code": 63, "label": "?" },
+          "relevant": [
+            { "code": 191, "label": "¿" },
+            { "code": 8253, "label": "‽" }
+          ]
+        }
+      },
+      "half": {  "code": 63, "label": "?", "popup": {
+          "main": { "code": 65311, "label": "？" },
+          "relevant": [
+            { "code": 191, "label": "¿" },
+            { "code": 8253, "label": "‽" }
+          ]
+        }
+      }
+    }
+  ]
+]

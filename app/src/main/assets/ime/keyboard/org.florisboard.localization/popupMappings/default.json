@@ -1,0 +1,18 @@
+{
+  "all": {
+    "~enter": {
+      "main": { "code": -212, "label": "ime_ui_mode_media", "type": "system_gui" },
+      "relevant": [
+        { "code": -112, "label": "compact_layout_to_right", "type": "system_gui" },
+        { "code": -213, "label": "ime_ui_mode_clipboard", "type": "system_gui"}
+      ]
+    },
+    "~left": {
+      "main": { "code": -212, "label": "ime_ui_mode_media", "type": "system_gui" },
+      "relevant": [
+        { "code": -111, "label": "compact_layout_to_left", "type": "system_gui" },
+        { "code": -301, "label": "settings", "type": "system_gui" }
+      ]
+    }
+  }
+}

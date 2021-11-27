@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
-import android.content.res.Configuration
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -46,9 +45,9 @@ class PopupManager<V : View>(
     private val exceptionsForKeyCodes = listOf(
         KeyCode.ENTER,
         KeyCode.LANGUAGE_SWITCH,
-        KeyCode.SWITCH_TO_TEXT_CONTEXT,
-        KeyCode.SWITCH_TO_MEDIA_CONTEXT,
-        KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT,
+        KeyCode.IME_UI_MODE_TEXT,
+        KeyCode.IME_UI_MODE_MEDIA,
+        KeyCode.IME_UI_MODE_CLIPBOARD,
         KeyCode.KANA_SWITCHER,
         KeyCode.CHAR_WIDTH_SWITCHER
     )
@@ -67,10 +66,6 @@ class PopupManager<V : View>(
     /** Is true if the extended popup is visible to the user, else false */
     val isShowingExtendedPopup: Boolean
         get() = popupViewExt.isShowing
-
-    companion object {
-        const val POPUP_EXTENSION_PATH_REL: String = "ime/text/characters/extended_popups"
-    }
 
     init {
         keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_width).toInt()
@@ -103,17 +98,17 @@ class PopupManager<V : View>(
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
-                    KeyCode.SWITCH_TO_TEXT_CONTEXT -> {
+                    KeyCode.IME_UI_MODE_TEXT -> {
                         PopupExtendedView.Element.Label(
                             keyboardView.resources.getString(R.string.key__view_characters), adjustedIndex
                         )
                     }
-                    KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                    KeyCode.IME_UI_MODE_MEDIA -> {
                         getDrawable(keyboardView.context, R.drawable.ic_sentiment_satisfied)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
-                    KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    KeyCode.IME_UI_MODE_CLIPBOARD -> {
                         getDrawable(keyboardView.context, R.drawable.ic_assignment)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
@@ -123,8 +118,8 @@ class PopupManager<V : View>(
                             popupKey.asString(isForDisplay = true), adjustedIndex
                         )
                     }
-                    KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT,
-                    KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> {
+                    KeyCode.COMPACT_LAYOUT_TO_LEFT,
+                    KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
                         getDrawable(keyboardView.context, R.drawable.ic_smartphone)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
@@ -186,31 +181,31 @@ class PopupManager<V : View>(
      */
     private fun calc(key: Key) {
         if (keyboardView is TextKeyboardView) {
-            when (keyboardView.resources.configuration.orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> {
-                    if (keyboardView.isSmartbarKeyboardView) {
-                        keyPopupWidth = (key.visibleBounds.width() * 1.0f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 3.0f * 1.2f).toInt()
-                    } else {
-                        keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width() * 1.0f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 3.0f).toInt()
-                    }
-                }
-                else -> {
-                    if (keyboardView.isSmartbarKeyboardView) {
-                        keyPopupWidth = (key.visibleBounds.width() * 1.1f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 2.5f * 1.2f).toInt()
-                    } else {
-                        keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width() * 1.1f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 2.5f).toInt()
-                    }
-                }
-            }
+            //when (keyboardView.resources.configuration.orientation) {
+            //    Configuration.ORIENTATION_LANDSCAPE -> {
+            //        if (keyboardView.isSmartbarKeyboardView) {
+            //            keyPopupWidth = (key.visibleBounds.width * 1.0f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 3.0f * 1.2f).toInt()
+            //        } else {
+            //            keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width * 1.0f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 3.0f).toInt()
+            //        }
+            //    }
+            //    else -> {
+            //        if (keyboardView.isSmartbarKeyboardView) {
+            //            keyPopupWidth = (key.visibleBounds.width * 1.1f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 2.5f * 1.2f).toInt()
+            //        } else {
+            //            keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width * 1.1f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 2.5f).toInt()
+            //        }
+            //    }
+            //}
         } else if (keyboardView is EmojiKeyboardView) {
-            keyPopupWidth = key.visibleBounds.width()
-            keyPopupHeight = (key.visibleBounds.height() * 2.5f).toInt()
+            keyPopupWidth = key.visibleBounds.width.toInt()
+            keyPopupHeight = (key.visibleBounds.height * 2.5f).toInt()
         }
-        keyPopupDiffX = (key.visibleBounds.width() - keyPopupWidth) / 2
+        keyPopupDiffX = (key.visibleBounds.width.toInt() - keyPopupWidth) / 2
     }
 
     /**
@@ -316,7 +311,7 @@ class PopupManager<V : View>(
                     anchorRight -> keyboardView.measuredWidth -
                             (key.visibleBounds.left + keyPopupDiffX + keyPopupWidth)
                     else -> 0
-                }
+                }.toInt()
                 while (offset > 0) {
                     if (availableSpace >= offset * keyPopupWidth) {
                         break
@@ -401,7 +396,7 @@ class PopupManager<V : View>(
             row1count > 0 -> keyPopupHeight * 0.4f * 2.0f
             else -> keyPopupHeight * 0.4f
         }.toInt()
-        val x = ((key.visibleBounds.width() - keyPopupWidth) / 2) + when {
+        val x = ((key.visibleBounds.width.toInt() - keyPopupWidth) / 2) + when {
             anchorLeft -> -anchorOffset * keyPopupWidth
             anchorRight -> -extWidth + keyPopupWidth + anchorOffset * keyPopupWidth
             else -> 0
@@ -472,8 +467,8 @@ class PopupManager<V : View>(
             }
             anchorRight -> when {
                 // check if out of boundary on x-axis
-                x > key.visibleBounds.width() - keyPopupDiffX + (anchorOffset + 1) * keyPopupWidth ||
-                x < (key.visibleBounds.width() - keyPopupDiffX - (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
+                x > key.visibleBounds.width - keyPopupDiffX + (anchorOffset + 1) * keyPopupWidth ||
+                x < (key.visibleBounds.width - keyPopupDiffX - (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
                     return false
                 }
                 // row 1

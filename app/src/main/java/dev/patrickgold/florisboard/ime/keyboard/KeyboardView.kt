@@ -22,16 +22,16 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.channels.trySendBlocking
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class KeyboardView : ViewGroup, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
-    protected val florisboard get() = FlorisBoard.getInstanceOrNull()
+abstract class KeyboardView : ViewGroup {
     protected val prefs by florisPreferenceModel()
+    protected val keyboardManager by context.keyboardManager()
     protected val themeManager get() = ThemeManager.defaultOrNull()
 
     var isMeasured: Boolean = false
@@ -54,16 +54,6 @@ abstract class KeyboardView : ViewGroup, KeyboardState.OnUpdateStateListener, Th
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        themeManager?.registerOnThemeUpdatedListener(this)
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        themeManager?.unregisterOnThemeUpdatedListener(this)
-    }
-
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return true
     }
@@ -80,7 +70,7 @@ abstract class KeyboardView : ViewGroup, KeyboardState.OnUpdateStateListener, Th
             MotionEvent.ACTION_POINTER_UP,
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_CANCEL -> {
-                touchEventChannel.sendBlocking(event)
+                touchEventChannel.trySendBlocking(event)
                 return true
             }
         }

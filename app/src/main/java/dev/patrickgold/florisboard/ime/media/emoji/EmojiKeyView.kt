@@ -106,7 +106,7 @@ class EmojiKeyView(
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(key, KeyHintConfiguration.HINTS_DISABLED)
                     emojiKeyboardView.popupManager.extend(key, KeyHintConfiguration.HINTS_DISABLED)
-                    florisboard?.inputFeedbackManager?.keyPress(TextKeyData.UNSPECIFIED)
+                    florisboard?.inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
@@ -134,7 +134,7 @@ class EmojiKeyView(
                     retData != null && !isCancelled
                 ) {
                     if (!emojiKeyboardView.isScrollBlocked) {
-                        florisboard?.inputFeedbackManager?.keyPress(TextKeyData.UNSPECIFIED)
+                        florisboard?.inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                     }
                     (retData as? EmojiKeyData)?.let { florisboard?.mediaInputManager?.sendEmojiKeyPress(it) }
                     performClick()
@@ -159,8 +159,8 @@ class EmojiKeyView(
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        key.visibleBounds.set(left, top, right, bottom)
-        key.touchBounds.set(left, top, right, bottom)
+        //key.visibleBounds.set(left, top, right, bottom)
+        //key.touchBounds.set(left, top, right, bottom)
     }
 
     override fun onThemeUpdated(theme: Theme) {

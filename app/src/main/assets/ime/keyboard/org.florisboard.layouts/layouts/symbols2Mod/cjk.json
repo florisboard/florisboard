@@ -1,0 +1,38 @@
+[
+  [
+    { "code": -202, "label": "view_symbols", "type": "system_gui" },
+    { "code":    0, "type": "placeholder" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code": -201, "label": "view_characters", "type": "system_gui" },
+    { "code": 12296, "label": "〈", "popup": {
+      "main": { "code": 12298, "label": "《" },
+      "relevant": [
+        { "code":  8804, "label": "≤" },
+        { "code":  8249, "label": "‹" },
+        { "code": 10216, "label": "⟨" },
+        { "code": 65308, "label": "＜" }
+      ]
+    } },
+    { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
+    { "code": 12288, "label": "空白" },
+    { "code": -9701, "label": "char_width_switcher", "type": "system_gui", "popup": {
+        "relevant": [
+          { "code": -9702, "label": "char_width_full", "type": "system_gui" },
+          { "code": -9703, "label": "char_width_half", "type": "system_gui" }
+        ]
+      }
+    },
+    { "code": 12297, "label": "〉", "popup": {
+      "main": { "code": 12299, "label": "》" },
+      "relevant": [
+        { "code":    62, "label": ">" },
+        { "code":  8805, "label": "≥" },
+        { "code": 10217, "label": "⟩" },
+        { "code": 65310, "label": "＞" }
+      ]
+    } },
+    { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+  ]
+]

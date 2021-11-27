@@ -1,0 +1,55 @@
+[
+  [
+    { "$": "case_selector",
+      "lower": { "code": 12610, "label": "ㅂ" },
+      "upper": { "code": 12611, "label": "ㅃ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 12616, "label": "ㅈ" },
+      "upper": { "code": 12617, "label": "ㅉ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 12599, "label": "ㄷ" },
+      "upper": { "code": 12600, "label": "ㄸ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 12593, "label": "ㄱ" },
+      "upper": { "code": 12594, "label": "ㄲ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 12613, "label": "ㅅ" },
+      "upper": { "code": 12614, "label": "ㅆ" }
+    },
+    { "$": "auto_text_key", "code": 12635, "label": "ㅛ"},
+    { "$": "auto_text_key", "code": 12629, "label": "ㅕ"},
+    { "$": "auto_text_key", "code": 12625, "label": "ㅑ"},
+    { "$": "case_selector",
+      "lower": { "code": 12624, "label": "ㅐ" },
+      "upper": { "code": 12626, "label": "ㅒ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 12628, "label": "ㅔ" },
+      "upper": { "code": 12630, "label": "ㅖ" }
+    }
+  ],
+  [
+    { "$": "auto_text_key", "code": 12609, "label": "ㅁ"},
+    { "$": "auto_text_key", "code": 12596, "label": "ㄴ"},
+    { "$": "auto_text_key", "code": 12615, "label": "ㅇ"},
+    { "$": "auto_text_key", "code": 12601, "label": "ㄹ"},
+    { "$": "auto_text_key", "code": 12622, "label": "ㅎ"},
+    { "$": "auto_text_key", "code": 12631, "label": "ㅗ"},
+    { "$": "auto_text_key", "code": 12627, "label": "ㅓ"},
+    { "$": "auto_text_key", "code": 12623, "label": "ㅏ"},
+    { "$": "auto_text_key", "code": 12643, "label": "ㅣ"}
+  ],
+  [
+    { "$": "auto_text_key", "code": 12619, "label": "ㅋ"},
+    { "$": "auto_text_key", "code": 12620, "label": "ㅌ"},
+    { "$": "auto_text_key", "code": 12618, "label": "ㅊ"},
+    { "$": "auto_text_key", "code": 12621, "label": "ㅍ"},
+    { "$": "auto_text_key", "code": 12640, "label": "ㅠ"},
+    { "$": "auto_text_key", "code": 12636, "label": "ㅜ"},
+    { "$": "auto_text_key", "code": 12641, "label": "ㅡ"}
+  ]
+]

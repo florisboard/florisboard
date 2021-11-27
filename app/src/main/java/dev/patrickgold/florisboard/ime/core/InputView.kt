@@ -31,8 +31,9 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.keyboardManager
 import kotlin.math.roundToInt
 
 /**
@@ -40,8 +41,8 @@ import kotlin.math.roundToInt
  */
 class InputView : LinearLayout {
     private val florisboard get() = FlorisBoard.getInstance()
-    private val oldPrefs get() = Preferences.default()
     private val prefs by florisPreferenceModel()
+    private val keyboardManager by context.keyboardManager()
 
     var desiredInputViewHeight: Float = resources.getDimension(R.dimen.inputView_baseHeight)
         private set
@@ -102,8 +103,8 @@ class InputView : LinearLayout {
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
-        val smartbarDisabled = !oldPrefs.smartbar.enabled ||
-                tim.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow.get() && !oldPrefs.suggestion.api30InlineSuggestionsEnabled
+        val smartbarDisabled = !prefs.smartbar.enabled.get() ||
+                keyboardManager.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow.get() && !prefs.suggestion.api30InlineSuggestionsEnabled.get()
         if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
             baseSmartbarHeight = 0.0f

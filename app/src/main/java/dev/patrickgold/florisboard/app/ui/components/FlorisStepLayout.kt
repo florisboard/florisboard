@@ -34,9 +34,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ContentAlpha
@@ -54,11 +52,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+
+private val StepHeaderPaddingVertical = 16.dp
+private val StepHeaderNumberBoxSize = 40.dp
+private val StepHeaderNumberBoxPaddingEnd = 16.dp
+private val StepHeaderTextBoxHeight = 32.dp
+private val StepHeaderTextInnerPaddingHorizontal = 16.dp
 
 data class FlorisStep(
     val id: Int,
@@ -217,10 +224,26 @@ private fun ColumnScope.Step(
         enter = fadeIn(animationSpec = animSpec),
         exit = fadeOut(animationSpec = animSpec),
     ) {
-        Box(modifier = Modifier.padding(start = 56.dp)) {
+        val onBackground = MaterialTheme.colors.onSurface
+        Box(
+            modifier = Modifier
+                .padding(start = 56.dp)
+                .drawBehind {
+                    val strokeWidth = 2.dp
+                    val x = -(StepHeaderNumberBoxPaddingEnd + (StepHeaderNumberBoxSize / 2 - strokeWidth / 2))
+                    drawLine(
+                        color = onBackground,
+                        start = Offset(x.toPx(), 0f),
+                        end = Offset(x.toPx(), size.height),
+                        strokeWidth = strokeWidth.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(2.dp.toPx(), 10.dp.toPx())),
+                        alpha = 0.12f,
+                    )
+                },
+        ) {
             Column(modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .florisVerticalScroll(),
             ) {
                 content()
             }
@@ -238,13 +261,13 @@ private fun StepHeader(
 ) {
     Row(
         modifier = modifier
-            .padding(vertical = 16.dp),
+            .padding(vertical = StepHeaderPaddingVertical),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
-                .padding(end = 16.dp)
-                .size(40.dp)
+                .padding(end = StepHeaderNumberBoxPaddingEnd)
+                .size(StepHeaderNumberBoxSize)
                 .clip(CircleShape)
                 .background(backgroundColor),
         ) {
@@ -257,7 +280,7 @@ private fun StepHeader(
 
         Box(
             modifier = Modifier
-                .height(32.dp)
+                .height(StepHeaderTextBoxHeight)
                 .weight(1.0f)
                 .clip(CircleShape)
                 .background(backgroundColor),
@@ -265,7 +288,7 @@ private fun StepHeader(
             Text(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = StepHeaderTextInnerPaddingHorizontal),
                 text = title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,

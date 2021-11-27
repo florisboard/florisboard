@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.res.ext
 
 import android.content.Context
-import dev.patrickgold.florisboard.common.resultErr
-import dev.patrickgold.florisboard.common.resultOk
+import dev.patrickgold.florisboard.common.kotlin.resultErr
+import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
 import kotlinx.serialization.Polymorphic

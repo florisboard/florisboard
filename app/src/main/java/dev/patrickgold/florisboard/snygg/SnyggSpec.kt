@@ -47,7 +47,7 @@ class SnyggSpecBuilder {
     }
 }
 
-data class SnyggPropertySetSpec(private val supportedProperties: List<SnyggPropertySpec>) {
+data class SnyggPropertySetSpec(val supportedProperties: List<SnyggPropertySpec>) {
     fun propertySpec(propertyName: String): SnyggPropertySpec? {
         return supportedProperties.find { it.name == propertyName }
     }

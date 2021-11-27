@@ -1,0 +1,48 @@
+[
+  [
+    { "code":   43, "label": "+", "popup": {
+      "relevant": [
+        { "code":   45, "label": "-" },
+        { "code":   42, "label": "*" },
+        { "code":   47, "label": "/" }
+      ]
+    } },
+    { "code":   49, "label": "1", "type": "numeric" },
+    { "code":   50, "label": "2", "type": "numeric" },
+    { "code":   51, "label": "3", "type": "numeric" },
+    { "code":   37, "label": "%" }
+  ],
+  [
+    { "code":   40, "label": "(", "popup": {
+      "relevant": [
+        { "code":   91, "label": "[" },
+        { "code":  123, "label": "{" }
+      ]
+    } },
+    { "code":   52, "label": "4", "type": "numeric" },
+    { "code":   53, "label": "5", "type": "numeric" },
+    { "code":   54, "label": "6", "type": "numeric" },
+    { "code":   32, "label": "space" }
+  ],
+  [
+    { "code":   41, "label": ")", "popup": {
+      "relevant": [
+        { "code":   93, "label": "]" },
+        { "code":  125, "label": "}" }
+      ]
+    } },
+    { "code":   55, "label": "7", "type": "numeric" },
+    { "code":   56, "label": "8", "type": "numeric" },
+    { "code":   57, "label": "9", "type": "numeric" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code": -201, "label": "view_characters", "type": "system_gui" },
+    { "code":   44, "label": "," },
+    { "code": -202, "label": "view_symbols", "type": "system_gui" },
+    { "code":   48, "label": "0", "type": "numeric" },
+    { "code":   61, "label": "=" },
+    { "code":   46, "label": "." },
+    { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+  ]
+]

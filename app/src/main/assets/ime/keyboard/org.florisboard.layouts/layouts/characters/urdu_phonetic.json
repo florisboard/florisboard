@@ -1,0 +1,34 @@
+[
+  [
+    { "code":  1602, "label": "ق" },
+    { "code":  1608, "label": "و" },
+    { "code":  1593, "label": "ع" },
+    { "code":  1585, "label": "ر" },
+    { "code":  1587, "label": "ت" },
+    { "code":  1746, "label": "ے" },
+    { "code":  1569, "label": "ء" },
+    { "code":  1740, "label": "ی" },
+    { "code":  1607, "label": "ه" },
+    { "code":  1662, "label": "پ" }
+  ],
+  [
+    { "code":  1575, "label": "ا" },
+    { "code":  1587, "label": "س" },
+    { "code":  1583, "label": "د" },
+    { "code":  1601, "label": "ف" },
+    { "code":  1711, "label": "گ" },
+    { "code":  1581, "label": "ح" },
+    { "code":  1580, "label": "ج" },
+    { "code":  1705, "label": "ک" },
+    { "code":  1604, "label": "ل" }
+  ],
+  [
+    { "code":  1584, "label": "ذ" },
+    { "code":  1588, "label": "ش" },
+    { "code":  1670, "label": "چ" },
+    { "code":  1591, "label": "ط" },
+    { "code":  1576, "label": "پ" },
+    { "code":  1606, "label": "ن" },
+    { "code":  1605, "label": "م" }
+  ]
+]

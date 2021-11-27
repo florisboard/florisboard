@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.prefs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
@@ -26,8 +27,10 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.util.VersionName
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.preferenceModel
 import java.time.LocalTime
@@ -91,6 +94,22 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
     }
 
+    val correction = Correction()
+    inner class Correction {
+        val autoCapitalization = boolean(
+            key = "correction__auto_capitalization",
+            default = true,
+        )
+        val doubleSpacePeriod = boolean(
+            key = "correction__double_space_period",
+            default = true,
+        )
+        val rememberCapsLockState = boolean(
+            key = "correction__remember_caps_lock_state",
+            default = false,
+        )
+    }
+
     val devtools = Devtools()
     inner class Devtools {
         val enabled = boolean(
@@ -104,6 +123,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val overrideWordSuggestionsMinHeapRestriction = boolean(
             key = "devtools__override_word_suggestions_min_heap_restriction",
             default = false,
+        )
+    }
+
+    val dictionary = Dictionary()
+    inner class Dictionary {
+        val enableSystemUserDictionary = boolean(
+            key = "suggestion__enable_system_user_dictionary",
+            default = true,
+        )
+        val enableFlorisUserDictionary = boolean(
+            key = "suggestion__enable_floris_user_dictionary",
+            default = true,
         )
     }
 
@@ -147,7 +178,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
-            default = 32,
+            default = 36,
         )
         val swipeVelocityThreshold = int(
             key = "gestures__swipe_velocity_threshold",
@@ -266,6 +297,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "internal__is_ime_set_up",
             default = false,
         )
+        val versionOnInstall = string(
+            key = "internal__version_on_install",
+            default = VersionName.DEFAULT_RAW,
+        )
+        val versionLastUse = string(
+            key = "internal__version_last_use",
+            default = VersionName.DEFAULT_RAW,
+        )
+        val versionLastChangelog = string(
+            key = "internal__version_last_changelog",
+            default = VersionName.DEFAULT_RAW,
+        )
     }
 
     val keyboard = Keyboard()
@@ -306,7 +349,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__font_size_multiplier_landscape",
             default = 100,
         )
-        val oneHandedMode = string(
+        val oneHandedMode = enum(
             key = "keyboard__one_handed_mode",
             default = OneHandedMode.OFF,
         )
@@ -374,6 +417,26 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         }
     }
 
+    val localization = Localization()
+    inner class Localization {
+        val activeSubtypeId = long(
+            key = "localization__active_subtype_id",
+            default = Subtype.DEFAULT.id,
+        )
+        val subtypes = string(
+            key = "localization__subtypes",
+            default = "[]",
+        )
+    }
+
+    val smartbar = Smartbar()
+    inner class Smartbar {
+        val enabled = boolean(
+            key = "smartbar__enabled",
+            default = true,
+        )
+    }
+
     val spelling = Spelling()
     inner class Spelling {
         val languageMode = enum(
@@ -387,6 +450,38 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val useUdmEntries = boolean(
             key = "spelling__use_udm_entries",
             default = true,
+        )
+    }
+
+    val suggestion = Suggestion()
+    inner class Suggestion {
+        val api30InlineSuggestionsEnabled = boolean(
+            key = "suggestion__api30_inline_suggestions_enabled",
+            default = true,
+        )
+        val enabled = boolean(
+            key = "suggestion__enabled",
+            default = false,
+        )
+        val displayMode = enum(
+            key = "suggestion__display_mode",
+            default = CandidateView.DisplayMode.DYNAMIC_SCROLLABLE,
+        )
+        val usePrevWords = boolean(
+            key = "suggestion__use_prev_words",
+            default = true,
+        )
+        val blockPossiblyOffensive = boolean(
+            key = "suggestion__block_possibly_offensive",
+            default = true,
+        )
+        val clipboardContentEnabled = boolean(
+            key = "suggestion__clipboard_content_enabled",
+            default = false,
+        )
+        val clipboardContentTimeout = int(
+            key = "suggestion__clipboard_content_timeout",
+            default = 30,
         )
     }
 

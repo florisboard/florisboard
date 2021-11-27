@@ -1,0 +1,110 @@
+[
+  [
+    { "code":   809, "label": "◌̩", "popup": {
+      "main": { "code": 781, "label": "◌̍" }
+    } },
+    { "code":   815, "label": "◌̯", "popup": {
+      "main": { "code": 785, "label": "◌̑" }
+    } },
+    { "code":   794, "label": "◌̚" },
+    { "code":   805, "label": "◌̥", "popup": {
+      "main": { "code": 778, "label": "◌̊" }
+    } },
+    { "code":   828, "label": "◌̼" },
+    { "code":   827, "label": "◌̻" },
+    { "code":   804, "label": "◌̤" },
+    { "code":   797, "label": "◌̝", "popup": {
+      "main": { "code":   724, "label": "◌˔" },
+      "relevant": [
+        { "code":   798, "label": "◌̞" },
+        { "code":  725, "label": "◌˕" },
+        { "code":  792, "label": "◌̘" },
+        { "code":  793, "label": "◌̙" }
+      ]
+    } },
+    { "code":   812, "label": "◌̬" },
+    { "code":   829, "label": "◌̽" },
+    { "code":   826, "label": "◌̺" }
+  ],
+  [
+    { "code":   816, "label": "◌̰" },
+    { "code":   810, "label": "◌̪", "popup": {
+      "main": { "code":   838, "label": "◌͆" }
+    } },
+    { "code":   826, "label": "◌̺" },
+    { "code":   799, "label": "◌̟", "popup": {
+      "main": { "code":  726, "label": "◌˖" }
+    } },
+    { "code":   64, "label": "@" },
+    { "code":   35, "label": "#", "popup": {
+      "main": { "code": 8470, "label": "№" }
+    } },
+    { "code": -801, "label": "currency_slot_1", "popup": {
+      "main": { "code": -802, "label": "currency_slot_2" },
+      "relevant": [
+        { "code": -806, "label": "currency_slot_6" },
+        { "code": -803, "label": "currency_slot_3" },
+        { "code": -804, "label": "currency_slot_4" },
+        { "code": -805, "label": "currency_slot_5" }
+      ]
+    } },
+    { "code":   37, "label": "%", "popup": {
+      "main": { "code": 8240, "label": "‰" },
+      "relevant": [
+        { "code": 8453, "label": "℅" }
+      ]
+    } },
+    { "code":   38, "label": "&" },
+    { "code":   45, "label": "-", "popup": {
+      "main": { "code":   95, "label": "_" },
+      "relevant": [
+        { "code": 8212, "label": "—" },
+        { "code": 8211, "label": "–" },
+        { "code":  183, "label": "·" }
+      ]
+    } },
+    { "code":   43, "label": "+", "popup": {
+      "main": { "code":  177, "label": "±" }
+    } }
+  ],
+  [
+    { "code":   42, "label": "*", "popup": {
+      "main": { "code": 664, "label": "ʘ" },
+      "relevant": [
+        { "code": 450, "label": "ǂ" }
+      ]
+    } },
+    { "code":   34, "label": "\"", "popup": {
+      "main": { "code": 8221, "label": "”" },
+      "relevant": [
+        { "code": 8222, "label": "„" },
+        { "code": 8220, "label": "“" },
+        { "code":  171, "label": "«" },
+        { "code":  187, "label": "»" }
+      ]
+    } },
+    { "code":   39, "label": "'", "popup": {
+      "main": { "code": 700, "label": "ʼ" },
+      "relevant": [
+        { "code": 8218, "label": "‚" },
+        { "code": 8216, "label": "‘" },
+        { "code": 8217, "label": "’" },
+        { "code": 8249, "label": "‹" },
+        { "code": 8250, "label": "›" }
+      ]
+    } },
+    { "code":   58, "label": ":", "popup": {
+      "main": { "code":  8942, "label": "⋮" }
+    } },
+    { "code":   59, "label": ";" },
+    { "code":   33, "label": "!", "popup": {
+      "main": { "code":  161, "label": "¡" }
+    } },
+    { "code":   63, "label": "?", "popup": {
+      "main": { "code":  191, "label": "¿" },
+      "relevant": [
+        { "code": 8253, "label": "‽" }
+      ]
+    } }
+  ]
+]

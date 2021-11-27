@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dev.patrickgold.florisboard.ime.core.InputWindowView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/input_window_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,33 +19,6 @@
         android:background="?inputView_bgColorFallback"
         android:baselineAligned="false">
 
-        <dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
-            android:id="@+id/one_handed_ctrl_panel_start"
-            android:layout_width="@dimen/one_handed_width"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:visibility="gone"
-            app:panelSide="start">
-
-            <ImageButton
-                android:tag="one_handed_ctrl_close"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one_handed_button_height"
-                android:layout_marginBottom="@dimen/one_handed_button_height"
-                android:src="@drawable/ic_zoom_out_map"
-                android:background="@drawable/button_transparent_bg_on_press"
-                android:contentDescription="@string/one_handed__close_btn_content_description"/>
-
-            <ImageButton
-                android:tag="one_handed_ctrl_move"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one_handed_button_height"
-                android:src="@drawable/ic_keyboard_arrow_left"
-                android:background="@drawable/button_transparent_bg_on_press"
-                android:contentDescription="@string/one_handed__move_start_btn_content_description"/>
-
-        </dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel>
-
         <dev.patrickgold.florisboard.common.FlorisViewFlipper
             android:id="@+id/main_view_flipper"
             android:layout_width="0dp"
@@ -61,33 +33,6 @@
             <include android:id="@+id/clipboard" layout="@layout/clipboard_layout"/>
 
         </dev.patrickgold.florisboard.common.FlorisViewFlipper>
-
-        <dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
-            android:id="@+id/one_handed_ctrl_panel_end"
-            android:layout_width="@dimen/one_handed_width"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:visibility="gone"
-            app:panelSide="end">
-
-            <ImageButton
-                android:tag="one_handed_ctrl_close"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one_handed_button_height"
-                android:layout_marginBottom="@dimen/one_handed_button_height"
-                android:src="@drawable/ic_zoom_out_map"
-                android:background="@drawable/button_transparent_bg_on_press"
-                android:contentDescription="@string/one_handed__close_btn_content_description"/>
-
-            <ImageButton
-                android:tag="one_handed_ctrl_move"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one_handed_button_height"
-                android:src="@drawable/ic_keyboard_arrow_right"
-                android:background="@drawable/button_transparent_bg_on_press"
-                android:contentDescription="@string/one_handed__move_start_btn_content_description"/>
-
-        </dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel>
 
     </dev.patrickgold.florisboard.ime.core.InputView>
 

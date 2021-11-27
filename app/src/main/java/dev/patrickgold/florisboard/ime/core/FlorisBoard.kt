@@ -61,20 +61,19 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
-import dev.patrickgold.florisboard.util.refreshLayoutOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -116,9 +115,9 @@ open class FlorisBoard : LifecycleInputMethodService(),
     val themeContext: Context
         get() = _themeContext ?: this
 
-    private val oldPrefs: Preferences get() = Preferences.default()
     private val prefs by florisPreferenceModel()
-    val activeState: KeyboardState = KeyboardState.new()
+    private val keyboardManager by keyboardManager()
+    private val subtypeManager by subtypeManager()
 
     var uiBinding: FlorisboardBinding? = null
         private set
@@ -128,7 +127,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
     var imeManager: InputMethodManager? = null
-    lateinit var inputFeedbackManager: InputFeedbackManager
+    lateinit var inputFeedbackController: InputFeedbackController
     var florisClipboardManager: FlorisClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
 
@@ -145,9 +144,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     lateinit var activeEditorInstance: EditorInstance
 
-    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
-    val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(activeSubtype.composerName)
-    lateinit var activeSubtype: Subtype
+    val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(subtypeManager.activeSubtype().composer.toString())
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
     private var isWindowShown: Boolean = false
@@ -207,11 +204,10 @@ open class FlorisBoard : LifecycleInputMethodService(),
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
 
-                activeEditorInstance = EditorInstance(this, activeState)
+                activeEditorInstance = EditorInstance(this)
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                inputFeedbackManager = InputFeedbackManager.new(this)
-                activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
+                inputFeedbackController = InputFeedbackController.new(this)
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
                 currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
@@ -225,7 +221,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
                     setupDevtools(prefs.devtools.enabled.get() && it)
                 }
 
-                AppVersionUtils.updateVersionOnInstallAndLastUse(this, oldPrefs)
+                AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
                 florisClipboardManager = FlorisClipboardManager.getInstance().also {
                     it.initialize(this)
@@ -270,11 +266,8 @@ open class FlorisBoard : LifecycleInputMethodService(),
         flogInfo(LogTopic.IMS_EVENTS)
 
         updateSoftInputWindowLayoutParameters()
-        updateOneHandedPanelVisibility()
 
         themeManager.requestThemeUpdate(this)
-
-        dispatchCurrentStateToInputUi()
     }
 
     /**
@@ -346,7 +339,10 @@ open class FlorisBoard : LifecycleInputMethodService(),
                 false
             } else {
                 when (prefs.keyboard.landscapeInputUiMode.get()) {
-                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
+                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> {
+                        !keyboardManager.activeState.imeOptions.flagNoFullscreen &&
+                            !keyboardManager.activeState.imeOptions.flagNoExtractUi
+                    }
                     LandscapeInputUiMode.NEVER_SHOW -> false
                     LandscapeInputUiMode.ALWAYS_SHOW -> true
                 }
@@ -369,8 +365,8 @@ open class FlorisBoard : LifecycleInputMethodService(),
     }
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode.get()) {
-            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
+        isExtractViewShown = keyboardManager.activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode.get()) {
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !keyboardManager.activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true
         }
@@ -389,7 +385,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
         } else {
             ResponseState.RESET
         }
-        activeEditorInstance.startInput(attribute)
+        activeEditorInstance.startInput(attribute!!)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -398,15 +394,14 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
         super.onStartInputView(info, restarting)
         if (info != null) {
-            activeState.update(info)
-            activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
+            keyboardManager.activeState.update(info)
+            keyboardManager.activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
         }
-        activeEditorInstance.startInputView(info)
+        activeEditorInstance.startInputView(info!!)
         themeManager.updateRemoteColorValues(activeEditorInstance.packageName ?: "")
         eventListeners.toList().forEach {
             it?.onStartInputView(activeEditorInstance, restarting)
         }
-        dispatchCurrentStateToInputUi()
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
@@ -414,14 +409,13 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
         if (!finishingInput) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                textInputManager.smartbarView?.clearInlineSuggestions()
+                //textInputManager.smartbarView?.clearInlineSuggestions()
             }
         }
         activeEditorInstance.finishInputView()
 
         super.onFinishInputView(finishingInput)
         eventListeners.toList().forEach { it?.onFinishInputView(finishingInput) }
-        dispatchCurrentStateToInputUi()
     }
 
     override fun onFinishInput() {
@@ -437,7 +431,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (oldPrefs.smartbar.enabled && oldPrefs.suggestion.api30InlineSuggestionsEnabled) {
+        return if (prefs.smartbar.enabled.get() && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
             }
@@ -471,7 +465,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
         flogInfo(LogTopic.IMS_EVENTS) {
             "Received inline suggestions response with ${response.inlineSuggestions.size} suggestion(s) provided."
         }
-        textInputManager.smartbarView?.clearInlineSuggestions()
+        //textInputManager.smartbarView?.clearInlineSuggestions()
         postPendingResponse(response)
         return true
     }
@@ -492,16 +486,12 @@ open class FlorisBoard : LifecycleInputMethodService(),
         pendingResponse = Runnable {
             pendingResponse = null
             if (responseState == ResponseState.START_INPUT && inlineSuggestions.isEmpty()) {
-                textInputManager.smartbarView?.clearInlineSuggestions()
+                //textInputManager.smartbarView?.clearInlineSuggestions()
             } else {
-                textInputManager.smartbarView?.showInlineSuggestions(inlineSuggestions)
+                //textInputManager.smartbarView?.showInlineSuggestions(inlineSuggestions)
             }
             responseState = ResponseState.RESET
         }.also { handler.post(it) }
-    }
-
-    fun dispatchCurrentStateToInputUi() {
-        uiBinding?.inputView?.updateKeyboardState(activeState)
     }
 
     override fun onWindowShown() {
@@ -514,15 +504,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
         }
         isWindowShown = true
 
-        val newActiveSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-        if (newActiveSubtype != activeSubtype) {
-            activeSubtype = newActiveSubtype
-            onSubtypeChanged(activeSubtype, true)
-        } else {
-            onSubtypeChanged(activeSubtype, false)
-        }
         setActiveInput(R.id.text_input)
-        updateOneHandedPanelVisibility()
         themeManager.update()
 
         eventListeners.toList().forEach { it?.onWindowShown() }
@@ -542,15 +524,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
         devtoolsOverlaySyncJob = null
 
         eventListeners.toList().forEach { it?.onWindowHidden() }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        flogInfo(LogTopic.IMS_EVENTS)
-        if (isInputViewShown) {
-            updateOneHandedPanelVisibility()
-        }
-
-        super.onConfigurationChanged(newConfig)
     }
 
     /**
@@ -602,7 +575,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
             candidatesStart, candidatesEnd
         )
 
-        activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
+        keyboardManager.activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
         if (internalBatchNestingLevel == 0) {
             flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)" }
             activeEditorInstance.updateSelection(
@@ -622,7 +595,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
             internalSelectionCache.candidatesStart = candidatesStart
             internalSelectionCache.candidatesEnd = candidatesEnd
         }
-        dispatchCurrentStateToInputUi()
     }
 
     override fun onThemeUpdated(theme: Theme) {
@@ -744,8 +716,8 @@ open class FlorisBoard : LifecycleInputMethodService(),
     fun executeSwipeAction(swipeAction: SwipeAction) {
         when (swipeAction) {
             SwipeAction.HIDE_KEYBOARD -> requestHideSelf(0)
-            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> switchToPrevSubtype()
-            SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> switchToNextSubtype()
+            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
+            SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
             SwipeAction.SWITCH_TO_PREV_KEYBOARD -> switchToPrevKeyboard()
             else -> textInputManager.executeSwipeAction(swipeAction)
         }
@@ -763,16 +735,9 @@ open class FlorisBoard : LifecycleInputMethodService(),
         applicationContext.startActivity(i)
     }
 
-    /**
-     * @return If the language switch should be shown.
-     */
-    fun shouldShowLanguageSwitch(): Boolean {
-        return subtypeManager.subtypes.size > 1
-    }
-
     fun switchToPrevKeyboard(){
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (AndroidVersion.ATLEAST_API28_P) {
                 switchToPreviousInputMethod()
             } else {
                 window.window?.let { window ->
@@ -788,7 +753,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     fun switchToNextKeyboard(){
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (AndroidVersion.ATLEAST_API28_P) {
                 switchToNextInputMethod(false)
             } else {
                 window.window?.let { window ->
@@ -800,25 +765,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
             flogError { "Unable to switch to the next IME" }
             imeManager?.showInputMethodPicker()
         }
-    }
-
-    fun switchToPrevSubtype() {
-        flogInfo(LogTopic.IMS_EVENTS)
-        activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype, true)
-    }
-
-    fun switchToNextSubtype() {
-        flogInfo(LogTopic.IMS_EVENTS)
-        activeSubtype = subtypeManager.switchToNextSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype, true)
-    }
-
-    private fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {
-        flogInfo(LogTopic.SUBTYPE_MANAGER) { "New subtype: $newSubtype" }
-        textInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
-        mediaInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
-        clipInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
     }
 
     fun setActiveInput(type: Int, forceSwitchToCharacters: Boolean = false) {
@@ -844,33 +790,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
             OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
             else -> OneHandedMode.OFF
         })
-        updateOneHandedPanelVisibility()
-    }
-
-    fun updateOneHandedPanelVisibility() {
-        if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
-            uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
-            uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
-        } else {
-            when (prefs.keyboard.oneHandedMode.get()) {
-                OneHandedMode.OFF -> {
-                    uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
-                    uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
-                }
-                OneHandedMode.START -> {
-                    uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
-                    uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
-                }
-                OneHandedMode.END -> {
-                    uiBinding?.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
-                    uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
-                }
-            }
-        }
-        // Delay execution so this function can return, then refresh the whole layout
-        uiScope.launch {
-            refreshLayoutOf(uiBinding?.inputView)
-        }
     }
 
     override fun onPrimaryClipChanged() {
@@ -915,7 +834,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
         fun onApplyThemeAttributes() {}
         fun onPrimaryClipChanged() {}
-        fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {}
     }
 
     private enum class ResponseState {
@@ -942,10 +860,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
         val packageName: String,
         @SerialName("composers")
         val composers: List<Composer> = listOf(),
-        @SerialName("currencySets")
-        val currencySets: List<CurrencySet> = listOf(),
-        @SerialName("defaultSubtypes")
-        val defaultSubtypes: List<DefaultSubtype> = listOf()
     ) {
         @Transient var currencySetNames: List<String> = listOf()
         @Transient var currencySetLabels: List<String> = listOf()
@@ -961,7 +875,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
             tmpComposerList.sortBy { it.second }
             // Move selected composers to the top of the list
             for (composerName in listOf(Appender.name)) {
-                val index: Int = tmpComposerList.indexOfFirst { it.first == composerName }
+                val index: Int = tmpComposerList.indexOfFirst { it.first == composerName.toString() }
                 if (index > 0) {
                     tmpComposerList.add(0, tmpComposerList.removeAt(index))
                 }
@@ -969,37 +883,37 @@ open class FlorisBoard : LifecycleInputMethodService(),
             composerNames = tmpComposerList.map { it.first }.toList()
             composerLabels = tmpComposerList.map { it.second }.toList()
 
-            val tmpCurrencyList = mutableListOf<Pair<String, String>>()
-            for (currencySet in currencySets) {
-                tmpCurrencyList.add(Pair(currencySet.name, currencySet.label))
-            }
-            // Sort currency set list alphabetically by the label of a currency set
-            tmpCurrencyList.sortBy { it.second }
-            // Move selected currency variants to the top of the list
-            for (currencyName in listOf("euro", "dollar")) {
-                val index: Int = tmpCurrencyList.indexOfFirst { it.first == currencyName }
-                if (index > 0) {
-                    tmpCurrencyList.add(0, tmpCurrencyList.removeAt(index))
-                }
-            }
-            currencySetNames = tmpCurrencyList.map { it.first }.toList()
-            currencySetLabels = tmpCurrencyList.map { it.second }.toList()
+            //val tmpCurrencyList = mutableListOf<Pair<String, String>>()
+            //for (currencySet in currencySets) {
+            //    tmpCurrencyList.add(Pair(currencySet.name, currencySet.label))
+            //}
+            //// Sort currency set list alphabetically by the label of a currency set
+            //tmpCurrencyList.sortBy { it.second }
+            //// Move selected currency variants to the top of the list
+            //for (currencyName in listOf("euro", "dollar")) {
+            //    val index: Int = tmpCurrencyList.indexOfFirst { it.first == currencyName }
+            //    if (index > 0) {
+            //        tmpCurrencyList.add(0, tmpCurrencyList.removeAt(index))
+            //    }
+            //}
+            //currencySetNames = tmpCurrencyList.map { it.first }.toList()
+            //currencySetLabels = tmpCurrencyList.map { it.second }.toList()
 
-            val tmpSubtypeList = mutableListOf<Pair<String, String>>()
-            for (defaultSubtype in defaultSubtypes) {
-                tmpSubtypeList.add(Pair(defaultSubtype.locale.localeTag(), defaultSubtype.locale.displayName()))
-            }
-            // Sort language list alphabetically by the display name of a language
-            tmpSubtypeList.sortBy { it.second }
-            // Move selected English variants to the top of the list
-            for (languageCode in listOf("en_CA", "en_AU", "en_UK", "en_US")) {
-                val index: Int = tmpSubtypeList.indexOfFirst { it.first == languageCode }
-                if (index > 0) {
-                    tmpSubtypeList.add(0, tmpSubtypeList.removeAt(index))
-                }
-            }
-            defaultSubtypesLanguageCodes = tmpSubtypeList.map { it.first }.toList()
-            defaultSubtypesLanguageNames = tmpSubtypeList.map { it.second }.toList()
+            //val tmpSubtypeList = mutableListOf<Pair<String, String>>()
+            //for (defaultSubtype in defaultSubtypes) {
+            //    tmpSubtypeList.add(Pair(defaultSubtype.locale.localeTag(), defaultSubtype.locale.displayName()))
+            //}
+            //// Sort language list alphabetically by the display name of a language
+            //tmpSubtypeList.sortBy { it.second }
+            //// Move selected English variants to the top of the list
+            //for (languageCode in listOf("en_CA", "en_AU", "en_UK", "en_US")) {
+            //    val index: Int = tmpSubtypeList.indexOfFirst { it.first == languageCode }
+            //    if (index > 0) {
+            //        tmpSubtypeList.add(0, tmpSubtypeList.removeAt(index))
+            //    }
+            //}
+            //defaultSubtypesLanguageCodes = tmpSubtypeList.map { it.first }.toList()
+            //defaultSubtypesLanguageNames = tmpSubtypeList.map { it.second }.toList()
         }
     }
 }

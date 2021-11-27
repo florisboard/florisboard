@@ -37,36 +37,35 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.*
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.launch
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
-    private lateinit var layoutManager: LayoutManager
     private val themeManager get() = ThemeManager.default()
     private val assetManager by assetManager()
+    private val keyboardManager by keyboardManager()
 
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
     private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
         override fun evaluateVisible(data: KeyData): Boolean {
-            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+            return data.code != KeyCode.IME_UI_MODE_MEDIA
         }
 
         override fun isSlot(data: KeyData): Boolean {
             return CurrencySet.isCurrencySlot(data.code)
         }
 
-        override fun getSlotData(data: KeyData): KeyData {
+        override fun slotData(data: KeyData): KeyData {
             return TextKeyData(label = "$")
         }
     }
@@ -135,8 +134,6 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        layoutManager = LayoutManager(this)
-
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
         selectedRef = evaluateSelectedRef()
@@ -161,9 +158,9 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
 
         textKeyboardIconSet = TextKeyboardIconSet.new(this)
-        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
-        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
-        binding.keyboardPreview.sync()
+        //binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        //binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
+        //binding.keyboardPreview.sync()
 
         buildUi()
     }
@@ -250,7 +247,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         setThemeRefInPrefs(selectedRef)
         themeManager.loadTheme(assetRef).onSuccess {
             selectedTheme = it
-            binding.keyboardPreview.onThemeUpdated(it)
+            //binding.keyboardPreview.onThemeUpdated(it)
         }
     }
 
@@ -405,10 +402,10 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
             setCheckedRadioButton(selectId!!)
         }
         launch {
-            binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT
-            ).await())
-            binding.keyboardPreview.onThemeUpdated(selectedTheme)
+            //binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
+            //    KeyboardMode.CHARACTERS, Subtype.DEFAULT
+            //).await())
+            //binding.keyboardPreview.onThemeUpdated(selectedTheme)
         }
     }
 }

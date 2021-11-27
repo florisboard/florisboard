@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -58,49 +59,51 @@ fun PreviewKeyboardField(
     val focusManager = LocalFocusManager.current
 
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    TextField(
-        modifier = modifier
-            .height(56.dp)
-            .fillMaxWidth()
-            .focusRequester(focusRequester)
-            .onFocusEvent { hasFocus = it.isFocused },
-        value = text,
-        onValueChange = { text = it },
-        placeholder = { Text(hint) },
-        trailingIcon = {
-            Row {
-                IconButton(onClick = {
-                    if (hasFocus) focusManager.clearFocus() else focusRequester.requestFocus()
-                }) {
-                    Icon(
-                        painter = painterResource(id = when {
-                            hasFocus -> R.drawable.ic_keyboard_arrow_down
-                            else -> R.drawable.ic_keyboard_arrow_up
-                        }),
-                        contentDescription = null,
-                    )
-                }
-                IconButton(onClick = {
-                    if (!InputMethodUtils.showImePicker(context)) {
-                        Toast.makeText(
-                            context, "Error: InputMethodManager service not available!", Toast.LENGTH_SHORT
-                        ).show()
+    SelectionContainer {
+        TextField(
+            modifier = modifier
+                .height(56.dp)
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+                .onFocusEvent { hasFocus = it.isFocused },
+            value = text,
+            onValueChange = { text = it },
+            placeholder = { Text(hint) },
+            trailingIcon = {
+                Row {
+                    IconButton(onClick = {
+                        if (hasFocus) focusManager.clearFocus() else focusRequester.requestFocus()
+                    }) {
+                        Icon(
+                            painter = painterResource(id = when {
+                                hasFocus -> R.drawable.ic_keyboard_arrow_down
+                                else -> R.drawable.ic_keyboard_arrow_up
+                            }),
+                            contentDescription = null,
+                        )
                     }
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_keyboard),
-                        contentDescription = null,
-                    )
+                    IconButton(onClick = {
+                        if (!InputMethodUtils.showImePicker(context)) {
+                            Toast.makeText(
+                                context, "Error: InputMethodManager service not available!", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_keyboard),
+                            contentDescription = null,
+                        )
+                    }
                 }
-            }
-        },
-        keyboardOptions = KeyboardOptions(autoCorrect = true),
-        singleLine = true,
-        shape = RectangleShape,
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-        ),
-    )
+            },
+            keyboardOptions = KeyboardOptions(autoCorrect = true),
+            singleLine = true,
+            shape = RectangleShape,
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+            ),
+        )
+    }
 }

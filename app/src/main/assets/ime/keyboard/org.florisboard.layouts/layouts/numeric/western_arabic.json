@@ -1,0 +1,28 @@
+[
+  [
+    { "code":   49, "label": "1", "type": "numeric" },
+    { "code":   50, "label": "2", "type": "numeric" },
+    { "code":   51, "label": "3", "type": "numeric" },
+    { "code":   45, "label": "-" }
+  ],
+  [
+    { "code":   52, "label": "4", "type": "numeric" },
+    { "code":   53, "label": "5", "type": "numeric" },
+    { "code":   54, "label": "6", "type": "numeric" },
+    { "code":   32, "label": "space" }
+  ],
+  [
+    { "code":   55, "label": "7", "type": "numeric" },
+    { "code":   56, "label": "8", "type": "numeric" },
+    { "code":   57, "label": "9", "type": "numeric" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code":   44, "label": "," },
+    { "code":   48, "label": "0", "type": "numeric", "popup": {
+      "main": { "code":   43, "label": "+" }
+    } },
+    { "code":   46, "label": "." },
+    { "code":   10, "label": "enter", "type": "enter_editing" }
+  ]
+]

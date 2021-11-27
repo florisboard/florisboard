@@ -1,0 +1,73 @@
+[
+  [
+    { "code":   49, "label": "1", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 176, "label": "°" },
+        { "code": 185, "label": "¹" }
+      ]
+    } },
+    { "code":   50, "label": "2", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 167, "label": "§" },
+        { "code": 178, "label": "²" }
+      ]
+    } },
+    { "code":   51, "label": "3", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 8467, "label": "ℓ" },
+        { "code":  179, "label": "³" }
+      ]
+    } },
+    { "code":   52, "label": "4", "type": "numeric", "popup": {
+      "relevant": [
+        { "code":  187, "label": "»" },
+        { "code": 8250, "label": "›" }
+      ]
+    } },
+    { "code":   53, "label": "5", "type": "numeric", "popup": {
+      "relevant": [
+        { "code":  171, "label": "«" },
+        { "code": 8249, "label": "‹" }
+      ]
+    } },
+    { "code":   54, "label": "6", "type": "numeric", "popup": {
+      "relevant": [
+        { "code":  36, "label": "$" },
+        { "code": 162, "label": "¢" }
+      ]
+    } },
+    { "code":   55, "label": "7", "type": "numeric", "popup": {
+      "main": { "code": -801, "label": "currency_slot_1" },
+      "relevant": [
+        { "code": -802, "label": "currency_slot_2" },
+        { "code": -803, "label": "currency_slot_3" },
+        { "code": -804, "label": "currency_slot_4" },
+        { "code": -805, "label": "currency_slot_5" },
+        { "code": -806, "label": "currency_slot_6" }
+      ]
+    } },
+    { "code":   56, "label": "8", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 8222, "label": "„" },
+        { "code": 8218, "label": "‚" }
+      ]
+    } },
+    { "code":   57, "label": "9", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 8220, "label": "“" },
+        { "code": 8216, "label": "‘" }
+      ]
+    } },
+    { "code":   48, "label": "0", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 8221, "label": "”" },
+        { "code": 8217, "label": "’" }
+      ]
+    } },
+    { "code":   45, "label": "-", "type": "numeric", "popup": {
+      "relevant": [
+        { "code": 8212, "label": "—" }
+      ]
+    } }
+  ]
+]

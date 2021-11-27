@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,127 +17,75 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
-import kotlin.collections.ArrayList
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
+val SubtypeJsonConfig = Json {
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    isLenient = false
+}
 
 /**
  * Class which acts as a high level helper for the raw implementation of subtypes in the prefs.
  * Also interprets the default subtype list defined in ime/config.json and provides helper
  * arrays for the language spinner.
- * @property packageName The package name this SubtypeManager is for.
+ * @param packageName The package name this SubtypeManager is for.
  * @property prefs Reference to the preferences, where the raw subtype settings are accessible.
  * @property imeConfig The [FlorisBoard.ImeConfig] of this input method editor.
  * @property subtypes The currently active subtypes.
  */
 class SubtypeManager(
-    private val packageName: String,
-    applicationContext: Context,
+    context: Context,
+    packageName: String = context.packageName,
 ) : CoroutineScope by MainScope() {
-    private val assetManager by applicationContext.assetManager()
-    private val prefs get() = Preferences.default()
 
-    companion object {
-        const val IME_CONFIG_FILE_PATH = "ime/config.json"
-        const val SUBTYPE_LIST_STR_DELIMITER = ";"
+    private val assetManager by context.assetManager()
+    private val keyboardManager by context.keyboardManager()
+    private val prefs by florisPreferenceModel()
 
-        private var instance: SubtypeManager? = null
+    val imeConfig: FlorisBoard.ImeConfig
 
-        fun init(context: Context): SubtypeManager {
-            val defaultInstance = SubtypeManager(context.packageName, context.applicationContext)
-            instance = defaultInstance
-            return defaultInstance
-        }
-
-        fun default(): SubtypeManager = instance!!
-
-        fun defaultOrNull(): SubtypeManager? = instance
-    }
-
-    var imeConfig: FlorisBoard.ImeConfig = FlorisBoard.ImeConfig(packageName)
-    private val _subtypes: ArrayList<Subtype> = ArrayList()
-    val subtypes: List<Subtype> get() = _subtypes
+    private val _subtypes = MutableLiveData<List<Subtype>>(emptyList())
+    val subtypes: LiveData<List<Subtype>> get() = _subtypes
+    private val _activeSubtype = MutableLiveData(Subtype.DEFAULT)
+    val activeSubtype: LiveData<Subtype> get() = _activeSubtype
 
     init {
-        imeConfig = loadImeConfig(IME_CONFIG_FILE_PATH)
+        // TODO: remove this
+        imeConfig = loadImeConfig("ime/config.json", packageName)
 
-        val listRaw = prefs.localization.subtypes
-        if (listRaw.isNotBlank()) {
-            listRaw.split(SUBTYPE_LIST_STR_DELIMITER).forEach {
-                _subtypes.add(Subtype.fromString(it))
+        prefs.localization.subtypes.observeForever { listRaw ->
+            flogDebug { listRaw }
+            val list = if (listRaw.isNotBlank()) {
+                SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
+            } else {
+                emptyList()
             }
+            _subtypes.postValue(list)
+            evaluateActiveSubtype(list)
         }
     }
 
-    private fun syncSubtypeListToPrefs() {
-        prefs.localization.subtypes = _subtypes.joinToString(SUBTYPE_LIST_STR_DELIMITER)
-    }
+    fun subtypes() = _subtypes.value!!
 
-    /**
-     * Loads the [FlorisBoard.ImeConfig] from ime/config.json.
-     *
-     * @param path The path to to IME config file.
-     * @return The [FlorisBoard.ImeConfig] or a default config.
-     */
-    private fun loadImeConfig(path: String): FlorisBoard.ImeConfig {
-        return assetManager.loadJsonAsset<FlorisBoard.ImeConfig>(FlorisRef.assets(path)).getOrElse {
-            flogError(LogTopic.SUBTYPE_MANAGER) { "Failed to retrieve IME config: $it" }
-            FlorisBoard.ImeConfig(packageName)
-        }
-    }
+    fun activeSubtype() = _activeSubtype.value!!
 
-    /**
-     * Adds a given [subtypeToAdd] to the subtype list, if it does not exist.
-     *
-     * @param subtypeToAdd The subtype which should be added.
-     * @return True if the subtype was added, false otherwise. A return value of false indicates
-     *  that the subtype already exists.
-     */
-    private fun addSubtype(subtypeToAdd: Subtype): Boolean {
-        if (_subtypes.contains(subtypeToAdd)) {
-            return false
-        }
-        _subtypes.add(subtypeToAdd)
-        syncSubtypeListToPrefs()
-        return true
-    }
-
-    /**
-     * Creates a [Subtype] from the given [locale] and [layoutMap] and adds it to the subtype
-     * list, if it does not exist.
-     *
-     * @param locale The locale of the subtype to be added.
-     * @param composerName The composer name of the subtype to be added.
-     * @param currencySetName The currency set name of the subtype to be added.
-     * @param layoutMap The layout map of the subtype to be added.
-     * @return True if the subtype was added, false otherwise. A return value of false indicates
-     *  that the subtype already exists.
-     */
-    fun addSubtype(locale: FlorisLocale, composerName: String, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
-        return addSubtype(
-            Subtype(
-                (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySetName.hashCode()),
-                locale,
-                composerName,
-                currencySetName,
-                layoutMap
-            )
-        )
-    }
-
-    /**
-     * Gets the currency set from the given subtype and returns it. Falls back to a default one if the subtype does not
-     * exist.
-     *
-     * @return The currency set or a fallback.
-     */
-    fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return imeConfig.currencySets.find { it.name == subtypeToSearch.currencySetName } ?: CurrencySet.default()
+    private fun persistNewSubtypeList(list: List<Subtype>) {
+        val listRaw = SubtypeJsonConfig.encodeToString(list)
+        prefs.localization.subtypes.set(listRaw)
     }
 
     /**
@@ -147,20 +95,54 @@ class SubtypeManager(
      * @return The active subtype or null, if the subtype list is empty or no new active subtype
      *  could be determined.
      */
-    fun getActiveSubtype(): Subtype? {
-        val subtypeList = _subtypes
-        for (subtype in subtypeList) {
-            if (subtype.id == prefs.localization.activeSubtypeId) {
-                return subtype
-            }
+    private fun evaluateActiveSubtype(list: List<Subtype>) {
+        val activeSubtypeId = prefs.localization.activeSubtypeId.get()
+        val subtype = list.find { it.id == activeSubtypeId } ?: list.firstOrNull() ?: Subtype.DEFAULT
+        if (subtype.id != activeSubtypeId) {
+            prefs.localization.activeSubtypeId.set(subtype.id)
         }
-        return if (subtypeList.isNotEmpty()) {
-            prefs.localization.activeSubtypeId = subtypeList[0].id
-            subtypeList[0]
-        } else {
-            prefs.localization.activeSubtypeId = Subtype.DEFAULT.id
-            null
+        _activeSubtype.postValue(subtype)
+    }
+
+    /**
+     * Loads the [FlorisBoard.ImeConfig] from ime/config.json.
+     *
+     * @param path The path to to IME config file.
+     * @return The [FlorisBoard.ImeConfig] or a default config.
+     */
+    private fun loadImeConfig(path: String, packageName: String): FlorisBoard.ImeConfig {
+        return assetManager.loadJsonAsset<FlorisBoard.ImeConfig>(FlorisRef.assets(path)).getOrElse {
+            flogError(LogTopic.SUBTYPE_MANAGER) { "Failed to retrieve IME config: $it" }
+            FlorisBoard.ImeConfig(packageName)
         }
+    }
+
+    /**
+     * Adds a given [subtype] to the subtype list, if it does not exist.
+     *
+     * @param subtype The subtype which should be added.
+     * @return True if the subtype was added, false otherwise. A return value of false indicates
+     *  that the subtype already exists.
+     */
+    fun addSubtype(subtype: Subtype): Boolean {
+        val subtypeToAdd = subtype.copy(id = System.currentTimeMillis())
+        val subtypeList = _subtypes.value!!
+        if (subtypeList.find { it.equalsExcludingId(subtype) } != null) {
+            return false
+        }
+        val newSubtypeList = subtypeList + subtypeToAdd
+        persistNewSubtypeList(newSubtypeList)
+        return true
+    }
+
+    /**
+     * Gets the currency set from the given subtype and returns it. Falls back to a default one if the subtype does not
+     * exist.
+     *
+     * @return The currency set or a fallback.
+     */
+    fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
+        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.default()
     }
 
     /**
@@ -169,14 +151,9 @@ class SubtypeManager(
      * @param id The id of the subtype you want to get.
      * @return The subtype or null, if no matching subtype could be found.
      */
-    fun getSubtypeById(id: Int): Subtype? {
-        val subtypeList = _subtypes
-        for (subtype in subtypeList) {
-            if (subtype.id == id) {
-                return subtype
-            }
-        }
-        return null
+    fun getSubtypeById(id: Long): Subtype? {
+        val subtypeList = _subtypes.value!!
+        return subtypeList.find { it.id == id }
     }
 
     /**
@@ -186,13 +163,8 @@ class SubtypeManager(
      * @return The default system locale or null, if no matching default system subtype could be
      *  found.
      */
-    fun getDefaultSubtypeForLocale(locale: FlorisLocale): DefaultSubtype? {
-        for (defaultSubtype in imeConfig.defaultSubtypes) {
-            if (defaultSubtype.locale == locale) {
-                return defaultSubtype
-            }
-        }
-        return null
+    fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
+        return keyboardManager.resources.subtypePresets.value?.find { it.locale == locale }
     }
 
     /**
@@ -202,10 +174,17 @@ class SubtypeManager(
      * @param subtypeToModify The subtype with the new details but same id.
      */
     fun modifySubtypeWithSameId(subtypeToModify: Subtype) {
-        val index = _subtypes.indexOfFirst { subtypeToModify.id == it.id }
-        if (index >= 0 && index < _subtypes.size) {
-            _subtypes[index] = subtypeToModify
-            syncSubtypeListToPrefs()
+        val subtypeList = _subtypes.value!!
+        val index = subtypeList.indexOfFirst { subtypeToModify.id == it.id }
+        if (index >= 0 && index < subtypeList.size) {
+            val newSubtypeList = subtypeList.mapIndexed { n, subtype ->
+                if (n == index) {
+                    subtypeToModify
+                } else {
+                    subtype
+                }
+            }
+            persistNewSubtypeList(newSubtypeList)
         }
     }
 
@@ -216,29 +195,29 @@ class SubtypeManager(
      * @param subtypeToRemove The subtype which should be removed.
      */
     fun removeSubtype(subtypeToRemove: Subtype) {
-        val subtypeList = _subtypes
-        for (subtype in subtypeList) {
-            if (subtype == subtypeToRemove) {
-                subtypeList.remove(subtypeToRemove)
-                break
+        val subtypeList = _subtypes.value!!
+        val indexToRemove = subtypeList.indexOf(subtypeToRemove)
+        if (indexToRemove in subtypeList.indices) {
+            val newSubtypeList = subtypeList.mapIndexedNotNull { n, subtype ->
+                if (n != indexToRemove) {
+                    subtype
+                } else {
+                    null
+                }
             }
-        }
-        syncSubtypeListToPrefs()
-        if (subtypeToRemove.id == prefs.localization.activeSubtypeId) {
-            getActiveSubtype()
+            persistNewSubtypeList(newSubtypeList)
+            evaluateActiveSubtype(newSubtypeList)
         }
     }
 
     /**
      * Switch to the previous subtype in the subtype list if possible.
-     *
-     * @return The new active subtype or null if the determination process failed.
      */
-    fun switchToPrevSubtype(): Subtype? {
-        val subtypeList = _subtypes
-        val activeSubtype = getActiveSubtype() ?: return null
+    fun switchToPrevSubtype() {
+        val subtypeList = _subtypes.value!!
+        val activeSubtype = _activeSubtype.value!!
         var triggerNextSubtype = false
-        var newActiveSubtype: Subtype? = null
+        var newActiveSubtype: Subtype = Subtype.DEFAULT
         for (subtype in subtypeList.reversed()) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
@@ -250,23 +229,18 @@ class SubtypeManager(
         if (triggerNextSubtype) {
             newActiveSubtype = subtypeList.last()
         }
-        prefs.localization.activeSubtypeId = when (newActiveSubtype) {
-            null -> Subtype.DEFAULT.id
-            else -> newActiveSubtype.id
-        }
-        return newActiveSubtype
+        prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
+        _activeSubtype.postValue(newActiveSubtype)
     }
 
     /**
      * Switch to the next subtype in the subtype list if possible.
-     *
-     * @return The new active subtype or null if the determination process failed.
      */
-    fun switchToNextSubtype(): Subtype? {
-        val subtypeList = _subtypes
-        val activeSubtype = getActiveSubtype() ?: return null
+    fun switchToNextSubtype() {
+        val subtypeList = _subtypes.value!!
+        val activeSubtype = _activeSubtype.value!!
         var triggerNextSubtype = false
-        var newActiveSubtype: Subtype? = null
+        var newActiveSubtype: Subtype = Subtype.DEFAULT
         for (subtype in subtypeList) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
@@ -278,10 +252,7 @@ class SubtypeManager(
         if (triggerNextSubtype) {
             newActiveSubtype = subtypeList.first()
         }
-        prefs.localization.activeSubtypeId = when (newActiveSubtype) {
-            null -> Subtype.DEFAULT.id
-            else -> newActiveSubtype.id
-        }
-        return newActiveSubtype
+        prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
+        _activeSubtype.postValue(newActiveSubtype)
     }
 }

@@ -25,7 +25,8 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                style="@style/SettingsCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="0dp">
 
@@ -63,8 +64,8 @@
                             android:layout_marginStart="16dp"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:src="@drawable/ic_edit"
-                            android:tint="?android:textColorPrimary"
-                            android:contentDescription="@string/settings__theme_editor__edit_group_dialog_title"/>
+                            android:contentDescription="@string/settings__theme_editor__edit_group_dialog_title"
+                            app:tint="?android:textColorPrimary" />
 
                     </LinearLayout>
 

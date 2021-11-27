@@ -73,7 +73,7 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
 
     override fun onUpdateSelection() {
         val isSelectionActive = florisboard?.activeEditorInstance?.selection?.isSelectionMode ?: false
-        val isSelectionMode = florisboard?.textInputManager?.isManualSelectionMode ?: false
+        val isSelectionMode = /*florisboard?.textInputManager?.isManualSelectionMode ?:*/ false
         selectKey?.isHighlighted = isSelectionActive || isSelectionMode
         selectAllKey?.visibility = when {
             isSelectionActive -> View.GONE

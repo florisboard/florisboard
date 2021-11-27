@@ -34,11 +34,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestoj</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Defaŭlta</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistema defaŭlta</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Aldoni</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aldoni subspeco</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Apliki</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Nuligi</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Forigi</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redakti subspeco</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lokaĵaro</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ĉi tiu subtipo jam ekzistas!</string>

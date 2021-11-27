@@ -1,0 +1,644 @@
+{
+  "$": "ime.extension.keyboard",
+  "meta": {
+    "id": "org.florisboard.layouts",
+    "version": "0.1.0",
+    "title": "Default layouts",
+    "description": "Default layouts which are always available.",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "license": "apache-2.0"
+  },
+  "layouts": {
+    "characters": [
+      {
+        "id": "arabic",
+        "label": "Arabic",
+        "authors": [ "HeiWiper" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:arabic"
+      },
+      {
+        "id": "azerty",
+        "label": "AZERTY",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "bepo",
+        "label": "BÉPO",
+        "authors": [ "salamandar" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "bone",
+        "label": "Bone",
+        "authors": [ "ostrya" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:neo2"
+      },
+      {
+        "id": "bulgarian_bds",
+        "label": "Bulgarian (BDS)",
+        "authors": [ "iorvethe" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "bulgarian_phonetic",
+        "label": "Bulgarian (Phonetic)",
+        "authors": [ "iorvethe" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "canadian_french",
+        "label": "Canadian French (QWERTY)",
+        "authors": [ "The-Quantum-Alpha" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "catalan",
+        "label": "Catalan (QWERTY)",
+        "authors": [ "mikelloc" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "catalan_accents",
+        "label": "Catalan (Accents)",
+        "authors": [ "mikelloc" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "colemak",
+        "label": "Colemak",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "danish",
+        "label": "Danish (QWERTY)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "dvorak",
+        "label": "Dvorak",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:dvorak"
+      },
+      {
+        "id": "esperanto",
+        "label": "Esperanto",
+        "authors": [ "jeremiah-miller", "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "esperanto_with_hx",
+        "label": "Esperanto with 'ĥ'",
+        "authors": [ "jeremiah-miller", "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "faroese",
+        "label": "Faroese (QWERTY)",
+        "authors": [ "BinFlush" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "german",
+        "label": "German (QWERTZ)",
+        "authors": [ "mahmoudk1000" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "greek",
+        "label": "Ελληνικά",
+        "authors": [ "tsiflimagas" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "halmak",
+        "label": "Halmak",
+        "authors": [ "dessalines" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "hebrew",
+        "label": "עברית",
+        "authors": [ "Antony" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:hebrew"
+      },
+      {
+        "id": "hungarian",
+        "label": "Hungarian",
+        "authors": [ "zoli111, gabik65", "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "icelandic",
+        "label": "Icelandic (QWERTY)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "igbo",
+        "label": "Igbo",
+        "authors": [ "nd500" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "ipa",
+        "label": "International Phonetic Alphabet",
+        "authors": [ "Huy-Ngo" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "jcuken_russian",
+        "label": "Russian (JCUKEN)",
+        "authors": [ "williamtheaker" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "jcuken_ukrainian",
+        "label": "Ukrainian (JCUKEN)",
+        "authors": [ "williamtheaker", "33kk" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "jis",
+        "label": "JIS",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:jis"
+      },
+      {
+        "id": "korean",
+        "label": "South Korean standard",
+        "authors": [ "patrickgold", "Hayleia" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kurdish",
+        "label": "کوردی (قوەرتی نوێ)",
+        "authors": [ "GoRaN" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:kurdish"
+      },
+      {
+        "id": "kurdish_kurmanci",
+        "label": "Kurdî",
+        "authors": [ "GoRaN" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kurdish_standard",
+        "label": 	"کوردی (ق‌ڤ‌ف‌غ)",
+        "authors": [ "GoRaN" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:kurdish"
+      },
+      {
+        "id": "nalmy",
+        "label": "NALMY",
+        "authors": [ "jeremiah-mille", "jasmcole" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:neo2"
+      },
+      {
+        "id": "norwegian",
+        "label": "Norwegian (QWERTY)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "PHELAT" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:persian"
+      },
+      {
+        "id": "qwerty",
+        "label": "QWERTY",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "qwertz",
+        "label": "QWERTZ",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "sangaline",
+        "label": "Sangaline",
+        "authors": [ "jeremiah-miller", "sangaline" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "serbian_cyrillic",
+        "label": "Serbian (ЉЊЕРТЗ)",
+        "authors": ["GrbavaCigla"],
+        "direction": "ltr"
+      },
+      {
+        "id": "serbian_latin",
+        "label": "Serbian (QWERTZ)",
+        "authors": ["GrbavaCigla"],
+        "direction": "ltr"
+      },
+      {
+        "id": "spanish",
+        "label": "Spanish (QWERTY)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "swedish_finnish",
+        "label": "Swedish/Finnish (QWERTY)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "swiss_french",
+        "label": "Swiss French (QWERTZ)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "swiss_german",
+        "label": "Swiss German (QWERTZ)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "swiss_italian",
+        "label": "Swiss Italian (QWERTZ)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "thai_kedmanee",
+        "label": "Thai Kedmanee",
+        "authors": [ "mrdeck4rd" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "thai_manoonchai",
+        "label": "Thai Manoonchai",
+        "authors": [ "mrdeck4rd" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "turkish_f",
+        "label": "Turkish-F",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "turkish_q",
+        "label": "Turkish-Q",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "urdu_phonetic",
+        "label": "Urdu Phonetic",
+        "authors": [ "mubashir-rehman", "mirfatif" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:arabic"
+      },
+      {
+        "id": "warang_citi",
+        "label": "𑢹𑣗𑣁𑣜𑣁𑣊 𑢯𑣂𑣕𑣂",
+        "authors": [ "Singkiring57" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "workman",
+        "label": "Workman",
+        "authors": [ "icyphox" ],
+        "direction": "ltr"
+      }
+    ],
+    "charactersMod": [
+      {
+        "id": "default",
+        "label": "Default character modifier layout",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "arabic",
+        "label": "Arabic",
+        "authors": [ "HeiWiper" ],
+        "direction": "rtl"
+      },
+      {
+        "id": "dvorak",
+        "label": "Dvorak",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "hebrew",
+        "label": "עברית",
+        "authors": [ "Antony" ],
+        "direction": "rtl"
+      },
+      {
+        "id": "jis",
+        "label": "JIS",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kurdish",
+        "label": "کوردی",
+        "authors": [ "GoRaN" ],
+        "direction": "rtl"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "PHELAT" ],
+        "direction": "rtl"
+      }
+    ],
+    "extension": [
+      {
+        "id": "clipboard_cursor_row",
+        "label": "Clipboard Cursor Row",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "numeric": [
+      {
+        "id": "western_arabic",
+        "label": "Western Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_arabic_pc",
+        "label": "Western Arabic (PC)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "numericAdvanced": [
+      {
+        "id": "western_arabic",
+        "label": "Western Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_arabic_pc",
+        "label": "Western Arabic (PC)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "numericRow": [
+      {
+        "id": "bengali",
+        "label": "Bengali",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "devanagari",
+        "label": "Devanagari",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "eastern_arabic",
+        "label": "Eastern Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "gujarati",
+        "label": "Gujarati",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "gurmukhi",
+        "label": "Gurmukhi",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kannada",
+        "label": "Kannada",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "malayalam",
+        "label": "Malayalam",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "oriya",
+        "label": "Odia",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "tamil",
+        "label": "Tamil",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "telugu",
+        "label": "Telugu",
+        "authors": [ "yashpalgoyal1304" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "thai",
+        "label": "Thai",
+        "authors": [ "mrdeck4rd" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "warang_citi",
+        "label": "Warang Citi",
+        "authors": [ "Singkiring57" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_arabic",
+        "label": "Western Arabic",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "phone": [
+      {
+        "id": "telpad",
+        "label": "Simple telpad input",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "phone2": [
+      {
+        "id": "telpad",
+        "label": "Simple telpad input (advanced controls)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols": [
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:cjk"
+      },
+      {
+        "id": "eastern",
+        "label": "Eastern",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "ipa",
+        "label": "International Phonetic Alphabet",
+        "authors": [ "Huy-Ngo" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:neo2"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western",
+        "label": "Western",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_additional_symbols",
+        "label": "Western (Additional symbols)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbolsMod": [
+      {
+        "id": "default",
+        "label": "Default",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "neo2",
+        "label": "Neo2",
+        "authors": [ "ostrya" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols2": [
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:cjk"
+      },
+      {
+        "id": "eastern",
+        "label": "Eastern",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "ipa",
+        "label": "International Phonetic Alphabet",
+        "authors": [ "Huy-Ngo" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "persian",
+        "label": "Persian",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western",
+        "label": "Western",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols2Mod": [
+      {
+        "id": "default",
+        "label": "Default",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "cjk",
+        "label": "CJK",
+        "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      }
+    ]
+  }
+}

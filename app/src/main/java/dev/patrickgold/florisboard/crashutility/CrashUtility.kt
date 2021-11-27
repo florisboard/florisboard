@@ -21,15 +21,14 @@ import android.app.*
 import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import java.io.File
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
@@ -119,7 +118,7 @@ abstract class CrashUtility private constructor() {
                         ) {}
                         override fun onActivityDestroyed(activity: Activity) {}
                     })
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (AndroidVersion.ATLEAST_API26_O) {
                         try {
                             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
                             if (notificationManager != null && notificationManager is NotificationManager) {
@@ -268,7 +267,7 @@ abstract class CrashUtility private constructor() {
             context ?: return
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
             if (notificationManager != null && notificationManager is NotificationManager) {
-                val notificationBuilder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val notificationBuilder = if (AndroidVersion.ATLEAST_API26_O) {
                     Notification.Builder(context.applicationContext, NOTIFICATION_CHANNEL_ID)
                 } else {
                     @Suppress("DEPRECATION")
@@ -398,21 +397,7 @@ abstract class CrashUtility private constructor() {
                 setLastCrashTimestamp(application, timestamp)
                 if (timestamp - lastTimestamp < 5000) {
                     pushCrashMultipleNotification(application)
-                    val florisboard = FlorisBoard.getInstanceOrNull()
-                    if (florisboard != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                            florisboard.switchToPreviousInputMethod()
-                        } else {
-                            val imm = application.getSystemService(Context.INPUT_METHOD_SERVICE)
-                            if (imm != null && imm is InputMethodManager) {
-                                @Suppress("DEPRECATION")
-                                imm.switchToNextInputMethod(
-                                    florisboard.window?.window?.attributes?.token,
-                                    false
-                                )
-                            }
-                        }
-                    }
+                    FlorisImeService.switchToPrevInputMethod() || FlorisImeService.switchToNextInputMethod()
                 } else {
                     pushCrashOnceNotification(application)
                 }

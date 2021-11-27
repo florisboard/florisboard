@@ -128,14 +128,14 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         event ?: return false
 
         val data = when (view.id) {
-            R.id.back_to_keyboard_button -> TextKeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
-            R.id.clear_clipboard_history -> TextKeyData(code = KeyCode.CLEAR_CLIPBOARD_HISTORY)
+            R.id.back_to_keyboard_button -> TextKeyData(code = KeyCode.IME_UI_MODE_TEXT)
+            R.id.clear_clipboard_history -> TextKeyData(code = KeyCode.CLIPBOARD_CLEAR_HISTORY)
             else -> null
         } ?: return false
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                florisboard.inputFeedbackManager.keyPress(data)
+                florisboard.inputFeedbackController.keyPress(data)
                 florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
             }
             MotionEvent.ACTION_UP -> {

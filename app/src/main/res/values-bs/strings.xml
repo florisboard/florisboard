@@ -38,11 +38,7 @@
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Tipkanje</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standardno</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Dodaj</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj pod-tip</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Primjeni</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Odustani</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Obriši</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedefinisano</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Vrijeme izlaska sunca</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Vrijeme zalaska sunca</string>

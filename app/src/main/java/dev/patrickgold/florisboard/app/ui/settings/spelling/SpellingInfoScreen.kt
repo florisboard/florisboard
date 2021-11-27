@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
@@ -47,7 +47,7 @@ fun SpellingInfoScreen() = FlorisScreen(
             title = source.label,
             summary = source.url,
             onClick = {
-                source.url?.let { launchUrl(context, it) }
+                source.url?.let { context.launchUrl(it) }
             },
         )
     }

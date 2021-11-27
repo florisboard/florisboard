@@ -53,11 +53,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Języki i układy klawiatury</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wygląda na to, że nie skonfigurowałeś żadnego układu. Jako alternatywa zostanie użyty układ Angielski/QWERTY!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Dodaj</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj układ</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Zastosuj</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Anuluj</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Usuń</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edytuj układ</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ustawienia regionalne</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Układ znaków</string>
@@ -195,7 +191,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Doświadczenie w pisaniu</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Słownik</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Słownik</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Włącz systemowy słownik użytkownika</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugeruj słowa przechowywane w słowniku użytkownika systemu</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Zarządzaj systemowym słownikiem użytkownika</string>

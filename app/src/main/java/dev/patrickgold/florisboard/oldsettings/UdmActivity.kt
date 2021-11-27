@@ -21,7 +21,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -251,14 +250,6 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
 
     override fun onCreateBinding(): UdmActivityBinding {
         return UdmActivityBinding.inflate(layoutInflater)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.udm_extra_menu, menu)
-        if (userDictionaryType == USER_DICTIONARY_TYPE_FLORIS) {
-            menu?.findItem(R.id.udm__open_system_manager_ui)?.isVisible = false
-        }
-        return true
     }
 
     override fun onDestroy() {

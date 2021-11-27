@@ -47,11 +47,13 @@ import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
-import dev.patrickgold.florisboard.app.ui.components.SystemUi
+import dev.patrickgold.florisboard.app.ui.components.SystemUiApp
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.util.AndroidVersion
-import dev.patrickgold.florisboard.util.PackageManagerUtils
+import dev.patrickgold.florisboard.common.android.hideAppIcon
+import dev.patrickgold.florisboard.common.android.showAppIcon
+import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
@@ -87,19 +89,20 @@ class FlorisAppActivity : ComponentActivity() {
             config.setLocale(if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it))
             resourcesContext = createConfigurationContext(config)
         }
-        if (AndroidVersion.ATMOST_P) {
+        if (AndroidVersion.ATMOST_API28_P) {
             prefs.advanced.showAppIcon.observe(this) {
                 showAppIcon = it
             }
         }
 
+        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
         WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
             ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
                     Surface(color = MaterialTheme.colors.background) {
-                        SystemUi()
+                        SystemUiApp()
                         if (isDatastoreReady) {
                             AppContent()
                         }
@@ -129,14 +132,14 @@ class FlorisAppActivity : ComponentActivity() {
 
         // App icon visibility control was restricted in Android 10.
         // See https://developer.android.com/reference/android/content/pm/LauncherApps#getActivityList(java.lang.String,%20android.os.UserHandle)
-        if (AndroidVersion.ATMOST_P) {
+        if (AndroidVersion.ATMOST_API28_P) {
             if (showAppIcon) {
-                PackageManagerUtils.showAppIcon(this)
+                this.showAppIcon()
             } else {
-                PackageManagerUtils.hideAppIcon(this)
+                this.hideAppIcon()
             }
         } else {
-            PackageManagerUtils.showAppIcon(this)
+            this.showAppIcon()
         }
     }
 
@@ -172,7 +175,8 @@ class FlorisAppActivity : ComponentActivity() {
                         Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
                         Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
                         Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View,
-                        Routes.Splash.Screen -> false
+                        Routes.Splash.Screen, Routes.Settings.SubtypeAdd,
+                        Routes.Settings.SubtypeEdit -> false
                         else -> true
                     }
                     AnimatedVisibility(visible = previewVisible) {

@@ -1,0 +1,26 @@
+[
+  [
+    { "code":   40, "label": "(" },
+    { "code":   47, "label": "/" },
+    { "code":   41, "label": ")" },
+    { "code":   45, "label": "-" }
+  ],
+  [
+    { "code":   78, "label": "N" },
+    { "code":   44, "label": "pause", "type": "system_gui" },
+    { "code":   44, "label": "," },
+    { "code":   32, "label": "space" }
+  ],
+  [
+    { "code":   42, "label": "*" },
+    { "code":   59, "label": "wait", "type": "system_gui" },
+    { "code":   35, "label": "#" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code": -206, "label": "view_phone", "type": "system_gui" },
+    { "code":   43, "label": "+" },
+    { "code":   46, "label": "." },
+    { "code":   10, "label": "enter", "type": "enter_editing" }
+  ]
+]

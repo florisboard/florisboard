@@ -18,14 +18,20 @@ package dev.patrickgold.florisboard.snygg
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import dev.patrickgold.florisboard.snygg.value.RgbaColor
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImageRefValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
@@ -51,7 +57,13 @@ class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
 
     val shadow = properties[Snygg.Shadow] ?: SnyggImplicitInheritValue
 
+    val shape = properties[Snygg.Shape] ?: SnyggImplicitInheritValue
+
     fun edit() = SnyggPropertySetEditor(properties)
+
+    override fun toString(): String {
+        return properties.toString()
+    }
 }
 
 class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
@@ -130,6 +142,10 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         get() =  getProperty(Snygg.Shadow)
         set(v) = setProperty(Snygg.Shadow, v)
 
+    var shape: SnyggValue?
+        get() =  getProperty(Snygg.Shape)
+        set(v) = setProperty(Snygg.Shape, v)
+
     fun rgbaColor(
         @IntRange(from = RgbaColor.RedMin.toLong(), to = RgbaColor.RedMax.toLong())
         r: Int,
@@ -148,6 +164,48 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         val green = g.toFloat() / RgbaColor.GreenMax
         val blue = b.toFloat() / RgbaColor.BlueMax
         return SnyggSolidColorValue(Color(red, green, blue, a))
+    }
+
+    fun rectangleShape(): SnyggRectangleShapeValue {
+        return SnyggRectangleShapeValue(RectangleShape)
+    }
+
+    fun cutCornerShape(cornerSize: Int): SnyggCutCornerShapeValue {
+        return SnyggCutCornerShapeValue(
+            shape = CutCornerShape(cornerSize),
+            cornerSize, cornerSize, cornerSize, cornerSize,
+        )
+    }
+
+    fun cutCornerShape(
+        topStart: Int,
+        topEnd: Int,
+        bottomEnd: Int,
+        bottomStart: Int,
+    ): SnyggCutCornerShapeValue {
+        return SnyggCutCornerShapeValue(
+            shape = CutCornerShape(topStart, topEnd, bottomEnd, bottomStart),
+            topStart, topEnd, bottomEnd, bottomStart,
+        )
+    }
+
+    fun roundedCornerShape(cornerSize: Int): SnyggRoundedCornerShapeValue {
+        return SnyggRoundedCornerShapeValue(
+            shape = RoundedCornerShape(cornerSize),
+            cornerSize, cornerSize, cornerSize, cornerSize,
+        )
+    }
+
+    fun roundedCornerShape(
+        topStart: Int,
+        topEnd: Int,
+        bottomEnd: Int,
+        bottomStart: Int,
+    ): SnyggRoundedCornerShapeValue {
+        return SnyggRoundedCornerShapeValue(
+            shape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart),
+            topStart, topEnd, bottomEnd, bottomStart,
+        )
     }
 
     fun size(dp: Dp): SnyggDpSizeValue {

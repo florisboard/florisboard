@@ -43,7 +43,7 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import java.time.LocalTime
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -273,7 +273,7 @@ class ThemeManager private constructor(
                 prefs.theme.dayThemeRef.get()
             }
             ThemeMode.FOLLOW_TIME -> {
-                if (AndroidVersion.ATLEAST_O) {
+                if (AndroidVersion.ATLEAST_API26_O) {
                     val current = LocalTime.now()
                     val sunrise = prefs.theme.sunriseTime.get()
                     val sunset = prefs.theme.sunsetTime.get()

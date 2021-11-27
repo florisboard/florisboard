@@ -17,10 +17,10 @@
 package dev.patrickgold.florisboard.util
 
 import android.content.Context
-import dev.patrickgold.florisboard.ime.core.Preferences
+import dev.patrickgold.florisboard.app.prefs.AppPrefs
 
 object AppVersionUtils {
-    fun getRawVersionName(context: Context): String {
+    private fun getRawVersionName(context: Context): String {
         return try {
             context.packageManager.getPackageInfo(context.packageName, 0).versionName
         } catch (e: Exception) {
@@ -28,26 +28,26 @@ object AppVersionUtils {
         }
     }
 
-    fun shouldShowChangelog(context: Context, prefs: Preferences): Boolean {
+    fun shouldShowChangelog(context: Context, prefs: AppPrefs): Boolean {
         val installVersion =
-            VersionName.fromString(prefs.internal.versionOnInstall) ?: VersionName.DEFAULT
+            VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
         val lastChangelogVersion =
-            VersionName.fromString(prefs.internal.versionLastChangelog) ?: VersionName.DEFAULT
+            VersionName.fromString(prefs.internal.versionLastChangelog.get()) ?: VersionName.DEFAULT
         val currentVersion =
             VersionName.fromString(getRawVersionName(context)) ?: VersionName.DEFAULT
 
         return lastChangelogVersion < currentVersion && installVersion != currentVersion
     }
 
-    fun updateVersionOnInstallAndLastUse(context: Context, prefs: Preferences) {
-        if (prefs.internal.versionOnInstall == VersionName.DEFAULT_RAW) {
-            prefs.internal.versionOnInstall = getRawVersionName(context)
+    fun updateVersionOnInstallAndLastUse(context: Context, prefs: AppPrefs) {
+        if (prefs.internal.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
+            prefs.internal.versionOnInstall.set(getRawVersionName(context))
         }
-        prefs.internal.versionLastUse = getRawVersionName(context)
+        prefs.internal.versionLastUse.set(getRawVersionName(context))
     }
 
-    fun updateVersionLastChangelog(context: Context, prefs: Preferences) {
-        prefs.internal.versionLastChangelog = getRawVersionName(context)
+    fun updateVersionLastChangelog(context: Context, prefs: AppPrefs) {
+        prefs.internal.versionLastChangelog.set(getRawVersionName(context))
     }
 }
 

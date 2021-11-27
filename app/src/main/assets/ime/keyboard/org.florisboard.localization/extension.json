@@ -1,0 +1,684 @@
+{
+  "$": "ime.extension.keyboard",
+  "meta": {
+    "id": "org.florisboard.localization",
+    "version": "0.1.0",
+    "title": "Default subtype presets / popup mappings",
+    "description": "Default subptye presets and popup mappings which are always available.",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "license": "apache-2.0"
+  },
+  "dependencies": [
+    "org.florisboard.composers",
+    "org.florisboard.currencysets",
+    "org.florisboard.layouts"
+  ],
+  "popupMappings": [
+    {
+      "id": "default",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "ar",
+      "authors": [ "HeiWiper" ]
+    },
+    {
+      "id": "bg",
+      "authors": [ "iorvethe" ]
+    },
+    {
+      "id": "ca",
+      "authors": [ "mikelloc" ]
+    },
+    {
+      "id": "ckb",
+      "authors": [ "GoRaN" ]
+    },
+    {
+      "id": "cs",
+      "authors": [ "stefan-misik" ]
+    },
+    {
+      "id": "da",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "de",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "de-DE-neobone",
+      "authors": [ "ostrya" ]
+    },
+    {
+      "id": "el",
+      "authors": [ "tsiflimagas" ]
+    },
+    {
+      "id": "en",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "eo",
+      "authors": [ "jeremiah-miller" ]
+    },
+    {
+      "id": "es",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "fa",
+      "authors": [ "PHELAT" ]
+    },
+    {
+      "id": "fi",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "fo",
+      "authors": [ "BinFlush" ]
+    },
+    {
+      "id": "fr",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "hr",
+      "authors": [ "hedidnothingwrong" ]
+    },
+    {
+      "id": "hu",
+      "authors": [ "zoli111, gabik65" ]
+    },
+    {
+      "id": "is",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "it",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "iw",
+      "authors": [ "Antony" ]
+    },
+    {
+      "id": "ja-JP-jis",
+      "authors": [ "waelwindows" ]
+    },
+    {
+      "id": "ko",
+      "authors": [ "patrickgold", "Hayleia" ]
+    },
+    {
+      "id": "ku",
+      "authors": [ "GoRaN" ]
+    },
+    {
+      "id": "lt",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "lv",
+      "authors": [ "patrickgold", "eandersons" ]
+    },
+    {
+      "id": "nb",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "nn",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "pl",
+      "authors": [ "Mikołaj Biel" ]
+    },
+    {
+      "id": "pt",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "pt-BR",
+      "authors": [ "rickym7" ]
+    },
+    {
+      "id": "ro",
+      "authors": [ "bertin0" ]
+    },
+    {
+      "id": "ru",
+      "authors": [ "williamtheaker", "33kk" ]
+    },
+    {
+      "id": "sk",
+      "authors": [ "stefan-misik", "majso" ]
+    },
+    {
+      "id": "sr",
+      "authors": [ "hedidnothingwrong", "GrbavaCigla" ]
+    },
+    {
+      "id": "sv",
+      "authors": [ "patrickgold" ]
+    },
+    {
+      "id": "tr",
+      "authors": [ "kisekinopureya", "patrickgold", "dvrnynr" ]
+    },
+    {
+      "id": "uk",
+      "authors": [ "williamtheaker", "33kk" ]
+    },
+    {
+      "id": "ur-PK",
+      "authors": [ "mubashir-rehman", "mirfatif" ]
+    },
+    {
+      "id": "vi-VN",
+      "authors": [ "patrickgold", "Hayleia" ]
+    }
+  ],
+  "subtypePresets": [
+    {
+      "languageTag": "en-US",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "en-UK",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:pound",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "en-CA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "en-AU",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "de-DE",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:de",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "de-AT",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:de",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "de-CH",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:de",
+      "preferred": {
+        "characters": "org.florisboard.layouts:swiss_german"
+      }
+    },
+    {
+      "languageTag": "de-DE-neobone",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:de-DE-neobone",
+      "preferred": {
+        "characters": "org.florisboard.layouts:neo2",
+        "symbols": "org.florisboard.layouts:neo2",
+        "numericRow": "org.florisboard.layouts:neo2"
+      }
+    },
+    {
+      "languageTag": "fr-FR",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:fr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:azerty"
+      }
+    },
+    {
+      "languageTag": "fr-CA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:fr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:canadian_french"
+      }
+    },
+    {
+      "languageTag": "fr-CH",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:fr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:swiss_french"
+      }
+    },
+    {
+      "languageTag": "it-IT",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:it",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "it-CH",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:it",
+      "preferred": {
+        "characters": "org.florisboard.layouts:swiss_italian"
+      }
+    },
+    {
+      "languageTag": "es-ES",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:es",
+      "preferred": {
+        "characters": "org.florisboard.layouts:spanish"
+      }
+    },
+    {
+      "languageTag": "es-US",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:es",
+      "preferred": {
+        "characters": "org.florisboard.layouts:spanish"
+      }
+    },
+    {
+      "languageTag": "es-419",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:es",
+      "preferred": {
+        "characters": "org.florisboard.layouts:spanish"
+      }
+    },
+    {
+      "languageTag": "pt-PT",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:pt",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "pt-BR",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:pt-BR",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "nb-NO",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:nb",
+      "preferred": {
+        "characters": "org.florisboard.layouts:norwegian"
+      }
+    },
+    {
+      "languageTag": "nn-NO",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:nn",
+      "preferred": {
+        "characters": "org.florisboard.layouts:norwegian"
+      }
+    },
+    {
+      "languageTag": "sv-SE",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:sv",
+      "preferred": {
+        "characters": "org.florisboard.layouts:swedish_finnish"
+      }
+    },
+    {
+      "languageTag": "fi-FI",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:fi",
+      "preferred": {
+        "characters": "org.florisboard.layouts:swedish_finnish"
+      }
+    },
+    {
+      "languageTag": "da-DK",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:da",
+      "preferred": {
+        "characters": "org.florisboard.layouts:danish"
+      }
+    },
+    {
+      "languageTag": "is-IS",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:is",
+      "preferred": {
+        "characters": "org.florisboard.layouts:icelandic"
+      }
+    },
+    {
+      "languageTag": "fo",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:fo",
+      "preferred": {
+        "characters": "org.florisboard.layouts:faroese"
+      }
+    },
+    {
+      "languageTag": "fa-FA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:fa",
+      "preferred": {
+        "characters": "org.florisboard.layouts:persian",
+        "symbols": "org.florisboard.layouts:persian",
+        "symbols2": "org.florisboard.layouts:persian",
+        "numericRow": "org.florisboard.layouts:persian"
+      }
+    },
+    {
+      "languageTag": "ar",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:ar",
+      "preferred": {
+        "characters": "org.florisboard.layouts:arabic",
+        "symbols": "org.florisboard.layouts:eastern",
+        "symbols2": "org.florisboard.layouts:eastern",
+        "numericRow": "org.florisboard.layouts:eastern_arabic"
+      }
+    },
+    {
+      "languageTag": "hu",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:hu",
+      "preferred": {
+        "characters": "org.florisboard.layouts:hungarian"
+      }
+    },
+    {
+      "languageTag": "eo",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:eo",
+      "preferred": {
+        "characters": "org.florisboard.layouts:esperanto"
+      }
+    },
+    {
+      "languageTag": "hr",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:hr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "ru",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:russian_ruble",
+      "popupMapping": "org.florisboard.localization:ru",
+      "preferred": {
+        "characters": "org.florisboard.layouts:jcuken_russian"
+      }
+    },
+    {
+      "languageTag": "uk",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:ukrainian_hryvnia",
+      "popupMapping": "org.florisboard.localization:uk",
+      "preferred": {
+        "characters": "org.florisboard.layouts:jcuken_ukrainian"
+      }
+    },
+    {
+      "languageTag": "el",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:el",
+      "preferred": {
+        "characters": "org.florisboard.layouts:greek"
+      }
+    },
+    {
+      "languageTag": "ro",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:ro",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "pl",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:pl",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "bg-bg",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:bg",
+      "preferred": {
+        "characters": "org.florisboard.layouts:bulgarian_phonetic"
+      }
+    },
+    {
+      "languageTag": "tr",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:turkish_lira",
+      "popupMapping": "org.florisboard.localization:tr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "iw-IL",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:israeli_new_shekel",
+      "popupMapping": "org.florisboard.localization:iw",
+      "preferred": {
+        "characters": "org.florisboard.layouts:hebrew"
+      }
+    },
+    {
+      "languageTag": "ckb",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:ckb",
+      "preferred": {
+        "characters": "org.florisboard.layouts:kurdish",
+        "symbols": "org.florisboard.layouts:eastern",
+        "symbols2": "org.florisboard.layouts:eastern",
+        "numericRow": "org.florisboard.layouts:eastern_arabic"
+      }
+    },
+    {
+      "languageTag": "sr-RS",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:sr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:serbian_cyrillic"
+      }
+    },
+    {
+      "languageTag": "lv-LV",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:lv",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "ku",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:ku",
+      "preferred": {
+        "characters": "org.florisboard.layouts:kurdish_kurmanci"
+      }
+    },
+    {
+      "languageTag": "ca",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:ca",
+      "preferred": {
+        "characters": "org.florisboard.layouts:catalan"
+      }
+    },
+    {
+      "languageTag": "IPA-IPA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "preferred": {
+        "characters": "org.florisboard.layouts:ipa",
+        "symbols": "org.florisboard.layouts:ipa",
+        "symbols2": "org.florisboard.layouts:ipa"
+      }
+    },
+    {
+      "languageTag": "sk",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:sk",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "cs",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:cs",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "ko",
+      "composer": "org.florisboard.composers:hangul-unicode",
+      "currencySet": "org.florisboard.currencysets:south_korean_won",
+      "popupMapping": "org.florisboard.localization:ko",
+      "preferred": {
+        "characters": "org.florisboard.layouts:korean"
+      }
+    },
+    {
+      "languageTag": "lt-LT",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:lt",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "ja-JP-jis",
+      "composer": "org.florisboard.composers:kana-unicode",
+      "currencySet": "org.florisboard.currencysets:yen",
+      "popupMapping": "org.florisboard.localization:ja-JP-jis",
+      "preferred": {
+        "characters": "org.florisboard.layouts:jis",
+        "symbols": "org.florisboard.layouts:cjk",
+        "symbols2": "org.florisboard.layouts:cjk",
+        "numericRow": "org.florisboard.layouts:cjk"
+      }
+    },
+    {
+      "languageTag": "th-kd",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:thai_baht",
+      "preferred": {
+        "characters": "org.florisboard.layouts:thai_kedmanee",
+        "numericRow": "org.florisboard.layouts:thai"
+      }
+    },
+    {
+      "languageTag": "vi-VN",
+      "composer": "org.florisboard.composers:basic-telex",
+      "currencySet": "org.florisboard.currencysets:vietnamese_dong",
+      "popupMapping": "org.florisboard.localization:vi-VN",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "ig-NG",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:nigerian_naira",
+      "preferred": {
+        "characters": "org.florisboard.layouts:igbo"
+      }
+    },
+    {
+      "languageTag": "hoc",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "preferred": {
+        "characters": "org.florisboard.layouts:warang_citi",
+        "numericRow": "org.florisboard.layouts:warang_citi"
+      }
+    },
+    {
+      "languageTag": "ur-PK",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:pakistani_rupee",
+      "popupMapping": "org.florisboard.localization:ur-PK",
+      "preferred": {
+        "characters": "org.florisboard.layouts:urdu_phonetic"
+      }
+    }
+  ]
+}

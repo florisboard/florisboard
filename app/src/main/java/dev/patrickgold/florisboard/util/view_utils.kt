@@ -6,8 +6,6 @@ import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import kotlin.reflect.KClass
@@ -22,55 +20,8 @@ fun getColorFromAttr(
     return typedValue.data
 }
 
-fun getBooleanFromAttr(
-    context: Context,
-    attrBoolean: Int,
-    typedValue: TypedValue = TypedValue(),
-    resolveRefs: Boolean = true
-): Boolean {
-    context.theme.resolveAttribute(attrBoolean, typedValue, resolveRefs)
-    return typedValue.data != 0
-}
-
-fun setBackgroundTintColor(view: View, colorId: Int) {
-    view.backgroundTintList = ColorStateList.valueOf(
-        getColorFromAttr(view.context, colorId)
-    )
-}
 fun setBackgroundTintColor2(view: View, colorInt: Int) {
     view.backgroundTintList = ColorStateList.valueOf(colorInt)
-}
-fun setDrawableTintColor(view: Button, colorId: Int) {
-    view.compoundDrawableTintList = ColorStateList.valueOf(
-        getColorFromAttr(view.context, colorId)
-    )
-}
-fun setDrawableTintColor2(view: Button, colorInt: Int) {
-    view.compoundDrawableTintList = ColorStateList.valueOf(colorInt)
-}
-fun setImageTintColor2(view: ImageView, colorInt: Int) {
-    view.imageTintList = ColorStateList.valueOf(colorInt)
-}
-fun setTextTintColor(view: View, colorId: Int) {
-    view.foregroundTintList = ColorStateList.valueOf(
-        getColorFromAttr(view.context, colorId)
-    )
-}
-fun setTextTintColor2(view: View, colorInt: Int) {
-    view.foregroundTintList = ColorStateList.valueOf(colorInt)
-}
-
-fun refreshLayoutOf(view: View?) {
-    if (view is ViewGroup) {
-        view.invalidate()
-        view.requestLayout()
-        for (childView in view.children) {
-            refreshLayoutOf(childView)
-        }
-    } else {
-        view?.invalidate()
-        view?.requestLayout()
-    }
 }
 
 @Suppress("UNCHECKED_CAST")

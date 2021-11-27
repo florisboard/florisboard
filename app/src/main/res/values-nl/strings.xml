@@ -53,11 +53,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is niet geselecteerd als de standaard invoermethode. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Talen &amp; Indelingen</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Het lijkt erop dat je geen indelingen hebt geconfigureerd. Als terugval wordt de indeling Engels / QWERTY gebruikt!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Toevoegen</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Indeling toevoegen</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Toepassen</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Annuleren</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Verwijderen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landinstelling</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tekenlayout</string>
@@ -189,7 +185,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Typervaring</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Woordenboek</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Woordenboek</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activeer het persoonlijke woordenboek van het systeem</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Stel woorden voor uit het persoonlijke woordenboek van het systeem</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Beheer persoonlijke woordenboek van het systeem</string>
@@ -346,7 +342,7 @@
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Auteurs</string>
+    <string name="ext__meta__maintainers">Auteurs</string>
     <string name="ext__meta__description">Beschrijving</string>
     <string name="ext__meta__homepage">Startpagina</string>
     <string name="ext__meta__id">ID</string>

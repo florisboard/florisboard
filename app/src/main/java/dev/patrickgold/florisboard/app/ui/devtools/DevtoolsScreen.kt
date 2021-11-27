@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.ui.devtools
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.R
@@ -25,9 +26,10 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.common.android.AndroidSettings
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
-import dev.patrickgold.florisboard.util.AndroidSettings
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
@@ -121,6 +123,24 @@ fun DevtoolsScreen() = FlorisScreen(title = stringRes(R.string.devtools__title))
             title = stringRes(R.string.devtools__android_locales__title),
             onClick = { navController.navigate(Routes.Devtools.AndroidLocales) },
             enabledIf = { prefs.devtools.enabled isEqualTo true },
+        )
+    }
+
+    PreferenceGroup(title = "prefs.internal.version*") {
+        val versionOnInstall by prefs.internal.versionOnInstall.observeAsState()
+        Preference(
+            title = "prefs.internal.versionOnInstall",
+            summary = versionOnInstall,
+        )
+        val versionLastUse by prefs.internal.versionLastUse.observeAsState()
+        Preference(
+            title = "prefs.internal.versionLastUse",
+            summary = versionLastUse,
+        )
+        val versionLastChangelog by prefs.internal.versionLastChangelog.observeAsState()
+        Preference(
+            title = "prefs.internal.versionLastChangelog",
+            summary = versionLastChangelog,
         )
     }
 

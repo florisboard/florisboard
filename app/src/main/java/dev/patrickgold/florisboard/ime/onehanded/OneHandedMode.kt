@@ -24,24 +24,26 @@ import dev.patrickgold.jetpref.ui.compose.entry
 /**
  * Static object which contains all possible one-handed mode strings.
  */
-object OneHandedMode {
-    const val OFF: String = "off"
-    const val START: String = "start"
-    const val END: String = "end"
+enum class OneHandedMode {
+    OFF,
+    START,
+    END;
 
-    @Composable
-    fun listEntries() = listOf(
-        entry(
-            key = OFF,
-            label = stringRes(R.string.enum__one_handed_mode__off),
-        ),
-        entry(
-            key = START,
-            label = stringRes(R.string.enum__one_handed_mode__start),
-        ),
-        entry(
-            key = END,
-            label = stringRes(R.string.enum__one_handed_mode__end),
-        ),
-    )
+    companion object {
+        @Composable
+        fun listEntries() = listOf(
+            entry(
+                key = OFF,
+                label = stringRes(R.string.enum__one_handed_mode__off),
+            ),
+            entry(
+                key = START,
+                label = stringRes(R.string.enum__one_handed_mode__start),
+            ),
+            entry(
+                key = END,
+                label = stringRes(R.string.enum__one_handed_mode__end),
+            ),
+        )
+    }
 }

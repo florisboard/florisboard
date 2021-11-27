@@ -18,12 +18,15 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.view.children
+import androidx.lifecycle.LiveData
+import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.properties.Delegates
 
 /**
  * This class is a helper managing the state of the text input logic which
@@ -38,9 +41,12 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  * ---------|----------|----------|----------|---------------------------------
  *          |          |          |     1111 | Active [KeyboardMode]
  *          |          |          | 1111     | Active [KeyVariation]
- *          |          |        1 |          | Caps flag
+ *          |          |        1 |          | Shift lock flag (shift and caps combined is InputMode id)
  *          |          |       1  |          | Caps lock flag
  *          |          |      1   |          | Is selection active (length > 0)
+ *          |          |     1    |          | Is manual selection mode
+ *          |          |    1     |          | Is manual selection mode (start)
+ *          |          |   1      |          | Is manual selection mode (end)
  *          |          | 1        |          | Is private mode
  *          |        1 |          |          | Is Smartbar quick actions visible
  *          |       1  |          |          | Is Smartbar showing inline suggestions
@@ -74,21 +80,30 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  * The resulting structure is only relevant during a runtime lifespan and
  * thus can easily be changed without worrying about destroying some saved state.
  *
- * @property value The internal register used to store the flags and region ints that
+ * @property rawValue The internal register used to store the flags and region ints that
  *  this keyboard state represents.
  * @property maskOfInterest The mask which is applied when comparing this state with another.
  *  Is useful if only parts of a state instance is relevant to look at.
  */
-class KeyboardState private constructor(var value: ULong, var maskOfInterest: ULong) {
+class KeyboardState private constructor(
+    initValue: ULong,
+    private var maskOfInterest: ULong,
+) : LiveData<KeyboardState>() {
+
     companion object {
         const val M_KEYBOARD_MODE: ULong =                  0x0Fu
         const val O_KEYBOARD_MODE: Int =                    0
         const val M_KEY_VARIATION: ULong =                  0x0Fu
         const val O_KEY_VARIATION: Int =                    4
+        const val M_INPUT_MODE: ULong =                     0x03u
+        const val O_INPUT_MODE: Int =                       8
 
         const val F_CAPS: ULong =                           0x00000100u
         const val F_CAPS_LOCK: ULong =                      0x00000200u
         const val F_IS_SELECTION_MODE: ULong =              0x00000400u
+        const val F_IS_MANUAL_SELECTION_MODE: ULong =       0x00000800u
+        const val F_IS_MANUAL_SELECTION_MODE_START: ULong = 0x00001000u
+        const val F_IS_MANUAL_SELECTION_MODE_END: ULong =   0x00002000u
         const val F_IS_PRIVATE_MODE: ULong =                0x00008000u
         const val F_IS_QUICK_ACTIONS_VISIBLE: ULong =       0x00010000u
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
@@ -102,8 +117,10 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
 
         const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
         const val INTEREST_NONE: ULong =                    0uL
-        const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
-        const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
+        //const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
+        //const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
+
+        const val BATCH_ZERO: Int =                         0
 
         fun new(
             value: ULong = STATE_ALL_ZERO,
@@ -111,8 +128,72 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         ) = KeyboardState(value, maskOfInterest)
     }
 
+    private var rawValue by Delegates.observable(initValue) { _, _, _ -> dispatchState() }
+    private val batchEditCount = AtomicInteger(BATCH_ZERO)
+
     val imeOptions: ImeOptions = ImeOptions(this)
     val inputAttributes: InputAttributes = InputAttributes(this)
+
+    init {
+        dispatchState()
+    }
+
+    override fun setValue(value: KeyboardState?) {
+        flogError { "Do not use setValue() directly" }
+    }
+
+    override fun postValue(value: KeyboardState?) {
+        flogError { "Do not use postValue() directly" }
+    }
+
+    /**
+     * Dispatches the new state to all observers if [batchEditCount] is [BATCH_ZERO] (= no active batch edits).
+     */
+    private fun dispatchState() {
+        if (batchEditCount.get() == BATCH_ZERO) {
+            try {
+                super.setValue(this)
+            } catch (e: Exception) {
+                super.postValue(this)
+            }
+        }
+    }
+
+    /**
+     * Begins a batch edit. Any modifications done during an active batch edit will not be dispatched to observers
+     * until [endBatchEdit] is called. At any time given there can be multiple active batch edits at once. This
+     * method is thread-safe and can be called from any thread.
+     */
+    fun beginBatchEdit() {
+        batchEditCount.incrementAndGet()
+    }
+
+    /**
+     * Ends a batch edit. Will dispatch the current state if there are no more other batch edits active. This method is
+     * thread-safe and can be called from any thread.
+     */
+    fun endBatchEdit() {
+        batchEditCount.decrementAndGet()
+        dispatchState()
+    }
+
+    /**
+     * Performs a batch edit by executing the modifier [block]. Any exception that [block] throws will be caught and
+     * re-thrown after correctly ending the batch edit.
+     */
+    inline fun batchEdit(block: (KeyboardState) -> Unit) {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
+        beginBatchEdit()
+        try {
+            block(this)
+        } catch (e: Throwable) {
+            throw e
+        } finally {
+            endBatchEdit()
+        }
+    }
 
     /**
      * Resets this state register.
@@ -121,7 +202,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
      *  Defaults to [STATE_ALL_ZERO].
      */
     fun reset(newValue: ULong = STATE_ALL_ZERO) {
-        value = newValue
+        rawValue = newValue
     }
 
     /**
@@ -131,7 +212,11 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
      *  the reset.
      */
     fun reset(newState: KeyboardState) {
-        value = newState.value
+        rawValue = newState.rawValue
+    }
+
+    fun snapshot(): KeyboardState {
+        return new(rawValue, maskOfInterest)
     }
 
     /**
@@ -146,33 +231,23 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     }
 
     internal fun getFlag(f: ULong): Boolean {
-        return (value and f) != STATE_ALL_ZERO
+        return (rawValue and f) != STATE_ALL_ZERO
     }
 
     internal fun setFlag(f: ULong, v: Boolean) {
-        value = if (v) { value or f } else { value and f.inv() }
+        rawValue = if (v) { rawValue or f } else { rawValue and f.inv() }
     }
 
     internal fun getRegion(m: ULong, o: Int): Int {
-        return ((value shr o) and m).toInt()
+        return ((rawValue shr o) and m).toInt()
     }
 
     internal fun setRegion(m: ULong, o: Int, v: Int) {
-        value = (value and (m shl o).inv()) or ((v.toULong() and m) shl o)
-    }
-
-    fun isEqualTo(other: KeyboardState): Boolean {
-        return (other.value and maskOfInterest) == (value and maskOfInterest)
-    }
-
-    fun isDifferentTo(other: KeyboardState): Boolean {
-        return !isEqualTo(other)
+        rawValue = (rawValue and (m shl o).inv()) or ((v.toULong() and m) shl o)
     }
 
     override fun hashCode(): Int {
-        var result = value.hashCode()
-        result = 31 * result + maskOfInterest.hashCode()
-        return result
+        return rawValue.hashCode()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -181,12 +256,13 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
 
         other as KeyboardState
 
-        if (value != other.value) return false
-        if (maskOfInterest != other.maskOfInterest) return false
-        if (imeOptions != other.imeOptions) return false
-        if (inputAttributes != other.inputAttributes) return false
+        if (rawValue != other.rawValue) return false
 
         return true
+    }
+
+    override fun toString(): String {
+        return "0x" + rawValue.toString(16).padStart(16, '0')
     }
 
     var keyVariation: KeyVariation
@@ -197,17 +273,41 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         get() = KeyboardMode.fromInt(getRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE))
         set(v) { setRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE, v.toInt()) }
 
-    var caps: Boolean
+    var inputMode: InputMode
+        get() = InputMode.fromInt(getRegion(M_INPUT_MODE, O_INPUT_MODE))
+        set(v) { setRegion(M_INPUT_MODE, O_INPUT_MODE, v.toInt()) }
+
+    @Deprecated("Use inputMode and/or isLowercase/isUppercase")
+    var shiftLock: Boolean
         get() = getFlag(F_CAPS)
         set(v) { setFlag(F_CAPS, v) }
 
+    @Deprecated("Use inputMode and/or isLowercase/isUppercase")
     var capsLock: Boolean
         get() = getFlag(F_CAPS_LOCK)
         set(v) { setFlag(F_CAPS_LOCK, v) }
 
+    val isLowercase: Boolean
+        get() = inputMode == InputMode.NORMAL
+
+    val isUppercase: Boolean
+        get() = inputMode != InputMode.NORMAL
+
     var isSelectionMode: Boolean
         get() = getFlag(F_IS_SELECTION_MODE)
         set(v) { setFlag(F_IS_SELECTION_MODE, v) }
+
+    var isManualSelectionMode: Boolean
+        get() = getFlag(F_IS_MANUAL_SELECTION_MODE)
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE, v) }
+
+    var isManualSelectionModeStart: Boolean
+        get() = getFlag(F_IS_MANUAL_SELECTION_MODE_START)
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE_START, v) }
+
+    var isManualSelectionModeEnd: Boolean
+        get() = getFlag(F_IS_MANUAL_SELECTION_MODE_END)
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE_END, v) }
 
     var isCursorMode: Boolean
         get() = !isSelectionMode
@@ -246,36 +346,4 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     var isKanaSmall: Boolean
         get() = getFlag(F_IS_KANA_SMALL)
         set(v) { setFlag(F_IS_KANA_SMALL, v) }
-
-    interface OnUpdateStateListener {
-        /**
-         * Adds the ability for Views to intercept a update keyboard state dispatch.
-         *
-         * @param newState Reference to the new state.
-         *
-         * @return True if the update was intercepted (and thus the child views have to
-         *  be manually updated if needed, false if no interception happened.
-         */
-        fun onInterceptUpdateKeyboardState(newState: KeyboardState): Boolean = false
-
-        /**
-         * A new keyboard state is dispatched to all views in this view tree.
-         *
-         * @param newState Reference to the new state.
-         */
-        fun onUpdateKeyboardState(newState: KeyboardState)
-    }
-}
-
-fun View.updateKeyboardState(newState: KeyboardState) {
-    val intercepted: Boolean
-    if (this is KeyboardState.OnUpdateStateListener) {
-        intercepted = this.onInterceptUpdateKeyboardState(newState)
-        this.onUpdateKeyboardState(newState)
-    } else {
-        intercepted = false
-    }
-    if (this is ViewGroup && !intercepted) {
-        this.children.forEach { it.updateKeyboardState(newState) }
-    }
 }

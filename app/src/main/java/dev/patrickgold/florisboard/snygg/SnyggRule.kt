@@ -16,8 +16,8 @@
 
 package dev.patrickgold.florisboard.snygg
 
-import dev.patrickgold.florisboard.common.curlyFormat
-import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -27,6 +27,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.Comparator
 
 private const val ATTRIBUTE_OPEN = '['
 private const val ATTRIBUTE_CLOSE = ']'
@@ -50,7 +51,7 @@ data class SnyggRule(
     val hoverSelector: Boolean = false,
     val focusSelector: Boolean = false,
     val pressedSelector: Boolean = false,
-) {
+) : Comparable<SnyggRule> {
     companion object {
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
@@ -63,6 +64,13 @@ data class SnyggRule(
             "m:shiftlock" to 2,
             "m:capslock" to 3,
         )
+
+        val Comparator = Comparator<SnyggRule> { a, b ->
+            when (val elem = a.element.compareTo(b.element)) {
+                0 -> a.comparatorWeight() - b.comparatorWeight()
+                else -> elem
+            }
+        }
 
         fun from(raw: String): SnyggRule? {
             val str = raw.trim().curlyFormat { placeholders[it]?.toString() }
@@ -112,6 +120,10 @@ data class SnyggRule(
         }
     }
 
+    override fun compareTo(other: SnyggRule): Int {
+        return Comparator.compare(this, other)
+    }
+
     override fun toString() = stringBuilder {
         append(element)
         appendAttribute(CODES_KEY, codes)
@@ -131,6 +143,15 @@ data class SnyggRule(
         hoverSelector,
         pressedSelector,
     )
+
+    private fun comparatorWeight(): Int {
+        return (if (codes.isNotEmpty()) 0x01 else 0) +
+            (if (groups.isNotEmpty()) 0x02 else 0) +
+            (if (modes.isNotEmpty()) 0x04 else 0) +
+            (if (focusSelector) 0x08 else 0) +
+            (if (hoverSelector) 0x10 else 0) +
+            (if (pressedSelector) 0x20 else 0)
+    }
 
     private fun StringBuilder.appendAttribute(key: String, entries: List<Int>) {
         if (entries.isNotEmpty()) {

@@ -24,45 +24,51 @@ import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.res.DefaultJsonConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
-import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
 
+@OptIn(ExperimentalSerializationApi::class)
+val ExtensionJsonConfig = Json(DefaultJsonConfig) {
+    prettyPrint = true
+    prettyPrintIndent = "  "
+    encodeDefaults = false
+    serializersModule = SerializersModule {
+        polymorphic(Extension::class) {
+            subclass(KeyboardExtension::class, KeyboardExtension.serializer())
+            subclass(SpellingExtension::class, SpellingExtension.serializer())
+            subclass(ThemeExtension::class, ThemeExtension.serializer())
+        }
+    }
+}
+
 class ExtensionManager(context: Context) {
     companion object {
+        private const val IME_KEYBOARD_PATH = "ime/keyboard"
         private const val IME_SPELLING_PATH = "ime/spelling"
-        private const val IME_THEME_PATH = "ime/theme"
+        private const val IME_THEME_PATH = "ime/themes"
     }
 
     private val appContext by context.appContext()
     private val assetManager by context.assetManager()
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
+    val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
-
-    @OptIn(ExperimentalSerializationApi::class)
-    private val jsonConfig = assetManager.jsonConfig {
-        prettyPrint = true
-        prettyPrintIndent = "  "
-        encodeDefaults = false
-        serializersModule = SerializersModule {
-            polymorphic(Extension::class) {
-                subclass(SpellingExtension::class, SpellingExtension.serializer())
-                subclass(ThemeExtension::class, ThemeExtension.serializer())
-            }
-        }
-    }
 
     fun import(ext: Extension) = runCatching {
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
@@ -72,7 +78,7 @@ class ExtensionManager(context: Context) {
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
-        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, jsonConfig).getOrThrow()
+        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, ExtensionJsonConfig).getOrThrow()
         writeExtension(ext).getOrThrow()
         ext.unload(appContext)
         ext.workingDir = null
@@ -85,6 +91,7 @@ class ExtensionManager(context: Context) {
     }
 
     fun getExtensionById(id: String): Extension? {
+        keyboardExtensions.value?.find { it.meta.id == id }?.let { return it }
         spellingDicts.value?.find { it.meta.id == id }?.let { return it }
         themes.value?.find { it.meta.id == id }?.let { return it }
         return null
@@ -113,7 +120,7 @@ class ExtensionManager(context: Context) {
         private val fileObserverMask =
             FileObserver.CLOSE_WRITE or FileObserver.DELETE or
             FileObserver.MOVED_FROM or FileObserver.MOVED_TO
-        private val fileObserver = if (AndroidVersion.ATLEAST_Q) {
+        private val fileObserver = if (AndroidVersion.ATLEAST_API29_Q) {
             object : FileObserver(internalModuleDir, fileObserverMask) {
                 override fun onEvent(event: Int, path: String?) = onEventCallback(event, path)
             }
@@ -124,7 +131,7 @@ class ExtensionManager(context: Context) {
             }
         }
 
-        fun onEventCallback(event: Int, path: String?) {
+        private fun onEventCallback(event: Int, path: String?) {
             flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
             if (path == null) return
             ioScope.launch {
@@ -152,7 +159,7 @@ class ExtensionManager(context: Context) {
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
-                        assetManager.loadJsonAsset(fileRef, serializer, jsonConfig).fold(
+                        assetManager.loadJsonAsset(fileRef, serializer, ExtensionJsonConfig).fold(
                             onSuccess = { ext ->
                                 ext.sourceRef = extRef
                                 list.add(ext)
@@ -181,7 +188,7 @@ class ExtensionManager(context: Context) {
                         }
                         ZipUtils.readFileFromArchive(appContext, extRef, ExtensionDefaults.MANIFEST_FILE_NAME).fold(
                             onSuccess = { metaStr ->
-                                assetManager.loadJsonAsset(metaStr, serializer, jsonConfig).fold(
+                                assetManager.loadJsonAsset(metaStr, serializer, ExtensionJsonConfig).fold(
                                     onSuccess = { ext ->
                                         ext.sourceRef = extRef
                                         list.add(ext)

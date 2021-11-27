@@ -1,0 +1,90 @@
+[
+  [
+    { "code":   712, "label": "ˈ", "popup": {
+      "main": { "code":   716, "label": "ˌ" }
+    } },
+    { "code":   720, "label": "ː", "popup": {
+      "main": { "code": 721, "label": "ˑ" },
+      "relevant": [
+        { "code":  774, "label": "◌̆" }
+      ]
+    } },
+    { "code":   8599, "label": "↗︎", "popup": {
+      "main": { "code":   42779, "label": "ꜛ" }
+    } },
+    { "code":   8600, "label": "↘︎", "popup": {
+      "main": { "code":   42780, "label": "ꜜ" }
+    } },
+    { "code":   745, "label": "˩", "popup": {
+      "main": { "code":   783, "label": "◌̏" }
+    } },
+    { "code":   744, "label": "˨", "popup": {
+      "main": { "code":   768, "label": "◌̀" },
+      "relevant": [
+        { "code":   780, "label": "◌̌" }
+      ]
+    } },
+    { "code":   743, "label": "˧", "popup": {
+      "main": { "code":   772, "label": "◌̄" }
+    } },
+    { "code":   742, "label": "˦", "popup": {
+      "main": { "code":   769, "label": "◌́" },
+      "relevant": [
+        { "code":   770, "label": "◌̂" }
+      ]
+    } },
+    { "code":   741, "label": "˥", "popup": {
+      "main": { "code": 779, "label": "◌̋" }
+    } },
+    { "code":  865, "label": "◌͡", "popup": {
+      "main": { "code": 8255, "label": "‿" }
+    } }
+  ],
+  [
+    { "code":   776, "label": "◌̈" },
+    { "code":   825, "label": "◌̹", "popup": {
+      "main": { "code": 855, "label": "◌͗" },
+      "relevant": [
+        { "code":  796, "label": "◌̜" },
+        { "code":  849, "label": "◌͑" }
+      ]
+    } },
+    { "code":   800, "label": "◌̠", "popup": {
+      "main": { "code": 727, "label": "◌˗" }
+    } },
+    { "code":   771, "label": "◌̃", "popup": {
+      "main": { "code":  820, "label": "◌̴" },
+      "relevant": [
+        { "code":  734, "label": "◌˞" }
+      ]
+    } },
+    { "code":   91, "label": "[", "popup": {
+      "relevant": [
+        { "code":   40, "label": "(" },
+        { "code":   11816, "label": "⸨" },
+        { "code":   10214, "label": "⟦" },
+        { "code":   10216, "label": "⟨" },
+        { "code":   10218, "label": "⟩" },
+        { "code":  123, "label": "{" }
+      ]
+    } },
+    { "code":   93, "label": "]", "popup": {
+      "relevant": [
+        { "code":   41, "label": ")" },
+        { "code":   11817, "label": "⸩" },
+        { "code":   10215, "label": "⟦" },
+        { "code":   10217, "label": "⟩" },
+        { "code":   10219, "label": "⟫" },
+        { "code":  125, "label": "}" }
+      ]
+    } },
+    { "code":   47, "label": "/", "popup": {
+      "main": { "code": 92, "label": "\\" },
+      "relevant": [
+        { "code":   11005, "label": "⫽" },
+        { "code":   8214, "label": "‖" },
+        { "code":  124, "label": "|" }
+      ]
+    } }
+  ]
+]

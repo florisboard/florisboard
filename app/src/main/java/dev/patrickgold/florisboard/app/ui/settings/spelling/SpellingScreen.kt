@@ -41,10 +41,10 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisSimpleCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
-import dev.patrickgold.florisboard.common.launchActivity
+import dev.patrickgold.florisboard.common.android.AndroidSettings
+import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
-import dev.patrickgold.florisboard.util.AndroidSettings
 import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
@@ -82,7 +82,7 @@ fun SpellingScreen() = FlorisScreen(
             "com.android.settings",
             "com.android.settings.Settings\$SpellCheckersSettingsActivity",
         )
-        launchActivity(context) {
+        context.launchActivity {
             it.addCategory(Intent.CATEGORY_DEFAULT)
             it.component = componentToLaunch
         }
@@ -141,7 +141,6 @@ fun SpellingScreen() = FlorisScreen(
                                 R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
                                 "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
                             ),
-                            contentPadding = PaddingValues(all = 8.dp),
                             onClick = openSystemSpellCheckerSettings,
                         )
                     }
@@ -149,7 +148,6 @@ fun SpellingScreen() = FlorisScreen(
             } else {
                 FlorisErrorCard(
                     text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
-                    contentPadding = PaddingValues(all = 8.dp),
                     onClick = openSystemSpellCheckerSettings,
                 )
             }

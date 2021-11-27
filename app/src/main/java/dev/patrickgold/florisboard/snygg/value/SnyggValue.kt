@@ -33,6 +33,23 @@ interface SnyggValue {
 }
 
 /**
+ * Checks if any given Snygg value indicates that it should be inherited from the parent rule, either marked
+ * explicitly or implicitly.
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun SnyggValue.isInherit(): Boolean {
+    return this is SnyggImplicitInheritValue || this is SnyggExplicitInheritValue
+}
+
+/**
+ * Convenience function which returns the opposite of SnyggValue.isInherit(). See [isInherit] for more info.
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun SnyggValue.isNotInherit(): Boolean {
+    return !isInherit()
+}
+
+/**
  * This value defines that a property value should be copied from the parent stylesheet.
  *
  * The inherit intent was defined explicitly by the creator of the stylesheet and thus should be kept internally in the

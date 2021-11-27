@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
-import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 
 interface SnyggValueSpec {
     val id: String?
@@ -175,6 +175,20 @@ data class SnyggListValueSpec(
     }
 }
 
+data class SnyggNothingValueSpec(
+    override val id: String?,
+) : SnyggValueSpec {
+
+    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+        check(str.isBlank())
+        return@runCatching dstMap
+    }
+
+    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
+        return@runCatching ""
+    }
+}
+
 class SnyggValueFormatListBuilder {
     private val valueFormats = mutableListOf<SnyggValueSpec>()
 
@@ -254,4 +268,16 @@ class SnyggValueSpecBuilder {
         max: Float? = null,
         namedNumbers: List<Pair<String, Float>> = listOf(),
     ) = SnyggNumberValueSpec(id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toFloat() })
+
+    fun percentageInt(
+        id: String? = null,
+        namedNumbers: List<Pair<String, Int>> = listOf(),
+    ) = int(id, unit = "%", min = 0, max = 100, namedNumbers = namedNumbers)
+
+    fun percentageFloat(
+        id: String? = null,
+        namedNumbers: List<Pair<String, Float>> = listOf(),
+    ) = float(id, unit = "%", min = 0.0f, max = 100.0f, namedNumbers = namedNumbers)
+
+    fun nothing() = SnyggNothingValueSpec(null)
 }

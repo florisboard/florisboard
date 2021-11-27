@@ -51,11 +51,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Nyelvek és billentyűzetkiosztások</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Úgy tűnik, hogy nem állított be altípusokat. Tartalékként az angol/QWERTY lesz használva!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Hozzáadás</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Alkalmaz</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Mégse</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Törlés</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Terület</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Karakterelrendezés</string>
@@ -162,7 +158,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Gépelési élmény</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Szótár</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Szótár</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>

@@ -17,9 +17,11 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -43,6 +45,7 @@ fun FlorisDropdownMenu(
     expanded: Boolean,
     selectedIndex: Int,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
     onSelectItem: (Int) -> Unit = { },
     onExpandRequest: () -> Unit = { },
     onDismissRequest: () -> Unit = { },
@@ -50,8 +53,19 @@ fun FlorisDropdownMenu(
     Box(modifier = modifier.wrapContentSize(Alignment.TopStart)) {
         val indicatorRotation by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
         val index = selectedIndex.coerceIn(items.indices)
+        val color = if (isError) {
+            MaterialTheme.colors.error
+        } else {
+            MaterialTheme.colors.onBackground
+        }
         OutlinedButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
+            border = if (isError) {
+                BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
+            } else {
+                ButtonDefaults.outlinedBorder
+            },
             onClick = { onExpandRequest() },
         ) {
             Text(
@@ -60,12 +74,12 @@ fun FlorisDropdownMenu(
                 textAlign = TextAlign.Start,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                color = MaterialTheme.colors.onBackground,
+                color = color,
             )
             Icon(
                 modifier = Modifier.rotate(indicatorRotation),
                 painter = painterResource(R.drawable.ic_keyboard_arrow_down),
-                tint = MaterialTheme.colors.onBackground.copy(alpha = ContentAlpha.medium),
+                tint = color.copy(alpha = ContentAlpha.medium),
                 contentDescription = "Dropdown indicator",
             )
         }

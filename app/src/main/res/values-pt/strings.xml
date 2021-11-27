@@ -53,11 +53,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard não está selecionado como método de introdução padrão. Toque aqui para resolver esta situação.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas e disposições de teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que ainda não configurou quaisquer subtipos. Como recurso será utilizado o subtipo Inglês/QWERTY!</string>
-    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Adicionar</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar subtipo</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Aplicar</string>
-    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Cancelar</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Remover</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar subtipo</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Configuração regional</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposição de caracteres</string>
@@ -209,7 +205,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Experiência de digitação</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Dicionário</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Dicionário</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ativar dicionário do sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palavras guardadas no dicionário do sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gerir dicionários do sistema</string>
@@ -416,7 +412,7 @@
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Autores</string>
+    <string name="ext__meta__maintainers">Autores</string>
     <string name="ext__meta__description">Descrição</string>
     <string name="ext__meta__homepage">Página web</string>
     <string name="ext__meta__id">ID</string>

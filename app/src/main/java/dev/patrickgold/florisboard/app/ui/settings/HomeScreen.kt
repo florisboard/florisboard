@@ -44,114 +44,131 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.launchActivity
-import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
+import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.Preference
 
 @Composable
-fun HomeScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__home__title),
-    backArrowVisible = false,
-) {
+fun HomeScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__home__title)
+    backArrowVisible = false
+
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
 
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
-    if (!isFlorisBoardEnabled) {
-        FlorisErrorCard(
-            modifier = Modifier.padding(8.dp),
-            showIcon = false,
-            text = stringRes(R.string.settings__home__ime_not_enabled),
-            onClick = { InputMethodUtils.showImeEnablerActivity(context) },
-        )
-    } else if (!isFlorisBoardSelected) {
-        FlorisWarningCard(
-            modifier = Modifier.padding(8.dp),
-            showIcon = false,
-            text = stringRes(R.string.settings__home__ime_not_selected),
-            onClick = { InputMethodUtils.showImePicker(context) },
-        )
-    }
+    content {
+        val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
 
-    Card(modifier = Modifier.padding(8.dp)) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "Beta-access to new Settings UI",
-                    style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(modifier = Modifier.weight(1.0f))
-                IconButton(onClick = { this@FlorisScreen.prefs.internal.homeIsBetaToolboxCollapsed.set(!isCollapsed) }) {
-                    Icon(
-                        painter = painterResource(if (isCollapsed) {
-                            R.drawable.ic_keyboard_arrow_down
-                        } else {
-                            R.drawable.ic_keyboard_arrow_up
-                        }),
-                        contentDescription = null,
+        val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
+        val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+        if (!isFlorisBoardEnabled) {
+            FlorisErrorCard(
+                modifier = Modifier.padding(8.dp),
+                showIcon = false,
+                text = stringRes(R.string.settings__home__ime_not_enabled),
+                onClick = { InputMethodUtils.showImeEnablerActivity(context) },
+            )
+        } else if (!isFlorisBoardSelected) {
+            FlorisWarningCard(
+                modifier = Modifier.padding(8.dp),
+                showIcon = false,
+                text = stringRes(R.string.settings__home__ime_not_selected),
+                onClick = { InputMethodUtils.showImePicker(context) },
+            )
+        }
+
+        Card(modifier = Modifier.padding(8.dp)) {
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Beta-access to new Settings UI",
+                        style = MaterialTheme.typography.subtitle1,
+                        fontWeight = FontWeight.Bold,
                     )
+                    Spacer(modifier = Modifier.weight(1.0f))
+                    IconButton(onClick = { this@content.prefs.internal.homeIsBetaToolboxCollapsed.set(!isCollapsed) }) {
+                        Icon(
+                            painter = painterResource(if (isCollapsed) {
+                                R.drawable.ic_keyboard_arrow_down
+                            } else {
+                                R.drawable.ic_keyboard_arrow_up
+                            }),
+                            contentDescription = null,
+                        )
+                    }
                 }
-            }
-            if (!isCollapsed) {
-                Text("You are currently testing out the new Settings of FlorisBoard.\n")
-                Text("Especially in the first few beta releases the Settings are completely split up and some UI controls (especially sliders!!) behave buggy. With each beta release preferences will be ported until everything is re-written, then the UI and the code base will get polished.\n")
-                Text("If you want to give feedback on the development of the new prefs, please do so in below linked feedback thread:\n")
-                Button(onClick = {
-                    launchUrl(context, "https://github.com/florisboard/florisboard/discussions/1235")
-                }) {
-                    Text("Open Feedback Thread")
+                if (!isCollapsed) {
+                    Text("You are currently testing out the new Settings of FlorisBoard.\n")
+                    Text("Especially in the first few beta releases the Settings are completely split up and some UI controls (especially sliders!!) behave buggy. With each beta release preferences will be ported until everything is re-written, then the UI and the code base will get polished.\n")
+                    Text("If you want to give feedback on the development of the new prefs, please do so in below linked feedback thread:\n")
+                    Button(onClick = {
+                        context.launchUrl("https://github.com/florisboard/florisboard/discussions/1235")
+                    }) {
+                        Text("Open Feedback Thread")
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
+        Preference(
+            iconId = R.drawable.ic_language,
+            title = stringRes(R.string.settings__localization__title),
+            onClick = { navController.navigate(Routes.Settings.Localization) },
+        )
+        Preference(
+            iconId = R.drawable.ic_palette,
+            title = stringRes(R.string.settings__theme__title),
+            onClick = { navController.navigate(Routes.Settings.Theme) },
+        )
+        Preference(
+            iconId = R.drawable.ic_keyboard,
+            title = stringRes(R.string.settings__keyboard__title),
+            onClick = { navController.navigate(Routes.Settings.Keyboard) },
+        )
+        Preference(
+            iconId = null,
+            title = stringRes(R.string.settings__smartbar__title),
+            onClick = { navController.navigate(Routes.Settings.Smartbar) },
+        )
+        Preference(
+            iconId = R.drawable.ic_settings_suggest,
+            title = stringRes(R.string.settings__typing__title),
+            onClick = { navController.navigate(Routes.Settings.Typing) },
+        )
+        Preference(
+            iconId = R.drawable.ic_spellcheck,
+            title = stringRes(R.string.settings__spelling__title),
+            onClick = { navController.navigate(Routes.Settings.Spelling) },
+        )
+        Preference(
+            iconId = R.drawable.ic_library_books,
+            title = stringRes(R.string.settings__dictionary__title),
+            onClick = { navController.navigate(Routes.Settings.Dictionary) },
+        )
+        Preference(
+            iconId = R.drawable.ic_gesture,
+            title = stringRes(R.string.settings__gestures__title),
+            onClick = { navController.navigate(Routes.Settings.Gestures) },
+        )
+        Preference(
+            iconId = R.drawable.ic_assignment,
+            title = stringRes(R.string.settings__clipboard__title),
+            onClick = { navController.navigate(Routes.Settings.Clipboard) },
+        )
+        Preference(
+            iconId = R.drawable.ic_adb,
+            title = stringRes(R.string.devtools__title),
+            onClick = { navController.navigate(Routes.Devtools.Home) },
+        )
+        Preference(
+            iconId = R.drawable.ic_build,
+            title = stringRes(R.string.settings__advanced__title),
+            onClick = { navController.navigate(Routes.Settings.Advanced) },
+        )
+        Preference(
+            iconId = R.drawable.ic_info,
+            title = stringRes(R.string.about__title),
+            onClick = { navController.navigate(Routes.Settings.About) },
+        )
     }
-    Preference(
-        title = "Remains of old settings",
-        onClick = { launchActivity(context, SettingsMainActivity::class) },
-    )
-    Preference(
-        iconId = R.drawable.ic_palette,
-        title = stringRes(R.string.settings__theme__title),
-        onClick = { navController.navigate(Routes.Settings.Theme) },
-    )
-    Preference(
-        iconId = R.drawable.ic_keyboard,
-        title = stringRes(R.string.settings__keyboard__title),
-        onClick = { navController.navigate(Routes.Settings.Keyboard) },
-    )
-    Preference(
-        iconId = R.drawable.ic_spellcheck,
-        title = stringRes(R.string.settings__spelling__title),
-        onClick = { navController.navigate(Routes.Settings.Spelling) },
-    )
-    Preference(
-        iconId = R.drawable.ic_gesture,
-        title = stringRes(R.string.settings__gestures__title),
-        onClick = { navController.navigate(Routes.Settings.Gestures) },
-    )
-    Preference(
-        iconId = R.drawable.ic_assignment,
-        title = stringRes(R.string.settings__clipboard__title),
-        onClick = { navController.navigate(Routes.Settings.Clipboard) },
-    )
-    Preference(
-        iconId = R.drawable.ic_adb,
-        title = stringRes(R.string.devtools__title),
-        onClick = { navController.navigate(Routes.Devtools.Home) },
-    )
-    Preference(
-        iconId = R.drawable.ic_build,
-        title = stringRes(R.string.settings__advanced__title),
-        onClick = { navController.navigate(Routes.Settings.Advanced) },
-    )
-    Preference(
-        iconId = R.drawable.ic_info,
-        title = stringRes(R.string.about__title),
-        onClick = { navController.navigate(Routes.Settings.About) },
-    )
 }

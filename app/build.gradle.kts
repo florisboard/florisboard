@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdk = 31
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "31.0.0"
     ndkVersion = "22.1.7171670"
 
     compileOptions {
@@ -20,7 +20,12 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn", "-Xopt-in=kotlin.contracts.ExperimentalContracts")
+        freeCompilerArgs = listOf(
+            "-Xallow-result-return-type",
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-Xopt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xjvm-default=compatibility",
+        )
     }
 
     defaultConfig {
@@ -73,7 +78,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-alpha06"
+        kotlinCompilerExtensionVersion = "1.1.0-beta03"
     }
 
     externalNativeBuild {
@@ -142,29 +147,29 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.activity:activity-ktx:1.3.1") // possibly remove after settings rework
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.activity:activity-ktx:1.4.0") // possibly remove after settings rework
     implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
-    implementation("androidx.compose.material:material:1.1.0-alpha06")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-alpha06")
-    implementation("androidx.compose.ui:ui:1.1.0-alpha06")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-alpha06")
+    implementation("androidx.compose.material:material:1.1.0-beta03")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-beta03")
+    implementation("androidx.compose.ui:ui:1.1.0-beta03")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-beta03")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
-    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha11")
-    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha11")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha12")
+    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha12")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("androidx.room:room-runtime:2.3.0")
     kapt("androidx.room:room-compiler:2.3.0")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
