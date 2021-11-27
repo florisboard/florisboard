@@ -17,8 +17,11 @@
 package dev.patrickgold.florisboard.ime.text
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
@@ -26,14 +29,20 @@ import dev.patrickgold.florisboard.ime.text.smartbar.Smartbar
 import dev.patrickgold.florisboard.keyboardManager
 
 @Composable
-fun TextInputLayout() = Column {
+fun TextInputLayout() {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
     val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
 
-    Smartbar()
-    TextKeyboardLayout(
-        renderInfo = renderInfo,
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+    ) {
+        Smartbar()
+        TextKeyboardLayout(
+            renderInfo = renderInfo,
+        )
+    }
 }

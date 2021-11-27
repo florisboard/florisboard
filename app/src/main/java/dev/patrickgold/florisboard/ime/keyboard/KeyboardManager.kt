@@ -96,6 +96,20 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 keyboardCache.clear()
             }
         }
+        prefs.keyboard.numberRow.observeForever {
+            updateRenderInfo {
+                keyboardCache.clear(KeyboardMode.CHARACTERS)
+            }
+        }
+        prefs.keyboard.hintedNumberRowEnabled.observeForever {
+            updateRenderInfo()
+        }
+        prefs.keyboard.hintedSymbolsEnabled.observeForever {
+            updateRenderInfo()
+        }
+        prefs.keyboard.utilityKeyEnabled.observeForever {
+            updateRenderInfo()
+        }
         activeState.observeForever {
             updateRenderInfo()
         }

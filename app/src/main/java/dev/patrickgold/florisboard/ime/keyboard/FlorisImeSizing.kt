@@ -60,20 +60,22 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
     val heightFactorLandscape by prefs.keyboard.heightFactorLandscape.observeAsTransformingState { it.toFloat() / 100f }
     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
     val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsTransformingState { it.toFloat() / 100f }
+    val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
 
     val baseRowHeight = remember(
         configuration, resources, heightFactorPortrait, heightFactorLandscape,
-        oneHandedMode, oneHandedModeScaleFactor
+        oneHandedMode, oneHandedModeScaleFactor, smartbarEnabled,
     ) {
         calcInputViewHeight(resources) * when {
             configuration.isOrientationLandscape() -> heightFactorLandscape
             else -> heightFactorPortrait * (if (oneHandedMode != OneHandedMode.OFF) oneHandedModeScaleFactor else 1f)
         }
     }
+    val smartbarHeight = if (smartbarEnabled) { baseRowHeight * 0.753f } else { 0f }
 
     CompositionLocalProvider(
         LocalKeyboardRowBaseHeight provides ViewUtils.px2dp(baseRowHeight).dp,
-        LocalSmartbarHeight provides ViewUtils.px2dp(baseRowHeight * 0.753f).dp,
+        LocalSmartbarHeight provides ViewUtils.px2dp(smartbarHeight).dp,
     ) {
         content()
     }
