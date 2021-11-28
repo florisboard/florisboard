@@ -6,6 +6,18 @@
         { "$": "auto_text_key", "code":  226, "label": "â" }
       ]
     },
+    "c": {
+      "relevant": [
+        { "code": 8217, "label": "’" }
+      ]
+    },
+    "h": {
+      "relevant": [
+        { "code": 8209, "label": "‑" },
+        { "code": 8211, "label": "–" },
+        { "code": 8212, "label": "—" }
+      ]
+    },
     "i": {
       "relevant": [
         { "$": "auto_text_key", "code":  238, "label": "î" }
@@ -19,6 +31,12 @@
     "t": {
       "relevant": [
         { "$": "auto_text_key", "code":  539, "label": "ț" }
+      ]
+    },
+    "x": {
+      "relevant": [
+        { "code": 8222, "label": "„" },
+        { "code": 8221, "label": "”" }
       ]
     },
     "~right": {
