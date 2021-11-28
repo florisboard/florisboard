@@ -148,6 +148,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
+    fun updateCapsState() {
+        if (activeState.inputMode != InputMode.CAPS_LOCK) {
+            val shift = prefs.correction.autoCapitalization.get() &&
+                activeEditorInstance?.cursorCapsMode != InputAttributes.CapsMode.NONE
+            activeState.inputMode = when {
+                shift -> InputMode.SHIFT_LOCK
+                else -> InputMode.NORMAL
+            }
+        }
+    }
+
     /**
      * @return If the language switch should be shown.
      */
