@@ -21,6 +21,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -78,7 +79,7 @@ fun Modifier.florisScrollbar(
     val duration = if (state.isScrollInProgress || isInitial) 0 else 950
     val alpha by animateFloatAsState(
         targetValue = targetAlpha,
-        animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing)
+        animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
     )
     val scrollbarColor = MaterialTheme.colors.onSurface.copy(alpha = 0.28f)
 
@@ -112,6 +113,60 @@ fun Modifier.florisScrollbar(
                 scrollbarOffsetX = state.value + (containerWidth - scrollbarWidth) * (scrollValue / scrollMax)
                 scrollbarOffsetY = size.height - scrollbarHeight
             }
+
+            drawRect(
+                color = scrollbarColor,
+                topLeft = Offset(scrollbarOffsetX, scrollbarOffsetY),
+                size = Size(scrollbarWidth, scrollbarHeight),
+                alpha = alpha,
+            )
+        }
+    }
+}
+
+fun Modifier.florisScrollbar(
+    state: LazyListState,
+    scrollbarSize: Dp = DefaultScrollbarSize,
+    isVertical: Boolean,
+): Modifier = composed {
+    var isInitial by remember { mutableStateOf(true) }
+    val targetAlpha = if (state.isScrollInProgress || isInitial) 1f else 0f
+    val duration = if (state.isScrollInProgress || isInitial) 0 else 950
+    val alpha by animateFloatAsState(
+        targetValue = targetAlpha,
+        animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
+    )
+    val scrollbarColor = MaterialTheme.colors.onSurface.copy(alpha = 0.28f)
+
+    LaunchedEffect(Unit) {
+        delay(1850)
+        isInitial = false
+    }
+
+    drawWithContent {
+        drawContent()
+        val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
+        val needDrawScrollbar = state.isScrollInProgress || isInitial || alpha > 0f
+        if (needDrawScrollbar && firstVisibleElementIndex != null) {
+            val scrollbarWidth: Float
+            val scrollbarHeight: Float
+            val scrollbarOffsetX: Float
+            val scrollbarOffsetY: Float
+
+            if (isVertical) {
+                val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
+                scrollbarWidth = scrollbarSize.toPx()
+                scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * elementHeight
+                scrollbarOffsetX = size.width - scrollbarWidth
+                scrollbarOffsetY = firstVisibleElementIndex * elementHeight
+            } else {
+                val elementWidth = this.size.width / state.layoutInfo.totalItemsCount
+                scrollbarWidth = state.layoutInfo.visibleItemsInfo.size * elementWidth
+                scrollbarHeight = scrollbarSize.toPx()
+                scrollbarOffsetX = firstVisibleElementIndex * elementWidth
+                scrollbarOffsetY = size.height - scrollbarHeight
+            }
+
             drawRect(
                 color = scrollbarColor,
                 topLeft = Offset(scrollbarOffsetX, scrollbarOffsetY),
