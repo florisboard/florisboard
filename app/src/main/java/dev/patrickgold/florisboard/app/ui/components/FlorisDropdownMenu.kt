@@ -100,3 +100,44 @@ fun FlorisDropdownMenu(
         }
     }
 }
+
+@Composable
+fun FlorisDropdownLikeButton(
+    item: String,
+    modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    onClick: () -> Unit = { },
+) {
+    Box(modifier = modifier.wrapContentSize(Alignment.TopStart)) {
+        val color = if (isError) {
+            MaterialTheme.colors.error
+        } else {
+            MaterialTheme.colors.onBackground
+        }
+        OutlinedButton(
+            modifier = Modifier
+                .fillMaxWidth(),
+            border = if (isError) {
+                BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
+            } else {
+                ButtonDefaults.outlinedBorder
+            },
+            onClick = onClick,
+        ) {
+            Text(
+                modifier = Modifier.weight(1.0f),
+                text = item,
+                textAlign = TextAlign.Start,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                color = color,
+            )
+            Icon(
+                modifier = Modifier.rotate(-90.0f),
+                painter = painterResource(R.drawable.ic_keyboard_arrow_down),
+                tint = color.copy(alpha = ContentAlpha.medium),
+                contentDescription = "Dropdown indicator",
+            )
+        }
+    }
+}

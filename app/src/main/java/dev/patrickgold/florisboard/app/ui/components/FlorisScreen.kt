@@ -21,7 +21,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -93,10 +96,10 @@ interface FlorisScreenScope {
 }
 
 private class FlorisScreenScopeImpl : FlorisScreenScope {
-    override var title: String = ""
-    override var backArrowVisible: Boolean = true
-    override var scrollable: Boolean = true
-    override var iconSpaceReserved: Boolean = true
+    override var title: String by mutableStateOf("")
+    override var backArrowVisible: Boolean by mutableStateOf(true)
+    override var scrollable: Boolean by mutableStateOf(true)
+    override var iconSpaceReserved: Boolean by mutableStateOf(true)
 
     private var actions: FlorisScreenActions = { }
     private var bottomBar: FlorisScreenBottomBar = { }
@@ -136,9 +139,8 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
                     florisPreferenceModel(),
                     scrollable = false,
                     iconSpaceReserved = iconSpaceReserved,
-                ) {
-                    content(this)
-                }
+                    content = content,
+                )
             }
         }
     }

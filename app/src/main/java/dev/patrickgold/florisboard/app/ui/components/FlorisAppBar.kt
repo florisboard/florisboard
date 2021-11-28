@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 fun FlorisAppBar(
     title: String,
     backArrowVisible: Boolean,
-    actions: @Composable RowScope.() -> Unit = { }
+    actions: @Composable RowScope.() -> Unit = { },
 ) {
     TopAppBar(
         navigationIcon = backNavBtn(backArrowVisible),
@@ -56,7 +56,7 @@ private fun backNavBtn(backArrowVisible: Boolean): @Composable (() -> Unit)? {
     val navController = LocalNavController.current
     return {
         IconButton(
-            onClick = { navController.popBackStack() }
+            onClick = { navController.popBackStack() },
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_arrow_back),
