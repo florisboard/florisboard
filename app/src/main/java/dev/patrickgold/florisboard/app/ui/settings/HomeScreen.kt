@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -99,13 +100,24 @@ fun HomeScreen() = FlorisScreen {
                 }
                 if (!isCollapsed) {
                     Text("You are currently testing out the new Settings of FlorisBoard.\n")
-                    Text("Especially in the first few beta releases the Settings are completely split up and some UI controls (especially sliders!!) behave buggy. With each beta release preferences will be ported until everything is re-written, then the UI and the code base will get polished.\n")
-                    Text("If you want to give feedback on the development of the new prefs, please do so in below linked feedback thread:\n")
+                    Text("This beta release contains a completely rewritten keyboard logic and UI backend, thus some features are still missing, which will get re-added in later beta versions (see below).\n")
+                    Text("If you want to give feedback on the development of the new prefs and keyboard logic, please do so in below linked feedback thread:\n")
                     Button(onClick = {
                         context.launchUrl("https://github.com/florisboard/florisboard/discussions/1235")
                     }) {
                         Text("Open Feedback Thread")
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text("Current version: ${BuildConfig.VERSION_NAME}\n")
+                    Text("List of unavailable features (and when they will get re-implemented):\n")
+                    Text(" - Smartbar (beta07)")
+                    Text(" - Password autofill on Android11+ (beta07)")
+                    Text(" - Clipboard manager / clipboard row (beta07)")
+                    Text(" - Theme customization (new theme engine and look) (beta08)")
+                    Text(" - Glide typing (beta09)")
+                    Text(" - Emoji view (beta09 or beta10)")
+                    Text(" - Word suggestions (beta10+, new suggestion algorithm 0.3.15/16)\n")
+                    Text("Please do not file issues that these features do not work while the current version is below the intended re-implementation version. Thank you!\n")
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
