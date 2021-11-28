@@ -207,9 +207,10 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onStartInputView(info, restarting)
         if (info == null) return
         activeState.batchEdit {
-            it.update(info)
-            it.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
+            activeState.update(info)
+            activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
             activeEditorInstance.startInputView(info)
+            keyboardManager.updateCapsState()
         }
     }
 
@@ -222,17 +223,22 @@ class FlorisImeService : LifecycleInputMethodService() {
         candidatesEnd: Int
     ) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
-        activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
-        activeEditorInstance.updateSelection(
-            oldSelStart, oldSelEnd,
-            newSelStart, newSelEnd,
-            candidatesStart, candidatesEnd,
-        )
+        activeState.batchEdit {
+            activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
+            activeEditorInstance.updateSelection(
+                oldSelStart, oldSelEnd,
+                newSelStart, newSelEnd,
+                candidatesStart, candidatesEnd,
+            )
+            keyboardManager.updateCapsState()
+        }
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         super.onFinishInputView(finishingInput)
-        activeState.reset()
+        // TODO: evaluate which parts to reset. Resetting everything is too much,
+        //  resetting nothing could be problematic too.
+        //activeState.reset()
         activeEditorInstance.finishInputView()
     }
 

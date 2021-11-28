@@ -56,6 +56,7 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
         onClick: () -> Unit,
     ) {
         TextButton(
+            modifier = modifier,
             enabled = enabled,
             colors = ButtonDefaults.buttonColors(
                 contentColor = MaterialTheme.colors.onPrimary,

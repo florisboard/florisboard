@@ -164,7 +164,8 @@ class SubtypeManager(
      *  found.
      */
     fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
-        return keyboardManager.resources.subtypePresets.value?.find { it.locale == locale }
+        val presets = keyboardManager.resources.subtypePresets.value
+        return presets?.find { it.locale == locale } ?: presets?.find { it.locale.language == locale.language }
     }
 
     /**

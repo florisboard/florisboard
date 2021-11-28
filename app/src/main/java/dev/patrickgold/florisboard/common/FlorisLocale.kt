@@ -118,6 +118,13 @@ class FlorisLocale private constructor(val base: Locale) {
          * @see java.util.Locale.getDefault
          */
         fun default() = FlorisLocale(Locale.getDefault())
+
+        /**
+         * Returns a list of all installed locales.
+         *
+         * @see java.util.Locale.getAvailableLocales
+         */
+        fun installedSystemLocales(): List<FlorisLocale> = Locale.getAvailableLocales().map { from(it) }
     }
 
     /**

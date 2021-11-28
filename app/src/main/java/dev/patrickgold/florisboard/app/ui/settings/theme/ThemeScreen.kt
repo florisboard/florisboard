@@ -16,12 +16,16 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
@@ -37,80 +41,91 @@ import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 
 @OptIn(ExperimentalJetPrefUi::class)
 @Composable
-fun ThemeScreen() = FlorisScreen(title = stringRes(R.string.settings__theme__title)) {
+fun ThemeScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__theme__title)
+
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val dayThemeRef by prefs.theme.dayThemeRef.observeAsState()
-    val nightThemeRef by prefs.theme.nightThemeRef.observeAsState()
 
-    ListPreference(
-        prefs.theme.mode,
-        iconId = R.drawable.ic_brightness_auto,
-        title = stringRes(R.string.pref__theme__mode__label),
-        entries = ThemeMode.listEntries(),
-    )
+    content {
+        val dayThemeRef by prefs.theme.dayThemeRef.observeAsState()
+        val nightThemeRef by prefs.theme.nightThemeRef.observeAsState()
 
-    PreferenceGroup(
-        title = stringRes(R.string.pref__theme__day),
-        enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
-    ) {
-        Preference(
-            iconId = R.drawable.ic_light_mode,
-            title = stringRes(R.string.pref__theme__any_theme__label),
-            summary = dayThemeRef.toString(),
-            onClick = {
-                // TODO: this currently launches the old UI for theme manager
-                context.launchActivity(ThemeManagerActivity::class) {
-                    it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.dayThemeRef.key)
-                    it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.dayThemeRef.default.toString())
-                }
-            },
+        FlorisErrorCard(
+            modifier = Modifier.padding(all = 8.dp),
+            text = "Theme customization is not available in this beta release and will return in 0.3.14-beta08.",
         )
-        if (AndroidVersion.ATLEAST_API26_O) {
-            LocalTimePickerPreference(
-                prefs.theme.sunriseTime,
-                iconId = R.drawable.ic_schedule,
-                title = stringRes(R.string.pref__theme__sunrise_time__label),
-                visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+
+        ListPreference(
+            prefs.theme.mode,
+            iconId = R.drawable.ic_brightness_auto,
+            title = stringRes(R.string.pref__theme__mode__label),
+            entries = ThemeMode.listEntries(),
+            enabledIf = { false },
+        )
+
+        PreferenceGroup(
+            title = stringRes(R.string.pref__theme__day),
+            enabledIf = { false && prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
+        ) {
+            Preference(
+                iconId = R.drawable.ic_light_mode,
+                title = stringRes(R.string.pref__theme__any_theme__label),
+                summary = dayThemeRef.toString(),
+                onClick = {
+                    // TODO: this currently launches the old UI for theme manager
+                    context.launchActivity(ThemeManagerActivity::class) {
+                        it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.dayThemeRef.key)
+                        it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.dayThemeRef.default.toString())
+                    }
+                },
+            )
+            if (AndroidVersion.ATLEAST_API26_O) {
+                LocalTimePickerPreference(
+                    prefs.theme.sunriseTime,
+                    iconId = R.drawable.ic_schedule,
+                    title = stringRes(R.string.pref__theme__sunrise_time__label),
+                    visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+                )
+            }
+            SwitchPreference(
+                prefs.theme.dayThemeAdaptToApp,
+                iconId = R.drawable.ic_format_paint,
+                title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
+                summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
             )
         }
-        SwitchPreference(
-            prefs.theme.dayThemeAdaptToApp,
-            iconId = R.drawable.ic_format_paint,
-            title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
-            summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
-        )
-    }
 
-    PreferenceGroup(
-        title = stringRes(R.string.pref__theme__night),
-        enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
-    ) {
-        Preference(
-            iconId = R.drawable.ic_dark_mode,
-            title = stringRes(R.string.pref__theme__any_theme__label),
-            summary = nightThemeRef.toString(),
-            onClick = {
-                // TODO: this currently launches the old UI for theme manager
-                context.launchActivity(ThemeManagerActivity::class) {
-                    it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.nightThemeRef.key)
-                    it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.nightThemeRef.default.toString())
-                }
-            },
-        )
-        if (AndroidVersion.ATLEAST_API26_O) {
-            LocalTimePickerPreference(
-                prefs.theme.sunsetTime,
-                iconId = R.drawable.ic_schedule,
-                title = stringRes(R.string.pref__theme__sunset_time__label),
-                visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+        PreferenceGroup(
+            title = stringRes(R.string.pref__theme__night),
+            enabledIf = { false && prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
+        ) {
+            Preference(
+                iconId = R.drawable.ic_dark_mode,
+                title = stringRes(R.string.pref__theme__any_theme__label),
+                summary = nightThemeRef.toString(),
+                onClick = {
+                    // TODO: this currently launches the old UI for theme manager
+                    context.launchActivity(ThemeManagerActivity::class) {
+                        it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.nightThemeRef.key)
+                        it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.nightThemeRef.default.toString())
+                    }
+                },
+            )
+            if (AndroidVersion.ATLEAST_API26_O) {
+                LocalTimePickerPreference(
+                    prefs.theme.sunsetTime,
+                    iconId = R.drawable.ic_schedule,
+                    title = stringRes(R.string.pref__theme__sunset_time__label),
+                    visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+                )
+            }
+            SwitchPreference(
+                prefs.theme.nightThemeAdaptToApp,
+                iconId = R.drawable.ic_format_paint,
+                title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
+                summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
             )
         }
-        SwitchPreference(
-            prefs.theme.nightThemeAdaptToApp,
-            iconId = R.drawable.ic_format_paint,
-            title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
-            summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
-        )
     }
 }

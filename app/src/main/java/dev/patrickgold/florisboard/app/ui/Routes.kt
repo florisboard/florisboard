@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.localization.LocalizationScreen
+import dev.patrickgold.florisboard.app.ui.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.ui.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.ui.settings.smartbar.SmartbarScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.ImportSpellingArchiveScreen
@@ -62,6 +63,7 @@ object Routes {
         const val Home = "settings"
 
         const val Localization = "settings/localization"
+        const val SelectLocale = "settings/localization/select-locale"
         const val SubtypeAdd = "settings/localization/subtype/add"
         const val SubtypeEdit = "settings/localization/subtype/edit/{id}"
         fun SubtypeEdit(id: Long) = SubtypeEdit.curlyFormat("id" to id)
@@ -125,6 +127,7 @@ object Routes {
             composable(Settings.Home) { HomeScreen() }
 
             composable(Settings.Localization) { LocalizationScreen() }
+            composable(Settings.SelectLocale) { SelectLocaleScreen() }
             composable(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
             composable(Settings.SubtypeEdit) { navBackStack ->
                 val id = navBackStack.arguments?.getString("id")?.toLongOrNull()
