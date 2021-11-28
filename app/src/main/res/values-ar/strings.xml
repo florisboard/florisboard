@@ -48,14 +48,11 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">الإيماءات</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">الإفتراضي</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">الإعداد الافتراضي</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">مرحبا بكم في {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">مرحبا بكم في {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">لم يتم تمكين FlorisBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم تعيين FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">اللغات وتخطيطات لوحة المفاتيح</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">يبدو أنك لم تقم بإختيار أية أنواع إدخال فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">إضافة نوع فرعي</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل النوع الفرعي</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">تخطيط المحارف</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الاساسي</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الثانوي</string>
@@ -66,8 +63,9 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">تخطيط صف الأرقام</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الأساسي للهاتف</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الثانوي للهاتف</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">اختر اللغة</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">يبدو أنك لم تقم بإختيار أية أنواع إدخال فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (غير مثبت)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">المظهر</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">وضع الثيم</string>
@@ -144,7 +142,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">لون شبه شفاف</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">لون النص</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">وصف مخصص (%s)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">الصوت والاهتزاز</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">الصوت والاهتزاز</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ردود الفعل الصوتية / الأصوات</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">تمكين التاثيرات الصوتية</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
@@ -201,11 +199,17 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">شريط المسافة يبدل بين تخطيط الأحرف</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">يؤدي الضغط على شريط المسافة إلى التبديل تلقائيًا إلى الأحرف عندما تكون في الرموز أو الأرقام</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">تجربة الكتابة</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
-    <string name="settings__dictionary__title" comment="Preference group title">القاموس</string>
+    <string name="pref__correction__title" comment="Preference group title">التصحيحات</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">استخدام الأحرف الكبيرة في الكلمات على حسب سياق نص الإدخال الحالي</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">تذكر حالة زر الأحرف الكبيرة</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">يضل وضع الأحرف الكبيرة قيد التشغيل عند الإنتقال إلى حقل نصي آخر</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">نقطة المسافة المزدوجة</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">تفعيل قاموس مستخدم النظام</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في قاموس مستخدم النظام</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">إدارة قاموس مستخدم النظام</string>
@@ -214,13 +218,6 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في القاموس الداخلي للمستخدم</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">إدارة قاموس الداخلي للمستخدم</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس المستخدم الداخلي</string>
-    <string name="pref__correction__title" comment="Preference group title">التصحيحات</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">استخدام الأحرف الكبيرة في الكلمات على حسب سياق نص الإدخال الحالي</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">تذكر حالة زر الأحرف الكبيرة</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">يضل وضع الأحرف الكبيرة قيد التشغيل عند الإنتقال إلى حقل نصي آخر</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">نقطة المسافة المزدوجة</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">القاموس الداخلي للمستخدم</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">قاموس مستخدم النظام</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">التكرار: %d</string>
@@ -432,7 +429,6 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">إعدادات نظام أندرويد</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">لغات النظام</string>
     <!-- Extension strings -->
-    <string name="ext__meta__maintainers">المؤلفون</string>
     <string name="ext__meta__description">التفاصيل</string>
     <string name="ext__meta__homepage">الصفحة الرئيسية</string>
     <string name="ext__meta__id">المعرف</string>
@@ -464,8 +460,8 @@
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">الإظهار دائماً</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">يعين بشكل ديناميكي</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">إيقاف</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">وضع اليد اليمنى</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">وضع اليد اليسرى</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">وضع اليد اليسرى</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">وضع اليد اليمنى</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استخدام لغات النظام</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">استخدم الأنواع الفرعية للوحة المفاتيح</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">بلا إجراء</string>

@@ -48,14 +48,11 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жестове</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По подразбиране</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">По подразбиране от системата</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Добре дошли във {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Добре дошли във {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Клавиатурата FlorisBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като метод за въвеждане по подразбиране. Докоснете тук, за да промените.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Езици и клавиатурни подредби</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Изглежда не сте настроили подвидове. По подразбиране ще се използва English/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подвид</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редактиране на подвид</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Език</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Подредба на клавишите</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Символи, основен изглед</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Символи, вторичен изглед</string>
@@ -66,8 +63,9 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Ред с цифри</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, основен изглед</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, вторичен изглед</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Избиране на език</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Изглежда не сте настроили подвидове. По подразбиране ще се използва English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Този подвид вече съществува!</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (не е инсталирано)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим на тема</string>
@@ -144,7 +142,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачен цвят</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвят на текста</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Потребителски атрибут (%s)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Звук и вибрация</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
@@ -201,11 +199,17 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при задържане на клавиш</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Клавишът интервал превключва към букви</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Клавишът за интервал превключва към букви ако се въвеждат символи или цифри</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Изживяване при въвеждане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="settings__dictionary__title" comment="Preference group title">Речник</string>
+    <string name="pref__correction__title" comment="Preference group title">Корекции</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се изписват с главни букви въз основа на текущия контекст</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на клавиш Caps Lock</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Системен потребителски речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление на системния потребителски речник</string>
@@ -214,13 +218,6 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Предлагат се думи от потребителския речник към приложението</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление на потребителския речник към приложението</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Преглед, добавяне и премахване на думи от потребителския речник към приложението</string>
-    <string name="pref__correction__title" comment="Preference group title">Корекции</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се изписват с главни букви въз основа на текущия контекст</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на клавиш Caps Lock</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Потребителски речник към приложението</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системен потребителски речник</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Честота: %d</string>
@@ -417,7 +414,6 @@
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Системни инструменти на Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
-    <string name="ext__meta__maintainers">Автори</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Страница</string>
     <string name="ext__meta__id">Идентификатор</string>
@@ -447,8 +443,8 @@
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Винаги се показва</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Показва се динамично</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">За дясна ръка</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">За лява ръка</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Използване на подвидове на клавиатурата</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Без действие</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Предишен режим на клавиатура</string>

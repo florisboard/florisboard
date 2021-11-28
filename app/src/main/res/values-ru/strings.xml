@@ -48,14 +48,11 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жесты</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По умолчанию</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Значение по умолчанию</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Добро пожаловать в {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Добро пожаловать в {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включена в системе и поэтому не будет доступна в качестве метода ввода. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Языки и раскладки клавиатуры</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Похоже, вы не настроили никаких раскладок. В качестве основного варианта будет использована English/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локализация</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Символьные раскладки</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основная символьная раскладка</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная символьная раскладка</string>
@@ -66,8 +63,9 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Настройка цифрового ряда</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Основная телефонная раскладка</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная телефонная раскладка</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Выберите язык</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Похоже, вы не настроили никаких раскладок. В качестве основного варианта будет использована English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Эта раскладка уже существует!</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (не установлен)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Темы</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не определено</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим темы</string>
@@ -144,7 +142,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачный цвет</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвет текста</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Пользовательский атрибут (%s)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Звук и вибрация</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
@@ -201,11 +199,17 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Задержка при нажатии</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробел переключает обратно на буквы</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Нажатие клавиши пробела автоматически переключает обратно на ввод букв из символьной или цифровой раскладки</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Настройки ввода текста</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="settings__dictionary__title" comment="Preference group title">Словарь</string>
+    <string name="pref__correction__title" comment="Preference group title">Исправления</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">При двойном нажатии на пробел вставляется точка, за которой следует пробел</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарем пользователя</string>
@@ -214,13 +218,6 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся во внутреннем словаре пользователя</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарем пользователя</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
-    <string name="pref__correction__title" comment="Preference group title">Исправления</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">При двойном нажатии на пробел вставляется точка, за которой следует пробел</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Внутренний словарь пользователя</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системный словарь пользователя</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Частота: %d</string>
@@ -430,7 +427,6 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системные настройки Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Языки системы</string>
     <!-- Extension strings -->
-    <string name="ext__meta__maintainers">Авторы</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Главная страница</string>
     <string name="ext__meta__id">ID</string>
@@ -462,8 +458,8 @@
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамическое отображение</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Отключено</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Режим правши</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Режим левши</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Режим левши</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Режим правши</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Использовать системные языки</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Использовать раскладки клавиатуры</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Не задано</string>

@@ -48,14 +48,11 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesten</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Willkommen bei {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Willkommen bei {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard ist in Ihrem System nicht aktiviert und kann daher nicht als Eingabemethode ausgewählt werden. Hier klicken, um dieses Problem zu lösen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard ist nicht als Standard-Eingabemethode ausgewählt. Hier klicken, um dieses Problem zu lösen.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Sprachen &amp; Tastatur-Layout</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Es scheinen keine benutzerdefinierten Eingabestile konfiguriert zu sein. Als Ausweichlösung wird daher der Eingabestil English/QWERTY benutzt!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Stil hinzufügen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Benutzerdefinierten Eingabestil bearbeiten</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Gebietsschema</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Zeichenanordnung</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primäre Symbolanordnung</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Symbolanordnung</string>
@@ -66,8 +63,9 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Zahlenanordnung</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäres Wählfeld</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäres Wählfeld</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Sprache auswählen</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Es scheinen keine benutzerdefinierten Eingabestile konfiguriert zu sein. Als Ausweichlösung wird daher der Eingabestil English/QWERTY benutzt!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dieser Eingabestil ist bereits vorhanden!</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (nicht installiert)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Design</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
@@ -144,7 +142,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Halbtransparente Farbe</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Schriftfarbe</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Benutzerdefinierte Attribute (%s)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Ton &amp; Vibration</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ton &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ton Rückmeldung / Klänge</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ton Rückmeldung aktivieren</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Töne für Eingabe Ereignisse aktivieren, abhängig von Systemeinstellungen</string>
@@ -201,11 +199,17 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zurück zur Buchstabenansicht</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Tipperlebnis</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="settings__dictionary__title" comment="Preference group title">Wörterbuch</string>
+    <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Die festgestellte Umschalttaste bleibt auch beim Wechsel in ein anderes Textfeld aktiviert</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Doppeltes Leerzeichen durch Punkt ersetzen</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppeltes Tippen auf die Leertaste fügt Punkt und ein Leerzeichen ein</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">System-Wörterbuch aktivieren</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Wörter vorschlagen, die im System-Benutzerwörterbuch gespeichert sind</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">System-Benutzerwörterbuch verwalten</string>
@@ -214,13 +218,6 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Wörter vorschlagen, die im internen Benutzerwörterbuch gespeichert sind</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Internes Benutzerwörterbuch verwalten</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Hinzufügen, ansehen und bearbeiten von Einträgen für das interne Benutzerwörterbuch</string>
-    <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Die festgestellte Umschalttaste bleibt auch beim Wechsel in ein anderes Textfeld aktiviert</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Doppeltes Leerzeichen durch Punkt ersetzen</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppeltes Tippen auf die Leertaste fügt Punkt und ein Leerzeichen ein</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internes Benutzerwörterbuch</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System-Benutzerwörterbuch</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Häufigkeit: %d</string>
@@ -423,7 +420,6 @@
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test-Absturzbericht Ansicht</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug-Aktion, um absichtlich einen Absturz zu verursachen</string>
     <!-- Extension strings -->
-    <string name="ext__meta__maintainers">Ersteller</string>
     <string name="ext__meta__description">Beschreibung</string>
     <string name="ext__meta__homepage">Startseite</string>
     <string name="ext__meta__id">ID</string>
@@ -455,8 +451,8 @@
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch anzeigen</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Aus</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Rechtshänder-Modus</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Linkshänder-Modus</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Linkshänder-Modus</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Rechtshänder-Modus</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Systemsprache verwenden</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Tastatur-Subtypen verwenden</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Keine Aktion</string>

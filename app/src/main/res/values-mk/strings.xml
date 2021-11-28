@@ -26,7 +26,6 @@
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Стандардно</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системски</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локално</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Неодредено</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->

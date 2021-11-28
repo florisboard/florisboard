@@ -27,9 +27,8 @@
     <!-- Settings UI strings -->
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie je v systéme povolený, a preto nebude k dispozícii, ako metóda zadávania v ponuke na výber vstupov. Kliknutím sem tento problém vyriešite.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie je vybraný, ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešite.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Jazyky a rozloženie klávesnice</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Zdá sa, že ste nenakonfigurovali žiadne podtypy. Ako náhradný sa použije podtyp Angličtina/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pridať podtyp</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá sa, že ste nenakonfigurovali žiadne podtypy. Ako náhradný sa použije podtyp Angličtina/QWERTY!</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočná téma</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Vybraná téma</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prispôsobenie farieb aplikácii</string>
@@ -89,6 +88,7 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazenie pomocného kľúča</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí konfigurovateľný pomocný kláves vedľa medzerníka</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Akcia užitočného kľúča</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->

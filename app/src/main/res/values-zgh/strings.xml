@@ -21,7 +21,6 @@
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">ⴰⵙⵏⵓⴱⴳ</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">ⴰⵏⴰⵙⵉⵡ</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">ⵜⵉⵔⵔⴰ</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">ⵜⵓⵜⵍⴰⵢⵜ</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">ⴰⵏⴰⵙⵉⵡ</string>
     <string name="pref__suggestion__title" comment="Preference group title">ⵉⵙⵓⵎⵔⵏ</string>
     <!-- Spelling UI strings -->

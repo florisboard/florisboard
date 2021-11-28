@@ -38,7 +38,6 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">기본</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">하위 유형 추가</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">하위 유형 편집</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">언어</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">이름</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">그룹 편집</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">속성 추가</string>

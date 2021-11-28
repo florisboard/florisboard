@@ -48,14 +48,11 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesty</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Domyślne</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Domyślne systemowe</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Witaj w {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Witaj w {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie jest włączony w systemie i dlatego nie będzie dostępny jako metoda wprowadzania danych w oknie wyboru. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Języki i układy klawiatury</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wygląda na to, że nie skonfigurowałeś żadnego układu. Jako alternatywa zostanie użyty układ Angielski/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj układ</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edytuj układ</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ustawienia regionalne</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Układ znaków</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Podstawowy układ symboli</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Dodatkowy układ symboli</string>
@@ -66,8 +63,9 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Układ wiersza liczb</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Podstawowy układ telefonu</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Dodatkowy układ telefonu</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Wybierz język</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Wygląda na to, że nie skonfigurowałeś żadnego układu. Jako alternatywa zostanie użyty układ Angielski/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ten układ już istnieje!</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (nie zainstalowano)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Motyw</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Niezdefiniowany</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tryb motywu</string>
@@ -143,7 +141,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Półprzezroczysty kolor</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Kolor tekstu</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atrybut niestandardowy (%s)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Dźwięki &amp; Wibracje</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Dźwięki &amp; Wibracje</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Dźwięki</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Włącz feedback audio</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Odtwarzaj dźwięki dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
@@ -187,11 +185,17 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Opóznienie długiego przytrzymania</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spacja przełącza się z powrotem do układu znaków</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Naciśnięcie spacji automatycznie przełącza z powrotem na znaki, podczas bycia w symbolach lub cyfrach</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Doświadczenie w pisaniu</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
-    <string name="settings__dictionary__title" comment="Preference group title">Słownik</string>
+    <string name="pref__correction__title" comment="Preference group title">Korekty</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatyczne wstawianie wielkich liter</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pisz wielkie litery w słowach na podstawie bieżącego kontekstu</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Zapamiętaj stan caps lock</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pozostanie włączony po przejściu do innego pola tekstowego</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Kropka z podwójną spacją</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dwukrotne naciśnięcie klawisza spacji powoduje wstawienie kropki, po której następuje spacja</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Włącz systemowy słownik użytkownika</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugeruj słowa przechowywane w słowniku użytkownika systemu</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Zarządzaj systemowym słownikiem użytkownika</string>
@@ -200,13 +204,6 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Sugeruj słowa przechowywane w wewnętrznym słowniku użytkownika</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Zarządzaj wewnętrznym słownikiem użytkownika</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Dodawaj, przeglądaj i usuwaj wpisy z wewnętrznego słownika użytkownika</string>
-    <string name="pref__correction__title" comment="Preference group title">Korekty</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatyczne wstawianie wielkich liter</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pisz wielkie litery w słowach na podstawie bieżącego kontekstu</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Zapamiętaj stan caps lock</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pozostanie włączony po przejściu do innego pola tekstowego</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Kropka z podwójną spacją</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dwukrotne naciśnięcie klawisza spacji powoduje wstawienie kropki, po której następuje spacja</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Wewnętrzny Słownik Uźytkownika</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Systemowy Słownik Uźytkownika</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Częstotliwość: %d</string>
@@ -344,8 +341,8 @@
     <!-- Enum label and description strings -->
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nigdy nie pokazuj</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Zawsze pokazuj</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Tryb prawej ręki</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Tryb lewej ręki</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Tryb lewej ręki</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Tryb prawej ręki</string>
     <string name="enum__swipe_action__delete_word" comment="Enum value label">Usuń bieżące słowo</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ukryj klawiaturę</string>
     <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Przesuń kursor do góry</string>

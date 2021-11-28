@@ -49,11 +49,8 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системний за замовчуванням</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не ввімкнено в системі, тому він не буде доступним як метод вводу в меню вибору методу вводу. Натисніть сюди, щоб виправити це.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не вибрано як стандартний метод вводу. Натисніть сюди, щоб виправити це.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Мова &amp; Розкладка клавіатури</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Здається, ви не налаштували ні один підтип. Як запасний варіант буде використано підтип English/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Додати підтип</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редагувати підтип</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локалізація</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Символьні розкладки</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основна символьна розкладка</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Додаткова символьна розкладка</string>
@@ -63,6 +60,7 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Налаштування рядка з цифрами</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Основна телефонна розкладка</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Додаткова телефонна розкладка</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Здається, ви не налаштували ні один підтип. Як запасний варіант буде використано підтип English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Цей підтип вже існує!</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не визначено</string>
@@ -155,9 +153,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробіл перемикає назад в буквенну розкладку</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискання пробіл автоматичну перемикає на буквенну розкладку коли знаходиться в символьній або цифровій</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Розумна панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Налаштування вводу тексту</string>
     <string name="pref__suggestion__title" comment="Preference group title">Пропозиції</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>

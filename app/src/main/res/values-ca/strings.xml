@@ -49,11 +49,8 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i per tant no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per resoldre aquest problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per resoldre aquest problema.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomes &amp; Disposicions de teclat</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sembla que no heu configurat cap subtipus. Com a alternativa s\'utilitzarà el subtipus anglès/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar el subtipus</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Local</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposició dels caràcters</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposició primària dels símbols</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària dels símbols</string>
@@ -64,6 +61,7 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposició de la fila numèrica</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposició primària del telèfon</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària del telèfon</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Sembla que no heu configurat cap subtipus. Com a alternativa s\'utilitzarà el subtipus anglès/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Aquest subtipus ja existeix!</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinit</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode del tema</string>
@@ -155,15 +153,15 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a la disposició de caràcters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En prémer la barra d\'espai, es torna automàticament als caràcters quan estan en símbols o numèrics</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra intel·ligent</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Es mostrarà a la part superior del teclat</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggeriments</string>
-    <string name="settings__dictionary__title" comment="Preference group title">Diccionari</string>
+    <string name="pref__correction__title" comment="Preference group title">Correccions</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilita el diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggereix paraules emmagatzemades al diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestiona el diccionari d\'usuari del sistema</string>
-    <string name="pref__correction__title" comment="Preference group title">Correccions</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->

@@ -48,11 +48,8 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">ברירת המחדל של המערכת</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard אינו מופעל במערכת ולכן לא יהיה זמין כשיטת קלט בעת בחירת סוג המלקדת. לחץ כאן כדי לפתור תקלה זו.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard אינו הוגדר כמקלדת ברירת המחדל. לחץ כאן כדי לפתור תקלה זו.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">שפות &amp; ותצורת מקלדת</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">נראה שלא הגדרת שום תת-סוג. לכן יהיה שימוש בתת-סוג אנגלית/QWERTY!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">הוסף תת-סוג</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ערוך תת-סוג</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">שפה</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">סמלים פריסה ראשית</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">סמלים פריסה משנית</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">מחבר</string>
@@ -60,6 +57,7 @@
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">פריסה מספרית</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">פריסה מספרית (מתקדם)</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">פריסת שורת מספרים</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">נראה שלא הגדרת שום תת-סוג. לכן יהיה שימוש בתת-סוג אנגלית/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">תת הסוג הזה כבר קיים!</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">לא מוגדר</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">מצב ערכת נושא</string>
@@ -145,17 +143,10 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">השהיית לחיצה מקש ארוכה</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">סרגל רווח עובר חזרה לפריסת התווים</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">לחיצה על סרגל הרווח מחזירה אוטומטית לתווים כאשר היא נמצאת בסמלים או במספרים</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">שורה חכמה</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">הפעל שורה חכמה</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">יהיה ממוקם מעל המקלדת</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">חווית הקלדה</string>
     <string name="pref__suggestion__title" comment="Preference group title">הצעות</string>
-    <string name="settings__dictionary__title" comment="Preference group title">מילון</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">אפשר מילון משתמשי מערכת</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון משתמשי המערכת</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">נהל את מילון משתמשי המערכת</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">הוסף, הצג והסר ערכים עבור מילון המשתמשים במערכת</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">אפשר מילון משתמשים פנימי</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון המשתמש הפנימי</string>
     <string name="pref__correction__title" comment="Preference group title">תיקונים</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">שימוש אוטומטי באותיות גדולות</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">הפוך אותיות לגדולות בהתחשב בהקשר של הקלט הנכוחי</string>
@@ -163,6 +154,12 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock ישאר פעיל גם כאשר תעבור לשדה טקסט אחר</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">רווח-כפול סוף משפט</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">לחיצה על מקש הרווח פעמים תכניס נקודה ואחריה רווח</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">אפשר מילון משתמשי מערכת</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון משתמשי המערכת</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">נהל את מילון משתמשי המערכת</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">הוסף, הצג והסר ערכים עבור מילון המשתמשים במערכת</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">אפשר מילון משתמשים פנימי</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון המשתמש הפנימי</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">מילון משתמשים פנימי</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">מילון משתמשי מערכת</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">מילון המשתמש יובא בהצלחה!</string>

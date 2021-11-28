@@ -1,26 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vent</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikon med tre prikker. Hvis synlig, indikerer det at flere bokstaver kan brukes hvis de trykkes lenger.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Flytt tastaturet til venstre.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Flytt tastaturet til høyre.</string>
     <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Privat modus</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__activities" comment="Emoji category name">Aktiviteter</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Gjenstander</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Åpne innstillinger.</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Innstillinger</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Hjelp</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Hjem</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tastatur</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Skriver</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Bevegelser</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Velkommen til {app_name}</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke aktivert i systemet og vil derfor ikke være tilgjengelig som inndatametode i inndatavelgeren. Klikk her for å løse dette problemet.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inndatametode. Klikk her for å løse dette problemet.</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Legg til undertype</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Velg språk</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det ser ut til at du ikke har konfigurert noen undertyper. Som en reserve vil undertypen engelsk/QWERTY bli brukt!</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Legg til gruppe</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Rediger gruppe</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Legg til attributt</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referanse</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppe</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Solid farge</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Bytt</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Tilstand</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Annet</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vennligst angi et gruppenavn.</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Nøkkel</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-hånds</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Privat modus</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBar</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ikke implementert</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: %d</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle språk</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Snarvei (valgfritt)</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Sveip oppover</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Sveip nedover</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Sveip mot venstre</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Sveip mot høyre</string>
     <!-- Spelling UI strings -->
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Velg kilde</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Velg språk</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Om</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Persovernerklæring</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Kildekode</string>
+    <string name="about__version__title" comment="Preference title">Versjon</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Noe gikk galt: %s</string>
+    <string name="about__changelog__title" comment="Preference title">Endringslogg</string>
+    <string name="about__changelog__summary" comment="Preference summary">Hva som er nytt</string>
     <!-- Assets strings -->
+    <string name="assets__file__name">Navn</string>
+    <string name="assets__file__source">Kilde</string>
+    <string name="assets__action__add">Legg til</string>
+    <string name="assets__action__apply">Bruk</string>
+    <string name="assets__action__cancel">Avbryt</string>
+    <string name="assets__action__default">Standard</string>
+    <string name="assets__action__delete">Slett</string>
+    <string name="assets__action__delete_confirm_title">Bekreft sletting</string>
+    <string name="assets__action__edit">Rediger</string>
+    <string name="assets__action__export">Eksport</string>
+    <string name="assets__action__import">Importer</string>
+    <string name="assets__action__no">Nei</string>
+    <string name="assets__action__ok">OK</string>
+    <string name="assets__action__save">Lagre</string>
+    <string name="assets__action__select">Velg</string>
+    <string name="assets__action__select_dir">Velg mappe</string>
+    <string name="assets__action__select_file">Velg fil</string>
+    <string name="assets__action__yes">Ja</string>
+    <string name="assets__error__details">Detaljer</string>
+    <string name="assets__error__invalid">Ygyldig</string>
+    <string name="assets__error__snackbar_message">Noe gikk galt</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Velkommen!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Persovernerklæring</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Pakkebrønn</string>
+    <string name="setup__finish_up__title">Gjøre ferdig</string>
+    <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>
+    <string name="setup__finish_up__description_p2">Skulle du støte på problemer, feil, krasjer eller bare vil komme med et forslag, sjekk ut prosjektlageret fra Om-skjermen!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__description" comment="Description of crash dialog">Beklager ulempen, men FlorisBoard har krasjet på grunn av en uventet feil.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Hvis du ønsker å rapportere denne feilen, sjekk først ut problemsporingen på GitHub hvis krasjen din ikke allerede er rapportert.\nHvis den ikke er det, kopier den genererte krasjloggen og åpne et nytt problem. Bruk \"%s\"-malen og fyll ut beskrivelsen, trinnene for å reprodusere, og lim inn den genererte krasjloggen på slutten. Dette er med på å gjøre FlorisBoard bedre og mer stabilt for alle. Takk skal du ha!</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Lukk</string>
     <!-- Clipboard strings -->
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__meta__description">Beskrivelse</string>
+    <string name="ext__meta__homepage">Startside</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__keywords">Nøkkelord</string>
+    <string name="ext__meta__license">Lisens</string>
+    <string name="ext__meta__title">Tittel</string>
+    <string name="ext__meta__version">Versjon</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Portrett</string>
+    <string name="screen_orientation__landscape">Landskap</string>
+    <string name="screen_orientation__vertical">Vertikal</string>
+    <string name="screen_orientation__horizontal">Horisontal</string>
     <!-- State strings -->
+    <string name="state__disabled">Deaktivert</string>
+    <string name="state__enabled">Aktivert</string>
     <!-- Enum label and description strings -->
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldri</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis alltid</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Følg systemet</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Bytt Språk</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

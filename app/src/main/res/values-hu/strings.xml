@@ -49,11 +49,8 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Rendszer alapértelmezett</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, beviteli módszerként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Nyelvek és billentyűzetkiosztások</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Úgy tűnik, hogy nem állított be altípusokat. Tartalékként az angol/QWERTY lesz használva!</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Terület</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Karakterelrendezés</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Elsődleges szimbólumelrendezés</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Másodlagos szimbólumelrendezés</string>
@@ -63,6 +60,7 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Számsor elrendezés</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Elsődleges telefonelrendezés</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Másodlagos telefonelrendezés</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Úgy tűnik, hogy nem állított be altípusokat. Tartalékként az angol/QWERTY lesz használva!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ez az altípus már létezik!</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nem meghatározott</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Téma mód</string>
@@ -154,14 +152,10 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz automatikusan visszavált a karakterelrendezésre</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">A szóköz lenyomáskor automatikusan visszavált a karakterekre, amikor a szimbólumok vagy a számok jelennek meg</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Gépelési élmény</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
-    <string name="settings__dictionary__title" comment="Preference group title">Szótár</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
@@ -169,6 +163,9 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha mozog egy másik szövegmezőbe</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Belső felhasználói szótár</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Gyakoriság: %d</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Az összes nyelvhez</string>
