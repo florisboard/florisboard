@@ -36,8 +36,8 @@ import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 
 @Composable
 fun LocalizationScreen() = FlorisScreen {

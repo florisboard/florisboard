@@ -42,7 +42,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.jetpref.ui.compose.Preference
+import dev.patrickgold.jetpref.datastore.ui.Preference
 
 @Composable
 fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {

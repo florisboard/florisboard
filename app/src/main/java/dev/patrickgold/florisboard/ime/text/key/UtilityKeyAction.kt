@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.key
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.jetpref.ui.compose.entry
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**
  * Enum for declaring the utility key actions.
@@ -33,23 +33,23 @@ enum class UtilityKeyAction {
 
     companion object {
         @Composable
-        fun listEntries() = listOf(
+        fun listEntries() = listPrefEntries {
             entry(
                 key = SWITCH_TO_EMOJIS,
                 label = stringRes(R.string.enum__utility_key_action__switch_to_emojis),
-            ),
+            )
             entry(
                 key = SWITCH_LANGUAGE,
                 label = stringRes(R.string.enum__utility_key_action__switch_language),
-            ),
+            )
             entry(
                 key = SWITCH_KEYBOARD_APP,
                 label = stringRes(R.string.enum__utility_key_action__switch_keyboard_app),
-            ),
+            )
             entry(
                 key = DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
                 label = stringRes(R.string.enum__utility_key_action__dynamic_switch_language_emojis),
-            ),
-        )
+            )
+        }
     }
 }

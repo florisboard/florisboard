@@ -47,7 +47,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.ui.compose.Preference
+import dev.patrickgold.jetpref.datastore.ui.Preference
 
 @Composable
 fun HomeScreen() = FlorisScreen {

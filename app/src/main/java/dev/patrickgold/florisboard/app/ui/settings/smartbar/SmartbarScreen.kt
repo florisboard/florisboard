@@ -24,7 +24,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
 fun SmartbarScreen() = FlorisScreen(title = stringRes(R.string.settings__smartbar__title)) {

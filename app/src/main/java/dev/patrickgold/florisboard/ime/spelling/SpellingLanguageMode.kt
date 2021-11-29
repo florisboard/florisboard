@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.spelling
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.jetpref.ui.compose.entry
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**
  * Enum for the spelling language modes.
@@ -30,15 +30,15 @@ enum class SpellingLanguageMode {
 
     companion object {
         @Composable
-        fun listEntries() = listOf(
+        fun listEntries() = listPrefEntries {
             entry(
                 key = USE_SYSTEM_LANGUAGES,
                 label = stringRes(R.string.enum__spelling_language_mode__use_system_languages),
-            ),
+            )
             entry(
                 key = USE_KEYBOARD_SUBTYPES,
                 label = stringRes(R.string.enum__spelling_language_mode__use_keyboard_subtypes),
-            ),
-        )
+            )
+        }
     }
 }

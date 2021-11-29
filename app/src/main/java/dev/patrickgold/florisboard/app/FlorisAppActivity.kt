@@ -54,7 +54,7 @@ import dev.patrickgold.florisboard.common.android.hideAppIcon
 import dev.patrickgold.florisboard.common.android.showAppIcon
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.util.AppVersionUtils
-import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
+import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),

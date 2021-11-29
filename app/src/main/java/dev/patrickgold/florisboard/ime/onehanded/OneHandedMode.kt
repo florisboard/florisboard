@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.onehanded
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.jetpref.ui.compose.entry
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**
  * Static object which contains all possible one-handed mode strings.
@@ -31,19 +31,19 @@ enum class OneHandedMode {
 
     companion object {
         @Composable
-        fun listEntries() = listOf(
+        fun listEntries() = listPrefEntries {
             entry(
                 key = OFF,
                 label = stringRes(R.string.enum__one_handed_mode__off),
-            ),
+            )
             entry(
                 key = START,
                 label = stringRes(R.string.enum__one_handed_mode__start),
-            ),
+            )
             entry(
                 key = END,
                 label = stringRes(R.string.enum__one_handed_mode__end),
-            ),
-        )
+            )
+        }
     }
 }

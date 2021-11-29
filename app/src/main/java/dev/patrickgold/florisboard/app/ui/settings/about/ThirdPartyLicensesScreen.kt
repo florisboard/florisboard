@@ -29,8 +29,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.launchUrl
-import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
-import dev.patrickgold.jetpref.ui.compose.Preference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 data class Library(val name: String, val licenseText: String)
 

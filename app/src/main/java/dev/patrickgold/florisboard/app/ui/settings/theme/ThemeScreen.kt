@@ -32,14 +32,14 @@ import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.oldsettings.ThemeManagerActivity
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.ui.compose.ListPreference
-import dev.patrickgold.jetpref.ui.compose.LocalTimePickerPreference
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
-import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
-@OptIn(ExperimentalJetPrefUi::class)
+@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun ThemeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__theme__title)

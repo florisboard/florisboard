@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.key
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.jetpref.ui.compose.entry
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**
  * Enum for the input modes of a text keyboard.
@@ -42,20 +42,20 @@ enum class InputMode(val value: Int) {
         fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: NORMAL
 
         @Composable
-        fun listEntries() = listOf(
+        fun listEntries() = listPrefEntries {
             entry(
                 key = NORMAL,
                 label = stringRes(R.string.enum__input_mode__normal),
-            ),
+            )
             entry(
                 key = SHIFT_LOCK,
                 label = stringRes(R.string.enum__input_mode__shift_lock),
-            ),
+            )
             entry(
                 key = CAPS_LOCK,
                 label = stringRes(R.string.enum__input_mode__caps_lock),
-            ),
-        )
+            )
+        }
     }
 
     fun toInt() = value

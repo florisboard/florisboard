@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.key
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.jetpref.ui.compose.entry
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**
  * Enum for the key hint modes.
@@ -32,25 +32,25 @@ enum class KeyHintMode {
 
     companion object {
         @Composable
-        fun listEntries() = listOf(
+        fun listEntries() = listPrefEntries {
             entry(
                 key = ACCENT_PRIORITY,
                 label = stringRes(R.string.enum__key_hint_mode__accent_priority),
                 description = stringRes(R.string.enum__key_hint_mode__accent_priority__description),
                 showDescriptionOnlyIfSelected = true,
-            ),
+            )
             entry(
                 key = HINT_PRIORITY,
                 label = stringRes(R.string.enum__key_hint_mode__hint_priority),
                 description = stringRes(R.string.enum__key_hint_mode__hint_priority__description),
                 showDescriptionOnlyIfSelected = true,
-            ),
+            )
             entry(
                 key = SMART_PRIORITY,
                 label = stringRes(R.string.enum__key_hint_mode__smart_priority),
                 description = stringRes(R.string.enum__key_hint_mode__smart_priority__description),
                 showDescriptionOnlyIfSelected = true,
-            ),
-        )
+            )
+        }
     }
 }

@@ -23,8 +23,8 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.oldsettings.UdmActivity
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
 fun DictionaryScreen() = FlorisScreen(title = stringRes(R.string.settings__dictionary__title)) {

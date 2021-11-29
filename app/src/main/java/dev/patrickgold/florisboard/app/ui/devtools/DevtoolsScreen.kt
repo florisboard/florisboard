@@ -30,10 +30,10 @@ import dev.patrickgold.florisboard.common.android.AndroidSettings
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"

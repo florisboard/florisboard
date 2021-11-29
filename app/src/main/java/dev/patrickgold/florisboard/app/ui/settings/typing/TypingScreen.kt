@@ -25,8 +25,8 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
 fun TypingScreen() = FlorisScreen(title = stringRes(R.string.settings__typing__title)) {

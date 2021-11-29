@@ -46,7 +46,6 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.jetpref.ui.compose.Preference
 
 @Composable
 fun ExtensionListScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
