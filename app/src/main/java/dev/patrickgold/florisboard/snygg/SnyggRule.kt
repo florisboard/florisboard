@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.snygg
 
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.common.kotlin.stringBuilder
+import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -38,9 +39,9 @@ private const val GROUPS_KEY = "group"
 private const val MODES_KEY = "mode"
 
 private const val SELECTOR_COLON = ':'
-private const val HOVER_SELECTOR = "hover"
-private const val FOCUS_SELECTOR = "focus"
 private const val PRESSED_SELECTOR = "pressed"
+private const val FOCUS_SELECTOR = "focus"
+private const val DISABLED_SELECTOR = "disabled"
 
 @Serializable(with = SnyggRuleSerializer::class)
 data class SnyggRule(
@@ -48,21 +49,21 @@ data class SnyggRule(
     val codes: List<Int> = listOf(),
     val groups: List<Int> = listOf(),
     val modes: List<Int> = listOf(),
-    val hoverSelector: Boolean = false,
-    val focusSelector: Boolean = false,
     val pressedSelector: Boolean = false,
+    val focusSelector: Boolean = false,
+    val disabledSelector: Boolean = false,
 ) : Comparable<SnyggRule> {
     companion object {
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
-            """^[a-zA-Z0-9-]+(\[(code|group|normal)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(hover|focus|pressed))*${'$'}""".toRegex()
+            """^[a-zA-Z0-9-]+(\[(code|group|normal)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
         private val placeholders = mapOf(
             "c:delete" to KeyCode.DELETE,
             "c:shift" to KeyCode.SHIFT,
             "c:space" to KeyCode.SPACE,
-            "m:normal" to 1,
-            "m:shiftlock" to 2,
-            "m:capslock" to 3,
+            "m:normal" to InputMode.NORMAL.value,
+            "m:shiftlock" to InputMode.SHIFT_LOCK.value,
+            "m:capslock" to InputMode.CAPS_LOCK.value,
         )
 
         val Comparator = Comparator<SnyggRule> { a, b ->
@@ -80,15 +81,15 @@ data class SnyggRule(
             try {
                 val selectors = str.split(SELECTOR_COLON)
                 val elementAndAttributes = selectors[0]
-                var hoverSelector = false
-                var focusSelector = false
                 var pressedSelector = false
+                var focusSelector = false
+                var disabledSelector = false
                 if (selectors.size > 1) {
                     for (selector in selectors.listIterator(1)) {
                         when (selector) {
-                            HOVER_SELECTOR -> hoverSelector = true
-                            FOCUS_SELECTOR -> focusSelector = true
                             PRESSED_SELECTOR -> pressedSelector = true
+                            FOCUS_SELECTOR -> focusSelector = true
+                            DISABLED_SELECTOR -> disabledSelector = true
                         }
                     }
                 }
@@ -112,7 +113,7 @@ data class SnyggRule(
                 }
                 return SnyggRule(
                     element, codes.toList(), groups.toList(), modes.toList(),
-                    hoverSelector, focusSelector, pressedSelector
+                    pressedSelector, focusSelector, disabledSelector,
                 )
             } catch (e: Exception) {
                 return null
@@ -129,9 +130,9 @@ data class SnyggRule(
         appendAttribute(CODES_KEY, codes)
         appendAttribute(GROUPS_KEY, groups)
         appendAttribute(MODES_KEY, modes)
-        appendSelector(HOVER_SELECTOR, hoverSelector)
-        appendSelector(FOCUS_SELECTOR, focusSelector)
         appendSelector(PRESSED_SELECTOR, pressedSelector)
+        appendSelector(FOCUS_SELECTOR, focusSelector)
+        appendSelector(DISABLED_SELECTOR, disabledSelector)
     }
 
     fun edit() = SnyggRuleEditor(
@@ -139,18 +140,18 @@ data class SnyggRule(
         codes.toMutableList(),
         groups.toMutableList(),
         modes.toMutableList(),
-        focusSelector,
-        hoverSelector,
         pressedSelector,
+        focusSelector,
+        disabledSelector,
     )
 
     private fun comparatorWeight(): Int {
         return (if (codes.isNotEmpty()) 0x01 else 0) +
             (if (groups.isNotEmpty()) 0x02 else 0) +
             (if (modes.isNotEmpty()) 0x04 else 0) +
-            (if (focusSelector) 0x08 else 0) +
-            (if (hoverSelector) 0x10 else 0) +
-            (if (pressedSelector) 0x20 else 0)
+            (if (pressedSelector) 0x08 else 0) +
+            (if (focusSelector) 0x10 else 0) +
+            (if (disabledSelector) 0x20 else 0)
     }
 
     private fun StringBuilder.appendAttribute(key: String, entries: List<Int>) {
@@ -181,11 +182,11 @@ class SnyggRuleEditor(
     val codes: MutableList<Int> = mutableListOf(),
     val groups: MutableList<Int> = mutableListOf(),
     val modes: MutableList<Int> = mutableListOf(),
-    var hoverSelector: Boolean = false,
-    var focusSelector: Boolean = false,
     var pressedSelector: Boolean = false,
+    var focusSelector: Boolean = false,
+    var disabledSelector: Boolean = false,
 ) {
-    fun build() = SnyggRule(element, codes, groups, modes, hoverSelector, focusSelector, pressedSelector)
+    fun build() = SnyggRule(element, codes, groups, modes, pressedSelector, focusSelector, disabledSelector)
 }
 
 @OptIn(ExperimentalSerializationApi::class)

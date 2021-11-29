@@ -45,9 +45,9 @@ class SnyggStylesheet(
                     && (rule.codes.isEmpty() || referenceRule.codes.isEmpty() || rule.codes.any { it in referenceRule.codes })
                     && (rule.groups.isEmpty() || referenceRule.groups.isEmpty() || rule.groups.any { it in referenceRule.groups })
                     && (rule.modes.isEmpty() || referenceRule.modes.isEmpty() || rule.modes.any { it in referenceRule.modes })
-                    && ((referenceRule.hoverSelector == rule.hoverSelector) || !rule.hoverSelector)
-                    && ((referenceRule.focusSelector == rule.focusSelector) || !rule.focusSelector)
                     && ((referenceRule.pressedSelector == rule.pressedSelector) || !rule.pressedSelector)
+                    && ((referenceRule.focusSelector == rule.focusSelector) || !rule.focusSelector)
+                    && ((referenceRule.disabledSelector == rule.disabledSelector) || !rule.disabledSelector)
             }.sortedDescending().map { rules[it]!! }
         }
 
@@ -57,18 +57,18 @@ class SnyggStylesheet(
             code: Int = Unspecified,
             group: Int = Unspecified,
             mode: Int = Unspecified,
-            isHover: Boolean = false,
-            isFocus: Boolean = false,
             isPressed: Boolean = false,
+            isFocus: Boolean = false,
+            isDisabled: Boolean = false,
         ): SnyggPropertySet {
             val possibleRules = rules.keys.filter { it.element == element }.sortedDescending()
             possibleRules.forEach { rule ->
                 val match = (code == Unspecified || rule.codes.isEmpty() || rule.codes.contains(code))
                     && (group == Unspecified || rule.groups.isEmpty() || rule.groups.contains(group))
                     && (mode == Unspecified || rule.modes.isEmpty() || rule.modes.contains(mode))
-                    && (isHover == rule.hoverSelector || !rule.hoverSelector)
-                    && (isFocus == rule.focusSelector || !rule.focusSelector)
                     && (isPressed == rule.pressedSelector || !rule.pressedSelector)
+                    && (isFocus == rule.focusSelector || !rule.focusSelector)
+                    && (isDisabled == rule.disabledSelector || !rule.disabledSelector)
                 if (match) {
                     return rules[rule]!!
                 }
@@ -83,11 +83,11 @@ class SnyggStylesheet(
         code: Int = Unspecified,
         group: Int = Unspecified,
         mode: Int = Unspecified,
-        isHover: Boolean = false,
-        isFocus: Boolean = false,
         isPressed: Boolean = false,
-    ) = remember(element, code, group, mode, isHover, isFocus, isPressed) {
-        getPropertySet(rules, element, code, group, mode, isHover, isFocus, isPressed)
+        isFocus: Boolean = false,
+        isDisabled: Boolean = false,
+    ) = remember(element, code, group, mode, isPressed, isFocus, isDisabled) {
+        getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
     }
 
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
@@ -162,9 +162,9 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
         codes: List<Int> = listOf(),
         groups: List<Int> = listOf(),
         modes: List<Int> = listOf(),
-        hoverSelector: Boolean = false,
-        focusSelector: Boolean = false,
         pressedSelector: Boolean = false,
+        focusSelector: Boolean = false,
+        disabledSelector: Boolean = false,
         propertySetBlock: SnyggPropertySetEditor.() -> Unit,
     ) {
         val propertySetEditor = SnyggPropertySetEditor()
@@ -174,9 +174,9 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
             codes.toMutableList(),
             groups.toMutableList(),
             modes.toMutableList(),
-            hoverSelector,
-            focusSelector,
             pressedSelector,
+            focusSelector,
+            disabledSelector,
         )
         rules[ruleEditor] = propertySetEditor
     }
