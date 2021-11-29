@@ -2,44 +2,85 @@
   [
     { "code":   39, "label": "'", "popup": {
       "relevant": [
+        { "code": 1474, "label": "ש\u05c2" },
+        { "code": 1467, "label": "ס\u05bb" },
+        { "code": 1523, "label": "׳" },
+        { "code": 1524, "label": "״" },
         { "code":   34, "label": "\"" },
         { "code":   96, "label": "`" }
       ]
     } },
     { "code":   45, "label": "-", "popup": {
       "relevant": [
+        { "code": 1470, "label": "־" },
+        { "code": 1473, "label": "ש\u05c1" },
         { "code":   95, "label": "_" }
       ]
     } },
-    { "code":  1511, "label": "ק" },
+    { "code":  1511, "label": "ק", "popup": {
+      "relevant": [
+        { "code": 1464, "label": "ס\u05b8" },
+        { "code": 1459, "label": "ס\u05b3" }
+      ]
+    } },
     { "code":  1512, "label": "ר" },
     { "code":  1488, "label": "א" },
     { "code":  1496, "label": "ט" },
-    { "code":  1493, "label": "ו" },
+    { "code":  1493, "label": "ו", "popup": {
+      "relevant": [
+        { "code": 1465, "label": "ס\u05b9" }
+      ]
+    } },
     { "code":  1503, "label": "ן" },
     { "code":  1501, "label": "ם" },
-    { "code":  1508, "label": "פ" }
+    { "code":  1508, "label": "פ", "popup": {
+      "relevant": [
+        { "code": 1463, "label": "ס\u05b7" },
+        { "code": 1458, "label": "ס\u05b2" }
+      ]
+    } }
   ],
   [
-    { "code":  1513, "label": "ש" },
-    { "code":  1491, "label": "ד" },
+    { "code":  1513, "label": "ש", "popup": {
+      "relevant": [
+        { "code": 1456, "label": "ס\u05b0" }
+      ]
+    } },
+    { "code":  1491, "label": "ד", "popup": {
+      "relevant": [
+        { "code": 1468, "label": "ס\u05bc" }
+      ]
+    } },
     { "code":  1490, "label": "ג" },
     { "code":  1499, "label": "כ" },
     { "code":  1506, "label": "ע" },
     { "code":  1497, "label": "י" },
-    { "code":  1495, "label": "ח" },
+    { "code":  1495, "label": "ח", "popup": {
+      "relevant": [
+        { "code": 1460, "label": "ס\u05b4" }
+      ]
+    } },
     { "code":  1500, "label": "ל" },
     { "code":  1498, "label": "ך" },
     { "code":  1507, "label": "ף" }
   ],
   [
     { "code":  1494, "label": "ז" },
-    { "code":  1505, "label": "ס" },
+    { "code":  1505, "label": "ס", "popup": {
+      "relevant": [
+        { "code": 1462, "label": "ס\u05b6" },
+        { "code": 1457, "label": "ס\u05b1" }
+      ]
+    } },
     { "code":  1489, "label": "ב" },
     { "code":  1492, "label": "ה" },
     { "code":  1504, "label": "נ" },
     { "code":  1502, "label": "מ" },
-    { "code":  1510, "label": "צ" },
+    { "code":  1510, "label": "צ", "popup": {
+      "relevant": [
+        { "code": 1461, "label": "ס\u05b5" }
+      ]
+    } },
     { "code":  1514, "label": "ת" },
     { "code":  1509, "label": "ץ" }
   ]
