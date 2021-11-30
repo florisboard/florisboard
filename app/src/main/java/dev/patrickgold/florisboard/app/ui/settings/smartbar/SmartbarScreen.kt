@@ -27,15 +27,24 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
-fun SmartbarScreen() = FlorisScreen(title = stringRes(R.string.settings__smartbar__title)) {
-    SwitchPreference(
-        prefs.smartbar.enabled,
-        title = stringRes(R.string.pref__smartbar__enabled__label),
-        summary = stringRes(R.string.pref__smartbar__enabled__summary),
-    )
-    // This card is temporary and is therefore not using a string resource
-    FlorisInfoCard(
-        modifier = Modifier.padding(8.dp),
-        text = "Smartbar will soon be customizable a lot more, thus this seemingly pointless screen currently",
-    )
+fun SmartbarScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__smartbar__title)
+
+    content {
+        SwitchPreference(
+            prefs.smartbar.enabled,
+            title = stringRes(R.string.pref__smartbar__enabled__label),
+            summary = stringRes(R.string.pref__smartbar__enabled__summary),
+        )
+        SwitchPreference(
+            prefs.smartbar.showSecondaryRowBelowPrimary,
+            title = stringRes(R.string.pref__smartbar__enabled__label),
+            summary = stringRes(R.string.pref__smartbar__enabled__summary),
+        )
+        // This card is temporary and is therefore not using a string resource
+        FlorisInfoCard(
+            modifier = Modifier.padding(8.dp),
+            text = "Smartbar will soon be customizable a lot more, thus this seemingly pointless screen currently",
+        )
+    }
 }

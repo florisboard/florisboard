@@ -34,10 +34,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
@@ -68,6 +68,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -166,7 +167,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
     private var composeInputView: View? = null
-    private var composeInputViewInnerHeight: Int by mutableStateOf(0)
+    private var composeInputViewInnerHeight: Int = 0
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
 
     override fun onCreate() {
@@ -272,6 +273,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun BoxScope.ImeUi() {
         val keyboardStyle = FlorisImeTheme.style.get(FlorisImeUi.Keyboard)
@@ -280,7 +282,9 @@ class FlorisImeService : LifecycleInputMethodService() {
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .align(Alignment.BottomStart)
-                .onGloballyPositioned { coords -> composeInputViewInnerHeight = coords.size.height },
+                .onGloballyPositioned { coords -> composeInputViewInnerHeight = coords.size.height }
+                // Do not remove below line or touch input may get stuck
+                .pointerInteropFilter { false },
             background = keyboardStyle.background,
         ) {
             val configuration = LocalConfiguration.current
@@ -292,7 +296,9 @@ class FlorisImeService : LifecycleInputMethodService() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(IntrinsicSize.Min)
+                    .wrapContentHeight()
+                    // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
+                    //.height(IntrinsicSize.Min)
                     .padding(bottom = bottomOffset),
             ) {
                 val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
@@ -329,6 +335,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onComputeInsets(outInsets)
         if (outInsets == null) return
 
+        flogDebug { "comp insets" }
         val composeView = composeInputView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
         if (!isInputViewShown) {
@@ -336,7 +343,9 @@ class FlorisImeService : LifecycleInputMethodService() {
             outInsets.visibleTopInsets = composeView.height
             return
         }
+
         val visibleTopY = composeView.height - composeInputViewInnerHeight
+        flogDebug { "comp insets: $visibleTopY" }
         outInsets.contentTopInsets = visibleTopY
         outInsets.visibleTopInsets = visibleTopY
         //if (isClipboardContextMenuShown) {

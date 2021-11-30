@@ -113,9 +113,66 @@ object FlorisImeUiSpec : SnyggSpec({
         )
     }
 
-    element(FlorisImeUi.Smartbar) {
+    element(FlorisImeUi.SmartbarPrimaryRow) {
         property(
             name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+    element(FlorisImeUi.SmartbarPrimaryActionRowToggle) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
+        )
+    }
+    element(FlorisImeUi.SmartbarPrimarySecondaryRowToggle) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
+        )
+    }
+
+    element(FlorisImeUi.SmartbarSecondaryRow) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+
+    element(FlorisImeUi.SmartbarActionRow) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+    element(FlorisImeUi.SmartbarActionButton) {
+        property(
+            name = Snygg.Foreground,
             level = SnyggLevel.BASIC,
             supportedValues(SnyggSolidColorValue),
         )

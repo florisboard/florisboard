@@ -24,7 +24,12 @@ object FlorisImeUi {
 
     const val OneHandedPanel = "one-handed-panel"
 
-    const val Smartbar = "smartbar"
+    const val SmartbarPrimaryRow = "smartbar-primary-row"
+    const val SmartbarPrimaryActionRowToggle = "smartbar-primary-action-row-toggle"
+    const val SmartbarPrimarySecondaryRowToggle = "smartbar-primary-secondary-row-toggle"
+    const val SmartbarSecondaryRow = "smartbar-secondary-row"
+    const val SmartbarActionRow = "smartbar-action-row"
+    const val SmartbarActionButton = "smartbar-action-button"
 
     const val SystemNavBar = "system-nav-bar"
 }

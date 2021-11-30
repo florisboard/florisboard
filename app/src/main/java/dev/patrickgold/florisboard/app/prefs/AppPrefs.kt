@@ -435,6 +435,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__enabled",
             default = true,
         )
+        val secondaryRowExpanded = boolean(
+            key = "smartbar__secondary_row_expanded",
+            default = false,
+        )
+        val actionRowExpanded = boolean(
+            key = "smartbar__action_row_expanded",
+            default = false,
+        )
+        val showSecondaryRowBelowPrimary = boolean(
+            key = "smartbar__show_secondary_row_below_primary",
+            default = false,
+        )
     }
 
     val spelling = Spelling()

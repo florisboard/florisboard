@@ -85,7 +85,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -126,7 +125,7 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
-                        touchEventChannel.trySendBlocking(event)
+                        touchEventChannel.trySend(event)
                         return@pointerInteropFilter true
                     }
                 }
