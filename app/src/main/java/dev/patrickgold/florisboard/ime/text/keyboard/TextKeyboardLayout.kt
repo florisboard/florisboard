@@ -63,7 +63,6 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
@@ -125,7 +124,8 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
-                        touchEventChannel.trySend(event)
+                        val eventCopy = MotionEvent.obtain(event)
+                        touchEventChannel.trySend(eventCopy)
                         return@pointerInteropFilter true
                     }
                 }
@@ -193,6 +193,7 @@ fun TextKeyboardLayout(
         for (event in touchEventChannel) {
             if (!isActive) break
             controller.onTouchEventInternal(event)
+            event.recycle()
         }
     }
 }
@@ -312,21 +313,21 @@ private class TextKeyboardLayoutController(
         flogDebug { "event=$event" }
         swipeGestureDetector.onTouchEvent(event)
 
-        if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
-            val glidePointer = pointerMap.findById(0)
-            if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
-                for (pointer in pointerMap) {
-                    if (pointer.activeKey != null) {
-                        onTouchCancelInternal(event, pointer)
-                    }
-                }
-                if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
-                    pointerMap.clear()
-                }
-                isGliding = true
-                return
-            }
-        }
+        //if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
+        //    val glidePointer = pointerMap.findById(0)
+        //    if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
+        //        for (pointer in pointerMap) {
+        //            if (pointer.activeKey != null) {
+        //                onTouchCancelInternal(event, pointer)
+        //            }
+        //        }
+        //        if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
+        //            pointerMap.clear()
+        //        }
+        //        isGliding = true
+        //        return
+        //    }
+        //}
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
@@ -461,7 +462,6 @@ private class TextKeyboardLayoutController(
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
 
         val key = keyboard.getKeyForPos(event.getLocalX(pointer.index), event.getLocalY(pointer.index))
-        flogDebug { key.toString() }
         if (key != null && key.isEnabled) {
             inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
             if (prefs.keyboard.popupEnabled.get() && popupUiController.isSuitableForPopups(key)) {
