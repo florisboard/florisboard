@@ -172,9 +172,19 @@ object FlorisImeUiSpec : SnyggSpec({
     }
     element(FlorisImeUi.SmartbarActionButton) {
         property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
             name = Snygg.Foreground,
             level = SnyggLevel.BASIC,
             supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
         )
     }
 

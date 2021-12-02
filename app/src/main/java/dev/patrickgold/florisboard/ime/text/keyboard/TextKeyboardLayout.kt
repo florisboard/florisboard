@@ -124,8 +124,7 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
-                        val eventCopy = MotionEvent.obtain(event)
-                        touchEventChannel.trySend(eventCopy)
+                        touchEventChannel.trySend(event)
                         return@pointerInteropFilter true
                     }
                 }
@@ -193,7 +192,6 @@ fun TextKeyboardLayout(
         for (event in touchEventChannel) {
             if (!isActive) break
             controller.onTouchEventInternal(event)
-            event.recycle()
         }
     }
 }

@@ -250,6 +250,19 @@ class TextKeyData(
             label = "clipboard_select_all",
         )
 
+        /** Predefined key data for [KeyCode.COMPACT_LAYOUT_TO_LEFT] */
+        val COMPACT_LAYOUT_TO_LEFT = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.COMPACT_LAYOUT_TO_LEFT,
+            label = "compact_layout_to_left",
+        )
+        /** Predefined key data for [KeyCode.COMPACT_LAYOUT_TO_RIGHT] */
+        val COMPACT_LAYOUT_TO_RIGHT = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.COMPACT_LAYOUT_TO_RIGHT,
+            label = "compact_layout_to_right",
+        )
+
         /** Predefined key data for [KeyCode.UNDO] */
         val UNDO = TextKeyData(
             type = KeyType.SYSTEM_GUI,
@@ -355,6 +368,13 @@ class TextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.IME_HIDE_UI,
             label = "ime_hide_ui",
+        )
+
+        /** Predefined key data for [KeyCode.SETTINGS] */
+        val SETTINGS = TextKeyData(
+            type = KeyType.CHARACTER,
+            code = KeyCode.SETTINGS,
+            label = "settings",
         )
 
         /** Predefined key data for [KeyCode.INTERNAL_BATCH_EDIT] */

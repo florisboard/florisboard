@@ -439,13 +439,17 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__secondary_row_expanded",
             default = false,
         )
+        val showSecondaryRowBelowPrimary = boolean(
+            key = "smartbar__show_secondary_row_below_primary",
+            default = false,
+        )
         val actionRowExpanded = boolean(
             key = "smartbar__action_row_expanded",
             default = false,
         )
-        val showSecondaryRowBelowPrimary = boolean(
-            key = "smartbar__show_secondary_row_below_primary",
-            default = false,
+        val actions = string(
+            key = "smartbar__actions",
+            default = "[]",
         )
     }
 

@@ -30,10 +30,11 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -110,7 +111,9 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
         ) {
             Box(
                 modifier = Modifier
-                    .requiredSize(32.dp)
+                    .padding(4.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
                     .snyggBackground(actionsToggleStyle.background, actionsToggleStyle.shape),
                 contentAlignment = Alignment.Center,
             ) {
@@ -144,42 +147,65 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                 enter = SmartbarHorizontalEnterTransition,
                 exit = SmartbarHorizontalExitTransition,
             ) {
-                Text(
-                    text = "action row",
-                )
+                SmartbarActionRow()
             }
         }
         IconButton(
             modifier = Modifier.padding(start = 8.dp),
-            onClick = { prefs.smartbar.secondaryRowExpanded.set(!secondaryRowExpanded) },
+            onClick = {
+                if (actionRowExpanded) {
+                    //
+                } else {
+                    prefs.smartbar.secondaryRowExpanded.set(!secondaryRowExpanded)
+                }
+            },
         ) {
-            val transition = updateTransition(secondaryRowExpanded, label = "smartbarSecondaryRowToggleBtn")
-            val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
-            val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
             Box(
                 modifier = Modifier
-                    .requiredSize(32.dp)
+                    .padding(4.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
                     .snyggBackground(secondaryToggleStyle.background, secondaryToggleStyle.shape),
                 contentAlignment = Alignment.Center,
             ) {
-                // Expanded icon
-                Icon(
-                    modifier = Modifier
-                        .alpha(alpha)
-                        .rotate(rotation),
-                    painter = painterResource(R.drawable.ic_unfold_less),
-                    contentDescription = null,
-                    tint = secondaryToggleStyle.foreground.solidColor(),
-                )
-                // Not expanded icon
-                Icon(
-                    modifier = Modifier
-                        .alpha(1f - alpha)
-                        .rotate(rotation - 180f),
-                    painter = painterResource(R.drawable.ic_unfold_more),
-                    contentDescription = null,
-                    tint = secondaryToggleStyle.foreground.solidColor(),
-                )
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = !actionRowExpanded,
+                    enter = SmartbarVerticalEnterTransition,
+                    exit = SmartbarVerticalExitTransition,
+                ) {
+                    val transition = updateTransition(secondaryRowExpanded, label = "smartbarSecondaryRowToggleBtn")
+                    val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
+                    val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
+                    // Expanded icon
+                    Icon(
+                        modifier = Modifier
+                            .alpha(alpha)
+                            .rotate(rotation),
+                        painter = painterResource(R.drawable.ic_unfold_less),
+                        contentDescription = null,
+                        tint = secondaryToggleStyle.foreground.solidColor(),
+                    )
+                    // Not expanded icon
+                    Icon(
+                        modifier = Modifier
+                            .alpha(1f - alpha)
+                            .rotate(rotation - 180f),
+                        painter = painterResource(R.drawable.ic_unfold_more),
+                        contentDescription = null,
+                        tint = secondaryToggleStyle.foreground.solidColor(),
+                    )
+                }
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = actionRowExpanded,
+                    enter = SmartbarHorizontalEnterTransition,
+                    exit = SmartbarHorizontalExitTransition,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_more_horiz),
+                        contentDescription = null,
+                        tint = secondaryToggleStyle.foreground.solidColor(),
+                    )
+                }
             }
         }
     }

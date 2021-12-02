@@ -183,6 +183,12 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
                 else -> null
             }
         }
+        KeyCode.UNDO -> {
+            R.drawable.ic_undo
+        }
+        KeyCode.REDO -> {
+            R.drawable.ic_redo
+        }
         KeyCode.KANA_SWITCHER -> {
             if (evaluator.activeState().isKanaKata) {
                 R.drawable.ic_keyboard_kana_switcher_kata

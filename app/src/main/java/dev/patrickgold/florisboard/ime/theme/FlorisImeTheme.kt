@@ -96,7 +96,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     }
     FlorisImeUi.SmartbarPrimarySecondaryRowToggle {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(144, 144, 144)
         shape = roundedCornerShape(50)
     }
 
@@ -104,8 +104,13 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = rgbaColor(0, 0, 0, 0f)
     }
 
+    FlorisImeUi.SmartbarActionRow {
+        background = rgbaColor(0, 0, 0, 0f)
+    }
     FlorisImeUi.SmartbarActionButton {
-        foreground = rgbaColor(255, 255, 255)
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        shape = roundedCornerShape(50)
     }
 
     FlorisImeUi.SystemNavBar {
