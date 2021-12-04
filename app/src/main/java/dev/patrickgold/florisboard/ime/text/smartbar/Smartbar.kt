@@ -30,6 +30,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -70,7 +71,7 @@ private val SmartbarHorizontalExitTransition =
 fun Smartbar() {
     val prefs by florisPreferenceModel()
     val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val showSecondaryRowBelowPrimary by prefs.smartbar.showSecondaryRowBelowPrimary.observeAsState()
+    val showSecondaryRowBelowPrimary by prefs.smartbar.secondaryRowShowBelowPrimary.observeAsState()
 
     AnimatedVisibility(
         visible = smartbarEnabled,
@@ -92,21 +93,18 @@ fun Smartbar() {
 @Composable
 private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
     val prefs by florisPreferenceModel()
-    val actionRowExpanded by prefs.smartbar.actionRowExpanded.observeAsState()
+    val primaryRowFlipToggles by prefs.smartbar.primaryRowFlipToggles.observeAsState()
+    val secondaryRowEnabled by prefs.smartbar.secondaryRowEnabled.observeAsState()
     val secondaryRowExpanded by prefs.smartbar.secondaryRowExpanded.observeAsState()
+    val actionRowExpanded by prefs.smartbar.actionRowExpanded.observeAsState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryRow)
     val actionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryActionRowToggle)
     val secondaryToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimarySecondaryRowToggle)
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(FlorisImeSizing.smartbarHeight)
-            .snyggBackground(rowStyle.background),
-    ) {
+    @Composable
+    fun ActionRowToggle() {
         IconButton(
-            modifier = Modifier.padding(end = 8.dp),
             onClick = { prefs.smartbar.actionRowExpanded.set(!actionRowExpanded) },
         ) {
             Box(
@@ -122,14 +120,23 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                 )
                 Icon(
                     modifier = Modifier.rotate(rotation),
-                    painter = painterResource(R.drawable.ic_keyboard_arrow_right),
+                    painter = painterResource(if (primaryRowFlipToggles) {
+                        R.drawable.ic_keyboard_arrow_left
+                    } else {
+                        R.drawable.ic_keyboard_arrow_right
+                    }),
                     contentDescription = null,
                     tint = actionsToggleStyle.foreground.solidColor(),
                 )
             }
         }
+    }
+
+    @Composable
+    fun RowScope.ActionRow() {
         Box(
             modifier = Modifier
+                .padding(horizontal = 8.dp)
                 .weight(1f)
                 .height(FlorisImeSizing.smartbarHeight),
         ) {
@@ -150,8 +157,11 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                 SmartbarActionRow()
             }
         }
+    }
+
+    @Composable
+    fun SecondaryRowToggle() {
         IconButton(
-            modifier = Modifier.padding(start = 8.dp),
             onClick = {
                 if (actionRowExpanded) {
                     //
@@ -159,6 +169,7 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                     prefs.smartbar.secondaryRowExpanded.set(!secondaryRowExpanded)
                 }
             },
+            enabled = secondaryRowEnabled || actionRowExpanded,
         ) {
             Box(
                 modifier = Modifier
@@ -168,8 +179,8 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                     .snyggBackground(secondaryToggleStyle.background, secondaryToggleStyle.shape),
                 contentAlignment = Alignment.Center,
             ) {
-                androidx.compose.animation.AnimatedVisibility(
-                    visible = !actionRowExpanded,
+                AnimatedVisibility(
+                    visible = secondaryRowEnabled && !actionRowExpanded,
                     enter = SmartbarVerticalEnterTransition,
                     exit = SmartbarVerticalExitTransition,
                 ) {
@@ -195,7 +206,7 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                         tint = secondaryToggleStyle.foreground.solidColor(),
                     )
                 }
-                androidx.compose.animation.AnimatedVisibility(
+                AnimatedVisibility(
                     visible = actionRowExpanded,
                     enter = SmartbarHorizontalEnterTransition,
                     exit = SmartbarHorizontalExitTransition,
@@ -209,17 +220,35 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
             }
         }
     }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(FlorisImeSizing.smartbarHeight)
+            .snyggBackground(rowStyle.background),
+    ) {
+        if (primaryRowFlipToggles) {
+            SecondaryRowToggle()
+            ActionRow()
+            ActionRowToggle()
+        } else {
+            ActionRowToggle()
+            ActionRow()
+            SecondaryRowToggle()
+        }
+    }
 }
 
 @Composable
 private fun SmartbarSecondaryRow() = key(FlorisImeUi.SmartbarSecondaryRow) {
     val prefs by florisPreferenceModel()
+    val secondaryRowEnabled by prefs.smartbar.secondaryRowEnabled.observeAsState()
     val secondaryRowExpanded by prefs.smartbar.secondaryRowExpanded.observeAsState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryRow)
 
     AnimatedVisibility(
-        visible = secondaryRowExpanded,
+        visible = secondaryRowEnabled && secondaryRowExpanded,
         enter = SmartbarVerticalEnterTransition,
         exit = SmartbarVerticalExitTransition,
     ) {

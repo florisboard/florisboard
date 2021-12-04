@@ -120,6 +120,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_heap_memory_stats",
             default = false,
         )
+        val showPrimaryClip = boolean(
+            key = "devtools__show_primary_clip",
+            default = false,
+        )
         val overrideWordSuggestionsMinHeapRestriction = boolean(
             key = "devtools__override_word_suggestions_min_heap_restriction",
             default = false,
@@ -435,12 +439,20 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__enabled",
             default = true,
         )
-        val secondaryRowExpanded = boolean(
-            key = "smartbar__secondary_row_expanded",
+        val primaryRowFlipToggles = boolean(
+            key = "smartbar__primary_row_flip_toggles",
             default = false,
         )
-        val showSecondaryRowBelowPrimary = boolean(
-            key = "smartbar__show_secondary_row_below_primary",
+        val secondaryRowEnabled = boolean(
+            key = "smartbar__secondary_row_enabled",
+            default = true,
+        )
+        val secondaryRowShowBelowPrimary = boolean(
+            key = "smartbar__secondary_row_show_below_primary",
+            default = false,
+        )
+        val secondaryRowExpanded = boolean(
+            key = "smartbar__secondary_row_expanded",
             default = false,
         )
         val actionRowExpanded = boolean(

@@ -174,7 +174,7 @@ class FlorisAppActivity : ComponentActivity() {
                         Routes.Setup.Screen, Routes.Settings.About, Routes.Settings.ProjectLicense,
                         Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
                         Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
-                        Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View,
+                        Routes.Devtools.AndroidSettings, Routes.Ext.View,
                         Routes.Splash.Screen, Routes.Settings.SubtypeAdd,
                         Routes.Settings.SubtypeEdit, Routes.Settings.SelectLocale -> false
                         else -> true
