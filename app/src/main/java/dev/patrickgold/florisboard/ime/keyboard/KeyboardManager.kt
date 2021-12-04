@@ -23,6 +23,7 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
@@ -64,6 +65,7 @@ private val DefaultRenderInfo = RenderInfo()
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
+    private val clipboardManager by context.clipboardManager()
     private val extensionManager by context.extensionManager()
     private val subtypeManager by context.subtypeManager()
 
@@ -76,6 +78,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
     val activeState = KeyboardState.new()
+
     private val renderInfoGuard = Mutex(locked = false)
     private var renderInfoVersion: Int = 1
     private val _renderInfo = MutableLiveData(DefaultRenderInfo)
@@ -149,11 +152,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 state = state,
                 evaluator = computingEvaluator,
             ))
-            smartbarClipboardCursorRenderInfo()
+            smartbarClipboardCursorRenderInfo(state)
         }
     }
 
-    private suspend fun smartbarClipboardCursorRenderInfo() {
+    private suspend fun smartbarClipboardCursorRenderInfo(state: KeyboardState) {
         val mode = KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW
         val subtype = Subtype.DEFAULT
         val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
@@ -164,7 +167,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }.await()
         val computingEvaluator = KeyboardComputingEvaluator(
             keyboard = computedKeyboard,
-            state = activeState.snapshot(),
+            state = state,
             subtype = subtype,
         )
         for (key in computedKeyboard.keys()) {
@@ -173,7 +176,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         _smartbarRenderInfo.postValue(RenderInfo(
             keyboard = computedKeyboard,
-            state = computingEvaluator.state,
+            state = state,
             evaluator = computingEvaluator,
         ))
     }
@@ -533,7 +536,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CLIPBOARD_PASTE -> activeEditorInstance?.performClipboardPaste()
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
             KeyCode.CLIPBOARD_SELECT_ALL -> activeEditorInstance?.performClipboardSelectAll()
-            KeyCode.CLIPBOARD_CLEAR_HISTORY -> {}//florisboard.florisClipboardManager?.clearHistoryWithAnimation()
+            KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistoryWithAnimation()
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode(isRight = false)
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> toggleOneHandedMode(isRight = true)
             KeyCode.DELETE -> handleDelete()
@@ -684,13 +687,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 KeyCode.CLIPBOARD_PASTE,
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
-                    // such gore. checks
-                    // 1. has a clipboard item
-                    // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
-                    //florisboard.florisClipboardManager?.canBePasted(
-                    //    florisboard.florisClipboardManager?.primaryClip
-                    //) == true
-                    false
+                    clipboardManager.canBePasted(clipboardManager.primaryClip.value)
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     state.isRichInputEditor

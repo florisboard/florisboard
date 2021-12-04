@@ -31,9 +31,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -162,6 +165,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     private val prefs by florisPreferenceModel()
+    private val clipboardManager by clipboardManager()
     private val keyboardManager by keyboardManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
@@ -265,6 +269,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                         // Outer box is necessary as an "outer window"
                         Box(modifier = Modifier.fillMaxSize()) {
                             ImeUi()
+                            val primaryClip by clipboardManager.primaryClip.observeAsState()
+                            Text(text = primaryClip.toString(), color = MaterialTheme.colors.primary)
                         }
                         SystemUiIme()
                     }
@@ -313,7 +319,9 @@ class FlorisImeService : LifecycleInputMethodService() {
                         weight = 1f - keyboardWeight,
                     )
                 }
-                Box(modifier = Modifier.weight(keyboardWeight).wrapContentHeight()) {
+                Box(modifier = Modifier
+                    .weight(keyboardWeight)
+                    .wrapContentHeight()) {
                     TextInputLayout()
                 }
                 if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {

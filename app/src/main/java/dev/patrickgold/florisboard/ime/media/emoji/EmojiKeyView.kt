@@ -104,32 +104,20 @@ class EmojiKeyView(
                     (parent as RecyclerView)
                         .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
-                    emojiKeyboardView.popupManager.show(key, KeyHintConfiguration.HINTS_DISABLED)
-                    emojiKeyboardView.popupManager.extend(key, KeyHintConfiguration.HINTS_DISABLED)
                     florisboard?.inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
-                if (emojiKeyboardView.popupManager.isShowingExtendedPopup) {
-                    val isPointerWithinBounds =
-                        emojiKeyboardView.popupManager.propagateMotionEvent(key, event, 0)
-                    if (!isPointerWithinBounds) {
-                        emojiKeyboardView.dismissKeyView(this)
-                    }
-                } else {
-                    if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
-                        || event.y < -0.1f * measuredHeight || event.y > 1.1f * measuredHeight
-                    ) {
-                        emojiKeyboardView.dismissKeyView(this)
-                    }
+                if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
+                    || event.y < -0.1f * measuredHeight || event.y > 1.1f * measuredHeight
+                ) {
+                    emojiKeyboardView.dismissKeyView(this)
                 }
             }
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_CANCEL -> {
                 osHandler?.removeCallbacksAndMessages(null)
-                val retData =
-                    emojiKeyboardView.popupManager.getActiveEmojiKeyData(key)
-                emojiKeyboardView.popupManager.hide()
+                val retData = null
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL &&
                     retData != null && !isCancelled
                 ) {

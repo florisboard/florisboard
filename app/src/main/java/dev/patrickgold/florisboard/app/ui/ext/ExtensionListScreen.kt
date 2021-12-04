@@ -16,36 +16,10 @@
 
 package dev.patrickgold.florisboard.app.ui.ext
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.content.res.ResourcesCompat
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 
 @Composable
 fun ExtensionListScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {

@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.jetpref.datastore.JetPrefManager
 import java.io.File
 import kotlin.Exception
@@ -61,6 +62,7 @@ class FlorisApplication : Application() {
     private val prefs by florisPreferenceModel()
 
     val assetManager = lazy { AssetManager(this) }
+    val clipboardManager = lazy { ClipboardManager(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val keyboardManager = lazy { KeyboardManager(this) }
     val spellingManager = lazy { SpellingManager(this) }
@@ -145,6 +147,8 @@ private fun Context.florisApplication(): FlorisApplication {
 fun Context.appContext() = lazy { this.florisApplication() }
 
 fun Context.assetManager() = lazy { this.florisApplication().assetManager.value }
+
+fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
 
 fun Context.extensionManager() = lazy { this.florisApplication().extensionManager.value }
 

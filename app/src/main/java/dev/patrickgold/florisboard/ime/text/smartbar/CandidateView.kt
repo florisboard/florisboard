@@ -35,13 +35,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import java.lang.ref.WeakReference
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 
@@ -51,7 +50,7 @@ import kotlin.math.abs
  */
 class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var themeManager: ThemeManager? = null
-    private var florisClipboardManager: FlorisClipboardManager? = null
+    private val clipboardManager by context.clipboardManager()
     private var displayMode: DisplayMode = DisplayMode.DYNAMIC_SCROLLABLE
 
     private val candidates: ArrayList<String> = ArrayList()
@@ -100,7 +99,6 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         super.onAttachedToWindow()
         themeManager = ThemeManager.defaultOrNull()
         themeManager?.registerOnThemeUpdatedListener(this)
-        florisClipboardManager = FlorisClipboardManager.getInstanceOrNull()
         recomputeCandidates()
     }
 
@@ -108,7 +106,6 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         super.onDetachedFromWindow()
         themeManager?.unregisterOnThemeUpdatedListener(this)
         themeManager = null
-        florisClipboardManager = null
         candidates.clear()
         velocityTracker?.recycle()
         velocityTracker = null
@@ -150,7 +147,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         val classicCandidateWidth = (measuredWidth - 2 * dividerWidth) / 3
         val maxDynamicCandidateWidth = (measuredWidth * 0.7).toInt()
         val clipItem = clipboardItem
-        val clipItemAvailable = clipItem != null && florisClipboardManager?.canBePasted(clipItem) == true
+        val clipItemAvailable = clipItem != null && clipboardManager?.canBePasted(clipItem) == true
         computedCandidatesWidthPx = 0
         if (candidates.isEmpty()) {
             if (clipItemAvailable) {

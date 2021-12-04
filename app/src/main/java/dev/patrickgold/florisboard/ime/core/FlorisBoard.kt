@@ -51,12 +51,10 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
@@ -102,7 +100,6 @@ private var florisboardInstance: FlorisBoard? = null
  *  https://cs.android.com/android/platform/superproject/+/master:development/samples/AutofillKeyboard/src/com/example/android/autofillkeyboard/AutofillImeService.java
  */
 open class FlorisBoard : LifecycleInputMethodService(),
-    FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
     private var devtoolsOverlaySyncJob: Job? = null
@@ -122,13 +119,11 @@ open class FlorisBoard : LifecycleInputMethodService(),
     var uiBinding: FlorisboardBinding? = null
         private set
     private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
-    var popupLayerView: PopupLayerView? = null
-        private set
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
     var imeManager: InputMethodManager? = null
     lateinit var inputFeedbackController: InputFeedbackController
-    var florisClipboardManager: FlorisClipboardManager? = null
+    var clipboardManager: ClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var internalBatchNestingLevel: Int = 0
@@ -155,7 +150,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     lateinit var textInputManager: TextInputManager
     lateinit var mediaInputManager: MediaInputManager
-    lateinit var clipInputManager: ClipboardInputManager
 
     var isClipboardContextMenuShown = false
 
@@ -166,7 +160,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
             textInputManager = TextInputManager.getInstance()
             mediaInputManager = MediaInputManager.getInstance()
-            clipInputManager = ClipboardInputManager.getInstance()
         } catch (e: Exception) {
             CrashUtility.stageException(e)
         }
@@ -222,11 +215,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
                 }
 
                 AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
-
-                florisClipboardManager = FlorisClipboardManager.getInstance().also {
-                    it.initialize(this)
-                    it.addPrimaryClipChangedListener(this)
-                }
             } catch (e: Exception) {
                 super.onCreate() // MUST CALL even if exception thrown or crash loop is imminent
                 CrashUtility.stageException(e)
@@ -247,13 +235,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
         CrashUtility.handleStagedButUnhandledExceptions()
 
         updateThemeContext(currentThemeResId)
-
-        popupLayerView = PopupLayerView(themeContext)
-        window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
-            if (content is ViewGroup) {
-                content.addView(popupLayerView)
-            }
-        }
 
         uiBinding = FlorisboardBinding.inflate(LayoutInflater.from(themeContext))
 
@@ -303,13 +284,11 @@ open class FlorisBoard : LifecycleInputMethodService(),
         flogInfo(LogTopic.IMS_EVENTS)
 
         themeManager.unregisterOnThemeUpdatedListener(this)
-        florisClipboardManager?.let {
-            it.removePrimaryClipChangedListener(this)
+        clipboardManager?.let {
             it.close()
-            florisClipboardManager = null
+            clipboardManager = null
         }
         imeManager = null
-        popupLayerView = null
         uiBinding = null
 
         eventListeners.toList().forEach { it?.onDestroy() }
@@ -778,9 +757,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
             R.id.media_input -> {
                 uiBinding?.mainViewFlipper?.displayedChild = 1
             }
-            R.id.clip_input -> {
-                uiBinding?.mainViewFlipper?.displayedChild = 2
-            }
         }
         textInputManager.isGlidePostEffect = false
     }
@@ -790,10 +766,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
             OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
             else -> OneHandedMode.OFF
         })
-    }
-
-    override fun onPrimaryClipChanged() {
-        eventListeners.toList().forEach { it?.onPrimaryClipChanged() }
     }
 
     /**

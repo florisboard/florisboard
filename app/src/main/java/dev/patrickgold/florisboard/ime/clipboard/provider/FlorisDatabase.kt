@@ -1,12 +1,27 @@
-package dev.patrickgold.florisboard.ime.clip.provider
+/*
+ * Copyright (C) 2021 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.ClipData
 import android.content.ContentValues
+import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
 import androidx.room.*
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import java.io.Closeable
 
 enum class ItemType(val value: Int) {
@@ -38,10 +53,10 @@ data class ClipboardItem(
     /**
      * Creates a new ClipData which has the same contents as this.
      */
-    fun toClipData(): ClipData {
+    fun toClipData(context: Context): ClipData {
         return when (type) {
             ItemType.IMAGE -> {
-                ClipData.newUri(FlorisBoard.getInstance().contentResolver, "Clipboard data", uri)
+                ClipData.newUri(context.contentResolver, "Clipboard data", uri)
             }
             ItemType.TEXT -> {
                 ClipData.newPlainText("Clipboard data", text)
@@ -54,7 +69,7 @@ data class ClipboardItem(
      */
     override fun close() {
         if (type == ItemType.IMAGE) {
-            FlorisBoard.getInstance().contentResolver.delete(this.uri!!, null, null)
+            //context.contentResolver.delete(this.uri!!, null, null)
         }
     }
 
@@ -102,7 +117,7 @@ data class ClipboardItem(
          * @param data The ClipData to clone.
          * @param cloneUri Whether to store the image using [FlorisContentProvider].
          */
-        fun fromClipData(data: ClipData, cloneUri: Boolean) : ClipboardItem {
+        fun fromClipData(context: Context, data: ClipData, cloneUri: Boolean) : ClipboardItem {
             val type = when {
                 data.getItemAt(0)?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
                 else -> ItemType.TEXT
@@ -116,11 +131,11 @@ data class ClipboardItem(
                             put("uri", data.getItemAt(0).uri.toString())
                             put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
                         }
-                        FlorisBoard.getInstance().contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
+                        context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
                     }
             } else { null }
 
-            val text = FlorisBoard.getInstanceOrNull()?.let { data.getItemAt(0).coerceToText(it).toString() } ?: "#ERROR"
+            val text = context.let { data.getItemAt(0).coerceToText(it).toString() }
             val mimeTypes = when (type) {
                 ItemType.IMAGE -> {
                     (0 until data.description.mimeTypeCount).map {
@@ -164,6 +179,7 @@ class Converters {
     fun mimeTypesToString(mimeTypes: Array<String>): String {
         return mimeTypes.joinToString(",")
     }
+
     @TypeConverter
     fun stringToMimeTypes(value: String): Array<String> {
         return value.split(",").toTypedArray()
@@ -188,18 +204,10 @@ abstract class PinnedItemsDatabase : RoomDatabase() {
     abstract fun clipboardItemDao() : PinnedClipboardItemDao
 
     companion object {
-        private var instance: PinnedItemsDatabase? = null
-
-        fun getInstance(): PinnedItemsDatabase {
-
-            if (instance == null) {
-                instance = Room.databaseBuilder(
-                    FlorisBoard.getInstance(),
-                    PinnedItemsDatabase::class.java,
-                    "pins").build()
-            }
-
-            return instance!!
+        fun new(context: Context): PinnedItemsDatabase {
+            return Room.databaseBuilder(
+                context, PinnedItemsDatabase::class.java, "pins",
+            ).build()
         }
     }
 }

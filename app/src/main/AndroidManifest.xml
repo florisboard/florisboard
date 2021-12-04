@@ -122,7 +122,7 @@
             android:theme="@style/CrashDialogTheme"/>
 
         <provider
-            android:name="dev.patrickgold.florisboard.ime.clip.provider.FlorisContentProvider"
+            android:name="dev.patrickgold.florisboard.ime.clipboard.provider.FlorisContentProvider"
             android:authorities="${applicationId}.provider.clip"
             android:grantUriPermissions="true"
             android:exported="false">
