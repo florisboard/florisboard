@@ -22,7 +22,8 @@ import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
 import androidx.room.*
-import java.io.Closeable
+
+private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
 
 enum class ItemType(val value: Int) {
     TEXT(1),
@@ -41,78 +42,39 @@ enum class ItemType(val value: Int) {
  * If type == ItemType.IMAGE there must be a uri set
  * if type == ItemType.TEXT there must be a text set
  */
-@Entity(tableName = "pins")
+@Entity(tableName = CLIPBOARD_HISTORY_TABLE)
 data class ClipboardItem(
-    /** Only used for pins */
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name=BaseColumns._ID, index=true) var uid: Long?,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = BaseColumns._ID, index = true)
+    var id: Long = 0,
     val type: ItemType,
-    val uri: Uri?,
     val text: String?,
-    val mimeTypes: Array<String>) : Closeable{
-
-    /**
-     * Creates a new ClipData which has the same contents as this.
-     */
-    fun toClipData(context: Context): ClipData {
-        return when (type) {
-            ItemType.IMAGE -> {
-                ClipData.newUri(context.contentResolver, "Clipboard data", uri)
-            }
-            ItemType.TEXT -> {
-                ClipData.newPlainText("Clipboard data", text)
-            }
-        }
-    }
-
-    /**
-     * Instructs the content provider to delete this URI. If not an image, is a noop
-     */
-    override fun close() {
-        if (type == ItemType.IMAGE) {
-            //context.contentResolver.delete(this.uri!!, null, null)
-        }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ClipboardItem
-
-        if (uid != other.uid) return false
-        if (type != other.type) return false
-        if (uri != other.uri) return false
-        if (text != other.text) return false
-        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = uid.hashCode()
-        result = 31 * result + type.hashCode()
-        result = 31 * result + (uri?.hashCode() ?: 0)
-        result = 31 * result + (text?.hashCode() ?: 0)
-        result = 31 * result + mimeTypes.contentHashCode()
-        return result
-    }
-
-    fun stringRepresentation(): String {
-        return when {
-            uri != null -> "(Image) $uri"
-            text != null -> text
-            else -> "#ERROR"
-        }
-    }
-
+    val uri: Uri?,
+    val creationTimestampMs: Long,
+    val isPinned: Boolean,
+    val mimeTypes: Array<String>,
+) {
     companion object {
         /**
          * So that every item doesn't have to allocate its own array.
          */
-        val TEXT_PLAIN = arrayOf("text/plain")
+        private val TEXT_PLAIN = arrayOf("text/plain")
+
+        const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
+
+        fun text(text: String): ClipboardItem {
+            return ClipboardItem(
+                type = ItemType.TEXT,
+                text = text,
+                uri = null,
+                creationTimestampMs = System.currentTimeMillis(),
+                isPinned = false,
+                mimeTypes = TEXT_PLAIN,
+            )
+        }
 
         /**
-         * Returns a new ClipboardItem based on a ClipData
+         * Returns a new ClipboardItem based on a ClipData.
          *
          * @param data The ClipData to clone.
          * @param cloneUri Whether to store the image using [FlorisContentProvider].
@@ -124,15 +86,15 @@ data class ClipboardItem(
             }
 
             val uri = if (type == ItemType.IMAGE) {
-                    if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority || !cloneUri){
-                        data.getItemAt(0).uri
-                    }else {
-                        val values = ContentValues().apply{
-                            put("uri", data.getItemAt(0).uri.toString())
-                            put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
-                        }
-                        context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
+                if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority || !cloneUri){
+                    data.getItemAt(0).uri
+                }else {
+                    val values = ContentValues().apply{
+                        put("uri", data.getItemAt(0).uri.toString())
+                        put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
                     }
+                    context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
+                }
             } else { null }
 
             val text = context.let { data.getItemAt(0).coerceToText(it).toString() }
@@ -145,7 +107,74 @@ data class ClipboardItem(
                 ItemType.TEXT -> { TEXT_PLAIN }
             }
 
-            return ClipboardItem(null, type, uri, text, mimeTypes)
+            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes)
+        }
+    }
+
+    infix fun isEqualTo(other: ClipData?): Boolean {
+        if (other == null) return false
+        return when (type) {
+            ItemType.TEXT -> text == other.getItemAt(0).text
+            ItemType.IMAGE -> uri == other.getItemAt(0).uri
+        }
+    }
+
+    infix fun isNotEqualTo(other: ClipData?): Boolean = !(this isEqualTo other)
+
+    /**
+     * Creates a new ClipData which has the same contents as this.
+     */
+    fun toClipData(context: Context): ClipData {
+        return when (type) {
+            ItemType.IMAGE -> {
+                ClipData.newUri(context.contentResolver, FLORIS_CLIP_LABEL, uri)
+            }
+            ItemType.TEXT -> {
+                ClipData.newPlainText(FLORIS_CLIP_LABEL, text)
+            }
+        }
+    }
+
+    /**
+     * Instructs the content provider to delete this URI. If not an image, is a noop
+     */
+    fun close(context: Context) {
+        if (type == ItemType.IMAGE) {
+            context.contentResolver.delete(this.uri!!, null, null)
+        }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ClipboardItem
+
+        if (id != other.id) return false
+        if (type != other.type) return false
+        if (text != other.text) return false
+        if (uri != other.uri) return false
+        if (creationTimestampMs != other.creationTimestampMs) return false
+        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (text?.hashCode() ?: 0)
+        result = 31 * result + (uri?.hashCode() ?: 0)
+        result = 31 * result + creationTimestampMs.hashCode()
+        result = 31 * result + mimeTypes.contentHashCode()
+        return result
+    }
+
+    fun stringRepresentation(): String {
+        return when {
+            uri != null -> "(Image) $uri"
+            text != null -> text
+            else -> "#ERROR"
         }
     }
 }
@@ -187,26 +216,26 @@ class Converters {
 }
 
 @Dao
-interface PinnedClipboardItemDao {
-    @Query("SELECT * FROM pins")
+interface ClipboardHistoryDao {
+    @Query("SELECT * FROM $CLIPBOARD_HISTORY_TABLE")
     fun getAll(): List<ClipboardItem>
 
     @Insert
-    fun insert(item: ClipboardItem) : Long
+    fun insert(item: ClipboardItem): Long
 
     @Delete
     fun delete(item: ClipboardItem)
 }
 
-@Database(entities = [ClipboardItem::class], version = 1)
+@Database(entities = [ClipboardItem::class], version = 2)
 @TypeConverters(Converters::class)
-abstract class PinnedItemsDatabase : RoomDatabase() {
-    abstract fun clipboardItemDao() : PinnedClipboardItemDao
+abstract class ClipboardHistoryDatabase : RoomDatabase() {
+    abstract fun clipboardItemDao(): ClipboardHistoryDao
 
     companion object {
-        fun new(context: Context): PinnedItemsDatabase {
+        fun new(context: Context): ClipboardHistoryDatabase {
             return Room.databaseBuilder(
-                context, PinnedItemsDatabase::class.java, "pins",
+                context, ClipboardHistoryDatabase::class.java, CLIPBOARD_HISTORY_TABLE,
             ).build()
         }
     }
