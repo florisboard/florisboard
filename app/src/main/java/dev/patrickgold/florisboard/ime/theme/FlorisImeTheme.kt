@@ -113,6 +113,21 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(50)
     }
 
+    FlorisImeUi.SmartbarKey {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(18.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.SmartbarKey(pressedSelector = true) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarKey(disabledSelector = true) {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(66, 66, 66)
+    }
+
     FlorisImeUi.SystemNavBar {
         background = rgbaColor(33, 33, 33)
     }

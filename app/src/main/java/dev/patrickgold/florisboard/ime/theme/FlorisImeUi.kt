@@ -30,6 +30,7 @@ object FlorisImeUi {
     const val SmartbarSecondaryRow = "smartbar-secondary-row"
     const val SmartbarActionRow = "smartbar-action-row"
     const val SmartbarActionButton = "smartbar-action-button"
+    const val SmartbarKey = "smartbar-key"
 
     const val SystemNavBar = "system-nav-bar"
 }

@@ -80,6 +80,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private var renderInfoVersion: Int = 1
     private val _renderInfo = MutableLiveData(DefaultRenderInfo)
     val renderInfo: LiveData<RenderInfo> get() = _renderInfo
+    private val _smartbarRenderInfo = MutableLiveData(DefaultRenderInfo)
+    val smartbarRenderInfo: LiveData<RenderInfo> get() = _smartbarRenderInfo
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -147,7 +149,33 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 state = state,
                 evaluator = computingEvaluator,
             ))
+            smartbarClipboardCursorRenderInfo()
         }
+    }
+
+    private suspend fun smartbarClipboardCursorRenderInfo() {
+        val mode = KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW
+        val subtype = Subtype.DEFAULT
+        val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
+            layoutManager.computeKeyboardAsync(
+                keyboardMode = mode,
+                subtype = subtype,
+            ).await()
+        }.await()
+        val computingEvaluator = KeyboardComputingEvaluator(
+            keyboard = computedKeyboard,
+            state = activeState.snapshot(),
+            subtype = subtype,
+        )
+        for (key in computedKeyboard.keys()) {
+            key.compute(computingEvaluator)
+            key.computeLabelsAndDrawables(computingEvaluator)
+        }
+        _smartbarRenderInfo.postValue(RenderInfo(
+            keyboard = computedKeyboard,
+            state = computingEvaluator.state,
+            evaluator = computingEvaluator,
+        ))
     }
 
     fun updateCapsState() {
@@ -654,7 +682,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_CUT -> {
                     state.isSelectionMode && state.isRichInputEditor
                 }
-                KeyCode.CLIPBOARD_PASTE -> {
+                KeyCode.CLIPBOARD_PASTE,
+                KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                     // such gore. checks
                     // 1. has a clipboard item
                     // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
@@ -689,7 +718,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !shouldShowLanguageSwitch()
                     }
                 }
-                KeyCode.IME_UI_MODE_CLIPBOARD -> prefs.clipboard.enableHistory.get()
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
                         prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()

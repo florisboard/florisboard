@@ -229,7 +229,7 @@ private fun SmartbarSecondaryRow() = key(FlorisImeUi.SmartbarSecondaryRow) {
                 .height(FlorisImeSizing.smartbarHeight)
                 .snyggBackground(rowStyle.background),
         ) {
-            Text(text = "secondary row")
+            SmartbarClipboardCursorRow()
         }
     }
 }

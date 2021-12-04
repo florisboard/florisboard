@@ -110,7 +110,11 @@ fun TextKeyboardLayout(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount)
+            .height(if (isSmartbarKeyboard) {
+                FlorisImeSizing.smartbarHeight
+            } else {
+                FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
+            })
             .onGloballyPositioned { coords ->
                 controller.offset = coords.positionInWindow()
                 controller.size = coords.size.toSize()
@@ -137,8 +141,13 @@ fun TextKeyboardLayout(
         val keyboardWidth = constraints.maxWidth.toFloat()
         val keyboardHeight = constraints.maxHeight.toFloat()
         desiredKey.touchBounds.apply {
-            width = keyboardWidth / 10.0f
-            height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+            if (isSmartbarKeyboard) {
+                width = keyboardWidth / 8f
+                height = FlorisImeSizing.smartbarHeight.toPx()
+            } else {
+                width = keyboardWidth / 10f
+                height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+            }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
         keyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
@@ -182,7 +191,7 @@ fun TextKeyboardLayout(
         popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
         for (textKey in keyboard.keys()) {
-            TextKeyButton(textKey, renderInfo, fontSizeMultiplier)
+            TextKeyButton(textKey, renderInfo, fontSizeMultiplier, isSmartbarKeyboard)
         }
 
         popupUiController.RenderPopups()
@@ -201,12 +210,14 @@ private fun TextKeyButton(
     key: TextKey,
     renderInfo: RenderInfo,
     fontSizeMultiplier: Float,
+    isSmartbarKey: Boolean,
 ) = with(LocalDensity.current) {
     val keyStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.Key,
+        element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
         code = key.computedData.code,
         mode = renderInfo.state.inputMode.value,
-        isPressed = key.isPressed,
+        isPressed = key.isPressed && key.isEnabled,
+        isDisabled = !key.isEnabled,
     )
     val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {
         KeyCode.VIEW_CHARACTERS,
