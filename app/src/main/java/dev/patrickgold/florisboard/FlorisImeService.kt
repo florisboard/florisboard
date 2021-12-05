@@ -44,6 +44,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
@@ -71,9 +72,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -173,8 +175,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
-    private var composeInputView: View? = null
-    private var composeInputViewInnerHeight: Int = 0
+    private var inputWindowView: View? = null
+    private var inputViewSize: IntSize = IntSize.Zero
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
 
@@ -187,7 +189,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onCreateInputView(): View {
         super.onCreateInputView()
         val composeView = ComposeInputView()
-        composeInputView = composeView
+        inputWindowView = composeView
         return composeView
     }
 
@@ -200,7 +202,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         super.onDestroy()
         FlorisImeServiceReference = WeakReference(null)
         activeEditorInstance.wordHistoryChangedListener = null
-        composeInputView = null
+        inputWindowView = null
     }
 
     override fun onBindInput() {
@@ -319,23 +321,33 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         super.onComputeInsets(outInsets)
         if (outInsets == null) return
 
-        flogDebug { "comp insets" }
-        val composeView = composeInputView ?: return
+        val inputWindowView = inputWindowView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
         if (!isInputViewShown) {
-            outInsets.contentTopInsets = composeView.height
-            outInsets.visibleTopInsets = composeView.height
+            outInsets.contentTopInsets = inputWindowView.height
+            outInsets.visibleTopInsets = inputWindowView.height
             return
         }
 
-        val visibleTopY = composeView.height - composeInputViewInnerHeight
-        flogDebug { "comp insets: $visibleTopY" }
+        val visibleTopY = inputWindowView.height - inputViewSize.height
+        val needAdditionalOverlay =
+            prefs.smartbar.enabled.get() &&
+                prefs.smartbar.secondaryRowEnabled.get() &&
+                prefs.smartbar.secondaryRowExpanded.get() &&
+                prefs.smartbar.secondaryRowPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI
+
         outInsets.contentTopInsets = visibleTopY
         outInsets.visibleTopInsets = visibleTopY
         //if (isClipboardContextMenuShown) {
         //    outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_FRAME
         //    outInsets.touchableRegion?.setEmpty()
         //}
+        outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
+        val left = 0
+        val top = visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
+        val right = inputViewSize.width
+        val bottom = inputWindowView.height
+        outInsets.touchableRegion.set(left, top, right, bottom)
     }
 
     /**
@@ -353,8 +365,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         val inputArea = w.findViewById<View>(android.R.id.inputArea) ?: return
         ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
         ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-        val composeView = composeInputView ?: return
-        ViewUtils.updateLayoutHeightOf(composeView, layoutHeight)
+        val inputWindowView = inputWindowView ?: return
+        ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
     }
 
     @Composable
@@ -387,7 +399,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .align(Alignment.BottomStart)
-                .onGloballyPositioned { coords -> composeInputViewInnerHeight = coords.size.height }
+                .onGloballyPositioned { coords -> inputViewSize = coords.size }
                 // Do not remove below line or touch input may get stuck
                 .pointerInteropFilter { false },
             background = keyboardStyle.background,

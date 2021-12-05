@@ -100,7 +100,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     }
 
     FlorisImeUi.SmartbarSecondaryRow {
-        background = rgbaColor(0, 0, 0, 0f)
+        background = rgbaColor(33, 33, 33)
     }
 
     FlorisImeUi.SmartbarActionRow {

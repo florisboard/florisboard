@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
+import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.VersionName
@@ -447,9 +448,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__secondary_row_enabled",
             default = true,
         )
-        val secondaryRowShowBelowPrimary = boolean(
-            key = "smartbar__secondary_row_show_below_primary",
-            default = false,
+        val secondaryRowPlacement = enum(
+            key = "smartbar__secondary_row_placement",
+            default = SecondaryRowPlacement.ABOVE_PRIMARY,
         )
         val secondaryRowExpanded = boolean(
             key = "smartbar__secondary_row_expanded",

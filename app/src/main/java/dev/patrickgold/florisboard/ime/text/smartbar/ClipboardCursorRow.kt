@@ -26,14 +26,14 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.keyboardManager
 
 @Composable
-fun SmartbarClipboardCursorRow() {
+fun SmartbarClipboardCursorRow(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
     val renderInfo by keyboardManager.smartbarRenderInfo.observeAsNonNullState()
 
     TextKeyboardLayout(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         renderInfo = renderInfo,
         isSmartbarKeyboard = true,
     )

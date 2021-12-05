@@ -20,6 +20,7 @@ import android.content.res.Resources
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -48,6 +49,12 @@ object FlorisImeSizing {
         @Composable
         @ReadOnlyComposable
         get() = LocalSmartbarHeight.current
+
+    object Static {
+        var keyboardRowBaseHeightPx: Int = 0
+
+        var smartbarHeightPx: Int = 0
+    }
 }
 
 @Composable
@@ -71,6 +78,11 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
         }
     }
     val smartbarHeight = baseRowHeight * 0.753f
+
+    SideEffect {
+        FlorisImeSizing.Static.keyboardRowBaseHeightPx = baseRowHeight.toInt()
+        FlorisImeSizing.Static.smartbarHeightPx = smartbarHeight.toInt()
+    }
 
     CompositionLocalProvider(
         LocalKeyboardRowBaseHeight provides ViewUtils.px2dp(baseRowHeight).dp,

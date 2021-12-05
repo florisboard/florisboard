@@ -234,16 +234,15 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Flip row toggle buttons</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Flips secondary and action row toggles depending on layout direction</string>
 
     <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primary row</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Flip row toggle buttons</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Flips secondary and action row toggles</string>
 
     <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secondary row</string>
     <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Enable secondary row</string>
     <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adds an expandable second row to allow for more controls to show</string>
-    <string name="pref__smartbar__secondary_row_show_below_primary__label" comment="Preference title">Show below primary</string>
-    <string name="pref__smartbar__secondary_row_show_below_primary__summary" comment="Preference summary">Will affect Smartbar layout only if secondary row is expanded</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Secondary row placement</string>
 
     <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Action row</string>
 
@@ -554,6 +553,13 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
+
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Above primary row</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Places the secondary row between the app UI and the primary row</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Below primary row</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Places the secondary row between the primary row and the text keyboard</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Places the secondary row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>

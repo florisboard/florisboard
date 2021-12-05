@@ -59,7 +59,7 @@ import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable
-fun CandidatesRow() {
+fun CandidatesRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
@@ -81,7 +81,7 @@ fun CandidatesRow() {
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .snyggBackground(rowStyle.background)
             .then(
@@ -98,7 +98,7 @@ fun CandidatesRow() {
         },
     ) {
         if (computedCandidates.isNotEmpty()) {
-            val modifier = if (computedCandidates.size == 1) {
+            val candidateModifier = if (computedCandidates.size == 1) {
                 Modifier
                     .fillMaxHeight()
                     .weight(1f, fill = false)
@@ -129,7 +129,7 @@ fun CandidatesRow() {
                     )
                 }
                 CandidateItem(
-                    modifier = modifier,
+                    modifier = candidateModifier,
                     computedCandidate = computedCandidate,
                     displayMode = displayMode,
                 )

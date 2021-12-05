@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -70,27 +71,50 @@ private val SmartbarHorizontalExitTransition =
 fun Smartbar() {
     val prefs by florisPreferenceModel()
     val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val showSecondaryRowBelowPrimary by prefs.smartbar.secondaryRowShowBelowPrimary.observeAsState()
+    val secondaryRowPlacement by prefs.smartbar.secondaryRowPlacement.observeAsState()
 
     AnimatedVisibility(
         visible = smartbarEnabled,
         enter = SmartbarVerticalEnterTransition,
         exit = SmartbarVerticalExitTransition,
     ) {
-        Column {
-            if (showSecondaryRowBelowPrimary) {
-                SmartbarPrimaryRow()
-                SmartbarSecondaryRow()
-            } else {
-                SmartbarSecondaryRow()
-                SmartbarPrimaryRow()
+        when (secondaryRowPlacement) {
+            SecondaryRowPlacement.ABOVE_PRIMARY -> {
+                Column {
+                    SmartbarSecondaryRow()
+                    SmartbarPrimaryRow()
+                }
+            }
+            SecondaryRowPlacement.BELOW_PRIMARY -> {
+                Column {
+                    SmartbarPrimaryRow()
+                    SmartbarSecondaryRow()
+                }
+            }
+            SecondaryRowPlacement.OVERLAY_APP_UI -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(FlorisImeSizing.smartbarHeight),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(FlorisImeSizing.smartbarHeight * 2)
+                            .absoluteOffset(y = -FlorisImeSizing.smartbarHeight),
+                        contentAlignment = Alignment.BottomStart,
+                    ) {
+                        SmartbarSecondaryRow()
+                    }
+                    SmartbarPrimaryRow()
+                }
             }
         }
     }
 }
 
 @Composable
-private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
+private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.SmartbarPrimaryRow) {
     val prefs by florisPreferenceModel()
     val primaryRowFlipToggles by prefs.smartbar.primaryRowFlipToggles.observeAsState()
     val secondaryRowEnabled by prefs.smartbar.secondaryRowEnabled.observeAsState()
@@ -119,11 +143,13 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                 )
                 Icon(
                     modifier = Modifier.rotate(rotation),
-                    painter = painterResource(if (primaryRowFlipToggles) {
-                        R.drawable.ic_keyboard_arrow_left
-                    } else {
-                        R.drawable.ic_keyboard_arrow_right
-                    }),
+                    painter = painterResource(
+                        if (primaryRowFlipToggles) {
+                            R.drawable.ic_keyboard_arrow_left
+                        } else {
+                            R.drawable.ic_keyboard_arrow_right
+                        }
+                    ),
                     contentDescription = null,
                     tint = actionsToggleStyle.foreground.solidColor(),
                 )
@@ -219,7 +245,7 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
     }
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight)
             .snyggBackground(rowStyle.background),
@@ -237,7 +263,7 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
 }
 
 @Composable
-private fun SmartbarSecondaryRow() = key(FlorisImeUi.SmartbarSecondaryRow) {
+private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.SmartbarSecondaryRow) {
     val prefs by florisPreferenceModel()
     val secondaryRowEnabled by prefs.smartbar.secondaryRowEnabled.observeAsState()
     val secondaryRowExpanded by prefs.smartbar.secondaryRowExpanded.observeAsState()
@@ -249,13 +275,11 @@ private fun SmartbarSecondaryRow() = key(FlorisImeUi.SmartbarSecondaryRow) {
         enter = SmartbarVerticalEnterTransition,
         exit = SmartbarVerticalExitTransition,
     ) {
-        Box(
-            modifier = Modifier
+        SmartbarClipboardCursorRow(
+            modifier = modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight)
                 .snyggBackground(rowStyle.background),
-        ) {
-            SmartbarClipboardCursorRow()
-        }
+        )
     }
 }
