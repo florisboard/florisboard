@@ -29,7 +29,6 @@ import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionConfig> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
 
-// TODO: This stylesheet is a complete work in progress, like with all Snygg components
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.Keyboard {
         background = rgbaColor(33, 33, 33)
@@ -111,6 +110,33 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
         shape = roundedCornerShape(50)
+    }
+
+    FlorisImeUi.SmartbarCandidateRow {
+        background = rgbaColor(0, 0, 0, 0f)
+    }
+    FlorisImeUi.SmartbarCandidateWord {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(14.sp)
+        shape = rectangleShape()
+    }
+    FlorisImeUi.SmartbarCandidateWord(pressedSelector = true) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarCandidateClip {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(14.sp)
+        shape = roundedCornerShape(8)
+    }
+    FlorisImeUi.SmartbarCandidateClip(pressedSelector = true) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarCandidateSpacer {
+        background = rgbaColor(255, 255, 255, 0.25f)
     }
 
     FlorisImeUi.SmartbarKey {

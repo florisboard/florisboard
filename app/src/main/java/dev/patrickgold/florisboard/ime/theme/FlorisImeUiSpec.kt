@@ -188,6 +188,65 @@ object FlorisImeUiSpec : SnyggSpec({
         )
     }
 
+    element(FlorisImeUi.SmartbarCandidateRow) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+    element(FlorisImeUi.SmartbarCandidateWord) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.FontSize,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggSpSizeValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
+        )
+    }
+    element(FlorisImeUi.SmartbarCandidateClip) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.FontSize,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggSpSizeValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
+        )
+    }
+    element(FlorisImeUi.SmartbarCandidateSpacer) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+
     element(FlorisImeUi.SmartbarKey) {
         property(
             name = Snygg.Background,

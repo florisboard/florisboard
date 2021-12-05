@@ -262,9 +262,6 @@
     <string translatable="false" name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
     <string translatable="false" name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">[EXPERIMENTAL] Clipboard suggestion timeout</string>
     <string translatable="false" name="pref__suggestion__display_mode__label" comment="Preference title">[EXPERIMENTAL] Suggestions display mode</string>
-    <string translatable="false" name="pref__suggestion__display_mode__classic" comment="Preference value">Classic (3 columns)</string>
-    <string translatable="false" name="pref__suggestion__display_mode__dynamic" comment="Preference value">Dynamic width</string>
-    <string translatable="false" name="pref__suggestion__display_mode__dynamic_scrollable" comment="Preference value">Dynamic width &amp; scrollable</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -535,6 +532,10 @@
     <string name="state__enabled">Enabled</string>
 
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
+
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint is prioritized</string>

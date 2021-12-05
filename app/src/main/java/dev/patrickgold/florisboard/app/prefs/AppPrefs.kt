@@ -27,7 +27,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
+import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.VersionName
@@ -493,7 +493,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val displayMode = enum(
             key = "suggestion__display_mode",
-            default = CandidateView.DisplayMode.DYNAMIC_SCROLLABLE,
+            default = CandidatesDisplayMode.DYNAMIC_SCROLLABLE,
         )
         val usePrevWords = boolean(
             key = "suggestion__use_prev_words",

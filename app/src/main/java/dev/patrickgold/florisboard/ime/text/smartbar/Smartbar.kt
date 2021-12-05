@@ -38,7 +38,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -133,10 +132,10 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
     }
 
     @Composable
-    fun RowScope.ActionRow() {
+    fun RowScope.CenterContent() {
         Box(
             modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 4.dp)
                 .weight(1f)
                 .height(FlorisImeSizing.smartbarHeight),
         ) {
@@ -145,9 +144,7 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
                 enter = SmartbarHorizontalEnterTransition,
                 exit = SmartbarHorizontalExitTransition,
             ) {
-                Text(
-                    text = "primary row",
-                )
+                CandidatesRow()
             }
             androidx.compose.animation.AnimatedVisibility(
                 visible = actionRowExpanded,
@@ -229,11 +226,11 @@ private fun SmartbarPrimaryRow() = key(FlorisImeUi.SmartbarPrimaryRow) {
     ) {
         if (primaryRowFlipToggles) {
             SecondaryRowToggle()
-            ActionRow()
+            CenterContent()
             ActionRowToggle()
         } else {
             ActionRowToggle()
-            ActionRow()
+            CenterContent()
             SecondaryRowToggle()
         }
     }

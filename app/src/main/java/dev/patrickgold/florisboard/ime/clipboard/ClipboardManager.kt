@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrim
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -176,17 +177,12 @@ class ClipboardManager(
                 return
             }
 
-            _primaryClip.postValue(ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true))
-            //val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip)
-            //if (prefs.clipboard.useInternalClipboard.get()) {
-            //    // In the event that the internal clipboard is enabled, sync to internal clipboard is enabled
-            //    // and the item is not already in internal clipboard, add it.
-            //    if (prefs.clipboard.syncToFloris.get() && !isEqual) {
-            //        addNewClip(ClipboardItem.fromClipData(appContext, systemPrimaryClip, true))
-            //    }
-            //} else if (prefs.clipboard.enableHistory.get()) {
-            //    updateHistory(ClipboardItem.fromClipData(appContext, systemPrimaryClip, true))
-            //}
+            val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
+            if (!isEqual) {
+                flogInfo { "check12" }
+                _primaryClip.postValue(ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true))
+                // TODO: update history
+            }
         }
     }
 

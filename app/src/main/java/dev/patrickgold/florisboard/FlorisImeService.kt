@@ -21,6 +21,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -69,7 +70,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.debug.flogInfo
+import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -90,7 +94,7 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
  * The main objective for the new class is to hold as few state as possible and delegate tasks to context-bound
  * manager classes.
  */
-class FlorisImeService : LifecycleInputMethodService() {
+class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHistoryChangedListener {
     companion object {
         fun activeEditorInstance(): EditorInstance? {
             return FlorisImeServiceReference.get()?.activeEditorInstance
@@ -165,16 +169,19 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val prefs by florisPreferenceModel()
     private val clipboardManager by clipboardManager()
     private val keyboardManager by keyboardManager()
+    private val nlpManager by nlpManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
     private var composeInputView: View? = null
     private var composeInputViewInnerHeight: Int = 0
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
+    private var isWindowShown: Boolean = false
 
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
+        activeEditorInstance.wordHistoryChangedListener = this
     }
 
     override fun onCreateInputView(): View {
@@ -192,6 +199,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onDestroy() {
         super.onDestroy()
         FlorisImeServiceReference = WeakReference(null)
+        activeEditorInstance.wordHistoryChangedListener = null
         composeInputView = null
     }
 
@@ -253,6 +261,100 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onUnbindInput() {
         super.onUnbindInput()
         activeEditorInstance.unbindInput()
+    }
+
+    override fun onWordHistoryChanged(
+        currentWord: EditorInstance.Region?,
+        wordsBeforeCurrent: List<EditorInstance.Region>,
+        wordsAfterCurrent: List<EditorInstance.Region>,
+    ) {
+        if (currentWord == null || !currentWord.isValid || !activeState.isComposingEnabled) {
+            nlpManager.clearSuggestions()
+            return
+        }
+        nlpManager.suggest(currentWord.text, listOf())
+    }
+
+    override fun onWindowShown() {
+        super.onWindowShown()
+        if (isWindowShown) {
+            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
+            return
+        } else {
+            flogInfo(LogTopic.IMS_EVENTS)
+        }
+        isWindowShown = true
+
+        // Must perform this because of strict privacy rules on modern Android versions, where
+        // else FlorisBoard would fail to recognize a current primary clip which was copied
+        // while the IME window was hidden.
+        //
+        // onPrimaryClipChanged() automatically checks if the clips are equal, thus this poses
+        // no problem in case the clip did not change while the window was hidden.
+        clipboardManager.onPrimaryClipChanged()
+    }
+
+    override fun onWindowHidden() {
+        super.onWindowHidden()
+        if (!isWindowShown) {
+            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
+            return
+        } else {
+            flogInfo(LogTopic.IMS_EVENTS)
+        }
+        isWindowShown = false
+    }
+
+    override fun updateFullscreenMode() {
+        super.updateFullscreenMode()
+        updateSoftInputWindowLayoutParameters()
+    }
+
+    override fun onUpdateExtractedText(token: Int, text: ExtractedText?) {
+        super.onUpdateExtractedText(token, text)
+        activeEditorInstance.updateText(token, text)
+    }
+
+    override fun onComputeInsets(outInsets: Insets?) {
+        super.onComputeInsets(outInsets)
+        if (outInsets == null) return
+
+        flogDebug { "comp insets" }
+        val composeView = composeInputView ?: return
+        // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
+        if (!isInputViewShown) {
+            outInsets.contentTopInsets = composeView.height
+            outInsets.visibleTopInsets = composeView.height
+            return
+        }
+
+        val visibleTopY = composeView.height - composeInputViewInnerHeight
+        flogDebug { "comp insets: $visibleTopY" }
+        outInsets.contentTopInsets = visibleTopY
+        outInsets.visibleTopInsets = visibleTopY
+        //if (isClipboardContextMenuShown) {
+        //    outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_FRAME
+        //    outInsets.touchableRegion?.setEmpty()
+        //}
+    }
+
+    /**
+     * Updates the layout params of the window and compose input view.
+     */
+    private fun updateSoftInputWindowLayoutParameters() {
+        val w = window?.window ?: return
+        WindowCompat.setDecorFitsSystemWindows(w, true)
+        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
+        val layoutHeight = if (isFullscreenMode) {
+            WindowManager.LayoutParams.WRAP_CONTENT
+        } else {
+            WindowManager.LayoutParams.MATCH_PARENT
+        }
+        val inputArea = w.findViewById<View>(android.R.id.inputArea) ?: return
+        ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
+        ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
+        val composeView = composeInputView ?: return
+        ViewUtils.updateLayoutHeightOf(composeView, layoutHeight)
     }
 
     @Composable
@@ -345,53 +447,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                 )
             }
         }
-    }
-
-    override fun updateFullscreenMode() {
-        super.updateFullscreenMode()
-        updateSoftInputWindowLayoutParameters()
-    }
-
-    override fun onComputeInsets(outInsets: Insets?) {
-        super.onComputeInsets(outInsets)
-        if (outInsets == null) return
-
-        flogDebug { "comp insets" }
-        val composeView = composeInputView ?: return
-        // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
-        if (!isInputViewShown) {
-            outInsets.contentTopInsets = composeView.height
-            outInsets.visibleTopInsets = composeView.height
-            return
-        }
-
-        val visibleTopY = composeView.height - composeInputViewInnerHeight
-        flogDebug { "comp insets: $visibleTopY" }
-        outInsets.contentTopInsets = visibleTopY
-        outInsets.visibleTopInsets = visibleTopY
-        //if (isClipboardContextMenuShown) {
-        //    outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_FRAME
-        //    outInsets.touchableRegion?.setEmpty()
-        //}
-    }
-
-    /**
-     * Updates the layout params of the window and compose input view.
-     */
-    private fun updateSoftInputWindowLayoutParameters() {
-        val w = window?.window ?: return
-        WindowCompat.setDecorFitsSystemWindows(w, true)
-        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val layoutHeight = if (isFullscreenMode) {
-            WindowManager.LayoutParams.WRAP_CONTENT
-        } else {
-            WindowManager.LayoutParams.MATCH_PARENT
-        }
-        val inputArea = w.findViewById<View>(android.R.id.inputArea) ?: return
-        ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
-        ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-        val composeView = composeInputView ?: return
-        ViewUtils.updateLayoutHeightOf(composeView, layoutHeight)
     }
 
     private inner class ComposeInputView : AbstractComposeView(this) {

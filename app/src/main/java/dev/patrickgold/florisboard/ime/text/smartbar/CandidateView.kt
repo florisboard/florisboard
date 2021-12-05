@@ -57,7 +57,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var clipboardItem: ClipboardItem? = null
     private var clipboardItemTime: Long = 0
     private var clipboardItemTimeout: Int = 60_000
-    private var computedCandidates: ArrayList<ComputedCandidate> = ArrayList()
+    private var computedCandidates: ArrayList<ComputedCandidateOld> = ArrayList()
     private var computedCandidatesWidthPx: Int = 0
     private var selectedIndex: Int = -1
 
@@ -151,7 +151,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         computedCandidatesWidthPx = 0
         if (candidates.isEmpty()) {
             if (clipItemAvailable) {
-                computedCandidates.add(ComputedCandidate.Clip(clipItem!!, Rect(
+                computedCandidates.add(ComputedCandidateOld.Clip(clipItem!!, Rect(
                     0,
                     0,
                     measuredWidth,
@@ -160,7 +160,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
             } else if (displayMode == DisplayMode.CLASSIC) {
                 for (n in 0 until 3) {
                     val left = (classicCandidateWidth + dividerWidth) * n
-                    computedCandidates.add(ComputedCandidate.Empty(Rect(
+                    computedCandidates.add(ComputedCandidateOld.Empty(Rect(
                         left,
                         0,
                         left + classicCandidateWidth,
@@ -169,7 +169,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                 }
             }
         } else if (candidates.size == 1 && !clipItemAvailable) {
-            computedCandidates.add(ComputedCandidate.Word(candidates[0], Rect(
+            computedCandidates.add(ComputedCandidateOld.Word(candidates[0], Rect(
                 0,
                 0,
                 measuredWidth,
@@ -181,7 +181,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     if (!clipItemAvailable) {
                         for (n in 0 until candidates.size.coerceAtMost(3)) {
                             val left = (classicCandidateWidth + dividerWidth) * n
-                            computedCandidates.add(ComputedCandidate.Word(candidates[n], Rect(
+                            computedCandidates.add(ComputedCandidateOld.Word(candidates[n], Rect(
                                 left,
                                 0,
                                 left + classicCandidateWidth,
@@ -189,7 +189,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                             )))
                         }
                     } else {
-                        computedCandidates.add(ComputedCandidate.Clip(clipItem!!, Rect(
+                        computedCandidates.add(ComputedCandidateOld.Clip(clipItem!!, Rect(
                             0,
                             0,
                             classicCandidateWidth,
@@ -197,7 +197,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                         )))
                         for (n in 0 until candidates.size.coerceAtMost(2)) {
                             val left = (classicCandidateWidth + dividerWidth) * (n + 1)
-                            computedCandidates.add(ComputedCandidate.Word(candidates[n], Rect(
+                            computedCandidates.add(ComputedCandidateOld.Word(candidates[n], Rect(
                                 left,
                                 0,
                                 left + classicCandidateWidth,
@@ -208,7 +208,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     if (computedCandidates.size < 3) {
                         for (n in computedCandidates.size until 3) {
                             val left = (classicCandidateWidth + dividerWidth) * n
-                            computedCandidates.add(ComputedCandidate.Empty(Rect(
+                            computedCandidates.add(ComputedCandidateOld.Empty(Rect(
                                 left,
                                 0,
                                 left + classicCandidateWidth,
@@ -220,7 +220,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                 DisplayMode.DYNAMIC -> {
                     if (clipItemAvailable) {
                         val candidateWidth = (textPaint.measureText(clipItem!!.stringRepresentation()).toInt() + candidateMarginH + measuredHeight * 4 / 6).coerceAtMost(maxDynamicCandidateWidth)
-                        computedCandidates.add(ComputedCandidate.Clip(clipItem, Rect(
+                        computedCandidates.add(ComputedCandidateOld.Clip(clipItem, Rect(
                             0,
                             0,
                             candidateWidth,
@@ -238,7 +238,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                         if (tmpWidthPx > measuredWidth) {
                             break
                         } else {
-                            computedCandidates.add(ComputedCandidate.Word(candidates[n], Rect(
+                            computedCandidates.add(ComputedCandidateOld.Word(candidates[n], Rect(
                                 computedCandidatesWidthPx,
                                 0,
                                 computedCandidatesWidthPx + candidateWidth,
@@ -258,7 +258,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                 DisplayMode.DYNAMIC_SCROLLABLE -> {
                     if (clipItemAvailable) {
                         val candidateWidth = (textPaint.measureText(clipItem!!.stringRepresentation()).toInt() + candidateMarginH + measuredHeight * 4 / 6).coerceAtMost(maxDynamicCandidateWidth)
-                        computedCandidates.add(ComputedCandidate.Clip(clipItem, Rect(
+                        computedCandidates.add(ComputedCandidateOld.Clip(clipItem, Rect(
                             0,
                             0,
                             candidateWidth,
@@ -271,7 +271,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                             computedCandidatesWidthPx += dividerWidth
                         }
                         val candidateWidth = (textPaint.measureText(candidates[n]).toInt() + 2 * candidateMarginH).coerceAtMost(maxDynamicCandidateWidth)
-                        computedCandidates.add(ComputedCandidate.Word(candidates[n], Rect(
+                        computedCandidates.add(ComputedCandidateOld.Word(candidates[n], Rect(
                             computedCandidatesWidthPx,
                             0,
                             computedCandidatesWidthPx + candidateWidth,
@@ -314,13 +314,13 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private fun onCandidateClick(index: Int) {
         computedCandidates.getOrNull(index)?.let { candidate ->
             when (candidate) {
-                is ComputedCandidate.Word -> {
+                is ComputedCandidateOld.Word -> {
                 }
-                is ComputedCandidate.Clip -> {
+                is ComputedCandidateOld.Clip -> {
                     clipboardItem = null
                     recomputeCandidates()
                 }
-                is ComputedCandidate.Empty -> {
+                is ComputedCandidateOld.Empty -> {
                 }
             }
         }
@@ -423,7 +423,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     canvas.drawRect(geometry, backgroundPaint)
                 }
                 when (this) {
-                    is ComputedCandidate.Word -> {
+                    is ComputedCandidateOld.Word -> {
                         val ellipsizedWord = TextUtils.ellipsize(
                             word, textPaint, geometry.width().toFloat() - candidateMarginH, TextUtils.TruncateAt.MIDDLE
                         ).toString()
@@ -434,7 +434,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                             textPaint
                         )
                     }
-                    is ComputedCandidate.Clip -> {
+                    is ComputedCandidateOld.Clip -> {
                         pasteDrawable?.setTint(candidateForeground.toSolidColor().color)
                         pasteDrawable?.setBounds(
                             geometry.left + geometry.height() / 3,
@@ -454,7 +454,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                             textPaint
                         )
                     }
-                    is ComputedCandidate.Empty -> {
+                    is ComputedCandidateOld.Empty -> {
                     }
                 }
                 if (n + 1 < computedCandidates.size) {
@@ -476,7 +476,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
      * @property geometry The geometry of the computed candidate, used to position and size the item correctly when
      *  being drawn on a canvas.
      */
-    private sealed class ComputedCandidate(val geometry: Rect) {
+    private sealed class ComputedCandidateOld(val geometry: Rect) {
         /**
          * Computed word candidate, used for suggestions provided by the NLP algorithm.
          *
@@ -486,7 +486,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         class Word(
             val word: String,
             geometry: Rect
-        ) : ComputedCandidate(geometry) {
+        ) : ComputedCandidateOld(geometry) {
             override fun toString(): String {
                 return "Word { word=\"$word\", geometry=$geometry }"
             }
@@ -498,7 +498,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
          */
         class Empty(
             geometry: Rect
-        ) : ComputedCandidate(geometry) {
+        ) : ComputedCandidateOld(geometry) {
             override fun toString(): String {
                 return "Empty { geometry=$geometry }"
             }
@@ -513,7 +513,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         class Clip(
             val clipboardItem: ClipboardItem,
             geometry: Rect
-        ) : ComputedCandidate(geometry) {
+        ) : ComputedCandidateOld(geometry) {
             override fun toString(): String {
                 return "Clip { clipboardItem=$clipboardItem, geometry=$geometry }"
             }

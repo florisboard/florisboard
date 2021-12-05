@@ -125,6 +125,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         subtypeManager.activeSubtype.observeForever {
             updateRenderInfo()
         }
+        clipboardManager.primaryClip.observeForever {
+            updateRenderInfo()
+        }
     }
 
     private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
