@@ -27,7 +27,6 @@ import dev.patrickgold.florisboard.common.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.common.android.systemService
-import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
@@ -168,17 +167,16 @@ class ClipboardManager(
             val internalPrimaryClip = primaryClip.value
 
             if (systemPrimaryClip == null) {
-                _primaryClip.value = null
+                _primaryClip.postValue(null)
                 return
             }
 
             if (systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
-                _primaryClip.value = null
+                _primaryClip.postValue(null)
                 return
             }
 
-            flogDebug { "call11" }
-            _primaryClip.value = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
+            _primaryClip.postValue(ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true))
             //val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip)
             //if (prefs.clipboard.useInternalClipboard.get()) {
             //    // In the event that the internal clipboard is enabled, sync to internal clipboard is enabled
