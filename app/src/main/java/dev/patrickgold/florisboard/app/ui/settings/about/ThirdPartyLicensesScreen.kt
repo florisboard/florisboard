@@ -17,6 +17,10 @@
 package dev.patrickgold.florisboard.app.ui.settings.about
 
 import android.webkit.URLUtil
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,10 +28,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
 import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -35,7 +41,10 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 data class Library(val name: String, val licenseText: String)
 
 @Composable
-fun ThirdPartyLicensesScreen() = FlorisScreen(title = stringRes(R.string.about__third_party_licenses__title)) {
+fun ThirdPartyLicensesScreen() = FlorisScreen {
+    title = stringRes(R.string.about__third_party_licenses__title)
+    scrollable = false
+
     val context = LocalContext.current
 
     var dialogLibraryToShow by rememberSaveable {
@@ -60,30 +69,43 @@ fun ThirdPartyLicensesScreen() = FlorisScreen(title = stringRes(R.string.about__
         list.add(
             Library("ICU4C Native C library", "https://github.com/unicode-org/icu/blob/main/icu4c/LICENSE")
         )
+        list.add(
+            Library("Google Material Icons", "https://www.apache.org/licenses/LICENSE-2.0.txt")
+        )
         list.sortedBy { it.name.lowercase() }.toList()
     }
 
-    for (library in libraries) {
-        val isUrl = URLUtil.isValidUrl(library.licenseText)
-        Preference(
-            title = library.name,
-            onClick = {
-                if (isUrl) {
-                    context.launchUrl(library.licenseText)
-                } else {
-                    dialogLibraryToShow = library
-                }
-            }
-        )
-    }
-
-    if (dialogLibraryToShow != null) {
-        JetPrefAlertDialog(
-            title = dialogLibraryToShow?.name ?: "",
-            dismissLabel = stringRes(android.R.string.ok),
-            onDismiss = { dialogLibraryToShow = null },
+    content {
+        val state = rememberLazyListState()
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .florisScrollbar(state = state, isVertical = true),
+            state = state,
         ) {
-            Text(dialogLibraryToShow?.licenseText ?: "")
+            items(libraries) { library ->
+                val isUrl = URLUtil.isValidUrl(library.licenseText)
+                Preference(
+                    title = library.name,
+                    onClick = {
+                        if (isUrl) {
+                            context.launchUrl(library.licenseText)
+                        } else {
+                            dialogLibraryToShow = library
+                        }
+                    },
+                )
+            }
+        }
+
+        if (dialogLibraryToShow != null) {
+            JetPrefAlertDialog(
+                title = dialogLibraryToShow?.name ?: "",
+                dismissLabel = stringRes(android.R.string.ok),
+                onDismiss = { dialogLibraryToShow = null },
+            ) {
+                Text(dialogLibraryToShow?.licenseText ?: "")
+            }
         }
     }
 }
