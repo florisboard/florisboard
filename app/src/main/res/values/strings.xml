@@ -245,6 +245,8 @@
     <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Secondary row placement</string>
 
     <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Action row</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the action row based on current state</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>

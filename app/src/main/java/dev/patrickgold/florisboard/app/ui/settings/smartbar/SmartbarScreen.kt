@@ -63,7 +63,12 @@ fun SmartbarScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_action_row__label)) {
-            //
+            SwitchPreference(
+                prefs.smartbar.actionRowAutoExpandCollapse,
+                title = stringRes(R.string.pref__smartbar__action_row_auto_expand_collapse__label),
+                summary = stringRes(R.string.pref__smartbar__action_row_auto_expand_collapse__summary),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+            )
         }
     }
 }

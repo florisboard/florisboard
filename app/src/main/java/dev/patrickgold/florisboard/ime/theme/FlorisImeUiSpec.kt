@@ -241,7 +241,7 @@ object FlorisImeUiSpec : SnyggSpec({
     }
     element(FlorisImeUi.SmartbarCandidateSpacer) {
         property(
-            name = Snygg.Background,
+            name = Snygg.Foreground,
             level = SnyggLevel.BASIC,
             supportedValues(SnyggSolidColorValue),
         )

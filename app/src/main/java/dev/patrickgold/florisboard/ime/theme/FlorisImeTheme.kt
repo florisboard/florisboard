@@ -136,7 +136,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = rgbaColor(220, 220, 220)
     }
     FlorisImeUi.SmartbarCandidateSpacer {
-        background = rgbaColor(255, 255, 255, 0.25f)
+        foreground = rgbaColor(255, 255, 255, 0.25f)
     }
 
     FlorisImeUi.SmartbarKey {

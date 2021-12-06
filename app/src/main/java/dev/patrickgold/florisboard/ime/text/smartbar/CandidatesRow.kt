@@ -32,7 +32,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,14 +41,15 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
-import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.nlpManager
@@ -62,20 +62,10 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 fun CandidatesRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
-    val clipboardManager by context.clipboardManager()
     val nlpManager by context.nlpManager()
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
-    val primaryClip by clipboardManager.primaryClip.observeAsState()
-    val candidates by nlpManager.candidates.observeAsState()
-
-    val isPrimaryWordBold = remember(candidates) { candidates?.isPrimaryTokenAutoInsert == true }
-    val computedCandidates = remember(primaryClip, candidates) {
-        buildList {
-            primaryClip?.let { add(ComputedCandidate.Clip(it)) }
-            candidates?.forEach { add(ComputedCandidate.Word(it)) }
-        }
-    }
+    val candidates by nlpManager.candidates.observeAsNonNullState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
@@ -85,20 +75,20 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .snyggBackground(rowStyle.background)
             .then(
-                if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && computedCandidates.size > 1) {
+                if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
                     Modifier.florisHorizontalScroll()
                 } else {
                     Modifier
                 }
             ),
-        horizontalArrangement = if (computedCandidates.size > 1) {
+        horizontalArrangement = if (candidates.size > 1) {
             Arrangement.Start
         } else {
             Arrangement.Center
         },
     ) {
-        if (computedCandidates.isNotEmpty()) {
-            val candidateModifier = if (computedCandidates.size == 1) {
+        if (candidates.isNotEmpty()) {
+            val candidateModifier = if (candidates.size == 1) {
                 Modifier
                     .fillMaxHeight()
                     .weight(1f, fill = false)
@@ -115,8 +105,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     .widthIn(max = 180.dp)
             }
             val list = when (displayMode) {
-                CandidatesDisplayMode.CLASSIC -> computedCandidates.subList(0, 3.coerceAtMost(computedCandidates.size))
-                else -> computedCandidates
+                CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
+                else -> candidates
             }
             for ((n, computedCandidate) in list.withIndex()) {
                 if (n > 0) {
@@ -125,12 +115,12 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             .width(1.dp)
                             .fillMaxHeight(0.6f)
                             .align(Alignment.CenterVertically)
-                            .snyggBackground(spacerStyle.background),
+                            .snyggBackground(spacerStyle.foreground),
                     )
                 }
                 CandidateItem(
                     modifier = candidateModifier,
-                    computedCandidate = computedCandidate,
+                    candidate = computedCandidate,
                     displayMode = displayMode,
                 )
             }
@@ -140,13 +130,13 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun CandidateItem(
-    computedCandidate: ComputedCandidate,
+    candidate: NlpManager.Candidate,
     displayMode: CandidatesDisplayMode,
     modifier: Modifier = Modifier,
 ) = with(LocalDensity.current) {
     var isPressed by remember { mutableStateOf(false) }
 
-    val style = if (computedCandidate is ComputedCandidate.Clip) {
+    val style = if (candidate is NlpManager.Candidate.Clip) {
         FlorisImeTheme.style.get(
             element = FlorisImeUi.SmartbarCandidateClip,
             isPressed = isPressed,
@@ -171,7 +161,7 @@ private fun CandidateItem(
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (computedCandidate is ComputedCandidate.Clip) {
+        if (candidate is NlpManager.Candidate.Clip) {
             Icon(
                 modifier = Modifier
                     .requiredSize(
@@ -195,40 +185,13 @@ private fun CandidateItem(
                         Modifier
                     }
                 ),
-            text = computedCandidate.text(),
+            text = candidate.text(),
             color = style.foreground.solidColor(),
             fontSize = style.fontSize.spSize(),
+            fontWeight = if (candidate.isAutoInsertWord()) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
     }
-}
-
-/**
- * Data class describing a computed candidate item.
- */
-private sealed class ComputedCandidate {
-    fun text(): String {
-        return when (this) {
-            is Clip -> clipboardItem.stringRepresentation()
-            is Word -> word
-        }
-    }
-
-    /**
-     * Computed word candidate, used for suggestions provided by the NLP algorithm.
-     *
-     * @property word The word this computed candidate item represents. Used in the callback to provide which word
-     *  should be filled out.
-     */
-    class Word(val word: String) : ComputedCandidate()
-
-    /**
-     * Computed word candidate, used for clipboard paste suggestions.
-     *
-     * @property clipboardItem The clipboard item this computed candidate item represents. Used in the callback to
-     *  provide which item should be pasted.
-     */
-    class Clip(val clipboardItem: ClipboardItem) : ComputedCandidate()
 }
