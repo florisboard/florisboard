@@ -514,7 +514,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val clipboardContentEnabled = boolean(
             key = "suggestion__clipboard_content_enabled",
-            default = false,
+            default = true,
         )
         val clipboardContentTimeout = int(
             key = "suggestion__clipboard_content_timeout",

@@ -40,6 +40,9 @@ class NlpManager(context: Context) {
         suggestions.observeForever {
             assembleCandidates()
         }
+        prefs.suggestion.clipboardContentEnabled.observeForever {
+            assembleCandidates()
+        }
     }
 
     fun suggest(
@@ -66,7 +69,14 @@ class NlpManager(context: Context) {
 
     private fun assembleCandidates() {
         val candidates = buildList {
-            clipboardManager.primaryClip()?.let { add(Candidate.Clip(it)) }
+            if (prefs.suggestion.clipboardContentEnabled.get()) {
+                val now = System.currentTimeMillis()
+                clipboardManager.primaryClip()?.let { item ->
+                    if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
+                        add(Candidate.Clip(item))
+                    }
+                }
+            }
             suggestions.value?.let { suggestionList ->
                 suggestionList.forEachIndexed { n, word ->
                     add(Candidate.Word(word, isAutoInsert = n == 0 && suggestionList.isPrimaryTokenAutoInsert))

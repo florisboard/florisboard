@@ -251,18 +251,18 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
-    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
-    <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[EXPERIMENTAL] Display suggestions while you type</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, …)</string>
+    <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[NOT YET INCLUDED] Display suggestions while you type</string>
     <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently only English (US). May fail to load if insufficient heap size is available.</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string translatable="false" name="pref__suggestion__use_pref_words__label" comment="Preference title">[NOT YET INCLUDED] Next-word suggestions</string>
     <string translatable="false" name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Use previous words for generating suggestions</string>
-    <string translatable="false" name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">[EXPERIMENTAL] Block possibly offensive words</string>
+    <string translatable="false" name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">[NOT YET INCLUDED] Block possibly offensive words</string>
     <string translatable="false" name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
-    <string translatable="false" name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">[EXPERIMENTAL] Clipboard content suggestions</string>
-    <string translatable="false" name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
-    <string translatable="false" name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">[EXPERIMENTAL] Clipboard suggestion timeout</string>
-    <string translatable="false" name="pref__suggestion__display_mode__label" comment="Preference title">[EXPERIMENTAL] Suggestions display mode</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Clipboard suggestion timeout</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>

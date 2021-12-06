@@ -26,10 +26,13 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
+@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun TypingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__typing__title)
@@ -61,6 +64,23 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__suggestion__display_mode__label),
                 entries = CandidatesDisplayMode.listEntries(),
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.suggestion.clipboardContentEnabled,
+                title = stringRes(R.string.pref__suggestion__clipboard_content_enabled__label),
+                summary = stringRes(R.string.pref__suggestion__clipboard_content_enabled__summary),
+                enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            DialogSliderPreference(
+                prefs.suggestion.clipboardContentTimeout,
+                title = stringRes(R.string.pref__suggestion__clipboard_content_timeout__label),
+                unit = stringRes(R.string.unit__seconds__symbol),
+                min = 30,
+                max = 300,
+                stepIncrement = 5,
+                enabledIf = {
+                    (prefs.suggestion.enabled isEqualTo true) && (prefs.suggestion.clipboardContentEnabled isEqualTo true)
+                }
             )
         }
 
