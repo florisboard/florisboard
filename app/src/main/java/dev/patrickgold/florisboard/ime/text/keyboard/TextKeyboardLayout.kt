@@ -82,6 +82,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -126,7 +127,11 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
                         val clonedEvent = MotionEvent.obtain(event)
-                        touchEventChannel.trySend(clonedEvent)
+                        touchEventChannel.trySend(clonedEvent).onFailure {
+                            // Make sure to prevent MotionEvent memory leakage
+                            // in case the input channel is full
+                            clonedEvent.recycle()
+                        }
                         return@pointerInteropFilter true
                     }
                 }
