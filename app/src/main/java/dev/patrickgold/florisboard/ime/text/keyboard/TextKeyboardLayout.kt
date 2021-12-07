@@ -36,11 +36,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -116,7 +114,6 @@ fun TextKeyboardLayout(
                 FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
             })
             .onGloballyPositioned { coords ->
-                controller.offset = coords.positionInWindow()
                 controller.size = coords.size.toSize()
             }
             .pointerInteropFilter { event ->
@@ -128,7 +125,8 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
-                        touchEventChannel.trySend(event)
+                        val clonedEvent = MotionEvent.obtain(event)
+                        touchEventChannel.trySend(clonedEvent)
                         return@pointerInteropFilter true
                     }
                 }
@@ -201,6 +199,7 @@ fun TextKeyboardLayout(
         for (event in touchEventChannel) {
             if (!isActive) break
             controller.onTouchEventInternal(event)
+            event.recycle()
         }
     }
 }
@@ -316,7 +315,6 @@ private class TextKeyboardLayoutController(
 
     lateinit var keyboard: TextKeyboard
     var size = Size.Zero
-    var offset = Offset.Zero
 
     fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
@@ -470,7 +468,7 @@ private class TextKeyboardLayoutController(
     private fun onTouchDownInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
 
-        val key = keyboard.getKeyForPos(event.getLocalX(pointer.index), event.getLocalY(pointer.index))
+        val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
             inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
             if (prefs.keyboard.popupEnabled.get() && popupUiController.isSuitableForPopups(key)) {
@@ -535,17 +533,17 @@ private class TextKeyboardLayoutController(
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
             if (popupUiController.isShowingExtendedPopup) {
-                val x = event.getLocalX(pointer.index)
-                val y = event.getLocalY(pointer.index)
+                val x = event.getX(pointer.index)
+                val y = event.getY(pointer.index)
                 if (!popupUiController.propagateMotionEvent(activeKey, x, y)) {
                     onTouchCancelInternal(event, pointer)
                     onTouchDownInternal(event, pointer)
                 }
             } else {
-                if ((event.getLocalX(pointer.index) < activeKey.visibleBounds.left - 0.1f * activeKey.visibleBounds.width)
-                    || (event.getLocalX(pointer.index) > activeKey.visibleBounds.right + 0.1f * activeKey.visibleBounds.width)
-                    || (event.getLocalY(pointer.index) < activeKey.visibleBounds.top - 0.35f * activeKey.visibleBounds.height)
-                    || (event.getLocalY(pointer.index) > activeKey.visibleBounds.bottom + 0.35f * activeKey.visibleBounds.height)
+                if ((event.getX(pointer.index) < activeKey.visibleBounds.left - 0.1f * activeKey.visibleBounds.width)
+                    || (event.getX(pointer.index) > activeKey.visibleBounds.right + 0.1f * activeKey.visibleBounds.width)
+                    || (event.getY(pointer.index) < activeKey.visibleBounds.top - 0.35f * activeKey.visibleBounds.height)
+                    || (event.getY(pointer.index) > activeKey.visibleBounds.bottom + 0.35f * activeKey.visibleBounds.height)
                 ) {
                     onTouchCancelInternal(event, pointer)
                     onTouchDownInternal(event, pointer)
@@ -825,14 +823,6 @@ private class TextKeyboardLayoutController(
             glideRefreshJob?.cancel()
             glideRefreshJob = null
         }
-    }
-
-    fun MotionEvent.getLocalX(index: Int): Float {
-        return this.getX(index) - offset.x
-    }
-
-    fun MotionEvent.getLocalY(index: Int): Float {
-        return this.getY(index) - offset.y
     }
 
     private class TouchPointer : Pointer() {
