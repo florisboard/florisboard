@@ -52,6 +52,7 @@ import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.snygg.ui.solidColor
@@ -62,6 +63,7 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 fun CandidatesRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
@@ -108,7 +110,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                 CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
                 else -> candidates
             }
-            for ((n, computedCandidate) in list.withIndex()) {
+            for ((n, candidate) in list.withIndex()) {
                 if (n > 0) {
                     Spacer(
                         modifier = Modifier
@@ -120,8 +122,12 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                 }
                 CandidateItem(
                     modifier = candidateModifier,
-                    candidate = computedCandidate,
+                    candidate = candidate,
                     displayMode = displayMode,
+                    onClick = {
+                        // Can't use candidate directly, reason unknown
+                        keyboardManager.commitCandidate(candidates[n])
+                    },
                 )
             }
         }
@@ -133,6 +139,7 @@ private fun CandidateItem(
     candidate: NlpManager.Candidate,
     displayMode: CandidatesDisplayMode,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = { },
 ) = with(LocalDensity.current) {
     var isPressed by remember { mutableStateOf(false) }
 
@@ -152,11 +159,16 @@ private fun CandidateItem(
         modifier = modifier
             .snyggBackground(style.background, style.shape)
             .pointerInput(Unit) {
-                detectTapGestures(onPress = {
-                    isPressed = true
-                    tryAwaitRelease()
-                    isPressed = false
-                })
+                detectTapGestures(
+                    onPress = {
+                        isPressed = true
+                        tryAwaitRelease()
+                        isPressed = false
+                    },
+                    onTap = {
+                        onClick()
+                    },
+                )
             }
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,

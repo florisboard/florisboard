@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -248,6 +249,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         if (keyData != null) {
             inputEventDispatcher.send(InputKeyEvent.downUp(keyData))
+        }
+    }
+
+    fun commitCandidate(candidate: NlpManager.Candidate) {
+        when (candidate) {
+            is NlpManager.Candidate.Word -> activeEditorInstance?.commitCompletion(candidate.word)
+            is NlpManager.Candidate.Clip -> activeEditorInstance?.commitClipboardItem(candidate.clipboardItem)
         }
     }
 
