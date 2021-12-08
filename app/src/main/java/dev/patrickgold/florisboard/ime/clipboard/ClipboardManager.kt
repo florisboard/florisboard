@@ -148,7 +148,7 @@ class ClipboardManager(
      * Sets the current primary clip without updating the internal clipboard history.
      */
     fun setPrimaryClip(item: ClipboardItem?) {
-        _primaryClip.value = item
+        _primaryClip.postValue(item)
         if (prefs.clipboard.useInternalClipboard.get()) {
             // Purposely do not sync to system if disabled in prefs
             if (prefs.clipboard.syncToSystem.get()) {
@@ -179,7 +179,6 @@ class ClipboardManager(
 
             val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
             if (!isEqual) {
-                flogInfo { "check12" }
                 _primaryClip.postValue(ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true))
                 // TODO: update history
             }

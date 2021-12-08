@@ -90,6 +90,16 @@ class SnyggStylesheet(
         getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
     }
 
+    fun getStatic(
+        element: String,
+        code: Int = Unspecified,
+        group: Int = Unspecified,
+        mode: Int = Unspecified,
+        isPressed: Boolean = false,
+        isFocus: Boolean = false,
+        isDisabled: Boolean = false,
+    ) = getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
+
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
         TODO()
     }

@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.smartbar
 
+import android.view.View
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -28,10 +29,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,10 +48,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
+import dev.patrickgold.florisboard.common.FlorisRect
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -68,67 +75,81 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.candidates.observeAsNonNullState()
+    val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
-    Row(
-        modifier = modifier
-            .fillMaxSize()
-            .snyggBackground(rowStyle.background)
-            .then(
-                if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
-                    Modifier.florisHorizontalScroll()
+    if (AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()) {
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+                .snyggBackground(rowStyle.background)
+                .florisHorizontalScroll(),
+        ) {
+            for (inlineSuggestion in inlineSuggestions) {
+                InlineSuggestionView(inlineSuggestion = inlineSuggestion)
+            }
+        }
+    } else {
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+                .snyggBackground(rowStyle.background)
+                .then(
+                    if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
+                        Modifier.florisHorizontalScroll()
+                    } else {
+                        Modifier
+                    }
+                ),
+            horizontalArrangement = if (candidates.size > 1) {
+                Arrangement.Start
+            } else {
+                Arrangement.Center
+            },
+        ) {
+            if (candidates.isNotEmpty()) {
+                val candidateModifier = if (candidates.size == 1) {
+                    Modifier
+                        .fillMaxHeight()
+                        .weight(1f, fill = false)
                 } else {
                     Modifier
+                        .fillMaxHeight()
+                        .then(
+                            if (displayMode == CandidatesDisplayMode.CLASSIC) {
+                                Modifier.weight(1f)
+                            } else {
+                                Modifier.wrapContentWidth()
+                            }
+                        )
+                        .widthIn(max = 180.dp)
                 }
-            ),
-        horizontalArrangement = if (candidates.size > 1) {
-            Arrangement.Start
-        } else {
-            Arrangement.Center
-        },
-    ) {
-        if (candidates.isNotEmpty()) {
-            val candidateModifier = if (candidates.size == 1) {
-                Modifier
-                    .fillMaxHeight()
-                    .weight(1f, fill = false)
-            } else {
-                Modifier
-                    .fillMaxHeight()
-                    .then(
-                        if (displayMode == CandidatesDisplayMode.CLASSIC) {
-                            Modifier.weight(1f)
-                        } else {
-                            Modifier.wrapContentWidth()
-                        }
-                    )
-                    .widthIn(max = 180.dp)
-            }
-            val list = when (displayMode) {
-                CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
-                else -> candidates
-            }
-            for ((n, candidate) in list.withIndex()) {
-                if (n > 0) {
-                    Spacer(
-                        modifier = Modifier
-                            .width(1.dp)
-                            .fillMaxHeight(0.6f)
-                            .align(Alignment.CenterVertically)
-                            .snyggBackground(spacerStyle.foreground),
+                val list = when (displayMode) {
+                    CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
+                    else -> candidates
+                }
+                for ((n, candidate) in list.withIndex()) {
+                    if (n > 0) {
+                        Spacer(
+                            modifier = Modifier
+                                .width(1.dp)
+                                .fillMaxHeight(0.6f)
+                                .align(Alignment.CenterVertically)
+                                .snyggBackground(spacerStyle.foreground),
+                        )
+                    }
+                    CandidateItem(
+                        modifier = candidateModifier,
+                        candidate = candidate,
+                        displayMode = displayMode,
+                        onClick = {
+                            // Can't use candidate directly, reason unknown
+                            keyboardManager.commitCandidate(candidates[n])
+                        },
                     )
                 }
-                CandidateItem(
-                    modifier = candidateModifier,
-                    candidate = candidate,
-                    displayMode = displayMode,
-                    onClick = {
-                        // Can't use candidate directly, reason unknown
-                        keyboardManager.commitCandidate(candidates[n])
-                    },
-                )
             }
         }
     }

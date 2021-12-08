@@ -33,6 +33,7 @@ import androidx.autofill.inline.common.ImageViewStyle
 import androidx.autofill.inline.common.TextViewStyle
 import androidx.autofill.inline.common.ViewStyle
 import androidx.autofill.inline.v1.InlineSuggestionUi
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
@@ -44,6 +45,8 @@ import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.snygg.ui.solidColor
 import java.time.LocalTime
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -99,6 +102,83 @@ class ThemeManager private constructor(
         }
 
         fun defaultOrNull(): ThemeManager? = defaultInstance
+
+        /**
+         * Creates a new inline suggestion UI bundle based on the attributes of the given [theme].
+         *
+         * @param context The context of the parent view/controller.
+         * @param theme The theme from which the color attributes should be fetched. Defaults to [activeTheme].
+         *
+         * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
+         */
+        @SuppressLint("RestrictedApi")
+        @RequiresApi(Build.VERSION_CODES.R)
+        fun createInlineSuggestionUiStyleBundle(context: Context, style: SnyggStylesheet = FlorisImeTheme.Static.style): Bundle {
+            val chipStyle = style.getStatic(FlorisImeUi.SmartbarPrimaryActionRowToggle)
+            val bgColor = chipStyle.background.solidColor().toArgb()
+            val fgColor = chipStyle.foreground.solidColor().toArgb()
+            val bgDrawableId = R.drawable.chip_background
+            val stylesBuilder = UiVersions.newStylesBuilder()
+            val suggestionStyle = InlineSuggestionUi.newStyleBuilder()
+                .setSingleIconChipStyle(
+                    ViewStyle.Builder()
+                        .setBackground(
+                            Icon.createWithResource(context, bgDrawableId).setTint(bgColor)
+                        )
+                        .setPadding(0, 0, 0, 0)
+                        .build()
+                )
+                .setChipStyle(
+                    ViewStyle.Builder()
+                        .setBackground(
+                            Icon.createWithResource(context, bgDrawableId).setTint(bgColor)
+                        )
+                        .setPadding(
+                            context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_start).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_top).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_end).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_bottom).toInt(),
+                        )
+                        .build()
+                )
+                .setStartIconStyle(
+                    ImageViewStyle.Builder()
+                        .setLayoutMargin(0, 0, 0, 0)
+                        .build()
+                )
+                .setTitleStyle(
+                    TextViewStyle.Builder()
+                        .setLayoutMargin(
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_start).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_top).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_end).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_bottom).toInt(),
+                        )
+                        .setTextColor(fgColor)
+                        .setTextSize(16f)
+                        .build()
+                )
+                .setSubtitleStyle(
+                    TextViewStyle.Builder()
+                        .setLayoutMargin(
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_start).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_top).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_end).toInt(),
+                            context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_bottom).toInt(),
+                        )
+                        .setTextColor(ColorUtils.setAlphaComponent(fgColor, 150))
+                        .setTextSize(14f)
+                        .build()
+                )
+                .setEndIconStyle(
+                    ImageViewStyle.Builder()
+                        .setLayoutMargin(0, 0, 0, 0)
+                        .build()
+                )
+                .build()
+            stylesBuilder.addStyle(suggestionStyle)
+            return stylesBuilder.build()
+        }
     }
 
     init {

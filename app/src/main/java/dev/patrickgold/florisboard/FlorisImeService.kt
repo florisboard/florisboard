@@ -17,12 +17,19 @@
 package dev.patrickgold.florisboard
 
 import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.util.Size
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedText
+import android.view.inputmethod.InlineSuggestionsRequest
+import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputMethodManager
+import android.widget.inline.InlinePresentationSpec
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
@@ -76,6 +83,7 @@ import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -98,6 +106,9 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
  */
 class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHistoryChangedListener {
     companion object {
+        private val InlineSuggestionUiSmallestSize = Size(0, 0)
+        private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
+
         fun activeEditorInstance(): EditorInstance? {
             return FlorisImeServiceReference.get()?.activeEditorInstance
         }
@@ -315,6 +326,38 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onUpdateExtractedText(token: Int, text: ExtractedText?) {
         super.onUpdateExtractedText(token, text)
         activeEditorInstance.updateText(token, text)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
+        return if (prefs.smartbar.enabled.get() && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
+            }
+            val stylesBundle = ThemeManager.createInlineSuggestionUiStyleBundle(this)
+            val spec = InlinePresentationSpec.Builder(InlineSuggestionUiSmallestSize, InlineSuggestionUiBiggestSize)
+                .setStyle(stylesBundle)
+                .build()
+            InlineSuggestionsRequest.Builder(listOf(spec)).let { request ->
+                request.setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
+                request.build()
+            }
+        } else {
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "Ignoring inline suggestions request because Smartbar and/or inline suggestions are disabled."
+            }
+            null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onInlineSuggestionsResponse(response: InlineSuggestionsResponse): Boolean {
+        val inlineSuggestions = response.inlineSuggestions
+        flogInfo(LogTopic.IMS_EVENTS) {
+            "Received inline suggestions response with ${inlineSuggestions.size} suggestion(s) provided."
+        }
+        nlpManager.showInlineSuggestions(inlineSuggestions)
+        return true
     }
 
     override fun onComputeInsets(outInsets: Insets?) {

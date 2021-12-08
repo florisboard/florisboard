@@ -64,6 +64,22 @@ class FlorisRect private constructor(
         return !isEmpty()
     }
 
+    fun intersectWith(other: FlorisRect) {
+        left = max(left, other.left)
+        top = max(top, other.top)
+        right = min(right, other.right)
+        bottom = min(bottom, other.bottom)
+    }
+
+    fun intersectedWith(other: FlorisRect): FlorisRect {
+        return FlorisRect(
+            max(left, other.left),
+            max(top, other.top),
+            min(right, other.right),
+            min(bottom, other.bottom)
+        )
+    }
+
     fun overlaps(other: FlorisRect): Boolean {
         if (right <= other.left || other.right <= left)
             return false
@@ -195,6 +211,10 @@ class FlorisRect private constructor(
 
     val bottomRight: Offset
         get() = Offset(right, bottom)
+
+    fun toAndroidRect(): android.graphics.Rect {
+        return android.graphics.Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
+    }
 
     override fun toString(): String {
         return "FlorisRect(left = $left, top = $top, right = $right, bottom = $bottom)"

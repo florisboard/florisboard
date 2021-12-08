@@ -17,11 +17,18 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
+import android.os.Build
+import android.util.Size
+import android.view.inputmethod.InlineSuggestion
+import android.widget.inline.InlineContentView
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import java.util.*
 
 class NlpManager(context: Context) {
     private val prefs by florisPreferenceModel()
@@ -32,6 +39,10 @@ class NlpManager(context: Context) {
 
     private val _candidates = MutableLiveData<List<Candidate>>(emptyList())
     val candidates: LiveData<List<Candidate>> get() = _candidates
+
+    private val inlineContentViews = Collections.synchronizedMap<InlineSuggestion, InlineContentView>(hashMapOf())
+    private val _inlineSuggestions = MutableLiveData<List<InlineSuggestion>>(emptyList())
+    val inlineSuggestions: LiveData<List<InlineSuggestion>> get() = _inlineSuggestions
 
     init {
         clipboardManager.primaryClip.observeForever {
@@ -84,9 +95,53 @@ class NlpManager(context: Context) {
             }
         }
         _candidates.postValue(candidates)
+        autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
+    }
+
+    /**
+     * Inflates the given inline suggestions. Once all provided views are ready, the suggestions
+     * strip is updated and the Smartbar update cycle is triggered.
+     *
+     * @param inlineSuggestions A collection of inline suggestions to be inflated and shown.
+     */
+    fun showInlineSuggestions(inlineSuggestions: List<InlineSuggestion>) {
+        inlineContentViews.clear()
+        _inlineSuggestions.postValue(inlineSuggestions)
+        autoExpandCollapseSmartbarActions(candidates.value, inlineSuggestions)
+    }
+
+    /**
+     * Clears the inline suggestions and triggers the Smartbar update cycle.
+     */
+    fun clearInlineSuggestions() {
+        inlineContentViews.clear()
+        _inlineSuggestions.postValue(emptyList())
+        autoExpandCollapseSmartbarActions(candidates.value, null)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun inflateOrGet(context: Context, size: Size, inlineSuggestion: InlineSuggestion, callback: (InlineContentView) -> Unit) {
+        val view = inlineContentViews[inlineSuggestion]
+        if (view != null) {
+            callback(view)
+        } else {
+            try {
+                inlineSuggestion.inflate(context, size, context.mainExecutor) { inflatedView ->
+                    if (inflatedView != null) {
+                        inlineContentViews[inlineSuggestion] = inflatedView
+                        callback(inflatedView)
+                    }
+                }
+            } catch (e: Exception) {
+                flogError { e.toString() }
+            }
+        }
+    }
+
+    private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
         if (prefs.smartbar.enabled.get() && prefs.smartbar.actionRowAutoExpandCollapse.get()) {
             prefs.smartbar.actionRowExpandWithAnimation.set(false)
-            prefs.smartbar.actionRowExpanded.set(candidates.isEmpty())
+            prefs.smartbar.actionRowExpanded.set(list1.isNullOrEmpty() && list2.isNullOrEmpty())
         }
     }
 
