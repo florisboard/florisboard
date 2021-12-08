@@ -21,6 +21,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import java.util.concurrent.atomic.AtomicInteger
@@ -54,6 +55,7 @@ import kotlin.properties.Delegates
  *          |   1      |          |          | Is character half-width enabled
  *          |  1       |          |          | Is Kana Kata enabled
  *          | 1        |          |          | Is Kana small
+ *      111 |          |          |          | Ime Ui Mode
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
@@ -82,14 +84,8 @@ import kotlin.properties.Delegates
  *
  * @property rawValue The internal register used to store the flags and region ints that
  *  this keyboard state represents.
- * @property maskOfInterest The mask which is applied when comparing this state with another.
- *  Is useful if only parts of a state instance is relevant to look at.
  */
-class KeyboardState private constructor(
-    initValue: ULong,
-    private var maskOfInterest: ULong,
-) : LiveData<KeyboardState>() {
-
+class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardState>() {
     companion object {
         const val M_KEYBOARD_MODE: ULong =                  0x0Fu
         const val O_KEYBOARD_MODE: Int =                    0
@@ -97,6 +93,8 @@ class KeyboardState private constructor(
         const val O_KEY_VARIATION: Int =                    4
         const val M_INPUT_MODE: ULong =                     0x03u
         const val O_INPUT_MODE: Int =                       8
+        const val M_IME_UI_MODE: ULong =                    0x07u
+        const val O_IME_UI_MODE: Int =                      24
 
         const val F_CAPS: ULong =                           0x00000100u
         const val F_CAPS_LOCK: ULong =                      0x00000200u
@@ -117,15 +115,10 @@ class KeyboardState private constructor(
 
         const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
         const val INTEREST_NONE: ULong =                    0uL
-        //const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
-        //const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
 
         const val BATCH_ZERO: Int =                         0
 
-        fun new(
-            value: ULong = STATE_ALL_ZERO,
-            maskOfInterest: ULong = INTEREST_ALL
-        ) = KeyboardState(value, maskOfInterest)
+        fun new(value: ULong = STATE_ALL_ZERO) = KeyboardState(value)
     }
 
     private var rawValue by Delegates.observable(initValue) { _, _, _ -> dispatchState() }
@@ -216,7 +209,7 @@ class KeyboardState private constructor(
     }
 
     fun snapshot(): KeyboardState {
-        return new(rawValue, maskOfInterest)
+        return new(rawValue)
     }
 
     /**
@@ -276,6 +269,10 @@ class KeyboardState private constructor(
     var inputMode: InputMode
         get() = InputMode.fromInt(getRegion(M_INPUT_MODE, O_INPUT_MODE))
         set(v) { setRegion(M_INPUT_MODE, O_INPUT_MODE, v.toInt()) }
+
+    var imeUiMode: ImeUiMode
+        get() = ImeUiMode.fromInt(getRegion(M_IME_UI_MODE, O_IME_UI_MODE))
+        set(v) { setRegion(M_IME_UI_MODE, O_IME_UI_MODE, v.toInt()) }
 
     @Deprecated("Use inputMode and/or isLowercase/isUppercase")
     var shiftLock: Boolean

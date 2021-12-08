@@ -20,9 +20,11 @@ import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpecBuilder
 import dev.patrickgold.florisboard.snygg.SnyggSpec
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeDpValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeDpValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 
@@ -51,7 +53,13 @@ fun SnyggPropertySetSpecBuilder.shape() {
     property(
         name = Snygg.Shape,
         level = SnyggLevel.ADVANCED,
-        supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
+        supportedValues(
+            SnyggRectangleShapeValue,
+            SnyggCutCornerShapeDpValue,
+            SnyggCutCornerShapePercentValue,
+            SnyggRoundedCornerShapeDpValue,
+            SnyggRoundedCornerShapePercentValue,
+        ),
     )
 }
 
@@ -82,6 +90,18 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+    }
+    element(FlorisImeUi.ClipboardItem) {
+        background()
+        foreground()
+        fontSize()
+        shape()
+    }
+    element(FlorisImeUi.ClipboardItemPopup) {
+        background()
+        foreground()
+        fontSize()
+        shape()
     }
 
     element(FlorisImeUi.OneHandedPanel) {

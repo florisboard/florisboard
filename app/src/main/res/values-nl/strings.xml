@@ -322,7 +322,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard lijkt herhaaldelijk te stoppen met werken…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Terugvallen op het vorige toetsenbord om oneindige crash-loop te stoppen. Tik om foutdetails te bekijken</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Klembordgeschiedenis</string>
     <string name="clip__clear_history">Wis geschiedenis</string>
     <string name="clip__unpin_item">Item losmaken</string>
     <string name="clip__pin_item">Item vastmaken</string>

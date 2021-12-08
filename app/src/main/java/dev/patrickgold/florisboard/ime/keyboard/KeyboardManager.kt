@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import android.view.KeyEvent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.neverEqualPolicy
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
@@ -27,9 +30,11 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
@@ -185,6 +190,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             state = state,
             evaluator = computingEvaluator,
         ))
+    }
+
+    @Composable
+    fun observeActiveState(): State<KeyboardState> {
+        return activeState.observeAsNonNullState(neverEqualPolicy())
     }
 
     fun updateCapsState() {
@@ -563,9 +573,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_HIDE_UI -> FlorisImeService.hideUi()
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
             KeyCode.IME_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
-            KeyCode.IME_UI_MODE_TEXT -> {} // TODO
-            KeyCode.IME_UI_MODE_MEDIA -> {} // TODO
-            KeyCode.IME_UI_MODE_CLIPBOARD -> {} // TODO
+            KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
+            KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
+            KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
@@ -708,9 +718,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     state.isRichInputEditor
-                }
-                KeyCode.IME_UI_MODE_CLIPBOARD -> {
-                    prefs.clipboard.enableHistory.get()
                 }
                 else -> true
             }

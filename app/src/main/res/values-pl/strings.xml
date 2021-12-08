@@ -326,12 +326,11 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard wydaje się wielokrotnie przerywać pracę…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Powracanie do poprzedniej klawiatury w celu zatrzymania nieskończonej pętli awarii. Stuknij, aby wyświetlić szczegóły błędu</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Historia schowka</string>
     <string name="clip__clear_history">Wyczyść historię</string>
     <string name="clip__delete_item">Usuń</string>
     <string name="clip__paste_item">Wklej</string>
     <string name="settings__clipboard__title">Schowek</string>
-    <string name="pref__clipboard__clipboard_history_title">Historia schowka</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Historia schowka</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Włącz historię schowka</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->

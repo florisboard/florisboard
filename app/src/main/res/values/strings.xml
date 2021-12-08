@@ -462,7 +462,10 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
 
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Clipboard history</string>
+    <string name="clipboard__header_title">Clipboard</string>
+    <string name="clipboard__disabled__title">Clipboard history is currently disabled</string>
+    <string name="clipboard__disabled__message">{app_name}\'s clipboard history allows you to quickly store and access text and images you copy, with the ability to pin items, configure automatic clean-up and set a maximum item limit.</string>
+    <string name="clipboard__disabled__enable_button">Enable integrated clipboard</string>
     <string name="clip__clear_history">Clear history</string>
     <string name="clip__unpin_item">Unpin item</string>
     <string name="clip__pin_item">Pin item</string>
@@ -478,9 +481,9 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
-    <string name="pref__clipboard__clipboard_history_title">Clipboard history</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>
     <string name="pref__clipboard__clean_up_old__label">Clean up old items</string>
     <string name="pref__clipboard__clean_up_after__label">Clean up old items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>

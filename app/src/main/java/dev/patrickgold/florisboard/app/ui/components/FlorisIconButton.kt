@@ -18,10 +18,16 @@ package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -41,12 +47,23 @@ fun FlorisIconButton(
         enabled = enabled,
         onClick = onClick,
     ) {
-        Box(modifier = iconModifier.requiredSize(32.dp)) {
-            Icon(
-                painter = painterResource(id = iconId),
-                contentDescription = null,
-                tint = iconColor,
-            )
+        val contentAlpha = if (enabled) LocalContentAlpha.current else 0.14f
+        CompositionLocalProvider(
+            LocalContentAlpha provides contentAlpha,
+            LocalContentColor provides iconColor,
+        ) {
+            Box(
+                modifier = iconModifier
+                    .padding(4.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1f),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    painter = painterResource(id = iconId),
+                    contentDescription = null,
+                )
+            }
         }
     }
 }

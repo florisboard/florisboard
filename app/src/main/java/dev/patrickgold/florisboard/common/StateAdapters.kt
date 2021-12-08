@@ -19,9 +19,11 @@ package dev.patrickgold.florisboard.common
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisallowComposableCalls
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SnapshotMutationPolicy
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -30,10 +32,11 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceObserver
 
 @Composable
 inline fun <V : Any, R : Any> PreferenceData<V>.observeAsTransformingState(
+    policy: SnapshotMutationPolicy<R> = structuralEqualityPolicy(),
     crossinline transform: @DisallowComposableCalls (V) -> R,
 ): State<R> {
     val lifecycleOwner = LocalLifecycleOwner.current
-    val state = remember(key) { mutableStateOf(transform(get())) }
+    val state = remember(key) { mutableStateOf(transform(get()), policy) }
     DisposableEffect(this, lifecycleOwner) {
         val observer = PreferenceObserver<V> { newValue -> state.value = transform(newValue) }
         observe(lifecycleOwner, observer)
@@ -43,14 +46,17 @@ inline fun <V : Any, R : Any> PreferenceData<V>.observeAsTransformingState(
 }
 
 @Composable
-fun <V> LiveData<V>.observeAsNonNullState(): State<V> = observeAsTransformingState { it!! }
+fun <V> LiveData<V>.observeAsNonNullState(
+    policy: SnapshotMutationPolicy<V> = structuralEqualityPolicy(),
+): State<V> = observeAsTransformingState(policy) { it!! }
 
 @Composable
 inline fun <V, R> LiveData<V>.observeAsTransformingState(
+    policy: SnapshotMutationPolicy<R> = structuralEqualityPolicy(),
     crossinline transform: @DisallowComposableCalls (V?) -> R,
 ): State<R> {
     val lifecycleOwner = LocalLifecycleOwner.current
-    val state = remember { mutableStateOf(transform(value)) }
+    val state = remember { mutableStateOf(transform(value), policy) }
     DisposableEffect(this, lifecycleOwner) {
         val observer = Observer<V> { state.value = transform(it) }
         observe(lifecycleOwner, observer)

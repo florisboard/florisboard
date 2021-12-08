@@ -209,7 +209,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard vaikuttaa lopettavan toimintansa toistuvasti…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vaihdetaan edelliseen näppäimistöön, jotta kaatumiskierre loppuu. Napauta nähdäksesi virheen tiedot</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Leikepöydän historia</string>
     <string name="clip__clear_history">Tyhjennä historia</string>
     <string name="clip__unpin_item">Poista kohteen kiinnitys</string>
     <string name="clip__pin_item">Kiinnitä kohde</string>

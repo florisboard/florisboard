@@ -28,7 +28,6 @@ import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrim
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -205,7 +204,7 @@ class ClipboardManager(
      * Adds a new item to the clipboard history (if enabled).
      */
     fun updateHistory(newData: ClipboardItem) {
-        if (prefs.clipboard.enableHistory.get()) {
+        if (prefs.clipboard.historyEnabled.get()) {
             val historyElement = history.firstOrNull { it.data.type == ItemType.TEXT && it.data.text == newData.text }
             if (historyElement != null) {
                 moveToTheBeginning(historyElement, newData)

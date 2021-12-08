@@ -378,7 +378,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard semble cesser de fonctionner de façon répétitive…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Retour au clavier précédent pour arrêter la boucle de plantage infinie. Appuyez pour afficher les détails de l\'erreur</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Historique du presse-papiers</string>
     <string name="clip__clear_history">Effacer l\'historique</string>
     <string name="clip__unpin_item">Détacher un élément</string>
     <string name="clip__pin_item">Épingler un élément</string>
@@ -393,7 +392,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Les mises à jour du presse-papiers du système mettent également à jour le presse-papiers de FlorisBoard.</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniser vers le presse-papier système</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Le presse-papier Floris met aussi à jour le presse-papier du système</string>
-    <string name="pref__clipboard__clipboard_history_title">Historique du presse-papiers</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Historique du presse-papiers</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Activer l\'historique du presse-papier</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserver les éléments du presse-papier</string>
     <string name="pref__clipboard__clean_up_old__label">Nettoyer les vieux éléments</string>

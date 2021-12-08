@@ -389,7 +389,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن FlorisBoard يوقف عن العمل بشكل متكرر…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">تم العودة إلى لوحة المفاتيح السابقة لإيقاف التعطل المتكرر الغير منتهي. انقر لعرض تفاصيل الخطأ</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">سجل الحافظة</string>
     <string name="clip__clear_history">مسح السجل</string>
     <string name="clip__unpin_item">إلغاء تثبيت العنصر</string>
     <string name="clip__pin_item">تثبيت العنصر</string>
@@ -404,7 +403,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">عند مزامنة حافظة النظام يتم مزامنة حافظة لوحة المفاتيح تلقائيا</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">مزامنة الى حافظة النظام</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">تحديثات حافظة لوحة المفاتيح يقوم أيضًا بتحديث حافظة النظام</string>
-    <string name="pref__clipboard__clipboard_history_title">سجل الحافظة</string>
+    <string name="pref__clipboard__group_clipboard_history__label">سجل الحافظة</string>
     <string name="pref__clipboard__enable_clipboard_history__label">تمكين سجل الحافظة</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">الاحتفاظ بعناصر الحافظة</string>
     <string name="pref__clipboard__clean_up_old__label">تنظيف العناصر القديمة</string>

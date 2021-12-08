@@ -384,7 +384,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Φαίνεται πως το FlorisBoard σταματά να λειτουργεί επανειλημμένα…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Χρήση εναλλακτικά του προηγούμενου πληκτρολογίου για να σταματήσει ο αδιάκοπος κύκλος απροσδόκητων τερματισμών. Πατήστε για να δείτε λεπτομέρειες του σφάλματος</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Ιστορικό προχείρου</string>
     <string name="clip__clear_history">Εκκαθάριση ιστορικού</string>
     <string name="clip__unpin_item">Ξεκαρφίτσωμα στοιχείου</string>
     <string name="clip__pin_item">Καρφίτσωμα στοιχείου</string>
@@ -399,7 +398,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου ενημερώνουν και το πρόχειρο Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Συγχρονισμός στο συστημικό πρόχειρο</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__clipboard_history_title">Ιστορικό προχείρου</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Ιστορικό προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση στοιχείων προχείρου</string>
     <string name="pref__clipboard__clean_up_old__label">Εκκαθάριση παλιών στοιχείων</string>

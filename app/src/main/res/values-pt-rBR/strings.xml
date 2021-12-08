@@ -385,7 +385,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard parece parar de funcionar repetidamente…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Recuando para o teclado anterior para parar o loop infinito de travamento. Toque para ver os detalhes do erro</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Histórico da área de transferência</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desafixar item</string>
     <string name="clip__pin_item">Fixar item</string>
@@ -400,7 +399,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Atualizações da área de transferência do sistema também atualizam a área de transferência do Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar com a área de transferência do sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Atualizações da área de transferência do Floris também atualizam a área de transferência do sistema</string>
-    <string name="pref__clipboard__clipboard_history_title">Histórico da área de transferência</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Histórico da área de transferência</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ativar histórico da área de transferência</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Reter itens da área de transferência</string>
     <string name="pref__clipboard__clean_up_old__label">Limpar itens antigos</string>

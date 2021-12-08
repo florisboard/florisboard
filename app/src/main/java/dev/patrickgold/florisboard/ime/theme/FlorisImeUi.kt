@@ -22,6 +22,10 @@ object FlorisImeUi {
     const val KeyHint = "key-hint"
     const val KeyPopup = "key-popup"
 
+    const val ClipboardHeader = "clipboard-header"
+    const val ClipboardItem = "clipboard-item"
+    const val ClipboardItemPopup = "clipboard-item-popup"
+
     const val OneHandedPanel = "one-handed-panel"
 
     const val SmartbarPrimaryRow = "smartbar-primary-row"

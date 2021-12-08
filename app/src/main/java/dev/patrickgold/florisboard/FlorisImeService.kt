@@ -60,13 +60,20 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import dev.patrickgold.florisboard.common.observeAsTransformingState
+import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogInfo
+import dev.patrickgold.florisboard.debug.flogWarning
+import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
 import dev.patrickgold.florisboard.ime.core.EditorInstance
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
@@ -74,16 +81,11 @@ import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
+import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.debug.flogWarning
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -232,6 +234,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         if (info == null) return
         activeState.batchEdit {
             activeState.update(info)
+            activeState.imeUiMode = ImeUiMode.TEXT
             activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
             activeEditorInstance.startInputView(info)
             keyboardManager.updateCapsState()
@@ -377,7 +380,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             prefs.smartbar.enabled.get() &&
                 prefs.smartbar.secondaryRowEnabled.get() &&
                 prefs.smartbar.secondaryRowExpanded.get() &&
-                prefs.smartbar.secondaryRowPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI
+                prefs.smartbar.secondaryRowPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI &&
+                keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
 
         outInsets.contentTopInsets = visibleTopY
         outInsets.visibleTopInsets = visibleTopY
@@ -473,10 +477,17 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                         weight = 1f - keyboardWeight,
                     )
                 }
-                Box(modifier = Modifier
-                    .weight(keyboardWeight)
-                    .wrapContentHeight()) {
-                    TextInputLayout()
+                Box(
+                    modifier = Modifier
+                        .weight(keyboardWeight)
+                        .wrapContentHeight(),
+                ) {
+                    val activeState by keyboardManager.observeActiveState()
+                    when (activeState.imeUiMode) {
+                        ImeUiMode.TEXT -> TextInputLayout()
+                        ImeUiMode.MEDIA -> {}
+                        ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                    }
                 }
                 if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
                     OneHandedPanel(

@@ -47,16 +47,16 @@ fun ClipboardScreen() = FlorisScreen(title = stringRes(R.string.settings__clipbo
         enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },
     )
 
-    PreferenceGroup(title = stringRes(R.string.pref__clipboard__clipboard_history_title)) {
+    PreferenceGroup(title = stringRes(R.string.pref__clipboard__group_clipboard_history__label)) {
         SwitchPreference(
-            prefs.clipboard.enableHistory,
+            prefs.clipboard.historyEnabled,
             title = stringRes(R.string.pref__clipboard__enable_clipboard_history__label),
             summary = stringRes(R.string.pref__clipboard__enable_clipboard_history__summary),
         )
         SwitchPreference(
             prefs.clipboard.cleanUpOld,
             title = stringRes(R.string.pref__clipboard__clean_up_old__label),
-            enabledIf = { prefs.clipboard.enableHistory isEqualTo true },
+            enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
         )
         DialogSliderPreference(
             prefs.clipboard.cleanUpAfter,
@@ -65,12 +65,12 @@ fun ClipboardScreen() = FlorisScreen(title = stringRes(R.string.settings__clipbo
             min = 0,
             max = 120,
             stepIncrement = 5,
-            enabledIf = { prefs.clipboard.enableHistory isEqualTo true && prefs.clipboard.cleanUpOld isEqualTo true },
+            enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.cleanUpOld isEqualTo true },
         )
         SwitchPreference(
             prefs.clipboard.limitHistorySize,
             title = stringRes(R.string.pref__clipboard__limit_history_size__label),
-            enabledIf = { prefs.clipboard.enableHistory isEqualTo true },
+            enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
         )
         DialogSliderPreference(
             prefs.clipboard.maxHistorySize,
@@ -79,7 +79,7 @@ fun ClipboardScreen() = FlorisScreen(title = stringRes(R.string.settings__clipbo
             min = 5,
             max = 100,
             stepIncrement = 5,
-            enabledIf = { prefs.clipboard.enableHistory isEqualTo true && prefs.clipboard.limitHistorySize isEqualTo true },
+            enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.limitHistorySize isEqualTo true },
         )
     }
 }

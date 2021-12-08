@@ -385,7 +385,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard kelihatannya berhenti bekerja berulang kali…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Mengembalikan ke keyboard sebelumnya untuk menghentikan loop crash tak terbatas. Ketuk untuk melihat detail kesalahan</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Riwayat papan klip</string>
     <string name="clip__clear_history">Hapus riwayat</string>
     <string name="clip__unpin_item">Lepas pin item</string>
     <string name="clip__pin_item">Pin item</string>
@@ -400,7 +399,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Pembaruan papan klip sistem juga memperbarui papan klip Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronkan ke papan klip sistem</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Pembaruan papan klip Floris juga memperbarui papan klip sistem</string>
-    <string name="pref__clipboard__clipboard_history_title">Riwayat papan klip</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Riwayat papan klip</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Aktifkan riwayat papan klip</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Pertahankan item papan klip</string>
     <string name="pref__clipboard__clean_up_old__label">Bersihkan item lama</string>

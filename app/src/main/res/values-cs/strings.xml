@@ -270,7 +270,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Historie schránky</string>
     <string name="clip__clear_history">Smazat historii</string>
     <string name="clip__unpin_item">Odepnout položku</string>
     <string name="clip__pin_item">Připnout položku</string>

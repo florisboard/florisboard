@@ -73,8 +73,8 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__sync_to_system",
             default = false,
         )
-        val enableHistory = boolean(
-            key = "clipboard__enable_history",
+        val historyEnabled = boolean(
+            key = "clipboard__history_enabled",
             default = false,
         )
         val cleanUpOld = boolean(

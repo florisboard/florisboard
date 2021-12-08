@@ -22,6 +22,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -78,6 +79,24 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = rgbaColor(189, 189, 189)
         foreground = rgbaColor(255, 255, 255)
         fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
+
+    FlorisImeUi.ClipboardHeader {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(16.sp)
+    }
+    FlorisImeUi.ClipboardItem {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(14.sp)
+        shape = roundedCornerShape(12.dp)
+    }
+    FlorisImeUi.ClipboardItemPopup {
+        background = rgbaColor(117, 117, 117)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(14.sp)
         shape = roundedCornerShape(20)
     }
 
