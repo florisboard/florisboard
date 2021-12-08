@@ -80,17 +80,19 @@ class NlpManager(context: Context) {
 
     private fun assembleCandidates() {
         val candidates = buildList {
-            if (prefs.suggestion.clipboardContentEnabled.get()) {
-                val now = System.currentTimeMillis()
-                clipboardManager.primaryClip()?.let { item ->
-                    if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
-                        add(Candidate.Clip(item))
+            if (prefs.smartbar.enabled.get() && prefs.suggestion.enabled.get()) {
+                if (prefs.suggestion.clipboardContentEnabled.get()) {
+                    val now = System.currentTimeMillis()
+                    clipboardManager.primaryClip()?.let { item ->
+                        if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
+                            add(Candidate.Clip(item))
+                        }
                     }
                 }
-            }
-            suggestions.value?.let { suggestionList ->
-                suggestionList.forEachIndexed { n, word ->
-                    add(Candidate.Word(word, isAutoInsert = n == 0 && suggestionList.isPrimaryTokenAutoInsert))
+                suggestions.value?.let { suggestionList ->
+                    suggestionList.forEachIndexed { n, word ->
+                        add(Candidate.Word(word, isAutoInsert = n == 0 && suggestionList.isPrimaryTokenAutoInsert))
+                    }
                 }
             }
         }

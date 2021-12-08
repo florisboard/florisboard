@@ -48,14 +48,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
-import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.observeAsNonNullState
-import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
