@@ -113,7 +113,7 @@ class ThemeManager private constructor(
          */
         @SuppressLint("RestrictedApi")
         @RequiresApi(Build.VERSION_CODES.R)
-        fun createInlineSuggestionUiStyleBundle(context: Context, style: SnyggStylesheet = FlorisImeTheme.Static.style): Bundle {
+        fun createInlineSuggestionUiStyleBundle(context: Context, style: SnyggStylesheet = FlorisImeThemeBaseStyle): Bundle {
             val chipStyle = style.getStatic(FlorisImeUi.SmartbarPrimaryActionRowToggle)
             val bgColor = chipStyle.background.solidColor().toArgb()
             val fgColor = chipStyle.foreground.solidColor().toArgb()
