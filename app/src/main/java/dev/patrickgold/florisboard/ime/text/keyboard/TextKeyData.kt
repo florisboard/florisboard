@@ -249,6 +249,24 @@ class TextKeyData(
             code = KeyCode.CLIPBOARD_SELECT_ALL,
             label = "clipboard_select_all",
         )
+        /** Predefined key data for [KeyCode.CLIPBOARD_CLEAR_HISTORY] */
+        val CLIPBOARD_CLEAR_HISTORY = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.CLIPBOARD_CLEAR_HISTORY,
+            label = "clipboard_clear_history",
+        )
+        /** Predefined key data for [KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY] */
+        val CLIPBOARD_CLEAR_FULL_HISTORY = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY,
+            label = "clipboard_clear_full_history",
+        )
+        /** Predefined key data for [KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP] */
+        val CLIPBOARD_CLEAR_PRIMARY_CLIP = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP,
+            label = "clipboard_clear_primary_clip",
+        )
 
         /** Predefined key data for [KeyCode.COMPACT_LAYOUT_TO_LEFT] */
         val COMPACT_LAYOUT_TO_LEFT = TextKeyData(

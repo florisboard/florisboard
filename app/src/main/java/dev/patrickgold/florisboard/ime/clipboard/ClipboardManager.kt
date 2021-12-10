@@ -32,11 +32,11 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.Closeable
-import kotlin.collections.ArrayDeque
 
 /**
  * [ClipboardManager] manages the clipboard and clipboard history.
@@ -48,11 +48,11 @@ import kotlin.collections.ArrayDeque
  */
 class ClipboardManager(
     context: Context,
-) : AndroidClipboardManager_OnPrimaryClipChangedListener, Closeable, CoroutineScope by MainScope() {
-
+) : AndroidClipboardManager_OnPrimaryClipChangedListener, Closeable {
     companion object {
         // 1 minute
         private const val INTERVAL = 60 * 1000L
+        private const val RECENT_TIMESPAN_MS = 300_000 // 300 sec = 5 min
 
         /**
          * Taken from ClipboardDescription.java from the AOSP
@@ -85,18 +85,17 @@ class ClipboardManager(
     private val appContext by context.appContext()
     private val systemClipboardManager = context.systemService(AndroidClipboardManager::class)
 
-    // Using ArrayDeque because it's "technically" the correct data structure (I think).
-    // Newest stored first, oldest stored last.
-    private val history: ArrayDeque<TimedClipData> = ArrayDeque()
-    private val pins: ArrayDeque<ClipboardItem> = ArrayDeque()
+    private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var cleanUpJob: Job
-    private lateinit var clipHistoryDao: ClipboardHistoryDao
+    private var clipHistoryDao: ClipboardHistoryDao? = null
+
+    private val _history = MutableLiveData(ClipboardHistory.Empty)
+    val history: LiveData<ClipboardHistory> get() = _history
 
     private val _primaryClip = MutableLiveData<ClipboardItem?>(null)
     val primaryClip: LiveData<ClipboardItem?> get() = _primaryClip
 
     init {
-        onPrimaryClipChanged()
         systemClipboardManager.addPrimaryClipChangedListener(this)
 
         val cleanUpClipboard = Runnable {
@@ -104,29 +103,34 @@ class ClipboardManager(
                 return@Runnable
             }
 
-            val currentTime = System.currentTimeMillis()
-            var numToPop = 0
-            val expiryTime = prefs.clipboard.cleanUpAfter.get() * 60 * 1000
-            for (item in history.asReversed()) {
-                if (item.timeUTC + expiryTime < currentTime) {
-                    numToPop += 1
-                } else {
-                    break
-                }
-            }
-            for (i in 0 until numToPop) {
-                history.removeLast().data.close(appContext)
-            }
+            //val currentTime = System.currentTimeMillis()
+            //var numToPop = 0
+            //val expiryTime = prefs.clipboard.cleanUpAfter.get() * 60 * 1000
+            //for (item in history.asReversed()) {
+            //    if (item.timeUTC + expiryTime < currentTime) {
+            //        numToPop += 1
+            //    } else {
+            //        break
+            //    }
+            //}
+            //for (i in 0 until numToPop) {
+            //    history.removeLast().data.close(appContext)
+            //}
         }
-        cleanUpJob = launch(Dispatchers.Main) {
+        cleanUpJob = ioScope.launch(Dispatchers.Main) {
             while (true) {
                 cleanUpClipboard.run()
                 delay(INTERVAL)
             }
         }
-        launch(Dispatchers.IO) {
+        ioScope.launch {
             clipHistoryDao = ClipboardHistoryDatabase.new(context).clipboardItemDao()
-            clipHistoryDao.getAll().toCollection(pins)
+            withContext(Dispatchers.Main) {
+                clipHistoryDao?.getAllLive()?.observeForever { items ->
+                    val clipHistory = ClipboardHistory(items.sortedByDescending { it.creationTimestampMs })
+                    _history.postValue(clipHistory)
+                }
+            }
             try {
                 FlorisContentProvider.getInstance().init()
             } catch (e: Exception) {
@@ -134,6 +138,8 @@ class ClipboardManager(
             }
         }
     }
+
+    fun history(): ClipboardHistory = history.value!!
 
     fun primaryClip(): ClipboardItem? {
         return primaryClip.value
@@ -178,8 +184,9 @@ class ClipboardManager(
 
             val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
             if (!isEqual) {
-                _primaryClip.postValue(ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true))
-                // TODO: update history
+                val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
+                _primaryClip.postValue(item)
+                updateHistory(item)
             }
         }
     }
@@ -203,138 +210,80 @@ class ClipboardManager(
     /**
      * Adds a new item to the clipboard history (if enabled).
      */
-    fun updateHistory(newData: ClipboardItem) {
+    fun updateHistory(newItem: ClipboardItem) {
         if (prefs.clipboard.historyEnabled.get()) {
-            val historyElement = history.firstOrNull { it.data.type == ItemType.TEXT && it.data.text == newData.text }
+            val historyElement = history().all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
             if (historyElement != null) {
-                moveToTheBeginning(historyElement, newData)
+                moveToTheBeginning(historyElement, newItem)
             } else {
-                if (prefs.clipboard.limitHistorySize.get()) {
-                    var numRemoved = 0
-                    while (history.size >= prefs.clipboard.maxHistorySize.get()) {
-                        numRemoved += 1
-                        history.removeLast().data.close(appContext)
-                    }
+                insertClip(newItem)
+            }
+        }
+    }
+
+    fun enforceHistoryLimit() {
+        if (prefs.clipboard.limitHistorySize.get()) {
+            val nToRemove = history().all.size - prefs.clipboard.maxHistorySize.get()
+            if (nToRemove > 0) {
+                for (n in 1..nToRemove) {
+                    val itemToRemove = history().all[history().all.size - n]
+                    deleteClip(itemToRemove)
                 }
-                createAndAddNewTimedClipData(newData)
             }
         }
     }
 
-    /**
-     * Moves a ClipboardItem to the beginning of the history by removing the old one and creating a new one
-     */
-    private fun moveToTheBeginning(
-        historyElement: TimedClipData,
-        newData: ClipboardItem,
-    ) {
-        val elementsPosition = history.indexOf(historyElement)
-        history.remove(historyElement)
-
-        createAndAddNewTimedClipData(newData)
-    }
-
-    fun peekHistory(index: Int): ClipboardItem? {
-        return history.getOrNull(index)?.data
-    }
-
-    /**
-     * Cleans up.
-     *
-     * Unregisters the system clipboard listener, cancels clipboard clean ups.
-     */
-    override fun close() {
-        systemClipboardManager.removePrimaryClipChangedListener(this)
-        cleanUpJob.cancel()
-    }
-
-    /**
-     * Clears the history with an animation.
-     */
-    fun clearHistoryWithAnimation() {
-        launch(Dispatchers.Main) {
-            delay(200)
-            val size = history.size
-            for (item in history) {
-                item.data.close(appContext)
-            }
-            history.clear()
+    private fun moveToTheBeginning(oldItem: ClipboardItem, newItem: ClipboardItem) {
+        ioScope.launch {
+            clipHistoryDao?.delete(oldItem)
+            clipHistoryDao?.insert(newItem)
         }
     }
 
-    fun pinClip(adapterPos: Int) {
-        val pin = history.removeAt(adapterPos - pins.size)
-        pins.addFirst(pin.data)
-
-        launch(Dispatchers.IO) {
-            val uid = clipHistoryDao.insert(pin.data)
-            pin.data.id = uid
+    fun insertClip(item: ClipboardItem) {
+        ioScope.launch {
+            clipHistoryDao?.insert(item)
         }
     }
 
-    /**
-     * Get the item at a particular [adapterPos] (i.e the position the item is displayed at.)
-     */
-    fun peekHistoryOrPin(adapterPos: Int): ClipboardItem {
-        return when {
-            adapterPos < pins.size -> pins[adapterPos]
-            else -> history[adapterPos - pins.size].data
-        }
-    }
-
-
-    fun isPinned(position: Int): Boolean {
-        return when {
-            position < pins.size -> true
-            else -> false
-        }
-    }
-
-    fun unpinClip(adapterPos: Int) {
-        val item = pins.removeAt(adapterPos)
-
-        val clipboardPrefs = prefs.clipboard
-        if (clipboardPrefs.limitHistorySize.get()) {
-            var numRemoved = 0
-            while (history.size >= clipboardPrefs.maxHistorySize.get()) {
-                numRemoved += 1
-                history.removeLast().data.close(appContext)
-            }
-        }
-
-        createAndAddNewTimedClipData(item)
-
-        launch(Dispatchers.IO) {
-            clipHistoryDao.delete(item)
-        }
-    }
-
-    /**
-     * Creates a new TimedClipData and adds it to the history
-     */
-    private fun createAndAddNewTimedClipData(newData: ClipboardItem) {
-        val timed = TimedClipData(newData, System.currentTimeMillis())
-        history.addFirst(timed)
-    }
-
-    fun removeClip(pos: Int) {
-        when {
-            pos < pins.size -> {
-                val item = pins.removeAt(pos)
-                launch(Dispatchers.IO) {
-                    clipHistoryDao.delete(item)
-                }
+    fun clearHistory() {
+        ioScope.launch {
+            for (item in history().all) {
                 item.close(appContext)
             }
-            else -> {
-                history.removeAt(pos - pins.size).data.close(appContext)
-            }
+            clipHistoryDao?.deleteAllUnpinned()
         }
     }
 
-    fun pasteItem(pos: Int) {
+    fun clearFullHistory() {
+        ioScope.launch {
+            for (item in history().all) {
+                item.close(appContext)
+            }
+            clipHistoryDao?.deleteAll()
+        }
+    }
+
+    fun deleteClip(item: ClipboardItem) {
+        ioScope.launch {
+            clipHistoryDao?.delete(item)
+        }
+    }
+
+    fun pinClip(item: ClipboardItem) {
+        ioScope.launch {
+            clipHistoryDao?.update(item.copy(isPinned = true))
+        }
+    }
+
+    fun unpinClip(item: ClipboardItem) {
+        ioScope.launch {
+            clipHistoryDao?.update(item.copy(isPinned =  false))
+        }
+    }
+
+    fun pasteItem(item: ClipboardItem) {
         val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return
-        val item = peekHistoryOrPin(pos)
         activeEditorInstance.commitClipboardItem(item)
     }
 
@@ -356,5 +305,25 @@ class ClipboardManager(
         } == true
     }
 
-    data class TimedClipData(val data: ClipboardItem, val timeUTC: Long)
+    /**
+     * Cleans up.
+     *
+     * Unregisters the system clipboard listener, cancels clipboard clean ups.
+     */
+    override fun close() {
+        systemClipboardManager.removePrimaryClipChangedListener(this)
+        cleanUpJob.cancel()
+    }
+
+    class ClipboardHistory(val all: List<ClipboardItem>) {
+        companion object {
+            val Empty = ClipboardHistory(emptyList())
+        }
+
+        private val now = System.currentTimeMillis()
+
+        val pinned = all.filter { it.isPinned }
+        val recent = all.filter { !it.isPinned && (now - it.creationTimestampMs < RECENT_TIMESPAN_MS) }
+        val other = all.filter { !it.isPinned && (now - it.creationTimestampMs >= RECENT_TIMESPAN_MS) }
+    }
 }

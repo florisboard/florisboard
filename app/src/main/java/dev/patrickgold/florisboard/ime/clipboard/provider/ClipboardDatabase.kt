@@ -21,6 +21,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
@@ -46,7 +47,7 @@ enum class ItemType(val value: Int) {
 data class ClipboardItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = BaseColumns._ID, index = true)
-    var id: Long = 0,
+    val id: Long = 0,
     val type: ItemType,
     val text: String?,
     val uri: Uri?,
@@ -172,8 +173,8 @@ data class ClipboardItem(
 
     fun stringRepresentation(): String {
         return when {
-            uri != null -> "(Image) $uri"
             text != null -> text
+            uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }
     }
@@ -220,11 +221,23 @@ interface ClipboardHistoryDao {
     @Query("SELECT * FROM $CLIPBOARD_HISTORY_TABLE")
     fun getAll(): List<ClipboardItem>
 
+    @Query("SELECT * FROM $CLIPBOARD_HISTORY_TABLE")
+    fun getAllLive(): LiveData<List<ClipboardItem>>
+
     @Insert
     fun insert(item: ClipboardItem): Long
 
+    @Update
+    fun update(item: ClipboardItem)
+
     @Delete
     fun delete(item: ClipboardItem)
+
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE")
+    fun deleteAll()
+
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE NOT isPinned")
+    fun deleteAllUnpinned()
 }
 
 @Database(entities = [ClipboardItem::class], version = 2)

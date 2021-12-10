@@ -6,7 +6,7 @@
     { "code":  -21, "label": "arrow_left", "type": "navigation" },
     { "code":  -22, "label": "arrow_right", "type": "navigation" },
     { "code":  -33, "label": "clipboard_paste", "type": "enter_editing" },
-    { "code":  -37, "label": "clipboard_clear_primary_clip", "type":  "system_gui"},
+    { "code":  -38, "label": "clipboard_clear_primary_clip", "type":  "system_gui"},
     { "code": -213, "label": "ime_ui_mode_clipboard", "type":  "system_gui"}
   ]
 ]

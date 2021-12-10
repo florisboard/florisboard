@@ -300,14 +300,6 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = true
-
-        // Must perform this because of strict privacy rules on modern Android versions, where
-        // else FlorisBoard would fail to recognize a current primary clip which was copied
-        // while the IME window was hidden.
-        //
-        // onPrimaryClipChanged() automatically checks if the clips are equal, thus this poses
-        // no problem in case the clip did not change while the window was hidden.
-        clipboardManager.onPrimaryClipChanged()
     }
 
     override fun onWindowHidden() {

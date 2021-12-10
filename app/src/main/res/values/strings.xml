@@ -465,7 +465,12 @@
     <string name="clipboard__header_title">Clipboard</string>
     <string name="clipboard__disabled__title">Clipboard history is currently disabled</string>
     <string name="clipboard__disabled__message">{app_name}\'s clipboard history allows you to quickly store and access text and images you copy, with the ability to pin items, configure automatic clean-up and set a maximum item limit.</string>
-    <string name="clipboard__disabled__enable_button">Enable integrated clipboard</string>
+    <string name="clipboard__disabled__enable_button">Enable clipboard history</string>
+    <string name="clipboard__empty__title">Your clipboard is empty</string>
+    <string name="clipboard__empty__message">Once you copy text clips or images they will show up here.</string>
+    <string name="clipboard__group_pinned">Pinned</string>
+    <string name="clipboard__group_recent">Recent</string>
+    <string name="clipboard__group_other">Other</string>
     <string name="clip__clear_history">Clear history</string>
     <string name="clip__unpin_item">Unpin item</string>
     <string name="clip__pin_item">Pin item</string>
@@ -474,6 +479,8 @@
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
     <string name="clipboard__cleared_primary_clip">Cleared primary clip</string>
+    <string name="clipboard__cleared_history">Cleared history</string>
+    <string name="clipboard__cleared_full_history">Cleared full history</string>
     <string name="settings__clipboard__title">Clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>

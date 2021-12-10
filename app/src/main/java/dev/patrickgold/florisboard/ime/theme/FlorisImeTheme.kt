@@ -96,7 +96,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = rgbaColor(117, 117, 117)
         foreground = rgbaColor(255, 255, 255)
         fontSize = size(14.sp)
-        shape = roundedCornerShape(20)
+        shape = roundedCornerShape(12.dp)
     }
 
     FlorisImeUi.OneHandedPanel {

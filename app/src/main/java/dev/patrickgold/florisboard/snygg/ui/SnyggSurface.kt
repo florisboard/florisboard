@@ -77,8 +77,8 @@ fun SnyggSurface(
                     color = backgroundColor,
                     shape = shapeValue,
                 )
-                .padding(contentPadding)
-                .then(clickAndSemanticsModifier),
+                .then(clickAndSemanticsModifier)
+                .padding(contentPadding),
             propagateMinConstraints = false,
             content = content,
         )

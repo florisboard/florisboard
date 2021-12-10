@@ -56,7 +56,8 @@ object KeyCode {
     const val CLIPBOARD_SELECT =             -34
     const val CLIPBOARD_SELECT_ALL =         -35
     const val CLIPBOARD_CLEAR_HISTORY =      -36
-    const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -37
+    const val CLIPBOARD_CLEAR_FULL_HISTORY = -37
+    const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -38
 
     const val COMPACT_LAYOUT_TO_LEFT =      -111
     const val COMPACT_LAYOUT_TO_RIGHT =     -112
