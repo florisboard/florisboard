@@ -468,6 +468,8 @@
     <string name="clipboard__disabled__enable_button">Enable clipboard history</string>
     <string name="clipboard__empty__title">Your clipboard is empty</string>
     <string name="clipboard__empty__message">Once you copy text clips or images they will show up here.</string>
+    <string name="clipboard__locked__title">Your clipboard is locked</string>
+    <string name="clipboard__locked__message">To access your clipboard history, please first unlock your device.</string>
     <string name="clipboard__group_pinned">Pinned</string>
     <string name="clipboard__group_recent">Recent</string>
     <string name="clipboard__group_other">Other</string>

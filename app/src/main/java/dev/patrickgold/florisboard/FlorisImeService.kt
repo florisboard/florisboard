@@ -377,10 +377,6 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
         outInsets.contentTopInsets = visibleTopY
         outInsets.visibleTopInsets = visibleTopY
-        //if (isClipboardContextMenuShown) {
-        //    outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_FRAME
-        //    outInsets.touchableRegion?.setEmpty()
-        //}
         outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
         val left = 0
         val top = visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0

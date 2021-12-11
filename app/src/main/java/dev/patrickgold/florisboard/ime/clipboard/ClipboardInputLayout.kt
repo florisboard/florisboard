@@ -54,6 +54,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -64,7 +65,9 @@ import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.theme.Green500
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.common.android.AndroidKeyguardManager
 import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
@@ -94,8 +97,10 @@ fun ClipboardInputLayout(
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
     val keyboardManager by context.keyboardManager()
+    val androidKeyguardManager = remember { context.systemService(AndroidKeyguardManager::class) }
 
     val activeState by keyboardManager.observeActiveState()
+    val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
@@ -152,7 +157,7 @@ fun ClipboardInputLayout(
                     R.drawable.ic_toggle_off
                 },
                 iconColor = headerStyle.foreground.solidColor(),
-                enabled = popupItem == null,
+                enabled = !deviceLocked && popupItem == null,
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
             )
             FlorisIconButton(
@@ -162,7 +167,7 @@ fun ClipboardInputLayout(
                     .aspectRatio(1f),
                 iconId = R.drawable.ic_clear_all,
                 iconColor = headerStyle.foreground.solidColor(),
-                enabled = historyEnabled && popupItem == null,
+                enabled = !deviceLocked && historyEnabled && popupItem == null,
                 onClick = {
                     clipboardManager.clearHistory()
                     context.showShortToast(R.string.clipboard__cleared_history)
@@ -334,6 +339,7 @@ fun ClipboardInputLayout(
                 text = stringRes(R.string.clipboard__empty__message),
                 color = itemStyle.foreground.solidColor(),
                 fontSize = itemStyle.fontSize.spSize(),
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -389,21 +395,49 @@ fun ClipboardInputLayout(
         }
     }
 
+    @Composable
+    fun HistoryLockedView() {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(innerHeight)
+                .padding(ContentPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
+                text = stringRes(R.string.clipboard__locked__title),
+                color = itemStyle.foreground.solidColor(),
+                fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = stringRes(R.string.clipboard__locked__message),
+                color = itemStyle.foreground.solidColor(),
+                fontSize = itemStyle.fontSize.spSize(),
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(),
     ) {
         HeaderRow()
-
-        if (historyEnabled) {
-            if (history.all.isNotEmpty()) {
-                HistoryMainView()
-            } else {
-                HistoryEmptyView()
-            }
+        if (deviceLocked) {
+            HistoryLockedView()
         } else {
-            HistoryDisabledView()
+            if (historyEnabled) {
+                if (history.all.isNotEmpty()) {
+                    HistoryMainView()
+                } else {
+                    HistoryEmptyView()
+                }
+            } else {
+                HistoryDisabledView()
+            }
         }
     }
 }
