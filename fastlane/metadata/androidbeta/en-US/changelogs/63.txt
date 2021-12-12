@@ -1,0 +1,4 @@
+This release re-implements the clipboard history and smartbar. Some functionality available in
+beta05 may be missing, please see the detailed changelog for this.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta07
