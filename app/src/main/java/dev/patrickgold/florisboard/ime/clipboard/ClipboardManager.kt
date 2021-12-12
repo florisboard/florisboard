@@ -34,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.Closeable
@@ -97,30 +98,10 @@ class ClipboardManager(
 
     init {
         systemClipboardManager.addPrimaryClipChangedListener(this)
-
-        val cleanUpClipboard = Runnable {
-            if (!prefs.clipboard.cleanUpOld.get()) {
-                return@Runnable
-            }
-
-            //val currentTime = System.currentTimeMillis()
-            //var numToPop = 0
-            //val expiryTime = prefs.clipboard.cleanUpAfter.get() * 60 * 1000
-            //for (item in history.asReversed()) {
-            //    if (item.timeUTC + expiryTime < currentTime) {
-            //        numToPop += 1
-            //    } else {
-            //        break
-            //    }
-            //}
-            //for (i in 0 until numToPop) {
-            //    history.removeLast().data.close(appContext)
-            //}
-        }
         cleanUpJob = ioScope.launch {
-            while (true) {
-                cleanUpClipboard.run()
+            while (isActive) {
                 delay(INTERVAL)
+                enforceExpiryDate(history())
             }
         }
         ioScope.launch {
@@ -145,10 +126,6 @@ class ClipboardManager(
 
     fun primaryClip(): ClipboardItem? {
         return primaryClip.value
-    }
-
-    fun hasPrimaryClip(): Boolean {
-        return primaryClip.value != null
     }
 
     /**
@@ -196,7 +173,7 @@ class ClipboardManager(
     /**
      * Change the current text on clipboard, update history (if enabled).
      */
-    fun addNewClip(item: ClipboardItem) {
+    private fun addNewClip(item: ClipboardItem) {
         updateHistory(item)
         setPrimaryClip(item)
     }
@@ -223,12 +200,25 @@ class ClipboardManager(
         }
     }
 
-    fun enforceHistoryLimit(clipHistory: ClipboardHistory) {
+    private fun enforceHistoryLimit(clipHistory: ClipboardHistory) {
         if (prefs.clipboard.limitHistorySize.get()) {
             val nonPinnedItems = clipHistory.recent + clipHistory.other
             val nToRemove = nonPinnedItems.size - prefs.clipboard.maxHistorySize.get()
             if (nToRemove > 0) {
                 val itemsToRemove = nonPinnedItems.asReversed().filterIndexed { n, _ -> n < nToRemove }
+                ioScope.launch {
+                    clipHistoryDao?.delete(itemsToRemove)
+                }
+            }
+        }
+    }
+
+    private fun enforceExpiryDate(clipHistory: ClipboardHistory) {
+        if (prefs.clipboard.cleanUpOld.get()) {
+            val nonPinnedItems = clipHistory.recent + clipHistory.other
+            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.cleanUpAfter.get() * 60 * 1000)
+            val itemsToRemove = nonPinnedItems.filter { it.creationTimestampMs < expiryTime }
+            if (itemsToRemove.isNotEmpty()) {
                 ioScope.launch {
                     clipHistoryDao?.delete(itemsToRemove)
                 }
