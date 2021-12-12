@@ -151,16 +151,14 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.4.0") // possibly remove after settings rework
     implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
+    implementation("androidx.collection:collection-ktx:1.2.0")
     implementation("androidx.compose.material:material:1.1.0-beta04")
     implementation("androidx.compose.runtime:runtime-livedata:1.1.0-beta04")
     implementation("androidx.compose.ui:ui:1.1.0-beta04")
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-beta04")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
-    implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
     implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
-    implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
@@ -171,8 +169,8 @@ dependencies {
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta01")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-    implementation("androidx.room:room-runtime:2.3.0")
-    kapt("androidx.room:room-compiler:2.3.0")
+    implementation("androidx.room:room-runtime:2.4.0-rc01")
+    kapt("androidx.room:room-compiler:2.4.0-rc01")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
