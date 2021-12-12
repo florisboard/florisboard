@@ -116,8 +116,10 @@
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Tangentbordshöjd</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tangenttryck</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Fördröjning vid långt tryck</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartremsa</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivera smartremsa</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Förslag</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Svep uppåt</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Svep nedåt</string>
@@ -166,6 +168,7 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Stäng</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Annat</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <!-- General strings -->

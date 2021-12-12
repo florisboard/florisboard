@@ -49,8 +49,11 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">زبان ها &amp; چیدمان ها</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">زیرنوع ها</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">افزودن زیر-نوعی</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">زبان اصلی</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">چیدمان کاراکتر ها</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">چیدمان اصلی نشانه ها</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی نشانه ها</string>
@@ -61,8 +64,14 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">چیدمان ردیف اعداد</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">چیدمان اصلی موبایل</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی موبایل</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">جستجو برای یک زبان</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">نمی توان زبانی مشابه با \"{search_term}\" یافت.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; انتخاب &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">نمایش همه</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">به نظر میرسد که هیچگونه زیرگروه دیگری را انتخاب نکرده اید. به همین علت زیرگروه English/QWERTY استفاده خواهد شد!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">چیدمان ها</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">تم</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">حالت طرح‌زمینه</string>
@@ -163,9 +172,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">نوار فاصله به چیدمان متنی بازمیگرداند</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">در حالت نمادین یا عددها، با فشار نوار فاصله به صورت خودکار به حالت نوشتار متنی برمیگردد</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">نوار هوشمند</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
@@ -253,7 +264,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مجوزهای متن باز</string>
     <string name="about__version__title" comment="Preference title">نسخه</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">نسخه در کلیپ‌بورد کپی شد</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">اوه! مشکلی پیش آمد: %s</string>
     <string name="about__changelog__title" comment="Preference title">لیست تغییرات</string>
     <string name="about__changelog__summary" comment="Preference summary">تغییرات جدید</string>
     <string name="about__repository__title" comment="Preference title">رپو (گیت هاب)</string>
@@ -288,6 +298,7 @@
     <string name="assets__action__select_dir">انتخاب مسیر</string>
     <string name="assets__action__select_file">انتخاب فایل</string>
     <string name="assets__action__yes">بله</string>
+    <string name="assets__error__title">خطا</string>
     <string name="assets__error__details">جزئیات</string>
     <string name="assets__error__invalid">نامعتبر</string>
     <string name="assets__error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
@@ -307,6 +318,8 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">به نظر می رسد فلوریس بورد کار خود را مکرر متوقف می کند…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">در خال بازگشت به کیبورد قبلی برای جلو گیری از بروز خطای دوباره. برای مشاهده جزئیات خطا ، ضربه بزنید</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__enable_button">فعالسازی تاریخچه کلیپ‌بورد</string>
+    <string name="clipboard__group_other">ديگر</string>
     <string name="clip__clear_history">پاک‌سازی تاریخچه</string>
     <string name="clip__unpin_item">برداشتن نشانه</string>
     <string name="clip__pin_item">نشانه گذاری</string>
@@ -317,8 +330,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">هماهنگ سازی از کلیپ‌بورد سیستم</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">هماهنگ سازی به کلیپ‌بورد سیستم</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد فلوریس کیبورد، کلیپ‌بورد سیستم را نیز بروز می کند</string>
+    <string name="pref__clipboard__group_clipboard_history__label">تاریخچه کلیپ بورد</string>
     <string name="pref__clipboard__enable_clipboard_history__label">فعالسازی تاریخچه کلیپ‌بورد</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">بازیابی موارد کلیپ‌بورد</string>
     <string name="pref__clipboard__limit_history_size__label">محدود کردن اندازه تاریخچه</string>
     <string name="pref__clipboard__max_history_size__label">حداکثر اندازه تاریخچه</string>
     <!-- Devtools strings -->
@@ -352,6 +365,9 @@
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
+    <string name="enum__input_mode__normal" comment="Enum value label">عادی</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">قفل Shift</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">قفل Caps</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استفاده از زبان سیستم</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">استفاده از زیرنوع های صفحه کلید</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">همیشه روز</string>

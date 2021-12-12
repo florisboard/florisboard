@@ -10,6 +10,8 @@
     <!-- Emoji strings -->
     <!-- Smartbar strings -->
     <!-- Settings UI strings -->
+    <!-- Smartbar strings -->
+    <!-- Typing strings -->
     <!-- Spelling UI strings -->
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
     <!-- About UI strings -->

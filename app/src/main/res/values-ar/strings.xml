@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">مرحبا بكم في {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">لم يتم تمكين FlorisBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم تعيين FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">إضافة نوع فرعي</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل النوع الفرعي</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة الأساسية</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">تخصيص المنبثقة</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">تخطيط المحارف</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الاساسي</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الثانوي</string>
@@ -64,8 +68,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الأساسي للهاتف</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الثانوي للهاتف</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">اختر اللغة</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">ابحث عن لغة</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">تعذر العثور على لغة مطابقة\"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; اختيار &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">الإعدادات المسبقة المقترحة للنوع الفرعي</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">لا توجد إعدادات مسبقة مقترحة متاحة. استخدم الزر أدناه لعرض جميع الإعدادات المسبقة للنوع الفرعي.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">الأنواع الفرعية المسبقة</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">عرض الكل</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">يبدو أنك لم تقم بإختيار أية أنواع إدخال فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">حقل واحد على الأقل ليس له قيمة محددة. الرجاء اختيار قيمة للحقل (الحقول).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (غير مثبت)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">التخطيطات</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">المظهر</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">وضع الثيم</string>
@@ -199,9 +214,12 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">شريط المسافة يبدل بين تخطيط الأحرف</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">يؤدي الضغط على شريط المسافة إلى التبديل تلقائيًا إلى الأحرف عندما تكون في الرموز أو الأرقام</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">الاقتراحات و التصحيح</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
     <string name="pref__correction__title" comment="Preference group title">التصحيحات</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
@@ -210,6 +228,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">يضل وضع الأحرف الكبيرة قيد التشغيل عند الإنتقال إلى حقل نصي آخر</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">نقطة المسافة المزدوجة</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">قاموس المستخدم</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">تفعيل قاموس مستخدم النظام</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في قاموس مستخدم النظام</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">إدارة قاموس مستخدم النظام</string>
@@ -313,7 +332,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
     <string name="about__version__title" comment="Preference title">الإصدار</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">تم نسخ الإصدار إلى الحافظة</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">لقد حدث خطأ ما: %s</string>
     <string name="about__changelog__title" comment="Preference title">سِجل التغييرات</string>
     <string name="about__changelog__summary" comment="Preference summary">مالجديد</string>
     <string name="about__repository__title" comment="Preference title">المستودع(چيتهب)</string>
@@ -356,6 +374,7 @@
     <string name="assets__action__select_dir">اختر مسار</string>
     <string name="assets__action__select_file">اختر ملفًا</string>
     <string name="assets__action__yes">موافق</string>
+    <string name="assets__error__title">خطأ</string>
     <string name="assets__error__details">التفاصيل</string>
     <string name="assets__error__invalid">غير صحيح</string>
     <string name="assets__error__snackbar_message">لقد حدث خطأ ما</string>
@@ -389,6 +408,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن FlorisBoard يوقف عن العمل بشكل متكرر…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">تم العودة إلى لوحة المفاتيح السابقة لإيقاف التعطل المتكرر الغير منتهي. انقر لعرض تفاصيل الخطأ</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">الحافظة</string>
+    <string name="clipboard__disabled__enable_button">تمكين سجل الحافظة</string>
+    <string name="clipboard__group_other">أخرى</string>
     <string name="clip__clear_history">مسح السجل</string>
     <string name="clip__unpin_item">إلغاء تثبيت العنصر</string>
     <string name="clip__pin_item">تثبيت العنصر</string>
@@ -405,7 +427,6 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">تحديثات حافظة لوحة المفاتيح يقوم أيضًا بتحديث حافظة النظام</string>
     <string name="pref__clipboard__group_clipboard_history__label">سجل الحافظة</string>
     <string name="pref__clipboard__enable_clipboard_history__label">تمكين سجل الحافظة</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">الاحتفاظ بعناصر الحافظة</string>
     <string name="pref__clipboard__clean_up_old__label">تنظيف العناصر القديمة</string>
     <string name="pref__clipboard__clean_up_after__label">تنظيف العناصر القديمة بعد</string>
     <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
@@ -434,6 +455,7 @@
     <string name="ext__meta__issue_tracker">متعقب المشاكل</string>
     <string name="ext__meta__keywords">الكلمات المفتاحية</string>
     <string name="ext__meta__license">الترخيص</string>
+    <string name="ext__meta__maintainers">المشرفون</string>
     <string name="ext__meta__title">العنوان</string>
     <string name="ext__meta__version">الإصدار</string>
     <string name="ext__error__not_found_title">الملحق غير موجود</string>
@@ -455,6 +477,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">دائمًا ما يكون الحرف الأولي المحدد بعد الضغط لفترة طويلة هو رمز التلميح ، أو العلامة الأساسية في حالة عدم توفر رمز تلميح</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">تحديد الاولويات الذكي</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">يتم تحديد الحرف الأولي المحدد بعد الضغط لفترة طويلة ديناميكيًا ليكون إما العلامة الأساسية أو رمز التلميح ، بناءً على اللغة والتخطيط الحاليين</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">عادي</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">مفتاح قفل التغيير Shift lock</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">مفتاح الحروف الكبيرة</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">لا تُظهر أبداً</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">الإظهار دائماً</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">يعين بشكل ديناميكي</string>

@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">Добро пожаловать в {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включена в системе и поэтому не будет доступна в качестве метода ввода. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Языки и макеты</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подтипы</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основной язык</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Отображение всплывающих окон</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Символьные раскладки</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основная символьная раскладка</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная символьная раскладка</string>
@@ -64,8 +68,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Основная телефонная раскладка</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная телефонная раскладка</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Выберите язык</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Поиск языка</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Не удалось найти соответствие языка \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; выбор &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Предлагаемые предустановки подтипов</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Предложенные предустановки отсутствуют. Используйте кнопку ниже для просмотра всех предустановок подтипов.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Предустановки подтипов</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Показать все</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Похоже, вы не настроили никаких раскладок. В качестве основного варианта будет использована English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Эта раскладка уже существует!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">По крайней мере, для одного поля не выбрано значение. Пожалуйста, выберите значение для этого поля (полей).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не установлен)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Макеты</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Темы</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не определено</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим темы</string>
@@ -199,10 +214,27 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Задержка при нажатии</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробел переключает обратно на буквы</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Нажатие клавиши пробела автоматически переключает обратно на ввод букв из символьной или цифровой раскладки</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Основной ряд</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Кнопки переключения рядов</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Переключение дополнительного ряда и ряда действий</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Дополнительный ряд</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Использовать дополнительный ряд</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Добавляется расширяемый дополнительный ряд, содержащий большое количество элементов управления</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Расположение дополнительного ряда</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Ряд действий</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Автоматическое сворачивание/разворачивание ряда действий в зависимости от текущего состояния</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Предложения и исправления</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показывать встроенные предложения, предоставляемые службами автозаполнения (менеджеры паролей и т.п.)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим отображения предложений</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Время отображения предложения буфера обмена</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
@@ -210,6 +242,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">При двойном нажатии на пробел вставляется точка, за которой следует пробел</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Пользовательские словари</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарем пользователя</string>
@@ -313,7 +346,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого исходного кода</string>
     <string name="about__version__title" comment="Preference title">Версия</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номер версии скопирован в буфер обмена</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Что-то пошло не так: %s</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Произошла ошибка: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">История изменений</string>
     <string name="about__changelog__summary" comment="Preference summary">Что нового</string>
     <string name="about__repository__title" comment="Preference title">Репозиторий (GitHub)</string>
@@ -354,6 +387,7 @@
     <string name="assets__action__select_dir">Выберите папку</string>
     <string name="assets__action__select_file">Выберите файл</string>
     <string name="assets__action__yes">Да</string>
+    <string name="assets__error__title">Ошибка</string>
     <string name="assets__error__details">Детали</string>
     <string name="assets__error__invalid">Ошибка</string>
     <string name="assets__error__snackbar_message">Что-то пошло не так</string>
@@ -387,6 +421,17 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, в работе FlorisBoard постоянно возникают проблемы…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Буфер обмена</string>
+    <string name="clipboard__disabled__title">История буфера обмена отключена</string>
+    <string name="clipboard__disabled__message">История буфера обмена {app_name} позволяет быстро сохранять и получать доступ к тексту и изображениям, которые вы копируете, с возможностью закреплять элементы, настраивать автоматическую очистку и устанавливать лимит количества записей.</string>
+    <string name="clipboard__disabled__enable_button">Включить историю буфера обмена</string>
+    <string name="clipboard__empty__title">Буфер обмена пуст</string>
+    <string name="clipboard__empty__message">Как только вы скопируете текст или изображение, они появятся здесь.</string>
+    <string name="clipboard__locked__title">Буфер обмена заблокирован</string>
+    <string name="clipboard__locked__message">Для доступа к истории буфера обмена необходимо разблокировать устройство.</string>
+    <string name="clipboard__group_pinned">Закреплено</string>
+    <string name="clipboard__group_recent">Недавнее</string>
+    <string name="clipboard__group_other">Разное</string>
     <string name="clip__clear_history">Очистить историю</string>
     <string name="clip__unpin_item">Открепить</string>
     <string name="clip__pin_item">Закрепить</string>
@@ -394,6 +439,9 @@
     <string name="clip__paste_item">Вставить</string>
     <string name="clip__back_to_text_input">Вернуться к вводу текста</string>
     <string name="clip__cant_paste">Приложение не позволяет вставлять такие данные.</string>
+    <string name="clipboard__cleared_primary_clip">Очищена основная запись</string>
+    <string name="clipboard__cleared_history">Очищена история</string>
+    <string name="clipboard__cleared_full_history">Очищена полная история</string>
     <string name="settings__clipboard__title">Буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Использовать внутренний буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Использовать внутренний буфер обмена вместо системного</string>
@@ -403,7 +451,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обмена Floris так же обновляет системный буфер обмена</string>
     <string name="pref__clipboard__group_clipboard_history__label">История буфера обмена</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Включить историю буфера обмена</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Сохранять буфер обмена</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Сохранение записей буфера обмена для быстрого доступа</string>
     <string name="pref__clipboard__clean_up_old__label">Очистить старые элементы</string>
     <string name="pref__clipboard__clean_up_after__label">Очистить старые элементы через</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничить размер истории</string>
@@ -414,6 +462,8 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Инструменты, специально разработанные для отладки и устранения проблем</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Статистика выделения памяти</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Показывать значения выделенной памяти и максимальный размер в правом верхнем углу</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Показать основную запись</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Наложение текущей основной записи буфера обмена</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Очистить внутренний словарь пользователя</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Удаление всех слов из базы внутреннего пользовательского словаря</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Сбросить флаг \"{flag_name}\"</string>
@@ -432,6 +482,7 @@
     <string name="ext__meta__issue_tracker">Известные проблемы</string>
     <string name="ext__meta__keywords">Ключевые слова</string>
     <string name="ext__meta__license">Лицензия</string>
+    <string name="ext__meta__maintainers">Сопровождающие</string>
     <string name="ext__meta__title">Заголовок</string>
     <string name="ext__meta__version">Версия</string>
     <string name="ext__error__not_found_title">Расширение не найдено</string>
@@ -453,12 +504,21 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является символом подсказки или основным акцентом, если символ подсказки недоступен</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Умный приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, динамически определяется как основной акцент или символ подсказки, основываясь на текущем языке и раскладке</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Нормальный</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамическое отображение</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Отключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Режим левши</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Режим правши</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Над основным рядом</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Дополнительный ряд размещается между пользовательским интерфейсом приложения и основным рядом</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под основным рядом</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Дополнительный ряд размещается между основным рядом и текстовой клавиатурой</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Наложение над приложением</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Дополнительный ряд отображается в виде наложения над пользовательским интерфейсом приложения, не влияя на результирующую высоту интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к частичному переполнению поля ввода приложения.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Использовать системные языки</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Использовать раскладки клавиатуры</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Не задано</string>

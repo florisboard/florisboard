@@ -92,9 +92,11 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetryk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup synlighed</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Langt tastetryk forsinkelse</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBjælke</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivér Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vil blive vist over tastaturet</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
     <string name="pref__correction__title" comment="Preference group title">Rettelser</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatisk stort bogstav</string>
@@ -134,7 +136,6 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Source kode</string>
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version kopieret til udklipsholderen</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Noget gik galt: %s</string>
     <string name="about__privacy_policy__title" comment="Preference title">Privatlivspolitik</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Privatlivspolitikken for dette projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
@@ -174,6 +175,8 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Udklipsholder</string>
+    <string name="clipboard__group_other">Andet</string>
     <string name="clip__clear_history">Ryd historik</string>
     <string name="clip__delete_item">Slet</string>
     <string name="clip__paste_item">Indsæt</string>

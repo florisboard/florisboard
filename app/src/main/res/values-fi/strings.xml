@@ -132,9 +132,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Palaa kirjainasetteluun välilyönnillä</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Välilyönnin painaminen symboli- tai numeroasettelussa vaihtaa näppäimistön automaattisesti kirjainasetteluun</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Älypalkki</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ota älypalkki käyttöön</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Näkyy näppäimistön yläpuolella</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
     <string name="pref__correction__title" comment="Preference group title">Korjaukset</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automaattiset isot kirjaimet</string>
@@ -209,6 +211,8 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard vaikuttaa lopettavan toimintansa toistuvasti…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vaihdetaan edelliseen näppäimistöön, jotta kaatumiskierre loppuu. Napauta nähdäksesi virheen tiedot</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__enable_button">Ota leikepöydän historia käyttöön</string>
+    <string name="clipboard__group_other">Muu</string>
     <string name="clip__clear_history">Tyhjennä historia</string>
     <string name="clip__unpin_item">Poista kohteen kiinnitys</string>
     <string name="clip__pin_item">Kiinnitä kohde</string>
@@ -219,8 +223,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synkronoi järjestelmän leikepöydältä</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synkronoi järjestelmän leikepöydälle</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floriksen leikepöytä päivittää myös järjestelmän leikepöydän</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Leikepöydän historia</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ota leikepöydän historia käyttöön</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Säilytä leikepöydän kohteet</string>
     <string name="pref__clipboard__limit_history_size__label">Rajoita historian kokoa</string>
     <string name="pref__clipboard__max_history_size__label">Historian maksimikoko</string>
     <!-- Devtools strings -->

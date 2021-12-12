@@ -49,12 +49,15 @@
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
     <string name="settings__theme__group_key" comment="Theme group label">Кључ</string>
+    <!-- Smartbar strings -->
+    <!-- Typing strings -->
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Друго</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <!-- General strings -->

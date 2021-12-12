@@ -153,9 +153,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a la disposició de caràcters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En prémer la barra d\'espai, es torna automàticament als caràcters quan estan en símbols o numèrics</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra intel·ligent</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Es mostrarà a la part superior del teclat</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Suggeriments</string>
     <string name="pref__correction__title" comment="Preference group title">Correccions</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
@@ -169,6 +171,7 @@
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Altres</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <string name="ext__meta__id">ID</string>

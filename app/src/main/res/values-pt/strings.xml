@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">Bem-vindo a {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard não está ativo no sistema, logo não pode ser utilizado como método de introdução no seletor. Toque aqui para resolver esta situação.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard não está selecionado como método de introdução padrão. Toque aqui para resolver esta situação.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e esquemas</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipos</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar subtipo</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar subtipo</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Idioma principal</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapeamento de popups</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposição de caracteres</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposição principal de símbolos</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposição secundária de símbolos</string>
@@ -64,8 +68,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposição principal do telefone</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposição secundária do telefone</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Selecione o idioma</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Pesquisar por um idioma</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Não foi possível encontrar o idioma \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; selecionar &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Subtipos sugeridos</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Não existem subtipos sugeridos. Utilize o botão abaixo para ver as predefinições de subtipos.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Predefinições de subtipos.</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Mostrar tudo</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Parece que ainda não configurou quaisquer subtipos. Como recurso será utilizado o subtipo Inglês/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Este subtipo já existe!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Existe, pelo menos, um campo que não tem valor. Deve escolher um valor para o(s) campo(s).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (não instalado)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Esquemas</string>
     <string name="settings__theme__title" comment="Title of the Theme screen"> Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinido</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modo do tema</string>
@@ -199,9 +214,12 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso para a pressão longa de teclas</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço alterna para a disposição de caracteres</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Ao premir a barra de espaço, alternar automaticamente para caracteres se em símbolos ou números</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
@@ -210,6 +228,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Manter CapsLock quando se muda para outro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Duplo espaço insere ponto final</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ao tocar 2 vezes na barra de espaços, inserir um ponto final e um espaço</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Dicionários do utilizador</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ativar dicionário do sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palavras guardadas no dicionário do sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gerir dicionários do sistema</string>
@@ -313,7 +332,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenças de código aberto</string>
     <string name="about__version__title" comment="Preference title">Versão</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versão copiada para a área de transferência</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Algo errado aconteceu: %s</string>
     <string name="about__changelog__title" comment="Preference title">Alterações</string>
     <string name="about__changelog__summary" comment="Preference summary">Novidades</string>
     <string name="about__repository__title" comment="Preference title">Repositório (GitHub)</string>
@@ -352,6 +370,7 @@
     <string name="assets__action__select_dir">Selecione o diretório</string>
     <string name="assets__action__select_file">Selecione o ficheiro</string>
     <string name="assets__action__yes">Sim</string>
+    <string name="assets__error__title">Erro</string>
     <string name="assets__error__details">Detalhes</string>
     <string name="assets__error__invalid">Inválido</string>
     <string name="assets__error__snackbar_message">Algo errado aconteceu!</string>
@@ -385,6 +404,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Parece que FlorisBoard não está a funcionar muito bem…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">A ativar o teclado usado anteriormente para parar este ciclo. Toque para ver os detalhes do erro.</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Área de transferência</string>
+    <string name="clipboard__disabled__enable_button">Ativar histórico da área de transferência</string>
+    <string name="clipboard__group_other">Outro</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desafixar item</string>
     <string name="clip__pin_item">Fixar item</string>
@@ -401,7 +423,6 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">As atualizações à área de transferência do Florisboard atualizam a do sistema</string>
     <string name="pref__clipboard__group_clipboard_history__label">Histórico da área de transferência</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ativar histórico da área de transferência</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Manter itens na área de transferência</string>
     <string name="pref__clipboard__clean_up_old__label">Remover itens antigos</string>
     <string name="pref__clipboard__clean_up_after__label">Remover itens antigos após</string>
     <string name="pref__clipboard__limit_history_size__label">Limitar histórico</string>
@@ -430,6 +451,7 @@
     <string name="ext__meta__issue_tracker">Erros e problemas</string>
     <string name="ext__meta__keywords">Palavras-chaves</string>
     <string name="ext__meta__license">Licença</string>
+    <string name="ext__meta__maintainers">Mantido por</string>
     <string name="ext__meta__title">Título</string>
     <string name="ext__meta__version">Versão</string>
     <string name="ext__error__not_found_title">Extensão não encontrada</string>
@@ -447,6 +469,9 @@
     <!-- Enum label and description strings -->
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Prioridade aos acentos</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioridade inteligente</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift Lock</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps Lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Não mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinamicamente</string>

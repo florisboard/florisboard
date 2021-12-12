@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">{app_name}\'a hoş geldiniz</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard sisteminizde etkinleştirilmediği için giriş seçeneklerinde görüntülenemez. Bu durumu düzeltmek için tıklayın.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard varsayılan giriş seçeneğiniz olarak seçilmemiş. Bu durumu düzeltmek için tıklayın.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Diller &amp; Düzenler</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Alt Türler</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dil/dizilim ekle</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Dil/dizilim düzenle</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Birincil dil</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup eşleştirme</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Karakter dizilimi</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Sembol birincil dizilimi</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sembol ikincil dizilimi</string>
@@ -64,8 +68,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Telefon birincil dizilimi</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefon ikincil dizilimi</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Dil Seçin</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Bir dil ara</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">\"{search_term}\" aramanızla eşleşen bir dil bulunamadı.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; seç &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Önerilen alt tür ayarları</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Önerilen ön ayar yok. Aşağıdaki tuşu kullanarak tüm alt türleri görüntüleyebilirsiniz.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Önceden ayarlanmış alt türler</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Tümünü göster</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Görünüşe göre herhangi bir dil ve klavye dizilimi seçmemişsiniz. Bu yüzden varsayılan olarak İngilizce/QWERTY kullanılacaktır!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Bu dil/dizilim zaten var!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">En az bir alan için değer saçilmemiş. Lütfen seçim yapın.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (yüklü değil)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Düzenler</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tanımlanmamış</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema modu</string>
@@ -199,10 +214,27 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tuşa uzun basma gecikmesi</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Boşluk tuşuna basıldığında harf düzenine geçer</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Sembol veya sayı düzenindeyken boşluk tuşuna basmak otomatik olarak harf düzenine geri geçirir</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Akıllı çubuk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Akıllı Çubuğu Etkinleştir</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Birincil sıra</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Satır geçiş düğmelerini çevir</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">İkincil ve eylem satır geçiş düğmelerini çevirir</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">İkincil sıra</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">İkinci sırayı etkinleştir</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Daha fazla seçenek için genişleyebilen ikincil sıra ekler</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">İkincil sıra yerleştirme</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Eylem sırası</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Öneriler &amp; Düzeltmeler</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Otomatik doldurma servisleri tarafından sağlanan önerileri göster (şifre yöneticileri, ...)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Öneri gösterim modu</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Pano önerileri zaman aşımı</string>
     <string name="pref__correction__title" comment="Preference group title">Düzeltmeler</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Otomatik olarak büyük harf yap</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">İçeriğe göre kelimelerin ilk harfini büyüt</string>
@@ -210,6 +242,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir yazım alanına geçerken büyük harf kilidini açık tut</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukta nokta</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk tuşuna 2 defa basmak bir nokta ve ardından bir boşluk koyar</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Kullanıcı sözlükleri</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Kullanıcı sözlüğünü etkinleştir</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Kullanıcı sözlüğünde saklanan kelimeleri öner</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Kullanıcı sözlüğünü yönet</string>
@@ -313,7 +346,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
     <string name="about__version__title" comment="Preference title">Sürüm</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Bir şeyler yanlış gitti: %s</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Bir şeyler yanlış gitti: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Sürüm Notları</string>
     <string name="about__changelog__summary" comment="Preference summary">Yenilikler</string>
     <string name="about__repository__title" comment="Preference title">Veri havuzu (GitHub)</string>
@@ -352,6 +385,7 @@
     <string name="assets__action__select_dir">Dizini seçin</string>
     <string name="assets__action__select_file">Dosyayı seçin</string>
     <string name="assets__action__yes">Evet</string>
+    <string name="assets__error__title">Hata</string>
     <string name="assets__error__details">Detaylar</string>
     <string name="assets__error__invalid">Geçersiz</string>
     <string name="assets__error__snackbar_message">Bir şeyler ters gitti</string>
@@ -385,6 +419,17 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard tekrar tekrar çalışmayı durduruyor gibi görünüyor…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Sonsuz çökme döngüsünü durdurmak için önceki klavyeye geri dönülüyor. Hata detaylarını görmek için dokunun</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Pano</string>
+    <string name="clipboard__disabled__title">Pano geçmişi etkin değil</string>
+    <string name="clipboard__disabled__message">{app_name}\'nın pano geçmişi, öğeleri sabitleme, otomatik temizlemeyi yapılandırma ve bir maksimum öğe sınırı belirleme yeteneği ile kopyaladığınız metin ve görüntüleri hızlı bir şekilde saklamanıza ve bunlara erişmenize olanak tanır.</string>
+    <string name="clipboard__disabled__enable_button">Pano geçmişini etkinleştir</string>
+    <string name="clipboard__empty__title">Pano boş</string>
+    <string name="clipboard__empty__message">Yazı veya resim kopyaladığınızda burada görüntülenecektir.</string>
+    <string name="clipboard__locked__title">Pano kilitli</string>
+    <string name="clipboard__locked__message">Lütfen pano geçmişinize erişmek için cihazınızın ekran kilidini açın.</string>
+    <string name="clipboard__group_pinned">Sabitlendi</string>
+    <string name="clipboard__group_recent">Son kullanılan</string>
+    <string name="clipboard__group_other">Diğer</string>
     <string name="clip__clear_history">Geçmişi Temizle</string>
     <string name="clip__unpin_item">Öğeyi sabitlemeyi kaldır</string>
     <string name="clip__pin_item">Öğeyi sabitle</string>
@@ -392,6 +437,9 @@
     <string name="clip__paste_item">Yapıştır</string>
     <string name="clip__back_to_text_input">Yazma girişine geri dön</string>
     <string name="clip__cant_paste">Bu uygulama bu içeriğin yapıştırılmasına izin vermiyor.</string>
+    <string name="clipboard__cleared_primary_clip">Birincil klip temizlendi</string>
+    <string name="clipboard__cleared_history">Geçmiş temizlendi</string>
+    <string name="clipboard__cleared_full_history">Tüm geçmiş temizlendi</string>
     <string name="settings__clipboard__title">Pano</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Dahili panoyu kullan</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Sistem panosu yerine dahili panoyu kullan</string>
@@ -401,7 +449,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris panosu değişimleri aynı zamanda sistem panosuna da yansır</string>
     <string name="pref__clipboard__group_clipboard_history__label">Pano geçmişi</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Pano geçmişini etkinleştir</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Pano öğelerini muhafaza et</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Hızlı erişim için pano öğelerini koru</string>
     <string name="pref__clipboard__clean_up_old__label">Eski öğeleri temizle</string>
     <string name="pref__clipboard__clean_up_after__label">Eski öğeleri temizleme süresi</string>
     <string name="pref__clipboard__limit_history_size__label">Geçmiş boyutunu sınırla</string>
@@ -412,6 +460,8 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Bellek durumunu göster</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Birincil klibi göster</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Panonun mevcut birincil klibini yerleştirir</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Dahili kullanıcı sözlüğü veritabanını temizle</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Sözlük veritabanı tablosundaki tüm sözcükleri temizler</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\" işaretini sıfırla</string>
@@ -430,6 +480,7 @@
     <string name="ext__meta__issue_tracker">Sorun izleyici</string>
     <string name="ext__meta__keywords">Anahtar Kelimeler</string>
     <string name="ext__meta__license">Lisans</string>
+    <string name="ext__meta__maintainers">Geliştiriciler</string>
     <string name="ext__meta__title">Başlık</string>
     <string name="ext__meta__version">Sürüm</string>
     <string name="ext__error__not_found_title">Eklenti bulunamadı</string>
@@ -451,12 +502,21 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakter her zaman ipucu sembolüdür veya ipucu sembolü yoksa birincil vurgudur</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Akıllı önceliklendirme</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakterin, geçerli dil ve düzene bağlı olarak ya birincil vurgu ya da ipucu sembolü olduğuna dinamik olarak karar verilir</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Üst karakter kilidi</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Büyük harf kilidi</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Asla gösterme</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Her zaman göster</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamik olarak göster</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Kapalı</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Sol el modu</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Sağ el modu</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Birincil sıranın üstünde</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">İkincil sırayı, uygulama arayüzü ve birincil sıranın arasına yerleştirir</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Birincil sıranın altında</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">İkincil sırayı, yazı klavyesi ve birincil sıranın arasına yerleştirir</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Uygulama arayüzünün üstünü kapla</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ortaya çıkan klavye kullanıcı arabirimi yüksekliğini etkilemeden ikincil satırı uygulama kullanıcı arabiriminin üzerine bir kaplama olarak yerleştirir. Bu yerleşimin, uygulama giriş alanının kısmen fazla çizilmesine neden olabileceğini unutmayın</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Sistem dillerini kullan</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Klavye alt türlerini kullan</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Eylem yok</string>

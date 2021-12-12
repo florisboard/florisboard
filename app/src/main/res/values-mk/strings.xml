@@ -27,6 +27,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Стандардно</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системски</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Неодредено</string>
+    <!-- Smartbar strings -->
+    <!-- Typing strings -->
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->

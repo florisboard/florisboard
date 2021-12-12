@@ -155,6 +155,7 @@
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Włącz feedback dotyku</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Wibracje dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignoruj ​​systemowe ustawienia dotykowe</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Użyj poniższych preferencji, nawet gdy wibracje są wyłączone w systemie</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Bezpośrednie wyzwalanie wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Czas trwania wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Siła wibracji</string>
@@ -185,9 +186,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Opóznienie długiego przytrzymania</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spacja przełącza się z powrotem do układu znaków</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Naciśnięcie spacji automatycznie przełącza z powrotem na znaki, podczas bycia w symbolach lub cyfrach</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
     <string name="pref__correction__title" comment="Preference group title">Korekty</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatyczne wstawianie wielkich liter</string>
@@ -267,7 +270,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licencje Open Source</string>
     <string name="about__version__title" comment="Preference title">Wersja</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Wersję skopiowano do schowka</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Coś poszło nie tak: %s</string>
     <string name="about__changelog__title" comment="Preference title">Lista zmian</string>
     <string name="about__changelog__summary" comment="Preference summary">Nowości</string>
     <string name="about__repository__title" comment="Preference title">Repozytorium (GitHub)</string>
@@ -326,6 +328,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard wydaje się wielokrotnie przerywać pracę…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Powracanie do poprzedniej klawiatury w celu zatrzymania nieskończonej pętli awarii. Stuknij, aby wyświetlić szczegóły błędu</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Schowek</string>
+    <string name="clipboard__disabled__enable_button">Włącz historię schowka</string>
+    <string name="clipboard__group_other">Inny</string>
     <string name="clip__clear_history">Wyczyść historię</string>
     <string name="clip__delete_item">Usuń</string>
     <string name="clip__paste_item">Wklej</string>

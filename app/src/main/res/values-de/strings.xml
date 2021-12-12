@@ -199,9 +199,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zurück zur Buchstabenansicht</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
@@ -313,7 +315,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open Source-Lizenzen</string>
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version in die Zwischenablage kopiert</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Etwas ist schief gelaufen: %s</string>
     <string name="about__changelog__title" comment="Preference title">Änderungsprotokoll</string>
     <string name="about__changelog__summary" comment="Preference summary">Was ist neu</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
@@ -385,6 +386,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard funktioniert zum wiederholten Male nicht…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Um eine endlose Absturzschleife zu verhindern, wurde automatisch auf die zuvor benutzte Tastatur zurückgegriffen. Tippen, um die Fehlermeldung anzuzeigen</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Zwischenablage</string>
+    <string name="clipboard__disabled__enable_button">Verlauf für Zwischenablage aktivieren</string>
+    <string name="clipboard__group_other">Andere</string>
     <string name="clip__clear_history">Verlauf leeren</string>
     <string name="clip__unpin_item">Element lösen</string>
     <string name="clip__pin_item">Element anheften</string>
@@ -401,7 +405,6 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
     <string name="pref__clipboard__group_clipboard_history__label">Zwischenablagenverlauf</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Verlauf für Zwischenablage aktivieren</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Elemente der Zwischenablage merken</string>
     <string name="pref__clipboard__clean_up_old__label">Alte Elemente bereinigen</string>
     <string name="pref__clipboard__clean_up_after__label">Alte Elemente bereinigen nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>

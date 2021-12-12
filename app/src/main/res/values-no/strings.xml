@@ -58,7 +58,9 @@
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBar</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ikke implementert</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: %d</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle språk</string>
@@ -76,7 +78,6 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Persovernerklæring</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kildekode</string>
     <string name="about__version__title" comment="Preference title">Versjon</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Noe gikk galt: %s</string>
     <string name="about__changelog__title" comment="Preference title">Endringslogg</string>
     <string name="about__changelog__summary" comment="Preference summary">Hva som er nytt</string>
     <!-- Assets strings -->
@@ -113,6 +114,7 @@
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Hvis du ønsker å rapportere denne feilen, sjekk først ut problemsporingen på GitHub hvis krasjen din ikke allerede er rapportert.\nHvis den ikke er det, kopier den genererte krasjloggen og åpne et nytt problem. Bruk \"%s\"-malen og fyll ut beskrivelsen, trinnene for å reprodusere, og lim inn den genererte krasjloggen på slutten. Dette er med på å gjøre FlorisBoard bedre og mer stabilt for alle. Takk skal du ha!</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Lukk</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Annet</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <string name="ext__meta__description">Beskrivelse</string>

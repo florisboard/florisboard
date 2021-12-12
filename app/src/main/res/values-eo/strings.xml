@@ -75,6 +75,8 @@
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavaĵo ekdepremi</string>
+    <!-- Smartbar strings -->
+    <!-- Typing strings -->
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Ŝovumi supre</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Ŝovumi sube</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Ŝovumi maldekstre</string>
@@ -113,6 +115,7 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Alia</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <!-- General strings -->

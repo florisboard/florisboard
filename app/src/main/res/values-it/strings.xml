@@ -197,9 +197,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra spaziatrice riporta alla digitazione a caratteri</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Premendo la barra spaziatrice si ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
@@ -272,6 +274,9 @@
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Controllo ortografico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usa la configurazione del controllo ortografico della tastiera</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Disabilitato a livello di sistema. Nessuna sottolineatura rossa apparirà nei campi di testo per parole incorrette. Tocca qui per cambiare.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Nessun servizio di controllo ortografico del testo in linea impostato. Tocca per cambiare.</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">L\'opzione \"Lingue\" del controllo ortografico di sistema è impostato su \"Utilizza le lingue di sistema\". A causa di un bug questo potrebbe impedire a {app_name} di effettuare il controllo ortografico. Si consiglia di cambiarla a \"{use_floris_config}\".</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Impostazioni</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Lingue</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usa i nomi dalla rubrica</string>
@@ -304,7 +309,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
     <string name="about__version__title" comment="Preference title">Versione</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versione copiata negli appunti</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Qualcosa è andato storto: %s</string>
     <string name="about__changelog__title" comment="Preference title">Registro delle modifiche</string>
     <string name="about__changelog__summary" comment="Preference summary">Cosa c\'è di nuovo</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
@@ -370,6 +374,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard sembra aver ripetutamente smesso di funzionare…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ripiega alla tastiera precedente per porre fine ai crash ripetuti. Tocca per visualizzare i dettagli dell\'errore</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Appunti</string>
+    <string name="clipboard__disabled__enable_button">Attiva la cronologia degli appunti</string>
+    <string name="clipboard__group_other">Altro</string>
     <string name="clip__clear_history">Cancella la cronologia</string>
     <string name="clip__unpin_item">Sblocca oggetto</string>
     <string name="clip__pin_item">Blocca oggetto</string>
@@ -385,7 +392,6 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Gli aggiornamenti degli appunti di Floris aggiornano anche gli appunti di sistema</string>
     <string name="pref__clipboard__group_clipboard_history__label">Cronologia appunti</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Attiva la cronologia degli appunti</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli appunti</string>
     <string name="pref__clipboard__clean_up_old__label">Elimina appunti vecchi</string>
     <string name="pref__clipboard__clean_up_after__label">Elimina appunti vecchi dopo</string>
     <string name="pref__clipboard__limit_history_size__label">Limita le dimensioni della cronologia</string>

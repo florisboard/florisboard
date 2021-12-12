@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">Laipni lūgts {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nav iespējots sistēmas iestatījumos, tādēļ tā nebūs pieejama kā ievades avots atlasītājā. Klikšķināt šeit, lai atrisinātu to.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nav atlasīts kā noklusējuma ievades veids. Klikšķināt šeit, lai to novērstu.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Valodas un izkārtojumi</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Apakšveidi</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pievienot apakšveidu</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Labot apakšveidu</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Galvenā valoda</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Uznirstošo lodziņu kartēšana</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rakstzīmju izkārtojums</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Zīmju galvenais izkārtojums</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Zīmju papildu izkārtojums</string>
@@ -64,8 +68,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa galvenais izkārtojums</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa papildu izkārtojums</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Atlasīt valodu</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Meklēt valodu</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Nebija iespējams atrast valodu, kas atbilstu \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; atlasīt &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Iteiktie apakšveidu priekšiestatījumi</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Ieteiktie priekšiestatījumi nav pieejami. Jāizmanto zemāk esošā poga, lai skatītu visus apakšveidu priekšiestatījumus.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Apakšveidu priekšiestatījumi</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Rādīt visu</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Izskatās, ka nav iestatīts neviens apakšveids. Tādēļ tiks izmantots Angļu/QWERTY apakšveids!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Šis apakšveids jau pastāv!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Vismaz vienam laukam nav atlasīta vērtība. Lūgums norādīt vērtību laukam(iem).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nav uzstādīts)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Izkārtojumi</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Izskats</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenoteikts</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Izskata veids</string>
@@ -199,9 +214,12 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Atstarpes taustiņš pārslēdz uz burtu izkārtojumu</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Atstarpes taustiņa nospiešana nomaina izkārtojumu no rakstzīmēm vai cipariem uz burtiem</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Viedjosla</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Ieteikumi un labojumi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
     <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
@@ -210,6 +228,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Lietotāja vārdnīcas</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Iespējot sistēmas lietotāja vārdnīcu</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti sistēmas lietotāja vārdnīcā</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Pārvaldīt sistēmas lietotāja vārdnīcu</string>
@@ -313,7 +332,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Atvērtā pirmavota licences</string>
     <string name="about__version__title" comment="Preference title">Laidiens</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Laidiena numurs ir ievietots starpliktuvē</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Kaut kas ir noticis nepareizi: %s</string>
     <string name="about__changelog__title" comment="Preference title">Izmaiņu žurnāls</string>
     <string name="about__changelog__summary" comment="Preference summary">Kas jauns?</string>
     <string name="about__repository__title" comment="Preference title">Glabātava (GitHub)</string>
@@ -353,6 +371,7 @@
     <string name="assets__action__select_dir">Atlasīt mapi</string>
     <string name="assets__action__select_file">Atlasīt datni</string>
     <string name="assets__action__yes">Jā</string>
+    <string name="assets__error__title">Kļūda</string>
     <string name="assets__error__details">Izklāsts</string>
     <string name="assets__error__invalid">Nederīgs</string>
     <string name="assets__error__snackbar_message">Kaut kas ir noticis nepareizi</string>
@@ -386,6 +405,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Izskatās, ka FlorisBoard atkārtoti pārstāj darboties…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Starpliktuve</string>
+    <string name="clipboard__disabled__enable_button">Iespējot starpliktuves vēsturi</string>
+    <string name="clipboard__group_other">Cits</string>
     <string name="clip__clear_history">Notīrīt vēsturi</string>
     <string name="clip__unpin_item">Atspraust vienumu</string>
     <string name="clip__pin_item">Piespraust vienumu</string>
@@ -402,7 +424,6 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
     <string name="pref__clipboard__group_clipboard_history__label">Starpliktuves vēsture</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Iespējot starpliktuves vēsturi</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus</string>
     <string name="pref__clipboard__clean_up_old__label">Noņemt vecos vienumus</string>
     <string name="pref__clipboard__clean_up_after__label">Noņemt vecos vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
@@ -431,6 +452,7 @@
     <string name="ext__meta__issue_tracker">Zināmās kļūdas</string>
     <string name="ext__meta__keywords">Atslēgvārdi</string>
     <string name="ext__meta__license">Licence</string>
+    <string name="ext__meta__maintainers">Uzturētāji</string>
     <string name="ext__meta__title">Nosaukums</string>
     <string name="ext__meta__version">Laidiens</string>
     <string name="ext__error__not_found_title">Paplašinājums nav atrasts</string>
@@ -452,6 +474,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir norādes zīme vai galvenā uzsvara zīme, ja norādes zīme nav pieejama</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Viedā priekšrokas noteikšana</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme (galvenā uzsvara vai norādes zīme) pēc ilga piespiediena tiek noteikta atbilstoši pašreizējai valodai un izkārtojumam</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Vispārpieņemts</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Pārslēgs</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Burtslēgs</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nerādīt nekad</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Rādīt pielāgojoties</string>

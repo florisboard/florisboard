@@ -153,9 +153,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробіл перемикає назад в буквенну розкладку</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискання пробіл автоматичну перемикає на буквенну розкладку коли знаходиться в символьній або цифровій</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Розумна панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Пропозиції</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
@@ -238,6 +240,8 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Здається, FlorisBoard постійно перестає працювати…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Повернення до попередньої клавіатури, щоб зупинити нескінченний цикл збою. Натисніть, щоб переглянути деталі про помилку</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__enable_button">Увімкнути історію буферу обміну</string>
+    <string name="clipboard__group_other">Інше</string>
     <string name="clip__clear_history">Очистити історію</string>
     <string name="clip__unpin_item">Відкріпити</string>
     <string name="clip__pin_item">Закріпити</string>
@@ -248,8 +252,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Синхронізувати з системного буферу обміну</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронізувати з системним буфером обміну</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обміну Floris також оновлює системний буфер обміну</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Історія буфера обміну</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Увімкнути історію буферу обміну</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Зберігати буфер обміну</string>
     <string name="pref__clipboard__limit_history_size__label">Обмежити розмір історії</string>
     <string name="pref__clipboard__max_history_size__label">Максимальний розмір історії</string>
     <!-- Devtools strings -->

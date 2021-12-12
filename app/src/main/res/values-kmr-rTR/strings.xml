@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">Bi xêr hatî {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard di pergalê de ne çalak e û ji ber vê yekê dê wekî rêbazek têketê di hilbijarka têketê de tune be. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard wekî metoda têketê ya pêşdarazî nayê hilbijartin. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Ziman û Rêzkirin</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Bintîp</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Zêdekirina Ziman</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Bin-tîp biguherîne</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Zimanê seretayî</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Nexşekirina popup</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rêza karakteran</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Nîska sereke ya sembolan</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Nîşa duyemîn a sembolan</string>
@@ -63,8 +67,19 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Rêzeya rêza hejmar</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Rêza sereke ya telefonê</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Rêza duyemîn a telefonê</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Li zimanekî bigere</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Zimanekî ku bi \"{search_term}\" re têkildar e nehat dîtin.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; bijartin &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Pêş- sazkirinên jêrîn ên pêşniyazkirî</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Eyarên pêşniyazkirî tune ne. Ji bo dîtina hemû pêşesazkirinên jêr bişkojka jêr bi kar bînin.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Pêş- mîhengên bintîp</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Hemûyî nîşan bide</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Wusa dixuye ku te tu cureyên jêr ava nekirine. Wekî paşvekê wê subtype English/QWERTY were bikaranîn!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ev jêrnivîs jixwe heye!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Qet nebe li qadekê nirxekî ku hatîye bijartin tune ye. Ji kerema xwe ji bo zevîyan nirxekî hilbijêrin.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (saznekirî)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rêzkirin</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenas</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Moda tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Dema rojbûnê</string>
@@ -162,9 +177,12 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Derengketina bişkojka bişkojka dirêj</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Darişka fezayê vediguhere rêza karakteran</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Dema ku di sembolan an jî hejmarê de be, bi xweber bara fezayê vediguhere karakteran</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Pêşniyar û Sererastkirinan</string>
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
@@ -173,6 +191,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock dê bimîne dema ku diçe qada textek din</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dema du-cihî</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Lêdana du caran li ser baroya cîhê serdemek li dû cîhek vedigire</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Ferhengên Bikarhêner</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Peyv</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Jest &amp; Bi şemitandin binivîse</string>
     <string name="pref__glide__title" comment="Preference group title">Bi şemitandin binivîse</string>
@@ -232,6 +251,7 @@
     <string name="assets__action__no">Na</string>
     <string name="assets__action__save">Berhevkirin</string>
     <string name="assets__action__yes">Erê</string>
+    <string name="assets__error__title">Çewtî</string>
     <string name="assets__error__details">Hûrgulî</string>
     <string name="assets__error__invalid">Seqet</string>
     <string name="assets__error__snackbar_message">Tiştek şaş çû</string>
@@ -245,6 +265,7 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Xuya ye FlorîsBoard bi berdewamî dest ji kar berde…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ji bo rawestandina loopa lêxistinê ya bêdawî, dîsa li klavyeya berê vedigerî. Ji bo dîtina hûrguliyên çewtiyê lêdan bike</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Din</string>
     <string name="clip__clear_history">Dîrokê paqij bike</string>
     <string name="clip__unpin_item">Hêmanê sabit rake</string>
     <string name="clip__pin_item">Hêmanê sabit bike</string>
@@ -252,12 +273,17 @@
     <string name="clip__paste_item">Bizeliqêne</string>
     <string name="clip__back_to_text_input">Vegere navnîşa nivîsê</string>
     <string name="clip__cant_paste">Ev sepan destûrê nade ku vê naverokê pêve bike.</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Dîroka panelê</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__meta__maintainers">Mûxayenekaran</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
+    <string name="enum__input_mode__normal" comment="Enum value label">Asayî</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

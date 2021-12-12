@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">بەخێربێی بۆ {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">تەختەکلیلی FlorisBoard هێشتا چالاک نەکراوە لە ڕێکخستنەکانی سیستەمدا، پێویستە چالاکی بکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">تەختەکلیلی FlorisBoard چالاککراوە لە ڕێکخستنەکانی سیستەمدا بەڵام هەڵنەبژێردراوە بۆ بەکارهێنان وەک تەختەکلیلی سەرەکی، پێویستە دیاریبکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا بۆ هەڵبژاردن.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">زمان و تەختەکلیل</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">شێوازەکان</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">زیادکردنی زمان</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">دەستکاریکردن تەختەکلیل</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">زمانی سەرەکی</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">پیتەکانی خانەی دووەم</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">شێوازی نووسین</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">شێوازی بنەڕەتی هێماکان</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">شێوازی دووەمی هێماکان</string>
@@ -64,8 +68,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">شێوازی بنەڕەتی ژمارەکان (تەلەفۆن)</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">شێوازی دووەمی ژمارەکان (تەلەفۆن)</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">زمان دیاریبکە</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">گەڕان بۆ زمان</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">هیچ زمانێک نەدۆزرایەوە هاوشێوەی \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; دیاریبکە &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">زمان و شێوازی پێشنیارکراو</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">هیچ زمان و شێوازێک نییە بۆ پێشنیارکردن، لەڕێی ئەو دوگمەی خوارەوە زمانێک هەڵبژێرە.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">زمانەکان</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">بینینی هەمووی</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">وا دیارە کە هیچ زمانێکی زیادە دانەنراوە بۆ نووسین، لەبەر ئەوەزمانی  زمانی ئینگلیزی(قوەرتی) بەبنەڕەتی بەکاردێت بۆ نووسین!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">ئەم زمانە پێشتر زیادکراوە لە لیستەکەدا هەیە!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">یەکێ لە خانەکان دیاری نەکراوە بۆ هەڵبژاردن، تکایە سەرجەمیان دیاریبکە.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (دانەبەزێنراوە)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">شێوازەکان</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">ڕووکار</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">بێ ناو</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">دۆخی ڕووکار</string>
@@ -199,9 +214,12 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">ماوەی دەست راگرتن بۆ پیتە لاوەکییەکان</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">دەستان لە دوگمەی بۆشایی ئەگەڕێتەوە بۆ پیتەکان</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">بە پەنجەنان لە دوگمەی بۆشایی ئەگەڕێتەوە بۆ پیتەکان بە خۆکاری کاتێ لە بەشی هێما و ژمارەکاندا بێت</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">ڕەنگی بەشی سەرەوە</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">پێشنیارکردن و ڕاستکردنەوە</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
     <string name="pref__correction__title" comment="Preference group title">ڕاستکردنەوە</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">گەورەکردنی خۆکاری</string>
@@ -210,6 +228,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">سەرجەم پیتەکان هەمیشە بە گەورەیی(کاپیتاڵ) دەمێننەوە تەنها بۆ ئینگلیزی و زمانە لاتینییەکان</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">دانانی خاڵ بە دوگمەی بۆشایی</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">دووجار دەست بنێیت بە دوگمەی بۆشاییدا خاڵ یان هێمای کۆتایی ڕستە دەنوسێت</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">فەرهەنگی بەکارهێنەر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">پێشنیارکردنی ئەو ووشانەی لەفەرهەنگی تایبەتی بەکارهێنەردا پاشەکەوتکراون</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">ڕێکخستنی فەرهەنگی تایبەت</string>
@@ -313,7 +332,6 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مەرج و مۆڵەتی سەرچاوەکان</string>
     <string name="about__version__title" comment="Preference title">وەشان</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">ژمارە و ناوی وەشان کۆپیکرا</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">هەڵەیەک ڕوویدا: %s</string>
     <string name="about__changelog__title" comment="Preference title">گۆڕانکارییەکان</string>
     <string name="about__changelog__summary" comment="Preference summary">نوێکارییەکان</string>
     <string name="about__repository__title" comment="Preference title">کۆدی سەرچاوە (GitHub)</string>
@@ -352,6 +370,7 @@
     <string name="assets__action__select_dir">فۆڵدەر دیاریبکە</string>
     <string name="assets__action__select_file">فایلێک دیاریبکە</string>
     <string name="assets__action__yes">بەڵێ</string>
+    <string name="assets__error__title">هەڵەیەک ڕوویدا</string>
     <string name="assets__error__details">زانیاری زیاتر</string>
     <string name="assets__error__invalid">نا درووستە</string>
     <string name="assets__error__snackbar_message">هەڵەیەکی نەزانراو ڕوویدا</string>
@@ -386,6 +405,9 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">تەختەکلیلی FlorisBoard لەوانەیە زوو زوو لەکارکردن بوەستێت…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">گۆڕین بۆ تەختەکلیلی پێشوو لەکاتی بوونی هەڵە و وەستانی لەناکاو، بینینی زانیاری هەڵەکان</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">لەبەرگیراوەکان</string>
+    <string name="clipboard__disabled__enable_button">بەکارهێنانی بەشی لەبەرگیراوەکان</string>
+    <string name="clipboard__group_other">جۆری تر</string>
     <string name="clip__clear_history">سڕینەوەی مێژوو</string>
     <string name="clip__unpin_item">جێگیر نەکردن</string>
     <string name="clip__pin_item">جێگیر کردن</string>
@@ -400,9 +422,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی سیستەم</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">لەبەرگیراوەی بەرنامەکە</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی بەرنامەکە</string>
-    <string name="pref__clipboard__group_clipboard_history__label">مێژووی لەبەرگیراوەکان</string>
+    <string name="pref__clipboard__group_clipboard_history__label">لەبەرگیراوەکان</string>
     <string name="pref__clipboard__enable_clipboard_history__label">بەکارهێنانی بەشی لەبەرگیراوەکان</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">هێشتنەوەی شتە لەبەرگیراوەکان</string>
     <string name="pref__clipboard__clean_up_old__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
     <string name="pref__clipboard__clean_up_after__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
     <string name="pref__clipboard__limit_history_size__label">سنوردارکردنی مێژووی هەڵگرتن</string>
@@ -431,6 +452,7 @@
     <string name="ext__meta__issue_tracker">دۆزەرەوەی هەڵە</string>
     <string name="ext__meta__keywords">کلیلە ووشە</string>
     <string name="ext__meta__license">مۆڵەت</string>
+    <string name="ext__meta__maintainers">گەشەپێدەر</string>
     <string name="ext__meta__title">ناو</string>
     <string name="ext__meta__version">وەشان</string>
     <string name="ext__error__not_found_title">زیادکراو نەدۆزرایەوە</string>
@@ -452,6 +474,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">پیشاندانی یەکەم هێمای خانەی دووەم لەکاتی دەست راگرتن</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">هەڵبژاردنی زیرەک</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">پیشاندانی یەکەم پیت یان هێمای خانەی دووەم لەکاتی دەست راگرتن بەخۆکاری بەپێی زمانی هەڵبژێردراو</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">بنەڕەتی</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">قفڵکردنی شێفت</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">گەورەکردنی شێفت</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">شاردنەوە</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">هەمیشە پیشاندان</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">پیشاندانی زیرەکانە</string>

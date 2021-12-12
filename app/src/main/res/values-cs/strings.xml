@@ -152,9 +152,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne znovu do písmenného rozložení</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Stisknutím mezerníku se automaticky vrátíte z nabídky čísel/symbolů ke klasické klávesnici</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
@@ -270,6 +272,8 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__enable_button">Zapnout historii schránky</string>
+    <string name="clipboard__group_other">Ostatní</string>
     <string name="clip__clear_history">Smazat historii</string>
     <string name="clip__unpin_item">Odepnout položku</string>
     <string name="clip__pin_item">Připnout položku</string>
@@ -277,6 +281,7 @@
     <string name="clip__paste_item">Vložit</string>
     <string name="clip__back_to_text_input">Zpět na zadávání textu</string>
     <string name="clip__cant_paste">Tato aplikace neumožňuje vkládání daného obsahu.</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Historie schránky</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>

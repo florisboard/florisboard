@@ -88,7 +88,9 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazenie pomocného kľúča</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí konfigurovateľný pomocný kláves vedľa medzerníka</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Akcia užitočného kľúča</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
+    <!-- Typing strings -->
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->

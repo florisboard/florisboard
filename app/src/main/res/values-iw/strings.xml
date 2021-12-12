@@ -143,9 +143,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">השהיית לחיצה מקש ארוכה</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">סרגל רווח עובר חזרה לפריסת התווים</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">לחיצה על סרגל הרווח מחזירה אוטומטית לתווים כאשר היא נמצאת בסמלים או במספרים</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">שורה חכמה</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">הפעל שורה חכמה</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">יהיה ממוקם מעל המקלדת</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">הצעות</string>
     <string name="pref__correction__title" comment="Preference group title">תיקונים</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">שימוש אוטומטי באותיות גדולות</string>
@@ -238,6 +240,8 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">נראה שFlorisBoard מפסיק לעבוד שוב שוב…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">המקדלת הקומדת הוחזרה כדי למנוע לולאת קריסה אינסופית. לחץ כדי לראות את פרטי השגיאה</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__enable_button">אפשר היסטוריה של הלוח</string>
+    <string name="clipboard__group_other">אחר</string>
     <string name="clip__clear_history">נקה היסטוריה</string>
     <string name="clip__unpin_item">ביטול הצמדה של פריט</string>
     <string name="clip__delete_item">מחק</string>
@@ -245,7 +249,6 @@
     <string name="clip__back_to_text_input">חזרה להזנת טקסט</string>
     <string name="clip__cant_paste">אפליקציה זו אינה מאפשרת הדבקת תוכן זה.</string>
     <string name="pref__clipboard__enable_clipboard_history__label">אפשר היסטוריה של הלוח</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">שמור פריטי לוח</string>
     <string name="pref__clipboard__limit_history_size__label">הגבל את גודל ההיסטוריה</string>
     <string name="pref__clipboard__max_history_size__label">גודל היסטוריה מקסימלי</string>
     <!-- Devtools strings -->

@@ -52,8 +52,12 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard tidak diaktifkan di sistem dan tidak akan tersedia sebagai metode input di pilihan input.
 Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard tidak dipilih sebagai metode input default. Klik di sini untuk menyelesaikan masalah ini.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Bahasa &amp; Tata Letak</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipe</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtipe</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Bahasa utama</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Pemetaan popup</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tata letak karakter</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Tata letak utama simbol</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Tata letak sekunder simbol</string>
@@ -65,8 +69,19 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Tata letak utama telepon</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Tata letak sekunder telepon</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Pilih bahasa</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Cari bahasa</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Tidak dapat menemukan bahasa yang cocok dengan \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; pilih &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Preset subtipe yang disarankan</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Tidak ada preset yang disarankan. Gunakan tombol di bawah untuk menampilkan semua preset subtipe.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Preset subtipe</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Tampilkan semua</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Sepertinya Anda belum mengkonfigurasi subtipe apapun. Sebagai penggantinya subtipe Inggris/QWERTY akan digunakan!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Subtipe ini sudah ada!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Setidaknya satu bidang tidak memiliki nilai yang dipilih. Harap pilih sebuah nilai untuk bidangnya.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (tidak terpasang)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tata Letak</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tidak ditetapkan</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode tema</string>
@@ -200,9 +215,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tundaan tekan lama tombol</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Bilah spasi beralih kembali ke tata letak karakter</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Menekan bilah spasi secara otomatis beralih kembali ke karakter saat dalam simbol atau numerik</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas papan ketik</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Saran &amp; Koreksi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
     <string name="pref__correction__title" comment="Preference group title">Koreksi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Kapitalisasi otomatis</string>
@@ -211,6 +229,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock akan tetap aktif saat pindah ke bidang teks lain</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Titik spasi ganda</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Mengetuk batang spasi dua kali memasukkan titik yang diikuti oleh sebuah spasi</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Kamus pengguna</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktifkan kamus pengguna sistem</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sarankan kata-kata tersimpan di kamus pengguna sistem</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Kelola kamus pengguna sistem</string>
@@ -314,7 +333,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lisensi sumber terbuka</string>
     <string name="about__version__title" comment="Preference title">Versi</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versi disalin ke papan klip</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Terjadi kesalahan: %s</string>
     <string name="about__changelog__title" comment="Preference title">Changelog</string>
     <string name="about__changelog__summary" comment="Preference summary">Apa yang baru</string>
     <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
@@ -352,6 +370,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="assets__action__select_dir">Pilih direktori</string>
     <string name="assets__action__select_file">Pilih file</string>
     <string name="assets__action__yes">Ya</string>
+    <string name="assets__error__title">Kesalahan</string>
     <string name="assets__error__details">Keterangan</string>
     <string name="assets__error__invalid">Tidak valid</string>
     <string name="assets__error__snackbar_message">Terjadi kesalahan</string>
@@ -385,6 +404,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard kelihatannya berhenti bekerja berulang kali…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Mengembalikan ke keyboard sebelumnya untuk menghentikan loop crash tak terbatas. Ketuk untuk melihat detail kesalahan</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Papan klip</string>
+    <string name="clipboard__disabled__enable_button">Aktifkan riwayat papan klip</string>
+    <string name="clipboard__group_other">Lainnya</string>
     <string name="clip__clear_history">Hapus riwayat</string>
     <string name="clip__unpin_item">Lepas pin item</string>
     <string name="clip__pin_item">Pin item</string>
@@ -401,7 +423,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Pembaruan papan klip Floris juga memperbarui papan klip sistem</string>
     <string name="pref__clipboard__group_clipboard_history__label">Riwayat papan klip</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Aktifkan riwayat papan klip</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Pertahankan item papan klip</string>
     <string name="pref__clipboard__clean_up_old__label">Bersihkan item lama</string>
     <string name="pref__clipboard__clean_up_after__label">Bersihkan item lama setelah</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
@@ -430,6 +451,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__meta__issue_tracker">Pelacak masalah</string>
     <string name="ext__meta__keywords">Kata kunci</string>
     <string name="ext__meta__license">Lisensi</string>
+    <string name="ext__meta__maintainers">Pengelola</string>
     <string name="ext__meta__title">Judul</string>
     <string name="ext__meta__version">Versi</string>
     <string name="ext__error__not_found_title">Ekstensi tidak ditemukan</string>
@@ -451,6 +473,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan simbol petunjuk, atau aksen utama jika tidak ada simbol petunjuk yang tersedia</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritas pintar</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama secara dinamis akan memutuskan untuk menjadi aksen utama atau simbol petunjuk, berdasarkan bahasa dan tata letak saat ini</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Jangan tampilkan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Selalu tampilkan</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Tampilkan secara dinamis</string>

@@ -152,9 +152,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz automatikusan visszavált a karakterelrendezésre</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">A szóköz lenyomáskor automatikusan visszavált a karakterekre, amikor a szimbólumok vagy a számok jelennek meg</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
@@ -258,6 +260,8 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Úgy tűnik, hogy a FlorisBoard többször leállt…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Visszalépés az előző billentyűzetre, a végtelen összeomlás megakadályozásához. Érintse meg a hiba részleteinek megtekintéséhez</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__enable_button">Vágólapelőzmények engedélyezése</string>
+    <string name="clipboard__group_other">Egyéb</string>
     <string name="clip__clear_history">Előzmények törlése</string>
     <string name="clip__unpin_item">Elem levétele</string>
     <string name="clip__pin_item">Elem kitűzése</string>
@@ -268,8 +272,8 @@
     <string name="pref__clipboard__sync_from_system_clipboard__label">Szinkronizálás a rendszervágólapról</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Szinkronizálás a rendszervágólapra</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">A Florisboard vágólapjának frissítései a rendszervágólapon is megjelennek</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Vágólap előzmények</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Vágólapelőzmények engedélyezése</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Vágólapelemek megtartása</string>
     <string name="pref__clipboard__limit_history_size__label">Előzmények méretének korlátozása</string>
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
     <!-- Devtools strings -->

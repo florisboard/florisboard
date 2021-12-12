@@ -51,8 +51,11 @@
     <string name="settings__home__title" comment="Title of the Home screen">Καλώς ήλθατε στο {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Το FlorisBoard δεν είναι ενεργοποιημένο στο σύστημα και συνεπώς δε θα είναι διαθέσιμο ως μέθοδος εισαγωγής στον επιλογέα εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Το FlorisBoard δεν έχει επιλεχθεί ως η προεπιλεγμένη μέθοδος εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Γλώσσες &amp; Διατάξεις</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Υποτύποι</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Προσθήκη υποτύπου</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Επεξεργασία υποτύπου</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Κύρια γλώσσα</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Διάταξη χαρακτήρων</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Πρωτεύουσα διάταξη συμβόλων</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Δευτερεύουσα διάταξη συμβόλων</string>
@@ -64,8 +67,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Πρωτεύουσα διάταξη τηλεφώνου</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Δευτερεύουσα διάταξη τηλεφώνου</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Επιλογή γλώσσας</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Αναζητήστε μία γλώσσα</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Αδυναμία εύρεσης γλώσσας που να αντιστοιχεί σε \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; επιλογή &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Προτεινόμενες προεπιλογές υποτύπων</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Δεν υπάρχουν διαθέσιμες προτεινόμενες προεπιλογές. Χρησιμοποιήστε το παρακάτω πλήκτρο για να δείτε όλες τις προεπιλογές υποτύπων.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Προεπιλογές υποτύπων</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Εμφάνιση όλων</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Φαίνεται πως δεν έχετε ορίσει κανέναν υποτύπο. Ως εναλλακτική ο υποτύπος English/QWERTY θα χρησιμοποιηθεί!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Αυτός ο υποτύπος υπάρχει ήδη!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Τουλάχιστον ένα πεδίο δεν έχει επιλεγμένη τιμή. Παρακαλώ επιλέξτε μία τιμή για το/τα πεδίο/α.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (δεν είναι εγκατεστημένο)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Διατάξεις</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Θέμα</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Μη ορισμένο</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Λειτουργία θέματος</string>
@@ -199,10 +213,19 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Καθυστέρηση παρατεταμένου πατήματος πλήκτρου</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Το πλήκτρο διαστήματος επιστρέφει στη διάταξη χαρακτήρων</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Πατώντας κενό επαναφέρεστε αυτόματα στους χαρακτήρες όταν βρίσκεστε στα σύμβολα ή στους αριθμούς</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Έξυπνη Μπάρα</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Πρωτεύουσα σειρά</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Δευτερεύουσα σειρά</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Ενεργοποίηση δευτερεύουσας σειράς</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Προσθήκη μίας προεκτάσιμης δεύτερης σειράς επιτρέποντας περισσότερους χειρισμούς να εμφανιστούν</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Τοποθέτηση δευτερεύουσας σειράς</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Προτάσεις &amp; Διορθώσεις</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Προτάσεις περιεχομένου προχείρου</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
@@ -210,6 +233,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Τα κεφαλαία θα παραμείνουν ενεργοποιημένα όταν μεταβείτε σε διαφορετικό πεδίο κειμένου</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Τελεία με διπλό-κενό</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Το διπλό πάτημα του πλήκτρου διαστήματος εισάγει μία τελεία ακολουθούμενη από ένα διάστημα</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Λεξικά χρήστη</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ενεργοποίηση λεξικού χρήστη στο σύστημα</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Προτάσεις λέξεων αποθηκευμένων στο λεξικό χρήστη στο σύστημα</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Διαχείριση λεξικού χρήστη στο σύστημα</string>
@@ -313,7 +337,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Άδειες λογισμικού ανοικτού κώδικα</string>
     <string name="about__version__title" comment="Preference title">Έκδοση</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Η έκδοση αντιγράφηκε στο πρόχειρο</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Κάτι πήγε στραβά: %s</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Κάτι πήγε στραβά: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Κατάλογος αλλαγών</string>
     <string name="about__changelog__summary" comment="Preference summary">Τι νέο υπάρχει</string>
     <string name="about__repository__title" comment="Preference title">Αποθετήριο (GitHub)</string>
@@ -351,6 +375,7 @@
     <string name="assets__action__select_dir">Επιλογή φακέλου</string>
     <string name="assets__action__select_file">Επιλογή αρχείου</string>
     <string name="assets__action__yes">Ναι</string>
+    <string name="assets__error__title">Σφάλμα</string>
     <string name="assets__error__details">Λεπτομέρειες</string>
     <string name="assets__error__invalid">Μη έγκυρο</string>
     <string name="assets__error__snackbar_message">Κάτι πήγε στραβά</string>
@@ -384,6 +409,15 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Φαίνεται πως το FlorisBoard σταματά να λειτουργεί επανειλημμένα…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Χρήση εναλλακτικά του προηγούμενου πληκτρολογίου για να σταματήσει ο αδιάκοπος κύκλος απροσδόκητων τερματισμών. Πατήστε για να δείτε λεπτομέρειες του σφάλματος</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Πρόχειρο</string>
+    <string name="clipboard__disabled__title">Το ιστορικό προχείρου είναι προς το παρόν απενεργοποιημένο</string>
+    <string name="clipboard__disabled__enable_button">Ενεργοποίηση ιστορικού του προχείρου</string>
+    <string name="clipboard__empty__title">Το πρόχειρό σας είναι κενό</string>
+    <string name="clipboard__empty__message">Αφού αντιγράψετε αποκόμματα κειμένου ή εικόνες θα εμφανιστούν εδώ.</string>
+    <string name="clipboard__locked__title">Το πρόχειρό σας είναι κλειδωμένο</string>
+    <string name="clipboard__group_pinned">Καρφιτσωμένα</string>
+    <string name="clipboard__group_recent">Πρόσφατα</string>
+    <string name="clipboard__group_other">Άλλο</string>
     <string name="clip__clear_history">Εκκαθάριση ιστορικού</string>
     <string name="clip__unpin_item">Ξεκαρφίτσωμα στοιχείου</string>
     <string name="clip__pin_item">Καρφίτσωμα στοιχείου</string>
@@ -391,6 +425,8 @@
     <string name="clip__paste_item">Επικόλληση</string>
     <string name="clip__back_to_text_input">Πίσω στην εισαγωγή κειμένου</string>
     <string name="clip__cant_paste">Η εφαρμογή αυτή δεν επιτρέπει την επικόλληση του περιεχομένου.</string>
+    <string name="clipboard__cleared_history">Το ιστορικό διαγράφηκε</string>
+    <string name="clipboard__cleared_full_history">Το πλήρες ιστορικό διαγράφηκε</string>
     <string name="settings__clipboard__title">Πρόχειρο</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Χρήση εσωτερικού προχείρου</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
@@ -400,7 +436,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
     <string name="pref__clipboard__group_clipboard_history__label">Ιστορικό προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση στοιχείων προχείρου</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση των στοιχείων του προχείρου για γρήγορη πρόσβαση</string>
     <string name="pref__clipboard__clean_up_old__label">Εκκαθάριση παλιών στοιχείων</string>
     <string name="pref__clipboard__clean_up_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
     <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
@@ -429,6 +465,7 @@
     <string name="ext__meta__issue_tracker">Ιχνηλάτης προβλημάτων</string>
     <string name="ext__meta__keywords">Λέξεις κλειδιά</string>
     <string name="ext__meta__license">Άδεια</string>
+    <string name="ext__meta__maintainers">Συντηρητές</string>
     <string name="ext__meta__title">Τίτλος</string>
     <string name="ext__meta__version">Έκδοση</string>
     <string name="ext__error__not_found_title">Η επέκταση δε βρέθηκε</string>
@@ -450,12 +487,20 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Ο αρχικός χαρακτήρας που επιλέγεται μετά από παρατεταμένο πάτημα είναι πάντα το υπονοούμενο σύμβολο, ή ο κύριος τονισμός εάν δεν υπάρχει διαθέσιμο υπονοούμενο σύμβολο</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Έξυπνη προτεραιοποίηση</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Ο αρχικός χαρακτήρας που επιλέγεται μετά από παρατεταμένο πάτημα αποφασίζεται δυναμικά ώστε να είναι είτε ο κύριος τονισμός, είτε το υπονοούμενο σύμβολο, βάσει της τρέχουσας γλώσσας και διάταξης</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Κανονικό</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Κεφαλαία</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Να μην εμφανίζεται ποτέ</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Να εμφανίζεται πάντα</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Να εμφανίζεται δυναμικά</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ανενεργό</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Λειτουργία για αριστερόχειρες</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Λειτουργία για δεξιόχειρες</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Πάνω από την πρωτεύουσα σειρά</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ του περιβάλλοντος της εφαρμογής και της πρωτεύουσας σειράς</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Κάτω από την πρωτεύουσα σειρά</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ της πρωτεύουσας σειράς και του πληκτρολογίου κειμένου</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Επικάλυψη περιβάλλοντος εφαρμογής</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά ως επικάλυμμα πάνω από το περιβάλλον της εφαρμογής, χωρίς να επηρεάζει το προκύπτον ύψος του περιβάλλοντος της εφαρμογής. Να σημειωθεί ότι αυτή η τοποθέτηση ίσως προκαλέσει μερική κάλυψη του πεδίου κειμένου της εφαρμογής</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Χρήση γλωσσών συστήματος</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Καμία ενέργεια</string>

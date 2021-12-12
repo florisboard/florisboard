@@ -51,8 +51,11 @@
     <string name="settings__home__title" comment="Title of the Home screen">Добре дошли във {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Клавиатурата FlorisBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като метод за въвеждане по подразбиране. Докоснете тук, за да промените.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подвидове</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подвид</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редактиране на подвид</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основен език</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Подредба на клавишите</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Символи, основен изглед</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Символи, вторичен изглед</string>
@@ -64,8 +67,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, основен изглед</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, вторичен изглед</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Избиране на език</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Търсене на език</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Език, съдържащ „{search_term}“ не е намерен.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; изберете &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Предложени предварителни настройки на подвида</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Няма предварителни предложени настройки на подвида. За да видите всички ппредварителни настройки използвайте бутона отдолу.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Предварителни настройки на подвида</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Показване на всички</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Изглежда не сте настроили подвидове. По подразбиране ще се използва English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Този подвид вече съществува!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Най-малко едно поле е без стойност. Изберете стойност за всички полета.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не е инсталирано)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Подредби</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим на тема</string>
@@ -199,10 +213,21 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при задържане на клавиш</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Клавишът интервал превключва към букви</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Клавишът за интервал превключва към букви ако се въвеждат символи или цифри</string>
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Първи ред</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Допълнителен ред</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Допълнителен ред</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Добавя се адаптивен втори ред за допълнителни клавиши</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Разположение на допълнителния ред</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Ред с действия</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Автонатично разтваряне/събиране</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от съдържанието на междинната памет</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се изписват с главни букви въз основа на текущия контекст</string>
@@ -210,6 +235,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Потребителски речници</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Системен потребителски речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление на системния потребителски речник</string>
@@ -305,7 +331,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензи с отворен код</string>
     <string name="about__version__title" comment="Preference title">Издание</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номера на изданието е копирано в междинната памет</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Нещо се обърка: %s</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Нещо се обърка: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Дневник на промените</string>
     <string name="about__changelog__summary" comment="Preference summary">Какво е новото</string>
     <string name="about__repository__title" comment="Preference title">Хранилище (GitHub)</string>
@@ -344,6 +370,7 @@
     <string name="assets__action__select_dir">Избиране на папка</string>
     <string name="assets__action__select_file">Избиране на файл</string>
     <string name="assets__action__yes">Да</string>
+    <string name="assets__error__title">Грешка</string>
     <string name="assets__error__details">Подробности</string>
     <string name="assets__error__invalid">Невалидно</string>
     <string name="assets__error__snackbar_message">Нещо се обърка</string>
@@ -377,6 +404,11 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard изглежда спира да работи многократно…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Връщане към предишна клавиатура, за да се спре безкрайния цикъл от сривове. Докоснете, за да видите подробности за грешката</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Междинна памет</string>
+    <string name="clipboard__disabled__enable_button">История</string>
+    <string name="clipboard__empty__title">Междинната памет е празна</string>
+    <string name="clipboard__locked__title">Междинната памет е недостъпна</string>
+    <string name="clipboard__group_other">Друго</string>
     <string name="clip__clear_history">Изчистване на историята</string>
     <string name="clip__unpin_item">Освобождаване</string>
     <string name="clip__pin_item">Закачане</string>
@@ -393,7 +425,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Промените в междинната памет на приложението се отразяват в системната</string>
     <string name="pref__clipboard__group_clipboard_history__label">История на междинната памет</string>
     <string name="pref__clipboard__enable_clipboard_history__label">История</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Запазва се хронология с елементите от междинната памет</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Запазване на копираното за по-бърз достъп до него</string>
     <string name="pref__clipboard__clean_up_old__label">Премахване на стари елементи</string>
     <string name="pref__clipboard__clean_up_after__label">Премахване на старите елементи след</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя</string>
@@ -419,6 +451,7 @@
     <string name="ext__meta__issue_tracker">Система за дефекти</string>
     <string name="ext__meta__keywords">Ключови думи</string>
     <string name="ext__meta__license">Лиценз</string>
+    <string name="ext__meta__maintainers">Отговорници по поддръжката</string>
     <string name="ext__meta__title">Заглавие</string>
     <string name="ext__meta__version">Издание</string>
     <string name="ext__error__not_found_description">Няма разширение с идентификатор „{id}“.</string>
@@ -438,12 +471,16 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е знака от подсказката или основния акцент ако в подсказката няма знак</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Интелигентен приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Първоначално избраният знак при задържане на клавиш се определя между основния акцент или знака от подсказката на базата на текущия език и подредба</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Обикновен</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Заключване на Shift</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps Lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не се показва</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Винаги се показва</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Показва се динамично</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Използване на системните езици</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Използване на подвидове на клавиатурата</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Без действие</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Предишен режим на клавиатура</string>

@@ -85,7 +85,9 @@
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mod za jednu ruku</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Visina tastature</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pritisak tastera</string>
+    <!-- Smartbar strings -->
     <string name="pref__smartbar__enabled__label" comment="Preference title">Uključi pametnu traku</string>
+    <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Sugestije</string>
     <string name="pref__correction__title" comment="Preference group title">Ispravke</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Tačka sa duplim razmakom</string>
@@ -124,6 +126,7 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__group_other">Drugo</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <!-- General strings -->
