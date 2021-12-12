@@ -23,10 +23,9 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.jetpref.ui.compose.ListPreference
-import dev.patrickgold.jetpref.ui.compose.ListPreferenceEntry
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
-import dev.patrickgold.jetpref.ui.compose.entry
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 @Composable
 fun AdvancedScreen() = FlorisScreen {
@@ -36,78 +35,81 @@ fun AdvancedScreen() = FlorisScreen {
         ListPreference(
             prefs.advanced.settingsTheme,
             title = stringRes(R.string.pref__advanced__settings_theme__label),
-            entries = listOf(
+            entries = listPrefEntries {
                 entry(
                     key = AppTheme.AUTO,
                     label = stringRes(R.string.settings__system_default),
-                ),
+                )
                 entry(
                     key = AppTheme.LIGHT,
                     label = stringRes(R.string.pref__advanced__settings_theme__light),
-                ),
+                )
                 entry(
                     key = AppTheme.DARK,
                     label = stringRes(R.string.pref__advanced__settings_theme__dark),
-                ),
+                )
                 entry(
                     key = AppTheme.AMOLED_DARK,
                     label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
-                ),
-            ),
+                )
+            },
         )
         ListPreference(
             prefs.advanced.settingsLanguage,
             title = stringRes(R.string.pref__advanced__settings_language__label),
-            entries = listOf(
-                "auto",
-                "ar",
-                "bg",
-                "bs",
-                "ca",
-                "ckb-IR",
-                "cs",
-                "da",
-                "de",
-                "el",
-                "en",
-                "eo",
-                "es",
-                "fa",
-                "fi",
-                "fr",
-                "hr",
-                "hu",
-                "in",
-                "it",
-                "iw",
-                "kmr-TR",
-                "ko-KR",
-                "lv-LV",
-                "mk",
-                "nds-DE",
-                "nl",
-                "no",
-                "pl",
-                "pt",
-                "pt-BR",
-                "ru",
-                "sk",
-                "sl",
-                "sr",
-                "sv",
-                "tr",
-                "uk",
-                "zgh",
-            ).map {
-                if (it == "auto") {
-                    entry(
-                        key = "auto",
-                        label = stringRes(R.string.settings__system_default),
-                    )
-                } else {
-                    FlorisLocale.fromTag(it).listEntry()
+            entries = listPrefEntries {
+                listOf(
+                    "auto",
+                    "ar",
+                    "bg",
+                    "bs",
+                    "ca",
+                    "ckb-IR",
+                    "cs",
+                    "da",
+                    "de",
+                    "el",
+                    "en",
+                    "eo",
+                    "es",
+                    "fa",
+                    "fi",
+                    "fr",
+                    "hr",
+                    "hu",
+                    "in",
+                    "it",
+                    "iw",
+                    "kmr-TR",
+                    "ko-KR",
+                    "lv-LV",
+                    "mk",
+                    "nds-DE",
+                    "nl",
+                    "no",
+                    "pl",
+                    "pt",
+                    "pt-BR",
+                    "ru",
+                    "sk",
+                    "sl",
+                    "sr",
+                    "sv",
+                    "tr",
+                    "uk",
+                    "zgh",
+                ).map { languageTag ->
+                    if (languageTag == "auto") {
+                        entry(
+                            key = "auto",
+                            label = stringRes(R.string.settings__system_default),
+                        )
+                    } else {
+                        val locale = FlorisLocale.fromTag(languageTag)
+                        entry(locale.languageTag(), locale.displayName(locale))
+                    }
                 }
-            },
+            }
         )
         SwitchPreference(
             prefs.advanced.showAppIcon,
@@ -124,8 +126,4 @@ fun AdvancedScreen() = FlorisScreen {
             summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
         )
     }
-}
-
-private fun FlorisLocale.listEntry(): ListPreferenceEntry<String> {
-    return entry(languageTag(), displayName(this))
 }

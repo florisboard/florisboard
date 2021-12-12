@@ -387,7 +387,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, в работе FlorisBoard постоянно возникают проблемы…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">История буфера обмена</string>
     <string name="clip__clear_history">Очистить историю</string>
     <string name="clip__unpin_item">Открепить</string>
     <string name="clip__pin_item">Закрепить</string>
@@ -402,7 +401,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Обновление системного буфера так же обновит буфер обмена Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронизировать с системным буфером обмена</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обмена Floris так же обновляет системный буфер обмена</string>
-    <string name="pref__clipboard__clipboard_history_title">История буфера обмена</string>
+    <string name="pref__clipboard__group_clipboard_history__label">История буфера обмена</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Включить историю буфера обмена</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Сохранять буфер обмена</string>
     <string name="pref__clipboard__clean_up_old__label">Очистить старые элементы</string>

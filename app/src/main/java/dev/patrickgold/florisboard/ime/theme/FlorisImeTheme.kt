@@ -21,6 +21,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -29,7 +30,6 @@ import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionConfig> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
 
-// TODO: This stylesheet is a complete work in progress, like with all Snygg components
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.Keyboard {
         background = rgbaColor(33, 33, 33)
@@ -81,13 +81,96 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(20)
     }
 
+    FlorisImeUi.ClipboardHeader {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(16.sp)
+    }
+    FlorisImeUi.ClipboardItem {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(14.sp)
+        shape = roundedCornerShape(12.dp)
+    }
+    FlorisImeUi.ClipboardItemPopup {
+        background = rgbaColor(117, 117, 117)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(14.sp)
+        shape = roundedCornerShape(12.dp)
+    }
+
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)
     }
 
-    FlorisImeUi.Smartbar {
+    FlorisImeUi.SmartbarPrimaryRow {
         background = rgbaColor(0, 0, 0, 0f)
+    }
+    FlorisImeUi.SmartbarPrimaryActionRowToggle {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(255, 255, 255)
+        shape = roundedCornerShape(50)
+    }
+    FlorisImeUi.SmartbarPrimarySecondaryRowToggle {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(144, 144, 144)
+        shape = roundedCornerShape(50)
+    }
+
+    FlorisImeUi.SmartbarSecondaryRow {
+        background = rgbaColor(33, 33, 33)
+    }
+
+    FlorisImeUi.SmartbarActionRow {
+        background = rgbaColor(0, 0, 0, 0f)
+    }
+    FlorisImeUi.SmartbarActionButton {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        shape = roundedCornerShape(50)
+    }
+
+    FlorisImeUi.SmartbarCandidateRow {
+        background = rgbaColor(0, 0, 0, 0f)
+    }
+    FlorisImeUi.SmartbarCandidateWord {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(14.sp)
+        shape = rectangleShape()
+    }
+    FlorisImeUi.SmartbarCandidateWord(pressedSelector = true) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarCandidateClip {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(14.sp)
+        shape = roundedCornerShape(8)
+    }
+    FlorisImeUi.SmartbarCandidateClip(pressedSelector = true) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarCandidateSpacer {
+        foreground = rgbaColor(255, 255, 255, 0.25f)
+    }
+
+    FlorisImeUi.SmartbarKey {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(18.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.SmartbarKey(pressedSelector = true) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarKey(disabledSelector = true) {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(66, 66, 66)
     }
 
     FlorisImeUi.SystemNavBar {

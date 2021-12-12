@@ -30,8 +30,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.AndroidSettings
-import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
-import dev.patrickgold.jetpref.ui.compose.Preference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 @Composable
 fun AndroidSettingsScreen(name: String?) = FlorisScreen(

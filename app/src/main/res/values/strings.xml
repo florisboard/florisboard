@@ -230,27 +230,39 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
 
+    <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
 
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primary row</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Flip row toggle buttons</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Flips secondary and action row toggles</string>
+
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secondary row</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Enable secondary row</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adds an expandable second row to allow for more controls to show</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Secondary row placement</string>
+
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Action row</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the action row based on current state</string>
+
+    <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
-    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
-    <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[EXPERIMENTAL] Display suggestions while you type</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, …)</string>
+    <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[NOT YET INCLUDED] Display suggestions while you type</string>
     <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently only English (US). May fail to load if insufficient heap size is available.</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string translatable="false" name="pref__suggestion__use_pref_words__label" comment="Preference title">[NOT YET INCLUDED] Next-word suggestions</string>
     <string translatable="false" name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Use previous words for generating suggestions</string>
-    <string translatable="false" name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">[EXPERIMENTAL] Block possibly offensive words</string>
+    <string translatable="false" name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">[NOT YET INCLUDED] Block possibly offensive words</string>
     <string translatable="false" name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
-    <string translatable="false" name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">[EXPERIMENTAL] Clipboard content suggestions</string>
-    <string translatable="false" name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
-    <string translatable="false" name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">[EXPERIMENTAL] Clipboard suggestion timeout</string>
-    <string translatable="false" name="pref__suggestion__display_mode__label" comment="Preference title">[EXPERIMENTAL] Suggestions display mode</string>
-    <string translatable="false" name="pref__suggestion__display_mode__classic" comment="Preference value">Classic (3 columns)</string>
-    <string translatable="false" name="pref__suggestion__display_mode__dynamic" comment="Preference value">Dynamic width</string>
-    <string translatable="false" name="pref__suggestion__display_mode__dynamic_scrollable" comment="Preference value">Dynamic width &amp; scrollable</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Clipboard suggestion timeout</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -369,7 +381,7 @@
 
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copied to clipboard</string>
-    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Something went wrong: %s</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Something went wrong: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Changelog</string>
     <string name="about__changelog__summary" comment="Preference summary">What\'s new</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
@@ -450,7 +462,17 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
 
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Clipboard history</string>
+    <string name="clipboard__header_title">Clipboard</string>
+    <string name="clipboard__disabled__title">Clipboard history is currently disabled</string>
+    <string name="clipboard__disabled__message">{app_name}\'s clipboard history allows you to quickly store and access text and images you copy, with the ability to pin items, configure automatic clean-up and set a maximum item limit.</string>
+    <string name="clipboard__disabled__enable_button">Enable clipboard history</string>
+    <string name="clipboard__empty__title">Your clipboard is empty</string>
+    <string name="clipboard__empty__message">Once you copy text clips or images they will show up here.</string>
+    <string name="clipboard__locked__title">Your clipboard is locked</string>
+    <string name="clipboard__locked__message">To access your clipboard history, please first unlock your device.</string>
+    <string name="clipboard__group_pinned">Pinned</string>
+    <string name="clipboard__group_recent">Recent</string>
+    <string name="clipboard__group_other">Other</string>
     <string name="clip__clear_history">Clear history</string>
     <string name="clip__unpin_item">Unpin item</string>
     <string name="clip__pin_item">Pin item</string>
@@ -458,6 +480,9 @@
     <string name="clip__paste_item">Paste</string>
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
+    <string name="clipboard__cleared_primary_clip">Cleared primary clip</string>
+    <string name="clipboard__cleared_history">Cleared history</string>
+    <string name="clipboard__cleared_full_history">Cleared full history</string>
     <string name="settings__clipboard__title">Clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>
@@ -465,9 +490,9 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
-    <string name="pref__clipboard__clipboard_history_title">Clipboard history</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>
     <string name="pref__clipboard__clean_up_old__label">Clean up old items</string>
     <string name="pref__clipboard__clean_up_after__label">Clean up old items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
@@ -479,6 +504,8 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Tools specifically designed for debugging and troubleshooting</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Show heap memory stats</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlays the heap memory usage and max size in the top-right corner</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Show primary clip</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Overlays the current primary clip of the clipboard</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Clear internal user dictionary database</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Clears all words from the dictionary database table</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset \"{flag_name}\" flag</string>
@@ -518,6 +545,10 @@
     <string name="state__enabled">Enabled</string>
 
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
+
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint is prioritized</string>
@@ -536,6 +567,13 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
+
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Above primary row</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Places the secondary row between the app UI and the primary row</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Below primary row</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Places the secondary row between the primary row and the text keyboard</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Places the secondary row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>

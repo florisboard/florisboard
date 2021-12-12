@@ -18,20 +18,29 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import android.view.KeyEvent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.neverEqualPolicy
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.InputMethodUtils
+import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -42,6 +51,7 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarActions
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -63,6 +73,7 @@ private val DefaultRenderInfo = RenderInfo()
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
+    private val clipboardManager by context.clipboardManager()
     private val extensionManager by context.extensionManager()
     private val subtypeManager by context.subtypeManager()
 
@@ -71,13 +82,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val keyboardCache = TextKeyboardCache()
 
     val resources = KeyboardManagerResources()
+    val smartbarActions = SmartbarActions()
 
     private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
     val activeState = KeyboardState.new()
+
     private val renderInfoGuard = Mutex(locked = false)
     private var renderInfoVersion: Int = 1
     private val _renderInfo = MutableLiveData(DefaultRenderInfo)
     val renderInfo: LiveData<RenderInfo> get() = _renderInfo
+    private val _smartbarRenderInfo = MutableLiveData(DefaultRenderInfo)
+    val smartbarRenderInfo: LiveData<RenderInfo> get() = _smartbarRenderInfo
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -116,6 +131,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         subtypeManager.activeSubtype.observeForever {
             updateRenderInfo()
         }
+        clipboardManager.primaryClip.observeForever {
+            updateRenderInfo()
+        }
     }
 
     private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
@@ -145,7 +163,38 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 state = state,
                 evaluator = computingEvaluator,
             ))
+            smartbarClipboardCursorRenderInfo(state)
         }
+    }
+
+    private suspend fun smartbarClipboardCursorRenderInfo(state: KeyboardState) {
+        val mode = KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW
+        val subtype = Subtype.DEFAULT
+        val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
+            layoutManager.computeKeyboardAsync(
+                keyboardMode = mode,
+                subtype = subtype,
+            ).await()
+        }.await()
+        val computingEvaluator = KeyboardComputingEvaluator(
+            keyboard = computedKeyboard,
+            state = state,
+            subtype = subtype,
+        )
+        for (key in computedKeyboard.keys()) {
+            key.compute(computingEvaluator)
+            key.computeLabelsAndDrawables(computingEvaluator)
+        }
+        _smartbarRenderInfo.postValue(RenderInfo(
+            keyboard = computedKeyboard,
+            state = state,
+            evaluator = computingEvaluator,
+        ))
+    }
+
+    @Composable
+    fun observeActiveState(): State<KeyboardState> {
+        return activeState.observeAsNonNullState(neverEqualPolicy())
     }
 
     fun updateCapsState() {
@@ -210,6 +259,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         if (keyData != null) {
             inputEventDispatcher.send(InputKeyEvent.downUp(keyData))
+        }
+    }
+
+    fun commitCandidate(candidate: NlpManager.Candidate) {
+        when (candidate) {
+            is NlpManager.Candidate.Word -> activeEditorInstance?.commitCompletion(candidate.word)
+            is NlpManager.Candidate.Clip -> activeEditorInstance?.commitClipboardItem(candidate.clipboardItem)
         }
     }
 
@@ -503,7 +559,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CLIPBOARD_PASTE -> activeEditorInstance?.performClipboardPaste()
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
             KeyCode.CLIPBOARD_SELECT_ALL -> activeEditorInstance?.performClipboardSelectAll()
-            KeyCode.CLIPBOARD_CLEAR_HISTORY -> {}//florisboard.florisClipboardManager?.clearHistoryWithAnimation()
+            KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistory()
+            KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
+            KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
+                clipboardManager.setPrimaryClip(null)
+                appContext.showShortToast(R.string.clipboard__cleared_primary_clip)
+            }
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode(isRight = false)
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> toggleOneHandedMode(isRight = true)
             KeyCode.DELETE -> handleDelete()
@@ -513,9 +574,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_HIDE_UI -> FlorisImeService.hideUi()
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
             KeyCode.IME_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
-            KeyCode.IME_UI_MODE_TEXT -> {} // TODO
-            KeyCode.IME_UI_MODE_MEDIA -> {} // TODO
-            KeyCode.IME_UI_MODE_CLIPBOARD -> {} // TODO
+            KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
+            KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
+            KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
@@ -652,20 +713,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_CUT -> {
                     state.isSelectionMode && state.isRichInputEditor
                 }
-                KeyCode.CLIPBOARD_PASTE -> {
-                    // such gore. checks
-                    // 1. has a clipboard item
-                    // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
-                    //florisboard.florisClipboardManager?.canBePasted(
-                    //    florisboard.florisClipboardManager?.primaryClip
-                    //) == true
-                    false
+                KeyCode.CLIPBOARD_PASTE,
+                KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
+                    clipboardManager.canBePasted(clipboardManager.primaryClip.value)
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     state.isRichInputEditor
-                }
-                KeyCode.IME_UI_MODE_CLIPBOARD -> {
-                    prefs.clipboard.enableHistory.get()
                 }
                 else -> true
             }
@@ -687,7 +740,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !shouldShowLanguageSwitch()
                     }
                 }
-                KeyCode.IME_UI_MODE_CLIPBOARD -> prefs.clipboard.enableHistory.get()
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
                         prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()

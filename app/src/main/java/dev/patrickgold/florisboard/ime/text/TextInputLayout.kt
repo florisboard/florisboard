@@ -29,14 +29,16 @@ import dev.patrickgold.florisboard.ime.text.smartbar.Smartbar
 import dev.patrickgold.florisboard.keyboardManager
 
 @Composable
-fun TextInputLayout() {
+fun TextInputLayout(
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
     val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(),
     ) {

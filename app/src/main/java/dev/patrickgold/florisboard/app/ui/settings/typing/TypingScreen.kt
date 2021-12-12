@@ -25,50 +25,81 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
+@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun TypingScreen() = FlorisScreen(title = stringRes(R.string.settings__typing__title)) {
-    PreferenceGroup(title = stringRes(R.string.pref__suggestion__title)) {
-        SwitchPreference(
-            prefs.suggestion.api30InlineSuggestionsEnabled,
-            title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
-            summary = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__summary),
-            visibleIf = { AndroidVersion.ATLEAST_API30_R },
-        )
-        // This card is temporary and is therefore not using a string resource
-        FlorisInfoCard(
-            modifier = Modifier.padding(8.dp),
-            text = if (AndroidVersion.ATLEAST_API30_R) {
-                "Suggestions (except autofill) are not available in this beta release"
-            } else {
-                "Suggestions are not available in this beta release"
-            },
-        )
-        SwitchPreference(
-            prefs.suggestion.enabled,
-            title = stringRes(R.string.pref__suggestion__enabled__label),
-            summary = stringRes(R.string.pref__suggestion__enabled__summary),
-            enabledIf = { false },
-        )
-    }
+fun TypingScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__typing__title)
 
-    PreferenceGroup(title = stringRes(R.string.pref__correction__title)) {
-        SwitchPreference(
-            prefs.correction.autoCapitalization,
-            title = stringRes(R.string.pref__correction__auto_capitalization__label),
-            summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
-        )
-        SwitchPreference(
-            prefs.correction.rememberCapsLockState,
-            title = stringRes(R.string.pref__correction__remember_caps_lock_state__label),
-            summary = stringRes(R.string.pref__correction__remember_caps_lock_state__summary),
-        )
-        SwitchPreference(
-            prefs.correction.doubleSpacePeriod,
-            title = stringRes(R.string.pref__correction__double_space_period__label),
-            summary = stringRes(R.string.pref__correction__double_space_period__summary),
-        )
+    content {
+        PreferenceGroup(title = stringRes(R.string.pref__suggestion__title)) {
+            SwitchPreference(
+                prefs.suggestion.api30InlineSuggestionsEnabled,
+                title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
+                summary = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__summary),
+                visibleIf = { AndroidVersion.ATLEAST_API30_R },
+            )
+            // This card is temporary and is therefore not using a string resource
+            FlorisInfoCard(
+                modifier = Modifier.padding(8.dp),
+                text = if (AndroidVersion.ATLEAST_API30_R) {
+                    "Suggestions (except autofill) are not available in this beta release"
+                } else {
+                    "Suggestions are not available in this beta release"
+                },
+            )
+            SwitchPreference(
+                prefs.suggestion.enabled,
+                title = stringRes(R.string.pref__suggestion__enabled__label),
+                summary = stringRes(R.string.pref__suggestion__enabled__summary),
+            )
+            ListPreference(
+                prefs.suggestion.displayMode,
+                title = stringRes(R.string.pref__suggestion__display_mode__label),
+                entries = CandidatesDisplayMode.listEntries(),
+                enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.suggestion.clipboardContentEnabled,
+                title = stringRes(R.string.pref__suggestion__clipboard_content_enabled__label),
+                summary = stringRes(R.string.pref__suggestion__clipboard_content_enabled__summary),
+                enabledIf = { prefs.suggestion.enabled isEqualTo true },
+            )
+            DialogSliderPreference(
+                prefs.suggestion.clipboardContentTimeout,
+                title = stringRes(R.string.pref__suggestion__clipboard_content_timeout__label),
+                unit = stringRes(R.string.unit__seconds__symbol),
+                min = 30,
+                max = 300,
+                stepIncrement = 5,
+                enabledIf = {
+                    (prefs.suggestion.enabled isEqualTo true) && (prefs.suggestion.clipboardContentEnabled isEqualTo true)
+                }
+            )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.pref__correction__title)) {
+            SwitchPreference(
+                prefs.correction.autoCapitalization,
+                title = stringRes(R.string.pref__correction__auto_capitalization__label),
+                summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
+            )
+            SwitchPreference(
+                prefs.correction.rememberCapsLockState,
+                title = stringRes(R.string.pref__correction__remember_caps_lock_state__label),
+                summary = stringRes(R.string.pref__correction__remember_caps_lock_state__summary),
+            )
+            SwitchPreference(
+                prefs.correction.doubleSpacePeriod,
+                title = stringRes(R.string.pref__correction__double_space_period__label),
+                summary = stringRes(R.string.pref__correction__double_space_period__summary),
+            )
+        }
     }
 }

@@ -30,8 +30,6 @@
 
             <include android:id="@+id/media" layout="@layout/media_input_layout"/>
 
-            <include android:id="@+id/clipboard" layout="@layout/clipboard_layout"/>
-
         </dev.patrickgold.florisboard.common.FlorisViewFlipper>
 
     </dev.patrickgold.florisboard.ime.core.InputView>

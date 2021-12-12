@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.6.0"
     id("com.google.android.gms.oss-licenses-plugin")
     id("de.mannodermaus.android-junit5")
 }
@@ -78,7 +78,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-beta03"
+        kotlinCompilerExtensionVersion = "1.1.0-beta04"
     }
 
     externalNativeBuild {
@@ -151,10 +151,10 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.4.0") // possibly remove after settings rework
     implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
-    implementation("androidx.compose.material:material:1.1.0-beta03")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-beta03")
-    implementation("androidx.compose.ui:ui:1.1.0-beta03")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-beta03")
+    implementation("androidx.compose.material:material:1.1.0-beta04")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-beta04")
+    implementation("androidx.compose.ui:ui:1.1.0-beta04")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-beta04")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
@@ -166,8 +166,9 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha12")
-    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha12")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta01")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta01")
+    implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta01")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("androidx.room:room-runtime:2.3.0")

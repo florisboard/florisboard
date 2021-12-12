@@ -22,9 +22,27 @@ object FlorisImeUi {
     const val KeyHint = "key-hint"
     const val KeyPopup = "key-popup"
 
+    const val ClipboardHeader = "clipboard-header"
+    const val ClipboardItem = "clipboard-item"
+    const val ClipboardItemPopup = "clipboard-item-popup"
+
     const val OneHandedPanel = "one-handed-panel"
 
-    const val Smartbar = "smartbar"
+    const val SmartbarPrimaryRow = "smartbar-primary-row"
+    const val SmartbarPrimaryActionRowToggle = "smartbar-primary-action-row-toggle"
+    const val SmartbarPrimarySecondaryRowToggle = "smartbar-primary-secondary-row-toggle"
+
+    const val SmartbarSecondaryRow = "smartbar-secondary-row"
+
+    const val SmartbarActionRow = "smartbar-action-row"
+    const val SmartbarActionButton = "smartbar-action-button"
+
+    const val SmartbarCandidateRow = "smartbar-candidate-row"
+    const val SmartbarCandidateWord = "smartbar-candidate-word"
+    const val SmartbarCandidateClip = "smartbar-candidate-clip"
+    const val SmartbarCandidateSpacer = "smartbar-candidate-spacer"
+
+    const val SmartbarKey = "smartbar-key"
 
     const val SystemNavBar = "system-nav-bar"
 }

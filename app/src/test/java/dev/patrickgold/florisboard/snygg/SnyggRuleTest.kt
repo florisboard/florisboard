@@ -13,13 +13,13 @@ class SnyggRuleTest : FreeSpec({
         "button[code=-113]" to SnyggRule(element = "button", codes = listOf(-113)),
         "button[code=113|212]" to SnyggRule(element = "button", codes = listOf(113,212)),
         "button[code=113][group=1]" to SnyggRule(element = "button", codes = listOf(113), groups = listOf(1)),
-        "button:hover" to SnyggRule(element = "button", hoverSelector = true),
-        "button:focus" to SnyggRule(element = "button", focusSelector = true),
         "button:pressed" to SnyggRule(element = "button", pressedSelector = true),
-        "button:hover:focus" to SnyggRule(element = "button", hoverSelector = true, focusSelector = true),
-        "button:hover:pressed" to SnyggRule(element = "button", hoverSelector = true, pressedSelector = true),
-        "button:focus:pressed" to SnyggRule(element = "button", focusSelector = true, pressedSelector = true),
-        "button:hover:focus:pressed" to SnyggRule(element = "button", hoverSelector = true, focusSelector = true, pressedSelector = true),
+        "button:focus" to SnyggRule(element = "button", focusSelector = true),
+        "button:disabled" to SnyggRule(element = "button", disabledSelector = true),
+        "button:focus:disabled" to SnyggRule(element = "button", focusSelector = true, disabledSelector = true),
+        "button:pressed:disabled" to SnyggRule(element = "button", pressedSelector = true, disabledSelector = true),
+        "button:pressed:focus" to SnyggRule(element = "button", pressedSelector = true, focusSelector = true),
+        "button:pressed:focus:disabled" to SnyggRule(element = "button", pressedSelector = true, focusSelector = true, disabledSelector = true),
         "button[code=113][group=1]:pressed" to SnyggRule(element = "button", codes = listOf(113), groups = listOf(1), pressedSelector = true),
     )
 
@@ -43,9 +43,9 @@ class SnyggRuleTest : FreeSpec({
             "button[code=]",
             "button[group]",
             "button[mode=normal]",
-            "button::hover",
-            "button::focus",
             "button::pressed",
+            "button::focus",
+            "button::disabled",
         ).forEach { ruleStr ->
             "`$ruleStr` should be null" {
                 SnyggRule.from(ruleStr) shouldBe null

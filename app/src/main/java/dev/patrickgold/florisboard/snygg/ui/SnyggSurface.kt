@@ -21,6 +21,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalAbsoluteElevation
 import androidx.compose.material.LocalContentColor
@@ -37,6 +39,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
+private val NoContentPadding = PaddingValues(all = 0.dp)
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SnyggSurface(
@@ -45,6 +49,7 @@ fun SnyggSurface(
     shape: SnyggValue? = null,
     border: BorderStroke? = null,
     clip: Boolean = false,
+    contentPadding: PaddingValues = NoContentPadding,
     elevation: Dp = 0.dp,
     clickAndSemanticsModifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
@@ -72,7 +77,8 @@ fun SnyggSurface(
                     color = backgroundColor,
                     shape = shapeValue,
                 )
-                .then(clickAndSemanticsModifier),
+                .then(clickAndSemanticsModifier)
+                .padding(contentPadding),
             propagateMinConstraints = false,
             content = content,
         )

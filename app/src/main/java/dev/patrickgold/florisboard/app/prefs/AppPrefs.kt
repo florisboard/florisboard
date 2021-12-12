@@ -27,7 +27,8 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
+import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
+import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.VersionName
@@ -72,8 +73,8 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__sync_to_system",
             default = false,
         )
-        val enableHistory = boolean(
-            key = "clipboard__enable_history",
+        val historyEnabled = boolean(
+            key = "clipboard__history_enabled",
             default = false,
         )
         val cleanUpOld = boolean(
@@ -118,6 +119,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val showHeapMemoryStats = boolean(
             key = "devtools__show_heap_memory_stats",
+            default = false,
+        )
+        val showPrimaryClip = boolean(
+            key = "devtools__show_primary_clip",
             default = false,
         )
         val overrideWordSuggestionsMinHeapRestriction = boolean(
@@ -435,6 +440,38 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__enabled",
             default = true,
         )
+        val primaryRowFlipToggles = boolean(
+            key = "smartbar__primary_row_flip_toggles",
+            default = false,
+        )
+        val secondaryRowEnabled = boolean(
+            key = "smartbar__secondary_row_enabled",
+            default = true,
+        )
+        val secondaryRowExpanded = boolean(
+            key = "smartbar__secondary_row_expanded",
+            default = false,
+        )
+        val secondaryRowPlacement = enum(
+            key = "smartbar__secondary_row_placement",
+            default = SecondaryRowPlacement.ABOVE_PRIMARY,
+        )
+        val actionRowExpanded = boolean(
+            key = "smartbar__action_row_expanded",
+            default = false,
+        )
+        val actionRowExpandWithAnimation = boolean(
+            key = "smartbar__action_row_expand_with_animation",
+            default = true,
+        )
+        val actionRowAutoExpandCollapse = boolean(
+            key = "smartbar__action_row_auto_expand_collapse",
+            default = true,
+        )
+        val actions = string(
+            key = "smartbar__actions",
+            default = "[]",
+        )
     }
 
     val spelling = Spelling()
@@ -465,7 +502,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val displayMode = enum(
             key = "suggestion__display_mode",
-            default = CandidateView.DisplayMode.DYNAMIC_SCROLLABLE,
+            default = CandidatesDisplayMode.DYNAMIC_SCROLLABLE,
         )
         val usePrevWords = boolean(
             key = "suggestion__use_prev_words",
@@ -477,7 +514,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val clipboardContentEnabled = boolean(
             key = "suggestion__clipboard_content_enabled",
-            default = false,
+            default = true,
         )
         val clipboardContentTimeout = int(
             key = "suggestion__clipboard_content_timeout",

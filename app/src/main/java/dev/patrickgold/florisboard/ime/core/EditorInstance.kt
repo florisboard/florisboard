@@ -32,6 +32,7 @@ import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.kotlin.stringBuilder
@@ -39,9 +40,8 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.clip.provider.ItemType
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.util.debugSummarize
 
@@ -65,6 +66,7 @@ class EditorInstance(private val ims: InputMethodService) {
     }
 
     private val prefs by florisPreferenceModel()
+    private val clipboardManager by ims.clipboardManager()
     private val keyboardManager by ims.keyboardManager()
 
     private val activeState get() = keyboardManager.activeState
@@ -72,7 +74,6 @@ class EditorInstance(private val ims: InputMethodService) {
     internal var extractedToken: Int = 0
     private var lastReportedComposingBounds: Bounds = Bounds(-1, -1)
     private var isInputBindingActive: Boolean = false
-    private val florisClipboardManager get() = FlorisClipboardManager.getInstance()
     var contentMimeTypes: Array<out String?>? = null
 
     var shouldReevaluateComposingSuggestions: Boolean = false
@@ -319,6 +320,7 @@ class EditorInstance(private val ims: InputMethodService) {
      * the cursor, then set the cursor position to the first character after the inserted text.
      *
      * @param text The text to commit.
+     *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitText(text: String): Boolean {
@@ -385,9 +387,11 @@ class EditorInstance(private val ims: InputMethodService) {
      * This allows for committing (e.g) images.
      *
      * @param item The ClipboardItem to commit
+     *
      * @return True on success, false if something went wrong.
      */
-    fun commitClipboardItem(item: ClipboardItem): Boolean {
+    fun commitClipboardItem(item: ClipboardItem?): Boolean {
+        if (item == null) return false
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.IMAGE -> {
@@ -402,7 +406,7 @@ class EditorInstance(private val ims: InputMethodService) {
                 if (AndroidVersion.ATLEAST_API25_N_MR1) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 } else {
-                    FlorisBoard.getInstance().grantUriPermission(
+                    ims.grantUriPermission(
                         editorInfo!!.packageName ?: "",
                         item.uri,
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -629,7 +633,7 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardCut(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        florisClipboardManager.addNewPlaintext(selection.icText)
+        clipboardManager.addNewPlaintext(selection.icText)
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
@@ -642,7 +646,7 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        florisClipboardManager.addNewPlaintext(selection.icText)
+        clipboardManager.addNewPlaintext(selection.icText)
         return selection.updateAndNotify(selection.end, selection.end)
     }
 
@@ -655,7 +659,7 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return commitClipboardItem(florisClipboardManager.primaryClip!!)
+        return commitClipboardItem(clipboardManager.primaryClip.value)
     }
 
     /**

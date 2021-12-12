@@ -32,7 +32,7 @@ import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.TextProcessor
+import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
@@ -766,7 +766,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
             KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
-            KeyCode.CLIPBOARD_CLEAR_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
             KeyCode.CLIPBOARD_PASTE -> activeEditorInstance.performClipboardPaste()
@@ -791,7 +790,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SPACE -> handleSpace(ev)
             KeyCode.IME_UI_MODE_MEDIA -> florisboard.setActiveInput(R.id.media_input)
-            KeyCode.IME_UI_MODE_CLIPBOARD -> florisboard.setActiveInput(R.id.clip_input)
             KeyCode.IME_UI_MODE_TEXT -> florisboard.setActiveInput(R.id.text_input, forceSwitchToCharacters = true)
             //KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT -> florisboard.toggleOneHandedMode(isRight = false)
             //KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> florisboard.toggleOneHandedMode(isRight = true)

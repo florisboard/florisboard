@@ -245,7 +245,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Xuya ye FlorîsBoard bi berdewamî dest ji kar berde…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ji bo rawestandina loopa lêxistinê ya bêdawî, dîsa li klavyeya berê vedigerî. Ji bo dîtina hûrguliyên çewtiyê lêdan bike</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Dîroka panelê</string>
     <string name="clip__clear_history">Dîrokê paqij bike</string>
     <string name="clip__unpin_item">Hêmanê sabit rake</string>
     <string name="clip__pin_item">Hêmanê sabit bike</string>

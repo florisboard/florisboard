@@ -52,8 +52,7 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtensionEditor
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.spellingManager
-import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
-import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 private object Step {
     const val SelectSource: Int = 1
@@ -61,7 +60,6 @@ private object Step {
     const val VerifyImport: Int = 3
 }
 
-@OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun ImportSpellingArchiveScreen() = FlorisScreen(
     title = stringRes(R.string.settings__spelling__import__title),

@@ -21,13 +21,13 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.jetpref.ui.compose.DialogSliderPreference
-import dev.patrickgold.jetpref.ui.compose.ListPreference
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
-import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
-@OptIn(ExperimentalJetPrefUi::class)
+@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun GesturesScreen() = FlorisScreen(title = stringRes(R.string.settings__gestures__title)) {
     PreferenceGroup(title = stringRes(R.string.pref__glide__title)) {

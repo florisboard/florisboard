@@ -108,7 +108,7 @@ fun PopupExtBox(
         modifier = modifier
             .snyggBackground(popupStyle.background, popupStyle.shape),
     ) {
-        for (row in elements.reversed()) {
+        for (row in elements.asReversed()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -385,7 +385,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Parece que FlorisBoard ha dejado de funcionar repetidamente…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Volviendo al teclado anterior para detener el bucle de cierre infinito. Toque para ver los detalles del error</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Historial del portapapeles</string>
     <string name="clip__clear_history">Borrar historial</string>
     <string name="clip__unpin_item">Desanclar</string>
     <string name="clip__pin_item">Anclar</string>
@@ -400,7 +399,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Las actualizaciones en el portapapeles del sistema también actualizan el portapapeles de Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar al portapapeles del sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Las actualizaciones del portapapeles de Floris también actualizan el portapapeles del sistema</string>
-    <string name="pref__clipboard__clipboard_history_title">Historial del portapapeles</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Historial del portapapeles</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Habilitar historial de portapapeles</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conservar items del portapapeles</string>
     <string name="pref__clipboard__clean_up_old__label">Limpiar ítems antiguos</string>

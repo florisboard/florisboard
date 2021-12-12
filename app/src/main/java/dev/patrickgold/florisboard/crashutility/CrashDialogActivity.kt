@@ -65,7 +65,7 @@ class CrashDialogActivity : AppCompatActivity() {
                     appendLine("suggestions_next_word = ${prefs.suggestion.usePrevWords.get()}")
                     appendLine("glide = ${prefs.glide.enabled.get()}")
                     appendLine("clipboard_internal = ${prefs.clipboard.useInternalClipboard.get()}")
-                    appendLine("clipboard_history = ${prefs.clipboard.enableHistory.get()}")
+                    appendLine("clipboard_history = ${prefs.clipboard.historyEnabled.get()}")
                 } catch (_: Exception) {
                     appendLine("error: Exception was thrown while retrieving preferences, instance not null.")
                 }

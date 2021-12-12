@@ -385,7 +385,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Parece que FlorisBoard não está a funcionar muito bem…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">A ativar o teclado usado anteriormente para parar este ciclo. Toque para ver os detalhes do erro.</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Histórico da área de transferência</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desafixar item</string>
     <string name="clip__pin_item">Fixar item</string>
@@ -400,7 +399,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Atualizações à área de transferência do sistema atualizam a do Florisboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar para área de transferência do sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">As atualizações à área de transferência do Florisboard atualizam a do sistema</string>
-    <string name="pref__clipboard__clipboard_history_title">Histórico da área de transferência</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Histórico da área de transferência</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ativar histórico da área de transferência</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Manter itens na área de transferência</string>
     <string name="pref__clipboard__clean_up_old__label">Remover itens antigos</string>

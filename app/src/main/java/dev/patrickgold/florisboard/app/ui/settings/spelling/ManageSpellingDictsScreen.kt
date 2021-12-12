@@ -35,9 +35,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 
-@OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun ManageSpellingDictsScreen() = FlorisScreen(
     title = stringRes(R.string.settings__spelling__manage_dicts__title),

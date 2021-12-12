@@ -385,7 +385,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard tekrar tekrar çalışmayı durduruyor gibi görünüyor…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Sonsuz çökme döngüsünü durdurmak için önceki klavyeye geri dönülüyor. Hata detaylarını görmek için dokunun</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Pano geçmişi</string>
     <string name="clip__clear_history">Geçmişi Temizle</string>
     <string name="clip__unpin_item">Öğeyi sabitlemeyi kaldır</string>
     <string name="clip__pin_item">Öğeyi sabitle</string>
@@ -400,7 +399,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistem panosu değişimleri aynı zamanda Floris panosuna da yansır</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sistem panosuna senkronize et</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris panosu değişimleri aynı zamanda sistem panosuna da yansır</string>
-    <string name="pref__clipboard__clipboard_history_title">Pano geçmişi</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Pano geçmişi</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Pano geçmişini etkinleştir</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Pano öğelerini muhafaza et</string>
     <string name="pref__clipboard__clean_up_old__label">Eski öğeleri temizle</string>

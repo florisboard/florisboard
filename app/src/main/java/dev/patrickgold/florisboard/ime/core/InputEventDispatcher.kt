@@ -17,9 +17,9 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.os.SystemClock
-import android.util.SparseArray
-import androidx.core.util.forEach
-import androidx.core.util.set
+import androidx.collection.SparseArrayCompat
+import androidx.collection.forEach
+import androidx.collection.set
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -41,7 +41,7 @@ class InputEventDispatcher private constructor(
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
     private val mainScope: CoroutineScope = CoroutineScope(mainDispatcher + SupervisorJob())
     private val defaultScope: CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
-    private val pressedKeys: SparseArray<PressedKeyInfo> = SparseArray()
+    private val pressedKeys: SparseArrayCompat<PressedKeyInfo> = SparseArrayCompat()
     var lastKeyEventDown: InputKeyEvent? = null
         private set
     var lastKeyEventUp: InputKeyEvent? = null
@@ -80,7 +80,7 @@ class InputEventDispatcher private constructor(
              channelCapacity, mainDispatcher, defaultDispatcher, repeatableKeyCodes.clone()
         )
 
-        private fun <T> SparseArray<T>.removeAndReturn(key: Int): T? {
+        private fun <T> SparseArrayCompat<T>.removeAndReturn(key: Int): T? {
             val elem = get(key)
             return if (elem == null) {
                 null
@@ -161,9 +161,7 @@ class InputEventDispatcher private constructor(
     }
 
     override fun send(ev: InputKeyEvent) {
-        mainScope.launch {
-            channel.send(ev)
-        }
+        channel.trySend(ev)
     }
 
     /**

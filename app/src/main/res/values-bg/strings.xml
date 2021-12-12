@@ -377,7 +377,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard изглежда спира да работи многократно…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Връщане към предишна клавиатура, за да се спре безкрайния цикъл от сривове. Докоснете, за да видите подробности за грешката</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">История на междинната памет</string>
     <string name="clip__clear_history">Изчистване на историята</string>
     <string name="clip__unpin_item">Освобождаване</string>
     <string name="clip__pin_item">Закачане</string>
@@ -392,7 +391,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Промените в системната памет се отразяват в тази на приложението</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Изнасяне в системната междинна памет</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Промените в междинната памет на приложението се отразяват в системната</string>
-    <string name="pref__clipboard__clipboard_history_title">История на междинната памет</string>
+    <string name="pref__clipboard__group_clipboard_history__label">История на междинната памет</string>
     <string name="pref__clipboard__enable_clipboard_history__label">История</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Запазва се хронология с елементите от междинната памет</string>
     <string name="pref__clipboard__clean_up_old__label">Премахване на стари елементи</string>

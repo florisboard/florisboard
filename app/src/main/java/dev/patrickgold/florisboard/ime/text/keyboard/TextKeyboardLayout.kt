@@ -36,11 +36,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -63,7 +61,6 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
@@ -85,7 +82,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -112,9 +109,12 @@ fun TextKeyboardLayout(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount)
+            .height(if (isSmartbarKeyboard) {
+                FlorisImeSizing.smartbarHeight
+            } else {
+                FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
+            })
             .onGloballyPositioned { coords ->
-                controller.offset = coords.positionInWindow()
                 controller.size = coords.size.toSize()
             }
             .pointerInteropFilter { event ->
@@ -126,7 +126,12 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
-                        touchEventChannel.trySendBlocking(event)
+                        val clonedEvent = MotionEvent.obtain(event)
+                        touchEventChannel.trySend(clonedEvent).onFailure {
+                            // Make sure to prevent MotionEvent memory leakage
+                            // in case the input channel is full
+                            clonedEvent.recycle()
+                        }
                         return@pointerInteropFilter true
                     }
                 }
@@ -139,8 +144,13 @@ fun TextKeyboardLayout(
         val keyboardWidth = constraints.maxWidth.toFloat()
         val keyboardHeight = constraints.maxHeight.toFloat()
         desiredKey.touchBounds.apply {
-            width = keyboardWidth / 10.0f
-            height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+            if (isSmartbarKeyboard) {
+                width = keyboardWidth / 8f
+                height = FlorisImeSizing.smartbarHeight.toPx()
+            } else {
+                width = keyboardWidth / 10f
+                height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+            }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
         keyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
@@ -184,7 +194,7 @@ fun TextKeyboardLayout(
         popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
         for (textKey in keyboard.keys()) {
-            TextKeyButton(textKey, renderInfo, fontSizeMultiplier)
+            TextKeyButton(textKey, renderInfo, fontSizeMultiplier, isSmartbarKeyboard)
         }
 
         popupUiController.RenderPopups()
@@ -194,6 +204,7 @@ fun TextKeyboardLayout(
         for (event in touchEventChannel) {
             if (!isActive) break
             controller.onTouchEventInternal(event)
+            event.recycle()
         }
     }
 }
@@ -203,12 +214,14 @@ private fun TextKeyButton(
     key: TextKey,
     renderInfo: RenderInfo,
     fontSizeMultiplier: Float,
+    isSmartbarKey: Boolean,
 ) = with(LocalDensity.current) {
     val keyStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.Key,
+        element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
         code = key.computedData.code,
         mode = renderInfo.state.inputMode.value,
-        isPressed = key.isPressed,
+        isPressed = key.isPressed && key.isEnabled,
+        isDisabled = !key.isEnabled,
     )
     val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {
         KeyCode.VIEW_CHARACTERS,
@@ -307,27 +320,26 @@ private class TextKeyboardLayoutController(
 
     lateinit var keyboard: TextKeyboard
     var size = Size.Zero
-    var offset = Offset.Zero
 
     fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
         swipeGestureDetector.onTouchEvent(event)
 
-        if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
-            val glidePointer = pointerMap.findById(0)
-            if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
-                for (pointer in pointerMap) {
-                    if (pointer.activeKey != null) {
-                        onTouchCancelInternal(event, pointer)
-                    }
-                }
-                if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
-                    pointerMap.clear()
-                }
-                isGliding = true
-                return
-            }
-        }
+        //if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
+        //    val glidePointer = pointerMap.findById(0)
+        //    if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
+        //        for (pointer in pointerMap) {
+        //            if (pointer.activeKey != null) {
+        //                onTouchCancelInternal(event, pointer)
+        //            }
+        //        }
+        //        if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
+        //            pointerMap.clear()
+        //        }
+        //        isGliding = true
+        //        return
+        //    }
+        //}
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
@@ -461,8 +473,7 @@ private class TextKeyboardLayoutController(
     private fun onTouchDownInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
 
-        val key = keyboard.getKeyForPos(event.getLocalX(pointer.index), event.getLocalY(pointer.index))
-        flogDebug { key.toString() }
+        val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
             inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
             if (prefs.keyboard.popupEnabled.get() && popupUiController.isSuitableForPopups(key)) {
@@ -527,17 +538,17 @@ private class TextKeyboardLayoutController(
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
             if (popupUiController.isShowingExtendedPopup) {
-                val x = event.getLocalX(pointer.index)
-                val y = event.getLocalY(pointer.index)
+                val x = event.getX(pointer.index)
+                val y = event.getY(pointer.index)
                 if (!popupUiController.propagateMotionEvent(activeKey, x, y)) {
                     onTouchCancelInternal(event, pointer)
                     onTouchDownInternal(event, pointer)
                 }
             } else {
-                if ((event.getLocalX(pointer.index) < activeKey.visibleBounds.left - 0.1f * activeKey.visibleBounds.width)
-                    || (event.getLocalX(pointer.index) > activeKey.visibleBounds.right + 0.1f * activeKey.visibleBounds.width)
-                    || (event.getLocalY(pointer.index) < activeKey.visibleBounds.top - 0.35f * activeKey.visibleBounds.height)
-                    || (event.getLocalY(pointer.index) > activeKey.visibleBounds.bottom + 0.35f * activeKey.visibleBounds.height)
+                if ((event.getX(pointer.index) < activeKey.visibleBounds.left - 0.1f * activeKey.visibleBounds.width)
+                    || (event.getX(pointer.index) > activeKey.visibleBounds.right + 0.1f * activeKey.visibleBounds.width)
+                    || (event.getY(pointer.index) < activeKey.visibleBounds.top - 0.35f * activeKey.visibleBounds.height)
+                    || (event.getY(pointer.index) > activeKey.visibleBounds.bottom + 0.35f * activeKey.visibleBounds.height)
                 ) {
                     onTouchCancelInternal(event, pointer)
                     onTouchDownInternal(event, pointer)
@@ -817,14 +828,6 @@ private class TextKeyboardLayoutController(
             glideRefreshJob?.cancel()
             glideRefreshJob = null
         }
-    }
-
-    fun MotionEvent.getLocalX(index: Int): Float {
-        return this.getX(index) - offset.x
-    }
-
-    fun MotionEvent.getLocalY(index: Int): Float {
-        return this.getY(index) - offset.y
     }
 
     private class TouchPointer : Pointer() {

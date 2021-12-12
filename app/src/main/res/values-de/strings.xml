@@ -385,7 +385,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard funktioniert zum wiederholten Male nicht…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Um eine endlose Absturzschleife zu verhindern, wurde automatisch auf die zuvor benutzte Tastatur zurückgegriffen. Tippen, um die Fehlermeldung anzuzeigen</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Zwischenablagenverlauf</string>
     <string name="clip__clear_history">Verlauf leeren</string>
     <string name="clip__unpin_item">Element lösen</string>
     <string name="clip__pin_item">Element anheften</string>
@@ -400,7 +399,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Änderungen in der Systemzwischenablage aktualisieren auch die interne Zwischenablage</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
-    <string name="pref__clipboard__clipboard_history_title">Zwischenablagenverlauf</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Zwischenablagenverlauf</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Verlauf für Zwischenablage aktivieren</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Elemente der Zwischenablage merken</string>
     <string name="pref__clipboard__clean_up_old__label">Alte Elemente bereinigen</string>

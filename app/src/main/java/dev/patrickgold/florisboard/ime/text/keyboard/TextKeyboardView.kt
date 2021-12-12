@@ -16,47 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.animation.ValueAnimator
 import android.content.Context
-import android.content.res.Configuration
-import android.graphics.*
-import android.graphics.drawable.PaintDrawable
-import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.animation.AccelerateInterpolator
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.common.Pointer
-import dev.patrickgold.florisboard.common.PointerMap
-import dev.patrickgold.florisboard.common.ViewUtils
-import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.core.*
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.Keyboard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.popup.PopupManager
-import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
-import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
-import dev.patrickgold.florisboard.ime.text.key.*
-import dev.patrickgold.florisboard.ime.theme.Theme
-import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import dev.patrickgold.florisboard.subtypeManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
-import kotlin.math.abs
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
 
 @Suppress("UNUSED_PARAMETER")
 class TextKeyboardView(context: Context) : KeyboardView(context) {

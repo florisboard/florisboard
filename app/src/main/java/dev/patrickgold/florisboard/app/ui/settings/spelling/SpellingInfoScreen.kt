@@ -27,10 +27,8 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
+import dev.patrickgold.jetpref.datastore.ui.Preference
 
-@OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun SpellingInfoScreen() = FlorisScreen(
     title = stringRes(R.string.settings__spelling__dict_sources_info__title),

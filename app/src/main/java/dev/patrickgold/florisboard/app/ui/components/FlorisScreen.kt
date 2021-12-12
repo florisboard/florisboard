@@ -28,8 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.jetpref.ui.compose.PreferenceLayout
-import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
+import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
+import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
 
 @Deprecated("Deprecated in favor of FlorisScreen DSL. When writing new screens make sure to use the new DSL version of this composable. Old code can continue using this version for now.")
 @Composable

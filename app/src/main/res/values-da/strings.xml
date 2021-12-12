@@ -174,12 +174,11 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">Udklipsholderhistorik</string>
     <string name="clip__clear_history">Ryd historik</string>
     <string name="clip__delete_item">Slet</string>
     <string name="clip__paste_item">Indsæt</string>
     <string name="settings__clipboard__title">Udklipsholder</string>
-    <string name="pref__clipboard__clipboard_history_title">Udklipsholderhistorik</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Udklipsholderhistorik</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <string name="ext__meta__description">Beskriveslse</string>

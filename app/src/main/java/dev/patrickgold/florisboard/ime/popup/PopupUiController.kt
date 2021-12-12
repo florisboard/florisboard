@@ -442,7 +442,7 @@ class PopupUiController(
             return null
         }
         var cachedIndex = index
-        elements.reversed().forEach { row ->
+        elements.asReversed().forEach { row ->
             if (cachedIndex >= row.size) {
                 cachedIndex -= row.size
             } else {

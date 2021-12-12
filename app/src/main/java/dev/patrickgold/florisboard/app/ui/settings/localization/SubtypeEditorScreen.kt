@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -70,8 +72,8 @@ import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
-import dev.patrickgold.jetpref.ui.compose.JetPrefListItem
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import java.util.*
@@ -464,11 +466,8 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     showSubtypePresetsDialog = false
                 },
             ) {
-                // TODO: make this LazyColumn once JetPref dialog is updated to disallow integrated scrolling
-                //LazyColumn {
-                //    items(subtypePresets) { subtypePreset ->
-                Column {
-                    for (subtypePreset in subtypePresets) {
+                LazyColumn {
+                    items(subtypePresets) { subtypePreset ->
                         JetPrefListItem(
                             modifier = Modifier.clickable {
                                 subtypeEditor.applySubtype(subtypePreset.toSubtype())
@@ -479,8 +478,6 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                         )
                     }
                 }
-                //    }
-                //}
             }
         }
 

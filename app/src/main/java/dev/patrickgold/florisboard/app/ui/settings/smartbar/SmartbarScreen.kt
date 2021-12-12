@@ -16,26 +16,59 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.smartbar
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
-fun SmartbarScreen() = FlorisScreen(title = stringRes(R.string.settings__smartbar__title)) {
-    SwitchPreference(
-        prefs.smartbar.enabled,
-        title = stringRes(R.string.pref__smartbar__enabled__label),
-        summary = stringRes(R.string.pref__smartbar__enabled__summary),
-    )
-    // This card is temporary and is therefore not using a string resource
-    FlorisInfoCard(
-        modifier = Modifier.padding(8.dp),
-        text = "Smartbar will soon be customizable a lot more, thus this seemingly pointless screen currently",
-    )
+fun SmartbarScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__smartbar__title)
+
+    content {
+        SwitchPreference(
+            prefs.smartbar.enabled,
+            title = stringRes(R.string.pref__smartbar__enabled__label),
+            summary = stringRes(R.string.pref__smartbar__enabled__summary),
+        )
+
+        PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_primary_row__label)) {
+            SwitchPreference(
+                prefs.smartbar.primaryRowFlipToggles,
+                title = stringRes(R.string.pref__smartbar__primary_row_flip_toggles__label),
+                summary = stringRes(R.string.pref__smartbar__primary_row_flip_toggles__summary),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+            )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_secondary_row__label)) {
+            SwitchPreference(
+                prefs.smartbar.secondaryRowEnabled,
+                title = stringRes(R.string.pref__smartbar__secondary_row_enabled__label),
+                summary = stringRes(R.string.pref__smartbar__secondary_row_enabled__summary),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+            )
+            ListPreference(
+                prefs.smartbar.secondaryRowPlacement,
+                title = stringRes(R.string.pref__smartbar__secondary_row_placement__label),
+                entries = SecondaryRowPlacement.listEntries(),
+                enabledIf = {
+                    (prefs.smartbar.enabled isEqualTo true) && (prefs.smartbar.secondaryRowEnabled isEqualTo true)
+                },
+            )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_action_row__label)) {
+            SwitchPreference(
+                prefs.smartbar.actionRowAutoExpandCollapse,
+                title = stringRes(R.string.pref__smartbar__action_row_auto_expand_collapse__label),
+                summary = stringRes(R.string.pref__smartbar__action_row_auto_expand_collapse__summary),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+            )
+        }
+    }
 }

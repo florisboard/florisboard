@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.onehanded
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -37,6 +36,7 @@ import dev.patrickgold.florisboard.snygg.ui.solidColor
 
 @Composable
 fun RowScope.OneHandedPanel(
+    modifier: Modifier = Modifier,
     panelSide: OneHandedMode,
     weight: Float,
 ) {
@@ -44,8 +44,7 @@ fun RowScope.OneHandedPanel(
     val inputFeedbackController = LocalInputFeedbackController.current
     val oneHandedPanelStyle = FlorisImeTheme.style.get(FlorisImeUi.OneHandedPanel)
     Column(
-        modifier = Modifier
-            .fillMaxHeight()
+        modifier = modifier
             .weight(weight)
             .snyggBackground(oneHandedPanelStyle.background),
         horizontalAlignment = Alignment.CenterHorizontally,

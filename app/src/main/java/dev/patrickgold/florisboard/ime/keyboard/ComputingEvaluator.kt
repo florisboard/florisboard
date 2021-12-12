@@ -129,6 +129,9 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         KeyCode.CLIPBOARD_SELECT_ALL -> {
             R.drawable.ic_select_all
         }
+        KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
+            R.drawable.ic_delete_sweep
+        }
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
         KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
             // TODO: find a better icon for compact mode
@@ -182,6 +185,12 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
                 }
                 else -> null
             }
+        }
+        KeyCode.UNDO -> {
+            R.drawable.ic_undo
+        }
+        KeyCode.REDO -> {
+            R.drawable.ic_redo
         }
         KeyCode.KANA_SWITCHER -> {
             if (evaluator.activeState().isKanaKata) {

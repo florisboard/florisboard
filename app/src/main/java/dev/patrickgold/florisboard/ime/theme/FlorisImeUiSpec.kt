@@ -18,114 +18,151 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
+import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpecBuilder
 import dev.patrickgold.florisboard.snygg.SnyggSpec
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeDpValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeDpValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 
+fun SnyggPropertySetSpecBuilder.background() {
+    property(
+        name = Snygg.Background,
+        level = SnyggLevel.BASIC,
+        supportedValues(SnyggSolidColorValue),
+    )
+}
+fun SnyggPropertySetSpecBuilder.foreground() {
+    property(
+        name = Snygg.Foreground,
+        level = SnyggLevel.BASIC,
+        supportedValues(SnyggSolidColorValue),
+    )
+}
+fun SnyggPropertySetSpecBuilder.fontSize() {
+    property(
+        name = Snygg.FontSize,
+        level = SnyggLevel.ADVANCED,
+        supportedValues(SnyggSpSizeValue),
+    )
+}
+fun SnyggPropertySetSpecBuilder.shape() {
+    property(
+        name = Snygg.Shape,
+        level = SnyggLevel.ADVANCED,
+        supportedValues(
+            SnyggRectangleShapeValue,
+            SnyggCutCornerShapeDpValue,
+            SnyggCutCornerShapePercentValue,
+            SnyggRoundedCornerShapeDpValue,
+            SnyggRoundedCornerShapePercentValue,
+        ),
+    )
+}
+
 object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.Keyboard) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
+        background()
     }
     element(FlorisImeUi.Key) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.Foreground,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.FontSize,
-            level = SnyggLevel.ADVANCED,
-            supportedValues(SnyggSpSizeValue),
-        )
-        property(
-            name = Snygg.Shape,
-            level = SnyggLevel.ADVANCED,
-            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
-        )
+        background()
+        foreground()
+        fontSize()
+        shape()
     }
     element(FlorisImeUi.KeyHint) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.Foreground,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.FontSize,
-            level = SnyggLevel.ADVANCED,
-            supportedValues(SnyggSpSizeValue),
-        )
-        property(
-            name = Snygg.Shape,
-            level = SnyggLevel.ADVANCED,
-            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
-        )
+        background()
+        foreground()
+        fontSize()
+        shape()
     }
     element(FlorisImeUi.KeyPopup) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.Foreground,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.FontSize,
-            level = SnyggLevel.ADVANCED,
-            supportedValues(SnyggSpSizeValue),
-        )
-        property(
-            name = Snygg.Shape,
-            level = SnyggLevel.ADVANCED,
-            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
-        )
+        background()
+        foreground()
+        fontSize()
+        shape()
+    }
+
+    element(FlorisImeUi.ClipboardHeader) {
+        background()
+        foreground()
+        fontSize()
+    }
+    element(FlorisImeUi.ClipboardItem) {
+        background()
+        foreground()
+        fontSize()
+        shape()
+    }
+    element(FlorisImeUi.ClipboardItemPopup) {
+        background()
+        foreground()
+        fontSize()
+        shape()
     }
 
     element(FlorisImeUi.OneHandedPanel) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
-        property(
-            name = Snygg.Foreground,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
+        background()
+        foreground()
     }
 
-    element(FlorisImeUi.Smartbar) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
+    element(FlorisImeUi.SmartbarPrimaryRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarPrimaryActionRowToggle) {
+        background()
+        foreground()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarPrimarySecondaryRowToggle) {
+        background()
+        foreground()
+        shape()
+    }
+
+    element(FlorisImeUi.SmartbarSecondaryRow) {
+        background()
+    }
+
+    element(FlorisImeUi.SmartbarActionRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarActionButton) {
+        background()
+        foreground()
+        shape()
+    }
+
+    element(FlorisImeUi.SmartbarCandidateRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarCandidateWord) {
+        background()
+        foreground()
+        fontSize()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarCandidateClip) {
+        background()
+        foreground()
+        fontSize()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarCandidateSpacer) {
+        foreground()
+    }
+
+    element(FlorisImeUi.SmartbarKey) {
+        background()
+        foreground()
+        fontSize()
+        shape()
     }
 
     element(FlorisImeUi.SystemNavBar) {
-        property(
-            name = Snygg.Background,
-            level = SnyggLevel.BASIC,
-            supportedValues(SnyggSolidColorValue),
-        )
+        background()
     }
 })

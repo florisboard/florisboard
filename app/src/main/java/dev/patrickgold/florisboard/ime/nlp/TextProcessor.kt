@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.patrickgold.florisboard.ime.nlp
 
 import dev.patrickgold.florisboard.common.FlorisLocale
 

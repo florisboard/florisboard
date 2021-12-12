@@ -39,6 +39,8 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.jetpref.datastore.JetPrefManager
 import java.io.File
 import kotlin.Exception
@@ -61,8 +63,10 @@ class FlorisApplication : Application() {
     private val prefs by florisPreferenceModel()
 
     val assetManager = lazy { AssetManager(this) }
+    val clipboardManager = lazy { ClipboardManager(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val keyboardManager = lazy { KeyboardManager(this) }
+    val nlpManager = lazy { NlpManager(this) }
     val spellingManager = lazy { SpellingManager(this) }
     val spellingService = lazy { SpellingService(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
@@ -146,9 +150,13 @@ fun Context.appContext() = lazy { this.florisApplication() }
 
 fun Context.assetManager() = lazy { this.florisApplication().assetManager.value }
 
+fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
+
 fun Context.extensionManager() = lazy { this.florisApplication().extensionManager.value }
 
 fun Context.keyboardManager() = lazy { this.florisApplication().keyboardManager.value }
+
+fun Context.nlpManager() = lazy { this.florisApplication().nlpManager.value }
 
 fun Context.spellingManager() = lazy { this.florisApplication().spellingManager.value }
 

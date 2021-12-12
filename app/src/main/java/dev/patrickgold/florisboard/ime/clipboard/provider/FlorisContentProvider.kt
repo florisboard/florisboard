@@ -1,4 +1,20 @@
-package dev.patrickgold.florisboard.ime.clip.provider
+/*
+ * Copyright (C) 2021 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.*
 import android.database.Cursor
@@ -20,7 +36,7 @@ import java.io.File
  * Database accesses are performed async.
  */
 class FlorisContentProvider : ContentProvider() {
-    private lateinit var fileUriDao: FileUriDao
+    private var fileUriDao: FileUriDao? = null
     private val mimeTypes: HashMap<Long, Array<String>> = hashMapOf()
     private val ioScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
@@ -49,17 +65,14 @@ class FlorisContentProvider : ContentProvider() {
         return true
     }
 
-    fun initIfNotAlready(){
-        if (this::fileUriDao.isInitialized){
-            return
-        }
-
+    fun init(){
         fileUriDao = Room.databaseBuilder(
             context!!,
-            FileUriDatabase::class.java, "fileuridb"
+            FileUriDatabase::class.java,
+            "fileuridb",
         ).build().fileUriDao()
 
-        for (fileUri in fileUriDao.getAll()) {
+        for (fileUri in fileUriDao?.getAll() ?: emptyList()) {
             mimeTypes[fileUri.fileName] = fileUri.mimeTypes
         }
     }
@@ -85,7 +98,7 @@ class FlorisContentProvider : ContentProvider() {
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor {
         val id = ContentUris.parseId(uri)
-        val path = File(FileStorage.getAddress(id))
+        val path = File(FileStorage.getAddress(context!!, id))
 
         // Nothing has permission to write anyway.
         return ParcelFileDescriptor.open(path, ParcelFileDescriptor.MODE_READ_ONLY)
@@ -94,7 +107,7 @@ class FlorisContentProvider : ContentProvider() {
     override fun insert(uri: Uri, values: ContentValues?): Uri {
         when (matcher.match(uri)){
             CLIPS_TABLE -> {
-                val id = FileStorage.cloneURI(Uri.parse(values?.getAsString("uri"))).getOrElse {
+                val id = FileStorage.cloneURI(context!!, Uri.parse(values?.getAsString("uri"))).getOrElse {
                     flogError(LogTopic.CLIPBOARD) { it.toString() }
                     return uri.buildUpon().appendPath("0").build()
                 }
@@ -103,7 +116,7 @@ class FlorisContentProvider : ContentProvider() {
                     mimeTypes[id] = mimes
                     ioScope.launch {
                         flogDebug { "Inserted file uri $id" }
-                        fileUriDao.insert(FileUri(id, mimes))
+                        fileUriDao?.insert(FileUri(id, mimes))
                     }
                 }
                 return ContentUris.withAppendedId(CLIPS_URI, id)
@@ -116,11 +129,11 @@ class FlorisContentProvider : ContentProvider() {
         when (matcher.match(uri)){
             CLIP_ITEM -> {
                 val id = ContentUris.parseId(uri)
-                FileStorage.deleteById(id)
+                FileStorage.deleteById(context!!, id)
                 mimeTypes.remove(id)
                 context?.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 ioScope.launch {
-                    fileUriDao.delete(id)
+                    fileUriDao?.delete(id)
                 }
                 return 1
             }

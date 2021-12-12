@@ -54,7 +54,7 @@ import dev.patrickgold.florisboard.common.android.hideAppIcon
 import dev.patrickgold.florisboard.common.android.showAppIcon
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.util.AppVersionUtils
-import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
+import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -174,7 +174,7 @@ class FlorisAppActivity : ComponentActivity() {
                         Routes.Setup.Screen, Routes.Settings.About, Routes.Settings.ProjectLicense,
                         Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
                         Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
-                        Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View,
+                        Routes.Devtools.AndroidSettings, Routes.Ext.View,
                         Routes.Splash.Screen, Routes.Settings.SubtypeAdd,
                         Routes.Settings.SubtypeEdit, Routes.Settings.SelectLocale -> false
                         else -> true

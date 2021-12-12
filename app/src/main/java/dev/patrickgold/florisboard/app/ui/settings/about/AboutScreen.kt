@@ -16,9 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.about
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,85 +37,87 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.android.launchUrl
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.jetpref.ui.compose.Preference
+import dev.patrickgold.florisboard.common.android.stringRes
+import dev.patrickgold.jetpref.datastore.ui.Preference
 
 @Composable
-fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
+fun AboutScreen() = FlorisScreen {
+    title = stringRes(R.string.about__title)
+
     val navController = LocalNavController.current
     val context = LocalContext.current
+    val clipboardManager by context.clipboardManager()
+
     val appVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp, bottom = 32.dp)
-    ) {
-        FlorisCanvasIcon(
-            modifier = Modifier.requiredSize(64.dp),
-            iconId = R.mipmap.floris_app_icon,
-            contentDescription = "FlorisBoard app icon",
+    content {
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, bottom = 32.dp)
+        ) {
+            FlorisCanvasIcon(
+                modifier = Modifier.requiredSize(64.dp),
+                iconId = R.mipmap.floris_app_icon,
+                contentDescription = "FlorisBoard app icon",
+            )
+            Text(
+                text = stringRes(R.string.floris_app_name),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(top = 16.dp),
+            )
+        }
+        Preference(
+            iconId = R.drawable.ic_info,
+            title = stringRes(R.string.about__version__title),
+            summary = appVersion,
+            onClick = {
+                try {
+                    clipboardManager.addNewPlaintext(appVersion)
+                    Toast.makeText(context, R.string.about__version_copied__title, Toast.LENGTH_SHORT).show()
+                } catch (e: Throwable) {
+                    Toast.makeText(
+                        context,
+                        context.stringRes(R.string.about__version_copied__error, "error_message" to e.message),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            },
         )
-        Text(
-            text = stringRes(R.string.floris_app_name),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 16.dp),
+        Preference(
+            iconId = R.drawable.ic_history,
+            title = stringRes(R.string.about__changelog__title),
+            summary = stringRes(R.string.about__changelog__summary),
+            onClick = { context.launchUrl(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
+        )
+        Preference(
+            iconId = R.drawable.ic_code,
+            title = stringRes(R.string.about__repository__title),
+            summary = stringRes(R.string.about__repository__summary),
+            onClick = { context.launchUrl(R.string.florisboard__repo_url) },
+        )
+        Preference(
+            iconId = R.drawable.ic_policy,
+            title = stringRes(R.string.about__privacy_policy__title),
+            summary = stringRes(R.string.about__privacy_policy__summary),
+            onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
+        )
+        Preference(
+            iconId = R.drawable.ic_description,
+            title = stringRes(R.string.about__project_license__title),
+            summary = stringRes(R.string.about__project_license__summary, "license_name" to "Apache 2.0"),
+            onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
+        )
+        Preference(
+            iconId = R.drawable.ic_description,
+            title = stringRes(id = R.string.about__third_party_licenses__title),
+            summary = stringRes(id = R.string.about__third_party_licenses__summary),
+            onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
         )
     }
-    Preference(
-        iconId = R.drawable.ic_info,
-        title = stringRes(R.string.about__version__title),
-        summary = appVersion,
-        onClick = {
-            try {
-                val isImeSelected = false // TODO: fix this mess anyways
-                if (isImeSelected) {
-                    FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
-                } else {
-                    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText("Florisboard version", appVersion)
-                    clipboard.setPrimaryClip(clip)
-                }
-                Toast.makeText(context, R.string.about__version_copied__title, Toast.LENGTH_SHORT).show()
-            } catch (e: Throwable) {
-                Toast.makeText(
-                    context, context.getString(R.string.about__version_copied__error, e.message), Toast.LENGTH_SHORT
-                ).show()
-            }
-        },
-    )
-    Preference(
-        iconId = R.drawable.ic_history,
-        title = stringRes(R.string.about__changelog__title),
-        summary = stringRes(R.string.about__changelog__summary),
-        onClick = { context.launchUrl(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
-    )
-    Preference(
-        iconId = R.drawable.ic_code,
-        title = stringRes(R.string.about__repository__title),
-        summary = stringRes(R.string.about__repository__summary),
-        onClick = { context.launchUrl(R.string.florisboard__repo_url) },
-    )
-    Preference(
-        iconId = R.drawable.ic_policy,
-        title = stringRes(R.string.about__privacy_policy__title),
-        summary = stringRes(R.string.about__privacy_policy__summary),
-        onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
-    )
-    Preference(
-        iconId = R.drawable.ic_description,
-        title = stringRes(R.string.about__project_license__title),
-        summary = stringRes(R.string.about__project_license__summary, "license_name" to "Apache 2.0"),
-        onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
-    )
-    Preference(
-        iconId = R.drawable.ic_description,
-        title = stringRes(id = R.string.about__third_party_licenses__title),
-        summary = stringRes(id = R.string.about__third_party_licenses__summary),
-        onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
-    )
 }

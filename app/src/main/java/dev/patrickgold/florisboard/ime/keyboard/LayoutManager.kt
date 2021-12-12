@@ -234,7 +234,7 @@ class LayoutManager(context: Context) {
         }
 
         // Add hints to keys
-        if (keyboardMode == KeyboardMode.CHARACTERS) {
+        if (keyboardMode == KeyboardMode.CHARACTERS && computedArrangement.isNotEmpty()) {
             val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
             // number row hint always happens on first row
             if (prefs.keyboard.hintedNumberRowEnabled.get() && symbolsComputedArrangement.isNotEmpty()) {

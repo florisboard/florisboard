@@ -45,13 +45,11 @@ import dev.patrickgold.florisboard.common.android.AndroidSettings
 import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
-import dev.patrickgold.jetpref.ui.compose.ListPreference
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
-import dev.patrickgold.jetpref.ui.compose.SwitchPreference
-import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
-@OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun SpellingScreen() = FlorisScreen(
     title = stringRes(R.string.settings__spelling__title),

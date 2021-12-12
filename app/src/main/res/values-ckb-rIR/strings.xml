@@ -386,7 +386,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">تەختەکلیلی FlorisBoard لەوانەیە زوو زوو لەکارکردن بوەستێت…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">گۆڕین بۆ تەختەکلیلی پێشوو لەکاتی بوونی هەڵە و وەستانی لەناکاو، بینینی زانیاری هەڵەکان</string>
     <!-- Clipboard strings -->
-    <string name="clip__context_header">لەبەرگیراوەکان</string>
     <string name="clip__clear_history">سڕینەوەی مێژوو</string>
     <string name="clip__unpin_item">جێگیر نەکردن</string>
     <string name="clip__pin_item">جێگیر کردن</string>
@@ -401,7 +400,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی سیستەم</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">لەبەرگیراوەی بەرنامەکە</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی بەرنامەکە</string>
-    <string name="pref__clipboard__clipboard_history_title">مێژووی لەبەرگیراوەکان</string>
+    <string name="pref__clipboard__group_clipboard_history__label">مێژووی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__enable_clipboard_history__label">بەکارهێنانی بەشی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">هێشتنەوەی شتە لەبەرگیراوەکان</string>
     <string name="pref__clipboard__clean_up_old__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>

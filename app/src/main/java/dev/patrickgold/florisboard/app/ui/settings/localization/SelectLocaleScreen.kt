@@ -47,7 +47,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.jetpref.ui.compose.JetPrefListItem
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 const val SelectLocaleScreenResultLanguageTag = "SelectLocaleScreen.languageTag"
 
