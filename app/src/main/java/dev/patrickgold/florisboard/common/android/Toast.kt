@@ -21,6 +21,14 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import dev.patrickgold.florisboard.common.kotlin.CurlyArg
 
+fun Context.showShortToast(text: String) {
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+}
+
+fun Context.showLongToast(text: String) {
+    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+}
+
 fun Context.showShortToast(@StringRes id: Int) {
     val text = this.stringRes(id)
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()

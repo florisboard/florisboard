@@ -111,7 +111,7 @@ fun HomeScreen() = FlorisScreen {
                     Text("Current version: ${BuildConfig.VERSION_NAME}\n")
                     Text("List of unavailable features (and when they will get re-implemented):\n")
                     Text(" - Theme customization (new theme engine and look) (beta08)")
-                    Text(" - Glide typing (beta09)")
+                    Text(" - Glide typing (beta08 or beta09)")
                     Text(" - Emoji view (beta09 or beta10)")
                     Text(" - Landscape fullscreen input (beta09 or beta10)")
                     Text(" - Word suggestions (will just show word + a number to test out if the UI works) (beta10+, new suggestion algorithm 0.3.15/16)\n")
