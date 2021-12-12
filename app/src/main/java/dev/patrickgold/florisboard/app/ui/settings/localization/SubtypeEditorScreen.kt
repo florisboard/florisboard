@@ -461,6 +461,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
             JetPrefAlertDialog(
                 title = stringRes(R.string.settings__localization__subtype_presets),
                 dismissLabel = stringRes(android.R.string.cancel),
+                scrollModifier = Modifier,
                 contentPadding = PaddingValues(horizontal = 8.dp),
                 onDismiss = {
                     showSubtypePresetsDialog = false
