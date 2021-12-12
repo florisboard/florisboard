@@ -272,6 +272,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onFinishInput() {
         super.onFinishInput()
         activeEditorInstance.finishInput()
+        nlpManager.clearInlineSuggestions()
     }
 
     override fun onUnbindInput() {
