@@ -236,6 +236,9 @@ interface ClipboardHistoryDao {
     @Delete
     fun delete(item: ClipboardItem)
 
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id")
+    fun delete(id: Long)
+
     @Delete
     fun delete(items: List<ClipboardItem>)
 
@@ -253,9 +256,12 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
 
     companion object {
         fun new(context: Context): ClipboardHistoryDatabase {
-            return Room.databaseBuilder(
-                context, ClipboardHistoryDatabase::class.java, CLIPBOARD_HISTORY_TABLE,
-            ).build()
+            return Room
+                .databaseBuilder(
+                    context, ClipboardHistoryDatabase::class.java, CLIPBOARD_HISTORY_TABLE,
+                )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }

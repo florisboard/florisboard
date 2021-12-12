@@ -27,7 +27,6 @@ import dev.patrickgold.florisboard.common.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.common.android.systemService
-import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -88,7 +87,8 @@ class ClipboardManager(
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var cleanUpJob: Job
-    private var clipHistoryDao: ClipboardHistoryDao? = null
+    private var clipHistoryDb: ClipboardHistoryDatabase? = null
+    private val clipHistoryDao: ClipboardHistoryDao? get() = clipHistoryDb?.clipboardItemDao()
 
     private val _history = MutableLiveData(ClipboardHistory.Empty)
     val history: LiveData<ClipboardHistory> get() = _history
@@ -104,22 +104,33 @@ class ClipboardManager(
                 enforceExpiryDate(history())
             }
         }
+        //ioScope.launch {
+        //    try {
+        //        FlorisContentProvider.getInstance().init()
+        //    } catch (e: Exception) {
+        //        flogError { e.toString() }
+        //    }
+        //}
+    }
+
+    fun initializeForContext(context: Context) {
         ioScope.launch {
-            clipHistoryDao = ClipboardHistoryDatabase.new(context).clipboardItemDao()
-            withContext(Dispatchers.Main) {
-                clipHistoryDao?.getAllLive()?.observeForever { items ->
-                    val itemsSorted = items.sortedByDescending { it.creationTimestampMs }
-                    val clipHistory = ClipboardHistory(itemsSorted)
-                    enforceHistoryLimit(clipHistory)
-                    _history.postValue(clipHistory)
+            if (clipHistoryDb == null) {
+                clipHistoryDb = ClipboardHistoryDatabase.new(context.applicationContext)
+                withContext(Dispatchers.Main) {
+                    clipHistoryDao?.getAllLive()?.observeForever { items ->
+                        updateHistory(items)
+                    }
                 }
             }
-            try {
-                FlorisContentProvider.getInstance().init()
-            } catch (e: Exception) {
-                flogError { e.toString() }
-            }
         }
+    }
+
+    private fun updateHistory(items: List<ClipboardItem>) {
+        val itemsSorted = items.sortedByDescending { it.creationTimestampMs }
+        val clipHistory = ClipboardHistory(itemsSorted)
+        enforceHistoryLimit(clipHistory)
+        _history.postValue(clipHistory)
     }
 
     fun history(): ClipboardHistory = history.value!!
@@ -165,7 +176,7 @@ class ClipboardManager(
             if (!isEqual) {
                 val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
                 _primaryClip.postValue(item)
-                updateHistory(item)
+                insertOrMoveBeginning(item)
             }
         }
     }
@@ -174,7 +185,7 @@ class ClipboardManager(
      * Change the current text on clipboard, update history (if enabled).
      */
     private fun addNewClip(item: ClipboardItem) {
-        updateHistory(item)
+        insertOrMoveBeginning(item)
         setPrimaryClip(item)
     }
 
@@ -189,7 +200,7 @@ class ClipboardManager(
     /**
      * Adds a new item to the clipboard history (if enabled).
      */
-    fun updateHistory(newItem: ClipboardItem) {
+    private fun insertOrMoveBeginning(newItem: ClipboardItem) {
         if (prefs.clipboard.historyEnabled.get()) {
             val historyElement = history().all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
             if (historyElement != null) {

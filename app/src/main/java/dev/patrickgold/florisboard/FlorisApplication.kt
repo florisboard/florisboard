@@ -92,6 +92,7 @@ class FlorisApplication : Application() {
             } else {
                 initICU(this)
                 prefs.initializeForContext(this)
+                clipboardManager.value.initializeForContext(this)
             }
 
             DictionaryManager.init(this)
@@ -134,6 +135,7 @@ class FlorisApplication : Application() {
                     flogError { e.toString() }
                 }
                 prefs.initializeForContext(this@FlorisApplication)
+                clipboardManager.value.initializeForContext(this@FlorisApplication)
             }
         }
     }
