@@ -230,8 +230,14 @@ interface ClipboardHistoryDao {
     @Update
     fun update(item: ClipboardItem)
 
+    @Update
+    fun update(items: List<ClipboardItem>)
+
     @Delete
     fun delete(item: ClipboardItem)
+
+    @Delete
+    fun delete(items: List<ClipboardItem>)
 
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE")
     fun deleteAll()

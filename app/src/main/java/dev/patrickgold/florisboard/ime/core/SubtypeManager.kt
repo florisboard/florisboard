@@ -219,7 +219,7 @@ class SubtypeManager(
         val activeSubtype = _activeSubtype.value!!
         var triggerNextSubtype = false
         var newActiveSubtype: Subtype = Subtype.DEFAULT
-        for (subtype in subtypeList.reversed()) {
+        for (subtype in subtypeList.asReversed()) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
                 newActiveSubtype = subtype

@@ -117,7 +117,7 @@ class ClipboardManager(
             //    history.removeLast().data.close(appContext)
             //}
         }
-        cleanUpJob = ioScope.launch(Dispatchers.Main) {
+        cleanUpJob = ioScope.launch {
             while (true) {
                 cleanUpClipboard.run()
                 delay(INTERVAL)
@@ -127,7 +127,9 @@ class ClipboardManager(
             clipHistoryDao = ClipboardHistoryDatabase.new(context).clipboardItemDao()
             withContext(Dispatchers.Main) {
                 clipHistoryDao?.getAllLive()?.observeForever { items ->
-                    val clipHistory = ClipboardHistory(items.sortedByDescending { it.creationTimestampMs })
+                    val itemsSorted = items.sortedByDescending { it.creationTimestampMs }
+                    val clipHistory = ClipboardHistory(itemsSorted)
+                    enforceHistoryLimit(clipHistory)
                     _history.postValue(clipHistory)
                 }
             }
@@ -221,13 +223,14 @@ class ClipboardManager(
         }
     }
 
-    fun enforceHistoryLimit() {
+    fun enforceHistoryLimit(clipHistory: ClipboardHistory) {
         if (prefs.clipboard.limitHistorySize.get()) {
-            val nToRemove = history().all.size - prefs.clipboard.maxHistorySize.get()
+            val nonPinnedItems = clipHistory.recent + clipHistory.other
+            val nToRemove = nonPinnedItems.size - prefs.clipboard.maxHistorySize.get()
             if (nToRemove > 0) {
-                for (n in 1..nToRemove) {
-                    val itemToRemove = history().all[history().all.size - n]
-                    deleteClip(itemToRemove)
+                val itemsToRemove = nonPinnedItems.asReversed().filterIndexed { n, _ -> n < nToRemove }
+                ioScope.launch {
+                    clipHistoryDao?.delete(itemsToRemove)
                 }
             }
         }
