@@ -32,25 +32,27 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import java.util.*
 
 @Composable
-fun AndroidLocalesScreen() = FlorisScreen(
-    title = stringRes(R.string.devtools__android_locales__title),
-    scrollable = false,
-) {
+fun AndroidLocalesScreen() = FlorisScreen {
+    title = stringRes(R.string.devtools__android_locales__title)
+    scrollable = false
+
     val availableLocales = remember { Locale.getAvailableLocales().sortedBy { it.toLanguageTag() } }
 
-    SelectionContainer(modifier = Modifier.fillMaxWidth()) {
-        LazyColumn {
-            items(availableLocales) {
-                Row {
-                    Text(
-                        text = it.toLanguageTag().padEnd(12),
-                        fontFamily = FontFamily.Monospace,
-                    )
-                    Text(
-                        modifier = Modifier.weight(1.0f),
-                        text = it.getDisplayName(it),
-                        fontFamily = FontFamily.Monospace,
-                    )
+    content {
+        SelectionContainer(modifier = Modifier.fillMaxWidth()) {
+            LazyColumn {
+                items(availableLocales) {
+                    Row {
+                        Text(
+                            text = it.toLanguageTag().padEnd(12),
+                            fontFamily = FontFamily.Monospace,
+                        )
+                        Text(
+                            modifier = Modifier.weight(1.0f),
+                            text = it.getDisplayName(it),
+                            fontFamily = FontFamily.Monospace,
+                        )
+                    }
                 }
             }
         }

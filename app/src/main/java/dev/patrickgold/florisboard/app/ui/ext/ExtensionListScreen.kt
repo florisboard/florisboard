@@ -22,7 +22,9 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 
 @Composable
-fun ExtensionListScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
+fun ExtensionListScreen() = FlorisScreen {
+    title = stringRes(R.string.about__title)
+
     /*val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager = ExtensionManager.def

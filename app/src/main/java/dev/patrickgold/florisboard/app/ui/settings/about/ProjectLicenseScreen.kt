@@ -33,32 +33,31 @@ import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 
 @Composable
-fun ProjectLicenseScreen() = FlorisScreen(
-    title = stringRes(R.string.about__project_license__title),
-    scrollable = false,
-) {
+fun ProjectLicenseScreen() = FlorisScreen {
+    title = stringRes(R.string.about__project_license__title)
+    scrollable = false
+
     val context = LocalContext.current
     val assetManager by context.assetManager()
 
-    SelectionContainer(
-        modifier = Modifier
-            .fillMaxSize()
-            .florisVerticalScroll()
-            .florisHorizontalScroll(),
-    ) {
-        val licenseText = assetManager.loadTextAsset(
-            FlorisRef.assets("license/project_license.txt")
-        ).getOrElse {
-            stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
-        }/* ?: stringRes(
-            id = R.string.about__project_license__error_license_text_failed,
-            "error_message" to stringRes(R.string.about__project_license__error_reason_asset_manager_null)
-        )*/
-        Text(
-            text = licenseText,
-            fontFamily = FontFamily.Monospace,
-            fontSize = 10.sp,
-            softWrap = false,
-        )
+    content {
+        SelectionContainer(
+            modifier = Modifier
+                .fillMaxSize()
+                .florisVerticalScroll()
+                .florisHorizontalScroll(),
+        ) {
+            val licenseText = assetManager.loadTextAsset(
+                FlorisRef.assets("license/project_license.txt")
+            ).getOrElse {
+                stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
+            }
+            Text(
+                text = licenseText,
+                fontFamily = FontFamily.Monospace,
+                fontSize = 10.sp,
+                softWrap = false,
+            )
+        }
     }
 }

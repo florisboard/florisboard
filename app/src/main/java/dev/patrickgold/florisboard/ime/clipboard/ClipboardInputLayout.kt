@@ -469,7 +469,7 @@ private fun PopupAction(
     onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .width(ItemWidth)
             .rippleClickable(onClick = onClick)
             .padding(all = 8.dp),

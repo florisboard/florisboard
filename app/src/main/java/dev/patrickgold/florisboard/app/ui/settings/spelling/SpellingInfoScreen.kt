@@ -30,27 +30,29 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 
 @Composable
-fun SpellingInfoScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__spelling__dict_sources_info__title),
-    iconSpaceReserved = false,
-) {
+fun SpellingInfoScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__spelling__dict_sources_info__title)
+    iconSpaceReserved = false
+
     val context = LocalContext.current
 
-    Text(
-        modifier = Modifier.padding(horizontal = 16.dp),
-        text = stringRes(R.string.settings__spelling__dict_sources_info__intro),
-    )
-    for (source in SpellingManager.Config.importSources) {
-        Preference(
-            title = source.label,
-            summary = source.url,
-            onClick = {
-                source.url?.let { context.launchUrl(it) }
-            },
+    content {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = stringRes(R.string.settings__spelling__dict_sources_info__intro),
+        )
+        for (source in SpellingManager.Config.importSources) {
+            Preference(
+                title = source.label,
+                summary = source.url,
+                onClick = {
+                    source.url?.let { context.launchUrl(it) }
+                },
+            )
+        }
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = stringRes(R.string.settings__spelling__dict_sources_info__other),
         )
     }
-    Text(
-        modifier = Modifier.padding(horizontal = 16.dp),
-        text = stringRes(R.string.settings__spelling__dict_sources_info__other),
-    )
 }

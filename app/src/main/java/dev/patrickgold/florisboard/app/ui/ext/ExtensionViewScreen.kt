@@ -62,85 +62,89 @@ fun ExtensionViewScreen(id: String) {
 }
 
 @Composable
-private fun ViewScreen(ext: Extension) = FlorisScreen(
-    title = ext.meta.title,
-) {
+private fun ViewScreen(ext: Extension) = FlorisScreen {
+    title = ext.meta.title
+
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
-    ) {
-        ext.meta.description?.let { Text(it) }
-        Spacer(modifier = Modifier.height(16.dp))
-        ExtensionMetaRowScrollableChips(
-            label = stringRes(R.string.ext__meta__maintainers),
-            showDividerAbove = false,
+    content {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp),
         ) {
-            for ((n, maintainer) in ext.meta.maintainers.withIndex()) {
-                if (n > 0) {
-                    Spacer(modifier = Modifier.width(8.dp))
-                }
-                ExtensionMaintainerChip(maintainer)
-            }
-        }
-        ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__id)) {
-            Text(text = ext.meta.id)
-        }
-        ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__version)) {
-            Text(text = ext.meta.version)
-        }
-        if (ext.meta.keywords != null && ext.meta.keywords!!.isNotEmpty()) {
-            ExtensionMetaRowScrollableChips(label = stringRes(R.string.ext__meta__keywords)) {
-                for ((n, keyword) in ext.meta.keywords!!.withIndex()) {
+            ext.meta.description?.let { Text(it) }
+            Spacer(modifier = Modifier.height(16.dp))
+            ExtensionMetaRowScrollableChips(
+                label = stringRes(R.string.ext__meta__maintainers),
+                showDividerAbove = false,
+            ) {
+                for ((n, maintainer) in ext.meta.maintainers.withIndex()) {
                     if (n > 0) {
                         Spacer(modifier = Modifier.width(8.dp))
                     }
-                    ExtensionKeywordChip(keyword)
+                    ExtensionMaintainerChip(maintainer)
                 }
             }
-        }
-        if (!ext.meta.homepage.isNullOrBlank()) {
-            ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__homepage)) {
-                FlorisHyperlinkText(
-                    text = FlorisRef.from(ext.meta.homepage!!).authority,
-                    url = ext.meta.homepage!!,
-                )
+            ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__id)) {
+                Text(text = ext.meta.id)
             }
-        }
-        if (!ext.meta.issueTracker.isNullOrBlank()) {
-            ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__issue_tracker)) {
-                FlorisHyperlinkText(
-                    text = FlorisRef.from(ext.meta.issueTracker!!).authority,
-                    url = ext.meta.issueTracker!!,
-                )
+            ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__version)) {
+                Text(text = ext.meta.version)
             }
-        }
-        ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__license)) {
-            // TODO: display human-readable License name instead of
-            //  SPDX identifier
-            Text(text = ext.meta.license)
-        }
-        if (extensionManager.canDelete(ext)) {
-            Button(onClick = {
-                extensionManager.delete(ext)
-                navController.popBackStack()
-            }) {
-                Text(text = stringRes(R.string.assets__action__delete))
+            if (ext.meta.keywords != null && ext.meta.keywords!!.isNotEmpty()) {
+                ExtensionMetaRowScrollableChips(label = stringRes(R.string.ext__meta__keywords)) {
+                    for ((n, keyword) in ext.meta.keywords!!.withIndex()) {
+                        if (n > 0) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
+                        ExtensionKeywordChip(keyword)
+                    }
+                }
+            }
+            if (!ext.meta.homepage.isNullOrBlank()) {
+                ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__homepage)) {
+                    FlorisHyperlinkText(
+                        text = FlorisRef.from(ext.meta.homepage!!).authority,
+                        url = ext.meta.homepage!!,
+                    )
+                }
+            }
+            if (!ext.meta.issueTracker.isNullOrBlank()) {
+                ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__issue_tracker)) {
+                    FlorisHyperlinkText(
+                        text = FlorisRef.from(ext.meta.issueTracker!!).authority,
+                        url = ext.meta.issueTracker!!,
+                    )
+                }
+            }
+            ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__license)) {
+                // TODO: display human-readable License name instead of
+                //  SPDX identifier
+                Text(text = ext.meta.license)
+            }
+            if (extensionManager.canDelete(ext)) {
+                Button(onClick = {
+                    extensionManager.delete(ext)
+                    navController.popBackStack()
+                }) {
+                    Text(text = stringRes(R.string.assets__action__delete))
+                }
             }
         }
     }
 }
 
 @Composable
-private fun ErrorScreen(id: String) = FlorisScreen(
-    title = stringRes(R.string.ext__error__not_found_title),
-) {
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
-    ) {
-        Text(stringRes(R.string.ext__error__not_found_description, "id" to id))
+private fun ErrorScreen(id: String) = FlorisScreen {
+    title = stringRes(R.string.ext__error__not_found_title)
+
+    content {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp),
+        ) {
+            Text(stringRes(R.string.ext__error__not_found_description, "id" to id))
+        }
     }
 }
 

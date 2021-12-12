@@ -51,9 +51,9 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
-fun SpellingScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__spelling__title),
-) {
+fun SpellingScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__spelling__title)
+
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
@@ -89,101 +89,104 @@ fun SpellingScreen() = FlorisScreen(
         systemSpellCheckerEnabled == "1" &&
         systemSpellCheckerPkgName == context.packageName &&
         systemSpellCheckerSubtypeIndex != "0"
-    PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
-        Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-            if (systemSpellCheckerEnabled == "1") {
-                if (systemSpellCheckerId == null) {
-                    FlorisWarningCard(
-                        text = stringRes(R.string.pref__spelling__active_spellchecker__summary_none),
-                        onClick = openSystemSpellCheckerSettings,
-                    )
-                } else {
-                    var spellCheckerIcon: Drawable?
-                    var spellCheckerLabel = "Unknown"
-                    try {
-                        val pm = context.packageManager
-                        val remoteAppInfo = pm.getApplicationInfo(systemSpellCheckerPkgName, 0)
-                        spellCheckerIcon = pm.getApplicationIcon(remoteAppInfo)
-                        spellCheckerLabel = pm.getApplicationLabel(remoteAppInfo).toString()
-                    } catch (e: Exception) {
-                        spellCheckerIcon = null
-                    }
-                    FlorisSimpleCard(
-                        icon = {
-                            if (spellCheckerIcon != null) {
-                                FlorisCanvasIcon(
-                                    modifier = Modifier
-                                        .padding(end = 8.dp)
-                                        .requiredSize(32.dp),
-                                    drawable = spellCheckerIcon,
-                                )
-                            } else {
-                                Icon(
-                                    modifier = Modifier
-                                        .padding(end = 8.dp)
-                                        .requiredSize(32.dp),
-                                    painter = painterResource(R.drawable.ic_help_outline),
-                                    contentDescription = null,
-                                )
-                            }
-                        },
-                        text = spellCheckerLabel,
-                        secondaryText = systemSpellCheckerPkgName,
-                        contentPadding = PaddingValues(all = 8.dp),
-                        onClick = openSystemSpellCheckerSettings,
-                    )
-                    if (systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex == "0") {
+
+    content {
+        PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
+            Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+                if (systemSpellCheckerEnabled == "1") {
+                    if (systemSpellCheckerId == null) {
                         FlorisWarningCard(
-                            modifier = Modifier.padding(top = 8.dp),
-                            text = stringRes(
-                                R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
-                                "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
-                            ),
+                            text = stringRes(R.string.pref__spelling__active_spellchecker__summary_none),
                             onClick = openSystemSpellCheckerSettings,
                         )
+                    } else {
+                        var spellCheckerIcon: Drawable?
+                        var spellCheckerLabel = "Unknown"
+                        try {
+                            val pm = context.packageManager
+                            val remoteAppInfo = pm.getApplicationInfo(systemSpellCheckerPkgName, 0)
+                            spellCheckerIcon = pm.getApplicationIcon(remoteAppInfo)
+                            spellCheckerLabel = pm.getApplicationLabel(remoteAppInfo).toString()
+                        } catch (e: Exception) {
+                            spellCheckerIcon = null
+                        }
+                        FlorisSimpleCard(
+                            icon = {
+                                if (spellCheckerIcon != null) {
+                                    FlorisCanvasIcon(
+                                        modifier = Modifier
+                                            .padding(end = 8.dp)
+                                            .requiredSize(32.dp),
+                                        drawable = spellCheckerIcon,
+                                    )
+                                } else {
+                                    Icon(
+                                        modifier = Modifier
+                                            .padding(end = 8.dp)
+                                            .requiredSize(32.dp),
+                                        painter = painterResource(R.drawable.ic_help_outline),
+                                        contentDescription = null,
+                                    )
+                                }
+                            },
+                            text = spellCheckerLabel,
+                            secondaryText = systemSpellCheckerPkgName,
+                            contentPadding = PaddingValues(all = 8.dp),
+                            onClick = openSystemSpellCheckerSettings,
+                        )
+                        if (systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex == "0") {
+                            FlorisWarningCard(
+                                modifier = Modifier.padding(top = 8.dp),
+                                text = stringRes(
+                                    R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
+                                    "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
+                                ),
+                                onClick = openSystemSpellCheckerSettings,
+                            )
+                        }
                     }
+                } else {
+                    FlorisErrorCard(
+                        text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
+                        onClick = openSystemSpellCheckerSettings,
+                    )
                 }
-            } else {
-                FlorisErrorCard(
-                    text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
-                    onClick = openSystemSpellCheckerSettings,
-                )
             }
         }
-    }
-    val spellingDicts by extensionManager.spellingDicts.observeAsState()
-    Preference(
-        iconId = R.drawable.ic_library_books,
-        title = stringRes(R.string.settings__spelling__manage_dicts__title),
-        summary = stringRes(
-            R.string.settings__spelling__manage_dicts__n_installed,
-            "n" to (spellingDicts?.size ?: 0).toString(),
-        ),
-        onClick = { navController.navigate(Routes.Settings.ManageSpellingDicts) },
-        enabledIf = { florisSpellCheckerEnabled },
-    )
-
-    PreferenceGroup(title = stringRes(R.string.pref__spelling__group_spellchecker_config__title)) {
-        ListPreference(
-            prefs.spelling.languageMode,
-            iconId = R.drawable.ic_language,
-            title = stringRes(R.string.pref__spelling__language_mode__label),
-            entries = SpellingLanguageMode.listEntries(),
-            enabledIf = { florisSpellCheckerEnabled },
-        )
-        SwitchPreference(
-            prefs.spelling.useContacts,
-            iconId = R.drawable.ic_contacts,
-            title = stringRes(R.string.pref__spelling__use_contacts__label),
-            summary = stringRes(R.string.pref__spelling__use_contacts__summary),
-            enabledIf = { florisSpellCheckerEnabled },
-        )
-        SwitchPreference(
-            prefs.spelling.useUdmEntries,
+        val spellingDicts by extensionManager.spellingDicts.observeAsState()
+        Preference(
             iconId = R.drawable.ic_library_books,
-            title = stringRes(R.string.pref__spelling__use_udm_entries__label),
-            summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
+            title = stringRes(R.string.settings__spelling__manage_dicts__title),
+            summary = stringRes(
+                R.string.settings__spelling__manage_dicts__n_installed,
+                "n" to (spellingDicts?.size ?: 0).toString(),
+            ),
+            onClick = { navController.navigate(Routes.Settings.ManageSpellingDicts) },
             enabledIf = { florisSpellCheckerEnabled },
         )
+
+        PreferenceGroup(title = stringRes(R.string.pref__spelling__group_spellchecker_config__title)) {
+            ListPreference(
+                prefs.spelling.languageMode,
+                iconId = R.drawable.ic_language,
+                title = stringRes(R.string.pref__spelling__language_mode__label),
+                entries = SpellingLanguageMode.listEntries(),
+                enabledIf = { florisSpellCheckerEnabled },
+            )
+            SwitchPreference(
+                prefs.spelling.useContacts,
+                iconId = R.drawable.ic_contacts,
+                title = stringRes(R.string.pref__spelling__use_contacts__label),
+                summary = stringRes(R.string.pref__spelling__use_contacts__summary),
+                enabledIf = { florisSpellCheckerEnabled },
+            )
+            SwitchPreference(
+                prefs.spelling.useUdmEntries,
+                iconId = R.drawable.ic_library_books,
+                title = stringRes(R.string.pref__spelling__use_udm_entries__label),
+                summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
+                enabledIf = { florisSpellCheckerEnabled },
+            )
+        }
     }
 }

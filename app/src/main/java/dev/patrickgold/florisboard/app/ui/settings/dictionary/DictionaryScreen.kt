@@ -27,33 +27,37 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
-fun DictionaryScreen() = FlorisScreen(title = stringRes(R.string.settings__dictionary__title)) {
+fun DictionaryScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__dictionary__title)
+
     val context = LocalContext.current
 
-    SwitchPreference(
-        prefs.dictionary.enableSystemUserDictionary,
-        title = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__label),
-        summary = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__summary),
-    )
-    Preference(
-        title = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__label),
-        summary = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__summary),
-        onClick = { context.launchActivity(UdmActivity::class) {
-            it.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_SYSTEM)
-        } },
-        enabledIf = { prefs.dictionary.enableSystemUserDictionary isEqualTo true },
-    )
-    SwitchPreference(
-        prefs.dictionary.enableFlorisUserDictionary,
-        title = stringRes(R.string.pref__dictionary__enable_internal_user_dictionary__label),
-        summary = stringRes(R.string.pref__dictionary__enable_internal_user_dictionary__summary),
-    )
-    Preference(
-        title = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__label),
-        summary = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__summary),
-        onClick = { context.launchActivity(UdmActivity::class) {
-            it.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_FLORIS)
-        } },
-        enabledIf = { prefs.dictionary.enableFlorisUserDictionary isEqualTo true },
-    )
+    content {
+        SwitchPreference(
+            prefs.dictionary.enableSystemUserDictionary,
+            title = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__label),
+            summary = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__summary),
+        )
+        Preference(
+            title = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__label),
+            summary = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__summary),
+            onClick = { context.launchActivity(UdmActivity::class) {
+                it.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_SYSTEM)
+            } },
+            enabledIf = { prefs.dictionary.enableSystemUserDictionary isEqualTo true },
+        )
+        SwitchPreference(
+            prefs.dictionary.enableFlorisUserDictionary,
+            title = stringRes(R.string.pref__dictionary__enable_internal_user_dictionary__label),
+            summary = stringRes(R.string.pref__dictionary__enable_internal_user_dictionary__summary),
+        )
+        Preference(
+            title = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__label),
+            summary = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__summary),
+            onClick = { context.launchActivity(UdmActivity::class) {
+                it.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_FLORIS)
+            } },
+            enabledIf = { prefs.dictionary.enableFlorisUserDictionary isEqualTo true },
+        )
+    }
 }

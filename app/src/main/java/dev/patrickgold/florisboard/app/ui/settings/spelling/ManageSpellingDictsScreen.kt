@@ -37,10 +37,14 @@ import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.extensionManager
 
 @Composable
-fun ManageSpellingDictsScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__spelling__manage_dicts__title),
-    floatingActionButton = {
-        val navController = LocalNavController.current
+fun ManageSpellingDictsScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__spelling__manage_dicts__title)
+
+    val navController = LocalNavController.current
+    val context = LocalContext.current
+    val extensionManager by context.extensionManager()
+
+    floatingActionButton {
         FloatingActionButton(
             onClick = { navController.navigate(Routes.Settings.ImportSpellingArchive) },
         ) {
@@ -49,30 +53,28 @@ fun ManageSpellingDictsScreen() = FlorisScreen(
                 contentDescription = "Add dictionary",
             )
         }
-    },
-) {
-    val navController = LocalNavController.current
-    val context = LocalContext.current
-    val extensionManager by context.extensionManager()
+    }
 
-    FlorisInfoCard(
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 16.dp),
-        text = stringRes(R.string.settings__spelling__dict_sources_info__title),
-        onClick = { navController.navigate(Routes.Settings.SpellingInfo) },
-    )
+    content {
+        FlorisInfoCard(
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 16.dp),
+            text = stringRes(R.string.settings__spelling__dict_sources_info__title),
+            onClick = { navController.navigate(Routes.Settings.SpellingInfo) },
+        )
 
-    val spellingDicts by extensionManager.spellingDicts.observeAsState()
-    if (spellingDicts != null && spellingDicts!!.isNotEmpty()) {
-        ExtensionList(
-            extList = spellingDicts!!,
-            summaryProvider = { ext ->
-                "${ext.spelling.locale.languageTag()} | ${ext.meta.version} | ${ext.spelling.originalSourceId}"
-            },
-        )
-    } else {
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringRes(R.string.settings__spelling__manage_dicts__no_dicts_installed),
-        )
+        val spellingDicts by extensionManager.spellingDicts.observeAsState()
+        if (spellingDicts != null && spellingDicts!!.isNotEmpty()) {
+            ExtensionList(
+                extList = spellingDicts!!,
+                summaryProvider = { ext ->
+                    "${ext.spelling.locale.languageTag()} | ${ext.meta.version} | ${ext.spelling.originalSourceId}"
+                },
+            )
+        } else {
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringRes(R.string.settings__spelling__manage_dicts__no_dicts_installed),
+            )
+        }
     }
 }

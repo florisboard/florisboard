@@ -316,7 +316,7 @@ private class TextKeyboardLayoutController(
     private var glideRefreshJob: Job? = null
     private val fadingGlide: MutableList<Pair<GlideTypingGesture.Detector.Position, Long>> = mutableListOf()
     private var fadingGlideRadius: Float = 0.0f
-    private val swipeGestureDetector = SwipeGesture.Detector(context, this)
+    private val swipeGestureDetector = SwipeGesture.Detector(this)
 
     lateinit var keyboard: TextKeyboard
     var size = Size.Zero

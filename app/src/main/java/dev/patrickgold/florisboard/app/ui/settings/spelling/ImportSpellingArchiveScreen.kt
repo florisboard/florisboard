@@ -61,10 +61,10 @@ private object Step {
 }
 
 @Composable
-fun ImportSpellingArchiveScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__spelling__import__title),
-    scrollable = false,
-) {
+fun ImportSpellingArchiveScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__spelling__import__title)
+    scrollable = false
+
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
@@ -108,122 +108,124 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
         FlorisStepState.new(init = Step.SelectSource)
     }
 
-    LaunchedEffect(sourceSelectedIndex, importArchiveEditor) {
-        stepState.setCurrentAuto(when {
-            sourceSelectedIndex <= 0 -> Step.SelectSource
-            importArchiveEditor == null -> Step.ImportArchive
-            else -> Step.VerifyImport
-        })
-    }
+    content {
+        LaunchedEffect(sourceSelectedIndex, importArchiveEditor) {
+            stepState.setCurrentAuto(when {
+                sourceSelectedIndex <= 0 -> Step.SelectSource
+                importArchiveEditor == null -> Step.ImportArchive
+                else -> Step.VerifyImport
+            })
+        }
 
-    FlorisStepLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        stepState = stepState,
-        steps = listOf(
-            FlorisStep(
-                id = Step.SelectSource,
-                title = if (stepState.getCurrent().value > Step.SelectSource) {
-                    sources.getOrElse(sourceSelectedIndex) { "undefined" }
-                } else {
-                    stringRes(R.string.settings__spelling__import_archive_s1__title)
-                },
-            ) {
-                StepText(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = stringRes(R.string.settings__spelling__import_archive_s1__p1),
-                )
-                FlorisDropdownMenu(
-                    items = sources,
-                    expanded = sourceExpanded,
-                    selectedIndex = sourceSelectedIndex,
-                    onSelectItem = { sourceSelectedIndex = it },
-                    onExpandRequest = { sourceExpanded = true },
-                    onDismissRequest = { sourceExpanded = false },
-                )
-            },
-            FlorisStep(
-                id = Step.ImportArchive,
-                title = if (stepState.getCurrent().value > Step.ImportArchive && importArchiveEditor != null) {
-                    importArchiveEditor?.meta?.title ?: "undefined"
-                } else {
-                    stringRes(R.string.settings__spelling__import_archive_s2__title)
-                },
-            ) {
-                StepText(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = stringRes(R.string.settings__spelling__import_archive_s2__p1),
-                )
-                StepText(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = importArchiveUri?.toString() ?: "No file selected.",
-                    fontStyle = FontStyle.Italic,
-                )
-                if (importArchiveError != null) {
-                    ErrorCard(
-                        onActionClick = { errorDialogVisible = true }
-                    )
-                }
-                StepButton(
-                    onClick = { importArchiveLauncher.launch("*/*") },
-                    label = stringRes(R.string.assets__action__select_file),
-                )
-            },
-            FlorisStep(
-                id = Step.VerifyImport,
-                title = stringRes(R.string.settings__spelling__import_any_s3__title),
-            ) {
-                StepText(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = stringRes(R.string.settings__spelling__import_any_s3__p1),
-                )
-                StepText(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    // TODO: add verify view
-                    text = "TODO: add verify view",
-                    fontStyle = FontStyle.Italic,
-                )
-                if (writeExtError != null) {
-                    ErrorCard(
-                        onActionClick = { errorDialogVisible = true }
-                    )
-                }
-                StepButton(
-                    onClick = {
-                        runCatching {
-                            extensionManager.import(importArchiveEditor!!.build().getOrThrow()).getOrThrow()
-                        }.fold(
-                            onSuccess = {
-                                navController.popBackStack()
-                            },
-                            onFailure = {
-                                writeExtError = it
-                            },
-                        )
+        FlorisStepLayout(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            stepState = stepState,
+            steps = listOf(
+                FlorisStep(
+                    id = Step.SelectSource,
+                    title = if (stepState.getCurrent().value > Step.SelectSource) {
+                        sources.getOrElse(sourceSelectedIndex) { "undefined" }
+                    } else {
+                        stringRes(R.string.settings__spelling__import_archive_s1__title)
                     },
-                    label = stringRes(R.string.assets__action__import),
-                )
-            },
-        ),
-    )
+                ) {
+                    StepText(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        text = stringRes(R.string.settings__spelling__import_archive_s1__p1),
+                    )
+                    FlorisDropdownMenu(
+                        items = sources,
+                        expanded = sourceExpanded,
+                        selectedIndex = sourceSelectedIndex,
+                        onSelectItem = { sourceSelectedIndex = it },
+                        onExpandRequest = { sourceExpanded = true },
+                        onDismissRequest = { sourceExpanded = false },
+                    )
+                },
+                FlorisStep(
+                    id = Step.ImportArchive,
+                    title = if (stepState.getCurrent().value > Step.ImportArchive && importArchiveEditor != null) {
+                        importArchiveEditor?.meta?.title ?: "undefined"
+                    } else {
+                        stringRes(R.string.settings__spelling__import_archive_s2__title)
+                    },
+                ) {
+                    StepText(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        text = stringRes(R.string.settings__spelling__import_archive_s2__p1),
+                    )
+                    StepText(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        text = importArchiveUri?.toString() ?: "No file selected.",
+                        fontStyle = FontStyle.Italic,
+                    )
+                    if (importArchiveError != null) {
+                        ErrorCard(
+                            onActionClick = { errorDialogVisible = true }
+                        )
+                    }
+                    StepButton(
+                        onClick = { importArchiveLauncher.launch("*/*") },
+                        label = stringRes(R.string.assets__action__select_file),
+                    )
+                },
+                FlorisStep(
+                    id = Step.VerifyImport,
+                    title = stringRes(R.string.settings__spelling__import_any_s3__title),
+                ) {
+                    StepText(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        text = stringRes(R.string.settings__spelling__import_any_s3__p1),
+                    )
+                    StepText(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        // TODO: add verify view
+                        text = "TODO: add verify view",
+                        fontStyle = FontStyle.Italic,
+                    )
+                    if (writeExtError != null) {
+                        ErrorCard(
+                            onActionClick = { errorDialogVisible = true }
+                        )
+                    }
+                    StepButton(
+                        onClick = {
+                            runCatching {
+                                extensionManager.import(importArchiveEditor!!.build().getOrThrow()).getOrThrow()
+                            }.fold(
+                                onSuccess = {
+                                    navController.popBackStack()
+                                },
+                                onFailure = {
+                                    writeExtError = it
+                                },
+                            )
+                        },
+                        label = stringRes(R.string.assets__action__import),
+                    )
+                },
+            ),
+        )
 
-    if (errorDialogVisible) {
-        JetPrefAlertDialog(
-            title = "Detailed crash log",
-            onDismiss = { errorDialogVisible = false },
-        ) {
-            if (importArchiveError != null) {
-                Text(
-                    text = importArchiveError.toString(),
-                    style = MaterialTheme.typography.body2,
-                )
-            }
-            if (writeExtError != null) {
-                Text(
-                    text = writeExtError.toString(),
-                    style = MaterialTheme.typography.body2,
-                )
+        if (errorDialogVisible) {
+            JetPrefAlertDialog(
+                title = "Detailed crash log",
+                onDismiss = { errorDialogVisible = false },
+            ) {
+                if (importArchiveError != null) {
+                    Text(
+                        text = importArchiveError.toString(),
+                        style = MaterialTheme.typography.body2,
+                    )
+                }
+                if (writeExtError != null) {
+                    Text(
+                        text = writeExtError.toString(),
+                        style = MaterialTheme.typography.body2,
+                    )
+                }
             }
         }
     }
