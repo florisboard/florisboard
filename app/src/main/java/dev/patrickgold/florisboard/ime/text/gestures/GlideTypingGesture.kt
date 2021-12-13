@@ -12,7 +12,6 @@ import kotlin.math.sqrt
  * Wrapper class which holds all enums, interfaces and classes for detecting a gesture.
  */
 class GlideTypingGesture {
-
     /**
      * Class which detects swipes based on given [MotionEvent]s. Only supports single-finger swipes
      * and ignores additional pointers provided, if any.
@@ -31,6 +30,7 @@ class GlideTypingGesture {
 
         /**
          * Method which evaluates if a given [event] is a gesture.
+         *
          * @return whether or not the event was interpreted as part of a gesture.
          */
         fun onTouchEvent(event: MotionEvent, initialKey: TextKey?): Boolean {
@@ -131,18 +131,14 @@ class GlideTypingGesture {
         data class PointerData(
             val positions: MutableList<Position>,
             var startTime: Long,
-            var isActuallyGesture: Boolean? = null
+            var isActuallyGesture: Boolean? = null,
         )
 
-        data class Position(
-            val x: Float,
-            val y: Float
-        ) {
+        data class Position(val x: Float, val y: Float) {
             fun dist(p2: Position): Float {
                 return sqrt((p2.x - x).pow(2) + (p2.y - y).pow(2))
             }
         }
-
     }
 
     interface Listener {
@@ -158,7 +154,7 @@ class GlideTypingGesture {
         fun onGlideAddPoint(point: Detector.Position) {}
 
         /**
-         * Called to cancel a gesture
+         * Called to cancel a gesture.
          */
         fun onGlideCancelled() {}
     }

@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -75,6 +76,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val extensionManager by context.extensionManager()
+    private val glideTypingManager by context.glideTypingManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -128,8 +130,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         activeState.observeForever {
             updateRenderInfo()
         }
-        subtypeManager.activeSubtype.observeForever {
+        subtypeManager.activeSubtype.observeForever { newSubtype ->
             updateRenderInfo()
+            if (prefs.glide.enabled.get()) {
+                glideTypingManager.setWordData(newSubtype)
+            }
         }
         clipboardManager.primaryClip.observeForever {
             updateRenderInfo()
@@ -266,6 +271,24 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         when (candidate) {
             is NlpManager.Candidate.Word -> activeEditorInstance?.commitCompletion(candidate.word)
             is NlpManager.Candidate.Clip -> activeEditorInstance?.commitClipboardItem(candidate.clipboardItem)
+        }
+    }
+
+    fun commitGesture(word: String) {
+        activeEditorInstance?.commitGesture(fixCase(word))
+    }
+
+    /**
+     * Changes a word to the current case.
+     * eg if [KeyboardState.capsLock] is true, abc -> ABC
+     *    if [caps]     is true, abc -> Abc
+     *    otherwise            , abc -> abc
+     */
+    fun fixCase(word: String): String {
+        return when(activeState.inputMode) {
+            InputMode.CAPS_LOCK -> word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
+            InputMode.SHIFT_LOCK -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(subtypeManager.activeSubtype().primaryLocale.base) else it.toString() }
+            else -> word
         }
     }
 

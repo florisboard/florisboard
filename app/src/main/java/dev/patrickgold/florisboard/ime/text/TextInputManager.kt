@@ -155,9 +155,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         dictionaryManager.prepareDictionaries(newSubtype)
                     }
                 }
-                if (prefs.glide.enabled.get()) {
-                    GlideTypingManager.getInstance(florisboard).setWordData(newSubtype)
-                }
+                //if (prefs.glide.enabled.get()) {
+                //    GlideTypingManager.getInstance(florisboard).setWordData(newSubtype)
+                //}
                 setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
             }
             isGlidePostEffect = false

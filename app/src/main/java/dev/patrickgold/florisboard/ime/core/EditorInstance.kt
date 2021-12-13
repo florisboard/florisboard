@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -368,10 +367,7 @@ class EditorInstance(private val ims: InputMethodService) {
             ic.finishComposingText()
             if (selection.start > 0) {
                 val previous = getTextBeforeCursor(1)
-                if (TextProcessor.isWord(previous, FlorisLocale.ENGLISH) ||
-                    previous.isDigitsOnly() ||
-                    previous in TextInputManager.getInstance().symbolsWithSpaceAfter
-                ) {
+                if (TextProcessor.isWord(previous, FlorisLocale.ENGLISH) || previous.isDigitsOnly()) {
                     ic.commitText(" ", 1)
                 }
             }

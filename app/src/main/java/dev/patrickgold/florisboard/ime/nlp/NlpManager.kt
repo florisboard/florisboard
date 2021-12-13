@@ -74,6 +74,10 @@ class NlpManager(context: Context) {
         _suggestions.postValue(SuggestionList2(suggestions, false))
     }
 
+    fun suggestDirectly(suggestions: List<String>) {
+        _suggestions.postValue(SuggestionList2(suggestions, false))
+    }
+
     fun clearSuggestions() {
         _suggestions.postValue(null)
     }

@@ -5,8 +5,9 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
-import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -22,23 +23,19 @@ import kotlin.math.min
  * with [GlideTypingClassifier].
  */
 class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
-    private var glideTypingClassifier = StatisticalGlideTypingClassifier()
-    private val prefs by florisPreferenceModel()
-    private val assetManager by context.assetManager()
-    private val subtypeManager by context.subtypeManager()
-
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
-
-        private lateinit var glideTypingManager: GlideTypingManager
-        // FIXME: remove singleton logic and add instance to application
-        fun getInstance(context: Context): GlideTypingManager {
-            if (!this::glideTypingManager.isInitialized) {
-                glideTypingManager = GlideTypingManager(context)
-            }
-            return glideTypingManager
-        }
     }
+
+    private val prefs by florisPreferenceModel()
+    private val assetManager by context.assetManager()
+    private val keyboardManager by context.keyboardManager()
+    private val nlpManager by context.nlpManager()
+    private val subtypeManager by context.subtypeManager()
+
+    private var glideTypingClassifier = StatisticalGlideTypingClassifier()
+    private var lastTime = System.currentTimeMillis()
+    private val wordDataCache = hashMapOf<String, Int>()
 
     override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
@@ -50,7 +47,6 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
         glideTypingClassifier.clear()
     }
 
-    private var lastTime = System.currentTimeMillis()
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
         val normalized = GlideTypingGesture.Detector.Position(point.x, point.y)
 
@@ -67,10 +63,10 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
      * Change the layout of the internal gesture classifier
      */
     fun setLayout(keys: List<TextKey>) {
-        glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype())
+        if (keys.isNotEmpty()) {
+            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype())
+        }
     }
-
-    private val wordDataCache = hashMapOf<String, Int>()
 
     /**
      * Set the word data for the internal gesture classifier
@@ -103,28 +99,20 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
         }
 
         launch(Dispatchers.Default) {
-            // To avoid cache misses when maxSuggestions goes from 5 to 1.
-            val time = System.nanoTime()
             val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
-                val textInputManager = TextInputManager.getInstance()
-                textInputManager.isGlidePostEffect = true
                 val suggestionList = SuggestionList.new(1)
                 suggestions.subList(
                     1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
                     maxSuggestionsToShow.coerceAtMost(suggestions.size)
-                ).map { textInputManager.fixCase(it) }.forEach {
+                ).map { keyboardManager.fixCase(it) }.forEach {
                     suggestionList.add(it, 255)
                 }
-                //textInputManager.smartbarView?.setCandidateSuggestionWords(
-                //    time,
-                //    suggestionList
-                //)
+                nlpManager.suggestDirectly(suggestionList.toList())
                 suggestionList.dispose()
-                //textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
-                    textInputManager.handleGesture(suggestions.first())
+                    keyboardManager.commitGesture(suggestions.first())
                 }
                 callback.invoke(true)
             }
