@@ -1,19 +1,43 @@
 {
   "all": {
     "a": {
-      "main": { "$": "auto_text_key", "code": 259, "label": "ă" },
       "relevant": [
+        { "$": "auto_text_key", "code":  259, "label": "ă" },
         { "$": "auto_text_key", "code":  226, "label": "â" }
       ]
     },
+    "c": {
+      "relevant": [
+        { "code": 8217, "label": "’" }
+      ]
+    },
+    "h": {
+      "relevant": [
+        { "code": 8209, "label": "‑" },
+        { "code": 8211, "label": "–" },
+        { "code": 8212, "label": "—" }
+      ]
+    },
     "i": {
-      "main": { "$": "auto_text_key", "code":  238, "label": "î" }
+      "relevant": [
+        { "$": "auto_text_key", "code":  238, "label": "î" }
+      ]
     },
     "s": {
-      "main": { "$": "auto_text_key", "code": 537, "label": "ș" }
+      "relevant": [
+        { "$": "auto_text_key", "code":  537, "label": "ș" }
+      ]
     },
     "t": {
-      "main": { "$": "auto_text_key", "code": 539, "label": "ț" }
+      "relevant": [
+        { "$": "auto_text_key", "code":  539, "label": "ț" }
+      ]
+    },
+    "x": {
+      "relevant": [
+        { "code": 8222, "label": "„" },
+        { "code": 8221, "label": "”" }
+      ]
     },
     "~right": {
       "main": { "code":   44, "label": "," },
@@ -40,10 +64,10 @@
     "~right": {
       "main": { "code": -255, "label": ".com" },
       "relevant": [
-        { "code": -255, "label": ".ro" },
-        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".eu" },
         { "code": -255, "label": ".net" },
-        { "code": -255, "label": ".edu" }
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".ro" }
       ]
     }
   }
