@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.snygg
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -107,8 +108,21 @@ class SnyggStylesheet(
     // TODO: divide in smaller, testable sections
     fun compileToFullyQualified(stylesheetSpec: SnyggSpec): SnyggStylesheet {
         val newRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
+        var definedVariables: SnyggPropertySet? = null
         for (rule in rules.keys.sorted()) {
+            if (rule.isAnnotation) {
+                if (rule.element == "defines") {
+                    definedVariables = rules[rule]
+                }
+                continue
+            }
             val editor = rules[rule]!!.edit()
+            for ((propertyName, propertyValue) in editor.properties) {
+                if (propertyValue is SnyggDefinedVarValue) {
+                    editor.properties[propertyName] =
+                        definedVariables?.properties?.get(propertyValue.key) ?: SnyggImplicitInheritValue
+                }
+            }
             val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
             val possiblePropertySets = getPropertySets(newRules, rule)
             propertySetSpec.supportedProperties.forEach { supportedProperty ->
@@ -168,6 +182,20 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
         }
     }
 
+    fun annotation(name: String, propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
+        val propertySetEditor = SnyggPropertySetEditor()
+        propertySetBlock(propertySetEditor)
+        val ruleEditor = SnyggRuleEditor(
+            isAnnotation = true,
+            element = name,
+        )
+        rules[ruleEditor] = propertySetEditor
+    }
+
+    fun defines(propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
+        annotation("defines", propertySetBlock)
+    }
+
     operator fun String.invoke(
         codes: List<Int> = listOf(),
         groups: List<Int> = listOf(),
@@ -180,6 +208,7 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
         val ruleEditor = SnyggRuleEditor(
+            isAnnotation = false,
             element = this,
             codes.toMutableList(),
             groups.toMutableList(),

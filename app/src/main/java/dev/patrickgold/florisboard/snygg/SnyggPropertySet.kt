@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.TextUnit
 import dev.patrickgold.florisboard.snygg.value.RgbaColor
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeDpValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImageRefValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
@@ -262,5 +263,9 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
 
     fun image(relPath: String): SnyggImageRefValue {
         return SnyggImageRefValue(relPath)
+    }
+
+    fun `var`(key: String): SnyggDefinedVarValue {
+        return SnyggDefinedVarValue((key))
     }
 }
