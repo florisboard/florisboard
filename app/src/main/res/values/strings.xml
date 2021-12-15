@@ -506,6 +506,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlays the heap memory usage and max size in the top-right corner</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Show primary clip</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Overlays the current primary clip of the clipboard</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Show spelling overlay</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Clear internal user dictionary database</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Clears all words from the dictionary database table</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset \"{flag_name}\" flag</string>

@@ -125,6 +125,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_primary_clip",
             default = false,
         )
+        val showSpellingOverlay = boolean(
+            key = "devtools__show_spelling_overlay",
+            default = false,
+        )
         val overrideWordSuggestionsMinHeapRestriction = boolean(
             key = "devtools__override_word_suggestions_min_heap_restriction",
             default = false,

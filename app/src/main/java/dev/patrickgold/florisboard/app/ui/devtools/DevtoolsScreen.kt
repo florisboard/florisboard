@@ -66,6 +66,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = stringRes(R.string.devtools__show_primary_clip__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            SwitchPreference(
+                prefs.devtools.showSpellingOverlay,
+                title = stringRes(R.string.devtools__show_spelling_overlay__label),
+                summary = stringRes(R.string.devtools__show_spelling_overlay__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
             // TODO: remove this preference once word suggestions are re-implemented in 0.3.15/16
             SwitchPreference(
                 prefs.devtools.overrideWordSuggestionsMinHeapRestriction,
