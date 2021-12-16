@@ -107,15 +107,18 @@ fun TextKeyboardLayout(
     isPreview: Boolean = false,
     isSmartbarKeyboard: Boolean = false,
 ): Unit = with(LocalDensity.current) {
+    val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
-    val prefs by florisPreferenceModel()
     val glideTypingManager by context.glideTypingManager()
+
+    val glideEnabled by prefs.glide.enabled.observeAsState()
+    val glideShowTrail by prefs.glide.showTrail.observeAsState()
 
     val keyboard = renderInfo.keyboard
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
-        if (!isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
+        if (glideEnabled && !isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
             val keys = keyboard.keys().asSequence().toList()
             glideTypingManager.setLayout(keys)
         }
@@ -168,7 +171,7 @@ fun TextKeyboardLayout(
             }
             .drawWithContent {
                 drawContent()
-                if (prefs.glide.enabled.get() && prefs.glide.showTrail.get() && !isSmartbarKeyboard) {
+                if (glideEnabled && glideShowTrail && !isSmartbarKeyboard) {
                     val targetDist = 3.0f
                     val radius = 20.0f
 
