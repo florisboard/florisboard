@@ -30,7 +30,6 @@ import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
@@ -67,12 +66,12 @@ fun ThemeManagerScreen() = FlorisScreen(title = stringRes(R.string.settings__the
             },
         )
         if (AndroidVersion.ATLEAST_API26_O) {
-            LocalTimePickerPreference(
-                prefs.theme.sunriseTime,
-                iconId = R.drawable.ic_schedule,
-                title = stringRes(R.string.pref__theme__sunrise_time__label),
-                visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
-            )
+            //LocalTimePickerPreference(
+            //    prefs.theme.sunriseTime,
+            //    iconId = R.drawable.ic_schedule,
+            //    title = stringRes(R.string.pref__theme__sunrise_time__label),
+            //    visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+            //)
         }
         SwitchPreference(
             prefs.theme.dayThemeAdaptToApp,
@@ -99,12 +98,12 @@ fun ThemeManagerScreen() = FlorisScreen(title = stringRes(R.string.settings__the
             },
         )
         if (AndroidVersion.ATLEAST_API26_O) {
-            LocalTimePickerPreference(
-                prefs.theme.sunsetTime,
-                iconId = R.drawable.ic_schedule,
-                title = stringRes(R.string.pref__theme__sunset_time__label),
-                visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
-            )
+            //LocalTimePickerPreference(
+            //    prefs.theme.sunsetTime,
+            //    iconId = R.drawable.ic_schedule,
+            //    title = stringRes(R.string.pref__theme__sunset_time__label),
+            //    visibleIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+            //)
         }
         SwitchPreference(
             prefs.theme.nightThemeAdaptToApp,

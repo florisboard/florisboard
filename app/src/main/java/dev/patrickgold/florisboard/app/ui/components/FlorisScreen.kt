@@ -56,7 +56,6 @@ fun FlorisScreen(
         Box(modifier = modifier.padding(innerPadding)) {
             PreferenceLayout(
                 florisPreferenceModel(),
-                scrollable = false,
                 iconSpaceReserved = iconSpaceReserved,
             ) {
                 content(this)
@@ -137,7 +136,6 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
             Box(modifier = modifier.padding(innerPadding)) {
                 PreferenceLayout(
                     florisPreferenceModel(),
-                    scrollable = false,
                     iconSpaceReserved = iconSpaceReserved,
                     content = content,
                 )
