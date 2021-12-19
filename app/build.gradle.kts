@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    kotlin("plugin.serialization") version "1.6.0"
+    kotlin("plugin.serialization")
     id("com.google.android.gms.oss-licenses-plugin")
     id("de.mannodermaus.android-junit5")
 }
