@@ -73,6 +73,7 @@ class ExtensionManager(context: Context) {
     fun import(ext: Extension) = runCatching {
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
+            is KeyboardExtension -> "ime/keyboard"
             is SpellingExtension -> "ime/spelling"
             is ThemeExtension -> "ime/theme"
             else -> error("Unknown extension type")

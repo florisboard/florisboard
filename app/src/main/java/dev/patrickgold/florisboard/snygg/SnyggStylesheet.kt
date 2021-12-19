@@ -149,7 +149,11 @@ class SnyggStylesheet(
                             val value = possiblePropertySets.firstNotNullOfOrNull {
                                 it.properties[supportedProperty.name]
                             } ?: SnyggImplicitInheritValue
-                            editor.properties[supportedProperty.name] = value
+                            editor.properties[supportedProperty.name] = if (value is SnyggDefinedVarValue) {
+                                definedVariables?.properties?.get(value.key) ?: SnyggImplicitInheritValue
+                            } else {
+                                value
+                            }
                         }
                     }
                     newRulesWithPressed[pressedRule] = editor.build()

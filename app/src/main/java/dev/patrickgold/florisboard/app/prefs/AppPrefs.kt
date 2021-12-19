@@ -30,7 +30,9 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.util.VersionName
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.preferenceModel
@@ -536,19 +538,19 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "theme__day_theme_adapt_to_app",
             default = false,
         )
-        val dayThemeRef = custom(
-            key = "theme__day_theme_ref",
-            default = FlorisRef.assets("ime/theme/floris_day.json"),
-            serializer = FlorisRef.Serializer,
+        val dayThemeId = custom(
+            key = "theme__day_theme_id",
+            default = extCoreTheme("floris_day"),
+            serializer = ExtensionComponentName.Serializer,
         )
         val nightThemeAdaptToApp = boolean(
             key = "theme__night_theme_adapt_to_app",
             default = false,
         )
-        val nightThemeRef = custom(
-            key = "theme__night_theme_ref",
-            default = FlorisRef.assets("ime/theme/floris_night.json"),
-            serializer = FlorisRef.Serializer,
+        val nightThemeId = custom(
+            key = "theme__night_theme_id",
+            default = extCoreTheme("floris_night"),
+            serializer = ExtensionComponentName.Serializer,
         )
         @RequiresApi(Build.VERSION_CODES.O)
         val sunriseTime = localTime(

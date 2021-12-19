@@ -19,15 +19,18 @@ package dev.patrickgold.florisboard.ime.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.themeManager
 
-private val LocalConfig = staticCompositionLocalOf<ThemeExtensionConfig> { error("not init") }
+private val LocalConfig = staticCompositionLocalOf<ThemeComponent> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
@@ -194,7 +197,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
 }
 
 object FlorisImeTheme {
-    val config: ThemeExtensionConfig
+    val config: ThemeComponent
         @Composable
         @ReadOnlyComposable
         get() = LocalConfig.current
@@ -207,13 +210,12 @@ object FlorisImeTheme {
 
 @Composable
 fun FlorisImeTheme(content: @Composable () -> Unit) {
-    // TODO: this should be dynamically selected for user themes
-    val activeConfig = remember {
-        ThemeExtensionConfig(stylesheet = "")
-    }
-    val activeStyle = remember {
-        FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec)
-    }
+    val context = LocalContext.current
+    val themeManager by context.themeManager()
+
+    val activeThemeInfo by themeManager.activeThemeInfo.observeAsNonNullState()
+    val activeConfig = activeThemeInfo.config
+    val activeStyle = activeThemeInfo.stylesheet
     CompositionLocalProvider(LocalConfig provides activeConfig, LocalStyle provides activeStyle) {
         content()
     }

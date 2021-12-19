@@ -72,6 +72,7 @@ class FlorisApplication : Application() {
     val spellingManager = lazy { SpellingManager(this) }
     val spellingService = lazy { SpellingService(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
+    val themeManager = lazy { ThemeManager(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -98,7 +99,6 @@ class FlorisApplication : Application() {
             }
 
             DictionaryManager.init(this)
-            ThemeManager.init(this, assetManager.value)
         } catch (e: Exception) {
             CrashUtility.stageException(e)
             return
@@ -169,3 +169,5 @@ fun Context.spellingManager() = lazy { this.florisApplication().spellingManager.
 fun Context.spellingService() = lazy { this.florisApplication().spellingService.value }
 
 fun Context.subtypeManager() = lazy { this.florisApplication().subtypeManager.value }
+
+fun Context.themeManager() = lazy { this.florisApplication().themeManager.value }

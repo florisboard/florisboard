@@ -16,16 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import android.content.Context
-import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
-import java.io.File
 
 private const val SERIAL_TYPE = "ime.extension.theme"
 
@@ -34,26 +30,10 @@ private const val SERIAL_TYPE = "ime.extension.theme"
 data class ThemeExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
-    val theme: ThemeExtensionConfig,
+    val themes: List<ThemeComponent>,
 ) : Extension() {
 
-    @Transient private var stylesheet: SnyggStylesheet? = null
-
     override fun serialType() = SERIAL_TYPE
-
-    override fun onAfterLoad(context: Context, cacheDir: File) {
-        val assetManager by context.assetManager()
-        val jsonStylesheet = readExtensionFile(context, theme.stylesheet)
-        if (jsonStylesheet != null) {
-            assetManager.loadJsonAsset<SnyggStylesheet>(jsonStylesheet).onSuccess {
-                stylesheet = it
-            }
-        }
-    }
-
-    override fun onBeforeUnload(context: Context, cacheDir: File) {
-        stylesheet = null
-    }
 
     override fun edit(): ExtensionEditor {
         TODO("Not yet implemented")
@@ -61,9 +41,20 @@ data class ThemeExtension(
 }
 
 @Serializable
-data class ThemeExtensionConfig(
+data class ThemeComponent(
+    val id: String,
     val isNightTheme: Boolean = true,
-    val isMaterialYouAware: Boolean = false,
     val isBorderless: Boolean = false,
-    val stylesheet: String,
-)
+    val isMaterialYouAware: Boolean = false,
+    val stylesheet: String? = null,
+) {
+    fun stylesheet() = "stylesheets/$id.json"
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun extCoreTheme(id: String): ExtensionComponentName {
+    return ExtensionComponentName(
+        extensionId = "org.florisboard.themes",
+        componentId = id,
+    )
+}

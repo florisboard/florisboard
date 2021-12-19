@@ -31,39 +31,6 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
 
-@Deprecated("Deprecated in favor of FlorisScreen DSL. When writing new screens make sure to use the new DSL version of this composable. Old code can continue using this version for now.")
-@Composable
-fun FlorisScreen(
-    title: String,
-    backArrowVisible: Boolean = true,
-    scrollable: Boolean = true,
-    iconSpaceReserved: Boolean = true,
-    actions: @Composable RowScope.() -> Unit = { },
-    bottomBar: @Composable () -> Unit = { },
-    floatingActionButton: @Composable () -> Unit = { },
-    content: PreferenceUiContent<AppPrefs>,
-) {
-    Scaffold(
-        topBar = { FlorisAppBar(title, backArrowVisible, actions) },
-        bottomBar = bottomBar,
-        floatingActionButton = floatingActionButton,
-    ) { innerPadding ->
-        val modifier = if (scrollable) {
-            Modifier.florisVerticalScroll()
-        } else {
-            Modifier
-        }
-        Box(modifier = modifier.padding(innerPadding)) {
-            PreferenceLayout(
-                florisPreferenceModel(),
-                iconSpaceReserved = iconSpaceReserved,
-            ) {
-                content(this)
-            }
-        }
-    }
-}
-
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
     val scope = remember { FlorisScreenScopeImpl() }

@@ -16,20 +16,15 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
+import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.android.launchActivity
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.oldsettings.ThemeManagerActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -46,36 +41,26 @@ fun ThemeScreen() = FlorisScreen {
     val context = LocalContext.current
 
     content {
-        val dayThemeRef by prefs.theme.dayThemeRef.observeAsState()
-        val nightThemeRef by prefs.theme.nightThemeRef.observeAsState()
-
-        FlorisErrorCard(
-            modifier = Modifier.padding(all = 8.dp),
-            text = "Theme customization is not available in this beta release and will return in 0.3.14-beta08.",
-        )
+        val dayThemeId by prefs.theme.dayThemeId.observeAsState()
+        val nightThemeId by prefs.theme.nightThemeId.observeAsState()
 
         ListPreference(
             prefs.theme.mode,
             iconId = R.drawable.ic_brightness_auto,
             title = stringRes(R.string.pref__theme__mode__label),
             entries = ThemeMode.listEntries(),
-            enabledIf = { false },
         )
 
         PreferenceGroup(
             title = stringRes(R.string.pref__theme__day),
-            enabledIf = { false && prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
+            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
         ) {
             Preference(
                 iconId = R.drawable.ic_light_mode,
                 title = stringRes(R.string.pref__theme__any_theme__label),
-                summary = dayThemeRef.toString(),
+                summary = dayThemeId.toString(),
                 onClick = {
-                    // TODO: this currently launches the old UI for theme manager
-                    context.launchActivity(ThemeManagerActivity::class) {
-                        it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.dayThemeRef.key)
-                        it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.dayThemeRef.default.toString())
-                    }
+                    navController.navigate(Routes.Settings.ThemeSelect("day"))
                 },
             )
             SwitchPreference(
@@ -88,18 +73,14 @@ fun ThemeScreen() = FlorisScreen {
 
         PreferenceGroup(
             title = stringRes(R.string.pref__theme__night),
-            enabledIf = { false && prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
+            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
         ) {
             Preference(
                 iconId = R.drawable.ic_dark_mode,
                 title = stringRes(R.string.pref__theme__any_theme__label),
-                summary = nightThemeRef.toString(),
+                summary = nightThemeId.toString(),
                 onClick = {
-                    // TODO: this currently launches the old UI for theme manager
-                    context.launchActivity(ThemeManagerActivity::class) {
-                        it.putExtra(ThemeManagerActivity.EXTRA_KEY, prefs.theme.nightThemeRef.key)
-                        it.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, prefs.theme.nightThemeRef.default.toString())
-                    }
+                    navController.navigate(Routes.Settings.ThemeSelect("night"))
                 },
             )
             SwitchPreference(
