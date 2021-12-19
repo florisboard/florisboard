@@ -158,17 +158,15 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
     implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
-    implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
-    implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta02")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta02")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta02")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-    implementation("androidx.room:room-runtime:2.4.0-rc01")
-    kapt("androidx.room:room-compiler:2.4.0-rc01")
+    implementation("androidx.room:room-runtime:2.4.0")
+    kapt("androidx.room:room-compiler:2.4.0")
 
     testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
     testImplementation("io.kotest:kotest-assertions-core:4.6.3")
