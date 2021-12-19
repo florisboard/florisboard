@@ -65,6 +65,7 @@
              rendering glitches!! -->
         <item name="android:windowBackground">@color/florisApp_windowBackground</item>
         <item name="android:colorBackground">@color/florisApp_windowBackground</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
         <!-- SplashScreen related attributes -->
         <item name="postSplashScreenTheme">@style/Theme.AppCompat.DayNight.NoActionBar</item>
