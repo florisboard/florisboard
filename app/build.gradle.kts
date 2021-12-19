@@ -71,7 +71,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -146,8 +145,7 @@ tasks.withType<Test> {
 
 dependencies {
     implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.activity:activity-ktx:1.4.0") // possibly remove after settings rework
-    implementation("androidx.appcompat:appcompat:1.4.0") // possibly remove after settings rework
+    implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.autofill:autofill:1.1.0")
     implementation("androidx.collection:collection-ktx:1.2.0")
     implementation("androidx.compose.material:material:1.1.0-rc01")
@@ -158,8 +156,6 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
     implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
-    implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
-    implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta02")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta02")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta02")
