@@ -36,7 +36,7 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggDpSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.dp.value)
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
@@ -59,7 +59,7 @@ data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSpSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.sp.value)
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
@@ -82,7 +82,7 @@ data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggPercentageSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.percentage * 100.0f)
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {

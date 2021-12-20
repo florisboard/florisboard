@@ -30,7 +30,7 @@ data class SnyggDefinedVarValue(val key: String) : SnyggVarValue {
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggDefinedVarValue)
             val map = SnyggIdToValueMap.new(VarKey to v.key)
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {

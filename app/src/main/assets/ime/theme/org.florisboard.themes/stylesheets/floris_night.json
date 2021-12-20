@@ -1,0 +1,158 @@
+{
+  "@defines": {
+    "--primary": "rgba(76, 175, 80, 1.0)",
+    "--primary-variant": "rgba(56, 142, 60, 1.0)",
+    "--secondary": "rgba(245, 124, 0, 1.0)",
+    "--secondary-variant": "rgba(230, 81, 0, 1.0)",
+    "--background": "rgba(33, 33, 33, 1.0)",
+    "--surface": "rgba(66, 66, 66, 1.0)",
+    "--surface-variant": "rgba(97, 97, 97, 1.0)",
+
+    "--on-primary": "rgba(255, 255, 255, 1.0)",
+    "--on-secondary": "rgba(255, 255, 255, 1.0)",
+    "--on-background": "rgba(255, 255, 255, 1.0)",
+    "--on-surface": "rgba(255, 255, 255, 1.0)"
+  },
+
+  "keyboard": {
+    "background": "var(--background)"
+  },
+
+  "key": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "22sp",
+    "shape": "rounded-corner-shape(20%, 20%, 20%, 20%)"
+  },
+  "key:pressed": {
+    "background": "var(--surface-variant)",
+    "foreground": "var(--on-surface)"
+  },
+  "key[code={c:enter}]": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-surface)"
+  },
+  "key[code={c:enter}]:pressed": {
+    "background": "var(--primary-variant)",
+    "foreground": "var(--on-surface)"
+  },
+  "key[code={c:shift}][mode={m:capslock}]": {
+    "foreground": "var(--secondary)"
+  },
+  "key[code={c:space}]": {
+    "background": "var(--surface)",
+    "foreground": "rgba(144, 144, 144, 1.0)",
+    "font-size": "12sp"
+  },
+  "key-hint": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "rgba(184, 184, 184, 1.0)",
+    "font-size": "12sp"
+  },
+  "key-popup": {
+    "background": "rgba(117, 117, 117, 1.0)",
+    "foreground": "var(--on-surface)",
+    "font-size": "22sp",
+    "shape": "rounded-corner-shape(20%, 20%, 20%, 20%)"
+  },
+  "key-popup:focus": {
+    "background": "rgba(189, 189, 189, 1.0)",
+    "foreground": "var(--on-surface)"
+  },
+
+  "clipboard-header": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "var(--on-surface)",
+    "font-size": "16sp"
+  },
+  "clipboard-item": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "14sp",
+    "shape": "rounded-corner-shape(12dp, 12dp, 12dp, 12dp)"
+  },
+  "clipboard-item-popup": {
+    "background": "rgba(117, 117, 117, 1.0)",
+    "foreground": "var(--on-surface)",
+    "font-size": "14sp",
+    "shape": "rounded-corner-shape(12dp, 12dp, 12dp, 12dp)"
+  },
+
+  "one-handed-panel": {
+    "background": "rgba(27, 94, 32, 1.0)",
+    "foreground": "rgba(238, 238, 238, 1.0)"
+  },
+
+  "smartbar-primary-row": {
+    "background": "rgba(0, 0, 0, 0.0)"
+  },
+  "smartbar-primary-action-row-toggle": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "shape": "rounded-corner-shape(50%, 50%, 50%, 50%)"
+  },
+  "smartbar-primary-secondary-row-toggle": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "rgba(144, 144, 144, 1.0)",
+    "shape": "rounded-corner-shape(50%, 50%, 50%, 50%)"
+  },
+
+  "smartbar-secondary-row": {
+    "background": "var(--background)"
+  },
+
+  "smartbar-action-row": {
+    "background": "rgba(0, 0, 0, 0.0)"
+  },
+  "smartbar-action-button": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "rgba(220, 220, 220, 1.0)",
+    "shape": "rounded-corner-shape(50%, 50%, 50%, 50%)"
+  },
+
+  "smartbar-candidate-row": {
+    "background": "rgba(0, 0, 0, 0.0)"
+  },
+  "smartbar-candidate-word": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "rgba(220, 220, 220, 1.0)",
+    "font-size": "14sp",
+    "shape": "rectangle-shape()"
+  },
+  "smartbar-candidate-word:pressed": {
+    "background": "var(--surface)",
+    "foreground": "rgba(220, 220, 220, 1.0)"
+  },
+  "smartbar-candidate-clip": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "rgba(220, 220, 220, 1.0)",
+    "font-size": "14sp",
+    "shape": "rounded-corner-shape(8%, 8%, 8%, 8%)"
+  },
+  "smartbar-candidate-clip:pressed": {
+    "background": "var(--surface)",
+    "foreground": "rgba(220, 220, 220, 1.0)"
+  },
+  "smartbar-candidate-spacer": {
+    "foreground": "rgba(255, 255, 255, 0.25)"
+  },
+
+  "smartbar-key": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "rgba(220, 220, 220, 1.0)",
+    "font-size": "18sp",
+    "shape": "rounded-corner-shape(20%, 20%, 20%, 20%)"
+  },
+  "smartbar-key:pressed": {
+    "background": "var(--surface)",
+    "foreground": "rgba(220, 220, 220, 1.0)"
+  },
+  "smartbar-key:disabled": {
+    "background": "rgba(0, 0, 0, 0.0)",
+    "foreground": "var(--surface)"
+  },
+
+  "system-nav-bar": {
+    "background": "rgba(33, 33, 33, 1.0)"
+  }
+}

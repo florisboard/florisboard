@@ -40,15 +40,19 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.decodeFromString
 import java.time.LocalTime
 
 /**
@@ -62,9 +66,10 @@ class ThemeManager(context: Context) {
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeComponent>())
-    val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeComponent>> get() = _indexedThemeConfigs
+    private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeConfig>())
+    val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeConfig>> get() = _indexedThemeConfigs
 
+    private val cachedThemeInfos = mutableListOf<ThemeInfo>()
     private val activeThemeGuard = Mutex(locked = false)
     private val _activeThemeInfo = MutableLiveData(ThemeInfo.DEFAULT)
     val activeThemeInfo: LiveData<ThemeInfo> get() = _activeThemeInfo
@@ -161,7 +166,9 @@ class ThemeManager(context: Context) {
             _indexedThemeConfigs.postValue(map)
         }
         indexedThemeConfigs.observeForever {
-            updateActiveTheme()
+            updateActiveTheme {
+                cachedThemeInfos.clear()
+            }
         }
         prefs.theme.mode.observeForever {
             updateActiveTheme()
@@ -178,13 +185,36 @@ class ThemeManager(context: Context) {
      * Updates the current theme ref and loads the corresponding theme, as well as notifies all
      * callback receivers about the new theme.
      */
-    private fun updateActiveTheme() = scope.launch {
+    private fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
-            val activeId = evaluateActiveThemeId()
+            action()
+            val activeName = evaluateActiveThemeName()
+            val cachedInfo = cachedThemeInfos.find { it.name == activeName }
+            if (cachedInfo != null) {
+                _activeThemeInfo.postValue(cachedInfo)
+            } else {
+                val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
+                val themeExtRef = themeExt?.sourceRef
+                if (themeExtRef != null) {
+                    val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
+                    if (themeConfig != null) {
+                        val newStylesheet = ZipUtils.readFileFromArchive(
+                            appContext, themeExtRef, themeConfig.stylesheetPath(),
+                        ).getOrNull()?.let { raw -> SnyggStylesheetJsonConfig.decodeFromString<SnyggStylesheet>(raw) }
+                        if (newStylesheet != null) {
+                            val newCompiledStylesheet = (newStylesheet)
+                                .compileToFullyQualified(FlorisImeUiSpec)
+                            val newInfo = ThemeInfo(activeName, themeConfig, newCompiledStylesheet)
+                            cachedThemeInfos.add(newInfo)
+                            _activeThemeInfo.postValue(newInfo)
+                        }
+                    }
+                }
+            }
         }
     }
 
-    private fun evaluateActiveThemeId(): ExtensionComponentName {
+    private fun evaluateActiveThemeName(): ExtensionComponentName {
         return when (prefs.theme.mode.get()) {
             ThemeMode.ALWAYS_DAY -> {
                 prefs.theme.dayThemeId.get()
@@ -232,13 +262,13 @@ class ThemeManager(context: Context) {
 
     data class ThemeInfo(
         val name: ExtensionComponentName,
-        val config: ThemeComponent,
+        val config: ThemeConfig,
         val stylesheet: SnyggStylesheet,
     ) {
         companion object {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
-                config = ThemeComponent(id = "base"),
+                config = ThemeConfig(id = "base"),
                 stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
             )
         }
@@ -246,9 +276,9 @@ class ThemeManager(context: Context) {
 
     data class RemoteColors(
         val packageName: String,
-        val colorPrimary: ThemeValue.SolidColor?,
-        val colorPrimaryVariant: ThemeValue.SolidColor?,
-        val colorSecondary: ThemeValue.SolidColor?
+        val colorPrimary: SnyggSolidColorValue?,
+        val colorPrimaryVariant: SnyggSolidColorValue?,
+        val colorSecondary: SnyggSolidColorValue?,
     ) {
         companion object {
             val DEFAULT = RemoteColors("undefined", null, null, null)

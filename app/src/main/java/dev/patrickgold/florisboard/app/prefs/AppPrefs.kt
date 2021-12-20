@@ -31,7 +31,6 @@ import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
-import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.util.VersionName
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel

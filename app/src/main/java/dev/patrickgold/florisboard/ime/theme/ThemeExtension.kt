@@ -30,7 +30,7 @@ private const val SERIAL_TYPE = "ime.extension.theme"
 data class ThemeExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
-    val themes: List<ThemeComponent>,
+    val themes: List<ThemeConfig>,
 ) : Extension() {
 
     override fun serialType() = SERIAL_TYPE
@@ -41,14 +41,15 @@ data class ThemeExtension(
 }
 
 @Serializable
-data class ThemeComponent(
+data class ThemeConfig(
     val id: String,
     val isNightTheme: Boolean = true,
     val isBorderless: Boolean = false,
     val isMaterialYouAware: Boolean = false,
-    val stylesheet: String? = null,
+    @SerialName("stylesheet")
+    val stylesheetPath: String? = null,
 ) {
-    fun stylesheet() = "stylesheets/$id.json"
+    fun stylesheetPath() = "stylesheets/$id.json"
 }
 
 @Suppress("NOTHING_TO_INLINE")

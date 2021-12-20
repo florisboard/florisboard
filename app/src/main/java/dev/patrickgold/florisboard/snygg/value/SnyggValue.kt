@@ -100,3 +100,16 @@ object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
 
     override fun encoder() = this
 }
+
+val SnyggVarValueEncoders = listOf(
+    SnyggSolidColorValue,
+    SnyggImageRefValue,
+    SnyggRectangleShapeValue,
+    SnyggCutCornerShapeDpValue,
+    SnyggCutCornerShapePercentValue,
+    SnyggRoundedCornerShapeDpValue,
+    SnyggRoundedCornerShapePercentValue,
+    SnyggDpSizeValue,
+    SnyggSpSizeValue,
+    SnyggPercentageSizeValue,
+)

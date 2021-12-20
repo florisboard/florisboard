@@ -59,9 +59,10 @@ data class SnyggRule(
     companion object {
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
-            """^(@?)[a-zA-Z0-9-]+(\[(code|group|normal)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
+            """^(@?)[a-zA-Z0-9-]+(\[(code|group|mode)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
         private val placeholders = mapOf(
             "c:delete" to KeyCode.DELETE,
+            "c:enter" to KeyCode.ENTER,
             "c:shift" to KeyCode.SHIFT,
             "c:space" to KeyCode.SPACE,
             "m:normal" to InputMode.NORMAL.value,

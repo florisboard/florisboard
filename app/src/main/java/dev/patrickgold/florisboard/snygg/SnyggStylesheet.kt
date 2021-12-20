@@ -21,12 +21,16 @@ import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.Json
+
+val SnyggStylesheetJsonConfig = Json
 
 @Serializable(with = SnyggStylesheetSerializer::class)
 class SnyggStylesheet(
@@ -102,7 +106,21 @@ class SnyggStylesheet(
     ) = getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
 
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
-        TODO()
+        val mergedRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
+        mergedRules.putAll(other.rules)
+        for ((rule, propertySet) in rules) {
+            if (mergedRules.containsKey(rule)) {
+                val otherPropertySet = mergedRules[rule]!!
+                val mergedProperties = buildMap {
+                    putAll(propertySet.properties)
+                    putAll(otherPropertySet.properties)
+                }
+                mergedRules[rule] = SnyggPropertySet(mergedProperties)
+            } else {
+                mergedRules[rule] = propertySet
+            }
+        }
+        return SnyggStylesheet(mergedRules)
     }
 
     // TODO: divide in smaller, testable sections
@@ -253,6 +271,14 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
         for ((rule, rawProperties) in rawRuleMap) {
             // FIXME: hardcoding which spec to use, the selection should happen dynamically
             val stylesheetSpec = FlorisImeUiSpec
+            if (rule.isAnnotation && rule.element == "defines") {
+                val parsedProperties = rawProperties.mapValues { (_, rawValue) ->
+                    SnyggVarValueEncoders.firstNotNullOfOrNull { it.deserialize(rawValue).getOrNull() }
+                        ?: SnyggImplicitInheritValue
+                }
+                ruleMap[rule] = SnyggPropertySet(parsedProperties)
+                continue
+            }
             val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
             val properties = rawProperties.mapValues { (name, value) ->
                 val propertySpec = propertySetSpec.propertySpec(name)

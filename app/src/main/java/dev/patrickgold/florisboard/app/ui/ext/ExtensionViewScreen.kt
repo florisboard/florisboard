@@ -43,7 +43,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.ime.theme.ThemeComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
@@ -215,7 +215,7 @@ private fun PreviewExtensionViewerScreen() {
         ),
         dependencies = null,
         themes = listOf(
-            ThemeComponent(id = "test", stylesheet = "test.json"),
+            ThemeConfig(id = "test", stylesheetPath = "test.json"),
         ),
     )
     ViewScreen(ext = testExtension)

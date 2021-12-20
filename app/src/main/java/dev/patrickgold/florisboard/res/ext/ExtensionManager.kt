@@ -59,7 +59,7 @@ class ExtensionManager(context: Context) {
     companion object {
         private const val IME_KEYBOARD_PATH = "ime/keyboard"
         private const val IME_SPELLING_PATH = "ime/spelling"
-        private const val IME_THEME_PATH = "ime/themes"
+        private const val IME_THEME_PATH = "ime/theme"
     }
 
     private val appContext by context.appContext()
@@ -73,9 +73,9 @@ class ExtensionManager(context: Context) {
     fun import(ext: Extension) = runCatching {
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
-            is KeyboardExtension -> "ime/keyboard"
-            is SpellingExtension -> "ime/spelling"
-            is ThemeExtension -> "ime/theme"
+            is KeyboardExtension -> IME_KEYBOARD_PATH
+            is SpellingExtension -> IME_SPELLING_PATH
+            is ThemeExtension -> IME_THEME_PATH
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
