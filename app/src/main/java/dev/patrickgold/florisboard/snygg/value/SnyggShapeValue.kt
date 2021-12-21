@@ -28,9 +28,9 @@ private const val CornerSizeTopEnd = "cornerSizeTopEnd"
 private const val CornerSizeBottomEnd = "cornerSizeBottomEnd"
 private const val CornerSizeBottomStart = "cornerSizeBottomStart"
 
-private const val Rectangle = "rectangle-shape"
-private const val CutCorner = "cut-corner-shape"
-private const val RoundedCorner = "rounded-corner-shape"
+private const val Rectangle = "rectangle"
+private const val CutCorner = "cut-corner"
+private const val RoundedCorner = "rounded-corner"
 
 private const val DpUnit = "dp"
 

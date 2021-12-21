@@ -22,7 +22,7 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shape": "rounded-corner-shape(20%, 20%, 20%, 20%)"
+    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
   },
   "key:pressed": {
     "background": "var(--surface-variant)",
@@ -53,7 +53,7 @@
     "background": "#757575",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shape": "rounded-corner-shape(20%, 20%, 20%, 20%)"
+    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
   },
   "key-popup:focus": {
     "background": "#bdbdbd",
@@ -69,13 +69,13 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shape": "rounded-corner-shape(12dp, 12dp, 12dp, 12dp)"
+    "shape": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
   },
   "clipboard-item-popup": {
     "background": "#757575",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shape": "rounded-corner-shape(12dp, 12dp, 12dp, 12dp)"
+    "shape": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
   },
 
   "one-handed-panel": {
@@ -89,12 +89,12 @@
   "smartbar-primary-action-row-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
-    "shape": "rounded-corner-shape(50%, 50%, 50%, 50%)"
+    "shape": "rounded-corner(50%, 50%, 50%, 50%)"
   },
   "smartbar-primary-secondary-row-toggle": {
     "background": "transparent",
     "foreground": "#909090",
-    "shape": "rounded-corner-shape(50%, 50%, 50%, 50%)"
+    "shape": "rounded-corner(50%, 50%, 50%, 50%)"
   },
 
   "smartbar-secondary-row": {
@@ -107,7 +107,7 @@
   "smartbar-action-button": {
     "background": "transparent",
     "foreground": "#dcdcdc",
-    "shape": "rounded-corner-shape(50%, 50%, 50%, 50%)"
+    "shape": "rounded-corner(50%, 50%, 50%, 50%)"
   },
 
   "smartbar-candidate-row": {
@@ -117,7 +117,7 @@
     "background": "transparent",
     "foreground": "#dcdcdc",
     "font-size": "14sp",
-    "shape": "rectangle-shape()"
+    "shape": "rectangle()"
   },
   "smartbar-candidate-word:pressed": {
     "background": "var(--surface)",
@@ -127,7 +127,7 @@
     "background": "transparent",
     "foreground": "#dcdcdc",
     "font-size": "14sp",
-    "shape": "rounded-corner-shape(8%, 8%, 8%, 8%)"
+    "shape": "rounded-corner(8%, 8%, 8%, 8%)"
   },
   "smartbar-candidate-clip:pressed": {
     "background": "var(--surface)",
@@ -141,7 +141,7 @@
     "background": "transparent",
     "foreground": "#dcdcdc",
     "font-size": "18sp",
-    "shape": "rounded-corner-shape(20%, 20%, 20%, 20%)"
+    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
   },
   "smartbar-key:pressed": {
     "background": "var(--surface)",
