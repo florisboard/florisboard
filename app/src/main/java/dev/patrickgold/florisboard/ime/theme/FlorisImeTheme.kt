@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -214,8 +215,8 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val themeManager by context.themeManager()
 
     val activeThemeInfo by themeManager.activeThemeInfo.observeAsNonNullState()
-    val activeConfig = activeThemeInfo.config
-    val activeStyle = activeThemeInfo.stylesheet
+    val activeConfig = remember(activeThemeInfo) { activeThemeInfo.config }
+    val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
     CompositionLocalProvider(LocalConfig provides activeConfig, LocalStyle provides activeStyle) {
         content()
     }

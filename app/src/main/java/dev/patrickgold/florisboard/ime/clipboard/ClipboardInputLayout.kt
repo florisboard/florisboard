@@ -79,6 +79,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggClip
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -279,7 +280,8 @@ fun ClipboardInputLayout(
                     Column(
                         modifier = Modifier
                             .padding(ItemMargin)
-                            .snyggBackground(popupStyle.background, popupStyle.shape),
+                            .snyggBackground(popupStyle.background, popupStyle.shape)
+                            .snyggClip(popupStyle.shape),
                     ) {
                         PopupAction(
                             iconId = R.drawable.ic_pin,

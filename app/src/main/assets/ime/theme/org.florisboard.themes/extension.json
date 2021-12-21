@@ -10,6 +10,12 @@
   },
   "themes": [
     {
+      "id": "floris_day",
+      "isNight": false,
+      "isBorderless": false,
+      "isMaterialYouAware": false
+    },
+    {
       "id": "floris_night",
       "isNight": true,
       "isBorderless": false,

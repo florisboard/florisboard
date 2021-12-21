@@ -91,7 +91,7 @@ class SnyggStylesheet(
         isPressed: Boolean = false,
         isFocus: Boolean = false,
         isDisabled: Boolean = false,
-    ) = remember(element, code, group, mode, isPressed, isFocus, isDisabled) {
+    ) = remember(this, element, code, group, mode, isPressed, isFocus, isDisabled) {
         getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
     }
 
