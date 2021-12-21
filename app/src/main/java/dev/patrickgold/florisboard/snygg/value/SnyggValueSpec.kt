@@ -225,20 +225,6 @@ class SnyggValueSpecBuilder {
         innerSpecBuilder: SnyggValueSpecBuilder.() -> SnyggValueSpec,
     ) = SnyggFunctionValueSpec(id = null, name, innerSpecBuilder(Instance))
 
-    fun rgbaColor(
-        idR: String = "r",
-        idG: String = "g",
-        idB: String = "b",
-        idA: String = "a",
-    ) = function(name = "rgba") {
-        commaList {
-            +int(id = idR, min = RgbaColor.RedMin, max = RgbaColor.RedMax)
-            +int(id = idG, min = RgbaColor.GreenMin, max = RgbaColor.GreenMax)
-            +int(id = idB, min = RgbaColor.BlueMin, max = RgbaColor.BlueMax)
-            +float(id = idA, min = RgbaColor.AlphaMin, max = RgbaColor.AlphaMax)
-        }
-    }
-
     fun keywords(
         id: String? = null,
         keywords: List<String>,

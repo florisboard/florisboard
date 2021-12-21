@@ -27,9 +27,16 @@ package dev.patrickgold.florisboard.snygg.value
 interface SnyggValueEncoder {
     /**
      * Describes the format of the [SnyggValue] in the serialized state of the value in the Json file. This spec is
-     * used in the serialization process of this encoder for providing
+     * used in the serialization process of this encoder for both serializing and deserializing.
      */
     val spec: SnyggValueSpec
+
+    /**
+     * Describes alternative formats of the [SnyggValue] in the serialized state of the value in the Json file. These
+     * specs are exclusively used in the deserialization process and ignored when serializing a value.
+     */
+    val alternativeSpecs: List<SnyggValueSpec>
+        get() = emptyList()
 
     /**
      * Serialize given Snygg value [v] and return a String representation of it. This method is exception-free, which
