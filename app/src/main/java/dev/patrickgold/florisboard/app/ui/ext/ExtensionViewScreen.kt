@@ -215,7 +215,7 @@ private fun PreviewExtensionViewerScreen() {
         ),
         dependencies = null,
         themes = listOf(
-            ThemeConfig(id = "test", stylesheetPath = "test.json"),
+            ThemeConfig(id = "test", label = "Test", authors = listOf(), stylesheetPath = "test.json"),
         ),
     )
     ViewScreen(ext = testExtension)

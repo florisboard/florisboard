@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.theme
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -43,6 +44,8 @@ data class ThemeExtension(
 @Serializable
 data class ThemeConfig(
     val id: String,
+    val label: String,
+    val authors: List<ExtensionMaintainer>,
     val isNightTheme: Boolean = true,
     val isBorderless: Boolean = false,
     val isMaterialYouAware: Boolean = false,

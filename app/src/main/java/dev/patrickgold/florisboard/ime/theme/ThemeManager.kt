@@ -37,6 +37,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeSelectScreenType
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.extensionManager
@@ -54,6 +55,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.decodeFromString
 import java.time.LocalTime
+import kotlin.properties.Delegates
 
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
@@ -68,6 +70,9 @@ class ThemeManager(context: Context) {
 
     private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeConfig>())
     val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeConfig>> get() = _indexedThemeConfigs
+    var themePreviewMode: ThemeSelectScreenType? by Delegates.observable(null) { _, _, _ ->
+        updateActiveTheme()
+    }
 
     private val cachedThemeInfos = mutableListOf<ThemeInfo>()
     private val activeThemeGuard = Mutex(locked = false)
@@ -215,32 +220,36 @@ class ThemeManager(context: Context) {
     }
 
     private fun evaluateActiveThemeName(): ExtensionComponentName {
-        return when (prefs.theme.mode.get()) {
-            ThemeMode.ALWAYS_DAY -> {
-                prefs.theme.dayThemeId.get()
-            }
-            ThemeMode.ALWAYS_NIGHT -> {
-                prefs.theme.nightThemeId.get()
-            }
-            ThemeMode.FOLLOW_SYSTEM -> if (appContext.resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-            ) {
-                prefs.theme.nightThemeId.get()
-            } else {
-                prefs.theme.dayThemeId.get()
-            }
-            ThemeMode.FOLLOW_TIME -> {
-                if (AndroidVersion.ATLEAST_API26_O) {
-                    val current = LocalTime.now()
-                    val sunrise = prefs.theme.sunriseTime.get()
-                    val sunset = prefs.theme.sunsetTime.get()
-                    if (current in sunrise..sunset) {
-                        prefs.theme.dayThemeId.get()
+        return when (themePreviewMode) {
+            ThemeSelectScreenType.DAY -> prefs.theme.dayThemeId.get()
+            ThemeSelectScreenType.NIGHT -> prefs.theme.nightThemeId.get()
+            else -> when (prefs.theme.mode.get()) {
+                ThemeMode.ALWAYS_DAY -> {
+                    prefs.theme.dayThemeId.get()
+                }
+                ThemeMode.ALWAYS_NIGHT -> {
+                    prefs.theme.nightThemeId.get()
+                }
+                ThemeMode.FOLLOW_SYSTEM -> if (appContext.resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                ) {
+                    prefs.theme.nightThemeId.get()
+                } else {
+                    prefs.theme.dayThemeId.get()
+                }
+                ThemeMode.FOLLOW_TIME -> {
+                    if (AndroidVersion.ATLEAST_API26_O) {
+                        val current = LocalTime.now()
+                        val sunrise = prefs.theme.sunriseTime.get()
+                        val sunset = prefs.theme.sunsetTime.get()
+                        if (current in sunrise..sunset) {
+                            prefs.theme.dayThemeId.get()
+                        } else {
+                            prefs.theme.nightThemeId.get()
+                        }
                     } else {
                         prefs.theme.nightThemeId.get()
                     }
-                } else {
-                    prefs.theme.nightThemeId.get()
                 }
             }
         }
@@ -268,7 +277,7 @@ class ThemeManager(context: Context) {
         companion object {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
-                config = ThemeConfig(id = "base"),
+                config = ThemeConfig(id = "base", label = "Base", authors = listOf()),
                 stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
             )
         }

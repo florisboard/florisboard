@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeSelectScreen
+import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeSelectScreenType
 import dev.patrickgold.florisboard.app.ui.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 import dev.patrickgold.florisboard.app.ui.splash.SplashScreen
@@ -139,7 +140,9 @@ object Routes {
 
             composable(Settings.Theme) { ThemeScreen() }
             composable(Settings.ThemeSelect) { navBackStack ->
-                val type = navBackStack.arguments?.getString("type")
+                val type = navBackStack.arguments?.getString("type")?.let { id ->
+                    ThemeSelectScreenType.values().firstOrNull { it.id == id }
+                }
                 ThemeSelectScreen(type)
             }
 
