@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +29,9 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -50,7 +55,10 @@ enum class ThemeSelectScreenType(val id: String) {
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
-    title = stringRes(R.string.settings__theme__title)
+    title = stringRes(when (type) {
+        ThemeSelectScreenType.DAY -> R.string.settings__theme_manager__title_day
+        else -> R.string.settings__theme_manager__title_night
+    })
 
     val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
@@ -82,21 +90,26 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
     }
 
     content {
-        DisposableEffect(Unit) {
-            if (type != null) {
-                themeManager.themePreviewMode = type
-            }
+        DisposableEffect(activeThemeId) {
+            themeManager.previewThemeId = activeThemeId
             onDispose {
-                themeManager.themePreviewMode = null
+                themeManager.previewThemeId = null
             }
         }
         for ((extensionId, configs) in extGroupedThemes) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    modifier = Modifier.rippleClickable {
-                        navController.navigate(Routes.Ext.View(extensionId))
-                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .rippleClickable {
+                            navController.navigate(Routes.Ext.View(extensionId))
+                        }
+                        .padding(16.dp),
                     text = extensionId,
+                    color = MaterialTheme.colors.onBackground,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 for (config in configs) {
                     key(extensionId, config.id) {
