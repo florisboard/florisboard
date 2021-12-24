@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.ui.ext
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,27 +28,40 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
+
+private val ComponentCardShape = RoundedCornerShape(8.dp)
 
 @Composable
 fun ExtensionViewScreen(id: String) {
@@ -131,6 +145,23 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     Text(text = stringRes(R.string.assets__action__delete))
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                modifier = Modifier.padding(bottom = 8.dp),
+                text = stringRes(R.string.ext__meta__components),
+                fontWeight = FontWeight.Bold,
+            )
+            when (ext) {
+                is ThemeExtension -> {
+                    if (ext.themes.isEmpty()) {
+                        ThemeExtensionComponentNoneFound()
+                    } else {
+                        for (themeConfig in ext.themes) {
+                            ThemeExtensionComponent(ext = ext, config = themeConfig)
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -146,6 +177,59 @@ private fun ErrorScreen(id: String) = FlorisScreen {
             Text(stringRes(R.string.ext__error__not_found_description, "id" to id))
         }
     }
+}
+
+@Composable
+private fun ThemeExtensionComponent(
+    ext: ThemeExtension,
+    config: ThemeConfig,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .padding(vertical = 8.dp)
+            .fillMaxWidth()
+            .border(1.dp, MaterialTheme.colors.onSurface.copy(alpha = 0.12f), ComponentCardShape)
+            .padding(vertical = 8.dp, horizontal = 14.dp),
+    ) {
+        Text(
+            text = stringRes(R.string.ext__meta__components_theme, "label" to config.label),
+            style = MaterialTheme.typography.subtitle2,
+        )
+        Text(
+            text = remember { ExtensionComponentName(ext.meta.id, config.id).toString() },
+            color = LocalContentColor.current.copy(alpha = 0.56f),
+            fontWeight = FontWeight.Normal,
+            fontFamily = FontFamily.Monospace,
+            fontSize = 10.sp,
+        )
+        val text = remember(config) {
+            stringBuilder {
+                appendLine("authors = ${config.authors}")
+                appendLine("isNightTheme = ${config.isNightTheme}")
+                appendLine("isBorderless = ${config.isBorderless}")
+                appendLine("isMaterialYouAware = ${config.isMaterialYouAware}")
+                append("stylesheetPath = ${config.stylesheetPath()}")
+            }
+        }
+        Text(
+            modifier = Modifier.padding(top = 8.dp),
+            text = text,
+            style = MaterialTheme.typography.body2,
+            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+        )
+    }
+}
+
+@Composable
+private fun ThemeExtensionComponentNoneFound(
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        modifier = modifier,
+        text = stringRes(R.string.ext__meta__components_none_found),
+        fontStyle = FontStyle.Italic,
+    )
 }
 
 @Composable

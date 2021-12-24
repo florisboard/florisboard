@@ -46,6 +46,7 @@ data class ThemeConfig(
     val id: String,
     val label: String,
     val authors: List<ExtensionMaintainer>,
+    @SerialName("isNight")
     val isNightTheme: Boolean = true,
     val isBorderless: Boolean = false,
     val isMaterialYouAware: Boolean = false,
