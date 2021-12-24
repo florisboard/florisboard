@@ -39,7 +39,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.key.Key
@@ -69,7 +68,6 @@ fun PreviewKeyboardField(
 ) {
     val context = LocalContext.current
 
-    var hasFocus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -90,24 +88,12 @@ fun PreviewKeyboardField(
                         }
                         false
                     }
-                    .focusRequester(focusRequester)
-                    .onFocusEvent { hasFocus = it.isFocused },
+                    .focusRequester(focusRequester),
                 value = text,
                 onValueChange = { text = it },
                 placeholder = { Text(hint) },
                 trailingIcon = {
                     Row {
-                        IconButton(onClick = {
-                            if (hasFocus) focusManager.clearFocus() else focusRequester.requestFocus()
-                        }) {
-                            Icon(
-                                painter = painterResource(id = when {
-                                    hasFocus -> R.drawable.ic_keyboard_arrow_down
-                                    else -> R.drawable.ic_keyboard_arrow_up
-                                }),
-                                contentDescription = null,
-                            )
-                        }
                         IconButton(onClick = {
                             if (!InputMethodUtils.showImePicker(context)) {
                                 context.showShortToast("Error: InputMethodManager service not available!")
