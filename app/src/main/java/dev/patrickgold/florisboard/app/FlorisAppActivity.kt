@@ -23,7 +23,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
@@ -179,9 +178,7 @@ class FlorisAppActivity : ComponentActivity() {
                         Routes.Settings.SubtypeEdit, Routes.Settings.SelectLocale -> false
                         else -> true
                     }
-                    AnimatedVisibility(visible = previewVisible) {
-                        PreviewKeyboardField()
-                    }
+                    PreviewKeyboardField(visible = previewVisible)
                 }
             }
         }

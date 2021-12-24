@@ -16,10 +16,13 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
-import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Icon
@@ -32,12 +35,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -46,10 +53,18 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.common.InputMethodUtils
+import dev.patrickgold.florisboard.common.android.showShortToast
 
+private const val AnimationDuration = 200
+
+private val PreviewEnterTransition = EnterTransition.verticalTween(AnimationDuration)
+private val PreviewExitTransition = ExitTransition.verticalTween(AnimationDuration)
+
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PreviewKeyboardField(
     modifier: Modifier = Modifier,
+    visible: Boolean = true,
     hint: String = stringRes(R.string.settings__preview_keyboard),
 ) {
     val context = LocalContext.current
@@ -59,51 +74,64 @@ fun PreviewKeyboardField(
     val focusManager = LocalFocusManager.current
 
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    SelectionContainer {
-        TextField(
-            modifier = modifier
-                .height(56.dp)
-                .fillMaxWidth()
-                .focusRequester(focusRequester)
-                .onFocusEvent { hasFocus = it.isFocused },
-            value = text,
-            onValueChange = { text = it },
-            placeholder = { Text(hint) },
-            trailingIcon = {
-                Row {
-                    IconButton(onClick = {
-                        if (hasFocus) focusManager.clearFocus() else focusRequester.requestFocus()
-                    }) {
-                        Icon(
-                            painter = painterResource(id = when {
-                                hasFocus -> R.drawable.ic_keyboard_arrow_down
-                                else -> R.drawable.ic_keyboard_arrow_up
-                            }),
-                            contentDescription = null,
-                        )
-                    }
-                    IconButton(onClick = {
-                        if (!InputMethodUtils.showImePicker(context)) {
-                            Toast.makeText(
-                                context, "Error: InputMethodManager service not available!", Toast.LENGTH_SHORT
-                            ).show()
+    AnimatedVisibility(
+        visible = visible,
+        enter = PreviewEnterTransition,
+        exit = PreviewExitTransition,
+    ) {
+        SelectionContainer {
+            TextField(
+                modifier = modifier
+                    .height(56.dp)
+                    .fillMaxWidth()
+                    .onPreviewKeyEvent { event ->
+                        if (event.key == Key.Back) {
+                            focusManager.clearFocus()
                         }
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_keyboard),
-                            contentDescription = null,
-                        )
+                        false
                     }
-                }
-            },
-            keyboardOptions = KeyboardOptions(autoCorrect = true),
-            singleLine = true,
-            shape = RectangleShape,
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-            ),
-        )
+                    .focusRequester(focusRequester)
+                    .onFocusEvent { hasFocus = it.isFocused },
+                value = text,
+                onValueChange = { text = it },
+                placeholder = { Text(hint) },
+                trailingIcon = {
+                    Row {
+                        IconButton(onClick = {
+                            if (hasFocus) focusManager.clearFocus() else focusRequester.requestFocus()
+                        }) {
+                            Icon(
+                                painter = painterResource(id = when {
+                                    hasFocus -> R.drawable.ic_keyboard_arrow_down
+                                    else -> R.drawable.ic_keyboard_arrow_up
+                                }),
+                                contentDescription = null,
+                            )
+                        }
+                        IconButton(onClick = {
+                            if (!InputMethodUtils.showImePicker(context)) {
+                                context.showShortToast("Error: InputMethodManager service not available!")
+                            }
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_keyboard),
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                },
+                keyboardActions = KeyboardActions(
+                    onDone = { focusManager.clearFocus() },
+                ),
+                keyboardOptions = KeyboardOptions(autoCorrect = true),
+                singleLine = true,
+                shape = RectangleShape,
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                ),
+            )
+        }
     }
 }
