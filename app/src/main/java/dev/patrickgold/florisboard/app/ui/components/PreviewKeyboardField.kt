@@ -48,6 +48,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -91,7 +92,13 @@ fun PreviewKeyboardField(
                     .focusRequester(focusRequester),
                 value = text,
                 onValueChange = { text = it },
-                placeholder = { Text(hint) },
+                placeholder = {
+                    Text(
+                        text = hint,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                    )
+                },
                 trailingIcon = {
                     Row {
                         IconButton(onClick = {
