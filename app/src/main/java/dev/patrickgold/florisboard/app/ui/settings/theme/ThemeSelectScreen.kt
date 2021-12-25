@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
@@ -29,17 +30,21 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeConfig
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
@@ -57,17 +62,19 @@ enum class ThemeSelectScreenType(val id: String) {
 fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
     title = stringRes(when (type) {
         ThemeSelectScreenType.DAY -> R.string.settings__theme_manager__title_day
-        else -> R.string.settings__theme_manager__title_night
+        ThemeSelectScreenType.NIGHT -> R.string.settings__theme_manager__title_night
+        else -> error("Theme select screen type must not be null")
     })
 
     val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
+    val extensionManager by context.extensionManager()
     val themeManager by context.themeManager()
 
     fun getThemeIdPref() = when (type) {
         ThemeSelectScreenType.DAY -> prefs.theme.dayThemeId
-        else -> prefs.theme.nightThemeId
+        ThemeSelectScreenType.NIGHT -> prefs.theme.nightThemeId
     }
 
     fun setTheme(extId: String, componentId: String) {
@@ -97,35 +104,52 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
             }
         }
         for ((extensionId, configs) in extGroupedThemes) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .rippleClickable {
-                            navController.navigate(Routes.Ext.View(extensionId))
+            FlorisOutlinedBox(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                title = {
+                    Text(
+                        text = remember {
+                            extensionManager.getExtensionById(extensionId)?.meta?.title ?: extensionId
+                        },
+                        style = MaterialTheme.typography.subtitle2,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                },
+                onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) }
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 10.dp, bottom = 4.dp)
+                            .rippleClickable {
+                                navController.navigate(Routes.Ext.View(extensionId))
+                            }
+                            .padding(start = 6.dp, end = 6.dp, bottom = 4.dp),
+                        text = extensionId,
+                        color = LocalContentColor.current.copy(alpha = 0.56f),
+                        fontWeight = FontWeight.Normal,
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 10.sp,
+                    )
+                    for (config in configs) {
+                        key(extensionId, config.id) {
+                            JetPrefListItem(
+                                modifier = Modifier.rippleClickable {
+                                    setTheme(extensionId, config.id)
+                                },
+                                icon = {
+                                    RadioButton(
+                                        selected = activeThemeId.extensionId == extensionId &&
+                                            activeThemeId.componentId == config.id,
+                                        onClick = null,
+                                    )
+                                },
+                                text = config.label,
+                            )
                         }
-                        .padding(16.dp),
-                    text = extensionId,
-                    color = MaterialTheme.colors.onBackground,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                for (config in configs) {
-                    key(extensionId, config.id) {
-                        JetPrefListItem(
-                            modifier = Modifier.rippleClickable {
-                                setTheme(extensionId, config.id)
-                            },
-                            icon = {
-                                RadioButton(
-                                    selected = activeThemeId.extensionId == extensionId &&
-                                        activeThemeId.componentId == config.id,
-                                    onClick = null,
-                                )
-                            },
-                            text = config.label,
-                        )
                     }
                 }
             }
