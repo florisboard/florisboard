@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -38,7 +37,6 @@ fun ThemeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__theme__title)
 
     val navController = LocalNavController.current
-    val context = LocalContext.current
 
     content {
         val dayThemeId by prefs.theme.dayThemeId.observeAsState()
@@ -50,6 +48,13 @@ fun ThemeScreen() = FlorisScreen {
             title = stringRes(R.string.pref__theme__mode__label),
             entries = ThemeMode.listEntries(),
         )
+        Preference(
+            iconId = R.drawable.ic_palette,
+            title = stringRes(R.string.settings__theme_manager__title_manage),
+            onClick = {
+                navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.MANAGE))
+            },
+        )
 
         PreferenceGroup(
             title = stringRes(R.string.pref__theme__day),
@@ -60,7 +65,7 @@ fun ThemeScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__theme__any_theme__label),
                 summary = dayThemeId.toString(),
                 onClick = {
-                    navController.navigate(Routes.Settings.ThemeSelect("day"))
+                    navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_DAY))
                 },
             )
             SwitchPreference(
@@ -80,7 +85,7 @@ fun ThemeScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__theme__any_theme__label),
                 summary = nightThemeId.toString(),
                 onClick = {
-                    navController.navigate(Routes.Settings.ThemeSelect("night"))
+                    navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_NIGHT))
                 },
             )
             SwitchPreference(

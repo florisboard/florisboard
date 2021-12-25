@@ -44,8 +44,8 @@ import dev.patrickgold.florisboard.app.ui.settings.spelling.ManageSpellingDictsS
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
-import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeSelectScreen
-import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeSelectScreenType
+import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeManagerScreen
+import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.ui.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 import dev.patrickgold.florisboard.app.ui.splash.SplashScreen
@@ -71,8 +71,8 @@ object Routes {
         fun SubtypeEdit(id: Long) = SubtypeEdit.curlyFormat("id" to id)
 
         const val Theme = "settings/theme"
-        const val ThemeSelect = "settings/theme/select/{type}"
-        fun ThemeSelect(type: String) = ThemeSelect.curlyFormat("type" to type)
+        const val ThemeManager = "settings/theme/manage/{action}"
+        fun ThemeManager(action: ThemeManagerScreenAction) = ThemeManager.curlyFormat("action" to action.id)
 
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
@@ -139,11 +139,11 @@ object Routes {
             }
 
             composable(Settings.Theme) { ThemeScreen() }
-            composable(Settings.ThemeSelect) { navBackStack ->
-                val type = navBackStack.arguments?.getString("type")?.let { id ->
-                    ThemeSelectScreenType.values().firstOrNull { it.id == id }
+            composable(Settings.ThemeManager) { navBackStack ->
+                val action = navBackStack.arguments?.getString("action")?.let { actionId ->
+                    ThemeManagerScreenAction.values().firstOrNull { it.id == actionId }
                 }
-                ThemeSelectScreen(type)
+                ThemeManagerScreen(action)
             }
 
             composable(Settings.Keyboard) { KeyboardScreen() }

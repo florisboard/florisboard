@@ -17,8 +17,11 @@
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
@@ -27,9 +30,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -52,18 +57,20 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
-enum class ThemeSelectScreenType(val id: String) {
-    DAY("day"),
-    NIGHT("night");
+enum class ThemeManagerScreenAction(val id: String) {
+    SELECT_DAY("select_day"),
+    SELECT_NIGHT("select_night"),
+    MANAGE("manage");
 }
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
-    title = stringRes(when (type) {
-        ThemeSelectScreenType.DAY -> R.string.settings__theme_manager__title_day
-        ThemeSelectScreenType.NIGHT -> R.string.settings__theme_manager__title_night
-        else -> error("Theme select screen type must not be null")
+fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
+    title = stringRes(when (action) {
+        ThemeManagerScreenAction.SELECT_DAY -> R.string.settings__theme_manager__title_day
+        ThemeManagerScreenAction.SELECT_NIGHT -> R.string.settings__theme_manager__title_night
+        ThemeManagerScreenAction.MANAGE -> R.string.settings__theme_manager__title_manage
+        else -> error("Theme manager screen action must not be null")
     })
 
     val prefs by florisPreferenceModel()
@@ -72,19 +79,8 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
     val extensionManager by context.extensionManager()
     val themeManager by context.themeManager()
 
-    fun getThemeIdPref() = when (type) {
-        ThemeSelectScreenType.DAY -> prefs.theme.dayThemeId
-        ThemeSelectScreenType.NIGHT -> prefs.theme.nightThemeId
-    }
-
-    fun setTheme(extId: String, componentId: String) {
-        val extComponentName = ExtensionComponentName(extId, componentId)
-        getThemeIdPref().set(extComponentName)
-    }
-
     val indexedThemeConfigs by themeManager.indexedThemeConfigs.observeAsNonNullState()
-    val activeThemeId by getThemeIdPref().observeAsState()
-
+    val selectedManagerThemeId = remember { mutableStateOf<ExtensionComponentName?>(null) }
     val extGroupedThemes = remember(indexedThemeConfigs) {
         buildMap<String, MutableList<ThemeConfig>> {
             for ((componentName, config) in indexedThemeConfigs) {
@@ -96,6 +92,31 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
         }.mapValues { (_, configs) -> configs.sortedBy { it.label } }
     }
 
+    fun getThemeIdPref() = when (action) {
+        ThemeManagerScreenAction.SELECT_DAY -> prefs.theme.dayThemeId
+        ThemeManagerScreenAction.SELECT_NIGHT -> prefs.theme.nightThemeId
+        ThemeManagerScreenAction.MANAGE -> error("internal error in manager logic")
+    }
+
+    fun setTheme(extId: String, componentId: String) {
+        val extComponentName = ExtensionComponentName(extId, componentId)
+        when (action) {
+            ThemeManagerScreenAction.SELECT_DAY,
+            ThemeManagerScreenAction.SELECT_NIGHT -> {
+                getThemeIdPref().set(extComponentName)
+            }
+            ThemeManagerScreenAction.MANAGE -> {
+                selectedManagerThemeId.value = extComponentName
+            }
+        }
+    }
+
+    val activeThemeId by when (action) {
+        ThemeManagerScreenAction.SELECT_DAY,
+        ThemeManagerScreenAction.SELECT_NIGHT -> getThemeIdPref().observeAsState()
+        ThemeManagerScreenAction.MANAGE -> selectedManagerThemeId
+    }
+
     content {
         DisposableEffect(activeThemeId) {
             themeManager.previewThemeId = activeThemeId
@@ -103,6 +124,7 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
                 themeManager.previewThemeId = null
             }
         }
+        val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         for ((extensionId, configs) in extGroupedThemes) {
             FlorisOutlinedBox(
                 modifier = Modifier
@@ -129,7 +151,7 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
                             }
                             .padding(start = 6.dp, end = 6.dp, bottom = 4.dp),
                         text = extensionId,
-                        color = LocalContentColor.current.copy(alpha = 0.56f),
+                        color = grayColor,
                         fontWeight = FontWeight.Normal,
                         fontFamily = FontFamily.Monospace,
                         fontSize = 10.sp,
@@ -142,12 +164,26 @@ fun ThemeSelectScreen(type: ThemeSelectScreenType?) = FlorisScreen {
                                 },
                                 icon = {
                                     RadioButton(
-                                        selected = activeThemeId.extensionId == extensionId &&
-                                            activeThemeId.componentId == config.id,
+                                        selected = activeThemeId?.extensionId == extensionId &&
+                                            activeThemeId?.componentId == config.id,
                                         onClick = null,
                                     )
                                 },
                                 text = config.label,
+                                trailing = {
+                                    Row {
+                                        Icon(
+                                            modifier = Modifier.size(18.dp),
+                                            painter = painterResource(if (config.isNightTheme) {
+                                                R.drawable.ic_dark_mode
+                                            } else {
+                                                R.drawable.ic_light_mode
+                                            }),
+                                            contentDescription = null,
+                                            tint = grayColor,
+                                        )
+                                    }
+                                },
                             )
                         }
                     }
