@@ -67,8 +67,8 @@ class ThemeManager(context: Context) {
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeConfig>())
-    val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeConfig>> get() = _indexedThemeConfigs
+    private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeExtensionComponent>())
+    val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeExtensionComponent>> get() = _indexedThemeConfigs
     var previewThemeId: ExtensionComponentName? by Delegates.observable(null) { _, _, _ ->
         updateActiveTheme()
     }
@@ -267,13 +267,13 @@ class ThemeManager(context: Context) {
 
     data class ThemeInfo(
         val name: ExtensionComponentName,
-        val config: ThemeConfig,
+        val config: ThemeExtensionComponent,
         val stylesheet: SnyggStylesheet,
     ) {
         companion object {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
-                config = ThemeConfig(id = "base", label = "Base", authors = listOf()),
+                config = ThemeExtensionComponent(id = "base", label = "Base", authors = listOf()),
                 stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
             )
         }

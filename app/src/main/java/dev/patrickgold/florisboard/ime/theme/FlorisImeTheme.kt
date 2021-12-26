@@ -31,7 +31,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.themeManager
 
-private val LocalConfig = staticCompositionLocalOf<ThemeConfig> { error("not init") }
+private val LocalConfig = staticCompositionLocalOf<ThemeExtensionComponent> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
@@ -198,7 +198,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
 }
 
 object FlorisImeTheme {
-    val config: ThemeConfig
+    val config: ThemeExtensionComponent
         @Composable
         @ReadOnlyComposable
         get() = LocalConfig.current

@@ -17,9 +17,9 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -31,7 +31,7 @@ private const val SERIAL_TYPE = "ime.extension.theme"
 data class ThemeExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
-    val themes: List<ThemeConfig>,
+    val themes: List<ThemeExtensionComponent>,
 ) : Extension() {
 
     override fun serialType() = SERIAL_TYPE
@@ -42,17 +42,17 @@ data class ThemeExtension(
 }
 
 @Serializable
-data class ThemeConfig(
-    val id: String,
-    val label: String,
-    val authors: List<ExtensionMaintainer>,
+data class ThemeExtensionComponent(
+    override val id: String,
+    override val label: String,
+    override val authors: List<String>,
     @SerialName("isNight")
     val isNightTheme: Boolean = true,
     val isBorderless: Boolean = false,
     val isMaterialYouAware: Boolean = false,
     @SerialName("stylesheet")
     val stylesheetPath: String? = null,
-) {
+) : ExtensionComponent {
     fun stylesheetPath() = "stylesheets/$id.json"
 }
 

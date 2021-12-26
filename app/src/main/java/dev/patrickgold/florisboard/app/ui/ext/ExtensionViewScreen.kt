@@ -54,9 +54,10 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.ime.theme.ThemeConfig
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
@@ -154,10 +155,28 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
             when (ext) {
                 is ThemeExtension -> {
                     if (ext.themes.isEmpty()) {
-                        ThemeExtensionComponentNoneFound()
+                        ExtensionComponentNoneFoundView()
                     } else {
                         for (themeConfig in ext.themes) {
-                            ThemeExtensionComponent(ext = ext, config = themeConfig)
+                            ExtensionComponentView(
+                                ext = ext,
+                                component = themeConfig,
+                            ) { _, component ->
+                                val text = remember(component) {
+                                    stringBuilder {
+                                        appendLine("authors = ${component.authors}")
+                                        appendLine("isNightTheme = ${component.isNightTheme}")
+                                        appendLine("isBorderless = ${component.isBorderless}")
+                                        appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
+                                        append("stylesheetPath = ${component.stylesheetPath()}")
+                                    }
+                                }
+                                Text(
+                                    text = text,
+                                    style = MaterialTheme.typography.body2,
+                                    color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                                )
+                            }
                         }
                     }
                 }
@@ -180,11 +199,13 @@ private fun ErrorScreen(id: String) = FlorisScreen {
 }
 
 @Composable
-private fun ThemeExtensionComponent(
-    ext: ThemeExtension,
-    config: ThemeConfig,
+private fun <Ext : Extension, ExtComp : ExtensionComponent> ExtensionComponentView(
+    ext: Ext,
+    component: ExtComp,
     modifier: Modifier = Modifier,
+    content: @Composable (ext: Ext, component: ExtComp) -> Unit,
 ) {
+    val componentName = remember { ExtensionComponentName(ext.meta.id, component.id) }
     Column(
         modifier = modifier
             .padding(vertical = 8.dp)
@@ -193,36 +214,26 @@ private fun ThemeExtensionComponent(
             .padding(vertical = 8.dp, horizontal = 14.dp),
     ) {
         Text(
-            text = stringRes(R.string.ext__meta__components_theme, "label" to config.label),
+            text = stringRes(when (component) {
+                is ThemeExtensionComponent -> R.string.ext__meta__components_label_theme
+                else -> R.string.ext__meta__components_label_generic
+            }, "label" to component.label),
             style = MaterialTheme.typography.subtitle2,
         )
         Text(
-            text = remember { ExtensionComponentName(ext.meta.id, config.id).toString() },
+            modifier = Modifier.padding(bottom = 8.dp),
+            text = remember { componentName.toString() },
             color = LocalContentColor.current.copy(alpha = 0.56f),
             fontWeight = FontWeight.Normal,
             fontFamily = FontFamily.Monospace,
             fontSize = 10.sp,
         )
-        val text = remember(config) {
-            stringBuilder {
-                appendLine("authors = ${config.authors}")
-                appendLine("isNightTheme = ${config.isNightTheme}")
-                appendLine("isBorderless = ${config.isBorderless}")
-                appendLine("isMaterialYouAware = ${config.isMaterialYouAware}")
-                append("stylesheetPath = ${config.stylesheetPath()}")
-            }
-        }
-        Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = text,
-            style = MaterialTheme.typography.body2,
-            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
-        )
+        content(ext, component)
     }
 }
 
 @Composable
-private fun ThemeExtensionComponentNoneFound(
+private fun ExtensionComponentNoneFoundView(
     modifier: Modifier = Modifier,
 ) {
     Text(
@@ -299,7 +310,7 @@ private fun PreviewExtensionViewerScreen() {
         ),
         dependencies = null,
         themes = listOf(
-            ThemeConfig(id = "test", label = "Test", authors = listOf(), stylesheetPath = "test.json"),
+            ThemeExtensionComponent(id = "test", label = "Test", authors = listOf(), stylesheetPath = "test.json"),
         ),
     )
     ViewScreen(ext = testExtension)

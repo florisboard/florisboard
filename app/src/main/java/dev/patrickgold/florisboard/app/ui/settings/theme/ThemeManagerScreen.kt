@@ -50,7 +50,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.theme.ThemeConfig
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -82,7 +82,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     val indexedThemeConfigs by themeManager.indexedThemeConfigs.observeAsNonNullState()
     val selectedManagerThemeId = remember { mutableStateOf<ExtensionComponentName?>(null) }
     val extGroupedThemes = remember(indexedThemeConfigs) {
-        buildMap<String, MutableList<ThemeConfig>> {
+        buildMap<String, MutableList<ThemeExtensionComponent>> {
             for ((componentName, config) in indexedThemeConfigs) {
                 if (!containsKey(componentName.extensionId)) {
                     put(componentName.extensionId, mutableListOf())
