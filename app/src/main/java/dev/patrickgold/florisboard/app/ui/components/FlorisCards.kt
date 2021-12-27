@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -171,6 +172,34 @@ fun FlorisInfoCard(
         ) }) else null,
         text = text,
         contentPadding = contentPadding,
+    )
+}
+
+@Composable
+fun FlorisOutlinedBox(
+    modifier: Modifier = Modifier,
+    title: String,
+    onTitleClick: (() -> Unit)? = null,
+    borderWidth: Dp = 1.dp,
+    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+    shape: Shape = OutlinedBoxShape,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    FlorisOutlinedBox(
+        modifier = modifier,
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.subtitle2,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        },
+        onTitleClick = onTitleClick,
+        borderWidth = borderWidth,
+        borderColor = borderColor,
+        shape = shape,
+        content = content,
     )
 }
 

@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +36,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
@@ -55,12 +53,13 @@ import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 enum class ThemeManagerScreenAction(val id: String) {
     SELECT_DAY("select_day"),
     SELECT_NIGHT("select_night"),
-    MANAGE("manage");
+    MANAGE("manage_installed_themes");
 }
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
@@ -125,20 +124,39 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
             }
         }
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
+        if (action == ThemeManagerScreenAction.MANAGE) {
+            FlorisOutlinedBox(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            ) {
+                Column {
+                    this@content.Preference(
+                        onClick = { },
+                        iconId = R.drawable.ic_add,
+                        title = stringRes(R.string.settings__theme_manager__create_empty),
+                    )
+                    this@content.Preference(
+                        onClick = { },
+                        iconId = R.drawable.ic_add,
+                        title = stringRes(R.string.settings__theme_manager__create_from_selected),
+                        enabledIf = { activeThemeId != null },
+                    )
+                    this@content.Preference(
+                        onClick = { },
+                        iconId = R.drawable.ic_input,
+                        title = stringRes(R.string.assets__action__import),
+                    )
+                }
+            }
+        }
         for ((extensionId, configs) in extGroupedThemes) {
             FlorisOutlinedBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                title = {
-                    Text(
-                        text = remember {
-                            extensionManager.getExtensionById(extensionId)?.meta?.title ?: extensionId
-                        },
-                        style = MaterialTheme.typography.subtitle2,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                title = remember {
+                    extensionManager.getExtensionById(extensionId)?.meta?.title ?: extensionId
                 },
                 onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) }
             ) {
