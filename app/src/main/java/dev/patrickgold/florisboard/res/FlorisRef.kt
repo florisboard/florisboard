@@ -32,8 +32,10 @@ import kotlin.contracts.contract
 
 /**
  * A universal resource reference, capable to point to destinations within
- * FlorisBoard's APK assets, cache and internal storage, external resources
- * provided to FlorisBoard via content URIs, as well as hyperlinks.
+ * FlorisBoard's app user interface screens, APK assets, cache and internal
+ * storage, external resources provided to FlorisBoard via content URIs, as
+ * well as hyperlinks.
+ *
  * [android.net.Uri] is used as the underlying implementation for storing the
  * reference and also handles parsing of raw string URIs.
  *
@@ -51,6 +53,9 @@ value class FlorisRef private constructor(val uri: Uri) {
         internal const val SCHEME_FLORIS = "florisboard"
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val AUTHORITY_APP_UI = "app-ui"
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_ASSETS = "assets"
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -58,6 +63,22 @@ value class FlorisRef private constructor(val uri: Uri) {
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_INTERNAL = "internal"
+
+        /**
+         * Constructs a new [FlorisRef] pointing to a UI screen within the app
+         * user interface.
+         *
+         * @param path The relative path of the UI screen this ref should point
+         *  too, including optional data arguments.
+         *
+         * @return The newly constructed reference.
+         */
+        fun app(path: String) = Uri.Builder().run {
+            scheme(SCHEME_FLORIS)
+            authority(AUTHORITY_APP_UI)
+            encodedPath(path)
+            FlorisRef(build())
+        }
 
         /**
          * Constructs a new [FlorisRef] pointing to a resource within the
@@ -124,6 +145,7 @@ value class FlorisRef private constructor(val uri: Uri) {
          * @return The newly constructed reference.
          */
         fun from(str: String): FlorisRef {
+            // First two entries only kept due to backwards-compatibility reasons.
             return when {
                 str.startsWith("assets:") -> assets(str.substring(7))
                 str.startsWith("internal:") -> internal(str.substring(9))
@@ -146,6 +168,13 @@ value class FlorisRef private constructor(val uri: Uri) {
             FlorisRef(build())
         }
     }
+
+    /**
+     * True if the scheme and authority indicates a reference to an app user interface
+     * component (screen), false otherwise.
+     */
+    val isAppUi: Boolean
+        get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_APP_UI
 
     /**
      * True if the scheme and authority indicates a reference to a FlorisBoard APK asset
@@ -218,7 +247,7 @@ value class FlorisRef private constructor(val uri: Uri) {
      */
     fun absolutePath(context: Context): String {
         return when {
-            isAssets -> relativePath
+            isAppUi || isAssets -> relativePath
             isCache -> "${context.cacheDir.absolutePath}/$relativePath"
             isInternal -> "${context.filesDir.absolutePath}/$relativePath"
             else -> uri.path ?: ""
@@ -254,6 +283,8 @@ value class FlorisRef private constructor(val uri: Uri) {
      * It is guaranteed that one of the four lambda parameters is executed.
      *
      * @param assets The lambda to run when the reference points to the FlorisBoard
+     *  screen UI resources. Defaults to do nothing.
+     * @param assets The lambda to run when the reference points to the FlorisBoard
      *  APK assets. Defaults to do nothing.
      * @param cache The lambda to run when the reference points to the FlorisBoard
      *  cache resources. Defaults to do nothing.
@@ -263,18 +294,21 @@ value class FlorisRef private constructor(val uri: Uri) {
      * resource. Defaults to do nothing.
      */
     fun whenSchemeIs(
+        appUi: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
         assets: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
         cache: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
         internal: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
         external: (ref: FlorisRef) -> Unit = { /* Do nothing */ }
     ) {
         contract {
+            callsInPlace(appUi, InvocationKind.AT_MOST_ONCE)
             callsInPlace(assets, InvocationKind.AT_MOST_ONCE)
             callsInPlace(cache, InvocationKind.AT_MOST_ONCE)
             callsInPlace(internal, InvocationKind.AT_MOST_ONCE)
             callsInPlace(external, InvocationKind.AT_MOST_ONCE)
         }
         when {
+            isAppUi -> appUi(this)
             isAssets -> assets(this)
             isCache -> cache(this)
             isInternal -> internal(this)

@@ -41,7 +41,7 @@ object FileUtils {
     }
 
     private fun copyApkAssets(context: Context, base: String, path: String, dst: File) {
-        val apkAssetsPath = if (base.isBlank()) path else "$base/$path"
+        val apkAssetsPath = if (base.isBlank()) path else if (path.isBlank()) base else "$base/$path"
         val list = context.assets.list(apkAssetsPath) ?: return
         if (list.isEmpty()) {
             // Is file
@@ -53,8 +53,10 @@ object FileUtils {
             }
         } else {
             // Is directory
+            val dir = File(dst, path)
+            dir.mkdirs()
             for (entry in list) {
-                copyApkAssets(context, base, "$apkAssetsPath/$entry", dst)
+                copyApkAssets(context, base, if (path.isBlank()) entry else "$path/$entry", dst)
             }
         }
     }

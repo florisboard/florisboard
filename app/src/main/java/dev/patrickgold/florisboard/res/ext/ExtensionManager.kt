@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.res.ext
 
 import android.content.Context
+import android.net.Uri
 import android.os.FileObserver
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
@@ -83,6 +84,13 @@ class ExtensionManager(context: Context) {
         writeExtension(ext).getOrThrow()
         ext.unload(appContext)
         ext.workingDir = null
+    }
+
+    fun export(ext: Extension, uri: Uri) = runCatching {
+        ext.load(appContext).getOrThrow()
+        val workingDir = ext.workingDir ?: error("No working dir specified")
+        ZipUtils.zip(appContext, workingDir, uri).getOrThrow()
+        ext.unload(appContext)
     }
 
     private fun writeExtension(ext: Extension) = runCatching {

@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.res
 
 import android.content.Context
+import android.net.Uri
 import dev.patrickgold.florisboard.assetManager
+import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
@@ -67,6 +69,31 @@ object ZipUtils {
                 }
             }
             else -> error("Unsupported destination!")
+        }
+    }
+
+    fun zip(context: Context, srcDir: File, uri: Uri) = runCatching {
+        check(srcDir.exists() && srcDir.isDirectory) { "Cannot zip standalone file." }
+        ExternalContentUtils.writeToUri(context, uri) { fileOut ->
+            ZipOutputStream(fileOut).use { zipOut ->
+                zip(srcDir, zipOut, "")
+            }
+        }.getOrThrow()
+    }
+
+    internal fun zip(srcDir: File, zipOut: ZipOutputStream, base: String) {
+        val dir = File(srcDir, base)
+        for (file in dir.listFiles() ?: arrayOf()) {
+            val path = if (base.isBlank()) file.name else "$base/${file.name}"
+            if (file.isDirectory) {
+                zipOut.putNextEntry(ZipEntry("$path/"))
+                zipOut.closeEntry()
+                zip(srcDir, zipOut, path)
+            } else {
+                zipOut.putNextEntry(ZipEntry(path))
+                file.inputStream().use { it.copyTo(zipOut) }
+                zipOut.closeEntry()
+            }
         }
     }
 

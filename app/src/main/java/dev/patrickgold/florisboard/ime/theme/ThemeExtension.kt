@@ -36,6 +36,8 @@ data class ThemeExtension(
 
     override fun serialType() = SERIAL_TYPE
 
+    override fun components() = themes
+
     override fun edit(): ExtensionEditor {
         TODO("Not yet implemented")
     }

@@ -46,6 +46,8 @@ abstract class Extension {
 
     abstract fun serialType(): String
 
+    abstract fun components(): List<ExtensionComponent>
+
     fun isLoaded() = workingDir != null
 
     open fun onBeforeLoad(context: Context, cacheDir: File) {

@@ -523,7 +523,7 @@
 
     <!-- Extension strings -->
     <string name="ext__meta__components">Bundled components</string>
-    <string name="ext__meta__components_label_generic" translatable="false">{label}</string>
+    <string name="ext__meta__components_label_generic">Unknown type | {label}</string>
     <string name="ext__meta__components_label_theme">Theme | {label}</string>
     <string name="ext__meta__components_none_found">This extension archive does not contain any bundled components.</string>
     <string name="ext__meta__description">Description</string>

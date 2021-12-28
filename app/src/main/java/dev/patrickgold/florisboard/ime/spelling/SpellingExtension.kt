@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.spelling
 import android.content.Context
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
@@ -40,6 +41,10 @@ data class SpellingExtension(
     @Transient var dict: SpellingDict? = null
 
     override fun serialType() = SERIAL_TYPE
+
+    override fun components(): List<ExtensionComponent> {
+        return emptyList()
+    }
 
     override fun onAfterLoad(context: Context, cacheDir: File) {
         dict = SpellingDict.new(cacheDir.absolutePath, this)
