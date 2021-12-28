@@ -27,6 +27,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun DictionaryScreen() = FlorisScreen {
     title = stringRes(R.string.settings__dictionary__title)
+    previewFieldVisible = true
 
     val context = LocalContext.current
 

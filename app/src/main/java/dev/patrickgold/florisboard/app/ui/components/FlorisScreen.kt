@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,8 @@ interface FlorisScreenScope {
 
     var backArrowVisible: Boolean
 
+    var previewFieldVisible: Boolean
+
     var scrollable: Boolean
 
     var iconSpaceReserved: Boolean
@@ -64,6 +67,7 @@ interface FlorisScreenScope {
 private class FlorisScreenScopeImpl : FlorisScreenScope {
     override var title: String by mutableStateOf("")
     override var backArrowVisible: Boolean by mutableStateOf(true)
+    override var previewFieldVisible: Boolean by mutableStateOf(false)
     override var scrollable: Boolean by mutableStateOf(true)
     override var iconSpaceReserved: Boolean by mutableStateOf(true)
 
@@ -90,6 +94,12 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
 
     @Composable
     fun Render() {
+        val previewFieldController = LocalPreviewFieldController.current
+
+        SideEffect {
+            previewFieldController?.isVisible = previewFieldVisible
+        }
+
         Scaffold(
             topBar = { FlorisAppBar(title, backArrowVisible, actions) },
             bottomBar = bottomBar,

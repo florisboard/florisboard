@@ -37,6 +37,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun KeyboardScreen() = FlorisScreen {
     title = stringRes(R.string.settings__keyboard__title)
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
 

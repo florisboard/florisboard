@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
+import dev.patrickgold.florisboard.app.ui.components.LocalPreviewFieldController
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable
@@ -41,6 +43,11 @@ fun SplashScreen() = Box(
     val isModelLoaded by prefs.datastoreReadyStatus.observeAsState()
     val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
     val navController = LocalNavController.current
+    val previewFieldController = LocalPreviewFieldController.current
+
+    SideEffect {
+        previewFieldController?.isVisible = false
+    }
 
     LaunchedEffect(isModelLoaded) {
         if (isModelLoaded) {

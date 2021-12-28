@@ -53,6 +53,7 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 fun HomeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__home__title)
     backArrowVisible = false
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
     val context = LocalContext.current

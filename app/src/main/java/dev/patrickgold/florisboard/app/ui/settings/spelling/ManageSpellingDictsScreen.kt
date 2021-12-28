@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.extensionManager
 @Composable
 fun ManageSpellingDictsScreen() = FlorisScreen {
     title = stringRes(R.string.settings__spelling__manage_dicts__title)
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
     val context = LocalContext.current

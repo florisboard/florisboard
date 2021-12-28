@@ -30,6 +30,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun InputFeedbackScreen() = FlorisScreen {
     title = stringRes(R.string.settings__input_feedback__title)
+    previewFieldVisible = true
 
     content {
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_audio__label)) {

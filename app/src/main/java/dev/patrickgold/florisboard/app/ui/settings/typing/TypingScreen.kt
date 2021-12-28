@@ -36,6 +36,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun TypingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__typing__title)
+    previewFieldVisible = true
 
     content {
         PreferenceGroup(title = stringRes(R.string.pref__suggestion__title)) {

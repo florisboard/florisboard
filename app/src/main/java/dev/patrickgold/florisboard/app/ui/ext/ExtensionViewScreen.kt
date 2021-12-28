@@ -34,6 +34,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -49,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.kotlin.stringBuilder
@@ -72,7 +74,7 @@ fun ExtensionViewScreen(id: String) {
     if (ext != null) {
         ViewScreen(ext)
     } else {
-        ErrorScreen(id)
+        ExtensionNotFoundScreen(id)
     }
 }
 
@@ -138,12 +140,20 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                 //  SPDX identifier
                 Text(text = ext.meta.license)
             }
-            if (extensionManager.canDelete(ext)) {
-                Button(onClick = {
-                    extensionManager.delete(ext)
-                    navController.popBackStack()
+            Row(modifier = Modifier.fillMaxWidth()) {
+                if (extensionManager.canDelete(ext)) {
+                    Button(onClick = {
+                        extensionManager.delete(ext)
+                        navController.popBackStack()
+                    }) {
+                        Text(text = stringRes(R.string.assets__action__delete))
+                    }
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                OutlinedButton(onClick = {
+                    navController.navigate(Routes.Ext.Export(ext.meta.id))
                 }) {
-                    Text(text = stringRes(R.string.assets__action__delete))
+                    Text(text = stringRes(R.string.assets__action__export))
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -152,32 +162,38 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                 text = stringRes(R.string.ext__meta__components),
                 fontWeight = FontWeight.Bold,
             )
-            when (ext) {
-                is ThemeExtension -> {
-                    if (ext.themes.isEmpty()) {
-                        ExtensionComponentNoneFoundView()
-                    } else {
-                        for (themeConfig in ext.themes) {
-                            ExtensionComponentView(
-                                ext = ext,
-                                component = themeConfig,
-                            ) { _, component ->
-                                val text = remember(component) {
-                                    stringBuilder {
-                                        appendLine("authors = ${component.authors}")
-                                        appendLine("isNightTheme = ${component.isNightTheme}")
-                                        appendLine("isBorderless = ${component.isBorderless}")
-                                        appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
-                                        append("stylesheetPath = ${component.stylesheetPath()}")
-                                    }
-                                }
-                                Text(
-                                    text = text,
-                                    style = MaterialTheme.typography.body2,
-                                    color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
-                                )
+            ExtensionComponentListView(ext)
+        }
+    }
+}
+
+@Composable
+private fun ExtensionComponentListView(ext: Extension) {
+    val components = ext.rememberComponents()
+    if (components.isEmpty()) {
+        ExtensionComponentNoneFoundView()
+    } else {
+        for (component in components) {
+            ExtensionComponentView(ext, component) {
+                when (component) {
+                    is ThemeExtensionComponent -> {
+                        val text = remember(component) {
+                            stringBuilder {
+                                appendLine("authors = ${component.authors}")
+                                appendLine("isNightTheme = ${component.isNightTheme}")
+                                appendLine("isBorderless = ${component.isBorderless}")
+                                appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
+                                append("stylesheetPath = ${component.stylesheetPath()}")
                             }
                         }
+                        Text(
+                            text = text,
+                            style = MaterialTheme.typography.body2,
+                            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                        )
+                    }
+                    else -> {
+                        ExtensionComponentNoneFoundView()
                     }
                 }
             }
@@ -186,24 +202,11 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
 }
 
 @Composable
-private fun ErrorScreen(id: String) = FlorisScreen {
-    title = stringRes(R.string.ext__error__not_found_title)
-
-    content {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp),
-        ) {
-            Text(stringRes(R.string.ext__error__not_found_description, "id" to id))
-        }
-    }
-}
-
-@Composable
-private fun <Ext : Extension, ExtComp : ExtensionComponent> ExtensionComponentView(
-    ext: Ext,
-    component: ExtComp,
+private fun ExtensionComponentView(
+    ext: Extension,
+    component: ExtensionComponent,
     modifier: Modifier = Modifier,
-    content: @Composable (ext: Ext, component: ExtComp) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val componentName = remember { ExtensionComponentName(ext.meta.id, component.id) }
     Column(
@@ -228,16 +231,13 @@ private fun <Ext : Extension, ExtComp : ExtensionComponent> ExtensionComponentVi
             fontFamily = FontFamily.Monospace,
             fontSize = 10.sp,
         )
-        content(ext, component)
+        content()
     }
 }
 
 @Composable
-private fun ExtensionComponentNoneFoundView(
-    modifier: Modifier = Modifier,
-) {
+private fun ExtensionComponentNoneFoundView() {
     Text(
-        modifier = modifier,
         text = stringRes(R.string.ext__meta__components_none_found),
         fontStyle = FontStyle.Italic,
     )

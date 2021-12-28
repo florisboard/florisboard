@@ -53,6 +53,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun SpellingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__spelling__title)
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
     val context = LocalContext.current

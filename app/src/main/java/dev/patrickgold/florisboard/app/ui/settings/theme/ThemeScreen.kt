@@ -35,6 +35,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun ThemeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__theme__title)
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
 

@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -60,21 +61,31 @@ private const val AnimationDuration = 200
 private val PreviewEnterTransition = EnterTransition.verticalTween(AnimationDuration)
 private val PreviewExitTransition = ExitTransition.verticalTween(AnimationDuration)
 
+val LocalPreviewFieldController = staticCompositionLocalOf<PreviewFieldController?> { null }
+
+@Composable
+fun rememberPreviewFieldController(): PreviewFieldController {
+    return remember { PreviewFieldController() }
+}
+
+class PreviewFieldController {
+    val focusRequester = FocusRequester()
+    var isVisible by mutableStateOf(false)
+    var text by mutableStateOf(TextFieldValue(""))
+}
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PreviewKeyboardField(
+    controller: PreviewFieldController,
     modifier: Modifier = Modifier,
-    visible: Boolean = true,
     hint: String = stringRes(R.string.settings__preview_keyboard),
 ) {
     val context = LocalContext.current
-
-    val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    var text by remember { mutableStateOf(TextFieldValue("")) }
     AnimatedVisibility(
-        visible = visible,
+        visible = controller.isVisible,
         enter = PreviewEnterTransition,
         exit = PreviewExitTransition,
     ) {
@@ -89,9 +100,9 @@ fun PreviewKeyboardField(
                         }
                         false
                     }
-                    .focusRequester(focusRequester),
-                value = text,
-                onValueChange = { text = it },
+                    .focusRequester(controller.focusRequester),
+                value = controller.text,
+                onValueChange = { controller.text = it },
                 placeholder = {
                     Text(
                         text = hint,

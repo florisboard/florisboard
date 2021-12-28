@@ -31,6 +31,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 @Composable
 fun GesturesScreen() = FlorisScreen {
     title = stringRes(R.string.settings__gestures__title)
+    previewFieldVisible = true
 
     content {
         PreferenceGroup(title = stringRes(R.string.pref__glide__title)) {
