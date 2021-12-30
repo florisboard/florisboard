@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.app.ui.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.ui.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionExportScreen
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
@@ -113,8 +114,8 @@ object Routes {
         const val Export = "ext/export/{id}"
         fun Export(id: String) = Export.curlyFormat("id" to id)
 
-        const val Import = "ext/import/{cacheUuid}"
-        fun Import(cacheUuid: String) = Import.curlyFormat("cacheUuid" to cacheUuid)
+        const val Import = "ext/import/{wsUuid}"
+        fun Import(wsUuid: String?) = Import.curlyFormat("wsUuid" to wsUuid)
 
         const val View = "ext/view/{id}"
         fun View(id: String) = View.curlyFormat("id" to id)
@@ -187,6 +188,11 @@ object Routes {
             composable(Ext.Export) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionExportScreen(id = extensionId.toString())
+            }
+
+            composable(Ext.Import) { navBackStack ->
+                val wsUuid = navBackStack.arguments?.getString("wsUuid")?.takeIf { it != "null" }
+                ExtensionImportScreen(wsUuid = wsUuid.toString())
             }
 
             composable(Ext.View) { navBackStack ->

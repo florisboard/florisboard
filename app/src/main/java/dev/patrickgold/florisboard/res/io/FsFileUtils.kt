@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res
+package dev.patrickgold.florisboard.res.io
 
 import android.content.Context
 import dev.patrickgold.florisboard.common.kotlin.resultErrStr
 import dev.patrickgold.florisboard.common.kotlin.resultOk
+import dev.patrickgold.florisboard.res.FlorisRef
 import java.io.File
 
-object FileUtils {
+object FsFileUtils {
     fun copy(context: Context, srcRef: FlorisRef, dst: File): Result<Unit> {
         return when {
             srcRef.isAssets -> {

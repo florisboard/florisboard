@@ -25,8 +25,10 @@ import java.io.BufferedWriter
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@Deprecated("Use ContentResolver extension funs instead.")
 object ExternalContentUtils {
-    inline fun <R> readFromUri(context: Context, uri: Uri, maxSize: Int, block: (it: BufferedInputStream) -> R): Result<R> {
+    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
+    inline fun <R> readFromUri(context: Context, uri: Uri, maxSize: Int = Int.MAX_VALUE, block: (it: BufferedInputStream) -> R): Result<R> {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
         }
@@ -44,6 +46,7 @@ object ExternalContentUtils {
         }
     }
 
+    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
     inline fun <R> readTextFromUri(context: Context, uri: Uri, maxSize: Int, block: (it: BufferedReader) -> R): Result<R> {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
@@ -62,10 +65,12 @@ object ExternalContentUtils {
         }
     }
 
+    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
     fun readAllTextFromUri(context: Context, uri: Uri, maxSize: Int): Result<String> {
         return readTextFromUri(context, uri, maxSize) { it.readText() }
     }
 
+    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
     inline fun writeToUri(context: Context, uri: Uri, block: (it: BufferedOutputStream) -> Unit): Result<Unit> {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
@@ -80,6 +85,7 @@ object ExternalContentUtils {
         }
     }
 
+    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
     inline fun writeTextToUri(context: Context, uri: Uri, block: (it: BufferedWriter) -> Unit): Result<Unit> {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
@@ -94,6 +100,7 @@ object ExternalContentUtils {
         }
     }
 
+    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
     fun writeAllTextToUri(context: Context, uri: Uri, text: String): Result<Unit> {
         return writeTextToUri(context, uri) { it.write(text) }
     }

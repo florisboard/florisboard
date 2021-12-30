@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
+import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPrefManager
 import java.io.File
 import kotlin.Exception
@@ -94,6 +95,7 @@ class FlorisApplication : Application() {
                 registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
             } else {
                 initICU(this)
+                cacheDir?.deleteContentsRecursively()
                 prefs.initializeForContext(this)
                 clipboardManager.value.initializeForContext(this)
             }
@@ -136,6 +138,7 @@ class FlorisApplication : Application() {
                 } catch (e: Exception) {
                     flogError { e.toString() }
                 }
+                cacheDir?.deleteContentsRecursively()
                 prefs.initializeForContext(this@FlorisApplication)
                 clipboardManager.value.initializeForContext(this@FlorisApplication)
             }

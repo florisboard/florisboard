@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.res
 import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.assetManager
-import java.io.BufferedOutputStream
+import dev.patrickgold.florisboard.res.io.FsFileUtils
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
@@ -105,7 +105,7 @@ object ZipUtils {
         dstDir.mkdirs()
         when {
             srcRef.isAssets -> {
-                FileUtils.copy(context, srcRef, dstDir).getOrThrow()
+                FsFileUtils.copy(context, srcRef, dstDir).getOrThrow()
             }
             srcRef.isCache || srcRef.isInternal -> {
                 val flexHandle = File(srcRef.absolutePath(context))

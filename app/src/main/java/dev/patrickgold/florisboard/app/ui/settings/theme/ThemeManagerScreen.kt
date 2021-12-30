@@ -71,6 +71,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         ThemeManagerScreenAction.MANAGE -> R.string.settings__theme_manager__title_manage
         else -> error("Theme manager screen action must not be null")
     })
+    previewFieldVisible = true
 
     val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
@@ -143,7 +144,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         enabledIf = { activeThemeId != null },
                     )
                     this@content.Preference(
-                        onClick = { },
+                        onClick = { navController.navigate(Routes.Ext.Import(null)) },
                         iconId = R.drawable.ic_input,
                         title = stringRes(R.string.assets__action__import),
                     )
