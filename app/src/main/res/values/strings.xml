@@ -538,6 +538,12 @@
     <string name="ext__error__not_found_title">Extension not found</string>
     <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
 
+    <!-- Importer / Exporter strings (extensions and raw files) -->
+    <string name="importer__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Import extension</string>
+    <string name="importer__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import keyboard extension</string>
+    <string name="importer__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Import spelling extension / dictionary</string>
+    <string name="importer__ext_theme" comment="Title of Importer screen for theme extension import">Import theme extension</string>
+
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
 

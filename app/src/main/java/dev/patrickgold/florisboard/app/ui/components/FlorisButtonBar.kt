@@ -17,32 +17,39 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun FlorisButtonBar(content: @Composable FlorisButtonBarScope.() -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.primary)
-            .padding(vertical = 4.dp, horizontal = 16.dp),
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colors.background,
+        elevation = 8.dp,
     ) {
-        val scope = FlorisButtonBarScope(this)
-        content(scope)
+        Row(
+            modifier = Modifier
+                .padding(top = 4.dp, bottom = 4.dp, start = 0.dp, end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val scope = FlorisButtonBarScope(this)
+            content(scope)
+        }
     }
 }
 
@@ -55,10 +62,11 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
         @DrawableRes iconId: Int? = null,
         onClick: () -> Unit,
     ) {
-        TextButton(
-            modifier = modifier,
+        Button(
+            modifier = modifier.padding(start = 16.dp),
             enabled = enabled,
             colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.primary,
                 contentColor = MaterialTheme.colors.onPrimary,
             ),
             onClick = onClick,
@@ -70,7 +78,34 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
                     contentDescription = null,
                 )
             }
-            Text(text = text.uppercase())
+            Text(text = text)
+        }
+    }
+
+    @Composable
+    fun ButtonBarTextButton(
+        text: String,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        @DrawableRes iconId: Int? = null,
+        onClick: () -> Unit,
+    ) {
+        TextButton(
+            modifier = modifier.padding(start = 16.dp),
+            enabled = enabled,
+            colors = ButtonDefaults.textButtonColors(
+                contentColor = MaterialTheme.colors.primary,
+            ),
+            onClick = onClick,
+        ) {
+            if (iconId != null) {
+                Icon(
+                    modifier = Modifier.padding(end = 8.dp),
+                    painter = painterResource(iconId),
+                    contentDescription = null,
+                )
+            }
+            Text(text = text)
         }
     }
 

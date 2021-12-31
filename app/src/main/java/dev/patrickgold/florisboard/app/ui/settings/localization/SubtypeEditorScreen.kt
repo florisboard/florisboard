@@ -224,7 +224,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     bottomBar {
         FlorisButtonBar {
             ButtonBarSpacer()
-            ButtonBarButton(text = stringRes(R.string.assets__action__cancel)) {
+            ButtonBarTextButton(text = stringRes(R.string.assets__action__cancel)) {
                 navController.popBackStack()
             }
             ButtonBarButton(text = stringRes(R.string.assets__action__save)) {

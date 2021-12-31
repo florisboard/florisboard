@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
+import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPrefManager
 import java.io.File
@@ -65,6 +66,7 @@ class FlorisApplication : Application() {
     private val prefs by florisPreferenceModel()
 
     val assetManager = lazy { AssetManager(this) }
+    val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
@@ -156,6 +158,8 @@ private fun Context.florisApplication(): FlorisApplication {
 fun Context.appContext() = lazy { this.florisApplication() }
 
 fun Context.assetManager() = lazy { this.florisApplication().assetManager.value }
+
+fun Context.cacheManager() = lazy { this.florisApplication().cacheManager.value }
 
 fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
 

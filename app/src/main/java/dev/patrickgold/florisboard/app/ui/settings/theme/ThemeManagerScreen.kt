@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
@@ -57,9 +58,9 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 enum class ThemeManagerScreenAction(val id: String) {
-    SELECT_DAY("select_day"),
-    SELECT_NIGHT("select_night"),
-    MANAGE("manage_installed_themes");
+    SELECT_DAY("select-day"),
+    SELECT_NIGHT("select-night"),
+    MANAGE("manage-installed-themes");
 }
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
@@ -144,7 +145,9 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         enabledIf = { activeThemeId != null },
                     )
                     this@content.Preference(
-                        onClick = { navController.navigate(Routes.Ext.Import(null)) },
+                        onClick = { navController.navigate(
+                            Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME, null)
+                        ) },
                         iconId = R.drawable.ic_input,
                         title = stringRes(R.string.assets__action__import),
                     )

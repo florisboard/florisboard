@@ -18,31 +18,54 @@ package dev.patrickgold.florisboard.app.ui.ext
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.res.importer.Importer
-import dev.patrickgold.florisboard.res.importer.ImportWorkspace
+
+enum class ExtensionImportScreenType(val id: String) {
+    EXT_ANY("ext-any"),
+    EXT_KEYBOARD("ext-keyboard"),
+    EXT_SPELLING("ext-spelling"),
+    EXT_THEME("ext-theme");
+}
 
 @Composable
-fun ExtensionImportScreen(wsUuid: String?) = FlorisScreen {
-    title = stringRes(R.string.assets__action__import)
-    scrollable = false
+fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = FlorisScreen {
+    title = stringRes(when (type) {
+        ExtensionImportScreenType.EXT_ANY -> R.string.importer__ext_any
+        ExtensionImportScreenType.EXT_KEYBOARD -> R.string.importer__ext_keyboard
+        ExtensionImportScreenType.EXT_SPELLING -> R.string.importer__ext_spelling
+        ExtensionImportScreenType.EXT_THEME -> R.string.importer__ext_theme
+    })
 
     val navController = LocalNavController.current
     val context = LocalContext.current
+    val cacheManager by context.cacheManager()
     val extensionManager by context.extensionManager()
-    var importResult by remember { mutableStateOf<Result<ImportWorkspace>?>(null) }
+
+    val initWsUuid by rememberSaveable { mutableStateOf(initUuid) }
+    var importResult by remember {
+        val workspace = initWsUuid?.let { cacheManager.importer.getWorkspaceByUuid(it) }?.let { resultOk(it) }
+        mutableStateOf(workspace)
+    }
 
     val importLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetMultipleContents(),
@@ -52,25 +75,49 @@ fun ExtensionImportScreen(wsUuid: String?) = FlorisScreen {
             //  we don't display an error message here.
             if (uriList.isNullOrEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
-            importResult = Importer.readFromUriIntoCache(context, uriList)
+            importResult = cacheManager.readFromUriIntoCache(uriList)
         },
     )
 
-    content {
-        Button(
-            onClick = {
-                importLauncher.launch("*/*")
-            },
-        ) {
-            Text(text = "select files")
+    bottomBar {
+        FlorisButtonBar {
+            ButtonBarSpacer()
+            ButtonBarTextButton(
+                text = stringRes(R.string.assets__action__cancel),
+            ) {
+                importResult?.getOrNull()?.close()
+                navController.popBackStack()
+            }
+            ButtonBarButton(
+                text = stringRes(R.string.assets__action__import),
+                enabled = importResult?.getOrNull() != null,
+            ) {
+                // TODO
+            }
         }
+    }
+
+    content {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Button(
+                onClick = {
+                    importLauncher.launch("*/*")
+                },
+            ) {
+                Text(text = "select files")
+            }
+        }
+
         when {
             importResult == null -> {
                 Text(text = "No files selected")
             }
             importResult!!.isSuccess -> {
                 val workspace = importResult!!.getOrThrow()
-                for (fileInfo in workspace.wsInputFiles) {
+                for (fileInfo in workspace.inputFileInfos) {
                     Text(text = fileInfo.file.name)
                     Text(text = fileInfo.file.extension)
                     Text(text = fileInfo.mediaType ?: "unspecified")

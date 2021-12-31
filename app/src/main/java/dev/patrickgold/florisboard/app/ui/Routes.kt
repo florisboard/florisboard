@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.app.ui.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreen
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
@@ -114,8 +115,11 @@ object Routes {
         const val Export = "ext/export/{id}"
         fun Export(id: String) = Export.curlyFormat("id" to id)
 
-        const val Import = "ext/import/{wsUuid}"
-        fun Import(wsUuid: String?) = Import.curlyFormat("wsUuid" to wsUuid)
+        const val Import = "ext/import/{type}?uuid={uuid}"
+        fun Import(
+            type: ExtensionImportScreenType,
+            uuid: String?,
+        ) = Import.curlyFormat("type" to type.id, "uuid" to uuid.toString())
 
         const val View = "ext/view/{id}"
         fun View(id: String) = View.curlyFormat("id" to id)
@@ -191,8 +195,11 @@ object Routes {
             }
 
             composable(Ext.Import) { navBackStack ->
-                val wsUuid = navBackStack.arguments?.getString("wsUuid")?.takeIf { it != "null" }
-                ExtensionImportScreen(wsUuid = wsUuid.toString())
+                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
+                    ExtensionImportScreenType.values().firstOrNull { it.id == typeId }
+                } ?: ExtensionImportScreenType.EXT_ANY
+                val uuid = navBackStack.arguments?.getString("uuid")?.takeIf { it != "null" }
+                ExtensionImportScreen(type, uuid)
             }
 
             composable(Ext.View) { navBackStack ->
