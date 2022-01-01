@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
-
 interface SnyggValueSpec {
     val id: String?
 
@@ -74,7 +72,7 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
             return namedValue.first
         }
         check(value.coerceIn(min, max) == value)
-        return stringBuilder {
+        return buildString {
             prefix?.let { append(it) }
             append(value)
             suffix?.let { append(it) }
@@ -164,7 +162,7 @@ data class SnyggListValueSpec(
     }
 
     override fun pack(srcMap: SnyggIdToValueMap): String {
-        return stringBuilder {
+        return buildString {
             for ((n, valueSpec) in valueSpecs.withIndex()) {
                 append(valueSpec.pack(srcMap))
                 if (n < valueSpecs.size - 1) {

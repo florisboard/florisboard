@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -61,7 +60,7 @@ data class ExtensionMaintainer(
 
     fun edit() = ExtensionMaintainerEditor(name, email ?: "", url ?: "")
 
-    override fun toString() = stringBuilder {
+    override fun toString() = buildString {
         append(name)
         if (email != null && email.isNotBlank()) {
             append(" <$email>")

@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.snygg
 
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -136,7 +135,7 @@ data class SnyggRule(
         return Comparator.compare(this, other)
     }
 
-    override fun toString() = stringBuilder {
+    override fun toString() = buildString {
         if (isAnnotation) {
             append(ANNOTATION_MARKER)
         }

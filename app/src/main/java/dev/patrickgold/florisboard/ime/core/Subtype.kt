@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.core
 
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.LayoutTypeId
 import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
@@ -160,7 +159,7 @@ data class SubtypeLayoutMap(
         }
     }
 
-    override fun toString() = stringBuilder(128) {
+    override fun toString() = buildString(128) {
         append(LayoutTypeId.CHARACTERS)
         append(EQUALS)
         append(characters)

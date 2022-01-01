@@ -53,7 +53,6 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
@@ -178,7 +177,7 @@ private fun ExtensionComponentListView(ext: Extension) {
                 when (component) {
                     is ThemeExtensionComponent -> {
                         val text = remember(component) {
-                            stringBuilder {
+                            buildString {
                                 appendLine("authors = ${component.authors}")
                                 appendLine("isNightTheme = ${component.isNightTheme}")
                                 appendLine("isBorderless = ${component.isBorderless}")

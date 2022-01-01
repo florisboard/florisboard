@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.spellingManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -107,7 +106,7 @@ private fun DevtoolsSpellingOverlay() {
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.sp,
                 )
-                val details = stringBuilder {
+                val details = buildString {
                     appendLine("isTypo: $isTypo")
                     if (isTypo) {
                         appendLine("providing corrections list of size n=${suggestions.size}")
