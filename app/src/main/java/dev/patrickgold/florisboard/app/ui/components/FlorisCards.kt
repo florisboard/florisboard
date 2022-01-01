@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.app.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -32,6 +31,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
@@ -42,9 +42,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 
 private val IconRequiredSize = 24.dp
@@ -180,10 +183,12 @@ fun FlorisOutlinedBox(
     modifier: Modifier = Modifier,
     title: String,
     onTitleClick: (() -> Unit)? = null,
+    subtitle: String? = null,
+    onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
     shape: Shape = OutlinedBoxShape,
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable () -> Unit,
 ) {
     FlorisOutlinedBox(
         modifier = modifier,
@@ -196,6 +201,22 @@ fun FlorisOutlinedBox(
             )
         },
         onTitleClick = onTitleClick,
+        subtitle = if (subtitle != null) {
+            {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 6.dp, end = 6.dp, bottom = 4.dp),
+                    text = subtitle,
+                    color = LocalContentColor.current.copy(alpha = 0.56f),
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 10.sp,
+                )
+            }
+        } else {
+            null
+        },
+        onSubtitleClick = onSubtitleClick,
         borderWidth = borderWidth,
         borderColor = borderColor,
         shape = shape,
@@ -208,22 +229,36 @@ fun FlorisOutlinedBox(
     modifier: Modifier = Modifier,
     title: (@Composable () -> Unit)? = null,
     onTitleClick: (() -> Unit)? = null,
+    subtitle: (@Composable () -> Unit)? = null,
+    onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
     shape: Shape = OutlinedBoxShape,
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier
             .padding(top = if (title != null) 11.dp else 0.dp),
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .border(borderWidth, borderColor, shape)
                 .clip(shape)
                 .padding(top = if (title != null) 11.dp else 0.dp),
-            content = content,
-        )
+        ) {
+            if (title != null && subtitle != null) {
+                Box(
+                    modifier = Modifier
+                        .padding(start = 10.dp, bottom = 4.dp)
+                        .rippleClickable(enabled = onSubtitleClick != null) {
+                            onSubtitleClick!!()
+                        },
+                ) {
+                    subtitle()
+                }
+            }
+            content()
+        }
         if (title != null) {
             Box(
                 modifier = Modifier

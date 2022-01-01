@@ -421,6 +421,7 @@
     <string name="assets__action__select">Select</string>
     <string name="assets__action__select_dir">Select directory</string>
     <string name="assets__action__select_file">Select file</string>
+    <string name="assets__action__select_files">Select files</string>
     <string name="assets__action__yes">Yes</string>
     <string name="assets__error__title">Error</string>
     <string name="assets__error__details">Details</string>
@@ -543,6 +544,13 @@
     <string name="importer__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import keyboard extension</string>
     <string name="importer__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Import spelling extension / dictionary</string>
     <string name="importer__ext_theme" comment="Title of Importer screen for theme extension import">Import theme extension</string>
+    <string name="importer__no_files_selected" comment="Label when no files are selected in the importer screen.">No files selected for import</string>
+    <string name="importer__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File will be skipped during import. Reason:</string>
+    <string name="importer__file_skip_unsupported" comment="Reason string when file is unsupported">Unsupported or unrecognized file type.</string>
+    <string name="importer__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Expected an extension archive of serial type \"{expected_serial_type}\" but was \"{actual_serial_type}\".</string>
+    <string name="importer__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
+    <string name="importer__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
+    <string name="importer__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
 
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>

@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -113,6 +114,7 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
             Box(modifier = modifier.padding(innerPadding)) {
                 PreferenceLayout(
                     florisPreferenceModel(),
+                    modifier = Modifier.fillMaxWidth(),
                     iconSpaceReserved = iconSpaceReserved,
                     content = content,
                 )

@@ -17,10 +17,12 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -42,13 +44,21 @@ fun FlorisButtonBar(content: @Composable FlorisButtonBarScope.() -> Unit) {
         color = MaterialTheme.colors.background,
         elevation = 8.dp,
     ) {
-        Row(
-            modifier = Modifier
-                .padding(top = 4.dp, bottom = 4.dp, start = 0.dp, end = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val scope = FlorisButtonBarScope(this)
-            content(scope)
+        Column {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp),
+                color = MaterialTheme.colors.surface,
+            ) {}
+            Row(
+                modifier = Modifier
+                    .padding(top = 4.dp, bottom = 4.dp, start = 0.dp, end = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val scope = FlorisButtonBarScope(this)
+                content(scope)
+            }
         }
     }
 }

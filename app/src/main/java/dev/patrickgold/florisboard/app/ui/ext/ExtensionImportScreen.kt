@@ -16,12 +16,17 @@
 
 package dev.patrickgold.florisboard.app.ui.ext
 
+import android.text.format.Formatter
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,32 +34,54 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.res.FileRegistry
+import dev.patrickgold.florisboard.res.cache.CacheManager
 
-enum class ExtensionImportScreenType(val id: String) {
-    EXT_ANY("ext-any"),
-    EXT_KEYBOARD("ext-keyboard"),
-    EXT_SPELLING("ext-spelling"),
-    EXT_THEME("ext-theme");
+enum class ExtensionImportScreenType(
+    val id: String,
+    @StringRes val titleResId: Int,
+    val supportedFiles: List<FileRegistry.Entry>,
+) {
+    EXT_ANY(
+        id = "ext-any",
+        titleResId = R.string.importer__ext_any,
+        supportedFiles = listOf(FileRegistry.FlexExtension),
+    ),
+    EXT_KEYBOARD(
+        id = "ext-keyboard",
+        titleResId = R.string.importer__ext_keyboard,
+        supportedFiles = listOf(FileRegistry.FlexExtension),
+    ),
+    EXT_SPELLING(
+        id = "ext-spelling",
+        titleResId = R.string.importer__ext_spelling,
+        supportedFiles = listOf(FileRegistry.FlexExtension),
+    ),
+    EXT_THEME(
+        id = "ext-theme",
+        titleResId = R.string.importer__ext_theme,
+        supportedFiles = listOf(FileRegistry.FlexExtension),
+    );
 }
 
 @Composable
 fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = FlorisScreen {
-    title = stringRes(when (type) {
-        ExtensionImportScreenType.EXT_ANY -> R.string.importer__ext_any
-        ExtensionImportScreenType.EXT_KEYBOARD -> R.string.importer__ext_keyboard
-        ExtensionImportScreenType.EXT_SPELLING -> R.string.importer__ext_spelling
-        ExtensionImportScreenType.EXT_THEME -> R.string.importer__ext_theme
-    })
+    title = stringRes(type.titleResId)
 
     val navController = LocalNavController.current
     val context = LocalContext.current
@@ -98,36 +125,96 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     }
 
     content {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
+        OutlinedButton(
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            onClick = {
+                importLauncher.launch("*/*")
+            },
         ) {
-            Button(
-                onClick = {
-                    importLauncher.launch("*/*")
-                },
-            ) {
-                Text(text = "select files")
-            }
+            Text(text = stringRes(R.string.assets__action__select_files))
         }
 
+        val result = importResult
         when {
-            importResult == null -> {
-                Text(text = "No files selected")
+            result == null -> {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(horizontal = 16.dp),
+                    text = stringRes(R.string.importer__no_files_selected),
+                    fontStyle = FontStyle.Italic,
+                )
             }
-            importResult!!.isSuccess -> {
-                val workspace = importResult!!.getOrThrow()
+            result.isSuccess -> {
+                val workspace = result.getOrThrow()
                 for (fileInfo in workspace.inputFileInfos) {
-                    Text(text = fileInfo.file.name)
-                    Text(text = fileInfo.file.extension)
-                    Text(text = fileInfo.mediaType ?: "unspecified")
-                    Text(text = "${fileInfo.size}bytes")
+                    FileInfoView(type, fileInfo)
                 }
             }
-            importResult!!.isFailure -> {
-                val error = importResult!!.exceptionOrNull()!!
-                Text(text = "error: $error")
+            result.isFailure -> {
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = stringRes(R.string.importer__error_unexpected_exception),
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.error,
+                )
+                Text(
+                    modifier = Modifier
+                        .florisHorizontalScroll()
+                        .padding(horizontal = 16.dp),
+                    text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.error,
+                    fontStyle = FontStyle.Italic,
+                )
+            }
+        }
+    }
+}
 
+@Composable
+private fun FileInfoView(
+    type: ExtensionImportScreenType,
+    fileInfo: CacheManager.FileInfo,
+) {
+    FlorisOutlinedBox(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        title = fileInfo.file.name,
+        subtitle = fileInfo.mediaType ?: "application/unknown",
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        ) {
+            Text(
+                text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
+                style = MaterialTheme.typography.body2,
+            )
+            val reasonStrId = remember(fileInfo) {
+                if (!FileRegistry.matchesFileFilter(fileInfo.file, fileInfo.mediaType, type.supportedFiles)) {
+                    R.string.importer__file_skip_unsupported
+                } else {
+                    null
+                }
+            }
+            if (reasonStrId != null) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringRes(R.string.importer__file_skip),
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.error,
+                )
+                Text(
+                    text = stringRes(reasonStrId),
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.error,
+                    fontStyle = FontStyle.Italic,
+                )
             }
         }
     }

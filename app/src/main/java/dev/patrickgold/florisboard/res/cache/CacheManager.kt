@@ -22,6 +22,7 @@ import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.query
 import dev.patrickgold.florisboard.common.android.readToFile
+import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.io.FsDir
 import dev.patrickgold.florisboard.res.io.FsFile
 import dev.patrickgold.florisboard.res.io.subDir
@@ -36,6 +37,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.Closeable
+import java.nio.file.Files
 import java.util.*
 
 class CacheManager(context: Context) {
@@ -67,13 +69,14 @@ class CacheManager(context: Context) {
                     val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                     val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
                     cursor.moveToFirst()
+                    val file = workspace.inputDir.subFile(cursor.getString(nameIndex))
+                    contentResolver.readToFile(uri, file)
                     FileInfo(
-                        file = workspace.inputDir.subFile(cursor.getString(nameIndex)),
-                        mediaType = contentResolver.getType(uri),
+                        file = file,
+                        mediaType = FileRegistry.guessMediaType(file) ?: contentResolver.getType(uri),
                         size = cursor.getLong(sizeIndex),
                     )
                 } ?: error("Unable to fetch info about one or more resources to be imported.")
-                contentResolver.readToFile(uri, info.file)
                 add(info)
             }
         }

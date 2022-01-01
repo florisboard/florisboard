@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -34,10 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -162,22 +158,11 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                 title = remember {
                     extensionManager.getExtensionById(extensionId)?.meta?.title ?: extensionId
                 },
-                onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) }
+                onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
+                subtitle = extensionId,
+                onSubtitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        modifier = Modifier
-                            .padding(start = 10.dp, bottom = 4.dp)
-                            .rippleClickable {
-                                navController.navigate(Routes.Ext.View(extensionId))
-                            }
-                            .padding(start = 6.dp, end = 6.dp, bottom = 4.dp),
-                        text = extensionId,
-                        color = grayColor,
-                        fontWeight = FontWeight.Normal,
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = 10.sp,
-                    )
                     for (config in configs) {
                         key(extensionId, config.id) {
                             JetPrefListItem(
