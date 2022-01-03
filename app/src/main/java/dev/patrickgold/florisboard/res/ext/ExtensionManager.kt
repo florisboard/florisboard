@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.kotlin.throwOnFailure
 import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.res.io.writeJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,7 +76,7 @@ class ExtensionManager(context: Context) {
     val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
 
-    fun import(ext: Extension) = runCatching {
+    fun import(ext: Extension) {
         val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
@@ -85,14 +86,14 @@ class ExtensionManager(context: Context) {
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
-        assetManager.writeJsonAsset(FsFile(workingDir, ExtensionDefaults.MANIFEST_FILE_NAME), ext, ExtensionJsonConfig).throwOnFailure()
+        FsFile(workingDir, ExtensionDefaults.MANIFEST_FILE_NAME).writeJson(ext, ExtensionJsonConfig)
         writeExtension(ext).throwOnFailure()
         ext.unload(appContext)
         ext.workingDir = null
     }
 
-    fun export(ext: Extension, uri: Uri) = runCatching {
-        ext.load(appContext).getOrThrow()
+    fun export(ext: Extension, uri: Uri) {
+        ext.load(appContext).throwOnFailure()
         val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
         ZipUtils.zip(appContext, workingDir, uri).throwOnFailure()
         ext.unload(appContext)

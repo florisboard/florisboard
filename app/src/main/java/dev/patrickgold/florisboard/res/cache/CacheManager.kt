@@ -65,7 +65,7 @@ class CacheManager(context: Context) {
 
     fun readFromUriIntoCache(uri: Uri) = readFromUriIntoCache(listOf(uri))
 
-    fun readFromUriIntoCache(uriList: List<Uri>) = runCatching<ImporterWorkspace> {
+    fun readFromUriIntoCache(uriList: List<Uri>): ImporterWorkspace {
         val contentResolver = appContext.contentResolver ?: error("Content resolver is null.")
         val workspace = ImporterWorkspace(uuid = UUID.randomUUID().toString()).also { it.mkdirs() }
         workspace.inputFileInfos = buildList {
@@ -80,7 +80,7 @@ class CacheManager(context: Context) {
                         val extWorkingDir = workspace.outputDir.subDir(file.nameWithoutExtension)
                         ZipUtils.unzip(srcFile = file, dstDir = extWorkingDir)
                         val extJsonFile = extWorkingDir.subFile(ExtensionDefaults.MANIFEST_FILE_NAME)
-                        extJsonFile.readJson<Extension>(ExtensionJsonConfig)
+                        extJsonFile.readJson<Extension>(ExtensionJsonConfig).also { it.workingDir = extWorkingDir }
                     }
                     FileInfo(
                         file = file,
@@ -93,7 +93,7 @@ class CacheManager(context: Context) {
             }
         }
         importer.add(workspace)
-        return@runCatching workspace
+        return workspace
     }
 
     inner class WorkspacesContainer<T : Workspace> internal constructor(val dirName: String) {

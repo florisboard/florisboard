@@ -61,7 +61,7 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
                 navController.popBackStack()
                 return@rememberLauncherForActivityResult
             }
-            val str = extensionManager.export(ext, uri).fold(
+            val str = runCatching { extensionManager.export(ext, uri) }.fold(
                 onSuccess = { "success" },
                 onFailure = { "failure: ${it}" },
             )

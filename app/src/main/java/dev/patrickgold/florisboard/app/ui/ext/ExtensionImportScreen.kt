@@ -52,9 +52,13 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.cache.CacheManager
 
@@ -130,7 +134,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             //  we don't display an error message here.
             if (uriList.isNullOrEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
-            importResult = cacheManager.readFromUriIntoCache(uriList).map { workspace ->
+            importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.map { workspace ->
                 workspace.inputFileInfos.forEach { fileInfo ->
                     fileInfo.skipReason = getSkipReason(fileInfo)
                 }
@@ -157,7 +161,32 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 text = stringRes(R.string.assets__action__import),
                 enabled = enabled,
             ) {
-                // TODO
+                val workspace = importResult!!.getOrThrow()
+                runCatching {
+                    for (fileInfo in workspace.inputFileInfos) {
+                        val ext = fileInfo.ext
+                        when (type) {
+                            ExtensionImportScreenType.EXT_ANY -> {
+                                ext?.let { extensionManager.import(it) }
+                            }
+                            ExtensionImportScreenType.EXT_KEYBOARD -> {
+                                ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
+                            }
+                            ExtensionImportScreenType.EXT_SPELLING -> {
+                                ext.takeIf { it is SpellingExtension }?.let { extensionManager.import(it) }
+                            }
+                            ExtensionImportScreenType.EXT_THEME -> {
+                                ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
+                            }
+                        }
+                    }
+                }.onSuccess {
+                    workspace.close()
+                    context.showLongToast("import successful")
+                    navController.popBackStack()
+                }.onFailure {
+                    context.showLongToast("import failed. ${it.localizedMessage}")
+                }
             }
         }
     }

@@ -58,15 +58,11 @@ object ZipUtils {
         when {
             dstRef.isCache || dstRef.isInternal -> {
                 val flexFile = FsFile(dstRef.absolutePath(context))
-                flexFile.delete()
                 flexFile.parentFile?.mkdirs()
+                flexFile.delete()
                 FileOutputStream(flexFile).use { fileOut ->
                     ZipOutputStream(fileOut).use { zipOut ->
-                        for (file in srcDir.listFiles() ?: arrayOf()) {
-                            zipOut.putNextEntry(ZipEntry(file.name))
-                            file.inputStream().use { it.copyTo(zipOut) }
-                            zipOut.closeEntry()
-                        }
+                        zip(srcDir, zipOut, "")
                     }
                 }
             }
