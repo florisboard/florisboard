@@ -28,10 +28,11 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.res.DefaultJsonConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.kotlin.throwOnFailure
+import dev.patrickgold.florisboard.res.io.FsFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,10 +41,13 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import java.io.File
 
 @OptIn(ExperimentalSerializationApi::class)
-val ExtensionJsonConfig = Json(DefaultJsonConfig) {
+val ExtensionJsonConfig = Json {
+    classDiscriminator = "$"
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    isLenient = true
     prettyPrint = true
     prettyPrintIndent = "  "
     encodeDefaults = false
@@ -72,6 +76,7 @@ class ExtensionManager(context: Context) {
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
 
     fun import(ext: Extension) = runCatching {
+        val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
             is KeyboardExtension -> IME_KEYBOARD_PATH
@@ -80,23 +85,23 @@ class ExtensionManager(context: Context) {
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
-        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, ExtensionJsonConfig).getOrThrow()
-        writeExtension(ext).getOrThrow()
+        assetManager.writeJsonAsset(FsFile(workingDir, ExtensionDefaults.MANIFEST_FILE_NAME), ext, ExtensionJsonConfig).throwOnFailure()
+        writeExtension(ext).throwOnFailure()
         ext.unload(appContext)
         ext.workingDir = null
     }
 
     fun export(ext: Extension, uri: Uri) = runCatching {
         ext.load(appContext).getOrThrow()
-        val workingDir = ext.workingDir ?: error("No working dir specified")
-        ZipUtils.zip(appContext, workingDir, uri).getOrThrow()
+        val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
+        ZipUtils.zip(appContext, workingDir, uri).throwOnFailure()
         ext.unload(appContext)
     }
 
     private fun writeExtension(ext: Extension) = runCatching {
-        val workingDir = ext.workingDir ?: error("No working dir specified")
-        val sourceRef = ext.sourceRef ?: error("No source ref specified")
-        ZipUtils.zip(appContext, workingDir, sourceRef).getOrThrow()
+        val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
+        val sourceRef = requireNotNull(ext.sourceRef) { "No source ref specified" }
+        ZipUtils.zip(appContext, workingDir, sourceRef).throwOnFailure()
     }
 
     fun getExtensionById(id: String): Extension? {

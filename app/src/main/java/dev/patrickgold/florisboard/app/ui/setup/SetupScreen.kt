@@ -18,18 +18,13 @@ package dev.patrickgold.florisboard.app.ui.setup
 
 import android.content.Intent
 import android.provider.Settings
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -38,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -46,6 +40,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisBulletSpacer
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisStep
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepLayout
@@ -173,13 +168,7 @@ fun SetupScreen() = FlorisScreen {
                     TextButton(onClick = { context.launchUrl(privacyPolicyUrl)}) {
                         Text(text = stringRes(R.string.setup__footer__privacy_policy))
                     }
-                    Box(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .size(12.dp, 4.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
-                    )
+                    FlorisBulletSpacer()
                     val repositoryUrl = stringRes(R.string.florisboard__repo_url)
                     TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
                         Text(text = stringRes(R.string.setup__footer__repository))

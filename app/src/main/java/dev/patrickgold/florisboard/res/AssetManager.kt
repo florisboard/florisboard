@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.res
 
 import android.content.Context
-import android.net.Uri
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.kotlin.resultErr
 import dev.patrickgold.florisboard.common.kotlin.resultErrStr
@@ -84,30 +83,6 @@ val DefaultJsonConfig = Json {
 class AssetManager(context: Context) {
     val appContext by context.appContext()
 
-    @Deprecated(message = "deleteAsset is deprecated in favor of delete")
-    fun deleteAsset(ref: FlorisRef): Result<Unit> {
-        return when {
-            ref.isCache || ref.isInternal -> {
-                val file = File(ref.absolutePath(appContext))
-                if (file.isFile) {
-                    try {
-                        val success = file.delete()
-                        if (success) {
-                            resultOk()
-                        } else {
-                            resultErrStr("Could not delete file.")
-                        }
-                    } catch (e: Exception) {
-                        resultErr(e)
-                    }
-                } else {
-                    resultErrStr("Provided reference is not a file.")
-                }
-            }
-            else -> resultErrStr("Can not delete an asset in source '${ref.scheme}'.")
-        }
-    }
-
     fun delete(ref: FlorisRef) = runCatching {
         when {
             ref.isCache || ref.isInternal -> {
@@ -133,48 +108,6 @@ class AssetManager(context: Context) {
                 file.exists() && file.isFile
             }
             else -> false
-        }
-    }
-
-    @Deprecated(message = "listAssets is deprecated in favor of list/listFiles/listDirs")
-    inline fun <reified T> listAssets(ref: FlorisRef): Result<Map<FlorisRef, T>> {
-        val retMap = mutableMapOf<FlorisRef, T>()
-        return when {
-            ref.isAssets -> runCatching {
-                val list = appContext.assets.list(ref.relativePath)
-                if (list != null) {
-                    for (file in list) {
-                        val fileRef = ref.subRef(file)
-                        val assetResult = loadJsonAsset<T>(fileRef)
-                        assetResult.onSuccess { asset ->
-                            retMap[fileRef] = asset
-                        }.onFailure { error ->
-                            flogError(LogTopic.FILE_IO) { error.toString() }
-                        }
-                    }
-                }
-                retMap.toMap()
-            }
-            ref.isCache || ref.isInternal -> {
-                val dir = File(ref.absolutePath(appContext))
-                if (dir.isDirectory) {
-                    dir.listFiles()?.let {
-                        it.forEach { file ->
-                            if (file.isFile) {
-                                val fileRef = ref.subRef(file.name)
-                                val assetResult = loadJsonAsset<T>(fileRef)
-                                assetResult.onSuccess { asset ->
-                                    retMap[fileRef] = asset
-                                }.onFailure { error ->
-                                    flogError(LogTopic.FILE_IO) { error.toString() }
-                                }
-                            }
-                        }
-                    }
-                }
-                resultOk(retMap.toMap())
-            }
-            else -> resultErrStr("Unsupported FlorisRef source!")
         }
     }
 
@@ -238,13 +171,6 @@ class AssetManager(context: Context) {
         )
     }
 
-    inline fun <reified T> loadJsonAsset(uri: Uri, maxSize: Int, jsonConfig: Json = DefaultJsonConfig): Result<T> {
-        return loadTextAsset(uri, maxSize).fold(
-            onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
-            onFailure = { resultErr(it) }
-        )
-    }
-
     inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = DefaultJsonConfig): Result<T> {
         return runCatching { jsonConfig.decodeFromString(jsonStr) }
     }
@@ -275,10 +201,6 @@ class AssetManager(context: Context) {
         }
     }
 
-    fun loadTextAsset(uri: Uri, maxSize: Int): Result<String> {
-        return ExternalContentUtils.readAllTextFromUri(appContext, uri, maxSize)
-    }
-
     inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
         return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(ref, it) },
@@ -293,13 +215,6 @@ class AssetManager(context: Context) {
         )
     }
 
-    inline fun <reified T> writeJsonAsset(uri: Uri, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
-        return runCatching { jsonConfig.encodeToString(asset) }.fold(
-            onSuccess = { writeTextAsset(uri, it) },
-            onFailure = { resultErr(it) }
-        )
-    }
-
     fun writeTextAsset(ref: FlorisRef, text: String): Result<Unit> {
         return when {
             ref.isCache || ref.isInternal -> {
@@ -308,10 +223,6 @@ class AssetManager(context: Context) {
             }
             else -> resultErrStr("Can not write an asset in source '${ref.scheme}'")
         }
-    }
-
-    fun writeTextAsset(uri: Uri, text: String): Result<Unit> {
-        return ExternalContentUtils.writeAllTextToUri(appContext, uri, text)
     }
 
     /**
@@ -336,56 +247,4 @@ class AssetManager(context: Context) {
         file.parentFile?.mkdirs()
         file.writeText(text)
     }
-
-    /*inline fun <reified C : ExtensionConfig> listExtensions(ref: FlorisRef): Result<Map<FlorisRef, C>> {
-        val retMap = mutableMapOf<FlorisRef, C>()
-        return when {
-            ref.isInternal -> {
-                val dir = File(ref.absolutePath(applicationContext))
-                if (dir.isDirectory) {
-                    val tempConfigFile = File.createTempFile("__config_ext_index", null)
-                    for (file in dir.listFiles() ?: arrayOf()) {
-                        if (file.isFile && file.extension == ExtensionMetaDefaults.FILE_EXTENSION) {
-                            val flexFile = ZipFile(file)
-                            val configEntry = flexFile.getEntry(ExtensionMetaDefaults.NAME)
-                            if (configEntry != null) {
-                                tempConfigFile.delete()
-                                flexFile.copy(configEntry, tempConfigFile)
-                                loadJsonAsset<C>(tempConfigFile).fold(
-                                    onSuccess = { config -> retMap.put(ref.subRef(file.name), config) },
-                                    onFailure = { error -> flogError(LogTopic.ASSET_MANAGER) { error.toString() } }
-                                )
-                            }
-                        }
-                    }
-                    tempConfigFile.delete()
-                    resultOk { retMap.toMap() }
-                } else {
-                    resultErrStr { "Given path does not exist or is a file!" }
-                }
-            }
-            else -> resultErrStr { "Unsupported asset source" }
-        }
-    }*/
-
-    /*inline fun <X: ExtensionConfig<C>, reified C : ExtensionConfig> writeExtension(extension: X): Result<Unit> {
-        if (extension.flexFile == null) return Result.failure(Exception("Flex file handle is null!"))
-        extension.flexFile.parentFile?.mkdirs()
-        extension.flexFile.deleteRecursively()
-        return try {
-            // Write extension file to working dir
-            writeJsonAsset(File(extension.workingDir, ExtensionConfig.DEFAULT_NAME), extension.config)
-            val fileOut = FileOutputStream(extension.flexFile.absolutePath)
-            val zipOut = ZipOutputStream(fileOut)
-            for (workingFile in extension.workingDir.listFiles() ?: arrayOf()) {
-                zipOut.putNextEntry(ZipEntry(workingFile.name))
-                workingFile.inputStream().use { it.copyTo(zipOut) }
-                zipOut.closeEntry()
-            }
-            zipOut.close()
-            return Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }*/
 }

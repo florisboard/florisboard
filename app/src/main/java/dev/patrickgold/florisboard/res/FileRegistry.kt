@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.res
 
+import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.io.FsFile
 
 object FileRegistry {
@@ -29,17 +30,26 @@ object FileRegistry {
         ),
     )
 
-    fun guessMediaType(file: FsFile): String? {
+    fun guessMediaType(file: FsFile, givenMediaType: String?): String? {
         return when (file.extension) {
-            FlexExtension.fileExt -> FlexExtension.mediaType
-            else -> null
+            FlexExtension.fileExt -> {
+                if (FlexExtension.alternativeMediaTypes.contains(givenMediaType)) {
+                    FlexExtension.mediaType
+                } else {
+                    givenMediaType
+                }
+            }
+            else -> givenMediaType
         }
     }
 
-    fun matchesFileFilter(file: FsFile, mediaType: String?, filter: List<Entry>): Boolean {
-        val fileExt = file.extension
+    fun matchesFileFilter(fileInfo: CacheManager.FileInfo, filter: List<Entry>): Boolean {
+        val fileExt = fileInfo.file.extension
         filter.forEach {
-            if (it.fileExt == fileExt || it.mediaType == mediaType || it.alternativeMediaTypes.contains(mediaType)) {
+            if (it.fileExt == fileExt ||
+                it.mediaType == fileInfo.mediaType ||
+                it.alternativeMediaTypes.contains(fileInfo.mediaType)
+            ) {
                 return true
             }
         }

@@ -20,11 +20,15 @@ import android.text.format.Formatter
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -42,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisBulletSpacer
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
@@ -49,6 +54,7 @@ import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.cache.CacheManager
 
@@ -94,6 +100,28 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         mutableStateOf(workspace)
     }
 
+    fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
+        return when {
+            !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
+                R.string.importer__file_skip_unsupported
+            }
+            fileInfo.ext != null -> {
+                val ext = fileInfo.ext
+                if (extensionManager.getExtensionById(ext.meta.id)?.sourceRef?.isAssets == true) {
+                    R.string.importer__file_skip_ext_core
+                } else {
+                    NATIVE_NULLPTR
+                }
+            }
+            fileInfo.mediaType == FileRegistry.FlexExtension.mediaType -> {
+                R.string.importer__file_skip_ext_corrupted
+            }
+            else -> {
+                NATIVE_NULLPTR
+            }
+        }
+    }
+
     val importLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetMultipleContents(),
         onResult = { uriList ->
@@ -102,7 +130,12 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             //  we don't display an error message here.
             if (uriList.isNullOrEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
-            importResult = cacheManager.readFromUriIntoCache(uriList)
+            importResult = cacheManager.readFromUriIntoCache(uriList).map { workspace ->
+                workspace.inputFileInfos.forEach { fileInfo ->
+                    fileInfo.skipReason = getSkipReason(fileInfo)
+                }
+                workspace
+            }
         },
     )
 
@@ -115,9 +148,14 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 importResult?.getOrNull()?.close()
                 navController.popBackStack()
             }
+            val enabled = remember(importResult) {
+                importResult?.getOrNull()?.takeIf { workspace ->
+                    workspace.inputFileInfos.any { it.skipReason == NATIVE_NULLPTR }
+                } != null
+            }
             ButtonBarButton(
                 text = stringRes(R.string.assets__action__import),
-                enabled = importResult?.getOrNull() != null,
+                enabled = enabled,
             ) {
                 // TODO
             }
@@ -191,26 +229,71 @@ private fun FileInfoView(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
-            Text(
-                text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
-                style = MaterialTheme.typography.body2,
-            )
-            val reasonStrId = remember(fileInfo) {
-                if (!FileRegistry.matchesFileFilter(fileInfo.file, fileInfo.mediaType, type.supportedFiles)) {
-                    R.string.importer__file_skip_unsupported
-                } else {
-                    null
+            val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
+            val ext = fileInfo.ext
+            Row {
+                Text(
+                    text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
+                    style = MaterialTheme.typography.body2,
+                    color = grayColor,
+                )
+                if (ext != null) {
+                    FlorisBulletSpacer()
+                    Text(
+                        text = ext.meta.id,
+                        style = MaterialTheme.typography.body2,
+                        color = grayColor,
+                    )
+                    FlorisBulletSpacer()
+                    Text(
+                        text = ext.meta.version,
+                        style = MaterialTheme.typography.body2,
+                        color = grayColor,
+                    )
                 }
             }
-            if (reasonStrId != null) {
+            if (ext != null) {
                 Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = ext.meta.title,
+                    style = MaterialTheme.typography.body2,
+                )
+                ext.meta.description?.let { description ->
+                    Text(
+                        text = description,
+                        style = MaterialTheme.typography.body2,
+                        fontStyle = FontStyle.Italic,
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                val maintainers = remember(ext) {
+                    ext.meta.maintainers.joinToString { it.name }
+                }
+                Text(
+                    text = stringRes(R.string.importer__ext__meta_by, "maintainers" to maintainers),
+                    style = MaterialTheme.typography.body2,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                for (component in ext.components()) {
+                    Text(
+                        text = component.id,
+                        style = MaterialTheme.typography.body2,
+                    )
+                }
+            }
+            if (fileInfo.skipReason != NATIVE_NULLPTR) {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(19.dp)
+                    .padding(top = 10.dp, bottom = 8.dp)
+                    .background(MaterialTheme.colors.error.copy(alpha = 0.56f)))
                 Text(
                     text = stringRes(R.string.importer__file_skip),
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.error,
                 )
                 Text(
-                    text = stringRes(reasonStrId),
+                    text = stringRes(fileInfo.skipReason),
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.error,
                     fontStyle = FontStyle.Italic,

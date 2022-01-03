@@ -201,7 +201,7 @@ class SpellingManager(context: Context) {
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
                     meta = ExtensionMetaEditor(
-                        id = ExtensionDefaults.createIdForImport("spelling"),
+                        id = ExtensionDefaults.createLocalId("spelling"),
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
                         description = manifest.description ?: "",
@@ -276,7 +276,7 @@ class SpellingManager(context: Context) {
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
                     meta = ExtensionMetaEditor(
-                        id = ExtensionDefaults.createIdForImport("spelling"),
+                        id = ExtensionDefaults.createLocalId("spelling"),
                         version = "0.0.0",
                         title = "FreeOffice import",
                         maintainers = mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),

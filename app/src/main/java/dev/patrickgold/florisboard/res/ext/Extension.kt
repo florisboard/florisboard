@@ -21,10 +21,11 @@ import dev.patrickgold.florisboard.common.kotlin.resultErr
 import dev.patrickgold.florisboard.common.kotlin.resultOk
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
+import dev.patrickgold.florisboard.res.io.FsDir
+import dev.patrickgold.florisboard.res.io.FsFile
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import java.io.File
 
 /**
  * An extension container holding a parsed config, a working directory file
@@ -38,7 +39,7 @@ import java.io.File
 @Polymorphic
 @Serializable
 abstract class Extension {
-    @Transient var workingDir: File? = null
+    @Transient var workingDir: FsDir? = null
     @Transient var sourceRef: FlorisRef? = null
 
     abstract val meta: ExtensionMeta
@@ -50,16 +51,16 @@ abstract class Extension {
 
     fun isLoaded() = workingDir != null
 
-    open fun onBeforeLoad(context: Context, cacheDir: File) {
+    open fun onBeforeLoad(context: Context, cacheDir: FsDir) {
         /* Empty */
     }
 
-    open fun onAfterLoad(context: Context, cacheDir: File) {
+    open fun onAfterLoad(context: Context, cacheDir: FsDir) {
         /* Empty */
     }
 
     fun load(context: Context, force: Boolean = false): Result<Unit> {
-        val cacheDir = File(context.cacheDir, meta.id)
+        val cacheDir = FsDir(context.cacheDir, meta.id)
         if (cacheDir.exists()) {
             if (force) {
                 cacheDir.deleteRecursively()
@@ -77,16 +78,16 @@ abstract class Extension {
         return resultOk()
     }
 
-    open fun onBeforeUnload(context: Context, cacheDir: File) {
+    open fun onBeforeUnload(context: Context, cacheDir: FsDir) {
         /* Empty */
     }
 
-    open fun onAfterUnload(context: Context, cacheDir: File) {
+    open fun onAfterUnload(context: Context, cacheDir: FsDir) {
         /* Empty */
     }
 
     fun unload(context: Context) {
-        val cacheDir = workingDir ?: File(context.cacheDir, meta.id)
+        val cacheDir = workingDir ?: FsDir(context.cacheDir, meta.id)
         if (!cacheDir.exists()) return
         onBeforeUnload(context, cacheDir)
         cacheDir.deleteRecursively()
@@ -95,9 +96,9 @@ abstract class Extension {
     }
 
     fun readExtensionFile(context: Context, relPath: String): String? {
-        val cacheDir = File(context.cacheDir, meta.id)
+        val cacheDir = FsDir(context.cacheDir, meta.id)
         if (cacheDir.exists() && cacheDir.isDirectory) {
-            val file = File(cacheDir, relPath)
+            val file = FsFile(cacheDir, relPath)
             if (file.exists() && file.isFile) {
                 return try {
                     file.readText()
@@ -114,5 +115,5 @@ abstract class Extension {
 
 interface ExtensionEditor {
     val meta: ExtensionMetaEditor
-    val workingDir: File?
+    val workingDir: FsDir?
 }

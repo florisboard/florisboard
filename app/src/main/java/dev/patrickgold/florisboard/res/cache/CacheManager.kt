@@ -22,9 +22,15 @@ import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.query
 import dev.patrickgold.florisboard.common.android.readToFile
+import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.res.FileRegistry
+import dev.patrickgold.florisboard.res.ZipUtils
+import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
+import dev.patrickgold.florisboard.res.ext.ExtensionJsonConfig
 import dev.patrickgold.florisboard.res.io.FsDir
 import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subDir
 import dev.patrickgold.florisboard.res.io.subFile
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +43,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.Closeable
-import java.nio.file.Files
 import java.util.*
 
 class CacheManager(context: Context) {
@@ -71,10 +76,17 @@ class CacheManager(context: Context) {
                     cursor.moveToFirst()
                     val file = workspace.inputDir.subFile(cursor.getString(nameIndex))
                     contentResolver.readToFile(uri, file)
+                    val ext = runCatching {
+                        val extWorkingDir = workspace.outputDir.subDir(file.nameWithoutExtension)
+                        ZipUtils.unzip(srcFile = file, dstDir = extWorkingDir)
+                        val extJsonFile = extWorkingDir.subFile(ExtensionDefaults.MANIFEST_FILE_NAME)
+                        extJsonFile.readJson<Extension>(ExtensionJsonConfig)
+                    }
                     FileInfo(
                         file = file,
-                        mediaType = FileRegistry.guessMediaType(file) ?: contentResolver.getType(uri),
+                        mediaType = FileRegistry.guessMediaType(file, contentResolver.getType(uri)),
                         size = cursor.getLong(sizeIndex),
+                        ext = ext.getOrNull(),
                     )
                 } ?: error("Unable to fetch info about one or more resources to be imported.")
                 add(info)
@@ -155,5 +167,7 @@ class CacheManager(context: Context) {
         val file: FsFile,
         val mediaType: String?,
         val size: Long,
+        val ext: Extension?,
+        var skipReason: Int = NATIVE_NULLPTR,
     )
 }
