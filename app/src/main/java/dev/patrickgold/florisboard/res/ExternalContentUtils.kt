@@ -66,11 +66,6 @@ object ExternalContentUtils {
     }
 
     @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
-    fun readAllTextFromUri(context: Context, uri: Uri, maxSize: Int): Result<String> {
-        return readTextFromUri(context, uri, maxSize) { it.readText() }
-    }
-
-    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
     inline fun writeToUri(context: Context, uri: Uri, block: (it: BufferedOutputStream) -> Unit): Result<Unit> {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
@@ -98,10 +93,5 @@ object ExternalContentUtils {
                 ?: throw NullPointerException("Cannot open output stream for given uri '$uri'")
             outputStream.bufferedWriter(Charsets.UTF_8).use { block(it) }
         }
-    }
-
-    @Deprecated("Use ContentResolver extension funs instead. This method will stay supported until all usages of ExternalContentUtils are replaced.")
-    fun writeAllTextToUri(context: Context, uri: Uri, text: String): Result<Unit> {
-        return writeTextToUri(context, uri) { it.write(text) }
     }
 }

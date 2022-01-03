@@ -18,10 +18,9 @@ package dev.patrickgold.florisboard.app.ui.ext
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.showLongToast
@@ -50,7 +49,6 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val components = ext.rememberComponents()
     val exportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument(),
         onResult = { uri ->
@@ -61,11 +59,11 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
                 navController.popBackStack()
                 return@rememberLauncherForActivityResult
             }
-            val str = runCatching { extensionManager.export(ext, uri) }.fold(
-                onSuccess = { "success" },
-                onFailure = { "failure: ${it}" },
-            )
-            context.showLongToast(str)
+            runCatching { extensionManager.export(ext, uri) }.onSuccess {
+                context.showLongToast(R.string.ext__export__success)
+            }.onFailure { error ->
+                context.showLongToast(R.string.ext__export__failure, "error_message" to error.localizedMessage)
+            }
             navController.popBackStack()
         },
     )

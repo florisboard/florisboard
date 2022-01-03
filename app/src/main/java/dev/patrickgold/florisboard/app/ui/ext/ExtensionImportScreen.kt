@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -69,22 +70,22 @@ enum class ExtensionImportScreenType(
 ) {
     EXT_ANY(
         id = "ext-any",
-        titleResId = R.string.importer__ext_any,
+        titleResId = R.string.ext__import__ext_any,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
     EXT_KEYBOARD(
         id = "ext-keyboard",
-        titleResId = R.string.importer__ext_keyboard,
+        titleResId = R.string.ext__import__ext_keyboard,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
     EXT_SPELLING(
         id = "ext-spelling",
-        titleResId = R.string.importer__ext_spelling,
+        titleResId = R.string.ext__import__ext_spelling,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
     EXT_THEME(
         id = "ext-theme",
-        titleResId = R.string.importer__ext_theme,
+        titleResId = R.string.ext__import__ext_theme,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     );
 }
@@ -107,18 +108,18 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
         return when {
             !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
-                R.string.importer__file_skip_unsupported
+                R.string.ext__import__file_skip_unsupported
             }
             fileInfo.ext != null -> {
                 val ext = fileInfo.ext
                 if (extensionManager.getExtensionById(ext.meta.id)?.sourceRef?.isAssets == true) {
-                    R.string.importer__file_skip_ext_core
+                    R.string.ext__import__file_skip_ext_core
                 } else {
                     NATIVE_NULLPTR
                 }
             }
             fileInfo.mediaType == FileRegistry.FlexExtension.mediaType -> {
-                R.string.importer__file_skip_ext_corrupted
+                R.string.ext__import__file_skip_ext_corrupted
             }
             else -> {
                 NATIVE_NULLPTR
@@ -164,6 +165,9 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 val workspace = importResult!!.getOrThrow()
                 runCatching {
                     for (fileInfo in workspace.inputFileInfos) {
+                        if (fileInfo.skipReason != NATIVE_NULLPTR) {
+                            continue
+                        }
                         val ext = fileInfo.ext
                         when (type) {
                             ExtensionImportScreenType.EXT_ANY -> {
@@ -182,10 +186,10 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     }
                 }.onSuccess {
                     workspace.close()
-                    context.showLongToast("import successful")
+                    context.showLongToast(R.string.ext__import__success)
                     navController.popBackStack()
-                }.onFailure {
-                    context.showLongToast("import failed. ${it.localizedMessage}")
+                }.onFailure { error ->
+                    context.showLongToast(R.string.ext__import__failure, "error_message" to error.localizedMessage)
                 }
             }
         }
@@ -210,32 +214,34 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(horizontal = 16.dp),
-                    text = stringRes(R.string.importer__no_files_selected),
+                    text = stringRes(R.string.ext__import__no_files_selected),
                     fontStyle = FontStyle.Italic,
                 )
             }
             result.isSuccess -> {
                 val workspace = result.getOrThrow()
                 for (fileInfo in workspace.inputFileInfos) {
-                    FileInfoView(type, fileInfo)
+                    FileInfoView(fileInfo)
                 }
             }
             result.isFailure -> {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    text = stringRes(R.string.importer__error_unexpected_exception),
+                    text = stringRes(R.string.ext__import__error_unexpected_exception),
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.error,
                 )
-                Text(
-                    modifier = Modifier
-                        .florisHorizontalScroll()
-                        .padding(horizontal = 16.dp),
-                    text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
-                    fontStyle = FontStyle.Italic,
-                )
+                SelectionContainer {
+                    Text(
+                        modifier = Modifier
+                            .florisHorizontalScroll()
+                            .padding(horizontal = 16.dp),
+                        text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colors.error,
+                        fontStyle = FontStyle.Italic,
+                    )
+                }
             }
         }
     }
@@ -243,7 +249,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
 
 @Composable
 private fun FileInfoView(
-    type: ExtensionImportScreenType,
     fileInfo: CacheManager.FileInfo,
 ) {
     FlorisOutlinedBox(
@@ -299,7 +304,7 @@ private fun FileInfoView(
                     ext.meta.maintainers.joinToString { it.name }
                 }
                 Text(
-                    text = stringRes(R.string.importer__ext__meta_by, "maintainers" to maintainers),
+                    text = stringRes(R.string.ext__meta__maintainers_by, "maintainers" to maintainers),
                     style = MaterialTheme.typography.body2,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -317,7 +322,7 @@ private fun FileInfoView(
                     .padding(top = 10.dp, bottom = 8.dp)
                     .background(MaterialTheme.colors.error.copy(alpha = 0.56f)))
                 Text(
-                    text = stringRes(R.string.importer__file_skip),
+                    text = stringRes(R.string.ext__import__file_skip),
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.error,
                 )

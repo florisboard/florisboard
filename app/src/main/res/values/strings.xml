@@ -534,26 +534,28 @@
     <string name="ext__meta__keywords">Keywords</string>
     <string name="ext__meta__license">License</string>
     <string name="ext__meta__maintainers">Maintainers</string>
+    <string name="ext__meta__maintainers_by">By: {maintainers}</string>
     <string name="ext__meta__title">Title</string>
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension not found</string>
     <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
-
-    <!-- Importer / Exporter strings (extensions and raw files) -->
-    <string name="importer__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Import extension</string>
-    <string name="importer__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import keyboard extension</string>
-    <string name="importer__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Import spelling extension / dictionary</string>
-    <string name="importer__ext_theme" comment="Title of Importer screen for theme extension import">Import theme extension</string>
-    <string name="importer__ext__meta_by" comment="Label for extension maintainers">By {maintainers}</string>
-    <string name="importer__no_files_selected" comment="Label when no files are selected in the importer screen.">No files selected for import</string>
-    <string name="importer__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File will be skipped during import. Reason:</string>
-    <string name="importer__file_skip_unsupported" comment="Reason string when file is unsupported">Unsupported or unrecognized file type.</string>
-    <string name="importer__file_skip_ext_core" comment="Reason string when ext has core extension ID">Unable to replace or update default extension packages provided with the app core assets. Consider updating the app itself if you intend to use a newer version of a core extension package.</string>
-    <string name="importer__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">File appears to be an extension archive but parsing of the archive data failed. Either the archive is corrupted or this file is not an extension at all.</string>
-    <string name="importer__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Expected an extension archive of serial type \"{expected_serial_type}\" but was \"{actual_serial_type}\".</string>
-    <string name="importer__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
-    <string name="importer__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
-    <string name="importer__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
+    <string name="ext__export__success">Successfully exported extension!</string>
+    <string name="ext__export__failure">Failed to export extension: {error_message}</string>
+    <string name="ext__import__success">Successfully imported extension!</string>
+    <string name="ext__import__failure">Failed to import extension: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Import extension</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import keyboard extension</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Import spelling extension / dictionary</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Import theme extension</string>
+    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">No files selected for import</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File can not be imported. Reason:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Unsupported or unrecognized file type.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Unable to replace or update default extension packages provided with the app core assets. Consider updating the app itself if you intend to use a newer version of a core extension package.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">File appears to be an extension archive but parsing of the archive data failed. Either the archive is corrupted or this file is not an extension at all.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Expected an extension archive of serial type \"{expected_serial_type}\" but was \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
 
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
