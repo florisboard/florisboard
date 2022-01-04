@@ -133,13 +133,13 @@ fun ClipboardInputLayout(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButton(
+                onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
                     .fillMaxHeight()
                     .aspectRatio(1f),
-                iconId = R.drawable.ic_arrow_back,
+                icon = painterResource(R.drawable.ic_arrow_back),
                 iconColor = headerStyle.foreground.solidColor(),
-                onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
             )
             Text(
                 modifier = Modifier.weight(1f),
@@ -148,31 +148,31 @@ fun ClipboardInputLayout(
                 fontSize = headerStyle.fontSize.spSize(),
             )
             FlorisIconButton(
+                onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
                     .fillMaxHeight()
                     .aspectRatio(1f),
-                iconId = if (historyEnabled) {
+                icon = painterResource(if (historyEnabled) {
                     R.drawable.ic_toggle_on
                 } else {
                     R.drawable.ic_toggle_off
-                },
+                }),
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && popupItem == null,
-                onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
             )
             FlorisIconButton(
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
-                iconId = R.drawable.ic_clear_all,
-                iconColor = headerStyle.foreground.solidColor(),
-                enabled = !deviceLocked && historyEnabled && popupItem == null,
                 onClick = {
                     clipboardManager.clearHistory()
                     context.showShortToast(R.string.clipboard__cleared_history)
                 },
+                modifier = Modifier
+                    .padding(HeaderIconPadding)
+                    .fillMaxHeight()
+                    .aspectRatio(1f),
+                icon = painterResource(R.drawable.ic_clear_all),
+                iconColor = headerStyle.foreground.solidColor(),
+                enabled = !deviceLocked && historyEnabled && popupItem == null,
             )
         }
     }

@@ -27,8 +27,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -46,6 +44,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.common.android.showShortToast
@@ -199,33 +198,24 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                                 .fillMaxWidth()
                                 .padding(horizontal = 6.dp),
                         ) {
-                            TextButton(
-                                onClick = { /*TODO*/context.showShortToast("TODO for 0.3.14-beta09") },
+                            FlorisTextButton(
+                                onClick = {
+                                    /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
+                                },
+                                icon = painterResource(R.drawable.ic_delete),
+                                text = stringRes(R.string.assets__action__delete),
                                 colors = ButtonDefaults.textButtonColors(
                                     contentColor = MaterialTheme.colors.error,
                                 ),
-                            ) {
-                                Icon(
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    painter = painterResource(R.drawable.ic_delete),
-                                    contentDescription = null,
-                                )
-                                Text(text = stringRes(R.string.assets__action__delete))
-                            }
+                            )
                             Spacer(modifier = Modifier.weight(1f))
-                            TextButton(
-                                onClick = { /*TODO*/context.showShortToast("TODO for 0.3.14-beta09") },
-                                colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colors.primary,
-                                ),
-                            ) {
-                                Icon(
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    painter = painterResource(R.drawable.ic_edit),
-                                    contentDescription = null,
-                                )
-                                Text(text = stringRes(R.string.assets__action__edit))
-                            }
+                            FlorisTextButton(
+                                onClick = {
+                                    /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
+                                },
+                                icon = painterResource(R.drawable.ic_edit),
+                                text = stringRes(R.string.assets__action__edit),
+                            )
                         }
                     }
                 }

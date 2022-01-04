@@ -31,7 +31,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,6 +49,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisBulletSpacer
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.cacheManager
@@ -196,16 +196,15 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     }
 
     content {
-        OutlinedButton(
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-                .align(Alignment.CenterHorizontally),
+        FlorisOutlinedButton(
             onClick = {
                 importLauncher.launch("*/*")
             },
-        ) {
-            Text(text = stringRes(R.string.assets__action__select_files))
-        }
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = stringRes(R.string.assets__action__select_files),
+        )
 
         val result = importResult
         when {
