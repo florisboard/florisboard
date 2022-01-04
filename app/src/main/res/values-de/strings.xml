@@ -82,7 +82,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Design Manager (Tag)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Design Manager (Nacht)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Leeres Design anlegen</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Aus ausgewähltem Design erstellen</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Benutzerdefiniert (basierend auf %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Neues Design</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Design erfolgreich importiert!</string>

@@ -82,7 +82,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Themamanager (Dag)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Themamanager (Nacht)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Nieuw thema maken</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Maak op basis van gekozen thema</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Aangepast (gebaseerd op %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nieuw thema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thema succesvol geïnporteerd!</string>

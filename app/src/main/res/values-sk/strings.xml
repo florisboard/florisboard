@@ -39,7 +39,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Manažér témy (deň)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Manažér témy (noc)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Vytvorenie prázdnej témy</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Vytvorenie z vybranej témy</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Vlastné (na základe %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nová téma</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Téma úspešne importovaná!</string>

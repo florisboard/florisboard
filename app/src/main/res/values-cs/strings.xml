@@ -77,7 +77,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Správce motivů (denní)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Správce motivů (noční)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Vytvořit nový motiv</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Vytvořit nový z vybraného motivu</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Vlastní (na základě %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nový motiv</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Motiv byl úspěšně nahrán!</string>

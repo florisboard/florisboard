@@ -97,7 +97,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gerenciador de Temas (Dia)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gerenciador de Temas (Noite)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Criar tema vazio</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Criar a partir do tema selecionado</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalizado (baseado no %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Novo tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importado com sucesso!</string>

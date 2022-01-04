@@ -18,12 +18,17 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -43,6 +48,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
+import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
@@ -130,15 +136,9 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
             ) {
                 Column {
                     this@content.Preference(
-                        onClick = { },
+                        onClick = { context.showShortToast("TODO for 0.3.14-beta09") },
                         iconId = R.drawable.ic_add,
-                        title = stringRes(R.string.settings__theme_manager__create_empty),
-                    )
-                    this@content.Preference(
-                        onClick = { },
-                        iconId = R.drawable.ic_add,
-                        title = stringRes(R.string.settings__theme_manager__create_from_selected),
-                        enabledIf = { activeThemeId != null },
+                        title = stringRes(R.string.ext__editor__create_new_extension),
                     )
                     this@content.Preference(
                         onClick = { navController.navigate(
@@ -151,12 +151,13 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
             }
         }
         for ((extensionId, configs) in extGroupedThemes) {
+            val ext = extensionManager.getExtensionById(extensionId) ?: continue
             FlorisOutlinedBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 title = remember {
-                    extensionManager.getExtensionById(extensionId)?.meta?.title ?: extensionId
+                    ext.meta.title
                 },
                 onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
                 subtitle = extensionId,
@@ -178,20 +179,53 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                                 },
                                 text = config.label,
                                 trailing = {
-                                    Row {
-                                        Icon(
-                                            modifier = Modifier.size(18.dp),
-                                            painter = painterResource(if (config.isNightTheme) {
-                                                R.drawable.ic_dark_mode
-                                            } else {
-                                                R.drawable.ic_light_mode
-                                            }),
-                                            contentDescription = null,
-                                            tint = grayColor,
-                                        )
-                                    }
+                                    Icon(
+                                        modifier = Modifier.size(18.dp),
+                                        painter = painterResource(if (config.isNightTheme) {
+                                            R.drawable.ic_dark_mode
+                                        } else {
+                                            R.drawable.ic_light_mode
+                                        }),
+                                        contentDescription = null,
+                                        tint = grayColor,
+                                    )
                                 },
                             )
+                        }
+                    }
+                    if (extensionManager.canDelete(ext)) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 6.dp),
+                        ) {
+                            TextButton(
+                                onClick = { /*TODO*/context.showShortToast("TODO for 0.3.14-beta09") },
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = MaterialTheme.colors.error,
+                                ),
+                            ) {
+                                Icon(
+                                    modifier = Modifier.padding(end = 8.dp),
+                                    painter = painterResource(R.drawable.ic_delete),
+                                    contentDescription = null,
+                                )
+                                Text(text = stringRes(R.string.assets__action__delete))
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            TextButton(
+                                onClick = { /*TODO*/context.showShortToast("TODO for 0.3.14-beta09") },
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = MaterialTheme.colors.primary,
+                                ),
+                            ) {
+                                Icon(
+                                    modifier = Modifier.padding(end = 8.dp),
+                                    painter = painterResource(R.drawable.ic_edit),
+                                    contentDescription = null,
+                                )
+                                Text(text = stringRes(R.string.assets__action__edit))
+                            }
                         }
                     }
                 }

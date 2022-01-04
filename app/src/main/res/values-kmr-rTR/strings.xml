@@ -95,7 +95,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Rêveberê Tema (Roj)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Rêveberê Tema (Şev)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Tema vala biafirîne</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Ji tema hilbijartî biafirîne</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Taybet (li ser bingeha %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema nû</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Têma têvedan bi serkeftî!</string>

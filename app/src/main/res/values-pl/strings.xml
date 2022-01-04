@@ -82,7 +82,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Menedżer motywu (tryb dzienny)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Menedżer motywu (tryb nocny)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Utwórz pusty motyw</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Utwórz na podstawie wybranego motywu</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Niestandardowy (w oparciu o %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nowy motyw</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Motyw został pomyślnie zaimportowany!</string>

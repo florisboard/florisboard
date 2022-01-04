@@ -97,7 +97,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدير الثيم (نهاري)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدير الثيم (ليلي)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">إنشاء ثيم فارغ جديد</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">إنشاء من الثيم المحدد</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">مخصص (على أساس %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ثيم جديد</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم استيراد الثيم بنجاح!</string>

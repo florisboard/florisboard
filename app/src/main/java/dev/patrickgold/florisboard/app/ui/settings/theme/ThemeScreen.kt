@@ -74,6 +74,7 @@ fun ThemeScreen() = FlorisScreen {
                 iconId = R.drawable.ic_format_paint,
                 title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
                 summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
+                visibleIf = { false },
             )
         }
 
@@ -94,6 +95,7 @@ fun ThemeScreen() = FlorisScreen {
                 iconId = R.drawable.ic_format_paint,
                 title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
                 summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
+                visibleIf = { false },
             )
         }
     }

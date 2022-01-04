@@ -48,7 +48,6 @@
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adaptiraj boje prema aplikaciji</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interna memorija</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Kreiraj praznu temu</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Kreiraj od odabrane teme</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova tema</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Uredi temu</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Ime</string>
