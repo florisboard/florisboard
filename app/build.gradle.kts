@@ -30,7 +30,7 @@ android {
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 23
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 64
         versionName = "0.3.14"
 
