@@ -94,6 +94,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__max_history_size",
             default = 20,
         )
+        val clearPrimaryClipDeletesLastItem = boolean(
+            key = "clipboard__clear_primary_clip_deletes_last_item",
+            default = true,
+        )
     }
 
     val correction = Correction()

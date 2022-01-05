@@ -585,6 +585,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistory()
             KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
             KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
+                if (prefs.clipboard.clearPrimaryClipDeletesLastItem.get()) {
+                    clipboardManager.primaryClip()?.let { clipboardManager.deleteClip(it) }
+                }
                 clipboardManager.setPrimaryClip(null)
                 appContext.showShortToast(R.string.clipboard__cleared_primary_clip)
             }
@@ -598,7 +601,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
             KeyCode.IME_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
             KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
-            KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
+            KeyCode.IME_UI_MODE_MEDIA -> {
+                // TODO activeState.imeUiMode = ImeUiMode.MEDIA
+                appContext.showShortToast("TODO: implement emoji view (beta10)")
+            }
             KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()

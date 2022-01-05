@@ -174,6 +174,18 @@ fun ClipboardInputLayout(
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && popupItem == null,
             )
+            FlorisIconButton(
+                onClick = {
+                    context.showShortToast("TODO: implement inline clip item editing")
+                },
+                modifier = Modifier
+                    .padding(HeaderIconPadding)
+                    .fillMaxHeight()
+                    .aspectRatio(1f),
+                icon = painterResource(R.drawable.ic_edit),
+                iconColor = headerStyle.foreground.solidColor(),
+                enabled = !deviceLocked && historyEnabled && popupItem == null,
+            )
         }
     }
 

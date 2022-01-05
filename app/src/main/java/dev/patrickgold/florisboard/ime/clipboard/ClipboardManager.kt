@@ -246,7 +246,8 @@ class ClipboardManager(
 
     fun insertClip(item: ClipboardItem) {
         ioScope.launch {
-            clipHistoryDao?.insert(item)
+            val id = clipHistoryDao?.insert(item)
+            item.id = id ?: 0
         }
     }
 

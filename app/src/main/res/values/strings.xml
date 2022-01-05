@@ -467,6 +467,8 @@
     <string name="pref__clipboard__clean_up_after__label">Clean up old items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
 
 
     <!-- Devtools strings -->
