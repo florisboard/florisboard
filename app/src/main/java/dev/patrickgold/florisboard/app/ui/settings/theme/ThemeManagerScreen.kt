@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -42,15 +43,18 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
+import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -118,6 +122,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         ThemeManagerScreenAction.SELECT_NIGHT -> getThemeIdPref().observeAsState()
         ThemeManagerScreenAction.MANAGE -> selectedManagerThemeId
     }
+    var themeExtToDelete by remember { mutableStateOf<Extension?>(null) }
 
     content {
         DisposableEffect(activeThemeId) {
@@ -149,8 +154,8 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                 }
             }
         }
-        for ((extensionId, configs) in extGroupedThemes) {
-            val ext = extensionManager.getExtensionById(extensionId) ?: continue
+        for ((extensionId, configs) in extGroupedThemes) key(extensionId) {
+            val ext = extensionManager.getExtensionById(extensionId)!!
             FlorisOutlinedBox(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -163,36 +168,34 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                 onSubtitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    for (config in configs) {
-                        key(extensionId, config.id) {
-                            JetPrefListItem(
-                                modifier = Modifier.rippleClickable {
-                                    setTheme(extensionId, config.id)
-                                },
-                                icon = {
-                                    RadioButton(
-                                        selected = activeThemeId?.extensionId == extensionId &&
-                                            activeThemeId?.componentId == config.id,
-                                        onClick = null,
-                                    )
-                                },
-                                text = config.label,
-                                trailing = {
-                                    Icon(
-                                        modifier = Modifier.size(18.dp),
-                                        painter = painterResource(if (config.isNightTheme) {
-                                            R.drawable.ic_dark_mode
-                                        } else {
-                                            R.drawable.ic_light_mode
-                                        }),
-                                        contentDescription = null,
-                                        tint = grayColor,
-                                    )
-                                },
-                            )
-                        }
+                    for (config in configs) key(extensionId, config.id) {
+                        JetPrefListItem(
+                            modifier = Modifier.rippleClickable {
+                                setTheme(extensionId, config.id)
+                            },
+                            icon = {
+                                RadioButton(
+                                    selected = activeThemeId?.extensionId == extensionId &&
+                                        activeThemeId?.componentId == config.id,
+                                    onClick = null,
+                                )
+                            },
+                            text = config.label,
+                            trailing = {
+                                Icon(
+                                    modifier = Modifier.size(ButtonDefaults.IconSize),
+                                    painter = painterResource(if (config.isNightTheme) {
+                                        R.drawable.ic_dark_mode
+                                    } else {
+                                        R.drawable.ic_light_mode
+                                    }),
+                                    contentDescription = null,
+                                    tint = grayColor,
+                                )
+                            },
+                        )
                     }
-                    if (extensionManager.canDelete(ext)) {
+                    if (action == ThemeManagerScreenAction.MANAGE && extensionManager.canDelete(ext)) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -200,7 +203,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         ) {
                             FlorisTextButton(
                                 onClick = {
-                                    /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
+                                    themeExtToDelete = ext
                                 },
                                 icon = painterResource(R.drawable.ic_delete),
                                 text = stringRes(R.string.assets__action__delete),
@@ -220,6 +223,24 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                     }
                 }
             }
+        }
+
+        if (themeExtToDelete != null) {
+            FlorisConfirmDeleteDialog(
+                onConfirm = {
+                    runCatching {
+                        extensionManager.delete(themeExtToDelete!!)
+                    }.onFailure { error ->
+                        context.showLongToast(
+                            R.string.assets__error__snackbar_message,
+                            "error_message" to error.localizedMessage,
+                        )
+                    }
+                    themeExtToDelete = null
+                },
+                onDismiss = { themeExtToDelete = null },
+                what = themeExtToDelete!!.meta.title,
+            )
         }
     }
 }

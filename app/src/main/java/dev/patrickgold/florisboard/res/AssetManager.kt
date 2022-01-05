@@ -21,12 +21,10 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.kotlin.resultErr
 import dev.patrickgold.florisboard.common.kotlin.resultErrStr
 import dev.patrickgold.florisboard.common.kotlin.resultOk
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
-import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
 import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
+import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
@@ -83,7 +81,7 @@ val DefaultJsonConfig = Json {
 class AssetManager(context: Context) {
     val appContext by context.appContext()
 
-    fun delete(ref: FlorisRef) = runCatching {
+    fun delete(ref: FlorisRef) {
         when {
             ref.isCache || ref.isInternal -> {
                 ref.absoluteFile(appContext).delete()

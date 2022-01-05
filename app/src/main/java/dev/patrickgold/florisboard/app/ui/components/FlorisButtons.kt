@@ -17,9 +17,11 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
@@ -45,17 +47,21 @@ fun FlorisButton(
     icon: Painter? = null,
     text: String,
     enabled: Boolean = true,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
 ) {
     Button(
         modifier = modifier,
         enabled = enabled,
         colors = colors,
+        contentPadding = contentPadding,
         onClick = onClick,
     ) {
         if (icon != null) {
             Icon(
-                modifier = Modifier.padding(end = 8.dp),
+                modifier = Modifier
+                    .padding(end = ButtonDefaults.IconSpacing)
+                    .size(ButtonDefaults.IconSize),
                 painter = icon,
                 contentDescription = null,
             )
@@ -71,17 +77,21 @@ fun FlorisOutlinedButton(
     icon: Painter? = null,
     text: String,
     enabled: Boolean = true,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
 ) {
     OutlinedButton(
         modifier = modifier,
         enabled = enabled,
         colors = colors,
+        contentPadding = contentPadding,
         onClick = onClick,
     ) {
         if (icon != null) {
             Icon(
-                modifier = Modifier.padding(end = 8.dp),
+                modifier = Modifier
+                    .padding(end = ButtonDefaults.IconSpacing)
+                    .size(ButtonDefaults.IconSize),
                 painter = icon,
                 contentDescription = null,
             )
@@ -97,17 +107,21 @@ fun FlorisTextButton(
     icon: Painter? = null,
     text: String,
     enabled: Boolean = true,
+    contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
 ) {
     TextButton(
         modifier = modifier,
         enabled = enabled,
         colors = colors,
+        contentPadding = contentPadding,
         onClick = onClick,
     ) {
         if (icon != null) {
             Icon(
-                modifier = Modifier.padding(end = 8.dp),
+                modifier = Modifier
+                    .padding(end = ButtonDefaults.IconSpacing)
+                    .size(ButtonDefaults.IconSize),
                 painter = icon,
                 contentDescription = null,
             )

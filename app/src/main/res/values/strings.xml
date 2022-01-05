@@ -410,7 +410,7 @@
     <string name="assets__action__default">Default</string>
     <string name="assets__action__delete">Delete</string>
     <string name="assets__action__delete_confirm_title">Confirm delete</string>
-    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"{database_name}\"? This action can not be undone once executed.</string>
+    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
     <string name="assets__action__edit">Edit</string>
     <string name="assets__action__export">Export</string>
     <string name="assets__action__import">Import</string>
@@ -426,6 +426,7 @@
     <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Invalid</string>
     <string name="assets__error__snackbar_message">Something went wrong</string>
+    <string name="assets__error__snackbar_message_template">Something went wrong: {error_message}</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>

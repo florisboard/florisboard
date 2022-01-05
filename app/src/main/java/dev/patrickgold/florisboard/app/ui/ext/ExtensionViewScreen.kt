@@ -29,18 +29,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -51,8 +54,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
@@ -84,6 +90,8 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
+
+    var extToDelete by remember { mutableStateOf<Extension?>(null) }
 
     content {
         Column(
@@ -141,19 +149,25 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 if (extensionManager.canDelete(ext)) {
-                    Button(onClick = {
-                        extensionManager.delete(ext)
-                        navController.popBackStack()
-                    }) {
-                        Text(text = stringRes(R.string.assets__action__delete))
-                    }
+                    FlorisOutlinedButton(
+                        onClick = {
+                            extToDelete = ext
+                        },
+                        icon = painterResource(R.drawable.ic_delete),
+                        text = stringRes(R.string.assets__action__delete),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colors.error,
+                        ),
+                    )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                OutlinedButton(onClick = {
-                    navController.navigate(Routes.Ext.Export(ext.meta.id))
-                }) {
-                    Text(text = stringRes(R.string.assets__action__export))
-                }
+                FlorisOutlinedButton(
+                    onClick = {
+                        navController.navigate(Routes.Ext.Export(ext.meta.id))
+                    },
+                    icon = painterResource(R.drawable.ic_share),
+                    text = stringRes(R.string.assets__action__export),
+                )
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -162,6 +176,26 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                 fontWeight = FontWeight.Bold,
             )
             ExtensionComponentListView(ext)
+        }
+
+        if (extToDelete != null) {
+            FlorisConfirmDeleteDialog(
+                onConfirm = {
+                    runCatching {
+                        extensionManager.delete(extToDelete!!)
+                    }.onSuccess {
+                        navController.popBackStack()
+                    }.onFailure { error ->
+                        context.showLongToast(
+                            R.string.assets__error__snackbar_message,
+                            "error_message" to error.localizedMessage,
+                        )
+                    }
+                    extToDelete = null
+                },
+                onDismiss = { extToDelete = null },
+                what = extToDelete!!.meta.title,
+            )
         }
     }
 }

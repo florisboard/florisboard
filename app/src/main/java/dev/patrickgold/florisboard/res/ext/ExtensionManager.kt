@@ -116,7 +116,7 @@ class ExtensionManager(context: Context) {
         return ext.sourceRef?.isInternal == true
     }
 
-    fun delete(ext: Extension) = runCatching {
+    fun delete(ext: Extension) {
         check(canDelete(ext)) { "Cannot delete extension!" }
         ext.unload(appContext)
         assetManager.delete(ext.sourceRef!!)
