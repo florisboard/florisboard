@@ -359,35 +359,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Licencias de terceros</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licencias de las librerías de terceros incluidas en esta aplicación</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Autor</item>
-        <item quantity="other">Autores</item>
-    </plurals>
-    <string name="assets__file__name">Nombre</string>
-    <string name="assets__file__source">Fuente</string>
-    <string name="assets__action__add">Agregar</string>
-    <string name="assets__action__apply">Aplicar</string>
-    <string name="assets__action__cancel">Cancelar</string>
-    <string name="assets__action__cancel_confirm_title">Confirmar cancelación</string>
-    <string name="assets__action__cancel_confirm_message">¿Está seguro de que desea descartar los cambios no guardados? Esta acción no se puede deshacer una vez ejecutada.</string>
-    <string name="assets__action__default">Por defecto</string>
-    <string name="assets__action__delete">Borrar</string>
-    <string name="assets__action__delete_confirm_title">Confirmar borrado</string>
-    <string name="assets__action__delete_confirm_message">¿Está seguro de querer borrar \"{database_name}\"? Esta acción no se puede deshacer una vez realizada.</string>
-    <string name="assets__action__edit">Editar</string>
-    <string name="assets__action__export">Exportar</string>
-    <string name="assets__action__import">Importar</string>
-    <string name="assets__action__no">No</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Guardar</string>
-    <string name="assets__action__select">Seleccionar</string>
-    <string name="assets__action__select_dir">Seleccionar carpeta</string>
-    <string name="assets__action__select_file">Seleccionar archivo</string>
-    <string name="assets__action__yes">Si</string>
-    <string name="assets__error__title">Error</string>
-    <string name="assets__error__details">Detalles</string>
-    <string name="assets__error__invalid">Inválido</string>
-    <string name="assets__error__snackbar_message">Algo salió mal</string>
+    <string name="action__add">Agregar</string>
+    <string name="action__apply">Aplicar</string>
+    <string name="action__cancel">Cancelar</string>
+    <string name="action__cancel_confirm_title">Confirmar cancelación</string>
+    <string name="action__cancel_confirm_message">¿Está seguro de que desea descartar los cambios no guardados? Esta acción no se puede deshacer una vez ejecutada.</string>
+    <string name="action__default">Por defecto</string>
+    <string name="action__delete">Borrar</string>
+    <string name="action__delete_confirm_title">Confirmar borrado</string>
+    <string name="action__delete_confirm_message">¿Está seguro de querer borrar \"{database_name}\"? Esta acción no se puede deshacer una vez realizada.</string>
+    <string name="action__edit">Editar</string>
+    <string name="action__export">Exportar</string>
+    <string name="action__import">Importar</string>
+    <string name="action__no">No</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Guardar</string>
+    <string name="action__select">Seleccionar</string>
+    <string name="action__select_dir">Seleccionar carpeta</string>
+    <string name="action__select_file">Seleccionar archivo</string>
+    <string name="action__yes">Si</string>
+    <string name="error__title">Error</string>
+    <string name="error__details">Detalles</string>
+    <string name="error__invalid">Inválido</string>
+    <string name="error__snackbar_message">Algo salió mal</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">¡Bienvenido/a!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">¡Gracias por usar {app_name}! Esta configuración rápida lo guiará a través de los pasos necesarios para poder utilizar {app_name} en su dispositivo.</string>

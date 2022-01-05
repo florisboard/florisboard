@@ -344,36 +344,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Trešo pušu licences</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Šajā lietotnē iekļauto trešo pušu bibliotēku licences</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="zero">Autors</item>
-        <item quantity="one">Autors</item>
-        <item quantity="other">Autori</item>
-    </plurals>
-    <string name="assets__file__name">Nosaukums</string>
-    <string name="assets__file__source">Avots</string>
-    <string name="assets__action__add">Pievienot</string>
-    <string name="assets__action__apply">Pielietot</string>
-    <string name="assets__action__cancel">Atcelt</string>
-    <string name="assets__action__cancel_confirm_title">Apstiprināt atcelšanu</string>
-    <string name="assets__action__cancel_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
-    <string name="assets__action__default">Noklusējums</string>
-    <string name="assets__action__delete">Izdzēst</string>
-    <string name="assets__action__delete_confirm_title">Apstiprināt izdzēšanu</string>
-    <string name="assets__action__delete_confirm_message">Vai tiešām izdzēst \"{database_name}\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
-    <string name="assets__action__edit">Labot</string>
-    <string name="assets__action__export">Izdot</string>
-    <string name="assets__action__import">Iekļaut</string>
-    <string name="assets__action__no">Nē</string>
-    <string name="assets__action__ok">Labi</string>
-    <string name="assets__action__save">Saglabāt</string>
-    <string name="assets__action__select">Atlasīt</string>
-    <string name="assets__action__select_dir">Atlasīt mapi</string>
-    <string name="assets__action__select_file">Atlasīt datni</string>
-    <string name="assets__action__yes">Jā</string>
-    <string name="assets__error__title">Kļūda</string>
-    <string name="assets__error__details">Izklāsts</string>
-    <string name="assets__error__invalid">Nederīgs</string>
-    <string name="assets__error__snackbar_message">Kaut kas ir noticis nepareizi</string>
+    <string name="action__add">Pievienot</string>
+    <string name="action__apply">Pielietot</string>
+    <string name="action__cancel">Atcelt</string>
+    <string name="action__cancel_confirm_title">Apstiprināt atcelšanu</string>
+    <string name="action__cancel_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="action__default">Noklusējums</string>
+    <string name="action__delete">Izdzēst</string>
+    <string name="action__delete_confirm_title">Apstiprināt izdzēšanu</string>
+    <string name="action__delete_confirm_message">Vai tiešām izdzēst \"{database_name}\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="action__edit">Labot</string>
+    <string name="action__export">Izdot</string>
+    <string name="action__import">Iekļaut</string>
+    <string name="action__no">Nē</string>
+    <string name="action__ok">Labi</string>
+    <string name="action__save">Saglabāt</string>
+    <string name="action__select">Atlasīt</string>
+    <string name="action__select_dir">Atlasīt mapi</string>
+    <string name="action__select_file">Atlasīt datni</string>
+    <string name="action__yes">Jā</string>
+    <string name="error__title">Kļūda</string>
+    <string name="error__details">Izklāsts</string>
+    <string name="error__invalid">Nederīgs</string>
+    <string name="error__snackbar_message">Kaut kas ir noticis nepareizi</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Sveiciens!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Paldies par {app_name} izmantošanu! Ātrā uzstādīšana virza caur nepieciešamajiem soļiem, lai ierīcē izmantotu {app_name}.</string>

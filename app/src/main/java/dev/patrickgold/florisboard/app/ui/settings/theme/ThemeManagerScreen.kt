@@ -149,7 +149,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                             Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME, null)
                         ) },
                         iconId = R.drawable.ic_input,
-                        title = stringRes(R.string.assets__action__import),
+                        title = stringRes(R.string.action__import),
                     )
                 }
             }
@@ -206,7 +206,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                                     themeExtToDelete = ext
                                 },
                                 icon = painterResource(R.drawable.ic_delete),
-                                text = stringRes(R.string.assets__action__delete),
+                                text = stringRes(R.string.action__delete),
                                 colors = ButtonDefaults.textButtonColors(
                                     contentColor = MaterialTheme.colors.error,
                                 ),
@@ -217,7 +217,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                                     /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
                                 },
                                 icon = painterResource(R.drawable.ic_edit),
-                                text = stringRes(R.string.assets__action__edit),
+                                text = stringRes(R.string.action__edit),
                             )
                         }
                     }
@@ -232,7 +232,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         extensionManager.delete(themeExtToDelete!!)
                     }.onFailure { error ->
                         context.showLongToast(
-                            R.string.assets__error__snackbar_message,
+                            R.string.error__snackbar_message,
                             "error_message" to error.localizedMessage,
                         )
                     }

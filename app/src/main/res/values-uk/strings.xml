@@ -204,29 +204,21 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Вихідний код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Ліцензії ПЗ з відкритим кодом</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Автор</item>
-        <item quantity="few">Автори</item>
-        <item quantity="many">Автори</item>
-        <item quantity="other">Автори</item>
-    </plurals>
-    <string name="assets__file__name">Назва</string>
-    <string name="assets__file__source">Джерело</string>
-    <string name="assets__action__add">Додати</string>
-    <string name="assets__action__cancel">Скасувати</string>
-    <string name="assets__action__cancel_confirm_title">Підтвердьте скасування</string>
-    <string name="assets__action__cancel_confirm_message">Ви впевнені, що хочете скасувати будь-які незбережені зміни? Цю дію неможливо скасувати після виконання.</string>
-    <string name="assets__action__delete">Видалити</string>
-    <string name="assets__action__delete_confirm_title">Підтвердьте видалення</string>
-    <string name="assets__action__edit">Редагувати</string>
-    <string name="assets__action__export">Експорт</string>
-    <string name="assets__action__import">Імпорт</string>
-    <string name="assets__action__no">Ні</string>
-    <string name="assets__action__save">Зберегти</string>
-    <string name="assets__action__yes">Так</string>
-    <string name="assets__error__details">Деталі</string>
-    <string name="assets__error__invalid">Помилка</string>
-    <string name="assets__error__snackbar_message">Щось пішло не так</string>
+    <string name="action__add">Додати</string>
+    <string name="action__cancel">Скасувати</string>
+    <string name="action__cancel_confirm_title">Підтвердьте скасування</string>
+    <string name="action__cancel_confirm_message">Ви впевнені, що хочете скасувати будь-які незбережені зміни? Цю дію неможливо скасувати після виконання.</string>
+    <string name="action__delete">Видалити</string>
+    <string name="action__delete_confirm_title">Підтвердьте видалення</string>
+    <string name="action__edit">Редагувати</string>
+    <string name="action__export">Експорт</string>
+    <string name="action__import">Імпорт</string>
+    <string name="action__no">Ні</string>
+    <string name="action__save">Зберегти</string>
+    <string name="action__yes">Так</string>
+    <string name="error__details">Деталі</string>
+    <string name="error__invalid">Помилка</string>
+    <string name="error__snackbar_message">Щось пішло не так</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Звіт про помилку FlorisBoard</string>

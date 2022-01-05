@@ -345,34 +345,29 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Lisensi pihak ketiga</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Lisensi pustaka pihak ketiga yang digunakan di aplikasi ini</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="other">Penulis</item>
-    </plurals>
-    <string name="assets__file__name">Nama</string>
-    <string name="assets__file__source">Sumber</string>
-    <string name="assets__action__add">Tambahkan</string>
-    <string name="assets__action__apply">Terapkan</string>
-    <string name="assets__action__cancel">Batal</string>
-    <string name="assets__action__cancel_confirm_title">Konfirmasi pembatalan</string>
-    <string name="assets__action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dieksekusi.</string>
-    <string name="assets__action__default">Bawaan</string>
-    <string name="assets__action__delete">Hapus</string>
-    <string name="assets__action__delete_confirm_title">Konfirmasi penghapusan</string>
-    <string name="assets__action__delete_confirm_message">Apakah Anda yakin ingin menghapus \"{database_name}\"? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
-    <string name="assets__action__edit">Sunting</string>
-    <string name="assets__action__export">Ekspor</string>
-    <string name="assets__action__import">Impor</string>
-    <string name="assets__action__no">Tidak</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Simpan</string>
-    <string name="assets__action__select">Pilih</string>
-    <string name="assets__action__select_dir">Pilih direktori</string>
-    <string name="assets__action__select_file">Pilih file</string>
-    <string name="assets__action__yes">Ya</string>
-    <string name="assets__error__title">Kesalahan</string>
-    <string name="assets__error__details">Keterangan</string>
-    <string name="assets__error__invalid">Tidak valid</string>
-    <string name="assets__error__snackbar_message">Terjadi kesalahan</string>
+    <string name="action__add">Tambahkan</string>
+    <string name="action__apply">Terapkan</string>
+    <string name="action__cancel">Batal</string>
+    <string name="action__cancel_confirm_title">Konfirmasi pembatalan</string>
+    <string name="action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dieksekusi.</string>
+    <string name="action__default">Bawaan</string>
+    <string name="action__delete">Hapus</string>
+    <string name="action__delete_confirm_title">Konfirmasi penghapusan</string>
+    <string name="action__delete_confirm_message">Apakah Anda yakin ingin menghapus \"{database_name}\"? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
+    <string name="action__edit">Sunting</string>
+    <string name="action__export">Ekspor</string>
+    <string name="action__import">Impor</string>
+    <string name="action__no">Tidak</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Simpan</string>
+    <string name="action__select">Pilih</string>
+    <string name="action__select_dir">Pilih direktori</string>
+    <string name="action__select_file">Pilih file</string>
+    <string name="action__yes">Ya</string>
+    <string name="error__title">Kesalahan</string>
+    <string name="error__details">Keterangan</string>
+    <string name="error__invalid">Tidak valid</string>
+    <string name="error__snackbar_message">Terjadi kesalahan</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Selamat datang!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Terima kasih untuk telah menggunakan {app_name}! Penyiapan cepat ini memandu Anda melalui langkah-langkah yang diperlukan untuk menggunakan {app_name} di perangkat Anda.</string>

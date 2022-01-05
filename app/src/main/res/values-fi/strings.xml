@@ -181,21 +181,20 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Lähdekoodi</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Avoimen lähdekoodin lisenssit</string>
     <!-- Assets strings -->
-    <string name="assets__file__name">Nimi</string>
-    <string name="assets__action__add">Lisää</string>
-    <string name="assets__action__cancel">Peruuta</string>
-    <string name="assets__action__cancel_confirm_title">Varmista peruutus</string>
-    <string name="assets__action__cancel_confirm_message">Haluatko varmasti hylätä kaikki tallentamattomat muutokset? Tätä ei voi hylkäämisen jälkeen enää peruuttaa.</string>
-    <string name="assets__action__delete">Poista</string>
-    <string name="assets__action__delete_confirm_title">Vahvista poistaminen</string>
-    <string name="assets__action__edit">Muokkaa</string>
-    <string name="assets__action__export">Vie</string>
-    <string name="assets__action__import">Tuo</string>
-    <string name="assets__action__no">Ei</string>
-    <string name="assets__action__save">Tallenna</string>
-    <string name="assets__action__yes">Kyllä</string>
-    <string name="assets__error__details">Tiedot</string>
-    <string name="assets__error__snackbar_message">Jokin meni pieleen</string>
+    <string name="action__add">Lisää</string>
+    <string name="action__cancel">Peruuta</string>
+    <string name="action__cancel_confirm_title">Varmista peruutus</string>
+    <string name="action__cancel_confirm_message">Haluatko varmasti hylätä kaikki tallentamattomat muutokset? Tätä ei voi hylkäämisen jälkeen enää peruuttaa.</string>
+    <string name="action__delete">Poista</string>
+    <string name="action__delete_confirm_title">Vahvista poistaminen</string>
+    <string name="action__edit">Muokkaa</string>
+    <string name="action__export">Vie</string>
+    <string name="action__import">Tuo</string>
+    <string name="action__no">Ei</string>
+    <string name="action__save">Tallenna</string>
+    <string name="action__yes">Kyllä</string>
+    <string name="error__details">Tiedot</string>
+    <string name="error__snackbar_message">Jokin meni pieleen</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>

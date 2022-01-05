@@ -144,25 +144,19 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Källkod</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenser för öppen källkod</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Upphovsman</item>
-        <item quantity="other">Upphovsmän</item>
-    </plurals>
-    <string name="assets__file__name">Namn</string>
-    <string name="assets__file__source">Källa</string>
-    <string name="assets__action__add">Lägg till</string>
-    <string name="assets__action__cancel">Avbryt</string>
-    <string name="assets__action__cancel_confirm_title">Bekräfta avbryt</string>
-    <string name="assets__action__cancel_confirm_message">Är du säker på att du vill ta bort alla icke sparade ändringar? Denna åtgärden kan inte ångras efter den har utförts.</string>
-    <string name="assets__action__delete">Radera</string>
-    <string name="assets__action__delete_confirm_title">Bekräfta radering</string>
-    <string name="assets__action__edit">Redigera</string>
-    <string name="assets__action__export">Exportera</string>
-    <string name="assets__action__import">Importera</string>
-    <string name="assets__action__no">Nej</string>
-    <string name="assets__action__save">Spara</string>
-    <string name="assets__action__yes">Ja</string>
-    <string name="assets__error__invalid">Ogiltig</string>
+    <string name="action__add">Lägg till</string>
+    <string name="action__cancel">Avbryt</string>
+    <string name="action__cancel_confirm_title">Bekräfta avbryt</string>
+    <string name="action__cancel_confirm_message">Är du säker på att du vill ta bort alla icke sparade ändringar? Denna åtgärden kan inte ångras efter den har utförts.</string>
+    <string name="action__delete">Radera</string>
+    <string name="action__delete_confirm_title">Bekräfta radering</string>
+    <string name="action__edit">Redigera</string>
+    <string name="action__export">Exportera</string>
+    <string name="action__import">Importera</string>
+    <string name="action__no">Nej</string>
+    <string name="action__save">Spara</string>
+    <string name="action__yes">Ja</string>
+    <string name="error__invalid">Ogiltig</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Stäng</string>

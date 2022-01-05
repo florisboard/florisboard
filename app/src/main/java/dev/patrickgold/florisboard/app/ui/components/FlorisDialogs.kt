@@ -31,12 +31,12 @@ fun FlorisConfirmDeleteDialog(
     what: String,
 ) {
     JetPrefAlertDialog(
-        title = stringRes(R.string.assets__action__delete_confirm_title),
-        confirmLabel = stringRes(R.string.assets__action__delete),
+        title = stringRes(R.string.action__delete_confirm_title),
+        confirmLabel = stringRes(R.string.action__delete),
         onConfirm = onConfirm,
-        dismissLabel = stringRes(R.string.assets__action__cancel),
+        dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
     ) {
-        Text(text = stringRes(R.string.assets__action__delete_confirm_message, "name" to what))
+        Text(text = stringRes(R.string.action__delete_confirm_message, "name" to what))
     }
 }

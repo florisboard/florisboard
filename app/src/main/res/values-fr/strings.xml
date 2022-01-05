@@ -359,35 +359,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Licences de tiers</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licences des bibliothèques tierces incluses dans cette application</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Auteur</item>
-        <item quantity="other">Auteurs</item>
-    </plurals>
-    <string name="assets__file__name">Nom</string>
-    <string name="assets__file__source">Source</string>
-    <string name="assets__action__add">Ajouter</string>
-    <string name="assets__action__apply">Appliquer</string>
-    <string name="assets__action__cancel">Annuler</string>
-    <string name="assets__action__cancel_confirm_title">Confirmer l\'annulation</string>
-    <string name="assets__action__cancel_confirm_message">Êtes-vous sûrs de vouloir abandonner tout changement non sauvegardé ? Cette action ne peut être annulée après son exécution.</string>
-    <string name="assets__action__default">Défaut</string>
-    <string name="assets__action__delete">Supprimer</string>
-    <string name="assets__action__delete_confirm_title">Confirmer la suppression</string>
-    <string name="assets__action__delete_confirm_message">Êtes-vous sûrs de vouloir supprimer « {database_name} » ? Cette action ne peut être annulée après son exécution.</string>
-    <string name="assets__action__edit">Modifier</string>
-    <string name="assets__action__export">Exporter</string>
-    <string name="assets__action__import">Importer</string>
-    <string name="assets__action__no">Non</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Sauvegarder</string>
-    <string name="assets__action__select">Sélectionner</string>
-    <string name="assets__action__select_dir">Sélectionner un dossier</string>
-    <string name="assets__action__select_file">Sélectionner un fichier</string>
-    <string name="assets__action__yes">Oui</string>
-    <string name="assets__error__title">Erreur</string>
-    <string name="assets__error__details">Détails</string>
-    <string name="assets__error__invalid">Invalide</string>
-    <string name="assets__error__snackbar_message">Un problème est survenu</string>
+    <string name="action__add">Ajouter</string>
+    <string name="action__apply">Appliquer</string>
+    <string name="action__cancel">Annuler</string>
+    <string name="action__cancel_confirm_title">Confirmer l\'annulation</string>
+    <string name="action__cancel_confirm_message">Êtes-vous sûrs de vouloir abandonner tout changement non sauvegardé ? Cette action ne peut être annulée après son exécution.</string>
+    <string name="action__default">Défaut</string>
+    <string name="action__delete">Supprimer</string>
+    <string name="action__delete_confirm_title">Confirmer la suppression</string>
+    <string name="action__delete_confirm_message">Êtes-vous sûrs de vouloir supprimer « {database_name} » ? Cette action ne peut être annulée après son exécution.</string>
+    <string name="action__edit">Modifier</string>
+    <string name="action__export">Exporter</string>
+    <string name="action__import">Importer</string>
+    <string name="action__no">Non</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Sauvegarder</string>
+    <string name="action__select">Sélectionner</string>
+    <string name="action__select_dir">Sélectionner un dossier</string>
+    <string name="action__select_file">Sélectionner un fichier</string>
+    <string name="action__yes">Oui</string>
+    <string name="error__title">Erreur</string>
+    <string name="error__details">Détails</string>
+    <string name="error__invalid">Invalide</string>
+    <string name="error__snackbar_message">Un problème est survenu</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Bienvenue !</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Merci d\'utiliser {app_name} ! Cette configuration rapide vous guide à travers les étapes nécessaires pour utiliser {app_name} sur votre appareil.</string>

@@ -154,7 +154,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                             extToDelete = ext
                         },
                         icon = painterResource(R.drawable.ic_delete),
-                        text = stringRes(R.string.assets__action__delete),
+                        text = stringRes(R.string.action__delete),
                         colors = ButtonDefaults.outlinedButtonColors(
                             contentColor = MaterialTheme.colors.error,
                         ),
@@ -166,7 +166,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                         navController.navigate(Routes.Ext.Export(ext.meta.id))
                     },
                     icon = painterResource(R.drawable.ic_share),
-                    text = stringRes(R.string.assets__action__export),
+                    text = stringRes(R.string.action__export),
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -187,7 +187,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                         navController.popBackStack()
                     }.onFailure { error ->
                         context.showLongToast(
-                            R.string.assets__error__snackbar_message,
+                            R.string.error__snackbar_message,
                             "error_message" to error.localizedMessage,
                         )
                     }

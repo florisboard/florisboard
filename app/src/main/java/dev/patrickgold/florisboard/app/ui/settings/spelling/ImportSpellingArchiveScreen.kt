@@ -168,7 +168,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen {
                     }
                     StepButton(
                         onClick = { importArchiveLauncher.launch("*/*") },
-                        label = stringRes(R.string.assets__action__select_file),
+                        label = stringRes(R.string.action__select_file),
                     )
                 },
                 FlorisStep(
@@ -203,7 +203,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen {
                                 },
                             )
                         },
-                        label = stringRes(R.string.assets__action__import),
+                        label = stringRes(R.string.action__import),
                     )
                 },
             ),

@@ -344,35 +344,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Licenças de terceiros</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenças das bibliotecas de terceiros incluídas nesta aplicação</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Autor</item>
-        <item quantity="other">Autores</item>
-    </plurals>
-    <string name="assets__file__name">Nome</string>
-    <string name="assets__file__source">Fonte</string>
-    <string name="assets__action__add">Adicionar</string>
-    <string name="assets__action__apply">Aplicar</string>
-    <string name="assets__action__cancel">Cancelar</string>
-    <string name="assets__action__cancel_confirm_title">Confirmar</string>
-    <string name="assets__action__cancel_confirm_message">Tem a certeza de que deseja descartar as alterações? Esta ação não pode ser revertida.</string>
-    <string name="assets__action__default">Padrão</string>
-    <string name="assets__action__delete">Remover</string>
-    <string name="assets__action__delete_confirm_title">Confirmar</string>
-    <string name="assets__action__delete_confirm_message">Tem a certeza de que deseja eliminar \"{database_name}\"? Esta ação não pode ser revertida.</string>
-    <string name="assets__action__edit">Editar</string>
-    <string name="assets__action__export">Exportar</string>
-    <string name="assets__action__import">Importar</string>
-    <string name="assets__action__no">Não</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Guardar</string>
-    <string name="assets__action__select">Selecionar</string>
-    <string name="assets__action__select_dir">Selecione o diretório</string>
-    <string name="assets__action__select_file">Selecione o ficheiro</string>
-    <string name="assets__action__yes">Sim</string>
-    <string name="assets__error__title">Erro</string>
-    <string name="assets__error__details">Detalhes</string>
-    <string name="assets__error__invalid">Inválido</string>
-    <string name="assets__error__snackbar_message">Algo errado aconteceu!</string>
+    <string name="action__add">Adicionar</string>
+    <string name="action__apply">Aplicar</string>
+    <string name="action__cancel">Cancelar</string>
+    <string name="action__cancel_confirm_title">Confirmar</string>
+    <string name="action__cancel_confirm_message">Tem a certeza de que deseja descartar as alterações? Esta ação não pode ser revertida.</string>
+    <string name="action__default">Padrão</string>
+    <string name="action__delete">Remover</string>
+    <string name="action__delete_confirm_title">Confirmar</string>
+    <string name="action__delete_confirm_message">Tem a certeza de que deseja eliminar \"{database_name}\"? Esta ação não pode ser revertida.</string>
+    <string name="action__edit">Editar</string>
+    <string name="action__export">Exportar</string>
+    <string name="action__import">Importar</string>
+    <string name="action__no">Não</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Guardar</string>
+    <string name="action__select">Selecionar</string>
+    <string name="action__select_dir">Selecione o diretório</string>
+    <string name="action__select_file">Selecione o ficheiro</string>
+    <string name="action__yes">Sim</string>
+    <string name="error__title">Erro</string>
+    <string name="error__details">Detalhes</string>
+    <string name="error__invalid">Inválido</string>
+    <string name="error__snackbar_message">Algo errado aconteceu!</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Boas vindas!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Obrigado por utilizar {app_name}! Esta configuração permite-lhe dar os primeiros passos para começar a utilizar {app_name}.</string>

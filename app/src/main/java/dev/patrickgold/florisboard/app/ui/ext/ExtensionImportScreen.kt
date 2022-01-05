@@ -148,7 +148,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         FlorisButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(
-                text = stringRes(R.string.assets__action__cancel),
+                text = stringRes(R.string.action__cancel),
             ) {
                 importResult?.getOrNull()?.close()
                 navController.popBackStack()
@@ -159,7 +159,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 } != null
             }
             ButtonBarButton(
-                text = stringRes(R.string.assets__action__import),
+                text = stringRes(R.string.action__import),
                 enabled = enabled,
             ) {
                 val workspace = importResult!!.getOrThrow()
@@ -203,7 +203,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .align(Alignment.CenterHorizontally),
-            text = stringRes(R.string.assets__action__select_files),
+            text = stringRes(R.string.action__select_files),
         )
 
         val result = importResult

@@ -232,28 +232,22 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Koda çavkanî</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lîsansên çavkaniya vekirî</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Nivîskar</item>
-        <item quantity="other">Nivîskaran</item>
-    </plurals>
-    <string name="assets__file__name">Nav</string>
-    <string name="assets__file__source">Pelên Çavkanî</string>
-    <string name="assets__action__add">Zêdekirin</string>
-    <string name="assets__action__cancel">Betal kirin</string>
-    <string name="assets__action__cancel_confirm_title">Betal kirî piştrast bike</string>
-    <string name="assets__action__cancel_confirm_message">Tu dixwazî guhertinên ku hatine torandin jê biavêjî? Ev çalakî nikare bi carekê ve were îdamkirin.</string>
-    <string name="assets__action__delete">Jêbirin</string>
-    <string name="assets__action__delete_confirm_title">Jêbirinê piştrast bike</string>
-    <string name="assets__action__edit">Destkarî</string>
-    <string name="assets__action__export">Hinardin</string>
-    <string name="assets__action__import">Veberhêne</string>
-    <string name="assets__action__no">Na</string>
-    <string name="assets__action__save">Berhevkirin</string>
-    <string name="assets__action__yes">Erê</string>
-    <string name="assets__error__title">Çewtî</string>
-    <string name="assets__error__details">Hûrgulî</string>
-    <string name="assets__error__invalid">Seqet</string>
-    <string name="assets__error__snackbar_message">Tiştek şaş çû</string>
+    <string name="action__add">Zêdekirin</string>
+    <string name="action__cancel">Betal kirin</string>
+    <string name="action__cancel_confirm_title">Betal kirî piştrast bike</string>
+    <string name="action__cancel_confirm_message">Tu dixwazî guhertinên ku hatine torandin jê biavêjî? Ev çalakî nikare bi carekê ve were îdamkirin.</string>
+    <string name="action__delete">Jêbirin</string>
+    <string name="action__delete_confirm_title">Jêbirinê piştrast bike</string>
+    <string name="action__edit">Destkarî</string>
+    <string name="action__export">Hinardin</string>
+    <string name="action__import">Veberhêne</string>
+    <string name="action__no">Na</string>
+    <string name="action__save">Berhevkirin</string>
+    <string name="action__yes">Erê</string>
+    <string name="error__title">Çewtî</string>
+    <string name="error__details">Hûrgulî</string>
+    <string name="error__invalid">Seqet</string>
+    <string name="error__snackbar_message">Tiştek şaş çû</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>

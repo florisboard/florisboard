@@ -359,37 +359,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Лицензии третьих сторон</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензии сторонних библиотек, используемых в данном приложении</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Автор</item>
-        <item quantity="few">Авторы</item>
-        <item quantity="many">Авторы</item>
-        <item quantity="other">Авторы</item>
-    </plurals>
-    <string name="assets__file__name">Название</string>
-    <string name="assets__file__source">Источник</string>
-    <string name="assets__action__add">Добавить</string>
-    <string name="assets__action__apply">Применить</string>
-    <string name="assets__action__cancel">Отмена</string>
-    <string name="assets__action__cancel_confirm_title">Подтвердите отмену</string>
-    <string name="assets__action__cancel_confirm_message">Вы уверены, что хотите отменить любые несохраненные изменения? Это действие нельзя отменить после выполнения.</string>
-    <string name="assets__action__default">По умолчанию</string>
-    <string name="assets__action__delete">Удалить</string>
-    <string name="assets__action__delete_confirm_title">Подтвердите удаление</string>
-    <string name="assets__action__delete_confirm_message">Удалить \"{database_name}\"? Это действие нельзя отменить после выполнения.</string>
-    <string name="assets__action__edit">Изменить</string>
-    <string name="assets__action__export">Экспорт</string>
-    <string name="assets__action__import">Импорт</string>
-    <string name="assets__action__no">Нет</string>
-    <string name="assets__action__ok">ОК</string>
-    <string name="assets__action__save">Сохранить</string>
-    <string name="assets__action__select">Выбор</string>
-    <string name="assets__action__select_dir">Выберите папку</string>
-    <string name="assets__action__select_file">Выберите файл</string>
-    <string name="assets__action__yes">Да</string>
-    <string name="assets__error__title">Ошибка</string>
-    <string name="assets__error__details">Детали</string>
-    <string name="assets__error__invalid">Ошибка</string>
-    <string name="assets__error__snackbar_message">Что-то пошло не так</string>
+    <string name="action__add">Добавить</string>
+    <string name="action__apply">Применить</string>
+    <string name="action__cancel">Отмена</string>
+    <string name="action__cancel_confirm_title">Подтвердите отмену</string>
+    <string name="action__cancel_confirm_message">Вы уверены, что хотите отменить любые несохраненные изменения? Это действие нельзя отменить после выполнения.</string>
+    <string name="action__default">По умолчанию</string>
+    <string name="action__delete">Удалить</string>
+    <string name="action__delete_confirm_title">Подтвердите удаление</string>
+    <string name="action__delete_confirm_message">Удалить \"{database_name}\"? Это действие нельзя отменить после выполнения.</string>
+    <string name="action__edit">Изменить</string>
+    <string name="action__export">Экспорт</string>
+    <string name="action__import">Импорт</string>
+    <string name="action__no">Нет</string>
+    <string name="action__ok">ОК</string>
+    <string name="action__save">Сохранить</string>
+    <string name="action__select">Выбор</string>
+    <string name="action__select_dir">Выберите папку</string>
+    <string name="action__select_file">Выберите файл</string>
+    <string name="action__yes">Да</string>
+    <string name="error__title">Ошибка</string>
+    <string name="error__details">Детали</string>
+    <string name="error__invalid">Ошибка</string>
+    <string name="error__snackbar_message">Что-то пошло не так</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добро пожаловать!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за выбор {app_name}! Это небольшое руководство проведет вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>

@@ -140,31 +140,25 @@
     <string name="about__privacy_policy__summary" comment="Preference summary">Privatlivspolitikken for dette projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Forfatter</item>
-        <item quantity="other">Forfattere</item>
-    </plurals>
-    <string name="assets__file__name">Navn</string>
-    <string name="assets__file__source">Kilde</string>
-    <string name="assets__action__add">Tilføj</string>
-    <string name="assets__action__apply">Anvend</string>
-    <string name="assets__action__cancel">Annullér</string>
-    <string name="assets__action__cancel_confirm_title">Bekræft annullering</string>
-    <string name="assets__action__default">Standard</string>
-    <string name="assets__action__delete">Slet</string>
-    <string name="assets__action__delete_confirm_title">Bekræft sletning</string>
-    <string name="assets__action__edit">Redigér</string>
-    <string name="assets__action__export">Eksportér</string>
-    <string name="assets__action__import">Importér</string>
-    <string name="assets__action__no">Nej</string>
-    <string name="assets__action__ok">Ok</string>
-    <string name="assets__action__save">Gem</string>
-    <string name="assets__action__select">Vælg</string>
-    <string name="assets__action__select_file">Vælg fil</string>
-    <string name="assets__action__yes">Ja</string>
-    <string name="assets__error__details">Detaljer</string>
-    <string name="assets__error__invalid">Ugyldig</string>
-    <string name="assets__error__snackbar_message">Noget gik galt</string>
+    <string name="action__add">Tilføj</string>
+    <string name="action__apply">Anvend</string>
+    <string name="action__cancel">Annullér</string>
+    <string name="action__cancel_confirm_title">Bekræft annullering</string>
+    <string name="action__default">Standard</string>
+    <string name="action__delete">Slet</string>
+    <string name="action__delete_confirm_title">Bekræft sletning</string>
+    <string name="action__edit">Redigér</string>
+    <string name="action__export">Eksportér</string>
+    <string name="action__import">Importér</string>
+    <string name="action__no">Nej</string>
+    <string name="action__ok">Ok</string>
+    <string name="action__save">Gem</string>
+    <string name="action__select">Vælg</string>
+    <string name="action__select_file">Vælg fil</string>
+    <string name="action__yes">Ja</string>
+    <string name="error__details">Detaljer</string>
+    <string name="error__invalid">Ugyldig</string>
+    <string name="error__snackbar_message">Noget gik galt</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privatlivspolitik</string>

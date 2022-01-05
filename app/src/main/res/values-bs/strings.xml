@@ -103,24 +103,17 @@
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikonica FlorisBoard aplikacije</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Izvorni kod</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Autor</item>
-        <item quantity="few">Autori</item>
-        <item quantity="other">Autori</item>
-    </plurals>
-    <string name="assets__file__name">Ime</string>
-    <string name="assets__file__source">Izvor</string>
-    <string name="assets__action__add">Dodaj</string>
-    <string name="assets__action__cancel">Odustani</string>
-    <string name="assets__action__cancel_confirm_title">Potvrdi odustajanje</string>
-    <string name="assets__action__delete">Obriši</string>
-    <string name="assets__action__delete_confirm_title">Potvrdi brisanje</string>
-    <string name="assets__action__edit">Uredi</string>
-    <string name="assets__action__export">Izvezi</string>
-    <string name="assets__action__import">Uvezi</string>
-    <string name="assets__action__no">Ne</string>
-    <string name="assets__action__save">Spremi</string>
-    <string name="assets__action__yes">Da</string>
+    <string name="action__add">Dodaj</string>
+    <string name="action__cancel">Odustani</string>
+    <string name="action__cancel_confirm_title">Potvrdi odustajanje</string>
+    <string name="action__delete">Obriši</string>
+    <string name="action__delete_confirm_title">Potvrdi brisanje</string>
+    <string name="action__edit">Uredi</string>
+    <string name="action__export">Izvezi</string>
+    <string name="action__import">Uvezi</string>
+    <string name="action__no">Ne</string>
+    <string name="action__save">Spremi</string>
+    <string name="action__yes">Da</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>

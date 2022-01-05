@@ -327,34 +327,28 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Drittanbieter-Lizenzen</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Lizenzen der Drittanbieter-Bibliotheken, die FlorisBoard verwendet</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Ersteller</item>
-        <item quantity="other">Ersteller</item>
-    </plurals>
-    <string name="assets__file__name">Name</string>
-    <string name="assets__file__source">Quelle</string>
-    <string name="assets__action__add">Hinzufügen</string>
-    <string name="assets__action__apply">Übernehmen</string>
-    <string name="assets__action__cancel">Abbrechen</string>
-    <string name="assets__action__cancel_confirm_title">Abbruch bestätigen</string>
-    <string name="assets__action__cancel_confirm_message">Wollen Sie wirklich alle ungespeicherten Änderungen verwerfen? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
-    <string name="assets__action__default">Standard</string>
-    <string name="assets__action__delete">Löschen</string>
-    <string name="assets__action__delete_confirm_title">Löschvorgang bestätigen</string>
-    <string name="assets__action__delete_confirm_message">Soll \"{database_name}\" wirklich gelöscht werden? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
-    <string name="assets__action__edit">Bearbeiten</string>
-    <string name="assets__action__export">Exportieren</string>
-    <string name="assets__action__import">Importieren</string>
-    <string name="assets__action__no">Nein</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Speichern</string>
-    <string name="assets__action__select">Auswählen</string>
-    <string name="assets__action__select_dir">Verzeichnis auswählen</string>
-    <string name="assets__action__select_file">Datei auswählen</string>
-    <string name="assets__action__yes">Ja</string>
-    <string name="assets__error__details">Details</string>
-    <string name="assets__error__invalid">Ungültig</string>
-    <string name="assets__error__snackbar_message">Etwas hat nicht geklappt</string>
+    <string name="action__add">Hinzufügen</string>
+    <string name="action__apply">Übernehmen</string>
+    <string name="action__cancel">Abbrechen</string>
+    <string name="action__cancel_confirm_title">Abbruch bestätigen</string>
+    <string name="action__cancel_confirm_message">Wollen Sie wirklich alle ungespeicherten Änderungen verwerfen? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
+    <string name="action__default">Standard</string>
+    <string name="action__delete">Löschen</string>
+    <string name="action__delete_confirm_title">Löschvorgang bestätigen</string>
+    <string name="action__delete_confirm_message">Soll \"{database_name}\" wirklich gelöscht werden? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
+    <string name="action__edit">Bearbeiten</string>
+    <string name="action__export">Exportieren</string>
+    <string name="action__import">Importieren</string>
+    <string name="action__no">Nein</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Speichern</string>
+    <string name="action__select">Auswählen</string>
+    <string name="action__select_dir">Verzeichnis auswählen</string>
+    <string name="action__select_file">Datei auswählen</string>
+    <string name="action__yes">Ja</string>
+    <string name="error__details">Details</string>
+    <string name="error__invalid">Ungültig</string>
+    <string name="error__snackbar_message">Etwas hat nicht geklappt</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Herzlich willkommen!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Vielen Dank für die Nutzung von {app_name}! Dieses Quick Setup leitet dich durch die erforderlichen Schritte {app_name} auf deinem Gerät zu nutzen.</string>

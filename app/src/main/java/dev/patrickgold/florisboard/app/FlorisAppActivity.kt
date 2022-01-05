@@ -161,9 +161,9 @@ class FlorisAppActivity : ComponentActivity() {
             LocalPreviewFieldController provides previewFieldController,
         ) {
             ProvideDefaultDialogPrefStrings(
-                confirmLabel = stringRes(R.string.assets__action__ok),
-                dismissLabel = stringRes(R.string.assets__action__cancel),
-                neutralLabel = stringRes(R.string.assets__action__default),
+                confirmLabel = stringRes(R.string.action__ok),
+                dismissLabel = stringRes(R.string.action__cancel),
+                neutralLabel = stringRes(R.string.action__default),
             ) {
                 Column {
                     Routes.AppNavHost(

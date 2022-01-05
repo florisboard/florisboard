@@ -283,30 +283,24 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenties</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Appversie gekopieerd naar klembord</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Auteur</item>
-        <item quantity="other">Auteurs</item>
-    </plurals>
-    <string name="assets__file__name">Naam</string>
-    <string name="assets__file__source">Bron</string>
-    <string name="assets__action__add">Toevoegen</string>
-    <string name="assets__action__apply">Toepassen</string>
-    <string name="assets__action__cancel">Annuleren</string>
-    <string name="assets__action__cancel_confirm_title">Annuleren bevestigen</string>
-    <string name="assets__action__cancel_confirm_message">Weet je zeker dat je onopgeslagen wijzigingen wil verwerpen? Deze actie kan niet ongedaan gemaakt worden.</string>
-    <string name="assets__action__default">Standaard</string>
-    <string name="assets__action__delete">Verwijderen</string>
-    <string name="assets__action__delete_confirm_title">Verwijderen bevestigen</string>
-    <string name="assets__action__edit">Bewerken</string>
-    <string name="assets__action__export">Exporteren</string>
-    <string name="assets__action__import">Importeren</string>
-    <string name="assets__action__no">Nee</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Opslaan</string>
-    <string name="assets__action__yes">Ja</string>
-    <string name="assets__error__details">Details</string>
-    <string name="assets__error__invalid">Ongeldig</string>
-    <string name="assets__error__snackbar_message">Er is iets mis gegaan</string>
+    <string name="action__add">Toevoegen</string>
+    <string name="action__apply">Toepassen</string>
+    <string name="action__cancel">Annuleren</string>
+    <string name="action__cancel_confirm_title">Annuleren bevestigen</string>
+    <string name="action__cancel_confirm_message">Weet je zeker dat je onopgeslagen wijzigingen wil verwerpen? Deze actie kan niet ongedaan gemaakt worden.</string>
+    <string name="action__default">Standaard</string>
+    <string name="action__delete">Verwijderen</string>
+    <string name="action__delete_confirm_title">Verwijderen bevestigen</string>
+    <string name="action__edit">Bewerken</string>
+    <string name="action__export">Exporteren</string>
+    <string name="action__import">Importeren</string>
+    <string name="action__no">Nee</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Opslaan</string>
+    <string name="action__yes">Ja</string>
+    <string name="error__details">Details</string>
+    <string name="error__invalid">Ongeldig</string>
+    <string name="error__snackbar_message">Er is iets mis gegaan</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>

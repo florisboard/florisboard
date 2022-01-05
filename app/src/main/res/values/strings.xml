@@ -395,39 +395,6 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
 
-    <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Author</item>
-        <item quantity="other">Authors</item>
-    </plurals>
-    <string name="assets__file__name">Name</string>
-    <string name="assets__file__source">Source</string>
-    <string name="assets__action__add">Add</string>
-    <string name="assets__action__apply">Apply</string>
-    <string name="assets__action__cancel">Cancel</string>
-    <string name="assets__action__cancel_confirm_title">Confirm cancel</string>
-    <string name="assets__action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
-    <string name="assets__action__default">Default</string>
-    <string name="assets__action__delete">Delete</string>
-    <string name="assets__action__delete_confirm_title">Confirm delete</string>
-    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
-    <string name="assets__action__edit">Edit</string>
-    <string name="assets__action__export">Export</string>
-    <string name="assets__action__import">Import</string>
-    <string name="assets__action__no">No</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Save</string>
-    <string name="assets__action__select">Select</string>
-    <string name="assets__action__select_dir">Select directory</string>
-    <string name="assets__action__select_file">Select file</string>
-    <string name="assets__action__select_files">Select files</string>
-    <string name="assets__action__yes">Yes</string>
-    <string name="assets__error__title">Error</string>
-    <string name="assets__error__details">Details</string>
-    <string name="assets__error__invalid">Invalid</string>
-    <string name="assets__error__snackbar_message">Something went wrong</string>
-    <string name="assets__error__snackbar_message_template">Something went wrong: {error_message}</string>
-
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welcome!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Thanks for using {app_name}! This quick setup guides you through the required steps to use {app_name} on your device.</string>
@@ -462,6 +429,7 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap to view error details</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard seems to stop working repeatedly…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
+
 
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Clipboard</string>
@@ -500,6 +468,7 @@
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
 
+
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Devtools</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Enable developer tools</string>
@@ -521,6 +490,7 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Secure Android settings</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">System Android settings</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">System locales</string>
+
 
     <!-- Extension strings -->
     <string name="ext__meta__components">Bundled components</string>
@@ -558,6 +528,37 @@
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
 
+
+    <!-- Action strings -->
+    <string name="action__add">Add</string>
+    <string name="action__apply">Apply</string>
+    <string name="action__cancel">Cancel</string>
+    <string name="action__cancel_confirm_title">Confirm cancel</string>
+    <string name="action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
+    <string name="action__default">Default</string>
+    <string name="action__delete">Delete</string>
+    <string name="action__delete_confirm_title">Confirm delete</string>
+    <string name="action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
+    <string name="action__edit">Edit</string>
+    <string name="action__export">Export</string>
+    <string name="action__import">Import</string>
+    <string name="action__no">No</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Save</string>
+    <string name="action__select">Select</string>
+    <string name="action__select_dir">Select directory</string>
+    <string name="action__select_dirs">Select directories</string>
+    <string name="action__select_file">Select file</string>
+    <string name="action__select_files">Select files</string>
+    <string name="action__yes">Yes</string>
+
+    <!-- Error strings (generic) -->
+    <string name="error__title">Error</string>
+    <string name="error__details">Details</string>
+    <string name="error__invalid">Invalid</string>
+    <string name="error__snackbar_message">Something went wrong</string>
+    <string name="error__snackbar_message_template">Something went wrong: {error_message}</string>
+
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
 
@@ -570,6 +571,7 @@
     <!-- State strings -->
     <string name="state__disabled">Disabled</string>
     <string name="state__enabled">Enabled</string>
+
 
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
@@ -639,6 +641,7 @@
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
+
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>

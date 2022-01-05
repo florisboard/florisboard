@@ -231,33 +231,25 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Autor</item>
-        <item quantity="few">Autoři</item>
-        <item quantity="many">Autorů</item>
-        <item quantity="other">Autorů</item>
-    </plurals>
-    <string name="assets__file__name">Název</string>
-    <string name="assets__file__source">Zdroj</string>
-    <string name="assets__action__add">Přidat</string>
-    <string name="assets__action__apply">Potvrdit</string>
-    <string name="assets__action__cancel">Zrušit</string>
-    <string name="assets__action__cancel_confirm_title">Potvrdit zrušení</string>
-    <string name="assets__action__cancel_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>
-    <string name="assets__action__delete">Odstranit</string>
-    <string name="assets__action__delete_confirm_title">Potvrdit odstranění</string>
-    <string name="assets__action__edit">Upravit</string>
-    <string name="assets__action__export">Exportovat</string>
-    <string name="assets__action__import">Importovat</string>
-    <string name="assets__action__no">Ne</string>
-    <string name="assets__action__save">Uložit</string>
-    <string name="assets__action__select">Vybrat</string>
-    <string name="assets__action__select_dir">Vybrat složku</string>
-    <string name="assets__action__select_file">Vybrat soubor</string>
-    <string name="assets__action__yes">Ano</string>
-    <string name="assets__error__details">Podrobnosti</string>
-    <string name="assets__error__invalid">Neplatné</string>
-    <string name="assets__error__snackbar_message">Něco se pokazilo</string>
+    <string name="action__add">Přidat</string>
+    <string name="action__apply">Potvrdit</string>
+    <string name="action__cancel">Zrušit</string>
+    <string name="action__cancel_confirm_title">Potvrdit zrušení</string>
+    <string name="action__cancel_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>
+    <string name="action__delete">Odstranit</string>
+    <string name="action__delete_confirm_title">Potvrdit odstranění</string>
+    <string name="action__edit">Upravit</string>
+    <string name="action__export">Exportovat</string>
+    <string name="action__import">Importovat</string>
+    <string name="action__no">Ne</string>
+    <string name="action__save">Uložit</string>
+    <string name="action__select">Vybrat</string>
+    <string name="action__select_dir">Vybrat složku</string>
+    <string name="action__select_file">Vybrat soubor</string>
+    <string name="action__yes">Ano</string>
+    <string name="error__details">Podrobnosti</string>
+    <string name="error__invalid">Neplatné</string>
+    <string name="error__snackbar_message">Něco se pokazilo</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
