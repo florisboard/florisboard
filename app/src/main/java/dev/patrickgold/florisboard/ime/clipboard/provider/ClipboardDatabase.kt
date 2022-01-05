@@ -47,7 +47,7 @@ enum class ItemType(val value: Int) {
 data class ClipboardItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = BaseColumns._ID, index = true)
-    val id: Long = 0,
+    var id: Long = 0,
     val type: ItemType,
     val text: String?,
     val uri: Uri?,
