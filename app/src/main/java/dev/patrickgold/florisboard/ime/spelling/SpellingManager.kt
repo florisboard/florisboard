@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.spelling
 
 import android.content.Context
 import android.net.Uri
+import android.util.LruCache
+import android.view.textservice.SuggestionsInfo
+import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
@@ -33,6 +36,7 @@ import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.zip.ZipFile
 
 class SpellingManager(context: Context) {
@@ -135,12 +139,15 @@ class SpellingManager(context: Context) {
     }
 
     private val appContext by context.appContext()
+    private val assetManager by context.assetManager()
     private val extensionManager by context.extensionManager()
-
-    private val assetManager by appContext.assetManager()
 
     val importSourceLabels: List<String>
     val importSourceUrls: List<String?>
+
+    val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SuggestionsInfo>>(10)
+    var debugOverlayVersion = MutableLiveData(0)
+    private val debugOverlayVersionSource = AtomicInteger(0)
 
     init {
         Config.importSources.map { it.label }.toMutableList().let {
@@ -194,7 +201,7 @@ class SpellingManager(context: Context) {
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
                     meta = ExtensionMetaEditor(
-                        id = ExtensionDefaults.createIdForImport("spelling"),
+                        id = ExtensionDefaults.createLocalId("spelling"),
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
                         description = manifest.description ?: "",
@@ -269,7 +276,7 @@ class SpellingManager(context: Context) {
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
                     meta = ExtensionMetaEditor(
-                        id = ExtensionDefaults.createIdForImport("spelling"),
+                        id = ExtensionDefaults.createLocalId("spelling"),
                         version = "0.0.0",
                         title = "FreeOffice import",
                         maintainers = mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
@@ -363,5 +370,17 @@ class SpellingManager(context: Context) {
             tempFile.outputStream().use { os -> bis.copyTo(os) }
         }.getOrThrow()
         tempFile
+    }
+
+    fun addToDebugOverlay(word: String, info: SuggestionsInfo) {
+        val version = debugOverlayVersionSource.incrementAndGet()
+        debugOverlaySuggestionsInfos.put(System.currentTimeMillis(), word to info)
+        debugOverlayVersion.postValue(version)
+    }
+
+    fun clearDebugOverlay() {
+        val version = debugOverlayVersionSource.incrementAndGet()
+        debugOverlaySuggestionsInfos.evictAll()
+        debugOverlayVersion.postValue(version)
     }
 }

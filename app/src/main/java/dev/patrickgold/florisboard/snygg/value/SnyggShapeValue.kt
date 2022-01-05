@@ -28,9 +28,9 @@ private const val CornerSizeTopEnd = "cornerSizeTopEnd"
 private const val CornerSizeBottomEnd = "cornerSizeBottomEnd"
 private const val CornerSizeBottomStart = "cornerSizeBottomStart"
 
-private const val Rectangle = "rectangleShape"
-private const val CutCorner = "cutCornerShape"
-private const val RoundedCorner = "roundedCornerShape"
+private const val Rectangle = "rectangle"
+private const val CutCorner = "cut-corner"
+private const val RoundedCorner = "rounded-corner"
 
 private const val DpUnit = "dp"
 
@@ -47,7 +47,7 @@ data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRectangleShapeValue)
             val map = SnyggIdToValueMap.new()
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
@@ -87,7 +87,7 @@ data class SnyggCutCornerShapeDpValue(
                 CornerSizeBottomEnd to v.bottomEnd.value,
                 CornerSizeBottomStart to v.bottomStart.value,
             )
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
@@ -134,7 +134,7 @@ data class SnyggCutCornerShapePercentValue(
                 CornerSizeBottomEnd to v.bottomEnd,
                 CornerSizeBottomStart to v.bottomStart,
             )
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
@@ -181,7 +181,7 @@ data class SnyggRoundedCornerShapeDpValue(
                 CornerSizeBottomEnd to v.bottomEnd.value,
                 CornerSizeBottomStart to v.bottomStart.value,
             )
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
@@ -228,7 +228,7 @@ data class SnyggRoundedCornerShapePercentValue(
                 CornerSizeBottomEnd to v.bottomEnd,
                 CornerSizeBottomStart to v.bottomStart,
             )
-            return spec.pack(map)
+            return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {

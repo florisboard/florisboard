@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.res.ext
 
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -39,7 +40,7 @@ interface ExtensionComponent {
  * Example component name:
  *  `org.florisboard.layouts:qwerty`
  */
-@Serializable(with = ExtensionComponentNameSerializer::class)
+@Serializable(with = ExtensionComponentName.Serializer::class)
 data class ExtensionComponentName(
     val extensionId: String,
     val componentId: String,
@@ -57,16 +58,24 @@ data class ExtensionComponentName(
     override fun toString(): String {
         return "$extensionId$DELIMITER$componentId"
     }
-}
 
-private class ExtensionComponentNameSerializer : KSerializer<ExtensionComponentName> {
-    override val descriptor = PrimitiveSerialDescriptor("ExtensionComponentName", PrimitiveKind.STRING)
+    object Serializer : PreferenceSerializer<ExtensionComponentName>, KSerializer<ExtensionComponentName> {
+        override val descriptor = PrimitiveSerialDescriptor("ExtensionComponentName", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: ExtensionComponentName) {
-        encoder.encodeString("${value.extensionId}:${value.componentId}")
-    }
+        override fun serialize(value: ExtensionComponentName): String {
+            return value.toString()
+        }
 
-    override fun deserialize(decoder: Decoder): ExtensionComponentName {
-        return ExtensionComponentName.from(decoder.decodeString()).getOrThrow()
+        override fun serialize(encoder: Encoder, value: ExtensionComponentName) {
+            encoder.encodeString("${value.extensionId}:${value.componentId}")
+        }
+
+        override fun deserialize(value: String): ExtensionComponentName? {
+            return from(value).getOrNull()
+        }
+
+        override fun deserialize(decoder: Decoder): ExtensionComponentName {
+            return from(decoder.decodeString()).getOrThrow()
+        }
     }
 }

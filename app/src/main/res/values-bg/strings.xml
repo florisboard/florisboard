@@ -96,7 +96,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Управление на теми (ден)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Управление на теми (нощ)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Създаване на празна тема</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Създаване от текущата</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Потребителска (от %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Темата е внесена успешно!</string>
@@ -345,35 +344,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Лицензи на трети страни</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензи на библиотеките от трети страни, използвани от приложението</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Автор</item>
-        <item quantity="other">Автори</item>
-    </plurals>
-    <string name="assets__file__name">Име</string>
-    <string name="assets__file__source">Източник</string>
-    <string name="assets__action__add">Добавяне</string>
-    <string name="assets__action__apply">Прилагане</string>
-    <string name="assets__action__cancel">Отказ</string>
-    <string name="assets__action__cancel_confirm_title">Потвърждаване на отказ</string>
-    <string name="assets__action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
-    <string name="assets__action__default">По подразбиране</string>
-    <string name="assets__action__delete">Изтриване</string>
-    <string name="assets__action__delete_confirm_title">Потвърждаване на изтриване</string>
-    <string name="assets__action__delete_confirm_message">Наистина ли искате да изтриете „{database_name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
-    <string name="assets__action__edit">Редактиране</string>
-    <string name="assets__action__export">Изнасяне</string>
-    <string name="assets__action__import">Внасяне</string>
-    <string name="assets__action__no">Не</string>
-    <string name="assets__action__ok">Добре</string>
-    <string name="assets__action__save">Запазване</string>
-    <string name="assets__action__select">Изберете</string>
-    <string name="assets__action__select_dir">Избиране на папка</string>
-    <string name="assets__action__select_file">Избиране на файл</string>
-    <string name="assets__action__yes">Да</string>
-    <string name="assets__error__title">Грешка</string>
-    <string name="assets__error__details">Подробности</string>
-    <string name="assets__error__invalid">Невалидно</string>
-    <string name="assets__error__snackbar_message">Нещо се обърка</string>
+    <string name="action__add">Добавяне</string>
+    <string name="action__apply">Прилагане</string>
+    <string name="action__cancel">Отказ</string>
+    <string name="action__cancel_confirm_title">Потвърждаване на отказ</string>
+    <string name="action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="action__default">По подразбиране</string>
+    <string name="action__delete">Изтриване</string>
+    <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>
+    <string name="action__delete_confirm_message">Наистина ли искате да изтриете „{database_name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="action__edit">Редактиране</string>
+    <string name="action__export">Изнасяне</string>
+    <string name="action__import">Внасяне</string>
+    <string name="action__no">Не</string>
+    <string name="action__ok">Добре</string>
+    <string name="action__save">Запазване</string>
+    <string name="action__select">Изберете</string>
+    <string name="action__select_dir">Избиране на папка</string>
+    <string name="action__select_file">Избиране на файл</string>
+    <string name="action__yes">Да</string>
+    <string name="error__title">Грешка</string>
+    <string name="error__details">Подробности</string>
+    <string name="error__invalid">Невалидно</string>
+    <string name="error__snackbar_message">Нещо се обърка</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добре дошли!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Благодарим ви, че използвате {app_name}! Този помощник ще ви преведе през задължителните стъпки, които трябва да предприемете, за да използвате {app_name}.</string>

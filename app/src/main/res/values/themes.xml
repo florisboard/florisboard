@@ -1,64 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="KeyboardThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="KeyboardThemeBase.Day">
-        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#FFFFFF</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
-        <item name="android:colorControlNormal">#8A000000</item><!-- Black, semi transparent -->
-        <item name="android:colorButtonNormal">#4A000000</item><!-- Black, semi transparent -->
-        <item name="android:textColor">#000000</item><!-- Black -->
-        <item name="semiTransparentColor">#20000000</item><!-- Black, semi transparent -->
-        <item name="inputView_bgColorFallback">#FFFFFF</item>
-    </style>
-
-    <style name="KeyboardThemeBase.Night">
-        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#000000</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
-        <item name="android:colorControlNormal">#B3FFFFFF</item><!-- White, semi transparent -->
-        <item name="android:colorButtonNormal">#73FFFFFF</item><!-- White, semi transparent -->
-        <item name="android:textColor">#FFFFFF</item><!-- White -->
-        <item name="semiTransparentColor">#20FFFFFF</item><!-- White, semi transparent -->
-        <item name="inputView_bgColorFallback">#000000</item>
-    </style>
-
-    <style name="SettingsToolbarTheme" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
-        <item name="android:textColorPrimary">@color/toolbarForegroundColor</item>
-        <item name="android:drawableTint">@color/toolbarForegroundColor</item>
-    </style>
-
-    <style name="SettingsTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="colorSuccess">@color/colorSuccess</item>
-        <item name="textColorSuccess">@color/textColorSuccess</item>
-        <item name="colorWarning">@color/colorWarning</item>
-        <item name="textColorWarning">@color/textColorWarning</item>
-        <item name="colorError">@color/colorError</item>
-        <item name="textColorError">@color/textColorError</item>
-
-        <!-- IMPORTANT: the following 2 colors MUST be references and not inline colors, or older
-             versions of Android will not set the window background and thus causing weird
-             rendering glitches!! -->
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:colorBackground">@color/windowBackground</item>
-
-        <item name="android:navigationBarColor">@color/navigationBarColor</item>
-    </style>
-
     <style name="FlorisAppTheme" parent="Theme.SplashScreen.IconBackground">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
 
         <!-- IMPORTANT: the following 2 colors MUST be references and not inline colors, or older
              versions of Android will not set the window background and thus causing weird
@@ -66,13 +12,15 @@
         <item name="android:windowBackground">@color/florisApp_windowBackground</item>
         <item name="android:colorBackground">@color/florisApp_windowBackground</item>
 
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
         <!-- SplashScreen related attributes -->
-        <item name="postSplashScreenTheme">@style/Theme.AppCompat.DayNight.NoActionBar</item>
+        <item name="postSplashScreenTheme">@android:style/Theme.Material.NoActionBar</item>
         <item name="windowSplashScreenBackground">@color/florisApp_windowBackground</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/ic_app_icon_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/floris_app_icon_foreground</item>
     </style>
 
-    <style name="CrashDialogTheme" parent="Theme.AppCompat.DayNight"/>
+    <style name="CrashDialogTheme" parent="android:Theme.Material"/>
 
 </resources>

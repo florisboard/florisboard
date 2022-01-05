@@ -74,7 +74,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">מנהל ערכת נושא (יום)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">מנהל ערכת נושא (לילה)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">צור ערכת עיצוב חדשה</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">צור מערכת הנושא שנבחרה</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">מותאם אישית (בהתבסס על %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ערכת נושא חדשה</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ערוך ערכת נושא</string>
@@ -204,30 +203,22 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">רישיונות קוד פתוח</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">הגרסה הועתקה ללוח</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">יוצר</item>
-        <item quantity="two">יוצרים</item>
-        <item quantity="many">יוצרים</item>
-        <item quantity="other">יוצרים</item>
-    </plurals>
-    <string name="assets__file__name">שם</string>
-    <string name="assets__file__source">מקור</string>
-    <string name="assets__action__add">הוסף</string>
-    <string name="assets__action__apply">החל</string>
-    <string name="assets__action__cancel">ביטול</string>
-    <string name="assets__action__cancel_confirm_title">אשר ביטול</string>
-    <string name="assets__action__cancel_confirm_message">האם אתה בטוח שברצונך לבטל שינויים שלא נשמרו? לא ניתן לבטל פעולה זו לאחר ביצועה.</string>
-    <string name="assets__action__delete">מחק</string>
-    <string name="assets__action__delete_confirm_title">אישור מחיקה</string>
-    <string name="assets__action__edit">ערוך</string>
-    <string name="assets__action__export">ייצוא</string>
-    <string name="assets__action__import">ייבוא</string>
-    <string name="assets__action__no">לא</string>
-    <string name="assets__action__save">שמור</string>
-    <string name="assets__action__yes">כן</string>
-    <string name="assets__error__details">פרטים</string>
-    <string name="assets__error__invalid">לא תקין</string>
-    <string name="assets__error__snackbar_message">משהו השתבש</string>
+    <string name="action__add">הוסף</string>
+    <string name="action__apply">החל</string>
+    <string name="action__cancel">ביטול</string>
+    <string name="action__cancel_confirm_title">אשר ביטול</string>
+    <string name="action__cancel_confirm_message">האם אתה בטוח שברצונך לבטל שינויים שלא נשמרו? לא ניתן לבטל פעולה זו לאחר ביצועה.</string>
+    <string name="action__delete">מחק</string>
+    <string name="action__delete_confirm_title">אישור מחיקה</string>
+    <string name="action__edit">ערוך</string>
+    <string name="action__export">ייצוא</string>
+    <string name="action__import">ייבוא</string>
+    <string name="action__no">לא</string>
+    <string name="action__save">שמור</string>
+    <string name="action__yes">כן</string>
+    <string name="error__details">פרטים</string>
+    <string name="error__invalid">לא תקין</string>
+    <string name="error__snackbar_message">משהו השתבש</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>

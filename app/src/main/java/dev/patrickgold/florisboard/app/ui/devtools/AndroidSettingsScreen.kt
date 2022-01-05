@@ -34,47 +34,49 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 @Composable
-fun AndroidSettingsScreen(name: String?) = FlorisScreen(
+fun AndroidSettingsScreen(name: String?) = FlorisScreen {
     title = when (name) {
         AndroidSettings.Global.groupId -> stringRes(R.string.devtools__android_settings_global__title)
         AndroidSettings.Secure.groupId -> stringRes(R.string.devtools__android_settings_secure__title)
         AndroidSettings.System.groupId -> stringRes(R.string.devtools__android_settings_system__title)
         else -> "invalid"
-    },
-    scrollable = false,
-) {
+    }
+    scrollable = false
+
     val context = LocalContext.current
 
     val settingsGroup = when (name) {
         AndroidSettings.Global.groupId -> AndroidSettings.Global
         AndroidSettings.Secure.groupId -> AndroidSettings.Secure
         AndroidSettings.System.groupId -> AndroidSettings.System
-        else -> return@FlorisScreen
+        else -> AndroidSettings.Global
     }
     val nameValueTable = remember(name) { settingsGroup.getAllKeys().toList() }
     var dialogKey by remember { mutableStateOf<String?>(null) }
 
-    LazyColumn {
-        items(nameValueTable) { (fieldName, key) ->
-            Preference(
-                title = fieldName,
-                summary = key,
-                onClick = { dialogKey = key },
-            )
-        }
-    }
-
-    if (dialogKey != null) {
-        JetPrefAlertDialog(
-            title = dialogKey!!,
-            onDismiss = { dialogKey = null },
-        ) {
-            SelectionContainer {
-                Text(
-                    text = remember {
-                        (settingsGroup.getString(context, dialogKey!!) ?: "(null)").ifBlank { "(blank)" }
-                    },
+    content {
+        LazyColumn {
+            items(nameValueTable) { (fieldName, key) ->
+                Preference(
+                    title = fieldName,
+                    summary = key,
+                    onClick = { dialogKey = key },
                 )
+            }
+        }
+
+        if (dialogKey != null) {
+            JetPrefAlertDialog(
+                title = dialogKey!!,
+                onDismiss = { dialogKey = null },
+            ) {
+                SelectionContainer {
+                    Text(
+                        text = remember {
+                            (settingsGroup.getString(context, dialogKey!!) ?: "(null)").ifBlank { "(blank)" }
+                        },
+                    )
+                }
             }
         }
     }

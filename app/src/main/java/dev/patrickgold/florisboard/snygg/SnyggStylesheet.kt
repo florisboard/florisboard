@@ -19,13 +19,18 @@ package dev.patrickgold.florisboard.snygg
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.Json
+
+val SnyggStylesheetJsonConfig = Json
 
 @Serializable(with = SnyggStylesheetSerializer::class)
 class SnyggStylesheet(
@@ -86,7 +91,7 @@ class SnyggStylesheet(
         isPressed: Boolean = false,
         isFocus: Boolean = false,
         isDisabled: Boolean = false,
-    ) = remember(element, code, group, mode, isPressed, isFocus, isDisabled) {
+    ) = remember(this, element, code, group, mode, isPressed, isFocus, isDisabled) {
         getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
     }
 
@@ -101,14 +106,41 @@ class SnyggStylesheet(
     ) = getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
 
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
-        TODO()
+        val mergedRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
+        mergedRules.putAll(other.rules)
+        for ((rule, propertySet) in rules) {
+            if (mergedRules.containsKey(rule)) {
+                val otherPropertySet = mergedRules[rule]!!
+                val mergedProperties = buildMap {
+                    putAll(propertySet.properties)
+                    putAll(otherPropertySet.properties)
+                }
+                mergedRules[rule] = SnyggPropertySet(mergedProperties)
+            } else {
+                mergedRules[rule] = propertySet
+            }
+        }
+        return SnyggStylesheet(mergedRules)
     }
 
     // TODO: divide in smaller, testable sections
     fun compileToFullyQualified(stylesheetSpec: SnyggSpec): SnyggStylesheet {
         val newRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
+        var definedVariables: SnyggPropertySet? = null
         for (rule in rules.keys.sorted()) {
+            if (rule.isAnnotation) {
+                if (rule.element == "defines") {
+                    definedVariables = rules[rule]
+                }
+                continue
+            }
             val editor = rules[rule]!!.edit()
+            for ((propertyName, propertyValue) in editor.properties) {
+                if (propertyValue is SnyggDefinedVarValue) {
+                    editor.properties[propertyName] =
+                        definedVariables?.properties?.get(propertyValue.key) ?: SnyggImplicitInheritValue
+                }
+            }
             val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
             val possiblePropertySets = getPropertySets(newRules, rule)
             propertySetSpec.supportedProperties.forEach { supportedProperty ->
@@ -135,7 +167,11 @@ class SnyggStylesheet(
                             val value = possiblePropertySets.firstNotNullOfOrNull {
                                 it.properties[supportedProperty.name]
                             } ?: SnyggImplicitInheritValue
-                            editor.properties[supportedProperty.name] = value
+                            editor.properties[supportedProperty.name] = if (value is SnyggDefinedVarValue) {
+                                definedVariables?.properties?.get(value.key) ?: SnyggImplicitInheritValue
+                            } else {
+                                value
+                            }
                         }
                     }
                     newRulesWithPressed[pressedRule] = editor.build()
@@ -168,6 +204,20 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
         }
     }
 
+    fun annotation(name: String, propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
+        val propertySetEditor = SnyggPropertySetEditor()
+        propertySetBlock(propertySetEditor)
+        val ruleEditor = SnyggRuleEditor(
+            isAnnotation = true,
+            element = name,
+        )
+        rules[ruleEditor] = propertySetEditor
+    }
+
+    fun defines(propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
+        annotation("defines", propertySetBlock)
+    }
+
     operator fun String.invoke(
         codes: List<Int> = listOf(),
         groups: List<Int> = listOf(),
@@ -180,6 +230,7 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
         val ruleEditor = SnyggRuleEditor(
+            isAnnotation = false,
             element = this,
             codes.toMutableList(),
             groups.toMutableList(),
@@ -220,6 +271,14 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
         for ((rule, rawProperties) in rawRuleMap) {
             // FIXME: hardcoding which spec to use, the selection should happen dynamically
             val stylesheetSpec = FlorisImeUiSpec
+            if (rule.isAnnotation && rule.element == "defines") {
+                val parsedProperties = rawProperties.mapValues { (_, rawValue) ->
+                    SnyggVarValueEncoders.firstNotNullOfOrNull { it.deserialize(rawValue).getOrNull() }
+                        ?: SnyggImplicitInheritValue
+                }
+                ruleMap[rule] = SnyggPropertySet(parsedProperties)
+                continue
+            }
             val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
             val properties = rawProperties.mapValues { (name, value) ->
                 val propertySpec = propertySetSpec.propertySpec(name)

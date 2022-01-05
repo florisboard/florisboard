@@ -19,38 +19,57 @@ package dev.patrickgold.florisboard.ime.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.themeManager
 
-private val LocalConfig = staticCompositionLocalOf<ThemeExtensionConfig> { error("not init") }
+private val LocalConfig = staticCompositionLocalOf<ThemeExtensionComponent> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
+    defines {
+        "primary" to rgbaColor(76, 175, 80)
+        "primaryVariant" to rgbaColor(56, 142, 60)
+        "secondary" to rgbaColor(245, 124, 0)
+        "secondaryVariant" to rgbaColor(230, 81, 0)
+        "background" to rgbaColor(33, 33, 33)
+        "surface" to rgbaColor(66, 66, 66)
+        "surfaceVariant" to rgbaColor(97, 97, 97)
+
+        "onPrimary" to rgbaColor(255, 255, 255)
+        "onSecondary" to rgbaColor(255, 255, 255)
+        "onBackground" to rgbaColor(255, 255, 255)
+        "onSurface" to rgbaColor(255, 255, 255)
+    }
+
     FlorisImeUi.Keyboard {
-        background = rgbaColor(33, 33, 33)
+        background = `var`("background")
     }
     FlorisImeUi.Key {
-        background = rgbaColor(66, 66, 66)
-        foreground = rgbaColor(255, 255, 255)
+        background = `var`("surface")
+        foreground = `var`("onSurface")
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(pressedSelector = true) {
-        background = rgbaColor(97, 97, 97)
-        foreground = rgbaColor(255, 255, 255)
+        background = `var`("surfaceVariant")
+        foreground = `var`("onSurface")
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
-        background = rgbaColor(76, 175, 80)
-        foreground = rgbaColor(255, 255, 255)
+        background = `var`("primary")
+        foreground = `var`("onSurface")
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER), pressedSelector = true) {
-        background = rgbaColor(56, 142, 60)
-        foreground = rgbaColor(255, 255, 255)
+        background = `var`("primaryVariant")
+        foreground = `var`("onSurface")
     }
     FlorisImeUi.Key(
         codes = listOf(KeyCode.SHIFT),
@@ -59,7 +78,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = rgbaColor(255, 152, 0)
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.SPACE)) {
-        background = rgbaColor(66, 66, 66)
+        background = `var`("surface")
         foreground = rgbaColor(144, 144, 144)
         fontSize = size(12.sp)
     }
@@ -70,31 +89,31 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     }
     FlorisImeUi.KeyPopup {
         background = rgbaColor(117, 117, 117)
-        foreground = rgbaColor(255, 255, 255)
+        foreground = `var`("onSurface")
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.KeyPopup(focusSelector = true) {
         background = rgbaColor(189, 189, 189)
-        foreground = rgbaColor(255, 255, 255)
+        foreground = `var`("onSurface")
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
 
     FlorisImeUi.ClipboardHeader {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(255, 255, 255)
+        foreground = `var`("onSurface")
         fontSize = size(16.sp)
     }
     FlorisImeUi.ClipboardItem {
-        background = rgbaColor(66, 66, 66)
-        foreground = rgbaColor(255, 255, 255)
+        background = `var`("surface")
+        foreground = `var`("onSurface")
         fontSize = size(14.sp)
         shape = roundedCornerShape(12.dp)
     }
     FlorisImeUi.ClipboardItemPopup {
         background = rgbaColor(117, 117, 117)
-        foreground = rgbaColor(255, 255, 255)
+        foreground = `var`("onSurface")
         fontSize = size(14.sp)
         shape = roundedCornerShape(12.dp)
     }
@@ -108,8 +127,8 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = rgbaColor(0, 0, 0, 0f)
     }
     FlorisImeUi.SmartbarPrimaryActionRowToggle {
-        background = rgbaColor(66, 66, 66)
-        foreground = rgbaColor(255, 255, 255)
+        background = `var`("surface")
+        foreground = `var`("onSurface")
         shape = roundedCornerShape(50)
     }
     FlorisImeUi.SmartbarPrimarySecondaryRowToggle {
@@ -141,7 +160,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = rectangleShape()
     }
     FlorisImeUi.SmartbarCandidateWord(pressedSelector = true) {
-        background = rgbaColor(66, 66, 66)
+        background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
     FlorisImeUi.SmartbarCandidateClip {
@@ -151,7 +170,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(8)
     }
     FlorisImeUi.SmartbarCandidateClip(pressedSelector = true) {
-        background = rgbaColor(66, 66, 66)
+        background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
     FlorisImeUi.SmartbarCandidateSpacer {
@@ -165,12 +184,12 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.SmartbarKey(pressedSelector = true) {
-        background = rgbaColor(66, 66, 66)
+        background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
     FlorisImeUi.SmartbarKey(disabledSelector = true) {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(66, 66, 66)
+        foreground = `var`("surface")
     }
 
     FlorisImeUi.SystemNavBar {
@@ -179,7 +198,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
 }
 
 object FlorisImeTheme {
-    val config: ThemeExtensionConfig
+    val config: ThemeExtensionComponent
         @Composable
         @ReadOnlyComposable
         get() = LocalConfig.current
@@ -192,13 +211,12 @@ object FlorisImeTheme {
 
 @Composable
 fun FlorisImeTheme(content: @Composable () -> Unit) {
-    // TODO: this should be dynamically selected for user themes
-    val activeConfig = remember {
-        ThemeExtensionConfig(stylesheet = "")
-    }
-    val activeStyle = remember {
-        FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec)
-    }
+    val context = LocalContext.current
+    val themeManager by context.themeManager()
+
+    val activeThemeInfo by themeManager.activeThemeInfo.observeAsNonNullState()
+    val activeConfig = remember(activeThemeInfo) { activeThemeInfo.config }
+    val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
     CompositionLocalProvider(LocalConfig provides activeConfig, LocalStyle provides activeStyle) {
         content()
     }

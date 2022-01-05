@@ -15,6 +15,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="dev.patrickgold.florisboard">
 
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
@@ -40,7 +41,7 @@
         android:label="@string/floris_app_name"
         android:roundIcon="@mipmap/floris_app_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/SettingsTheme">
+        android:theme="@style/FlorisAppTheme">
 
         <!-- IME service -->
         <service
@@ -48,7 +49,8 @@
             android:label="@string/floris_app_name"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:directBootAware="true"
-            android:exported="true">
+            android:exported="true"
+            tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.view.InputMethod"/>
             </intent-filter>
@@ -75,7 +77,12 @@
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/FlorisAppTheme"/>
+            android:theme="@style/FlorisAppTheme"
+            android:exported="false">
+            <intent-filter>
+                <data android:scheme="florisboard" android:host="app-ui"/>
+            </intent-filter>
+        </activity>
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias
@@ -93,26 +100,23 @@
             </intent-filter>
         </activity-alias>
 
-        <!-- User Dictionary Manager Activity -->
+        <!-- Import File Bridging Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.oldsettings.UdmActivity"
+            android:name="dev.patrickgold.florisboard.app.ui.ext.ImportFileActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
-            android:theme="@style/SettingsTheme"/>
-
-        <!-- Theme Selector Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.oldsettings.ThemeManagerActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/settings__title"
-            android:theme="@style/SettingsTheme"/>
-
-        <!-- Theme Editor Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.oldsettings.ThemeEditorActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/settings__theme_editor__title"
-            android:theme="@style/SettingsTheme"/>
+            android:launchMode="singleTask"
+            android:roundIcon="@mipmap/floris_app_icon_round"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/FlorisAppTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="*" android:host="*" android:pathPattern=".*\\.flex"/>
+                <data android:scheme="*" android:host="*" android:pathPattern=".*\\.xpi"/>
+            </intent-filter>
+        </activity>
 
         <!-- Crash Dialog Activity -->
         <activity

@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.snygg
 
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -29,6 +28,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.Comparator
+
+private const val ANNOTATION_MARKER = '@'
 
 private const val ATTRIBUTE_OPEN = '['
 private const val ATTRIBUTE_CLOSE = ']'
@@ -45,6 +46,7 @@ private const val DISABLED_SELECTOR = "disabled"
 
 @Serializable(with = SnyggRuleSerializer::class)
 data class SnyggRule(
+    val isAnnotation: Boolean = false,
     val element: String,
     val codes: List<Int> = listOf(),
     val groups: List<Int> = listOf(),
@@ -56,9 +58,10 @@ data class SnyggRule(
     companion object {
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
-            """^[a-zA-Z0-9-]+(\[(code|group|normal)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
+            """^(@?)[a-zA-Z0-9-]+(\[(code|group|mode)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
         private val placeholders = mapOf(
             "c:delete" to KeyCode.DELETE,
+            "c:enter" to KeyCode.ENTER,
             "c:shift" to KeyCode.SHIFT,
             "c:space" to KeyCode.SPACE,
             "m:normal" to InputMode.NORMAL.value,
@@ -67,9 +70,15 @@ data class SnyggRule(
         )
 
         val Comparator = Comparator<SnyggRule> { a, b ->
-            when (val elem = a.element.compareTo(b.element)) {
-                0 -> a.comparatorWeight() - b.comparatorWeight()
-                else -> elem
+            when {
+                a.isAnnotation && !b.isAnnotation -> -1
+                !a.isAnnotation && b.isAnnotation -> 1
+                else /* a.isAnnotation == b.isAnnotation */ -> {
+                    when (val elem = a.element.compareTo(b.element)) {
+                        0 -> a.comparatorWeight() - b.comparatorWeight()
+                        else -> elem
+                    }
+                }
             }
         }
 
@@ -97,7 +106,8 @@ data class SnyggRule(
                 val groups = mutableListOf<Int>()
                 val modes = mutableListOf<Int>()
                 val attributes = elementAndAttributes.split(ATTRIBUTE_OPEN, ATTRIBUTE_CLOSE)
-                val element = attributes[0]
+                val isAnnotation = attributes[0].startsWith(ANNOTATION_MARKER)
+                val element = if (isAnnotation) attributes[0].substring(1) else attributes[0]
                 if (attributes.size > 1) {
                     for (attribute in attributes.listIterator(1)) {
                         if (attribute.isBlank()) continue
@@ -112,7 +122,7 @@ data class SnyggRule(
                     }
                 }
                 return SnyggRule(
-                    element, codes.toList(), groups.toList(), modes.toList(),
+                    isAnnotation, element, codes.toList(), groups.toList(), modes.toList(),
                     pressedSelector, focusSelector, disabledSelector,
                 )
             } catch (e: Exception) {
@@ -125,7 +135,10 @@ data class SnyggRule(
         return Comparator.compare(this, other)
     }
 
-    override fun toString() = stringBuilder {
+    override fun toString() = buildString {
+        if (isAnnotation) {
+            append(ANNOTATION_MARKER)
+        }
         append(element)
         appendAttribute(CODES_KEY, codes)
         appendAttribute(GROUPS_KEY, groups)
@@ -136,6 +149,7 @@ data class SnyggRule(
     }
 
     fun edit() = SnyggRuleEditor(
+        isAnnotation,
         element,
         codes.toMutableList(),
         groups.toMutableList(),
@@ -178,6 +192,7 @@ data class SnyggRule(
 }
 
 class SnyggRuleEditor(
+    var isAnnotation: Boolean = false,
     var element: String = "",
     val codes: MutableList<Int> = mutableListOf(),
     val groups: MutableList<Int> = mutableListOf(),
@@ -186,7 +201,10 @@ class SnyggRuleEditor(
     var focusSelector: Boolean = false,
     var disabledSelector: Boolean = false,
 ) {
-    fun build() = SnyggRule(element, codes, groups, modes, pressedSelector, focusSelector, disabledSelector)
+    fun build() = SnyggRule(
+        isAnnotation, element, codes, groups, modes,
+        pressedSelector, focusSelector, disabledSelector,
+    )
 }
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -199,6 +217,6 @@ class SnyggRuleSerializer : KSerializer<SnyggRule> {
     }
 
     override fun deserialize(decoder: Decoder): SnyggRule {
-        return SnyggRule.from(decoder.decodeString()) ?: SnyggRule("invalid")
+        return SnyggRule.from(decoder.decodeString()) ?: SnyggRule(element = "invalid")
     }
 }

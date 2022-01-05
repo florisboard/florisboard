@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.snygg
 
+import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
 
@@ -56,7 +57,9 @@ data class SnyggPropertySetSpec(val supportedProperties: List<SnyggPropertySpec>
 class SnyggPropertySetSpecBuilder {
     private var supportedProperties = mutableListOf<SnyggPropertySpec>()
 
-    fun supportedValues(vararg encoders: SnyggValueEncoder) = listOf(SnyggExplicitInheritValue, *encoders)
+    fun supportedValues(vararg encoders: SnyggValueEncoder) = listOf(
+        SnyggExplicitInheritValue, SnyggDefinedVarValue, *encoders,
+    )
 
     fun property(name: String, level: SnyggLevel, supportedValues: List<SnyggValueEncoder>) {
         supportedProperties.add(SnyggPropertySpec(name, level, supportedValues))

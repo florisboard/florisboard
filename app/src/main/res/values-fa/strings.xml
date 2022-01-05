@@ -88,7 +88,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدیریت طرح‌ضمینه (روز)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدیریت طرح‌ضمینه (شب)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">ساختن طرح‌زمینه خالی</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">ساختن از طرح‌زمینه انتخاب شده</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">سفارشی (بر اساس %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">طرح‌زمینه جدید</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم با موفقیت افزوده شد!</string>
@@ -274,34 +273,28 @@
     <string name="about__third_party_licenses__title" comment="Preference title">گواهی های شخص ثالث</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">گواهی های استفاده از کتابخانه های شخص ثالث استفاده شده در این برنامه</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">سازنده</item>
-        <item quantity="other">سازندگان</item>
-    </plurals>
-    <string name="assets__file__name">نام</string>
-    <string name="assets__file__source">منبع</string>
-    <string name="assets__action__add">اضافه کردن</string>
-    <string name="assets__action__apply">اعمال</string>
-    <string name="assets__action__cancel">لغو</string>
-    <string name="assets__action__cancel_confirm_title">تائید لغو</string>
-    <string name="assets__action__cancel_confirm_message">آیا مطمئنید که می خواهید هر یک از تغییرات ذخیره نشده را لغو کنید؟ این عمل در صورت اجرا غیرقابل بازگشت خواهد بود.</string>
-    <string name="assets__action__default">پیشفرض</string>
-    <string name="assets__action__delete">حذف</string>
-    <string name="assets__action__delete_confirm_title">تائید حذف</string>
-    <string name="assets__action__edit">ویرایش</string>
-    <string name="assets__action__export">استخراج</string>
-    <string name="assets__action__import">واردکردن</string>
-    <string name="assets__action__no">خیر</string>
-    <string name="assets__action__ok">تأیید</string>
-    <string name="assets__action__save">ذخیره</string>
-    <string name="assets__action__select">انتخاب</string>
-    <string name="assets__action__select_dir">انتخاب مسیر</string>
-    <string name="assets__action__select_file">انتخاب فایل</string>
-    <string name="assets__action__yes">بله</string>
-    <string name="assets__error__title">خطا</string>
-    <string name="assets__error__details">جزئیات</string>
-    <string name="assets__error__invalid">نامعتبر</string>
-    <string name="assets__error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
+    <string name="action__add">اضافه کردن</string>
+    <string name="action__apply">اعمال</string>
+    <string name="action__cancel">لغو</string>
+    <string name="action__cancel_confirm_title">تائید لغو</string>
+    <string name="action__cancel_confirm_message">آیا مطمئنید که می خواهید هر یک از تغییرات ذخیره نشده را لغو کنید؟ این عمل در صورت اجرا غیرقابل بازگشت خواهد بود.</string>
+    <string name="action__default">پیشفرض</string>
+    <string name="action__delete">حذف</string>
+    <string name="action__delete_confirm_title">تائید حذف</string>
+    <string name="action__edit">ویرایش</string>
+    <string name="action__export">استخراج</string>
+    <string name="action__import">واردکردن</string>
+    <string name="action__no">خیر</string>
+    <string name="action__ok">تأیید</string>
+    <string name="action__save">ذخیره</string>
+    <string name="action__select">انتخاب</string>
+    <string name="action__select_dir">انتخاب مسیر</string>
+    <string name="action__select_file">انتخاب فایل</string>
+    <string name="action__yes">بله</string>
+    <string name="error__title">خطا</string>
+    <string name="error__details">جزئیات</string>
+    <string name="error__invalid">نامعتبر</string>
+    <string name="error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>

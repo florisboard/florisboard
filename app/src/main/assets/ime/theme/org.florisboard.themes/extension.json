@@ -1,0 +1,29 @@
+{
+  "$": "ime.extension.theme",
+  "meta": {
+    "id": "org.florisboard.themes",
+    "version": "0.1.0",
+    "title": "FlorisBoard default themes",
+    "description": "Default themes (both day and night) for the keyboard UI",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "license": "apache-2.0"
+  },
+  "themes": [
+    {
+      "id": "floris_day",
+      "label": "Floris Day",
+      "authors": [ "patrickgold" ],
+      "isNight": false,
+      "isBorderless": false,
+      "isMaterialYouAware": false
+    },
+    {
+      "id": "floris_night",
+      "label": "Floris Night",
+      "authors": [ "patrickgold" ],
+      "isNight": true,
+      "isBorderless": false,
+      "isMaterialYouAware": false
+    }
+  ]
+}

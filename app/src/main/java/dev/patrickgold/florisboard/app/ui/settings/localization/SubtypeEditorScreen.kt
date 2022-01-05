@@ -224,10 +224,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     bottomBar {
         FlorisButtonBar {
             ButtonBarSpacer()
-            ButtonBarButton(text = stringRes(R.string.assets__action__cancel)) {
+            ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
                 navController.popBackStack()
             }
-            ButtonBarButton(text = stringRes(R.string.assets__action__save)) {
+            ButtonBarButton(text = stringRes(R.string.action__save)) {
                 subtypeEditor.toSubtype().onSuccess { subtype ->
                     if (id == null) {
                         if (!subtypeManager.addSubtype(subtype)) {
@@ -484,7 +484,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
         errorDialogStrId?.let { strId ->
             JetPrefAlertDialog(
-                title = stringRes(R.string.assets__error__title),
+                title = stringRes(R.string.error__title),
                 confirmLabel = stringRes(android.R.string.ok),
                 onConfirm = {
                     errorDialogStrId = null

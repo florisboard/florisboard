@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.gestures
 
-import android.content.Context
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import androidx.compose.ui.unit.dp
@@ -39,7 +38,7 @@ abstract class SwipeGesture {
      *
      * @property listener The listener to report detected swipes to.
      */
-    class Detector(private val context: Context, private val listener: Listener) {
+    class Detector(private val listener: Listener) {
         private val prefs by florisPreferenceModel()
 
         var isEnabled: Boolean = true
@@ -50,8 +49,6 @@ abstract class SwipeGesture {
          * Method which evaluates if a given [event] is a gesture.
          *
          * @param event The MotionEvent which should be checked for a gesture.
-         * @param alwaysTriggerOnMove Set to true if the moving detection algorithm should always
-         *  trigger, regardless of the distance from the previous event. Defaults to false.
          * @return True if the given [event] is a gesture, false otherwise.
          */
         fun onTouchEvent(event: MotionEvent) {
@@ -142,6 +139,7 @@ abstract class SwipeGesture {
             return false
         }
 
+        @Suppress("UNUSED_PARAMETER")
         fun onTouchCancel(event: MotionEvent, pointer: Pointer) {
             if (!isEnabled) return
             pointerMap.removeById(pointer.id)

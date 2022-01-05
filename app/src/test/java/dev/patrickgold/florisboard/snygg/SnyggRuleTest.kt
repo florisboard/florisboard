@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 
 class SnyggRuleTest : FreeSpec({
     val validTestPairs = listOf(
+        "@annotation" to SnyggRule(isAnnotation = true, element = "annotation"),
         "button" to SnyggRule(element = "button"),
         "button-name" to SnyggRule(element = "button-name"),
         "button042" to SnyggRule(element = "button042"),

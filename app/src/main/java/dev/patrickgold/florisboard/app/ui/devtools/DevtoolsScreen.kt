@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.devtools
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +24,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.AndroidSettings
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -33,7 +33,6 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
@@ -42,6 +41,7 @@ class DebugOnPurposeCrashException : Exception(
 @Composable
 fun DevtoolsScreen() = FlorisScreen {
     title = stringRes(R.string.devtools__title)
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
@@ -64,6 +64,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 prefs.devtools.showPrimaryClip,
                 title = stringRes(R.string.devtools__show_primary_clip__label),
                 summary = stringRes(R.string.devtools__show_primary_clip__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.devtools.showSpellingOverlay,
+                title = stringRes(R.string.devtools__show_spelling_overlay__label),
+                summary = stringRes(R.string.devtools__show_spelling_overlay__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             // TODO: remove this preference once word suggestions are re-implemented in 0.3.15/16
@@ -154,9 +160,7 @@ fun DevtoolsScreen() = FlorisScreen {
         }
 
         if (showDialog) {
-            JetPrefAlertDialog(
-                title = stringRes(R.string.assets__action__delete_confirm_title),
-                confirmLabel = stringRes(R.string.assets__action__delete),
+            FlorisConfirmDeleteDialog(
                 onConfirm = {
                     DictionaryManager.default().let {
                         it.loadUserDictionariesIfNecessary()
@@ -164,16 +168,9 @@ fun DevtoolsScreen() = FlorisScreen {
                     }
                     setShowDialog(false)
                 },
-                dismissLabel = stringRes(R.string.assets__action__cancel),
                 onDismiss = { setShowDialog(false) },
-            ) {
-                Text(
-                    text = stringRes(
-                        R.string.assets__action__delete_confirm_message,
-                        "database_name" to FlorisUserDictionaryDatabase.DB_FILE_NAME,
-                    )
-                )
-            }
+                what = FlorisUserDictionaryDatabase.DB_FILE_NAME,
+            )
         }
     }
 }

@@ -77,7 +77,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Témakezelő (nappali)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Témakezelő (éjszakai)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Üres téma létrehozása</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Létrehozás a kiválasztott témából</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Egyéni (ezen alapul: %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Új téma</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Téma sikeresen importálva!</string>
@@ -219,31 +218,25 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verzió a vágólapra másolva</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Készítő</item>
-        <item quantity="other">Készítők</item>
-    </plurals>
-    <string name="assets__file__name">Név</string>
-    <string name="assets__file__source">Forrás</string>
-    <string name="assets__action__add">Hozzáadás</string>
-    <string name="assets__action__apply">Alkalmaz</string>
-    <string name="assets__action__cancel">Mégse</string>
-    <string name="assets__action__cancel_confirm_title">Kilépés megerősítése</string>
-    <string name="assets__action__cancel_confirm_message">Biztosan el szeretne vetni minden mentetlen változtatást? Ezt a műveletet nem lehet visszavonni.</string>
-    <string name="assets__action__delete">Törlés</string>
-    <string name="assets__action__delete_confirm_title">Törlés megerősítése</string>
-    <string name="assets__action__edit">Szerkesztés</string>
-    <string name="assets__action__export">Exportálás</string>
-    <string name="assets__action__import">Importálás</string>
-    <string name="assets__action__no">Nem</string>
-    <string name="assets__action__save">Mentés</string>
-    <string name="assets__action__select">Kiválasztás</string>
-    <string name="assets__action__select_dir">Könyvtár kiválasztása</string>
-    <string name="assets__action__select_file">Fájl kiválasztása</string>
-    <string name="assets__action__yes">Igen</string>
-    <string name="assets__error__details">Részletek</string>
-    <string name="assets__error__invalid">Érvénytelen</string>
-    <string name="assets__error__snackbar_message">Valami rosszul sült el</string>
+    <string name="action__add">Hozzáadás</string>
+    <string name="action__apply">Alkalmaz</string>
+    <string name="action__cancel">Mégse</string>
+    <string name="action__cancel_confirm_title">Kilépés megerősítése</string>
+    <string name="action__cancel_confirm_message">Biztosan el szeretne vetni minden mentetlen változtatást? Ezt a műveletet nem lehet visszavonni.</string>
+    <string name="action__delete">Törlés</string>
+    <string name="action__delete_confirm_title">Törlés megerősítése</string>
+    <string name="action__edit">Szerkesztés</string>
+    <string name="action__export">Exportálás</string>
+    <string name="action__import">Importálás</string>
+    <string name="action__no">Nem</string>
+    <string name="action__save">Mentés</string>
+    <string name="action__select">Kiválasztás</string>
+    <string name="action__select_dir">Könyvtár kiválasztása</string>
+    <string name="action__select_file">Fájl kiválasztása</string>
+    <string name="action__yes">Igen</string>
+    <string name="error__details">Részletek</string>
+    <string name="error__invalid">Érvénytelen</string>
+    <string name="error__snackbar_message">Valami rosszul sült el</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hibajelentés</string>

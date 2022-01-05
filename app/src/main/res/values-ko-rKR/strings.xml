@@ -68,9 +68,9 @@
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->
-    <string name="assets__action__yes">예</string>
-    <string name="assets__error__details">세부사항</string>
-    <string name="assets__error__invalid">유효하지 않음</string>
+    <string name="action__yes">예</string>
+    <string name="error__details">세부사항</string>
+    <string name="error__invalid">유효하지 않음</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->

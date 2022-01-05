@@ -16,11 +16,11 @@
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
-    <string name="assets__action__no">Ne</string>
-    <string name="assets__action__select">Auswählen</string>
-    <string name="assets__action__select_dir">Verzeichnis wählen</string>
-    <string name="assets__action__select_file">Datei auswählen</string>
-    <string name="assets__action__yes">Jau</string>
+    <string name="action__no">Ne</string>
+    <string name="action__select">Auswählen</string>
+    <string name="action__select_dir">Verzeichnis wählen</string>
+    <string name="action__select_file">Datei auswählen</string>
+    <string name="action__yes">Jau</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->

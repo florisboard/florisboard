@@ -35,21 +35,22 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -59,6 +60,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
+import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
@@ -182,14 +184,13 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     }
 
     private val prefs by florisPreferenceModel()
-    private val clipboardManager by clipboardManager()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
-    private var inputWindowView: View? = null
-    private var inputViewSize: IntSize = IntSize.Zero
+    private var inputWindowView by mutableStateOf<View?>(null)
+    private var inputViewSize by mutableStateOf(IntSize.Zero)
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
 
@@ -416,8 +417,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                     FlorisImeTheme {
                         // Outer box is necessary as an "outer window"
                         Box(modifier = Modifier.fillMaxSize()) {
+                            DevtoolsUi()
                             ImeUi()
-                            DevtoolsOverlays()
                         }
                         SystemUiIme()
                     }
@@ -489,18 +490,19 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     }
 
     @Composable
-    private fun BoxScope.DevtoolsOverlays() {
+    private fun BoxScope.DevtoolsUi() = with(LocalDensity.current) {
         val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
         if (devtoolsEnabled) {
-            val devtoolsShowPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
-            if (devtoolsShowPrimaryClip) {
-                val primaryClip by clipboardManager.primaryClip.observeAsState()
-                Text(
-                    modifier = Modifier.align(Alignment.TopStart),
-                    text = primaryClip.toString(),
-                    color = Color.White,
-                )
-            }
+            val maxHeight = inputWindowView?.measuredHeight?.let { windowHeight ->
+                windowHeight - inputViewSize.height - FlorisImeSizing.Static.smartbarHeightPx
+            } ?: inputViewSize.height
+            DevtoolsOverlay(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .heightIn(max = maxHeight.toDp())
+                    .align(Alignment.TopStart),
+            )
         }
     }
 

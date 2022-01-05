@@ -47,3 +47,7 @@ inline fun <T> resultErr(error: Throwable): Result<T> {
 inline fun <T> resultErrStr(error: String): Result<T> {
     return Result.failure(Exception(error))
 }
+
+inline fun Result<*>.throwOnFailure() {
+    getOrThrow()
+}

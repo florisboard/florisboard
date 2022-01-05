@@ -97,7 +97,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدير الثيم (نهاري)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدير الثيم (ليلي)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">إنشاء ثيم فارغ جديد</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">إنشاء من الثيم المحدد</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">مخصص (على أساس %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ثيم جديد</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم استيراد الثيم بنجاح!</string>
@@ -345,39 +344,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">تراخيص الأطراف الثالثة</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">تراخيص مكتبات الطرف الثالث المدرجة في هذا التطبيق</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="zero">المؤلف</item>
-        <item quantity="one">المؤلف</item>
-        <item quantity="two">المؤلفون</item>
-        <item quantity="few">كُتَّاب</item>
-        <item quantity="many">كُتَّاب</item>
-        <item quantity="other">المؤلفون</item>
-    </plurals>
-    <string name="assets__file__name">الاسم</string>
-    <string name="assets__file__source">المصدر</string>
-    <string name="assets__action__add">إضافة</string>
-    <string name="assets__action__apply">تطبيق</string>
-    <string name="assets__action__cancel">إلغاء</string>
-    <string name="assets__action__cancel_confirm_title">تأكيد الإلغاء</string>
-    <string name="assets__action__cancel_confirm_message">هل أنت متأكد أنك تريد تجاهل أي تغييرات غير محفوظة؟ لا يمكن التراجع عن هذا الإجراء بمجرد تنفيذه.</string>
-    <string name="assets__action__default">الإفتراضي</string>
-    <string name="assets__action__delete">حذف</string>
-    <string name="assets__action__delete_confirm_title">تأكيد الحذف</string>
-    <string name="assets__action__delete_confirm_message">هل أنت متأكد من حذف \"{database_name}\"؟ لا يمكن التراجع عن هذا الإجراء.</string>
-    <string name="assets__action__edit">تعديل</string>
-    <string name="assets__action__export">تصدير</string>
-    <string name="assets__action__import">استيراد</string>
-    <string name="assets__action__no">كلا</string>
-    <string name="assets__action__ok">حسناً</string>
-    <string name="assets__action__save">حفظ</string>
-    <string name="assets__action__select">اختيار</string>
-    <string name="assets__action__select_dir">اختر مسار</string>
-    <string name="assets__action__select_file">اختر ملفًا</string>
-    <string name="assets__action__yes">موافق</string>
-    <string name="assets__error__title">خطأ</string>
-    <string name="assets__error__details">التفاصيل</string>
-    <string name="assets__error__invalid">غير صحيح</string>
-    <string name="assets__error__snackbar_message">لقد حدث خطأ ما</string>
+    <string name="action__add">إضافة</string>
+    <string name="action__apply">تطبيق</string>
+    <string name="action__cancel">إلغاء</string>
+    <string name="action__cancel_confirm_title">تأكيد الإلغاء</string>
+    <string name="action__cancel_confirm_message">هل أنت متأكد أنك تريد تجاهل أي تغييرات غير محفوظة؟ لا يمكن التراجع عن هذا الإجراء بمجرد تنفيذه.</string>
+    <string name="action__default">الإفتراضي</string>
+    <string name="action__delete">حذف</string>
+    <string name="action__delete_confirm_title">تأكيد الحذف</string>
+    <string name="action__delete_confirm_message">هل أنت متأكد من حذف \"{database_name}\"؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="action__edit">تعديل</string>
+    <string name="action__export">تصدير</string>
+    <string name="action__import">استيراد</string>
+    <string name="action__no">كلا</string>
+    <string name="action__ok">حسناً</string>
+    <string name="action__save">حفظ</string>
+    <string name="action__select">اختيار</string>
+    <string name="action__select_dir">اختر مسار</string>
+    <string name="action__select_file">اختر ملفًا</string>
+    <string name="action__yes">موافق</string>
+    <string name="error__title">خطأ</string>
+    <string name="error__details">التفاصيل</string>
+    <string name="error__invalid">غير صحيح</string>
+    <string name="error__snackbar_message">لقد حدث خطأ ما</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">مرحباً!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">شكرًا لاستخدامك {app_name}! سيرشدك هذا الإعداد السريع خلال الخطوات المطلوبة لاستخدام {app_name} على جهازك.</string>

@@ -1,7 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 
 /**
@@ -11,6 +10,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 interface GlideTypingClassifier {
     /**
      * Called to notify gesture classifier that it can add a new point to the gesture.
+     *
      * @param position The position to add
      */
     fun addGesturePoint(position: GlideTypingGesture.Detector.Position)

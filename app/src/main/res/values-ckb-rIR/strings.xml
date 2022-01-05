@@ -97,7 +97,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">ڕێکخستنی ڕووکار (ڕووناک)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">ڕێکخستنی ڕووکار (تاریک)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">دروستکردنی ڕووکار</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">دروستکردن لە ڕووکارە بەردەستەکان</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">تایبەت (سەرچاوەکراوە لە %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ڕووکاری نوێ</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">ڕووکار بەسەرکەتوویی هێنرا!</string>
@@ -345,35 +344,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">مۆڵەتی سەرچاوە-دەرەکییەکان</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">مۆڵەتی ئەو سەرچاوە-دەرەکییانەی کە لە بەرنامەکەدا بەکارهاتووە</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">دارێژەر</item>
-        <item quantity="other">دارێژەر</item>
-    </plurals>
-    <string name="assets__file__name">ناو</string>
-    <string name="assets__file__source">سەرچاوە</string>
-    <string name="assets__action__add">زیادکردن</string>
-    <string name="assets__action__apply">جێبەجێکردن</string>
-    <string name="assets__action__cancel">پاشگەزبونەوە</string>
-    <string name="assets__action__cancel_confirm_title">دڵنیاکردنەوە</string>
-    <string name="assets__action__cancel_confirm_message">ئایا دڵنیایت لەوەی دەتەوێت گۆڕانکاریە هەڵنەگیراوەکان پشتگوێ بخەیت؟ ئەم کارە ناکرێت یەکجار جێبەجێکرا ناتوانرێ بگەڕێتەوە.</string>
-    <string name="assets__action__default">بنەڕەتی</string>
-    <string name="assets__action__delete">سڕینەوە</string>
-    <string name="assets__action__delete_confirm_title">دڵنیاکردنەوە</string>
-    <string name="assets__action__delete_confirm_message">ئایا دڵنیایت لە سڕینەوەی \"{database_name}\"؟ ئەم فرمانە ناتوانرێ بگەرێندرێتەوە کە یەکجار جێبەجێکرا.</string>
-    <string name="assets__action__edit">دەستکاریکردن</string>
-    <string name="assets__action__export">هەڵگرتن</string>
-    <string name="assets__action__import">هێنان</string>
-    <string name="assets__action__no">نەخێر</string>
-    <string name="assets__action__ok">باشە</string>
-    <string name="assets__action__save">پاراستن</string>
-    <string name="assets__action__select">دیاریکردن</string>
-    <string name="assets__action__select_dir">فۆڵدەر دیاریبکە</string>
-    <string name="assets__action__select_file">فایلێک دیاریبکە</string>
-    <string name="assets__action__yes">بەڵێ</string>
-    <string name="assets__error__title">هەڵەیەک ڕوویدا</string>
-    <string name="assets__error__details">زانیاری زیاتر</string>
-    <string name="assets__error__invalid">نا درووستە</string>
-    <string name="assets__error__snackbar_message">هەڵەیەکی نەزانراو ڕوویدا</string>
+    <string name="action__add">زیادکردن</string>
+    <string name="action__apply">جێبەجێکردن</string>
+    <string name="action__cancel">پاشگەزبونەوە</string>
+    <string name="action__cancel_confirm_title">دڵنیاکردنەوە</string>
+    <string name="action__cancel_confirm_message">ئایا دڵنیایت لەوەی دەتەوێت گۆڕانکاریە هەڵنەگیراوەکان پشتگوێ بخەیت؟ ئەم کارە ناکرێت یەکجار جێبەجێکرا ناتوانرێ بگەڕێتەوە.</string>
+    <string name="action__default">بنەڕەتی</string>
+    <string name="action__delete">سڕینەوە</string>
+    <string name="action__delete_confirm_title">دڵنیاکردنەوە</string>
+    <string name="action__delete_confirm_message">ئایا دڵنیایت لە سڕینەوەی \"{database_name}\"؟ ئەم فرمانە ناتوانرێ بگەرێندرێتەوە کە یەکجار جێبەجێکرا.</string>
+    <string name="action__edit">دەستکاریکردن</string>
+    <string name="action__export">هەڵگرتن</string>
+    <string name="action__import">هێنان</string>
+    <string name="action__no">نەخێر</string>
+    <string name="action__ok">باشە</string>
+    <string name="action__save">پاراستن</string>
+    <string name="action__select">دیاریکردن</string>
+    <string name="action__select_dir">فۆڵدەر دیاریبکە</string>
+    <string name="action__select_file">فایلێک دیاریبکە</string>
+    <string name="action__yes">بەڵێ</string>
+    <string name="error__title">هەڵەیەک ڕوویدا</string>
+    <string name="error__details">زانیاری زیاتر</string>
+    <string name="error__invalid">نا درووستە</string>
+    <string name="error__snackbar_message">هەڵەیەکی نەزانراو ڕوویدا</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">بەخێربێیت!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">سوپاس بۆ بەکارهێنانی {app_name}! ئەم فێرکارییە یارمەتیت دەدات بۆ چالاککردن و ڕێکخستنی {app_name} لەسەر مۆبایلەکەت.</string>

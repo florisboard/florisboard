@@ -42,6 +42,7 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 @Composable
 fun LocalizationScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__title)
+    previewFieldVisible = true
     iconSpaceReserved = false
 
     val navController = LocalNavController.current

@@ -82,7 +82,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestore Tema (Giorno)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestore Tema (Notte)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crea tema vuoto</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Crea dal tema selezionato</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalizzato (basato su %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nuovo tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importato correttamente!</string>
@@ -322,34 +321,28 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Licenze di terze parti</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenze delle librerie di terze parti incluse in questa app</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Autore</item>
-        <item quantity="other">Autori</item>
-    </plurals>
-    <string name="assets__file__name">Nome</string>
-    <string name="assets__file__source">Fonte</string>
-    <string name="assets__action__add">Aggiungi</string>
-    <string name="assets__action__apply">Applica</string>
-    <string name="assets__action__cancel">Annulla</string>
-    <string name="assets__action__cancel_confirm_title">Conferma anulla</string>
-    <string name="assets__action__cancel_confirm_message">Sei sicuro di volere cancellare gli cambiamenti non salvati? Questo non può essere annullato.</string>
-    <string name="assets__action__default">Predefinito</string>
-    <string name="assets__action__delete">Elimina</string>
-    <string name="assets__action__delete_confirm_title">Conferma eliminazione</string>
-    <string name="assets__action__delete_confirm_message">Sei sicuro di volere eliminare \"{database_name}\"? Questa azione non può essere annullata una volta eseguita.</string>
-    <string name="assets__action__edit">Modifica</string>
-    <string name="assets__action__export">Esporta</string>
-    <string name="assets__action__import">Importa</string>
-    <string name="assets__action__no">No</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Salva</string>
-    <string name="assets__action__select">Seleziona</string>
-    <string name="assets__action__select_dir">Seleziona la cartella</string>
-    <string name="assets__action__select_file">Seleziona il file</string>
-    <string name="assets__action__yes">Sì</string>
-    <string name="assets__error__details">Dettagli</string>
-    <string name="assets__error__invalid">Invalido</string>
-    <string name="assets__error__snackbar_message">Qualcosa è andato storto</string>
+    <string name="action__add">Aggiungi</string>
+    <string name="action__apply">Applica</string>
+    <string name="action__cancel">Annulla</string>
+    <string name="action__cancel_confirm_title">Conferma anulla</string>
+    <string name="action__cancel_confirm_message">Sei sicuro di volere cancellare gli cambiamenti non salvati? Questo non può essere annullato.</string>
+    <string name="action__default">Predefinito</string>
+    <string name="action__delete">Elimina</string>
+    <string name="action__delete_confirm_title">Conferma eliminazione</string>
+    <string name="action__delete_confirm_message">Sei sicuro di volere eliminare \"{database_name}\"? Questa azione non può essere annullata una volta eseguita.</string>
+    <string name="action__edit">Modifica</string>
+    <string name="action__export">Esporta</string>
+    <string name="action__import">Importa</string>
+    <string name="action__no">No</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Salva</string>
+    <string name="action__select">Seleziona</string>
+    <string name="action__select_dir">Seleziona la cartella</string>
+    <string name="action__select_file">Seleziona il file</string>
+    <string name="action__yes">Sì</string>
+    <string name="error__details">Dettagli</string>
+    <string name="error__invalid">Invalido</string>
+    <string name="error__snackbar_message">Qualcosa è andato storto</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Benvenuto!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Informativa sulla privacy</string>

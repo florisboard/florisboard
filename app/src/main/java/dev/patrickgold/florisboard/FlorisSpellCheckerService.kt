@@ -32,6 +32,7 @@ import kotlinx.coroutines.runBlocking
 class FlorisSpellCheckerService : SpellCheckerService() {
     private val prefs by florisPreferenceModel()
     private val dictionaryManager get() = DictionaryManager.default()
+    private val spellingManager by spellingManager()
     private val spellingService by spellingService()
     private val subtypeManager by subtypeManager()
 
@@ -82,7 +83,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private fun spellMultiple(
             spellingLocale: FlorisLocale,
             textInfos: Array<out TextInfo>,
-            suggestionsLimit: Int
+            suggestionsLimit: Int,
         ): Array<SuggestionsInfo> = runBlocking {
             val retInfos = Array(textInfos.size) { n ->
                 val word = textInfos[n].text ?: ""
@@ -102,13 +103,15 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             setupSpellingIfNecessary()
             val spellingLocale = cachedSpellingLocale ?: return SpellingService.emptySuggestionsInfo()
 
-            return spellingService.spell(spellingLocale, textInfo.text, suggestionsLimit)
+            return spellingService
+                .spell(spellingLocale, textInfo.text, suggestionsLimit)
+                .sendToDebugOverlayIfEnabled(textInfo)
         }
 
         override fun onGetSuggestionsMultiple(
             textInfos: Array<out TextInfo>?,
             suggestionsLimit: Int,
-            sequentialWords: Boolean
+            sequentialWords: Boolean,
         ): Array<SuggestionsInfo> {
             flogInfo(LogTopic.SPELL_EVENTS)
 
@@ -116,12 +119,12 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             setupSpellingIfNecessary()
             val spellingLocale = cachedSpellingLocale ?: return emptyArray()
 
-            return spellMultiple(spellingLocale, textInfos, suggestionsLimit)
+            return spellMultiple(spellingLocale, textInfos, suggestionsLimit).sendToDebugOverlayIfEnabled(textInfos)
         }
 
         override fun onGetSentenceSuggestionsMultiple(
             textInfos: Array<out TextInfo>?,
-            suggestionsLimit: Int
+            suggestionsLimit: Int,
         ): Array<SentenceSuggestionsInfo> {
             flogInfo(LogTopic.SPELL_EVENTS)
 
@@ -133,12 +136,38 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             flogInfo(LogTopic.SPELL_EVENTS)
 
             super.onCancel()
+            if (prefs.devtools.showSpellingOverlay.get()) {
+                spellingManager.clearDebugOverlay()
+            }
         }
 
         override fun onClose() {
             flogInfo(LogTopic.SPELL_EVENTS)
 
             super.onClose()
+            if (prefs.devtools.showSpellingOverlay.get()) {
+                spellingManager.clearDebugOverlay()
+            }
+        }
+
+        fun SuggestionsInfo.sendToDebugOverlayIfEnabled(
+            textInfo: TextInfo,
+        ): SuggestionsInfo {
+            if (prefs.devtools.showSpellingOverlay.get()) {
+                spellingManager.addToDebugOverlay(textInfo.text, this)
+            }
+            return this
+        }
+
+        fun Array<SuggestionsInfo>.sendToDebugOverlayIfEnabled(
+            textInfos: Array<out TextInfo>,
+        ): Array<SuggestionsInfo> {
+            if (prefs.devtools.showSpellingOverlay.get()) {
+                for ((n, info) in this.withIndex()) {
+                    spellingManager.addToDebugOverlay(textInfos[n].text, info)
+                }
+            }
+            return this
         }
     }
 }

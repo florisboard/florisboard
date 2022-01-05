@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.res.ext
 
 import android.content.Context
+import android.net.Uri
 import android.os.FileObserver
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
@@ -27,10 +28,12 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.res.DefaultJsonConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.kotlin.throwOnFailure
+import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.res.io.writeJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,10 +42,13 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import java.io.File
 
 @OptIn(ExperimentalSerializationApi::class)
-val ExtensionJsonConfig = Json(DefaultJsonConfig) {
+val ExtensionJsonConfig = Json {
+    classDiscriminator = "$"
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    isLenient = true
     prettyPrint = true
     prettyPrintIndent = "  "
     encodeDefaults = false
@@ -59,7 +65,7 @@ class ExtensionManager(context: Context) {
     companion object {
         private const val IME_KEYBOARD_PATH = "ime/keyboard"
         private const val IME_SPELLING_PATH = "ime/spelling"
-        private const val IME_THEME_PATH = "ime/themes"
+        private const val IME_THEME_PATH = "ime/theme"
     }
 
     private val appContext by context.appContext()
@@ -70,24 +76,33 @@ class ExtensionManager(context: Context) {
     val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
 
-    fun import(ext: Extension) = runCatching {
+    fun import(ext: Extension) {
+        val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
-            is SpellingExtension -> "ime/spelling"
-            is ThemeExtension -> "ime/theme"
+            is KeyboardExtension -> IME_KEYBOARD_PATH
+            is SpellingExtension -> IME_SPELLING_PATH
+            is ThemeExtension -> IME_THEME_PATH
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
-        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, ExtensionJsonConfig).getOrThrow()
-        writeExtension(ext).getOrThrow()
+        FsFile(workingDir, ExtensionDefaults.MANIFEST_FILE_NAME).writeJson(ext, ExtensionJsonConfig)
+        writeExtension(ext).throwOnFailure()
         ext.unload(appContext)
         ext.workingDir = null
     }
 
+    fun export(ext: Extension, uri: Uri) {
+        ext.load(appContext).throwOnFailure()
+        val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
+        ZipUtils.zip(appContext, workingDir, uri).throwOnFailure()
+        ext.unload(appContext)
+    }
+
     private fun writeExtension(ext: Extension) = runCatching {
-        val workingDir = ext.workingDir ?: error("No working dir specified")
-        val sourceRef = ext.sourceRef ?: error("No source ref specified")
-        ZipUtils.zip(appContext, workingDir, sourceRef).getOrThrow()
+        val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
+        val sourceRef = requireNotNull(ext.sourceRef) { "No source ref specified" }
+        ZipUtils.zip(appContext, workingDir, sourceRef).throwOnFailure()
     }
 
     fun getExtensionById(id: String): Extension? {
@@ -101,7 +116,7 @@ class ExtensionManager(context: Context) {
         return ext.sourceRef?.isInternal == true
     }
 
-    fun delete(ext: Extension) = runCatching {
+    fun delete(ext: Extension) {
         check(canDelete(ext)) { "Cannot delete extension!" }
         ext.unload(appContext)
         assetManager.delete(ext.sourceRef!!)

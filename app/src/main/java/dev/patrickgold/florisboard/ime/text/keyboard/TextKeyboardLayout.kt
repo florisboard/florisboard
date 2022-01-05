@@ -30,13 +30,21 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
@@ -59,8 +67,10 @@ import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
@@ -87,6 +97,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -96,24 +107,43 @@ fun TextKeyboardLayout(
     isPreview: Boolean = false,
     isSmartbarKeyboard: Boolean = false,
 ): Unit = with(LocalDensity.current) {
+    val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
-    val prefs by florisPreferenceModel()
+    val glideTypingManager by context.glideTypingManager()
+
+    val glideEnabled by prefs.glide.enabled.observeAsState()
+    val glideShowTrail by prefs.glide.showTrail.observeAsState()
 
     val keyboard = renderInfo.keyboard
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
+        if (glideEnabled && !isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
+            val keys = keyboard.keys().asSequence().toList()
+            glideTypingManager.setLayout(keys)
+        }
     }
     val touchEventChannel = remember { Channel<MotionEvent>(64) }
+
+    DisposableEffect(Unit) {
+        controller.glideTypingDetector.registerListener(controller)
+        controller.glideTypingDetector.registerListener(glideTypingManager)
+        onDispose {
+            controller.glideTypingDetector.unregisterListener(controller)
+            controller.glideTypingDetector.unregisterListener(glideTypingManager)
+        }
+    }
 
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(if (isSmartbarKeyboard) {
-                FlorisImeSizing.smartbarHeight
-            } else {
-                FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
-            })
+            .height(
+                if (isSmartbarKeyboard) {
+                    FlorisImeSizing.smartbarHeight
+                } else {
+                    FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
+                }
+            )
             .onGloballyPositioned { coords ->
                 controller.size = coords.size.toSize()
             }
@@ -127,15 +157,40 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL -> {
                         val clonedEvent = MotionEvent.obtain(event)
-                        touchEventChannel.trySend(clonedEvent).onFailure {
-                            // Make sure to prevent MotionEvent memory leakage
-                            // in case the input channel is full
-                            clonedEvent.recycle()
-                        }
+                        touchEventChannel
+                            .trySend(clonedEvent)
+                            .onFailure {
+                                // Make sure to prevent MotionEvent memory leakage
+                                // in case the input channel is full
+                                clonedEvent.recycle()
+                            }
                         return@pointerInteropFilter true
                     }
                 }
                 return@pointerInteropFilter false
+            }
+            .drawWithContent {
+                drawContent()
+                if (glideEnabled && glideShowTrail && !isSmartbarKeyboard) {
+                    val targetDist = 3.0f
+                    val radius = 20.0f
+
+                    val radiusReductionFactor = 0.99f
+                    if (controller.fadingGlideRadius > 0) {
+                        controller.drawGlideTrail(
+                            this,
+                            controller.fadingGlide,
+                            targetDist,
+                            controller.fadingGlideRadius,
+                            radiusReductionFactor
+                        )
+                    }
+                    if (controller.isGliding && controller.glideDataForDrawing.isNotEmpty()) {
+                        controller.drawGlideTrail(
+                            this, controller.glideDataForDrawing, targetDist, radius, radiusReductionFactor
+                        )
+                    }
+                }
             },
     ) {
         val keyMarginH by prefs.keyboard.keySpacingHorizontal.observeAsTransformingState { it.dp.toPx() }
@@ -309,14 +364,13 @@ private class TextKeyboardLayoutController(
 
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
-    private var isGliding: Boolean = false
+    var isGliding: Boolean = false
 
-    private val glideTypingDetector = GlideTypingGesture.Detector(context)
-    private val glideDataForDrawing: MutableList<Pair<GlideTypingGesture.Detector.Position, Long>> = mutableListOf()
-    private var glideRefreshJob: Job? = null
-    private val fadingGlide: MutableList<Pair<GlideTypingGesture.Detector.Position, Long>> = mutableListOf()
-    private var fadingGlideRadius: Float = 0.0f
-    private val swipeGestureDetector = SwipeGesture.Detector(context, this)
+    val glideTypingDetector = GlideTypingGesture.Detector(context)
+    val glideDataForDrawing = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
+    val fadingGlide = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
+    var fadingGlideRadius by mutableStateOf(0.0f)
+    private val swipeGestureDetector = SwipeGesture.Detector(this)
 
     lateinit var keyboard: TextKeyboard
     var size = Size.Zero
@@ -325,21 +379,21 @@ private class TextKeyboardLayoutController(
         flogDebug { "event=$event" }
         swipeGestureDetector.onTouchEvent(event)
 
-        //if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
-        //    val glidePointer = pointerMap.findById(0)
-        //    if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
-        //        for (pointer in pointerMap) {
-        //            if (pointer.activeKey != null) {
-        //                onTouchCancelInternal(event, pointer)
-        //            }
-        //        }
-        //        if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
-        //            pointerMap.clear()
-        //        }
-        //        isGliding = true
-        //        return
-        //    }
-        //}
+        if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
+            val glidePointer = pointerMap.findById(0)
+            if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
+                for (pointer in pointerMap) {
+                    if (pointer.activeKey != null) {
+                        onTouchCancelInternal(event, pointer)
+                    }
+                }
+                if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
+                    pointerMap.clear()
+                }
+                isGliding = true
+                return
+            }
+        }
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
@@ -795,14 +849,7 @@ private class TextKeyboardLayoutController(
 
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
         if (prefs.glide.enabled.get()) {
-            glideDataForDrawing.add(Pair(point, System.currentTimeMillis()))
-            if (glideRefreshJob == null) {
-                glideRefreshJob = scope.launch(Dispatchers.Main) {
-                    while (true) {
-                        delay(10)
-                    }
-                }
-            }
+            glideDataForDrawing.add(point to System.currentTimeMillis())
         }
     }
 
@@ -825,8 +872,41 @@ private class TextKeyboardLayoutController(
 
             glideDataForDrawing.clear()
             isGliding = false
-            glideRefreshJob?.cancel()
-            glideRefreshJob = null
+        }
+    }
+
+    fun drawGlideTrail(
+        drawScope: ContentDrawScope,
+        gestureData: MutableList<Pair<GlideTypingGesture.Detector.Position, Long>>,
+        targetDist: Float,
+        initialRadius: Float,
+        radiusReductionFactor: Float,
+    ) {
+        var radius = initialRadius
+        var drawnPoints = 0
+        var prevX = gestureData.lastOrNull()?.first?.x ?: 0.0f
+        var prevY = gestureData.lastOrNull()?.first?.y ?: 0.0f
+        val time = System.currentTimeMillis()
+
+        outer@ for (i in gestureData.size - 1 downTo 1) {
+            if (time - gestureData[i - 1].second > prefs.glide.trailDuration.get()) break
+
+            val dx = prevX - gestureData[i - 1].first.x
+            val dy = prevY - gestureData[i - 1].first.y
+            val dist = sqrt(dx * dx + dy * dy)
+
+            val numPoints = (dist / targetDist).toInt()
+            for (j in 0 until numPoints) {
+                radius *= radiusReductionFactor
+                val intermediateX =
+                    gestureData[i].first.x * (1 - j.toFloat() / numPoints) + gestureData[i - 1].first.x * (j.toFloat() / numPoints)
+                val intermediateY =
+                    gestureData[i].first.y * (1 - j.toFloat() / numPoints) + gestureData[i - 1].first.y * (j.toFloat() / numPoints)
+                drawScope.drawCircle(Color.Green, radius, center = Offset(intermediateX, intermediateY))
+                drawnPoints += 1
+                prevX = intermediateX
+                prevY = intermediateY
+            }
         }
     }
 

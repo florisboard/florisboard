@@ -97,7 +97,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Tema Yöneticisi (Gündüz)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Tema Yöneticisi (Gece)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Boş tema oluştur</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Seçili temadan oluştur</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Özel (%s üzerinden)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Yeni tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema başarıyla içe aktarıldı!</string>
@@ -360,35 +359,29 @@
     <string name="about__third_party_licenses__title" comment="Preference title">Üçüncü parti lisanslar</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Üçüncü taraf kütüphanelerin lisansları bu uygulamaya dahildir</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Oluşturan</item>
-        <item quantity="other">Oluşturanlar</item>
-    </plurals>
-    <string name="assets__file__name">İsim</string>
-    <string name="assets__file__source">Kaynak</string>
-    <string name="assets__action__add">Ekle</string>
-    <string name="assets__action__apply">Uygula</string>
-    <string name="assets__action__cancel">İptal</string>
-    <string name="assets__action__cancel_confirm_title">İptali onayla</string>
-    <string name="assets__action__cancel_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>
-    <string name="assets__action__default">Varsayılan</string>
-    <string name="assets__action__delete">Sil</string>
-    <string name="assets__action__delete_confirm_title">Silmeyi onayla</string>
-    <string name="assets__action__delete_confirm_message">\"{database_name}\"’yi silmek istediğinize emin misiniz? Bu işlem yapıldıktan sonra geri alınamaz.</string>
-    <string name="assets__action__edit">Düzenle</string>
-    <string name="assets__action__export">Dışa aktar</string>
-    <string name="assets__action__import">İçe aktar</string>
-    <string name="assets__action__no">Hayır</string>
-    <string name="assets__action__ok">Tamam</string>
-    <string name="assets__action__save">Kaydet</string>
-    <string name="assets__action__select">Seç</string>
-    <string name="assets__action__select_dir">Dizini seçin</string>
-    <string name="assets__action__select_file">Dosyayı seçin</string>
-    <string name="assets__action__yes">Evet</string>
-    <string name="assets__error__title">Hata</string>
-    <string name="assets__error__details">Detaylar</string>
-    <string name="assets__error__invalid">Geçersiz</string>
-    <string name="assets__error__snackbar_message">Bir şeyler ters gitti</string>
+    <string name="action__add">Ekle</string>
+    <string name="action__apply">Uygula</string>
+    <string name="action__cancel">İptal</string>
+    <string name="action__cancel_confirm_title">İptali onayla</string>
+    <string name="action__cancel_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>
+    <string name="action__default">Varsayılan</string>
+    <string name="action__delete">Sil</string>
+    <string name="action__delete_confirm_title">Silmeyi onayla</string>
+    <string name="action__delete_confirm_message">\"{database_name}\"’yi silmek istediğinize emin misiniz? Bu işlem yapıldıktan sonra geri alınamaz.</string>
+    <string name="action__edit">Düzenle</string>
+    <string name="action__export">Dışa aktar</string>
+    <string name="action__import">İçe aktar</string>
+    <string name="action__no">Hayır</string>
+    <string name="action__ok">Tamam</string>
+    <string name="action__save">Kaydet</string>
+    <string name="action__select">Seç</string>
+    <string name="action__select_dir">Dizini seçin</string>
+    <string name="action__select_file">Dosyayı seçin</string>
+    <string name="action__yes">Evet</string>
+    <string name="error__title">Hata</string>
+    <string name="error__details">Detaylar</string>
+    <string name="error__invalid">Geçersiz</string>
+    <string name="error__snackbar_message">Bir şeyler ters gitti</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hoş geldiniz!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} kullandığınız için teşekkürler! Bu hızlı kurulum, cihazınızda {app_name} uygulamasını kullanmak için gerekli adımlarda size rehberlik eder.</string>

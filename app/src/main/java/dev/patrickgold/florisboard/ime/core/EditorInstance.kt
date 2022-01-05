@@ -35,7 +35,6 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
@@ -45,7 +44,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -368,10 +366,7 @@ class EditorInstance(private val ims: InputMethodService) {
             ic.finishComposingText()
             if (selection.start > 0) {
                 val previous = getTextBeforeCursor(1)
-                if (TextProcessor.isWord(previous, FlorisLocale.ENGLISH) ||
-                    previous.isDigitsOnly() ||
-                    previous in TextInputManager.getInstance().symbolsWithSpaceAfter
-                ) {
+                if (TextProcessor.isWord(previous, FlorisLocale.ENGLISH) || previous.isDigitsOnly()) {
                     ic.commitText(" ", 1)
                 }
             }
@@ -864,7 +859,7 @@ class EditorInstance(private val ims: InputMethodService) {
 
     internal fun ExtractedText.getTextStr() = (this.text ?: "").toString()
 
-    private fun ExtractedText.debugSummarize() = stringBuilder {
+    private fun ExtractedText.debugSummarize() = buildString {
         append("ExtractedText:")
         appendLine()
         append("text=\"${this@debugSummarize.text}\"")
@@ -1050,7 +1045,7 @@ class EditorInstance(private val ims: InputMethodService) {
             )
 
             flogDebug(LogTopic.EDITOR_INSTANCE) {
-                stringBuilder {
+                buildString {
                     append("Words before current: ")
                     wordsBeforeCurrent.forEach {
                         append(it.toString())
@@ -1059,12 +1054,12 @@ class EditorInstance(private val ims: InputMethodService) {
                 }
             }
             flogDebug(LogTopic.EDITOR_INSTANCE) {
-                stringBuilder {
+                buildString {
                     append("Current word: $currentWord")
                 }
             }
             flogDebug(LogTopic.EDITOR_INSTANCE) {
-                stringBuilder {
+                buildString {
                     append("Words after current: ")
                     wordsAfterCurrent.forEach {
                         append(it.toString())

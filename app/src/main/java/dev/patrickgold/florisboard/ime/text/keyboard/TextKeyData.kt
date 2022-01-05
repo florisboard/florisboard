@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.kotlin.lowercase
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import dev.patrickgold.florisboard.common.kotlin.uppercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
@@ -57,7 +56,7 @@ class TextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return stringBuilder {
+        return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
                 // Combining Diacritical Marks
                 // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
@@ -427,7 +426,7 @@ class AutoTextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return stringBuilder {
+        return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
                 // Combining Diacritical Marks
                 // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
@@ -462,7 +461,7 @@ class MultiTextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return stringBuilder {
+        return buildString {
             if (isForDisplay) {
                 append(label)
             } else {

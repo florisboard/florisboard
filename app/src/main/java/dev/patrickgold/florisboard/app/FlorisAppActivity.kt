@@ -23,7 +23,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
@@ -39,20 +38,22 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.LocalPreviewFieldController
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUiApp
+import dev.patrickgold.florisboard.app.ui.components.rememberPreviewFieldController
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.android.hideAppIcon
-import dev.patrickgold.florisboard.common.android.showAppIcon
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.android.hideAppIcon
+import dev.patrickgold.florisboard.common.android.setLocale
+import dev.patrickgold.florisboard.common.android.showAppIcon
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
@@ -149,19 +150,20 @@ class FlorisAppActivity : ComponentActivity() {
         prefs.forceSyncToDisk()
     }
 
-    private fun Configuration.setLocale(locale: FlorisLocale) {
-        return this.setLocale(locale.base)
-    }
-
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun AppContent() {
         val navController = rememberNavController()
-        CompositionLocalProvider(LocalNavController provides navController) {
+        val previewFieldController = rememberPreviewFieldController()
+
+        CompositionLocalProvider(
+            LocalNavController provides navController,
+            LocalPreviewFieldController provides previewFieldController,
+        ) {
             ProvideDefaultDialogPrefStrings(
-                confirmLabel = stringRes(R.string.assets__action__ok),
-                dismissLabel = stringRes(R.string.assets__action__cancel),
-                neutralLabel = stringRes(R.string.assets__action__default),
+                confirmLabel = stringRes(R.string.action__ok),
+                dismissLabel = stringRes(R.string.action__cancel),
+                neutralLabel = stringRes(R.string.action__default),
             ) {
                 Column {
                     Routes.AppNavHost(
@@ -169,22 +171,11 @@ class FlorisAppActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Routes.Splash.Screen,
                     )
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val previewVisible = when (navBackStackEntry?.destination?.route) {
-                        Routes.Setup.Screen, Routes.Settings.About, Routes.Settings.ProjectLicense,
-                        Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
-                        Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
-                        Routes.Devtools.AndroidSettings, Routes.Ext.View,
-                        Routes.Splash.Screen, Routes.Settings.SubtypeAdd,
-                        Routes.Settings.SubtypeEdit, Routes.Settings.SelectLocale -> false
-                        else -> true
-                    }
-                    AnimatedVisibility(visible = previewVisible) {
-                        PreviewKeyboardField()
-                    }
+                    PreviewKeyboardField(previewFieldController)
                 }
             }
         }
+
         SideEffect {
             navController.setOnBackPressedDispatcher(this.onBackPressedDispatcher)
         }

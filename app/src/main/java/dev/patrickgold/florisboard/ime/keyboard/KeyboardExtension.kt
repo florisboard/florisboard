@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
@@ -39,6 +40,10 @@ data class KeyboardExtension(
 ) : Extension() {
 
     override fun serialType() = SERIAL_TYPE
+
+    override fun components(): List<ExtensionComponent> {
+        return emptyList()
+    }
 
     override fun edit(): ExtensionEditor {
         TODO("Not yet implemented")

@@ -19,15 +19,15 @@ package dev.patrickgold.florisboard.res.ext
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 
 object ExtensionDefaults {
-    private const val ID_IMPORT = "local.imported.{groupName}.{extensionName}"
+    private const val ID_LOCAL_TEMPLATE = "local.{groupName}.{extensionName}"
 
     const val FILE_EXTENSION = "flex"
     const val MANIFEST_FILE_NAME = "extension.json"
 
-    fun createIdForImport(
+    fun createLocalId(
         groupName: String,
         extensionName: String = System.currentTimeMillis().toString(),
-    ) = ID_IMPORT.curlyFormat("groupName" to groupName, "extensionName" to extensionName)
+    ) = ID_LOCAL_TEMPLATE.curlyFormat("groupName" to groupName, "extensionName" to extensionName)
 
     fun createFlexName(id: String) = "$id.$FILE_EXTENSION"
 }

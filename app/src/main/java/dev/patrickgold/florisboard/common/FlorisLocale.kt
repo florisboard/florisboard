@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.common
 
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -135,7 +134,7 @@ class FlorisLocale private constructor(val base: Locale) {
      * @return The generated tag for this locale. May be an empty string if
      *  [language], [country] and [variant] are not specified.
      */
-    private fun buildLocaleString(delimiter: Char) = stringBuilder {
+    private fun buildLocaleString(delimiter: Char) = buildString {
         val language = base.language
         val country = base.country
         val variant = base.variant
@@ -243,7 +242,7 @@ class FlorisLocale private constructor(val base: Locale) {
      * @return The display name for this locale. May be an empty string if
      *  [language], [country] and [variant] are not specified.
      */
-    fun displayName(locale: FlorisLocale = default()) = stringBuilder {
+    fun displayName(locale: FlorisLocale = default()) = buildString {
         val languageName = displayLanguage(locale).ifBlank { base.language }
         val countryName = displayCountry(locale).ifBlank { base.country }
         val variantName = displayVariant(locale).ifBlank { base.variant }

@@ -18,11 +18,8 @@ package dev.patrickgold.florisboard.ime.theme
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Color
 import android.graphics.drawable.Icon
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
@@ -36,78 +33,58 @@ import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.res.ZipUtils
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.decodeFromString
 import java.time.LocalTime
-import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.properties.Delegates
 
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
  * Settings Activities.
  */
-class ThemeManager private constructor(
-    private val applicationContext: Context,
-    private val assetManager: AssetManager
-) {
+class ThemeManager(context: Context) {
     private val prefs by florisPreferenceModel()
-    private val callbackReceivers: CopyOnWriteArrayList<OnThemeUpdatedListener> = CopyOnWriteArrayList()
-    private val packageManager: PackageManager? = applicationContext.packageManager
+    private val appContext by context.appContext()
+    private val extensionManager by context.extensionManager()
 
-    var activeTheme: Theme = Theme.empty()
-        private set
-    var indexedDayThemeRefs: MutableMap<FlorisRef, ThemeMetaOnly> = mutableMapOf()
-    var indexedNightThemeRefs: MutableMap<FlorisRef, ThemeMetaOnly> = mutableMapOf()
-    var isAdaptiveThemeEnabled: Boolean = false
-        private set
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    var remote: RemoteColors = RemoteColors.DEFAULT
-        private set
-    private val remoteCache: ArrayList<RemoteColors> = arrayListOf()
+    private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeExtensionComponent>())
+    val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeExtensionComponent>> get() = _indexedThemeConfigs
+    var previewThemeId: ExtensionComponentName? by Delegates.observable(null) { _, _, _ ->
+        updateActiveTheme()
+    }
+
+    private val cachedThemeInfos = mutableListOf<ThemeInfo>()
+    private val activeThemeGuard = Mutex(locked = false)
+    private val _activeThemeInfo = MutableLiveData(ThemeInfo.DEFAULT)
+    val activeThemeInfo: LiveData<ThemeInfo> get() = _activeThemeInfo
 
     companion object {
-        /** The static relative path where a theme is located, regardless of the asset source. */
-        const val THEME_PATH_REL: String = "ime/theme"
-        /** Maximum size in bytes a theme file may have when loaded. */
-        const val THEME_MAX_SIZE: Int = 512_000
-
-        private var defaultInstance: ThemeManager? = null
-
-        fun init(
-            applicationContext: Context,
-            assetManager: AssetManager
-        ): ThemeManager {
-            val instance = ThemeManager(applicationContext, assetManager)
-            defaultInstance = instance
-            return instance
-        }
-
-        fun default(): ThemeManager {
-            val instance = defaultInstance
-            if (instance != null) {
-                return instance
-            } else {
-                throw UninitializedPropertyAccessException(
-                    "${ThemeManager::class.simpleName} has not been initialized previously. Make sure to call init() before using default()."
-                )
-            }
-        }
-
-        fun defaultOrNull(): ThemeManager? = defaultInstance
-
         /**
-         * Creates a new inline suggestion UI bundle based on the attributes of the given [theme].
+         * Creates a new inline suggestion UI bundle based on the attributes of the given [style].
          *
          * @param context The context of the parent view/controller.
-         * @param theme The theme from which the color attributes should be fetched. Defaults to [activeTheme].
+         * @param style The theme from which the color attributes should be fetched. Defaults to
+         *  [FlorisImeThemeBaseStyle].
          *
          * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
          */
@@ -182,90 +159,96 @@ class ThemeManager private constructor(
     }
 
     init {
-        update()
+        extensionManager.themes.observeForever { themeExtensions ->
+            val map = buildMap {
+                for (themeExtension in themeExtensions) {
+                    for (themeComponent in themeExtension.themes) {
+                        put(ExtensionComponentName(themeExtension.meta.id, themeComponent.id), themeComponent)
+                    }
+                }
+            }
+            _indexedThemeConfigs.postValue(map)
+        }
+        indexedThemeConfigs.observeForever {
+            updateActiveTheme {
+                cachedThemeInfos.clear()
+            }
+        }
+        prefs.theme.mode.observeForever {
+            updateActiveTheme()
+        }
+        prefs.theme.dayThemeId.observeForever {
+            updateActiveTheme()
+        }
+        prefs.theme.nightThemeId.observeForever {
+            updateActiveTheme()
+        }
     }
 
     /**
      * Updates the current theme ref and loads the corresponding theme, as well as notifies all
      * callback receivers about the new theme.
      */
-    fun update() {
-        indexThemeRefs()
-        val ref = evaluateActiveThemeRef()
-        flogDebug(LogTopic.THEME_MANAGER) { ref.toString() }
-        activeTheme = AdaptiveThemeOverlay(
-            this, if (ref.isInvalid) {
-                Theme.BASE_THEME
+    private fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
+        activeThemeGuard.withLock {
+            action()
+            val activeName = evaluateActiveThemeName()
+            val cachedInfo = cachedThemeInfos.find { it.name == activeName }
+            if (cachedInfo != null) {
+                _activeThemeInfo.postValue(cachedInfo)
             } else {
-                loadTheme(ref).getOrDefault(Theme.BASE_THEME)
+                val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
+                val themeExtRef = themeExt?.sourceRef
+                if (themeExtRef != null) {
+                    val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
+                    if (themeConfig != null) {
+                        val newStylesheet = ZipUtils.readFileFromArchive(
+                            appContext, themeExtRef, themeConfig.stylesheetPath(),
+                        ).getOrNull()?.let { raw -> SnyggStylesheetJsonConfig.decodeFromString<SnyggStylesheet>(raw) }
+                        if (newStylesheet != null) {
+                            val newCompiledStylesheet = (newStylesheet)
+                                .compileToFullyQualified(FlorisImeUiSpec)
+                            val newInfo = ThemeInfo(activeName, themeConfig, newCompiledStylesheet)
+                            cachedThemeInfos.add(newInfo)
+                            _activeThemeInfo.postValue(newInfo)
+                        }
+                    }
+                }
             }
-        )
-        flogInfo(LogTopic.THEME_MANAGER) { activeTheme.label }
-        notifyCallbackReceivers()
+        }
     }
 
-    /**
-     * Gets the primary and ark variants of the app with given [remotePackageName].
-     * Based AnySoftKeyboard's way of getting remote colors:
-     *  https://github.com/AnySoftKeyboard/AnySoftKeyboard/blob/master/ime/overlay/src/main/java/com/anysoftkeyboard/overlay/OverlyDataCreatorForAndroid.java
-     *
-     * @param remotePackageName The package name from which the colors should be extracted.
-     */
-    fun updateRemoteColorValues(remotePackageName: String) {
-        if (!isAdaptiveThemeEnabled) return
-        try {
-            val tempRemote = remoteCache.find { it.packageName == remotePackageName }
-            if (tempRemote != null) {
-                remote = tempRemote
-                return
+    private fun evaluateActiveThemeName(): ExtensionComponentName {
+        previewThemeId?.let { return it }
+        return when (prefs.theme.mode.get()) {
+            ThemeMode.ALWAYS_DAY -> {
+                prefs.theme.dayThemeId.get()
             }
-            val colorPrimary: Int?
-            val colorPrimaryVariant: Int?
-            val colorSecondary: Int?
-            val pm = packageManager ?: return
-            val remoteApp = pm.getLaunchIntentForPackage(remotePackageName)?.component ?: return
-            val activityInfo = pm.getActivityInfo(remoteApp, PackageManager.GET_META_DATA)
-            val remoteContext = applicationContext.createPackageContext(
-                remoteApp.packageName,
-                Context.CONTEXT_IGNORE_SECURITY
-            )
-            remoteContext.setTheme(activityInfo.themeResource)
-            val res = remoteContext.resources
-            val attrs = intArrayOf(
-                res.getIdentifier("colorPrimary", "attr", remotePackageName),
-                android.R.attr.colorPrimary,
-                res.getIdentifier("colorPrimaryDark", "attr", remotePackageName),
-                android.R.attr.colorPrimaryDark,
-                res.getIdentifier("colorPrimaryVariant", "attr", remotePackageName),
-                res.getIdentifier("colorAccent", "attr", remotePackageName),
-                android.R.attr.colorAccent,
-                res.getIdentifier("colorSecondary", "attr", remotePackageName)
-            )
-            val typedValue = TypedValue()
-            colorPrimary =
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[0]) ?:
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[1])
-            colorPrimaryVariant =
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[2]) ?:
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[3]) ?:
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[4])
-            colorSecondary =
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[5]) ?:
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[6]) ?:
-                getColorFromThemeAttribute(remoteContext, typedValue, attrs[7])
-            val newRemote = RemoteColors(
-                packageName = remotePackageName,
-                colorPrimary = colorPrimary?.let { ThemeValue.SolidColor(it or Color.BLACK) },
-                colorPrimaryVariant = colorPrimaryVariant?.let { ThemeValue.SolidColor(it or Color.BLACK) },
-                colorSecondary = colorSecondary?.let { ThemeValue.SolidColor(it or Color.BLACK) }
-            )
-            remoteCache.add(newRemote)
-            remote = newRemote
-        } catch (e: Exception) {
-            remote = RemoteColors.DEFAULT
-            flogError(LogTopic.THEME_MANAGER) { e.toString() }
+            ThemeMode.ALWAYS_NIGHT -> {
+                prefs.theme.nightThemeId.get()
+            }
+            ThemeMode.FOLLOW_SYSTEM -> if (appContext.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+            ) {
+                prefs.theme.nightThemeId.get()
+            } else {
+                prefs.theme.dayThemeId.get()
+            }
+            ThemeMode.FOLLOW_TIME -> {
+                if (AndroidVersion.ATLEAST_API26_O) {
+                    val current = LocalTime.now()
+                    val sunrise = prefs.theme.sunriseTime.get()
+                    val sunset = prefs.theme.sunsetTime.get()
+                    if (current in sunrise..sunset) {
+                        prefs.theme.dayThemeId.get()
+                    } else {
+                        prefs.theme.nightThemeId.get()
+                    }
+                } else {
+                    prefs.theme.nightThemeId.get()
+                }
+            }
         }
-        notifyCallbackReceivers()
     }
 
     private fun getColorFromThemeAttribute(
@@ -282,219 +265,28 @@ class ThemeManager private constructor(
         }
     }
 
-    /**
-     * Sends a theme update to the given [onThemeUpdatedListener], regardless if it is currently
-     * registered or not.
-     */
-    fun requestThemeUpdate(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
-        onThemeUpdatedListener.onThemeUpdated(activeTheme)
-        return true
-    }
-
-    @Synchronized
-    fun registerOnThemeUpdatedListener(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
-        val ret = callbackReceivers.addIfAbsent(onThemeUpdatedListener)
-        onThemeUpdatedListener.onThemeUpdated(activeTheme)
-        return ret
-    }
-
-    @Synchronized
-    fun unregisterOnThemeUpdatedListener(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
-        return callbackReceivers.remove(onThemeUpdatedListener)
-    }
-
-    @Synchronized
-    fun notifyCallbackReceivers() {
-        callbackReceivers.forEach {
-            it.onThemeUpdated(activeTheme)
+    data class ThemeInfo(
+        val name: ExtensionComponentName,
+        val config: ThemeExtensionComponent,
+        val stylesheet: SnyggStylesheet,
+    ) {
+        companion object {
+            val DEFAULT = ThemeInfo(
+                name = extCoreTheme("base"),
+                config = ThemeExtensionComponent(id = "base", label = "Base", authors = listOf()),
+                stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
+            )
         }
-    }
-
-    fun deleteTheme(ref: FlorisRef): Result<Unit> {
-        return assetManager.deleteAsset(ref)
-    }
-
-    fun loadTheme(ref: FlorisRef): Result<Theme> {
-        return assetManager.loadJsonAsset(ref)
-    }
-
-    fun loadTheme(uri: Uri): Result<Theme> {
-        return assetManager.loadJsonAsset(uri, THEME_MAX_SIZE)
-    }
-
-    fun writeTheme(ref: FlorisRef, theme: Theme): Result<Unit> {
-        return assetManager.writeJsonAsset(ref, theme)
-    }
-
-    fun writeTheme(uri: Uri, theme: Theme): Result<Unit> {
-        return assetManager.writeJsonAsset(uri, theme)
-    }
-
-    private fun evaluateActiveThemeRef(): FlorisRef {
-        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.mode.toString() }
-        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.dayThemeRef.get().toString() }
-        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.nightThemeRef.get().toString() }
-        return when (prefs.theme.mode.get()) {
-            ThemeMode.ALWAYS_DAY -> {
-                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp.get()
-                prefs.theme.dayThemeRef.get()
-            }
-            ThemeMode.ALWAYS_NIGHT -> {
-                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
-                prefs.theme.nightThemeRef.get()
-            }
-            ThemeMode.FOLLOW_SYSTEM -> if (applicationContext.resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-            ) {
-                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
-                prefs.theme.nightThemeRef.get()
-            } else {
-                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp.get()
-                prefs.theme.dayThemeRef.get()
-            }
-            ThemeMode.FOLLOW_TIME -> {
-                if (AndroidVersion.ATLEAST_API26_O) {
-                    val current = LocalTime.now()
-                    val sunrise = prefs.theme.sunriseTime.get()
-                    val sunset = prefs.theme.sunsetTime.get()
-                    if (current in sunrise..sunset) {
-                        isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp.get()
-                        prefs.theme.dayThemeRef.get()
-                    } else {
-                        isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
-                        prefs.theme.nightThemeRef.get()
-                    }
-                } else {
-                    isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
-                    prefs.theme.nightThemeRef.get()
-                }
-            }
-        }
-    }
-
-    private fun indexThemeRefs() {
-        indexedDayThemeRefs.clear()
-        indexedNightThemeRefs.clear()
-        assetManager.listAssets<ThemeMetaOnly>(
-            FlorisRef.assets(THEME_PATH_REL)
-        ).onSuccess {
-            for ((ref, themeMetaOnly) in it) {
-                if (themeMetaOnly.isNightTheme) {
-                    indexedNightThemeRefs[ref] = themeMetaOnly
-                } else {
-                    indexedDayThemeRefs[ref] = themeMetaOnly
-                }
-            }
-        }.onFailure {
-            flogError(LogTopic.THEME_MANAGER) { it.toString() }
-        }
-        assetManager.listAssets<ThemeMetaOnly>(
-            FlorisRef.internal(THEME_PATH_REL)
-        ).onSuccess {
-            for ((ref, themeMetaOnly) in it) {
-                if (themeMetaOnly.isNightTheme) {
-                    indexedNightThemeRefs[ref] = themeMetaOnly
-                } else {
-                    indexedDayThemeRefs[ref] = themeMetaOnly
-                }
-            }
-        }.onFailure {
-            flogError(LogTopic.THEME_MANAGER) { it.toString() }
-        }
-    }
-
-    /**
-     * Creates a new inline suggestion UI bundle based on the attributes of the given [theme].
-     *
-     * @param context The context of the parent view/controller.
-     * @param theme The theme from which the color attributes should be fetched. Defaults to [activeTheme].
-     *
-     * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
-     */
-    @SuppressLint("RestrictedApi")
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun createInlineSuggestionUiStyleBundle(context: Context, theme: Theme = activeTheme): Bundle {
-        val bgColor = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color
-        val fgColor = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color
-        val bgDrawableId = R.drawable.chip_background
-        val stylesBuilder = UiVersions.newStylesBuilder()
-        val style = InlineSuggestionUi.newStyleBuilder()
-            .setSingleIconChipStyle(
-                ViewStyle.Builder()
-                    .setBackground(
-                        Icon.createWithResource(context, bgDrawableId).setTint(bgColor)
-                    )
-                    .setPadding(0, 0, 0, 0)
-                    .build()
-            )
-            .setChipStyle(
-                ViewStyle.Builder()
-                    .setBackground(
-                        Icon.createWithResource(context, bgDrawableId).setTint(bgColor)
-                    )
-                    .setPadding(
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_start).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_top).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_end).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_bottom).toInt(),
-                    )
-                    .build()
-            )
-            .setStartIconStyle(
-                ImageViewStyle.Builder()
-                    .setLayoutMargin(0, 0, 0, 0)
-                    .build()
-            )
-            .setTitleStyle(
-                TextViewStyle.Builder()
-                    .setLayoutMargin(
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_start).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_top).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_end).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_bottom).toInt(),
-                    )
-                    .setTextColor(fgColor)
-                    .setTextSize(16f)
-                    .build()
-            )
-            .setSubtitleStyle(
-                TextViewStyle.Builder()
-                    .setLayoutMargin(
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_start).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_top).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_end).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_bottom).toInt(),
-                    )
-                    .setTextColor(ColorUtils.setAlphaComponent(fgColor, 150))
-                    .setTextSize(14f)
-                    .build()
-            )
-            .setEndIconStyle(
-                ImageViewStyle.Builder()
-                    .setLayoutMargin(0, 0, 0, 0)
-                    .build()
-            )
-            .build()
-        stylesBuilder.addStyle(style)
-        return stylesBuilder.build()
     }
 
     data class RemoteColors(
         val packageName: String,
-        val colorPrimary: ThemeValue.SolidColor?,
-        val colorPrimaryVariant: ThemeValue.SolidColor?,
-        val colorSecondary: ThemeValue.SolidColor?
+        val colorPrimary: SnyggSolidColorValue?,
+        val colorPrimaryVariant: SnyggSolidColorValue?,
+        val colorSecondary: SnyggSolidColorValue?,
     ) {
         companion object {
             val DEFAULT = RemoteColors("undefined", null, null, null)
         }
-    }
-
-    /**
-     * Functional interface which should be implemented by event listeners to be able to receive
-     * theme updates.
-     */
-    fun interface OnThemeUpdatedListener {
-        fun onThemeUpdated(theme: Theme)
     }
 }

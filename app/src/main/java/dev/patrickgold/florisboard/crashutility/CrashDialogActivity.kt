@@ -16,29 +16,37 @@
 
 package dev.patrickgold.florisboard.crashutility
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.databinding.CrashDialogBinding
 import dev.patrickgold.florisboard.debug.*
 
-class CrashDialogActivity : AppCompatActivity() {
-    private lateinit var binding: CrashDialogBinding
+class CrashDialogActivity : ComponentActivity() {
     private var stacktraces: List<CrashUtility.Stacktrace> = listOf()
     private var errorReport: StringBuilder = StringBuilder()
     private var prefs: AppPrefs? = null
 
+    private val stacktrace by lazy { findViewById<TextView>(R.id.stacktrace) }
+    private val reportInstructions by lazy { findViewById<TextView>(R.id.report_instructions) }
+    private val copyToClipboard by lazy { findViewById<Button>(R.id.copy_to_clipboard) }
+    private val openBugReportForm by lazy { findViewById<Button>(R.id.open_bug_report_form) }
+    private val close by lazy { findViewById<Button>(R.id.close) }
+
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = CrashDialogBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val layout = layoutInflater.inflate(R.layout.crash_dialog, null)
+        setContentView(layout)
 
         // We secure the PrefHelper usage here because the PrefHelper could potentially be the
         // source of the crash, thus making the crash dialog unusable if not wrapped.
@@ -85,14 +93,14 @@ class CrashDialogActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.stacktrace.text = errorReport
+        stacktrace.text = errorReport
 
-        binding.reportInstructions.text =
-            binding.reportInstructions.text.toString().format(
+        reportInstructions.text =
+            reportInstructions.text.toString().format(
                 resources.getString(R.string.crash_dialog__bug_report_template)
             )
 
-        binding.copyToClipboard.setOnClickListener {
+        copyToClipboard.setOnClickListener {
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
             val toastMessage: String = if (clipboardManager != null && clipboardManager is ClipboardManager) {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText(errorReport, errorReport))
@@ -103,7 +111,7 @@ class CrashDialogActivity : AppCompatActivity() {
             Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         }
 
-        binding.openBugReportForm.setOnClickListener {
+        openBugReportForm.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(resources.getString(R.string.florisboard__issue_tracker_url))
@@ -111,7 +119,7 @@ class CrashDialogActivity : AppCompatActivity() {
             startActivity(browserIntent)
         }
 
-        binding.close.setOnClickListener {
+        close.setOnClickListener {
             finish()
         }
     }

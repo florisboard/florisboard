@@ -41,6 +41,9 @@ import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
+import dev.patrickgold.florisboard.res.cache.CacheManager
+import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPrefManager
 import java.io.File
 import kotlin.Exception
@@ -63,13 +66,16 @@ class FlorisApplication : Application() {
     private val prefs by florisPreferenceModel()
 
     val assetManager = lazy { AssetManager(this) }
+    val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
     val extensionManager = lazy { ExtensionManager(this) }
+    val glideTypingManager = lazy { GlideTypingManager(this) }
     val keyboardManager = lazy { KeyboardManager(this) }
     val nlpManager = lazy { NlpManager(this) }
     val spellingManager = lazy { SpellingManager(this) }
     val spellingService = lazy { SpellingService(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
+    val themeManager = lazy { ThemeManager(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -91,12 +97,12 @@ class FlorisApplication : Application() {
                 registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
             } else {
                 initICU(this)
+                cacheDir?.deleteContentsRecursively()
                 prefs.initializeForContext(this)
                 clipboardManager.value.initializeForContext(this)
             }
 
             DictionaryManager.init(this)
-            ThemeManager.init(this, assetManager.value)
         } catch (e: Exception) {
             CrashUtility.stageException(e)
             return
@@ -134,6 +140,7 @@ class FlorisApplication : Application() {
                 } catch (e: Exception) {
                     flogError { e.toString() }
                 }
+                cacheDir?.deleteContentsRecursively()
                 prefs.initializeForContext(this@FlorisApplication)
                 clipboardManager.value.initializeForContext(this@FlorisApplication)
             }
@@ -152,9 +159,13 @@ fun Context.appContext() = lazy { this.florisApplication() }
 
 fun Context.assetManager() = lazy { this.florisApplication().assetManager.value }
 
+fun Context.cacheManager() = lazy { this.florisApplication().cacheManager.value }
+
 fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
 
 fun Context.extensionManager() = lazy { this.florisApplication().extensionManager.value }
+
+fun Context.glideTypingManager() = lazy { this.florisApplication().glideTypingManager.value }
 
 fun Context.keyboardManager() = lazy { this.florisApplication().keyboardManager.value }
 
@@ -165,3 +176,5 @@ fun Context.spellingManager() = lazy { this.florisApplication().spellingManager.
 fun Context.spellingService() = lazy { this.florisApplication().spellingService.value }
 
 fun Context.subtypeManager() = lazy { this.florisApplication().subtypeManager.value }
+
+fun Context.themeManager() = lazy { this.florisApplication().themeManager.value }

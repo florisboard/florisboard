@@ -30,6 +30,7 @@ import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 @Composable
 fun AdvancedScreen() = FlorisScreen {
     title = stringRes(R.string.settings__advanced__title)
+    previewFieldVisible = true
 
     content {
         ListPreference(

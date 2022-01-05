@@ -81,27 +81,25 @@
     <string name="about__changelog__title" comment="Preference title">Endringslogg</string>
     <string name="about__changelog__summary" comment="Preference summary">Hva som er nytt</string>
     <!-- Assets strings -->
-    <string name="assets__file__name">Navn</string>
-    <string name="assets__file__source">Kilde</string>
-    <string name="assets__action__add">Legg til</string>
-    <string name="assets__action__apply">Bruk</string>
-    <string name="assets__action__cancel">Avbryt</string>
-    <string name="assets__action__default">Standard</string>
-    <string name="assets__action__delete">Slett</string>
-    <string name="assets__action__delete_confirm_title">Bekreft sletting</string>
-    <string name="assets__action__edit">Rediger</string>
-    <string name="assets__action__export">Eksport</string>
-    <string name="assets__action__import">Importer</string>
-    <string name="assets__action__no">Nei</string>
-    <string name="assets__action__ok">OK</string>
-    <string name="assets__action__save">Lagre</string>
-    <string name="assets__action__select">Velg</string>
-    <string name="assets__action__select_dir">Velg mappe</string>
-    <string name="assets__action__select_file">Velg fil</string>
-    <string name="assets__action__yes">Ja</string>
-    <string name="assets__error__details">Detaljer</string>
-    <string name="assets__error__invalid">Ygyldig</string>
-    <string name="assets__error__snackbar_message">Noe gikk galt</string>
+    <string name="action__add">Legg til</string>
+    <string name="action__apply">Bruk</string>
+    <string name="action__cancel">Avbryt</string>
+    <string name="action__default">Standard</string>
+    <string name="action__delete">Slett</string>
+    <string name="action__delete_confirm_title">Bekreft sletting</string>
+    <string name="action__edit">Rediger</string>
+    <string name="action__export">Eksport</string>
+    <string name="action__import">Importer</string>
+    <string name="action__no">Nei</string>
+    <string name="action__ok">OK</string>
+    <string name="action__save">Lagre</string>
+    <string name="action__select">Velg</string>
+    <string name="action__select_dir">Velg mappe</string>
+    <string name="action__select_file">Velg fil</string>
+    <string name="action__yes">Ja</string>
+    <string name="error__details">Detaljer</string>
+    <string name="error__invalid">Ygyldig</string>
+    <string name="error__snackbar_message">Noe gikk galt</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Persovernerklæring</string>

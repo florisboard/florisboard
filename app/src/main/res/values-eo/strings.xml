@@ -42,7 +42,6 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Krei malplenan etoson</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Krei el elektita etoso</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Propra (bazita sur %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova etoso</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redakti etoson</string>
@@ -95,22 +94,16 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Fontkodo</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Malfermitkodaj permesiloj</string>
     <!-- Assets strings -->
-    <plurals name="assets__file__authors">
-        <item quantity="one">Aŭtoro</item>
-        <item quantity="other">Aŭtoroj</item>
-    </plurals>
-    <string name="assets__file__name">Nomo</string>
-    <string name="assets__file__source">Fonto</string>
-    <string name="assets__action__add">Aldoni</string>
-    <string name="assets__action__cancel">Nuligi</string>
-    <string name="assets__action__delete">Forigi</string>
-    <string name="assets__action__edit">Redakti</string>
-    <string name="assets__action__export">Elporti</string>
-    <string name="assets__action__import">Enporti</string>
-    <string name="assets__action__no">Ne</string>
-    <string name="assets__action__save">Konsvervi</string>
-    <string name="assets__action__yes">Jes</string>
-    <string name="assets__error__invalid">Nevalida</string>
+    <string name="action__add">Aldoni</string>
+    <string name="action__cancel">Nuligi</string>
+    <string name="action__delete">Forigi</string>
+    <string name="action__edit">Redakti</string>
+    <string name="action__export">Elporti</string>
+    <string name="action__import">Enporti</string>
+    <string name="action__no">Ne</string>
+    <string name="action__save">Konsvervi</string>
+    <string name="action__yes">Jes</string>
+    <string name="error__invalid">Nevalida</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>

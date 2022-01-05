@@ -18,18 +18,13 @@ package dev.patrickgold.florisboard.app.ui.setup
 
 import android.content.Intent
 import android.provider.Settings
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -38,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -46,6 +40,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisBulletSpacer
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisStep
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepLayout
@@ -64,11 +59,11 @@ private object Step {
 }
 
 @Composable
-fun SetupScreen() = FlorisScreen(
-    title = stringRes(R.string.setup__title),
-    backArrowVisible = false,
-    scrollable = false,
-) {
+fun SetupScreen() = FlorisScreen {
+    title = stringRes(R.string.setup__title)
+    backArrowVisible = false
+    scrollable = false
+
     val navController = LocalNavController.current
     val context = LocalContext.current
 
@@ -83,107 +78,103 @@ fun SetupScreen() = FlorisScreen(
         FlorisStepState.new(init = initStep)
     }
 
-    LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected) {
-        stepState.setCurrentAuto(when {
-            !isFlorisBoardEnabled -> Step.EnableIme
-            !isFlorisBoardSelected -> Step.SelectIme
-            else -> Step.FinishUp
-        })
-    }
+    content {
+        LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected) {
+            stepState.setCurrentAuto(when {
+                !isFlorisBoardEnabled -> Step.EnableIme
+                !isFlorisBoardSelected -> Step.SelectIme
+                else -> Step.FinishUp
+            })
+        }
 
-    // Below block allows to return from the system IME enabler activity
-    // as soon as it gets selected.
-    LaunchedEffect(Unit) {
-        while (isActive) {
-            delay(200)
-            val imeIds = AndroidSettings.Secure.getString(
-                context,
-                Settings.Secure.ENABLED_INPUT_METHODS,
-            ) ?: "(null)"
-            val isEnabled = InputMethodUtils.parseIsFlorisboardEnabled(context, imeIds)
-            if (stepState.getCurrentAuto().value == Step.EnableIme &&
-                stepState.getCurrentManual().value == -1 &&
-                !isFlorisBoardEnabled &&
-                !isFlorisBoardSelected &&
-                isEnabled
-            ) {
-                context.launchActivity(FlorisAppActivity::class) {
-                    it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-                        or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                        or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        // Below block allows to return from the system IME enabler activity
+        // as soon as it gets selected.
+        LaunchedEffect(Unit) {
+            while (isActive) {
+                delay(200)
+                val imeIds = AndroidSettings.Secure.getString(
+                    context,
+                    Settings.Secure.ENABLED_INPUT_METHODS,
+                ) ?: "(null)"
+                val isEnabled = InputMethodUtils.parseIsFlorisboardEnabled(context, imeIds)
+                if (stepState.getCurrentAuto().value == Step.EnableIme &&
+                    stepState.getCurrentManual().value == -1 &&
+                    !isFlorisBoardEnabled &&
+                    !isFlorisBoardSelected &&
+                    isEnabled
+                ) {
+                    context.launchActivity(FlorisAppActivity::class) {
+                        it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                            or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                            or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    }
                 }
             }
         }
-    }
 
-    FlorisStepLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        stepState = stepState,
-        header = {
-            StepText(stringRes(R.string.setup__intro_message))
-            Spacer(modifier = Modifier.height(16.dp))
-        },
-        steps = listOf(
-            FlorisStep(
-                id = Step.EnableIme,
-                title = stringRes(R.string.setup__enable_ime__title),
-            ) {
-                StepText(stringRes(R.string.setup__enable_ime__description))
-                StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
-                    InputMethodUtils.showImeEnablerActivity(context)
-                }
+        FlorisStepLayout(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            stepState = stepState,
+            header = {
+                StepText(stringRes(R.string.setup__intro_message))
+                Spacer(modifier = Modifier.height(16.dp))
             },
-            FlorisStep(
-                id = Step.SelectIme,
-                title = stringRes(R.string.setup__select_ime__title),
-            ) {
-                StepText(stringRes(R.string.setup__select_ime__description))
-                StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
-                    InputMethodUtils.showImePicker(context)
-                }
-            },
-            FlorisStep(
-                id = Step.FinishUp,
-                title = stringRes(R.string.setup__finish_up__title),
-            ) {
-                StepText(stringRes(R.string.setup__finish_up__description_p1))
-                StepText(stringRes(R.string.setup__finish_up__description_p2))
-                StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
-                    this@FlorisScreen.prefs.internal.isImeSetUp.set(true)
-                    navController.navigate(Routes.Settings.Home) {
-                        popUpTo(Routes.Setup.Screen) {
-                            inclusive = true
+            steps = listOf(
+                FlorisStep(
+                    id = Step.EnableIme,
+                    title = stringRes(R.string.setup__enable_ime__title),
+                ) {
+                    StepText(stringRes(R.string.setup__enable_ime__description))
+                    StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
+                        InputMethodUtils.showImeEnablerActivity(context)
+                    }
+                },
+                FlorisStep(
+                    id = Step.SelectIme,
+                    title = stringRes(R.string.setup__select_ime__title),
+                ) {
+                    StepText(stringRes(R.string.setup__select_ime__description))
+                    StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
+                        InputMethodUtils.showImePicker(context)
+                    }
+                },
+                FlorisStep(
+                    id = Step.FinishUp,
+                    title = stringRes(R.string.setup__finish_up__title),
+                ) {
+                    StepText(stringRes(R.string.setup__finish_up__description_p1))
+                    StepText(stringRes(R.string.setup__finish_up__description_p2))
+                    StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
+                        this@content.prefs.internal.isImeSetUp.set(true)
+                        navController.navigate(Routes.Settings.Home) {
+                            popUpTo(Routes.Setup.Screen) {
+                                inclusive = true
+                            }
                         }
+                    }
+                },
+            ),
+            footer = {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
+                    TextButton(onClick = { context.launchUrl(privacyPolicyUrl)}) {
+                        Text(text = stringRes(R.string.setup__footer__privacy_policy))
+                    }
+                    FlorisBulletSpacer()
+                    val repositoryUrl = stringRes(R.string.florisboard__repo_url)
+                    TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
+                        Text(text = stringRes(R.string.setup__footer__repository))
                     }
                 }
             },
-        ),
-        footer = {
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
-                TextButton(onClick = { context.launchUrl(privacyPolicyUrl)}) {
-                    Text(text = stringRes(R.string.setup__footer__privacy_policy))
-                }
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .size(12.dp, 4.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
-                )
-                val repositoryUrl = stringRes(R.string.florisboard__repo_url)
-                TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
-                    Text(text = stringRes(R.string.setup__footer__repository))
-                }
-            }
-        },
-    )
+        )
+    }
 }

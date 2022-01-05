@@ -18,9 +18,11 @@ package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,40 +32,6 @@ import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
-
-@Deprecated("Deprecated in favor of FlorisScreen DSL. When writing new screens make sure to use the new DSL version of this composable. Old code can continue using this version for now.")
-@Composable
-fun FlorisScreen(
-    title: String,
-    backArrowVisible: Boolean = true,
-    scrollable: Boolean = true,
-    iconSpaceReserved: Boolean = true,
-    actions: @Composable RowScope.() -> Unit = { },
-    bottomBar: @Composable () -> Unit = { },
-    floatingActionButton: @Composable () -> Unit = { },
-    content: PreferenceUiContent<AppPrefs>,
-) {
-    Scaffold(
-        topBar = { FlorisAppBar(title, backArrowVisible, actions) },
-        bottomBar = bottomBar,
-        floatingActionButton = floatingActionButton,
-    ) { innerPadding ->
-        val modifier = if (scrollable) {
-            Modifier.florisVerticalScroll()
-        } else {
-            Modifier
-        }
-        Box(modifier = modifier.padding(innerPadding)) {
-            PreferenceLayout(
-                florisPreferenceModel(),
-                scrollable = false,
-                iconSpaceReserved = iconSpaceReserved,
-            ) {
-                content(this)
-            }
-        }
-    }
-}
 
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
@@ -82,6 +50,8 @@ interface FlorisScreenScope {
 
     var backArrowVisible: Boolean
 
+    var previewFieldVisible: Boolean
+
     var scrollable: Boolean
 
     var iconSpaceReserved: Boolean
@@ -98,6 +68,7 @@ interface FlorisScreenScope {
 private class FlorisScreenScopeImpl : FlorisScreenScope {
     override var title: String by mutableStateOf("")
     override var backArrowVisible: Boolean by mutableStateOf(true)
+    override var previewFieldVisible: Boolean by mutableStateOf(false)
     override var scrollable: Boolean by mutableStateOf(true)
     override var iconSpaceReserved: Boolean by mutableStateOf(true)
 
@@ -124,6 +95,12 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
 
     @Composable
     fun Render() {
+        val previewFieldController = LocalPreviewFieldController.current
+
+        SideEffect {
+            previewFieldController?.isVisible = previewFieldVisible
+        }
+
         Scaffold(
             topBar = { FlorisAppBar(title, backArrowVisible, actions) },
             bottomBar = bottomBar,
@@ -137,7 +114,7 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
             Box(modifier = modifier.padding(innerPadding)) {
                 PreferenceLayout(
                     florisPreferenceModel(),
-                    scrollable = false,
+                    modifier = Modifier.fillMaxWidth(),
                     iconSpaceReserved = iconSpaceReserved,
                     content = content,
                 )

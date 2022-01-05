@@ -16,14 +16,12 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
-import dev.patrickgold.florisboard.common.kotlin.stringBuilder
-
 interface SnyggValueSpec {
     val id: String?
 
-    fun parse(str: String, dstMap: SnyggIdToValueMap): Result<SnyggIdToValueMap>
+    fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap
 
-    fun pack(srcMap: SnyggIdToValueMap): Result<String>
+    fun pack(srcMap: SnyggIdToValueMap): String
 }
 
 fun SnyggValueSpec(block: SnyggValueSpecBuilder.() -> SnyggValueSpec): SnyggValueSpec {
@@ -41,12 +39,12 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
     val strToNumber: (String) -> T,
 ) : SnyggValueSpec {
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         checkNotNull(id)
         var valStr = str.trim()
         val namedValue = namedNumbers.find { it.first == valStr }
         if (namedValue != null) {
-            return@runCatching SnyggIdToValueMap.new(id to namedValue.second)
+            return SnyggIdToValueMap.new(id to namedValue.second)
         }
         if (prefix != null) {
             check(valStr.startsWith(prefix))
@@ -63,18 +61,18 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
         val number = strToNumber(valStr.trim())
         check(number.coerceIn(min, max) == number)
         dstMap.add(id to number)
-        return@runCatching dstMap
+        return dstMap
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
+    override fun pack(srcMap: SnyggIdToValueMap): String {
         checkNotNull(id)
         val value = srcMap.getOrThrow<T>(id)
         val namedValue = namedNumbers.find { it.second == value }
         if (namedValue != null) {
-            return@runCatching namedValue.first
+            return namedValue.first
         }
         check(value.coerceIn(min, max) == value)
-        return@runCatching stringBuilder {
+        return buildString {
             prefix?.let { append(it) }
             append(value)
             suffix?.let { append(it) }
@@ -88,19 +86,19 @@ data class SnyggKeywordValueSpec(
     val keywords: List<String>,
 ) : SnyggValueSpec {
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         checkNotNull(id)
         val valStr = str.trim()
         check(valStr in keywords)
         dstMap.add(id to valStr)
-        return@runCatching dstMap
+        return dstMap
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
+    override fun pack(srcMap: SnyggIdToValueMap): String {
         checkNotNull(id)
         val value = srcMap.getOrThrow<String>(id)
         check(value in keywords)
-        return@runCatching value
+        return value
     }
 }
 
@@ -109,19 +107,19 @@ data class SnyggStringValueSpec(
     val regex: Regex,
 ) : SnyggValueSpec {
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         checkNotNull(id)
         val valStr = str.trim()
         check(valStr matches regex)
         dstMap.add(id to valStr)
-        return@runCatching dstMap
+        return dstMap
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
+    override fun pack(srcMap: SnyggIdToValueMap): String {
         checkNotNull(id)
         val value = srcMap.getOrThrow<String>(id)
         check(value matches regex)
-        return@runCatching value
+        return value
     }
 }
 
@@ -131,7 +129,7 @@ data class SnyggFunctionValueSpec(
     val innerSpec: SnyggValueSpec,
 ) : SnyggValueSpec {
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         var valStr = str.trim()
         check(valStr.startsWith(name)) { "Incorrect function name" }
         valStr = valStr.removePrefix(name).trim()
@@ -140,9 +138,9 @@ data class SnyggFunctionValueSpec(
         return innerSpec.parse(valStr, dstMap)
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
+    override fun pack(srcMap: SnyggIdToValueMap): String {
         val innerStr = innerSpec.pack(srcMap)
-        return@runCatching "$name($innerStr)"
+        return "$name($innerStr)"
     }
 }
 
@@ -152,7 +150,7 @@ data class SnyggListValueSpec(
     val valueSpecs: List<SnyggValueSpec>,
 ) : SnyggValueSpec {
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         val valStr = str.trim()
         val values = valStr.split(separator)
         check(values.size == valueSpecs.size)
@@ -160,11 +158,11 @@ data class SnyggListValueSpec(
             val valueSpec = valueSpecs[n]
             valueSpec.parse(value.trim(), dstMap)
         }
-        return@runCatching dstMap
+        return dstMap
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
-        return@runCatching stringBuilder {
+    override fun pack(srcMap: SnyggIdToValueMap): String {
+        return buildString {
             for ((n, valueSpec) in valueSpecs.withIndex()) {
                 append(valueSpec.pack(srcMap))
                 if (n < valueSpecs.size - 1) {
@@ -179,13 +177,13 @@ data class SnyggNothingValueSpec(
     override val id: String?,
 ) : SnyggValueSpec {
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         check(str.isBlank())
-        return@runCatching dstMap
+        return dstMap
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
-        return@runCatching ""
+    override fun pack(srcMap: SnyggIdToValueMap): String {
+        return ""
     }
 }
 
@@ -224,20 +222,6 @@ class SnyggValueSpecBuilder {
         name: String,
         innerSpecBuilder: SnyggValueSpecBuilder.() -> SnyggValueSpec,
     ) = SnyggFunctionValueSpec(id = null, name, innerSpecBuilder(Instance))
-
-    fun rgbaColor(
-        idR: String = "r",
-        idG: String = "g",
-        idB: String = "b",
-        idA: String = "a",
-    ) = function(name = "rgba") {
-        commaList {
-            +int(id = idR, min = RgbaColor.RedMin, max = RgbaColor.RedMax)
-            +int(id = idG, min = RgbaColor.GreenMin, max = RgbaColor.GreenMax)
-            +int(id = idB, min = RgbaColor.BlueMin, max = RgbaColor.BlueMax)
-            +float(id = idA, min = RgbaColor.AlphaMin, max = RgbaColor.AlphaMax)
-        }
-    }
 
     fun keywords(
         id: String? = null,
