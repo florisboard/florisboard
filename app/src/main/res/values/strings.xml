@@ -411,7 +411,7 @@
 
     <string name="setup__finish_up__title">Finish Up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
-    <string name="setup__finish_up__description_p2">Should you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
+    <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
     <string name="setup__finish_up__finish_btn">Start Customizing</string>
 
     <!-- Crash Dialog strings -->
