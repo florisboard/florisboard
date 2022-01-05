@@ -72,7 +72,7 @@
       "$": "auto_text_key", "code": 105, "label": "i",
       "popup": {
         "relevant": [
-          { "$": "auto_text_key", "code": 7574, "label": "ᵻ" },
+          { "$": "auto_text_key", "code": 7547, "label": "ᵻ" },
           { "$": "auto_text_key", "code": 616, "label": "ɨ" },
           { "$": "auto_text_key", "code": 618, "label": "ɪ" }
         ]
@@ -167,10 +167,10 @@
       "$": "auto_text_key", "code": 106, "label": "j",
       "popup": {
         "relevant": [
-          { "$": "auto_text_key", "code": 668, "label": "ʝ" },
+          { "$": "auto_text_key", "code": 669, "label": "ʝ" },
           { "$": "auto_text_key", "code": 607, "label": "ɟ" },
           { "$": "auto_text_key", "code": 690, "label": "◌ʲ" },
-          { "$": "auto_text_key", "code": 664, "label": "ʄ" }
+          { "$": "auto_text_key", "code": 644, "label": "ʄ" }
         ]
       }
     },
@@ -258,7 +258,7 @@
           { "$": "auto_text_key", "code": 628, "label": "ɴ" },
           { "$": "auto_text_key", "code": 8319, "label": "◌ⁿ" },
           { "$": "auto_text_key", "code": 771, "label": "◌̃" },
-          { "$": "auto_text_key", "code": 631, "label": "ŋ" }
+          { "$": "auto_text_key", "code": 331, "label": "ŋ" }
         ]
       }
     },
