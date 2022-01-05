@@ -1,0 +1,4 @@
+This release re-implements custom themes (atm as import of stylesheets, an in-app UI will come
+in beta09). Some functionality available in beta05 may be missing, please see the detailed changelog for this.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta08
