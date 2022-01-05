@@ -300,7 +300,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     val internal = Internal()
     inner class Internal {
         val homeIsBetaToolboxCollapsed = boolean(
-            key = "internal__home_is_beta_toolbox_collapsed_beta06",
+            key = "internal__home_is_beta_toolbox_collapsed_beta08",
             default = false,
         )
         val isImeSetUp = boolean(

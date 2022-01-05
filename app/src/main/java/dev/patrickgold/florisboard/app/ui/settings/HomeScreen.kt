@@ -101,7 +101,6 @@ fun HomeScreen() = FlorisScreen {
                 }
                 if (!isCollapsed) {
                     Text("You are currently testing out the new Settings of FlorisBoard.\n")
-                    Text("This beta release contains a completely rewritten keyboard logic and UI backend, thus some features are still missing. These will get re-added in later beta versions (see below).\n")
                     Text("If you want to give feedback on the development of the new prefs and keyboard logic, please do so in below linked feedback thread:\n")
                     Button(onClick = {
                         context.launchUrl("https://github.com/florisboard/florisboard/discussions/1235")
@@ -111,10 +110,10 @@ fun HomeScreen() = FlorisScreen {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Current version: ${BuildConfig.VERSION_NAME}\n")
                     Text("List of unavailable features (and when they will get re-implemented):\n")
-                    Text(" - Theme customization (new theme engine and look) (beta08)")
-                    Text(" - Glide typing (beta08 or beta09)")
-                    Text(" - Emoji view (beta09 or beta10)")
-                    Text(" - Landscape fullscreen input (beta09 or beta10)")
+                    Text(" - In-app theme customization (beta09) -> Theme import/export of custom themes is already possible, also the new engine is already pretty advanced and usable with imported theme extensions")
+                    Text(" - Glide typing bug fixes (beta09) -> glide works somewhat but long words tend to not get recognized")
+                    Text(" - Emoji view (beta10)")
+                    Text(" - Landscape fullscreen input (beta10)")
                     Text(" - Word suggestions (will just show word + a number to test out if the UI works) (beta10+, new suggestion algorithm 0.3.15/16)\n")
                     Text("Please do not file issues that these features do not work while the current version is below the intended re-implementation version. Thank you!\n")
                     Spacer(modifier = Modifier.height(16.dp))

@@ -16,9 +16,13 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.gestures
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -34,6 +38,13 @@ fun GesturesScreen() = FlorisScreen {
     previewFieldVisible = true
 
     content {
+        FlorisInfoCard(
+            modifier = Modifier.padding(8.dp),
+            text = """
+                Glide typing is currently only available in English (US). This will change with the development for the 0.4.0 release.
+            """.trimIndent()
+        )
+
         PreferenceGroup(title = stringRes(R.string.pref__glide__title)) {
             SwitchPreference(
                 prefs.glide.enabled,

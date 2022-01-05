@@ -16,12 +16,16 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -42,6 +46,17 @@ fun ThemeScreen() = FlorisScreen {
     content {
         val dayThemeId by prefs.theme.dayThemeId.observeAsState()
         val nightThemeId by prefs.theme.nightThemeId.observeAsState()
+
+        FlorisInfoCard(
+            modifier = Modifier.padding(8.dp),
+            text = """
+                Themes can currently only be customized by writing (or modifying) a custom theme extension and then importing it, using the new FlexCSS stylesheet format packaged in a flex archive.
+
+                beta09 will provide a full in-app UI which allows to create and modify theme extensions hassle-free in a modern theme editor UI.
+
+                Additionally the theme mode "Follow time" is not available in this beta release.
+            """.trimIndent()
+        )
 
         ListPreference(
             prefs.theme.mode,
