@@ -47,6 +47,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жести</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">За замовчуванням</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системний за замовчуванням</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Ласкаво просимо до {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не ввімкнено в системі, тому він не буде доступним як метод вводу в меню вибору методу вводу. Натисніть сюди, щоб виправити це.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не вибрано як стандартний метод вводу. Натисніть сюди, щоб виправити це.</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Додати підтип</string>
@@ -75,8 +76,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ресурси FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Внутрішня пам\'ять</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Зовнішнє джерело</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Менеджер теми (День)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Менеджер теми (Ніч)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Створити пусту тему</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Користувацька (на основі %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
@@ -137,6 +136,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Напівпрозорий колір</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Колір тексту</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Користувацький атрибут (%s)</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Клавіатура</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Рядок з цифрами</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Підказка в строці з цифрами</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Підказки симолів</string>
@@ -149,6 +149,7 @@
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Ввід на цілий екран (пейзаж)</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Висота клавіатури</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробіл перемикає назад в буквенну розкладку</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискання пробіл автоматичну перемикає на буквенну розкладку коли знаходиться в символьній або цифровій</string>
@@ -158,6 +159,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Пропозиції</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Пропозиції вмісту буферу обміну</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Використовувати великі літери на основі поточного контексту введення</string>
@@ -203,23 +205,10 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Політика конфіденційності</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Вихідний код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Ліцензії ПЗ з відкритим кодом</string>
-    <!-- Assets strings -->
-    <string name="action__add">Додати</string>
-    <string name="action__cancel">Скасувати</string>
-    <string name="action__cancel_confirm_title">Підтвердьте скасування</string>
-    <string name="action__cancel_confirm_message">Ви впевнені, що хочете скасувати будь-які незбережені зміни? Цю дію неможливо скасувати після виконання.</string>
-    <string name="action__delete">Видалити</string>
-    <string name="action__delete_confirm_title">Підтвердьте видалення</string>
-    <string name="action__edit">Редагувати</string>
-    <string name="action__export">Експорт</string>
-    <string name="action__import">Імпорт</string>
-    <string name="action__no">Ні</string>
-    <string name="action__save">Зберегти</string>
-    <string name="action__yes">Так</string>
-    <string name="error__details">Деталі</string>
-    <string name="error__invalid">Помилка</string>
-    <string name="error__snackbar_message">Щось пішло не так</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Політика конфіденційності</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Ласкаво просимо!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Політика конфіденційності</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Звіт про помилку FlorisBoard</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Зкопіювати в системний буфер обміну</string>
@@ -231,6 +220,7 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Здається, FlorisBoard постійно перестає працювати…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Повернення до попередньої клавіатури, щоб зупинити нескінченний цикл збою. Натисніть, щоб переглянути деталі про помилку</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Буфер обміну</string>
     <string name="clipboard__disabled__enable_button">Увімкнути історію буферу обміну</string>
     <string name="clipboard__group_other">Інше</string>
     <string name="clip__clear_history">Очистити історію</string>
@@ -240,19 +230,68 @@
     <string name="clip__paste_item">Вставити</string>
     <string name="clip__back_to_text_input">Повернутися до вводу тексту</string>
     <string name="clip__cant_paste">Цей додаток не дозволяє вставляти такі дані.</string>
+    <string name="settings__clipboard__title">Буфер обміну</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Використовувати внутрішній буфер обміну</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Використовувати внутрішній буфер обміну замість системного</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Синхронізувати з системного буферу обміну</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Оновлення системного буферу також оновить буфер обміну Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронізувати з системним буфером обміну</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обміну Floris також оновлює системний буфер обміну</string>
     <string name="pref__clipboard__group_clipboard_history__label">Історія буфера обміну</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Увімкнути історію буферу обміну</string>
+    <string name="pref__clipboard__clean_up_old__label">Очистити старі елементи</string>
+    <string name="pref__clipboard__clean_up_after__label">Очистити старі елементи через</string>
     <string name="pref__clipboard__limit_history_size__label">Обмежити розмір історії</string>
     <string name="pref__clipboard__max_history_size__label">Максимальний розмір історії</string>
     <!-- Devtools strings -->
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Увімкнути параметри розробника</string>
     <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
+    <string name="state__disabled">Вимкнено</string>
     <!-- Enum label and description strings -->
+    <string name="enum__input_mode__normal" comment="Enum value label">Нормальний</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ніколи не відображати</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Завжди відображати</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамічно показувати</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">Вимк</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Режим лівші</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Режим правші</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Немає дії</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Перейти до попереднього режиму клавіатури</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Перейти до наступного режиму клавіатури</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Точне видалення символів</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Видалити поточне слово</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Точне видалення слова</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Приховати клавіатуру</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Вставити пробіл</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Перемістити курсор вверх</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Перемістити курсор вниз</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Перемістити курсор вліво</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Перемістити курсор вправо</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Перемістити курсор на початок рядку</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Перемістити курсор в кінець рядку</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Перемістити курсор на початок тексту</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Перемістити курсор в кінець тексту</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Відкрити буфер обміну/історію</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Повторити</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Відмінити</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Показати вибір методу вводу</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Перемикнутись на попередню клавіатуру</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Перемкнутись на попередню розкладку</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Перемкнутись на наступну розкладку</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Завжди день</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Завжди ніч</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Дотримуватись системи</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Дотримуватись часу</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Перемикнутись на емодзі</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Змінити мову</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Перемикнути програму клавіатури</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Динамічне: Перемикнутись на емодзі / Змінити мову</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

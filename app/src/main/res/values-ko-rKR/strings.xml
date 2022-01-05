@@ -18,11 +18,11 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">이모티콘</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">카오모지</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">웃음 &amp; 이모티콘</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">사람 &amp; 사람들</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">동물들 &amp; 자연</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">음식 &amp; 음료</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">여행 &amp; 장소들</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">스마일리 &amp; 이모티콘</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">사람 &amp; 몸</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">동물 &amp; 자연</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">음식</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">여행 &amp; 장소</string>
     <string name="emoji__category__activities" comment="Emoji category name">활동</string>
     <string name="emoji__category__objects" comment="Emoji category name">사물</string>
     <string name="emoji__category__symbols" comment="Emoji category name">기호</string>
@@ -62,21 +62,22 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">테마 이름을 입력해 주세요.</string>
     <string name="settings__theme__group_window" comment="Theme group label">창 및 시스템</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">키보드</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">사생활 보호 모드</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">배경 색상</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">키보드</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
-    <!-- Assets strings -->
-    <string name="action__yes">예</string>
-    <string name="error__details">세부사항</string>
-    <string name="error__invalid">유효하지 않음</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
     <string name="clipboard__group_other">기타</string>
+    <string name="clip__delete_item">삭제</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->

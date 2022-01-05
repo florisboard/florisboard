@@ -95,8 +95,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Aset Aplikasi FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Penyimpanan Internal</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Penyedia Eksternal</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Pengelola Tema (Pagi)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Pengelola Tema (Malam)</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Pilih tema pagi</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Pilih tema malam</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Kelola tema terpasang</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Buat tema kosong</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Kustom (berdasarkan %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema baru</string>
@@ -218,9 +219,23 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas papan ketik</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Baris utama</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Balikkan baris tombol alih</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Membalikkan alih baris sekunder dan tindakan</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Baris sekunder</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Aktifkan baris sekunder</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Menambahkan sebuah baris sekunder yang dapat dibesarkan untuk memperbolehkan kontrol lainnya untuk ditampilkan</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Peletakan baris sekunder</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Baris tindakan</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan secara otomatis berdasarkan status saat ini</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Saran &amp; Koreksi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Tampilkan saran dalam baris yang disediakan oleh layanan pengisian otomatis (manajer kata sandi, …)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode penampilan saran</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Saran konten papan klip</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Waktu habis saran papan klip</string>
     <string name="pref__correction__title" comment="Preference group title">Koreksi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Kapitalisasi otomatis</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalisasi kata berdasarkan konteks input saat ini</string>
@@ -332,6 +347,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lisensi sumber terbuka</string>
     <string name="about__version__title" comment="Preference title">Versi</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versi disalin ke papan klip</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Terjadi kesalahan: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Changelog</string>
     <string name="about__changelog__summary" comment="Preference summary">Apa yang baru</string>
     <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
@@ -344,30 +360,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Referensi pengelola aset adalah null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Lisensi pihak ketiga</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Lisensi pustaka pihak ketiga yang digunakan di aplikasi ini</string>
-    <!-- Assets strings -->
-    <string name="action__add">Tambahkan</string>
-    <string name="action__apply">Terapkan</string>
-    <string name="action__cancel">Batal</string>
-    <string name="action__cancel_confirm_title">Konfirmasi pembatalan</string>
-    <string name="action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dieksekusi.</string>
-    <string name="action__default">Bawaan</string>
-    <string name="action__delete">Hapus</string>
-    <string name="action__delete_confirm_title">Konfirmasi penghapusan</string>
-    <string name="action__delete_confirm_message">Apakah Anda yakin ingin menghapus \"{database_name}\"? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
-    <string name="action__edit">Sunting</string>
-    <string name="action__export">Ekspor</string>
-    <string name="action__import">Impor</string>
-    <string name="action__no">Tidak</string>
-    <string name="action__ok">OK</string>
-    <string name="action__save">Simpan</string>
-    <string name="action__select">Pilih</string>
-    <string name="action__select_dir">Pilih direktori</string>
-    <string name="action__select_file">Pilih file</string>
-    <string name="action__yes">Ya</string>
-    <string name="error__title">Kesalahan</string>
-    <string name="error__details">Keterangan</string>
-    <string name="error__invalid">Tidak valid</string>
-    <string name="error__snackbar_message">Terjadi kesalahan</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Selamat datang!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Terima kasih untuk telah menggunakan {app_name}! Penyiapan cepat ini memandu Anda melalui langkah-langkah yang diperlukan untuk menggunakan {app_name} di perangkat Anda.</string>
@@ -399,7 +391,15 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Mengembalikan ke keyboard sebelumnya untuk menghentikan loop crash tak terbatas. Ketuk untuk melihat detail kesalahan</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Papan klip</string>
+    <string name="clipboard__disabled__title">Riwayat papan klip saat ini dinonaktifkan</string>
+    <string name="clipboard__disabled__message">Riwayat papan klip {app_name} memungkinkan Anda untuk menyimpan dan akses teks dan gambar yang Anda salin secara cepat, dengan kemampuan untuk menyematkan item-item, konfigurasi pembersihan otomatis, dan tetapkan batas jumlah item.</string>
     <string name="clipboard__disabled__enable_button">Aktifkan riwayat papan klip</string>
+    <string name="clipboard__empty__title">Papan klip Anda kosong</string>
+    <string name="clipboard__empty__message">Ketika Anda salin teks atau gambar, mereka akan muncul di sini.</string>
+    <string name="clipboard__locked__title">Papan klip Anda terkunci</string>
+    <string name="clipboard__locked__message">Untuk mengakses riwayat papan klip Anda, mohon buka kunci perangkat Anda.</string>
+    <string name="clipboard__group_pinned">Disematkan</string>
+    <string name="clipboard__group_recent">Terkini</string>
     <string name="clipboard__group_other">Lainnya</string>
     <string name="clip__clear_history">Hapus riwayat</string>
     <string name="clip__unpin_item">Lepas pin item</string>
@@ -408,6 +408,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clip__paste_item">Tempel</string>
     <string name="clip__back_to_text_input">Kembali ke teks input</string>
     <string name="clip__cant_paste">Aplikasi ini tidak mengizinkan untuk menempel konten ini.</string>
+    <string name="clipboard__cleared_primary_clip">Klip utama dibersihkan</string>
+    <string name="clipboard__cleared_history">Riwayat dibersihkan</string>
+    <string name="clipboard__cleared_full_history">Seluruh riwayat dibersihkan</string>
     <string name="settings__clipboard__title">Papan klip</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Gunakan papan klip internal</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Gunakan papan klip internal daripada papan klip sistem</string>
@@ -417,6 +420,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Pembaruan papan klip Floris juga memperbarui papan klip sistem</string>
     <string name="pref__clipboard__group_clipboard_history__label">Riwayat papan klip</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Aktifkan riwayat papan klip</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Tetapkan item-item papan klip untuk akses cepat</string>
     <string name="pref__clipboard__clean_up_old__label">Bersihkan item lama</string>
     <string name="pref__clipboard__clean_up_after__label">Bersihkan item lama setelah</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
@@ -427,6 +431,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Alat yang dirancang khusus untuk debugging dan pemecahan masalah</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Tampilkan statistik tumpukan memori</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Melapisi penggunaan tumpukan memori dan ukuran maksimal di sudut kanan atas</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Tampilkan klip utama</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Menampilkan klip utama papan klip</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Tampilkan overlay pengejaan</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Menampilkan hasil pengejaan saat ini untuk pengawakutuan</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Bersihkan data kamus pengguna internal</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Akan membersihkan semua kata-kata dari tabel basisdata kamus</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atur ulang flag \"{flag_name}\"</string>
@@ -439,6 +447,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Pengaturan sistem Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
     <!-- Extension strings -->
+    <string name="ext__meta__components">Komponen yang dibundel</string>
+    <string name="ext__meta__components_label_generic">Tipe yang tidak diketahui | {label}</string>
+    <string name="ext__meta__components_label_theme">Tema | {label}</string>
+    <string name="ext__meta__components_none_found">Arsip ekstensi ini tidak berisi komponen apa pun yang dibundel.</string>
     <string name="ext__meta__description">Deskripsi</string>
     <string name="ext__meta__homepage">Beranda</string>
     <string name="ext__meta__id">ID</string>
@@ -446,10 +458,57 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__meta__keywords">Kata kunci</string>
     <string name="ext__meta__license">Lisensi</string>
     <string name="ext__meta__maintainers">Pengelola</string>
+    <string name="ext__meta__maintainers_by">Oleh: {maintainers}</string>
     <string name="ext__meta__title">Judul</string>
     <string name="ext__meta__version">Versi</string>
     <string name="ext__error__not_found_title">Ekstensi tidak ditemukan</string>
     <string name="ext__error__not_found_description">Tidak ada ekstensi dengan ID \"{id}\" yang ditemukan.</string>
+    <string name="ext__editor__create_new_extension">Buat ekstensi baru</string>
+    <string name="ext__export__success">Berhasil mengekspor ekstensi!</string>
+    <string name="ext__export__failure">Gagal untuk mengekspor ekstensi: {error_message}</string>
+    <string name="ext__import__success">Berhasil mengimpor ekstensi!</string>
+    <string name="ext__import__failure">Gagal untuk mengimpor ekstensi: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Impor ekstensi</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Impor ekstensi keyboard</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Impor ekstensi / kamus pengejaan</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Impor ekstensi tema</string>
+    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Tidak ada file yang dipilih untuk diimpor</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File tidak dapat diimpor. Alasan:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipe file tidak didukung atau tidak diketahui.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Tidak dapat menggantikan atau memperbarui paket-paket ekstensi bawaan yang disediakan dengan aset inti aplikasi. Pertimbangkan untuk memperbarui aplikasinya sendiri jika Anda ingin memakai paket ekstensi inti dengan versi yang baru.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">File terlihat sebagai arsip ekstensi tetapi menguraikan data arsip gagal. Arsip mungkin terkorupsi atau file ini bukan sebuah ekstensi.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Diduga arsip ekstensi dari tipe serial \"{expected_serial_type}\" tetapi malah \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Diduga sebuah file media (gambar, suara, font, dll.) tetapi menemukan sebuah arsip ekstensi.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Diduga sebuah arsip ekstensi tetapi menemukan sebuah file media (gambar, suara, font, dll.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Sebuah kesalahan yang tidak terduga terjadi saat mengimpor. Detail berikut ini disediakan:</string>
+    <!-- Action strings -->
+    <string name="action__add">Tambahkan</string>
+    <string name="action__apply">Terapkan</string>
+    <string name="action__cancel">Batal</string>
+    <string name="action__cancel_confirm_title">Konfirmasi pembatalan</string>
+    <string name="action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
+    <string name="action__default">Default</string>
+    <string name="action__delete">Hapus</string>
+    <string name="action__delete_confirm_title">Konfirmasi penghapusan</string>
+    <string name="action__delete_confirm_message">Apakah Anda yakin ingin menghapus \"{name}\"? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
+    <string name="action__edit">Edit</string>
+    <string name="action__export">Ekspor</string>
+    <string name="action__import">Impor</string>
+    <string name="action__no">Tidak</string>
+    <string name="action__ok">Oke</string>
+    <string name="action__save">Simpan</string>
+    <string name="action__select">Pilih</string>
+    <string name="action__select_dir">Pilih direktori</string>
+    <string name="action__select_dirs">Pilih beberapa direktori</string>
+    <string name="action__select_file">Pilih file</string>
+    <string name="action__select_files">Pilih beberapa file</string>
+    <string name="action__yes">Ya</string>
+    <!-- Error strings (generic) -->
+    <string name="error__title">Kesalahan</string>
+    <string name="error__details">Detail</string>
+    <string name="error__invalid">Tidak valid</string>
+    <string name="error__snackbar_message">Terjadi kesalahan</string>
+    <string name="error__snackbar_message_template">Terjadi kesalahan: {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Tidak ada aplikasi peramban untuk menangani URL {url}</string>
     <!-- Screen orientation strings -->
@@ -461,6 +520,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="state__disabled">Dinonaktifkan</string>
     <string name="state__enabled">Diaktifkan</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasik (3 baris)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Lebar dinamis</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Lebar dinamis &amp; dapat digulir</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksen diprioritaskan</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan aksen utama, atau simbol petunjuk jika tidak ada aksen utama yang tersedia</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Petunjuk diprioritaskan</string>
@@ -476,6 +538,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Mati</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode tangan kiri</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode tangan kanan</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Di atas baris utama</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara UI aplikasi dan baris utama</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Di bawah baris utama</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara baris utama dan keyboard teks</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Tampilkan UI aplikasi</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Menempatkan baris sekunder sebagai overlay di atas UI aplikasi, tanpa mempengaruhi ketinggian UI keyboard. Dicatat bahwa penempatannya mungkin membuat kolom input aplikasi sebagian digambar terlalu banyak</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Gunakan bahasa sistem</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Gunakan subtipe-subtipe keyboard</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Tidak ada aksi</string>

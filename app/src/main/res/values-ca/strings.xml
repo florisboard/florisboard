@@ -47,6 +47,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestos</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Predeterminat</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Benvingut a {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i per tant no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per resoldre aquest problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per resoldre aquest problema.</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
@@ -63,6 +64,7 @@
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària del telèfon</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Sembla que no heu configurat cap subtipus. Com a alternativa s\'utilitzarà el subtipus anglès/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Aquest subtipus ja existeix!</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinit</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode del tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora de trenc d\'alba</string>
@@ -75,8 +77,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Emmagatzematge intern</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestor de temes (diürn)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestor de temes (nocturn)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crear un nou tema</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalitzat (basat en %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nou tema</string>
@@ -137,6 +137,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Color semitransparent</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Color del text</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atribut personalitzat (%s)</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclat</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Número de fila</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Número d\'indicació de fila</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symbols marcats</string>
@@ -149,6 +150,7 @@
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa apaïsada</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Alçada del teclat</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a la disposició de caràcters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En prémer la barra d\'espai, es torna automàticament als caràcters quan estan en símbols o numèrics</string>
@@ -166,11 +168,12 @@
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
-    <!-- Assets strings -->
+    <string name="about__version__title" comment="Preference title">Versió</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
     <string name="clipboard__group_other">Altres</string>
+    <string name="clip__delete_item">Eliminar</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <string name="ext__meta__id">ID</string>
@@ -180,6 +183,8 @@
     <string name="ext__meta__version">Versió</string>
     <string name="ext__error__not_found_title">Extensió no trobada</string>
     <string name="ext__error__not_found_description">No s\'ha trobat cap extensió amb ID \"{id}\".</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No s\'ha trobat cap aplicació de navegació per gestionar URL \"{url}\"</string>
     <!-- Screen orientation strings -->
@@ -192,6 +197,14 @@
     <string name="state__enabled">Habilitat</string>
     <!-- Enum label and description strings -->
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent està prioritzat</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">Desactivat</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Mode esquerrà</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Mode dretà</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Amagar el teclat</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Canvia a teclat previ</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Canvia a subtipus anterior</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Canvia a subtipus següent</string>

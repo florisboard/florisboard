@@ -94,8 +94,9 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ressources de l’application FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Stockage interne</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Fournisseur externe</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestionnaire du thème (clair)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestionnaire du thème (sombre)</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Sélectionner le thème jour</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Sélectionner le thème nuit</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gérer les thèmes installés</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Créer un thème vide</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personnalisé (basé sur %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nouveau thème</string>
@@ -358,36 +359,12 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">La référence du gestionnaire d\'actifs est nulle</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Licences de tiers</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licences des bibliothèques tierces incluses dans cette application</string>
-    <!-- Assets strings -->
-    <string name="action__add">Ajouter</string>
-    <string name="action__apply">Appliquer</string>
-    <string name="action__cancel">Annuler</string>
-    <string name="action__cancel_confirm_title">Confirmer l\'annulation</string>
-    <string name="action__cancel_confirm_message">Êtes-vous sûrs de vouloir abandonner tout changement non sauvegardé ? Cette action ne peut être annulée après son exécution.</string>
-    <string name="action__default">Défaut</string>
-    <string name="action__delete">Supprimer</string>
-    <string name="action__delete_confirm_title">Confirmer la suppression</string>
-    <string name="action__delete_confirm_message">Êtes-vous sûrs de vouloir supprimer « {database_name} » ? Cette action ne peut être annulée après son exécution.</string>
-    <string name="action__edit">Modifier</string>
-    <string name="action__export">Exporter</string>
-    <string name="action__import">Importer</string>
-    <string name="action__no">Non</string>
-    <string name="action__ok">OK</string>
-    <string name="action__save">Sauvegarder</string>
-    <string name="action__select">Sélectionner</string>
-    <string name="action__select_dir">Sélectionner un dossier</string>
-    <string name="action__select_file">Sélectionner un fichier</string>
-    <string name="action__yes">Oui</string>
-    <string name="error__title">Erreur</string>
-    <string name="error__details">Détails</string>
-    <string name="error__invalid">Invalide</string>
-    <string name="error__snackbar_message">Un problème est survenu</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Bienvenue !</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Merci d\'utiliser {app_name} ! Cette configuration rapide vous guide à travers les étapes nécessaires pour utiliser {app_name} sur votre appareil.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Politique de confidentialité</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Dépôt</string>
-    <string name="setup__enable_ime__title">Activé {app_name}</string>
+    <string name="setup__enable_ime__title">Activer {app_name}</string>
     <string name="setup__enable_ime__description">Android exige que chaque clavier personnalisé soit activé séparément avant que vous puissiez l\'utiliser. Ouvrez le système <i>Language &amp;amp ; Input</i> Settings, là activez \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Ouvrir paramètres de système</string>
     <string name="setup__select_ime__title">Sélectionner {app_name}</string>
@@ -455,6 +432,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Afficher en superposé l\'utilisation de mémoire tas et sa taille maximale dans le coin haut droit</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Afficher l\'attache principale</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Superposer l\'attache principale actuelle du presse-papiers</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Afficher la superposition d\'orthographe</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Superpose les résultats d\'orthographe actuels pour le débogage</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Effacer la base de données du dictionnaire utilisateur interne</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Efface tous les mots de la table de la base de données du dictionnaire</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Réinitialisation du drapeau \"{flag_name}\"</string>
@@ -467,6 +446,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Paramètres système Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Paramètres régionaux du système</string>
     <!-- Extension strings -->
+    <string name="ext__meta__components">Composants groupés</string>
+    <string name="ext__meta__components_label_generic">Type inconnu | {label}</string>
+    <string name="ext__meta__components_label_theme">Thème | {label}</string>
+    <string name="ext__meta__components_none_found">Cette archive d\'extension ne contient aucun composant groupé.</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Page d\'accueil</string>
     <string name="ext__meta__id">ID</string>
@@ -474,10 +457,57 @@
     <string name="ext__meta__keywords">Mots clés</string>
     <string name="ext__meta__license">Licence</string>
     <string name="ext__meta__maintainers">Mainteneurs</string>
+    <string name="ext__meta__maintainers_by">Par : {maintainers}</string>
     <string name="ext__meta__title">Titre</string>
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension introuvable</string>
     <string name="ext__error__not_found_description">Aucune extension avec l\'ID \"{id}\" n\'a pu être trouvée.</string>
+    <string name="ext__editor__create_new_extension">Créer une nouvelle extension</string>
+    <string name="ext__export__success">Extension exportée avec succès !</string>
+    <string name="ext__export__failure">Échec de l\'exportation de l\'extension : {error_message}</string>
+    <string name="ext__import__success">Extension importée avec succès !</string>
+    <string name="ext__import__failure">Échec de l\'importation de l\'extension : {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importer l\'extension</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importer une extension de clavier</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Importer l\'extension orthographique / le dictionnaire</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importer l\'extension de thème</string>
+    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Aucun fichier sélectionné pour l\'importation</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Le fichier ne peut pas être importé. Raison :</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Type de fichier non pris en charge ou non reconnu.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Impossible de remplacer ou de mettre à jour les packages d\'extension par défaut fournis avec les ressources principales de l\'application. Envisagez de mettre à jour l\'application elle-même si vous avez l\'intention d\'utiliser une version plus récente d\'un package d\'extension de base.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Le fichier semble être une archive d\'extension, mais l\'analyse des données d\'archive a échoué. Soit l\'archive est corrompue, soit ce fichier n\'est pas du tout une extension.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Attendu une archive d\'extension de type série \"{expected_serial_type}\" mais était \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Un fichier multimédia étai attendu (image, audio, police, etc.) mais une archive d\'extension a été trouvée.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Une archive d\'extension était attendue mais un fichier multimédia (image, audio, police, etc.) a été trouvé.</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Une erreur inattendue s\'est produite lors de l\'importation. Les détails suivants ont été fournis :</string>
+    <!-- Action strings -->
+    <string name="action__add">Ajouter</string>
+    <string name="action__apply">Appliquer</string>
+    <string name="action__cancel">Annuler</string>
+    <string name="action__cancel_confirm_title">Confirmer l\'annulation</string>
+    <string name="action__cancel_confirm_message">Voulez-vous vraiment supprimer les modifications non enregistrées ? Cette action ne peut pas être annulée une fois exécutée.</string>
+    <string name="action__default">Par défaut</string>
+    <string name="action__delete">Supprimer</string>
+    <string name="action__delete_confirm_title">Confirmer la suppression</string>
+    <string name="action__delete_confirm_message">Êtes-vous sûrs de vouloir supprimer « {name} » ? Cette action ne peut être annulée après son exécution.</string>
+    <string name="action__edit">Éditer</string>
+    <string name="action__export">Exporter</string>
+    <string name="action__import">Importer</string>
+    <string name="action__no">Non</string>
+    <string name="action__ok">Ok</string>
+    <string name="action__save">Enregistrer</string>
+    <string name="action__select">Sélectionner</string>
+    <string name="action__select_dir">Sélectionner un dossier</string>
+    <string name="action__select_dirs">Sélectionner des dossiers</string>
+    <string name="action__select_file">Sélectionner un fichier</string>
+    <string name="action__select_files">Sélectionner des fichiers</string>
+    <string name="action__yes">Oui</string>
+    <!-- Error strings (generic) -->
+    <string name="error__title">Erreur</string>
+    <string name="error__details">Détails</string>
+    <string name="error__invalid">Invalide</string>
+    <string name="error__snackbar_message">Un problème est survenu</string>
+    <string name="error__snackbar_message_template">Quelque chose s\'est mal passé : {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Aucune application de navigateur trouvée pour gérer l\'URL {url}</string>
     <!-- Screen orientation strings -->
@@ -489,6 +519,9 @@
     <string name="state__disabled">Désactivé</string>
     <string name="state__enabled">Activé</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classique (3 colonnes)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largeur dynamique</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largeur dynamique &amp; déroulant</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Activé priorité à l\'accent</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Activé priorité à l\'accent</string>

@@ -34,13 +34,16 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestoj</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Defaŭlta</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistema defaŭlta</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Bonvenon al {app_name}</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aldoni subspeco</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redakti subspeco</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ĉi tiu subtipo jam ekzistas!</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Etoso</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedifinita</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selektado etoso</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Krei malplenan etoson</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Propra (bazita sur %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova etoso</string>
@@ -60,6 +63,7 @@
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teksto</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Klavaro</string>
     <string name="settings__theme__group_key" comment="Theme group label">Klavo</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Privata reĝimo</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Propra grubo (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Fona koloro</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Fona koloro (aktiva)</string>
@@ -71,6 +75,7 @@
     <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Akcenta koloro</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Teksta koloro</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Propra atributo (%s)</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavaĵo ekdepremi</string>
@@ -93,28 +98,35 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privateca politiko</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Fontkodo</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Malfermitkodaj permesiloj</string>
-    <!-- Assets strings -->
-    <string name="action__add">Aldoni</string>
-    <string name="action__cancel">Nuligi</string>
-    <string name="action__delete">Forigi</string>
-    <string name="action__edit">Redakti</string>
-    <string name="action__export">Elporti</string>
-    <string name="action__import">Enporti</string>
-    <string name="action__no">Ne</string>
-    <string name="action__save">Konsvervi</string>
-    <string name="action__yes">Jes</string>
-    <string name="error__invalid">Nevalida</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Privateca politiko</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Bonvenon!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privateca politiko</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
     <!-- Clipboard strings -->
     <string name="clipboard__group_other">Alia</string>
+    <string name="clip__delete_item">Forigi</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
+    <string name="state__disabled">Malŝaltita</string>
     <!-- Enum label and description strings -->
+    <string name="enum__input_mode__normal" comment="Enum value label">Norma</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Neniam montri</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Ĉiam montri</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">Malvalidigita</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Neniu ago</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Ĉiama tago</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Ĉiama nokto</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Laŭ operaciumo</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Laŭ tempo</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Baskuli lingvon</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Ŝalti klavara aplikaĵo</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

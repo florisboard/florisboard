@@ -3,19 +3,19 @@
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Duraklat</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Bekle</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Üç nokta simgesi. Eğer varsa, uzun süre dokunarak daha fazla harf kullanabilirsiniz.</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Üç nokta simgesi var ise, uzun süre dokunarak daha fazla harf kullanabilirsiniz.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tek el modunu kapat.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Klavyeyi sola kaydır.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Klavyeyi sağa kaydır.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Gizlilik modu</string>
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Gizli mod</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">İfadeler</string>
-    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">İfadeler</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojiler</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emojiler</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Suratlar &amp; İfadeler</string>
@@ -26,7 +26,7 @@
     <string name="emoji__category__activities" comment="Emoji category name">Etkinlikler</string>
     <string name="emoji__category__objects" comment="Emoji category name">Nesneler</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Semboller</string>
-    <string name="emoji__category__flags" comment="Emoji category name">İşaretler</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Bayraklar</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Hızlı erişim tuşu. Basılı tutarak, kelime önerileri ve hızlı erişim tuşları arasında geçin yapar.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Yazı düzenleme panelinden çık.</string>
@@ -50,7 +50,7 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistem Varsayılanları</string>
     <string name="settings__home__title" comment="Title of the Home screen">{app_name}\'a hoş geldiniz</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard sisteminizde etkinleştirilmediği için giriş seçeneklerinde görüntülenemez. Bu durumu düzeltmek için tıklayın.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard varsayılan giriş seçeneğiniz olarak seçilmemiş. Bu durumu düzeltmek için tıklayın.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard varsayılan giriş seçeneği değil. Düzeltmek için tıklayın.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Diller &amp; Düzenler</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Alt Türler</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dil/dizilim ekle</string>
@@ -94,8 +94,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Uygulama Elemanları</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Dahili Depolama</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Harici Sağlayıcı</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Tema Yöneticisi (Gündüz)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Tema Yöneticisi (Gece)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Boş tema oluştur</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Özel (%s üzerinden)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Yeni tema</string>
@@ -358,30 +356,6 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Öğe yöneticisi referans boş</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Üçüncü parti lisanslar</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Üçüncü taraf kütüphanelerin lisansları bu uygulamaya dahildir</string>
-    <!-- Assets strings -->
-    <string name="action__add">Ekle</string>
-    <string name="action__apply">Uygula</string>
-    <string name="action__cancel">İptal</string>
-    <string name="action__cancel_confirm_title">İptali onayla</string>
-    <string name="action__cancel_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>
-    <string name="action__default">Varsayılan</string>
-    <string name="action__delete">Sil</string>
-    <string name="action__delete_confirm_title">Silmeyi onayla</string>
-    <string name="action__delete_confirm_message">\"{database_name}\"’yi silmek istediğinize emin misiniz? Bu işlem yapıldıktan sonra geri alınamaz.</string>
-    <string name="action__edit">Düzenle</string>
-    <string name="action__export">Dışa aktar</string>
-    <string name="action__import">İçe aktar</string>
-    <string name="action__no">Hayır</string>
-    <string name="action__ok">Tamam</string>
-    <string name="action__save">Kaydet</string>
-    <string name="action__select">Seç</string>
-    <string name="action__select_dir">Dizini seçin</string>
-    <string name="action__select_file">Dosyayı seçin</string>
-    <string name="action__yes">Evet</string>
-    <string name="error__title">Hata</string>
-    <string name="error__details">Detaylar</string>
-    <string name="error__invalid">Geçersiz</string>
-    <string name="error__snackbar_message">Bir şeyler ters gitti</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hoş geldiniz!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} kullandığınız için teşekkürler! Bu hızlı kurulum, cihazınızda {app_name} uygulamasını kullanmak için gerekli adımlarda size rehberlik eder.</string>
@@ -395,7 +369,6 @@
     <string name="setup__select_ime__switch_keyboard_btn">Klavyeyi Değiştir</string>
     <string name="setup__finish_up__title">Tamamen Bitir</string>
     <string name="setup__finish_up__description_p1">{app_name} sistemde etkin ve özelleştirilmeye hazır.</string>
-    <string name="setup__finish_up__description_p2">Herhangi bir sorunla, hatayla, çökmeyle karşılaşırsanız veya sadece bir öneride bulunmak isterseniz, hakkında ekranından proje deposuna göz atın!</string>
     <string name="setup__finish_up__finish_btn">Özelleştirmeye Başla</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
@@ -478,6 +451,8 @@
     <string name="ext__meta__version">Sürüm</string>
     <string name="ext__error__not_found_title">Eklenti bulunamadı</string>
     <string name="ext__error__not_found_description">\"{id}\" kimlikli uzantı bulunamadı.</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">{url} adresini açmak için tarayıcı uygulaması bulunamadı</string>
     <!-- Screen orientation strings -->

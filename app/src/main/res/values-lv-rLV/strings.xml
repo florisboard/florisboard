@@ -94,8 +94,9 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ārējs avots</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Izskata pārvaldnieks (Diena)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Izskata pārvaldnieks (Nakts)</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Atlasīt dienas izskatu</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Atlasīt nakts izskatu</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Izveidot tukšu izskatu</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Pielāgots (no %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Jauns izskats</string>
@@ -217,9 +218,23 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Viedjosla</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Galvenā rinda</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Apvērst rindu pārslēgšanas pogas</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Apvērš otrējās un darbību rindas pārslēgus</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Otrējā rinda</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Iespējot otrējo rindu</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Pievieno izvēršamu otro rindu, lai attēlotu vairāk vadības iespēju</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Otrējās rindas novietojums</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Darbību rinda</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj darbību rindu atbilstoši pašreizējam stāvoklim</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Ieteikumi un labojumi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Attēlot iekļautus ieteikumus, kurus nodrošina pašaizpildīšanas pakalpojumi (paroļu pārvaldnieki, …)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Ieteikumu attēlošanas veids</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Starpliktuves ieteikumu noildze</string>
     <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pārveidot vārdu sākumburtus par lielajiem, balstoties uz pašreizējo ievades kopumu</string>
@@ -331,6 +346,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Atvērtā pirmavota licences</string>
     <string name="about__version__title" comment="Preference title">Laidiens</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Laidiena numurs ir ievietots starpliktuvē</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Kaut kas nogāja greizi: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Izmaiņu žurnāls</string>
     <string name="about__changelog__summary" comment="Preference summary">Kas jauns?</string>
     <string name="about__repository__title" comment="Preference title">Glabātava (GitHub)</string>
@@ -343,30 +359,6 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Līdzekļu pārvaldītāja atsauce ir null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Trešo pušu licences</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Šajā lietotnē iekļauto trešo pušu bibliotēku licences</string>
-    <!-- Assets strings -->
-    <string name="action__add">Pievienot</string>
-    <string name="action__apply">Pielietot</string>
-    <string name="action__cancel">Atcelt</string>
-    <string name="action__cancel_confirm_title">Apstiprināt atcelšanu</string>
-    <string name="action__cancel_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
-    <string name="action__default">Noklusējums</string>
-    <string name="action__delete">Izdzēst</string>
-    <string name="action__delete_confirm_title">Apstiprināt izdzēšanu</string>
-    <string name="action__delete_confirm_message">Vai tiešām izdzēst \"{database_name}\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
-    <string name="action__edit">Labot</string>
-    <string name="action__export">Izdot</string>
-    <string name="action__import">Iekļaut</string>
-    <string name="action__no">Nē</string>
-    <string name="action__ok">Labi</string>
-    <string name="action__save">Saglabāt</string>
-    <string name="action__select">Atlasīt</string>
-    <string name="action__select_dir">Atlasīt mapi</string>
-    <string name="action__select_file">Atlasīt datni</string>
-    <string name="action__yes">Jā</string>
-    <string name="error__title">Kļūda</string>
-    <string name="error__details">Izklāsts</string>
-    <string name="error__invalid">Nederīgs</string>
-    <string name="error__snackbar_message">Kaut kas ir noticis nepareizi</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Sveiciens!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Paldies par {app_name} izmantošanu! Ātrā uzstādīšana virza caur nepieciešamajiem soļiem, lai ierīcē izmantotu {app_name}.</string>
@@ -398,7 +390,15 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Starpliktuve</string>
+    <string name="clipboard__disabled__title">Starpliktuves vēsture pašreiz ir atspējota</string>
+    <string name="clipboard__disabled__message">{app_name} starpliktuves vēsture ļauj ātri saglabāt un piekļūt saturam un attēliem, kas tiek kopēti, ar iespēju piespraust vienumus, uzstādīt pašattīrīšanos un uzstādīt lielāko pieļaujamo vienumu ierobežojumu.</string>
     <string name="clipboard__disabled__enable_button">Iespējot starpliktuves vēsturi</string>
+    <string name="clipboard__empty__title">Starpliktuve ir tukša</string>
+    <string name="clipboard__empty__message">Tiklīdz satura gabali vai attēli tiks kopēti, tie tiks šeit uzrādīti.</string>
+    <string name="clipboard__locked__title">Starpliktuve ir slēgta</string>
+    <string name="clipboard__locked__message">Lai piekļūtu starpliktuves vēsturei, vispirms ir jāatslēdz iekārta.</string>
+    <string name="clipboard__group_pinned">Piesprausts</string>
+    <string name="clipboard__group_recent">Nesenie</string>
     <string name="clipboard__group_other">Cits</string>
     <string name="clip__clear_history">Notīrīt vēsturi</string>
     <string name="clip__unpin_item">Atspraust vienumu</string>
@@ -407,6 +407,9 @@
     <string name="clip__paste_item">Ielīmēt</string>
     <string name="clip__back_to_text_input">Atgriezties pie teksta ievades</string>
     <string name="clip__cant_paste">Pašreizējā lietotne neļauj ielīmēt šo saturu.</string>
+    <string name="clipboard__cleared_primary_clip">Galvenais vienums notīrīts</string>
+    <string name="clipboard__cleared_history">Vēsture notīrīta</string>
+    <string name="clipboard__cleared_full_history">Visa vēsture notīrīta</string>
     <string name="settings__clipboard__title">Starpliktuve</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
@@ -416,6 +419,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
     <string name="pref__clipboard__group_clipboard_history__label">Starpliktuves vēsture</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Iespējot starpliktuves vēsturi</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus ātrai piekļuvei</string>
     <string name="pref__clipboard__clean_up_old__label">Noņemt vecos vienumus</string>
     <string name="pref__clipboard__clean_up_after__label">Noņemt vecos vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
@@ -426,6 +430,8 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Rīki, kas ir paredzēti atkļūdošanai un traucējummeklēšanai</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Rādīt grēdas atmiņas statistiku</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Rādīt galveno vienumu</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Pārklāj pašreizējo galveno starpliktuves vienumu</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atiestatīt iezīmi \"{flag_name}\"</string>
@@ -449,6 +455,8 @@
     <string name="ext__meta__version">Laidiens</string>
     <string name="ext__error__not_found_title">Paplašinājums nav atrasts</string>
     <string name="ext__error__not_found_description">Netika atrasts neviens paplašinājums ar Id \"{id}\".</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Netika atrasta neviena pārlūka lietotne URL {url} atvēršanai</string>
     <!-- Screen orientation strings -->
@@ -475,6 +483,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Izslēgts</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Ievade ar kreiso roku</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Ievade ar labo roku</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Virs galvenās rindas</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Novieto otrējo rindu starp lietotnes saskarni un galveno rindu</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Zem galvenās rindas</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Novieto otrējo rindu starp galveno rindu un burtu taustiņiem</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Pārklāt lietotnes saskarni</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Novieto otrējo rindu kā pārklājumu virs lietotnes saskarnes, neietekmējot izrietošo tastatūras saskarnes augstumu. Jāņem vērā, ka šis novietojums var izraisīt lietotnes ievades lauka daļēju pārklāšanu</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Izmantot sistēmas valodas</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Izmantot tastatūras apakšveidus</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nav darbības</string>

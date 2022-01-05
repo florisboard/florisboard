@@ -47,6 +47,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">اشارات</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">پیشفرض</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
+    <string name="settings__home__title" comment="Title of the Home screen">خوش آمدید به {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">زبان ها &amp; چیدمان ها</string>
@@ -71,6 +72,7 @@
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">نمایش همه</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">به نظر میرسد که هیچگونه زیرگروه دیگری را انتخاب نکرده اید. به همین علت زیرگروه English/QWERTY استفاده خواهد شد!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (نصب نشده)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">چیدمان ها</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">تم</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
@@ -85,8 +87,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">ابزار های برنامه فلوریس بورد</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">حافظه داخلی</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">ارائه دهنده خارجی</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدیریت طرح‌ضمینه (روز)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدیریت طرح‌ضمینه (شب)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">ساختن طرح‌زمینه خالی</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">سفارشی (بر اساس %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">طرح‌زمینه جدید</string>
@@ -156,6 +156,7 @@
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">میزان صدا برای رویداد های ورودی</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">صدا های فشردن کلید</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">صدا های نگه داشتن طولانی کلید</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">صفحه کلید</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">ردیف عدد</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">ردیف عددی همیار</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">نشانه های همیار</string>
@@ -168,6 +169,7 @@
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">ورودی تمام صفحه افقی</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع صفحه کلید</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">نوار فاصله به چیدمان متنی بازمیگرداند</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">در حالت نمادین یا عددها، با فشار نوار فاصله به صورت خودکار به حالت نوشتار متنی برمیگردد</string>
@@ -177,6 +179,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پیشنهادات محتوای کلیپ بورد</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
@@ -263,6 +266,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مجوزهای متن باز</string>
     <string name="about__version__title" comment="Preference title">نسخه</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">نسخه در کلیپ‌بورد کپی شد</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">اوه! مشکلی پیش آمد: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">لیست تغییرات</string>
     <string name="about__changelog__summary" comment="Preference summary">تغییرات جدید</string>
     <string name="about__repository__title" comment="Preference title">رپو (گیت هاب)</string>
@@ -270,32 +274,13 @@
     <string name="about__privacy_policy__title" comment="Preference title">سیاست حریم خصوصی</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">سیاست حریم خصوصی برای این پروژه</string>
     <string name="about__project_license__title" comment="Preference title">گواهی های پروژه</string>
+    <string name="about__project_license__summary" comment="Preference summary">فلوریس بورد زیر نظر {license_name} دارای گواهی می باشد</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطا: ناتوانی در بارگذاری متن گواهی.\n-&gt; دلیل: {error_message}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">گواهی های شخص ثالث</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">گواهی های استفاده از کتابخانه های شخص ثالث استفاده شده در این برنامه</string>
-    <!-- Assets strings -->
-    <string name="action__add">اضافه کردن</string>
-    <string name="action__apply">اعمال</string>
-    <string name="action__cancel">لغو</string>
-    <string name="action__cancel_confirm_title">تائید لغو</string>
-    <string name="action__cancel_confirm_message">آیا مطمئنید که می خواهید هر یک از تغییرات ذخیره نشده را لغو کنید؟ این عمل در صورت اجرا غیرقابل بازگشت خواهد بود.</string>
-    <string name="action__default">پیشفرض</string>
-    <string name="action__delete">حذف</string>
-    <string name="action__delete_confirm_title">تائید حذف</string>
-    <string name="action__edit">ویرایش</string>
-    <string name="action__export">استخراج</string>
-    <string name="action__import">واردکردن</string>
-    <string name="action__no">خیر</string>
-    <string name="action__ok">تأیید</string>
-    <string name="action__save">ذخیره</string>
-    <string name="action__select">انتخاب</string>
-    <string name="action__select_dir">انتخاب مسیر</string>
-    <string name="action__select_file">انتخاب فایل</string>
-    <string name="action__yes">بله</string>
-    <string name="error__title">خطا</string>
-    <string name="error__details">جزئیات</string>
-    <string name="error__invalid">نامعتبر</string>
-    <string name="error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">خوش آمدید!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سیاست حفظ حریم خصوصی</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>
@@ -311,6 +296,7 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">به نظر می رسد فلوریس بورد کار خود را مکرر متوقف می کند…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">در خال بازگشت به کیبورد قبلی برای جلو گیری از بروز خطای دوباره. برای مشاهده جزئیات خطا ، ضربه بزنید</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">کلیپ‌بورد</string>
     <string name="clipboard__disabled__enable_button">فعالسازی تاریخچه کلیپ‌بورد</string>
     <string name="clipboard__group_other">ديگر</string>
     <string name="clip__clear_history">پاک‌سازی تاریخچه</string>
@@ -320,11 +306,17 @@
     <string name="clip__paste_item">چسباندن</string>
     <string name="clip__back_to_text_input">بازگشت به ورودی متن</string>
     <string name="clip__cant_paste">این برنامه اجازه چسباندن این محتوا را نمی دهد.</string>
+    <string name="settings__clipboard__title">کلیپ‌بورد</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">استفاده از کلیپ‌بورد داخلی</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">استفاده از کلیپ‌بورد داخل برنامه بجای کلیپ‌بورد سیستم</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">هماهنگ سازی از کلیپ‌بورد سیستم</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد سیستم، کلیپ‌بورد فلوریس کیبورد را نیز بروز می کند</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">هماهنگ سازی به کلیپ‌بورد سیستم</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد فلوریس کیبورد، کلیپ‌بورد سیستم را نیز بروز می کند</string>
     <string name="pref__clipboard__group_clipboard_history__label">تاریخچه کلیپ بورد</string>
     <string name="pref__clipboard__enable_clipboard_history__label">فعالسازی تاریخچه کلیپ‌بورد</string>
+    <string name="pref__clipboard__clean_up_old__label">پاکسازی موارد قدیمی</string>
+    <string name="pref__clipboard__clean_up_after__label">پاکسازی موارد قدیمی بعد از</string>
     <string name="pref__clipboard__limit_history_size__label">محدود کردن اندازه تاریخچه</string>
     <string name="pref__clipboard__max_history_size__label">حداکثر اندازه تاریخچه</string>
     <!-- Devtools strings -->
@@ -354,19 +346,56 @@
     <string name="ext__meta__title">عنوان</string>
     <string name="ext__meta__version">نسخه</string>
     <string name="ext__error__not_found_title">افزونه یافت نشد</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
+    <string name="state__disabled">غیرفعال شد</string>
     <!-- Enum label and description strings -->
     <string name="enum__input_mode__normal" comment="Enum value label">عادی</string>
     <string name="enum__input_mode__shift_lock" comment="Enum value label">قفل Shift</string>
     <string name="enum__input_mode__caps_lock" comment="Enum value label">قفل Caps</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">هرگز نشان نده</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">همیشه نشان بده</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">به صورت پویا نشان بده</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">خاموش</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">حالت دست چپی</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">حالت دست راستی</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استفاده از زبان سیستم</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">استفاده از زیرنوع های صفحه کلید</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">بدون عمل</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">چرخش به حالت صفحه کلید پیشین</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">چرخش به حالت صفحه کلید پسین</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">حذف کردن دقیق حروف</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">حذف کلمه کنونی</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">حذف دقیق‌ کلمات</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">مخفی کردن کیبورد</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">وارد کردن فاصله</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">حرکت مکان نما به بالا</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">حرکت مکان نما به پایین</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">حرکت مکان نما به چپ</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">حرکت مکان نما به راست</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">انتقال اشاره به شروع خط</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">انتقال اشاره به پایان خط</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">انتقال اشاره‌گر به اول صفحه</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">انتقال اشاره‌گر به پایان صفحه</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">بازکردن تاریخچه/مدیریت کلیپ‌بورد</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">شیفت</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">بازانجام</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">واگردانی</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">نمایش حالت انتخاب کننده</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">تعویض به صفحه کلید قبلی</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">تغییر به زیر گروه قبلی</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">تغییر به زیرگروه بعدی</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">همیشه روز</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">همیشه شب</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">پیروی از سیستم</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">پیروی از زمان</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">تغییر به شکلک‌ها</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">تغییر زبان</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">تغییر برنامه کیبورد</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">متغیر: تغییر به شکلک‌ها / تغییر زبان</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

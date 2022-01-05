@@ -94,8 +94,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">ڕەنگی بنەڕەتی بەرنامەکە</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">بیرگەی ناخۆیی</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">بیرگەی دەرەکی</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">ڕێکخستنی ڕووکار (ڕووناک)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">ڕێکخستنی ڕووکار (تاریک)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">دروستکردنی ڕووکار</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">تایبەت (سەرچاوەکراوە لە %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ڕووکاری نوێ</string>
@@ -135,8 +133,8 @@
     <string name="settings__theme__group_oneHanded" comment="Theme group label">بەکارهێنان بە یەک دەست</string>
     <string name="settings__theme__group_popup" comment="Theme group label">بچووکراوەی پیت</string>
     <string name="settings__theme__group_privateMode" comment="Theme group label">دۆخی تایبەت</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">ڕەنگی بەشی سەرەوە</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">ڕەنگی دوگمەکانی بەشی سەرەوە</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">بەشی سەرەوە</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">دوگمەکانی بەشی سەرەوە</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">فرمانی دوگمەی نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
     <string name="settings__theme__group_glideTrail" comment="Theme group label">پیشاندانی هێما</string>
@@ -214,12 +212,26 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">دەستان لە دوگمەی بۆشایی ئەگەڕێتەوە بۆ پیتەکان</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">بە پەنجەنان لە دوگمەی بۆشایی ئەگەڕێتەوە بۆ پیتەکان بە خۆکاری کاتێ لە بەشی هێما و ژمارەکاندا بێت</string>
     <!-- Smartbar strings -->
-    <string name="settings__smartbar__title" comment="Title of Smartbar screen">ڕەنگی بەشی سەرەوە</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">بەشی سەرەوە</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">ڕیزی بنەڕەتی</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">جێگۆڕینی دوگمەکان</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">پێچەوانە کردنەوەی شوێنی دوگمەی پیشاندانی ئامرازەکان</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">ڕیزی دووەم</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">زیادکردنی ڕیزێکی زیادە بۆ ڕیزی بنەڕەتی </string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">شوێنی ڕیزی دووەم</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">ڕێکخستنی دوگمە</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">پێشنیارکردن و ڕاستکردنەوە</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پیشنیارکردنی زیرەک بۆ پڕکردنەوەی ژمارە و تێپەڕە ووشەکان (بەڕێوەبەری تێپەڕە ووشە …)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
     <string name="pref__correction__title" comment="Preference group title">ڕاستکردنەوە</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">گەورەکردنی خۆکاری</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">گەورەکردنی پیتەکان بە خۆکاری تەنها بۆ زمانە لاتینییەکان</string>
@@ -331,6 +343,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مەرج و مۆڵەتی سەرچاوەکان</string>
     <string name="about__version__title" comment="Preference title">وەشان</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">ژمارە و ناوی وەشان کۆپیکرا</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">ھەڵەیەک ڕوویدا: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">گۆڕانکارییەکان</string>
     <string name="about__changelog__summary" comment="Preference summary">نوێکارییەکان</string>
     <string name="about__repository__title" comment="Preference title">کۆدی سەرچاوە (GitHub)</string>
@@ -343,30 +356,6 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">بەڕێوەبەری فایلەکان پڕ بووە</string>
     <string name="about__third_party_licenses__title" comment="Preference title">مۆڵەتی سەرچاوە-دەرەکییەکان</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">مۆڵەتی ئەو سەرچاوە-دەرەکییانەی کە لە بەرنامەکەدا بەکارهاتووە</string>
-    <!-- Assets strings -->
-    <string name="action__add">زیادکردن</string>
-    <string name="action__apply">جێبەجێکردن</string>
-    <string name="action__cancel">پاشگەزبونەوە</string>
-    <string name="action__cancel_confirm_title">دڵنیاکردنەوە</string>
-    <string name="action__cancel_confirm_message">ئایا دڵنیایت لەوەی دەتەوێت گۆڕانکاریە هەڵنەگیراوەکان پشتگوێ بخەیت؟ ئەم کارە ناکرێت یەکجار جێبەجێکرا ناتوانرێ بگەڕێتەوە.</string>
-    <string name="action__default">بنەڕەتی</string>
-    <string name="action__delete">سڕینەوە</string>
-    <string name="action__delete_confirm_title">دڵنیاکردنەوە</string>
-    <string name="action__delete_confirm_message">ئایا دڵنیایت لە سڕینەوەی \"{database_name}\"؟ ئەم فرمانە ناتوانرێ بگەرێندرێتەوە کە یەکجار جێبەجێکرا.</string>
-    <string name="action__edit">دەستکاریکردن</string>
-    <string name="action__export">هەڵگرتن</string>
-    <string name="action__import">هێنان</string>
-    <string name="action__no">نەخێر</string>
-    <string name="action__ok">باشە</string>
-    <string name="action__save">پاراستن</string>
-    <string name="action__select">دیاریکردن</string>
-    <string name="action__select_dir">فۆڵدەر دیاریبکە</string>
-    <string name="action__select_file">فایلێک دیاریبکە</string>
-    <string name="action__yes">بەڵێ</string>
-    <string name="error__title">هەڵەیەک ڕوویدا</string>
-    <string name="error__details">زانیاری زیاتر</string>
-    <string name="error__invalid">نا درووستە</string>
-    <string name="error__snackbar_message">هەڵەیەکی نەزانراو ڕوویدا</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">بەخێربێیت!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">سوپاس بۆ بەکارهێنانی {app_name}! ئەم فێرکارییە یارمەتیت دەدات بۆ چالاککردن و ڕێکخستنی {app_name} لەسەر مۆبایلەکەت.</string>
@@ -380,7 +369,6 @@
     <string name="setup__select_ime__switch_keyboard_btn">هەڵبژاردنی تەختەکلیل</string>
     <string name="setup__finish_up__title">تەواو</string>
     <string name="setup__finish_up__description_p1">{app_name} ئێستا چالاکە بۆ بەکارهێنان و نووسین لەسەر مۆبایلەکەت.</string>
-    <string name="setup__finish_up__description_p2">لەکاتی بوونی هەر پرسیار و سەرنج و پێشنیارێک ئەتوانن سەردانی بەشی تایبەتی یارمەتیدان بکەن!</string>
     <string name="setup__finish_up__finish_btn">ڕێکخستنەکانی تەختەکلیل</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBorad ڕاپۆرتی هەڵەی</string>
@@ -399,7 +387,15 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">گۆڕین بۆ تەختەکلیلی پێشوو لەکاتی بوونی هەڵە و وەستانی لەناکاو، بینینی زانیاری هەڵەکان</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">لەبەرگیراوەکان</string>
+    <string name="clipboard__disabled__title">بەشی لەبەرگیراوەکان نا چالاککراوە </string>
+    <string name="clipboard__disabled__message">بەشی لەبەرگیراوەکانی {app_name} ڕێگە دەدات بە هەڵگرتن و هێشتنەوەی شتە کۆپی کراوەکانت و ڕێکخستنیان بەدڵی خۆت.</string>
     <string name="clipboard__disabled__enable_button">بەکارهێنانی بەشی لەبەرگیراوەکان</string>
+    <string name="clipboard__empty__title">بەشی لەبەرگیراوەکان بەتاڵە</string>
+    <string name="clipboard__empty__message">هەر کاتێ نووسین یان وێنەیەکت کۆپی کرد لێرەدا دەرەکەون.</string>
+    <string name="clipboard__locked__title">بەشی لەبەرگیراوەکان قفڵکراوە</string>
+    <string name="clipboard__locked__message">بۆ بینینی شتەکانی بەشی لەبەرگیراوەکان، پێویستە قفڵی مۆبایلەکەت بکەیتەوە.</string>
+    <string name="clipboard__group_pinned">جێگیرکراو</string>
+    <string name="clipboard__group_recent">دوایین لەبەرگیراوە</string>
     <string name="clipboard__group_other">جۆری تر</string>
     <string name="clip__clear_history">سڕینەوەی مێژوو</string>
     <string name="clip__unpin_item">جێگیر نەکردن</string>
@@ -408,6 +404,9 @@
     <string name="clip__paste_item">دانان</string>
     <string name="clip__back_to_text_input">گەڕانەوە</string>
     <string name="clip__cant_paste">ئەم بەرنامەیە پشتگیری دانانی شتەکان ناکات.</string>
+    <string name="clipboard__cleared_primary_clip">سڕینەوەی گشتی</string>
+    <string name="clipboard__cleared_history">سڕینەوەی مێژوو</string>
+    <string name="clipboard__cleared_full_history">سڕینەوەی هەموو شتێک</string>
     <string name="settings__clipboard__title">لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__label">بەشی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">بەکارهێنانی بەشی لەبەرگیراوەکان بۆ هەڵگرتنی شتەکان</string>
@@ -417,6 +416,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی بەرنامەکە</string>
     <string name="pref__clipboard__group_clipboard_history__label">لەبەرگیراوەکان</string>
     <string name="pref__clipboard__enable_clipboard_history__label">بەکارهێنانی بەشی لەبەرگیراوەکان</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">هێشتنەوەی لەبەرگیراوەکان لەسەر شاشە بۆ خێرا دەست پێگەیشتن</string>
     <string name="pref__clipboard__clean_up_old__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
     <string name="pref__clipboard__clean_up_after__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
     <string name="pref__clipboard__limit_history_size__label">سنوردارکردنی مێژووی هەڵگرتن</string>
@@ -427,6 +427,8 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">پیشاندانی زانیاری لەسەر هەندێ تایبەتمەندی تەختەکلیل</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">پیشاندانی زانیاری بیرگە</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">پیشاندانی زانیاری لەسەر ڕێژەی بیرگەی کاتی بەکارهاتوو</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">پیشاندانی لەبەرگیراوەی بنەڕەتی</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">جێگۆڕینی لەبەرگیراوەکانی ئێستا لەگەڵ لەبەرگیراوەی بەرنامەکە</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">لابردنی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">سڕینەوەی ووشە زیادکراوەکانی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\" ڕێکخستنەوەی</string>
@@ -450,6 +452,8 @@
     <string name="ext__meta__version">وەشان</string>
     <string name="ext__error__not_found_title">زیادکراو نەدۆزرایەوە</string>
     <string name="ext__error__not_found_description">هیچ زیادکراوێک بەناوی \"{id}\" نەدۆزرایەوە.</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">هیچ بەرنامەیەکی وێبگەڕ نەدۆزرایەوە بۆ کردنەوەی {url}</string>
     <!-- Screen orientation strings -->
@@ -476,6 +480,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">نا چالاک</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">بەکارهێنان بۆ دەستی چەپ</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">بەکارهێنان بۆ دەستی ڕاست</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">لەسەروی ڕیزی یەکەم</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان بەرنامەکە و ڕیزی یەکەم</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">لەخواروی ڕیزی یەکەم</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">لەسەروی بەرنامەکە</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان لەبەشی سەرەوەی بەرنامەکە، بەبێ گۆڕینی قیاسی تەختەکلیل</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">بەکارهێنانی زمانی سیستەم</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">بەکارهێنانی ناوی تەختەکلیل</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">هیچ فرمانێک</string>

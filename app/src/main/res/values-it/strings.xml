@@ -51,8 +51,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">Benvenuto in {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard non è abilitato nel sistema e quindi non sarà disponibile come metodo di immissione. Clicca quì per risolvere il problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard non è la tastiera predefinita. Clicca quì per risolvere questo problema.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingue &amp; Layout</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Sottotipi</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Limgua principale</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mappatura popup</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposizione caratteri</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale simboli</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria simboli</string>
@@ -64,8 +68,18 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale telefono</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria telefono</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Selezionare lingua</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Cerca una lingua</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Impossibile trovare una lingua corrispondente \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; seleziona &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Sottotipi predefiniti suggeriti</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Sottotipi predefiniti</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Mostra tutto</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Questo stile di input esiste già !</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almeno un campo non ha un valore selezionato. Scegli un valore per il campo(i campi).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (non installato)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layout</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sconosciuto</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modalità tema</string>
@@ -79,8 +93,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Risorse dell\'app FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Memoria interna</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Provider esterno</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestore Tema (Giorno)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestore Tema (Notte)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crea tema vuoto</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalizzato (basato su %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nuovo tema</string>
@@ -193,6 +205,8 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Includi simboli alla pressione popups</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Aggiungi i simboli popups alla configurazione default degli accenti</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra spaziatrice riporta alla digitazione a caratteri</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Premendo la barra spaziatrice si ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
@@ -200,8 +214,22 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Riga principale</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Inverte la riga secondaria e d\'azione</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Riga secondaria</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Abilita riga secondaria</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Aggiunge una seconda riga espandibile per consentire la visualizzazione di più controlli</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Posizionamento della riga secondaria</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Riga d\'azione</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Espande/collassa automaticamente</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Espande/collassa automaticamente la riga dell\'azione in base allo stato corrente</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggerimenti &amp; Correzioni</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra suggerimenti in linea forniti dall\'autocompilazione(gestore password, …)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Modalità visualizzazione dei suggerimenti</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggerimenti per il contenuto degli appunti</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Timeout suggerimento appunti</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Rendi maiuscole le parole in base al contesto attuale</string>
@@ -209,6 +237,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Il maiuscolo rimarrà attivo quando ti sposti ad un altro campo di testo</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppio tocco barra spaziatrice</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Dizionari utente</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Abilita il dizionario utente di sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggerisci le parole contenute nel dizionario utente di sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestisci il dizionario utente di sistema</string>
@@ -273,6 +302,7 @@
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Controllo ortografico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usa la configurazione del controllo ortografico della tastiera</string>
+    <string name="pref__spelling__active_spellchecker__label">Controllo vocale del campo di testo inline</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Disabilitato a livello di sistema. Nessuna sottolineatura rossa apparirà nei campi di testo per parole incorrette. Tocca qui per cambiare.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nessun servizio di controllo ortografico del testo in linea impostato. Tocca per cambiare.</string>
     <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">L\'opzione \"Lingue\" del controllo ortografico di sistema è impostato su \"Utilizza le lingue di sistema\". A causa di un bug questo potrebbe impedire a {app_name} di effettuare il controllo ortografico. Si consiglia di cambiarla a \"{use_floris_config}\".</string>
@@ -289,13 +319,16 @@
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affisso + file dizionario</string>
     <string name="settings__spelling__import__title" comment="Title for the import screen">Importa nuovo dizionario</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Seleziona origine</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Seleziona la sorgente da cui scaricare estensioni di terze parti. Questo aiuta il processo di analisi del formato per le estensioni non appartenenti a FlorisBoard, adattandole per esserle.</string>
     <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importa archivio</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Importa l\'archivio scegliendo il file attraverso la finestra di selezione.</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Selezionare lingua</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Codice lingua (ad esempio it_IT)</string>
     <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Importa affix/file dizionario</string>
     <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Seleziona file affix (.aff)</string>
     <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Seleziona il file dizionario (.dic)</string>
     <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verifica importazione</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Verifica che i metadati siano corretti. Se qualcosa andasse storto, puoi tornare al passaggio precedente e riselezionare/importare nuovamente l\'archivio.</string>
     <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Dove ottengo i dizionari?</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard usa Nuspell come motore per il controllo ortografico, ciò significa che c\'è una vasta gamma di dizionari disponibili, poiché Hunspell è usato anche da tanti altri software. La lista in basso mostra alcune sorgenti curate supportate dal gestore importazione. Scarica il file archivio o i file dizionario, poi seleziona la sorgente corretta nel gestore importazione (questo è importante per leggere correttamente il formato dell\'archivio).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">se questa lista non contiene dizionari per la tua lingua o dialetto, puoi cercare manualmente i dizionari Hunspell e importare i loro file \'aff\' e \'dic\'.</string>
@@ -308,6 +341,7 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
     <string name="about__version__title" comment="Preference title">Versione</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versione copiata negli appunti</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Qualcosa è andato storto: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Registro delle modifiche</string>
     <string name="about__changelog__summary" comment="Preference summary">Cosa c\'è di nuovo</string>
     <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
@@ -320,37 +354,19 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Il riferimento al Gestore risorse è nullo</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Licenze di terze parti</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenze delle librerie di terze parti incluse in questa app</string>
-    <!-- Assets strings -->
-    <string name="action__add">Aggiungi</string>
-    <string name="action__apply">Applica</string>
-    <string name="action__cancel">Annulla</string>
-    <string name="action__cancel_confirm_title">Conferma anulla</string>
-    <string name="action__cancel_confirm_message">Sei sicuro di volere cancellare gli cambiamenti non salvati? Questo non può essere annullato.</string>
-    <string name="action__default">Predefinito</string>
-    <string name="action__delete">Elimina</string>
-    <string name="action__delete_confirm_title">Conferma eliminazione</string>
-    <string name="action__delete_confirm_message">Sei sicuro di volere eliminare \"{database_name}\"? Questa azione non può essere annullata una volta eseguita.</string>
-    <string name="action__edit">Modifica</string>
-    <string name="action__export">Esporta</string>
-    <string name="action__import">Importa</string>
-    <string name="action__no">No</string>
-    <string name="action__ok">OK</string>
-    <string name="action__save">Salva</string>
-    <string name="action__select">Seleziona</string>
-    <string name="action__select_dir">Seleziona la cartella</string>
-    <string name="action__select_file">Seleziona il file</string>
-    <string name="action__yes">Sì</string>
-    <string name="error__details">Dettagli</string>
-    <string name="error__invalid">Invalido</string>
-    <string name="error__snackbar_message">Qualcosa è andato storto</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Benvenuto!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Grazie per aver utilizzato {app_name}! Questa veloce guida potrebbe aiutarti a configurare la nostra tastiera {app_name} sul tuo dispositivo.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Informativa sulla privacy</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
     <string name="setup__enable_ime__title">Abilita {app_name}</string>
+    <string name="setup__enable_ime__description">Android richiede che ogni tastiera esterna sia separatamente abilitata prima di utilizzarla. Apri le impostazioni di Sistema <i> Lingue &amp; Impostazioni Immissione</i>, Impostazioni della tastiera. Abilita {app_name}.</string>
     <string name="setup__enable_ime__open_settings_btn">Apri le impostazioni di sistema</string>
     <string name="setup__select_ime__title">Selezionare {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} è stato abilitato nel tuo sistema. Per usarlo, passa a {app_name} selezionandolo dal selettore di input!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Cambia Tastiera</string>
+    <string name="setup__finish_up__title">Finisci</string>
+    <string name="setup__finish_up__description_p1">{app_name} è stata abilitata nel sistema ed è pronta per essere personalizzata.</string>
     <string name="setup__finish_up__finish_btn">Inizia la personalizzazione</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Segnalazione errore</string>
@@ -368,7 +384,15 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ripiega alla tastiera precedente per porre fine ai crash ripetuti. Tocca per visualizzare i dettagli dell\'errore</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Appunti</string>
+    <string name="clipboard__disabled__title">La cronologia della tastiera è disabilitata</string>
+    <string name="clipboard__disabled__message">La cronologia degli appunti di {app_name} consente di salvare e accedere rapidamente a testo e immagini che copi, con la possibilità di fissare elementi, impostare la pulizia automatica e limitare il numero di elementi.</string>
     <string name="clipboard__disabled__enable_button">Attiva la cronologia degli appunti</string>
+    <string name="clipboard__empty__title">Gli appunti sono vuoti</string>
+    <string name="clipboard__empty__message">Quando copi del testo o delle immagini verranno mostrate qui.</string>
+    <string name="clipboard__locked__title">Gli appunti sono bloccati</string>
+    <string name="clipboard__locked__message">Per accedere alla cronologia degli appunti, sblocca il tuo dispositivo.</string>
+    <string name="clipboard__group_pinned">Fissati</string>
+    <string name="clipboard__group_recent">Recenti</string>
     <string name="clipboard__group_other">Altro</string>
     <string name="clip__clear_history">Cancella la cronologia</string>
     <string name="clip__unpin_item">Sblocca oggetto</string>
@@ -377,14 +401,19 @@
     <string name="clip__paste_item">Incolla</string>
     <string name="clip__back_to_text_input">Torna all\'immissione di testo</string>
     <string name="clip__cant_paste">Questa app non permette di incollare questo contenuto.</string>
+    <string name="clipboard__cleared_primary_clip">Clip principale cancellata</string>
+    <string name="clipboard__cleared_history">Cronologia cancellata</string>
+    <string name="clipboard__cleared_full_history">Tutta la cronologia cancellata</string>
     <string name="settings__clipboard__title">Appunti</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizza dagli appunti di sistema</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Gli aggiornamenti degli appunti di sistema aggiornano anche gli appunti di Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizza con gli appunti di sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Gli aggiornamenti degli appunti di Floris aggiornano anche gli appunti di sistema</string>
     <string name="pref__clipboard__group_clipboard_history__label">Cronologia appunti</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Attiva la cronologia degli appunti</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli elementi degli appunti per un accesso rapido</string>
     <string name="pref__clipboard__clean_up_old__label">Elimina appunti vecchi</string>
     <string name="pref__clipboard__clean_up_after__label">Elimina appunti vecchi dopo</string>
     <string name="pref__clipboard__limit_history_size__label">Limita le dimensioni della cronologia</string>
@@ -395,38 +424,64 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Strumenti specifici per il debug e la risoluzione dei problemi</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Mostra statistiche della memoria heap</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Mostra l\'utilizzo e la dimensione massima della memoria heap nell\'angolo in alto a destra</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostra clip principale</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Sovrappone la clip principale corrente degli appunti</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Cancella il dizionario utente interno</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Cancella tutte le parole dal dizionario</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset impostazione \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Azione di debug per mostrare nuovamente la schermata di setup</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Azione di debug per produrre intenzionalmente un arresto anomalo</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Strumenti di sistema Android</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Impostazioni globali Android</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Impostazioni di sicurezza Android</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Impostazioni di sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Lingue di sistema</string>
     <!-- Extension strings -->
     <string name="ext__meta__description">Descrizione</string>
     <string name="ext__meta__homepage">Pagina iniziale</string>
     <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Tracker degli errori</string>
     <string name="ext__meta__keywords">Parole Chiave</string>
     <string name="ext__meta__license">Licenza</string>
+    <string name="ext__meta__maintainers">Manutentori</string>
     <string name="ext__meta__title">Titolo</string>
     <string name="ext__meta__version">Versione</string>
     <string name="ext__error__not_found_title">Estensione non trovata</string>
+    <string name="ext__error__not_found_description">Nessuna estensione con ID \"{id}\" trovata.</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
+    <string name="general__no_browser_app_found_for_url">Nessun browser trovato per la gestione dell\'URL {url}</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Verticale</string>
+    <string name="screen_orientation__landscape">Orizzontale</string>
     <string name="screen_orientation__vertical">Verticale</string>
     <string name="screen_orientation__horizontal">Orizontale</string>
     <!-- State strings -->
     <string name="state__disabled">Disabilitato</string>
     <string name="state__enabled">Abilitato</string>
     <!-- Enum label and description strings -->
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Priorità agli accenti</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo la pressione prolungata è l\'accento principale, o il suggerimento se non c\'è un accento principale</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Priorità ai suggerimenti</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo la pressione prolungata è l\'accento principale, o il suggerimento se non c\'è un accento principale</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritizzazione intelligente</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo una pressione prolungata viene deciso dinamicamente tra l\'accento principale o il suggerimento, in base alla lingua e al layout selezionati</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Normale</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Non visualizzare mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostra sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostra dinamicamente</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Spento</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modalità per mancini</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modalità per destri</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Sopra la riga principale</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Posiziona la riga secondaria tra l\'UI dell\'app e la riga principale</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Sotto la riga principale</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Posiziona la riga secondaria tra la riga principale e la tastiera del testo</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay UI dell\'app</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Posiziona la riga secondaria come sovrapposizione sopra l\'UI dell\'app, senza influire sull\'altezza dell\'UI della tastiera risultante. Tieni presente che questo posizionamento potrebbe causare la parziale sovrascrittura del campo di input dell\'app</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Usa lingua di sistema</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Usa gli stili di input</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nessuna azione</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passa alla modalità precedente</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passa alla modalità successiva</string>

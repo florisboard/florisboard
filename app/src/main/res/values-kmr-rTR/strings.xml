@@ -67,6 +67,7 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Rêzeya rêza hejmar</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Rêza sereke ya telefonê</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Rêza duyemîn a telefonê</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Ziman hilbijêre</string>
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Li zimanekî bigere</string>
     <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Zimanekî ku bi \"{search_term}\" re têkildar e nehat dîtin.</string>
     <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; bijartin &#8210;</string>
@@ -80,6 +81,7 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Qet nebe li qadekê nirxekî ku hatîye bijartin tune ye. Ji kerema xwe ji bo zevîyan nirxekî hilbijêrin.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (saznekirî)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rêzkirin</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Mijar</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenas</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Moda tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Dema rojbûnê</string>
@@ -92,8 +94,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Hebûnên Sepan</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Depoya Navxweyî</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Pêşkêşkerê Derve</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Rêveberê Tema (Roj)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Rêveberê Tema (Şev)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Tema vala biafirîne</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Taybet (li ser bingeha %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema nû</string>
@@ -160,6 +160,14 @@
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Ji bo bûyerên têketinê dengan lê bide, girêdayî eyarên pergalê ye</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Eyarên denga system îhmal bike</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Di pergalê de deng neçalak be jî, li jêr tercîhan bi kar bînin. Dema ku gustîlka pergalê tê bêdengkirin naxebite</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Deng ji bo bûyerên têketinê</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Dengên kilîta çapê</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Dengê kilîta dirêj ya çapameniyê</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Dengên çalakiya dubarekirî ya bişkokê</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Dengên jestê skrîp</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Paşvegerên bextewar çalak bike</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Maweya tewrîbûnê</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Hêza tewrîbûnê</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavye</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rêza hejmar</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rêza jimareya nîşankirî</string>
@@ -167,12 +175,16 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mifteya avîteyê nîşan bide</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mifteya avîtyê ya mîhengkirî li rex darişa cîhê nîşan dide</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Çalakiya bişkojka avît</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pirjimara mezinahiya curenivîsê</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raxistin</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Moda yek-destî</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Firehiya klavyeya moda yek-destî</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Têveka dîmendera tije ya peyzgeh</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Bilindahiya klavyeyê</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Kilît ji bo veqetandinê</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Çapemeniya kilît</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">PopUp Dîtinî</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Dema pêl bişkojkê bikî popup nîşan bide</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Derengketina bişkojka bişkojka dirêj</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Darişka fezayê vediguhere rêza karakteran</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Dema ku di sembolan an jî hejmarê de be, bi xweber bara fezayê vediguhere karakteran</string>
@@ -180,9 +192,23 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">ڕیزی بنەڕەتی</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">گۆڕینی شوێنی دوگمە بۆ لای ڕاست</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">گواستنەوەی دوگمەکان بۆ لای راست</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">ڕیزی دووەم</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">زیادکردنی ڕیزێکی زیادە لەسەرووی ڕیزی بنەڕەتی بۆ پیشادانی ئامرازەکان</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">شوێنی ڕیزی دووەم</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">فرمانی دوگمە</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">کردنەوە و داخستنی خۆکاری</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی لیستی ئامرازەکان بە خۆکاری </string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Pêşniyar û Sererastkirinan</string>
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پێشنیارکردنی زیرەک بۆ تەواوکردنی تێپەڕە ووشە (بەرێوەبەری تێپەڕە ووشەکان.. ھتد)</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی لەبەرگیراوەکان</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Li gorî konteksa têkevinê ya niha peyvan mezin bikin</string>
@@ -191,6 +217,12 @@
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dema du-cihî</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Lêdana du caran li ser baroya cîhê serdemek li dû cîhek vedigire</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Ferhengên Bikarhêner</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ferhenga bikarhêner a systemê çalak bike</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ferhenga navxweyî ya bikarhêner çalak bike</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekans: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekans: %d | Kurterê: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Ji bo hemû zimanan</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Rêvebirê pergala vekirî UI</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Peyv</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Jest &amp; Bi şemitandin binivîse</string>
     <string name="pref__glide__title" comment="Preference group title">Bi şemitandin binivîse</string>
@@ -224,6 +256,13 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tu taybetiyên ku divê bi daneyên xwe yên têvel bi demkî bixebite neçalak bike</string>
     <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Rastnivîs</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Ziman</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[BI CIH NAYÊ ANÎN] Ji kesan navan bi kar bîne</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} sazkirî</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Ziman hilbijêre</string>
+    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Koda ziman (mînak en_US, ku)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Veguheztinê piştrast bike</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya FlorisBoard</string>
@@ -231,26 +270,20 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Polîtîkaya nepenîtiyê</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Koda çavkanî</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Lîsansên çavkaniya vekirî</string>
-    <!-- Assets strings -->
-    <string name="action__add">Zêdekirin</string>
-    <string name="action__cancel">Betal kirin</string>
-    <string name="action__cancel_confirm_title">Betal kirî piştrast bike</string>
-    <string name="action__cancel_confirm_message">Tu dixwazî guhertinên ku hatine torandin jê biavêjî? Ev çalakî nikare bi carekê ve were îdamkirin.</string>
-    <string name="action__delete">Jêbirin</string>
-    <string name="action__delete_confirm_title">Jêbirinê piştrast bike</string>
-    <string name="action__edit">Destkarî</string>
-    <string name="action__export">Hinardin</string>
-    <string name="action__import">Veberhêne</string>
-    <string name="action__no">Na</string>
-    <string name="action__save">Berhevkirin</string>
-    <string name="action__yes">Erê</string>
-    <string name="error__title">Çewtî</string>
-    <string name="error__details">Hûrgulî</string>
-    <string name="error__invalid">Seqet</string>
-    <string name="error__snackbar_message">Tiştek şaş çû</string>
+    <string name="about__version__title" comment="Preference title">Guherto</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Hejmara guhertoya ji bo panoyê hatiye kopîkirin</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">ھەڵەیەک ڕوویدا: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Lîsteya guhertinan</string>
+    <string name="about__changelog__summary" comment="Preference summary">Çi nû ye</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Polîtîqa Taybetîyê</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Hûn bi xêr hatin!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Polîtîkaya nepenîtiyê</string>
+    <string name="setup__finish_up__finish_btn">Dest Bi Taybetkirinê Bike</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Ji ber nelirêtîyê xemgîn im, lê FlorisBoard ji ber xeletîyeka nelibendê têk çû.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Heke hûn bixwazin vê çewtiyê ragihînin, pêşî li ser GitHubê temaşekerê pirsgirêkê kontrol bikin heke qezaya we jixwe nehatibe ragihandin. nIf ew nehatibe ragihandin, qeyda têkçûnê ya hilberandî kopî bikin û pirsgirêkeke nû vekin. Şablona \"%s\" bi kar bîne û danasînê, gavên ji nû ve hilberînê dagire û di dawîyê da rojnivîska têkçûnê ya çêkirî pê ve bike. Ev, dibe alîkar ku FlorisBoard ji bo her kesî baştir û aramtir bibe. Sax bî!</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raportên xeletiya FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorîsBoardê dest ji kar berda…</string>
@@ -258,6 +291,14 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Xuya ye FlorîsBoard bi berdewamî dest ji kar berde…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ji bo rawestandina loopa lêxistinê ya bêdawî, dîsa li klavyeya berê vedigerî. Ji bo dîtina hûrguliyên çewtiyê lêdan bike</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__title">ھەڵگرتنی لەبەرگیراوەکان نا چالاکە</string>
+    <string name="clipboard__disabled__message">ڕێگەت پێدەدات نووسین و وێنە کۆپیکراوەکانت لێرەدا ھەڵبگریت تا ئەوکاتەی خۆت ئەتەوێ {app_name} بەشی تایبەتی لەبەرگیراوەکانی</string>
+    <string name="clipboard__empty__title">بەشی لەبەرگیراوەکان بەتاڵە</string>
+    <string name="clipboard__empty__message">ھەر کاتێ نووسینێک یان وێنەیەکت کۆپی کرد لێرەدا دەرەکەوێت</string>
+    <string name="clipboard__locked__title">لەبەرگیراوەکانت قفڵ کراون</string>
+    <string name="clipboard__locked__message">بۆ بینینی لەبەرگیراوەکان پێویستە قفڵی مۆبایلەکەت بکەیتەوە</string>
+    <string name="clipboard__group_pinned">جێگیرکراو</string>
+    <string name="clipboard__group_recent">دوایین لەبەرگیراوە</string>
     <string name="clipboard__group_other">Din</string>
     <string name="clip__clear_history">Dîrokê paqij bike</string>
     <string name="clip__unpin_item">Hêmanê sabit rake</string>
@@ -266,17 +307,75 @@
     <string name="clip__paste_item">Bizeliqêne</string>
     <string name="clip__back_to_text_input">Vegere navnîşa nivîsê</string>
     <string name="clip__cant_paste">Ev sepan destûrê nade ku vê naverokê pêve bike.</string>
+    <string name="clipboard__cleared_primary_clip">لەبەرگیراوەی بنەڕەتی سڕایەوە</string>
+    <string name="clipboard__cleared_history">لەبەرگیراوەکان سڕانەوە</string>
+    <string name="clipboard__cleared_full_history">سەرجەم لەبەرگیراوەکان سڕانەوە</string>
     <string name="pref__clipboard__group_clipboard_history__label">Dîroka panelê</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">هەڵگرتنی شتە لەبەرگیراوەکان بۆ هێشتنەوە</string>
     <!-- Devtools strings -->
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">پیشاندانی لەبەرگیراوە بنەڕەتیەکان</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">پیشاندانی لەبەرگیراوەی بنەڕەتی سیستەم</string>
     <!-- Extension strings -->
+    <string name="ext__meta__description">Ravekirin</string>
+    <string name="ext__meta__homepage">Malper</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Şopênerê pirsgirêkê</string>
+    <string name="ext__meta__keywords">Peyvên mifteyan</string>
+    <string name="ext__meta__license">Lîsans</string>
     <string name="ext__meta__maintainers">Mûxayenekaran</string>
+    <string name="ext__meta__title">Sernav</string>
+    <string name="ext__meta__version">Guherto</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
+    <string name="state__disabled">Hat neçalakkirin</string>
     <!-- Enum label and description strings -->
     <string name="enum__input_mode__normal" comment="Enum value label">Asayî</string>
     <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
     <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Tu carî nîşan nede</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Herdem nîşan bide</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dînamîk nîşan bide</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">Girtî</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Moda destê-çepê</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Moda destê-rastê</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">سەرەوە</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕووکەشی بەرنامەکەو ڕیزی یەکەم</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">خوارەوە</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">لەسەروی تەختەکلیل</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">پیشادانی ڕیزی دووەم لەسەروی تەختەکلیلەکە، بەبێ گەورەکردنی قەبارەی تەختەکلیل، لەوانەیە ھەندێ بەش بەباشی دەرنەکەون</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Zimanên systemê bi kar bîne</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Cureyên jêr ên klavyeyê bi kar bîne</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Bê çalakî</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Karakteran bi rastî jê bibe</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Peyva heyî jê dibe</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Peyvan bi rastî jê bibire</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Klavyeyê veşêre</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Cih têxê</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Nîşanek ber bi jor ve bibe</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Nîşanek berjêr bike jêr</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Nîşanek ber bi ve çepê</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Nîşanekê ber bi ve rastê</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Nîşanek biguhêze da ku ji rêzikê dest pê bike</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Nîşanek ber bi dawiya rêzikê ve bibe</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Nîşanek bibe destpêka rûpelê</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Nîşanek ber bi dawiya rûpelê ve bibe</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Hilbijêrê metoda têkerê nîşan bide</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Li klavyeya berê biguhere</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Biguhere jêrtîpa berê</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Biguhere jêrtîpa din</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Herdem ronahî</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Herdem tarî</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Systemê bişopîne</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Demê bişopîne</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Berê xwe bide emojîyan</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Ziman biguherîne</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Bernameya klavyeyê biguherînin</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dînamîk: Bi zimanê emojîyan / Ziman veguherîn</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

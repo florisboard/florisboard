@@ -21,20 +21,26 @@
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">ⴰⵙⵏⵓⴱⴳ</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">ⴰⵏⴰⵙⵉⵡ</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">ⵜⵉⵔⵔⴰ</string>
+    <string name="settings__home__title" comment="Title of the Home screen">ⴱⵔⵔⴽ ⴳ {app_name}</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">ⴰⵏⴰⵙⵉⵡ</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">ⴰⵏⴰⵙⵉⵡ</string>
     <!-- Smartbar strings -->
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">ⵔⴰⴷ ⵓⵎⴰⵏⵏ ⴳ ⵓⴼⵍⵍⴰ ⵏ ⵓⵏⴰⵙⵉⵡ</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">ⵉⵙⵓⵎⵔⵏ</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">ⵅⴼ</string>
-    <!-- Assets strings -->
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">ⴱⵔⵔⴽ!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">ⵔⴳⵍ</string>
     <!-- Clipboard strings -->
+    <string name="clip__delete_item">ⴽⴽⵙ</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->

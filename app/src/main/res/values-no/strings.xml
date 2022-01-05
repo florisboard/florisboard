@@ -5,6 +5,7 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vent</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikon med tre prikker. Hvis synlig, indikerer det at flere bokstaver kan brukes hvis de trykkes lenger.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Lukk enhåndsmodus.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Flytt tastaturet til venstre.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Flytt tastaturet til høyre.</string>
     <!-- Private mode info dialog strings -->
@@ -13,16 +14,32 @@
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojier</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smilefjes &amp; Emotikon</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Folk &amp; Kropp</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Dyr &amp; Natur</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Mat &amp; Drikke</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Reise &amp; Steder</string>
     <string name="emoji__category__activities" comment="Emoji category name">Aktiviteter</string>
     <string name="emoji__category__objects" comment="Emoji category name">Gjenstander</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Rask handling-veksling. Veksler mellom ordforslag og hurtighandlingsknappene.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Avslutt tekstredigeringspanelet.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Veksle enhåndsmodus.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Åpne innstillinger.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Bytt til tekstredigeringspanelet.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Bytt til medieinputvisning.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Angre-knapp for å reversere den siste handlingen</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Omgjørings-knapp for å reversere den forrige angre-handlingen</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Når synlig, indikerer at privat-modus er aktiv. Når du klikker på den vises informasjon om privat-modus.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Innstillinger</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prøv oppsettet ditt</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Hjelp</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Hjem</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tastatur</string>
@@ -35,94 +52,378 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke aktivert i systemet og vil derfor ikke være tilgjengelig som inndatametode i inndatavelgeren. Klikk her for å løse dette problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inndatametode. Klikk her for å løse dette problemet.</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Legg til undertype</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Rediger undertype</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primærspråk</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tegnoppsett</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primært symboloppsett</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundært symboloppsett</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Komponist</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Valutasett</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerisk oppsett</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Numerisk (avansert) oppsett</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Nummerrad-oppsett</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primært telefonoppsett</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundært telefonoppsett</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Velg språk</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Vis alle</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det ser ut til at du ikke har konfigurert noen undertyper. Som en reserve vil undertypen engelsk/QWERTY bli brukt!</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Denne undertypen finnes allerede!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ikke installert)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tegnoppsett</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Udefinert</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema-modus</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Soloppgangstid</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Solnedgangstid</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dag-tema</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Natt-tema</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valgt tema</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Tilpass farger til app</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Temafarger tilpasser seg de i den gjeldende appen, hvis appen støtter det.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Ressurser</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern Lagring</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Ekstern Leverandør</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Opprett tomt tema</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Egendefinert (basert på %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nytt tema</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importert!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema eksportert!</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Rediger tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Legg til gruppe</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Rediger gruppe</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Legg til attributt</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Rediger attributt</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Rediger temanavn</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referanse</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppe</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attributt</string>
     <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Solid farge</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineær gradient</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiell gradient</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Bytt</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Tilstand</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Annet</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Forhåndsvisning av temaverdien</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Vennligst angi et temanavn.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Vennligst angi et gruppenavn som bare inneholder bokstaver (a–z og/eller A–Z), kolon (:) for undergruppering eller i tillegg nummer (0–9), tilde (~) og underlinjer (_) for nøkkelverdien.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vennligst angi et gruppenavn.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Dette gruppenavnet finnes allerede i dette temaet. Vennligst velg et annet.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vennligst angi et attributtnavn som bare inneholder bokstavene a-z og/eller A-Z.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vennligst angi et attributtnavn.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Dette attributtnavnet finnes allerede i denne gruppen. Vennligst velg et annet.</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Vindu &amp; System</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Nøkkel</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-hånds</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Tast</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tast (%s)</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-håndt</string>
     <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
     <string name="settings__theme__group_privateMode" comment="Theme group label">Privat modus</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBar</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartbar-knapp</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Fullskjermmodus i landskap</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Landskap-fullskjerm handling knapp</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Glidespor</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Egendefinert gruppe (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Bakgrunnsfarge</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Bakgrunnsfarge (aktiv)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Bakgrunnsfarge (inntrykket)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Forgrunnsfarge</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Forgrunnsfarge (alternativ)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Forgrunnsfarge (inntrykket)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Vis kanter</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primærfarge</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primærfarge (mørk)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Aksentfarge</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Navigasjonsbar-farge</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Mørk navigasjonsbar-farge forgrunn</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Halvgjennomsiktig farge</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarge</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Egendefinert attributt (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Spill av lyder for input-hendelser, avhengig av systeminnstillinger</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorer systemlydinnstillinger</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Bruk innstillingene nedenfor, selv om lyd er deaktivert i systemet. Fungerer ikke når system-ringetone er dempet</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lydvolum for input-hendelser</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastetrykk-lyder</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tastetrykklyder ved langt trykk</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Gjentatte tastetrykklyder</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sveipe-lyder</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sveipe-lyder</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptisk tilbakemelding / Vibrasjon</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktiver haptisk tilbakemelding</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrer for input-hendelser, avhengig av systeminnstillinger</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorer haptiske innstillinger for systemet</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Bruk innstillingene under, selv om haptisk er deaktivert i systemet</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Utløs vibrasjoner direkte</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Utløs vibrasjoner direkte i stedet for å bruke Androids haptiske tilbakemeldingsfunksjonssett</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som bare er tilgjengelig på Android 8.0 eller nyere</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Tastevibrasjon</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Tastevibrasjon for lange trykk</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Gjentatte tastehandlingsvibrasjoner</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Glidesveipvibrasjoner</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Sveipebevegelsevibrasjoner</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">f.eks. taster, knapper, emoji faner</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">f.eks. popup meny</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">f.eks. sletteknapp</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ikke implementert</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">f.eks. markør kontroll sveip</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrad</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Vis nummerrad over tegnoppsettet</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Hintet nummerrad</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symbolhint</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Vis verktøytast</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Vis en konfigurerbar verktøys-tast ved mellomromstasten</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Verktøytastfunksjon</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Skriftstørrelse multiplikator</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Oppsett</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Enhåndsmodus</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Tastaturbredde i enhåndsmodus</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landskap fullskjerm input</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastaturhøyde</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Tasteavstand</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Nedre forskyving</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetrykk</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup-synlighet</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vis popup når du trykker en tast</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Inkluder symbol-popup-vinduer i aksenter</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Legg til symbol-popup-vinduene til standardoppsettets aksenter</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Forsinkelse for langt tastetrykk</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mellomromstasten skifter tilbake til tegnoppsett</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Å trykke mellomromstasten bytter automatisk tilbake til tegn når du er i symboler eller numeriske tegn</string>
     <!-- Smartbar strings -->
-    <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Aktiver smartbar</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vill vises på toppen av tastaturet</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primærrad</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Sekundærrad</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Skru på sekundærrad</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Plassering av sekundærraden</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
+    <string name="pref__correction__title" comment="Preference group title">Reguleringer</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatisk stor forbokstav</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Bruk stor forbokstav i ord basert på den gjeldende inputkonteksten</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Husk caps lock status</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock forblir på når du flytter til et annet tekstfelt</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbel-mellomrom punktum</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Om du trykker to ganger på mellomromstasten settes det inn et punktum etterfulgt av et mellomrom</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Brukerordlister</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktiver system-brukerordliste</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Anbefal ord lagret i system-brukerordlisten</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Rediger system-brukerordliste</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i system-brukerordlisten</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Aktiver intern brukerordliste</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Anbefal ord lagret i den interne brukerordlisten</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Rediger intern brukerordliste</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i den interne brukerordlisten</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Intern Brukerordliste</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System Brukerordliste</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvens: %d | Snarvei: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle språk</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Åpne systemadministrasjonsgrensesnitt</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Import av brukerordliste vellykket!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Eksport av brukerordliste vellykket!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Legg til ordoppføring</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Rediger ordoppføring</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Vennligst angi et ord!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Ordet inneholder ugyldige tegn.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvens (mellom %d og %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Vennligst angi en frekvensverdi!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Vennligst angi et gyldig nummer innenfor de spesifiserte grensene!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Snarvei (valgfritt)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Snarveien inneholder ugyldige tegn.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Språkkode (valgfritt)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Denne språkkoden samsvarer ikke med den forventede syntaksen. Koden må enten være bare et språk (som no), et språk og et land (som nb_NO) eller et språk, land og skript (som nb_NO-script).</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Bevegelser &amp; Glideskriving</string>
+    <string name="pref__glide__title" comment="Preference group title">Glideskriving</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Aktiver glideskriving</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Skriv inn et ord ved å glide fingeren din gjennom bokstavene</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Vis glidespor</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Vill forsvinne etter hvert ord</string>
+    <string name="pref__glide_trail_fade_duration">Glidespor forsvinningstid</string>
+    <string name="pref__glide_preview_refresh_delay">Oppdateringsforsinkelse av forhåndsvisning</string>
+    <string name="pref__glide__show_preview">Vis forhåndsvisning under glideskriving</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Generelle bevegelser</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Mellomromstastbevegelser</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Andre bevegelser / Terskelverdier for bevegelser</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Sveip oppover</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Sveip nedover</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Sveip mot venstre</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Sveip mot høyre</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Sveip opp på mellomromstast</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Sveip til venstre på mellomromstast</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Sveip til høyre på mellomromstast</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Langt trykk på mellomromstast</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Sveip til venstre på slettetasten</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Sveipehastighetsterskel</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Sveipedistanseterskel</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Avansert</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Innstillingstema</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lyst</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørkt</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Mørkt</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Innstillingsspråk</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Vis app-ikon i programmeny</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Alltid privat modus</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Vil deaktivere alle funksjoner som må midlertidig håndtere input-dataene dine</string>
     <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Stavekontroll</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Bruk tastatur-stavekontroll konfigurasjon</string>
+    <string name="pref__spelling__active_spellchecker__label">Kontroll av linjebundet tekstfelt</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Innstillingen \"Språk\" i system-ordliste-skjermen er satt til \"Bruk systemspråk\". På grunn av en bug kan dette føre til at {app_name} ikke får utført linjebundet stavekontroll. Vurder å endre den til \"{use_floris_config}\".</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfigurasjon</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[IKKE IMPLEMENTERT] Bruk navn fra kontaktlisten</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Stavekontroll vil bruke navn fra din kontaktliste for å kontrollere staving</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Bruk brukerordlisteoppføringer</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Stavekontroll vil bruke brukerordlister, hvis disse er aktivert</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Rediger ordbøker</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} installert</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Ingen stavekontroll ordlister er installert. Trykk på \'+\'-knappen for å legge til den første!</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Utvidelse / Arkiv</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affix + Ordlistefil</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">Importer ny ordliste</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Velg kilde</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Velg kilden du lastet ned tredjepartsutvidelsen fra. Dette hjelper deg med å analysere ikke-FlorisBoard-utvidelsesformatet riktig og konvertere det til FlorisBoard.</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importer arkiv</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Importer arkivet ved å velge filen i fil-velger dialogen.</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Velg språk</string>
+    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Språkkode (f.eks. nb_NO)</string>
+    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Importer affix/ordliste filer</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Velg affix-fil (.aff)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Velg ordliste-fil (.dic)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verifiser import</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Kontroller at metadataene nedenfor er riktige. Hvis noe er galt, kan du bytte tilbake til et tidligere trinn og velge kilden / importere arkivet på nytt.</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Hvor får jeg tak i ordlister?</string>
+    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard bruker Nuspell som stavekontroll-motor, som betyr at det er en stor mengde med ordlister tilgjengelig, ettersom Hunspell også er brukt av mange andre programvarer. Listen under viser noen få hånd-valgte kilder import-funksjonen støtter. Last ned enten arkiv-filen eller ordliste-filene, velg riktig kilde i import-funksjonen, og importer (dette er viktig for at import-funksjonen skal få til å lese arkiv-formatet).</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">hvis denne listen ikke inneholder ordlister for ditt språk eller din dialekt, kan du manuelt søke etter en Hunspell ordliste og importere \'aff\' og \'dic\' filene for språket/dialekten du vil legge til.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard\'s app ikon</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Åpen kildekode-lisenser</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Persovernerklæring</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kildekode</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Åpen kildekode-lisenser</string>
     <string name="about__version__title" comment="Preference title">Versjon</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versjon kopiert til utklippstavlen</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Noe gikk galt: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Endringslogg</string>
     <string name="about__changelog__summary" comment="Preference summary">Hva som er nytt</string>
-    <!-- Assets strings -->
-    <string name="action__add">Legg til</string>
-    <string name="action__apply">Bruk</string>
-    <string name="action__cancel">Avbryt</string>
-    <string name="action__default">Standard</string>
-    <string name="action__delete">Slett</string>
-    <string name="action__delete_confirm_title">Bekreft sletting</string>
-    <string name="action__edit">Rediger</string>
-    <string name="action__export">Eksport</string>
-    <string name="action__import">Importer</string>
-    <string name="action__no">Nei</string>
-    <string name="action__ok">OK</string>
-    <string name="action__save">Lagre</string>
-    <string name="action__select">Velg</string>
-    <string name="action__select_dir">Velg mappe</string>
-    <string name="action__select_file">Velg fil</string>
-    <string name="action__yes">Ja</string>
-    <string name="error__details">Detaljer</string>
-    <string name="error__invalid">Ygyldig</string>
-    <string name="error__snackbar_message">Noe gikk galt</string>
+    <string name="about__repository__title" comment="Preference title">Oppbevaringssted (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Kildekode, diskusjoner, saker og info</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Persovernerklæring</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Personvernærklæring for dette prosjektet</string>
+    <string name="about__project_license__title" comment="Preference title">Prosjektlisens</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard er lisensiert under {license_name}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Feil: Fikk ikke til å laste lisenstekst.\n-&gt; Årsak: {error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Referanse for aktivaforvalter er null</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Tredjepartslisenser</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Lisenser for tredjeparts-biblioteker som er inkludert i denne appen</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Takk for at du bruker {app_name}! Dette hurtigoppsettet leder deg gjennom de nødvendige trinnene for å bruke {app_name} på enheten din.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Persovernerklæring</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Pakkebrønn</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Oppbevaringssted</string>
+    <string name="setup__enable_ime__title">Aktiver {app_name}</string>
+    <string name="setup__enable_ime__description">Android krever at alle egendefinerte tastatur er aktivert før du kan bruke de. Åpne System <i>Språk &amp; Inndata</i> Innstillingene, aktiver \"{app_name}\".</string>
+    <string name="setup__enable_ime__open_settings_btn">Åpne Systeminnstillinger</string>
+    <string name="setup__select_ime__title">Velg {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} er nå aktivert i systemet ditt. For å bruke det, bytt til {app_name} ved å velge den i input-valg-dialogen!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Bytt Tastatur</string>
     <string name="setup__finish_up__title">Gjøre ferdig</string>
     <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>
-    <string name="setup__finish_up__description_p2">Skulle du støte på problemer, feil, krasjer eller bare vil komme med et forslag, sjekk ut prosjektlageret fra Om-skjermen!</string>
+    <string name="setup__finish_up__finish_btn">Begynn å Tilpasse</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard feilmeldingsrapporter</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Beklager ulempen, men FlorisBoard har krasjet på grunn av en uventet feil.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Hvis du ønsker å rapportere denne feilen, sjekk først ut problemsporingen på GitHub hvis krasjen din ikke allerede er rapportert.\nHvis den ikke er det, kopier den genererte krasjloggen og åpne et nytt problem. Bruk \"%s\"-malen og fyll ut beskrivelsen, trinnene for å reprodusere, og lim inn den genererte krasjloggen på slutten. Dette er med på å gjøre FlorisBoard bedre og mer stabilt for alle. Takk skal du ha!</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Hvis du ønsker å rapportere denne feilen, sjekk først at krasjen ikke allerede er rapportert i sakssystemet GitHub.\nHvis den ikke er det, kopier den genererte krasjloggen og åpne en ny sak. Bruk \"%s\"-malen og fyll ut beskrivelsen, trinnene for å reprodusere, og lim inn den genererte krasjloggen på slutten. Dette er med på å gjøre FlorisBoard bedre og mer stabilt for alle. Takk skal du ha!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopier til systemutklippstavlen</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Kopiert til systemutklippstavlen</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Kan ikke kopiere til systemutklippstavlen: Utklippstavlebehandler ikke funnet</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Åpne sakssystem (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Lukk</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard feilmeldingsrapporter</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard har sluttet å fungere…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Klikk for å se feilmeldingsdetaljer</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard virker å stoppe å fungere gjentatte ganger…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Faller tilbake til forrige tastatur for å stoppe uendelig krasjloop. Klikk for å vise feilmeldingsdetaljer</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Utklippstavle</string>
+    <string name="clipboard__disabled__title">Utklippshistorikk er deaktivert</string>
+    <string name="clipboard__disabled__message">{app_name}s utklippshistorie lar deg kjapt lagre og hente tekst og bilder du kopierer, med muligheten til å feste elementer, konfigurere automatisk fjerning og begrense hvor mange elementer som kan eksistere på utklippstavlen.</string>
+    <string name="clipboard__disabled__enable_button">Skru på utklippstavle-historie</string>
+    <string name="clipboard__empty__title">Utklippstavlen din er tom</string>
+    <string name="clipboard__empty__message">Når du kopierer tekst eller bilder vil de vises her.</string>
+    <string name="clipboard__locked__title">Utklippstavlen din er låst</string>
+    <string name="clipboard__group_pinned">Festet</string>
     <string name="clipboard__group_other">Annet</string>
+    <string name="clip__clear_history">Slett loggen</string>
+    <string name="clip__unpin_item">Løsne element</string>
+    <string name="clip__pin_item">Fest element</string>
+    <string name="clip__delete_item">Slett</string>
+    <string name="clip__paste_item">Lim inn</string>
+    <string name="clip__back_to_text_input">Tilbake til tekstinput</string>
+    <string name="clip__cant_paste">Denne appen tillater ikke innliming av dette innholdet.</string>
+    <string name="settings__clipboard__title">Utklippstavle</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Bruk intern utklippstavle</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Bruk en intern utklippstavle i steden for systemutklippstavlen</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Synkroniser fra systemutklippstavlen</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Systemutklippstavlen oppdaterer også Floris-utklippstavlen</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Synkroniser til systemutklippstavlen</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris-utklippstavlen oppdaterer også systemutklippstavlen</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Utklippstavle-historie</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Skru på utklippstavle-historie</string>
+    <string name="pref__clipboard__clean_up_old__label">Rydd opp gamle elementer</string>
+    <string name="pref__clipboard__clean_up_after__label">Rydd opp gamle elementer i etterkant</string>
+    <string name="pref__clipboard__limit_history_size__label">Begrens historiestørrelse</string>
+    <string name="pref__clipboard__max_history_size__label">Maks historiestørrelse</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Utviklerverktøy</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Skru på utviklerverktøy</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Verktøy som er spesifikt utviklet for feilsøking</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Vis haugminnestatistikk</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlegger haugminnebruk og maks størrelse i hjørnet øverst til høyre</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Tøm intern brukerordlistedatabase</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Fjerner alle ord fra ordlistedatabasetabellen</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Tilbakestill \"{flag_name}\" flagg</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Feilsøkingshandling for å vise oppsettskjermen på nytt</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test krasj-rapport-skjerm</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Feilsøkshandling for å hensiktsmessig produsere en krasj</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android systemverktøy</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globale Android instillinger</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Sikre Android-innstillinger</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Android systeminstillinger</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systemspråk</string>
     <!-- Extension strings -->
     <string name="ext__meta__description">Beskrivelse</string>
     <string name="ext__meta__homepage">Startside</string>
     <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Sakssystem</string>
     <string name="ext__meta__keywords">Nøkkelord</string>
     <string name="ext__meta__license">Lisens</string>
     <string name="ext__meta__title">Tittel</string>
     <string name="ext__meta__version">Versjon</string>
+    <string name="ext__error__not_found_title">Kunne ikke finne utvidelsen</string>
+    <string name="ext__error__not_found_description">Kunne ikke finne en utvidelse med ID \"{id}\".</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
+    <string name="general__no_browser_app_found_for_url">Ingen nettleser-app unnet for håndtering av URL {url}</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrett</string>
     <string name="screen_orientation__landscape">Landskap</string>
@@ -132,12 +433,70 @@
     <string name="state__disabled">Deaktivert</string>
     <string name="state__enabled">Aktivert</string>
     <!-- Enum label and description strings -->
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksent er prioritisert</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Det første tegnet som velges etter langt trykk er alltid den primære aksenten, eller tipssymbolet hvis ingen primær aksent er tilgjengelig</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint er prioritisert</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Det første tegnet som velges etter langt trykk er alltid tipssymbolet eller den primære aksenten hvis det ikke finnes noe tipssymbol</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritisering</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Det første tegnet valgt etter et langt trykk bestemmes dynamisk for å være enten den primære aksenten eller tipssymbolet, basert på gjeldende språk og oppsett</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis alltid</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisk visning</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Under primærrad</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Bruk systemspråk</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Bruk tastatur-undertyper</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ruller til forrige tastatur-modus</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ruller til neste tastatur-modus</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Slett tegn nøyaktig</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Slett gjeldende ord</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Slett ord nøyaktig</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skjul tastatur</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Sett inn mellomrom</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Flytt markør opp</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Flytt markør ned</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Flytt markør til venstre</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Flytt markør til høyre</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Flytt markør til starten av linjen</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Flytt markør til slutten av linjen</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Flytt markør til starten av siden</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Flytt markør til slutten av siden</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Åpne utklippstavlebehandler/historie</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Skift</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Omgjør</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Angre</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Vis inndata-metode-velger</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Bytt til forrige tastatur</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Bytt til forrige undertype</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Bytt til neste undertype</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Alltid dag</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Alltid natt</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Følg systemet</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Følg tid</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Bytt til emojier</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Bytt Språk</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Bytt tastatur app</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamisk: Bytt til emojier / Bytt språk</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} time</item>
+        <item quantity="other">{v} timer</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minutt</item>
+        <item quantity="other">{v} minutter</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} sekund</item>
+        <item quantity="other">{v} sekunder</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} element</item>
+        <item quantity="other">{v} elementer</item>
+    </plurals>
 </resources>

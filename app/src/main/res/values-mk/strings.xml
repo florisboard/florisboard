@@ -26,17 +26,25 @@
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Стандардно</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системски</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Добредојдовте во {app_name}</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Неодредено</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Одбери тема</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Прилагоден (заснован на %s)</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Тастатура</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Тастатура</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
-    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
+    <string name="clip__delete_item">Избриши</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->

@@ -55,10 +55,12 @@
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Vælg sprog</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det ser ud til, at der ikke er konfigureret nogle undertastaturer. I dette tilfælde faldes der tilbage på Engelsk/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ikke installeret)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ikke defineret</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valgte tema</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Opret tomt tema</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Brugerdefineret (baseret på %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nyt tema</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redigér tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
@@ -75,7 +77,10 @@
     <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tast</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-håndstilstand</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Privattilstand</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBjælke</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartbjælke knap</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Baggrundsfarve</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Baggrundsfarve (aktiv)</string>
     <string name="settings__theme__attr_foreground" comment="Theme attribute label">Forgrundsfarve</string>
@@ -91,6 +96,7 @@
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Opsætning</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetryk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup synlighed</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Hvis popup ved tastetryk</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Langt tastetryk forsinkelse</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBjælke</string>
@@ -98,6 +104,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vil blive vist over tastaturet</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Udklipsholder indholdsforslag</string>
     <string name="pref__correction__title" comment="Preference group title">Rettelser</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatisk stort bogstav</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Gør bogstaver i ord store baseret på nuværende inputskontekst</string>
@@ -136,29 +143,10 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Source kode</string>
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version kopieret til udklipsholderen</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Noget gik galt: {error_message}</string>
     <string name="about__privacy_policy__title" comment="Preference title">Privatlivspolitik</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Privatlivspolitikken for dette projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
-    <!-- Assets strings -->
-    <string name="action__add">Tilføj</string>
-    <string name="action__apply">Anvend</string>
-    <string name="action__cancel">Annullér</string>
-    <string name="action__cancel_confirm_title">Bekræft annullering</string>
-    <string name="action__default">Standard</string>
-    <string name="action__delete">Slet</string>
-    <string name="action__delete_confirm_title">Bekræft sletning</string>
-    <string name="action__edit">Redigér</string>
-    <string name="action__export">Eksportér</string>
-    <string name="action__import">Importér</string>
-    <string name="action__no">Nej</string>
-    <string name="action__ok">Ok</string>
-    <string name="action__save">Gem</string>
-    <string name="action__select">Vælg</string>
-    <string name="action__select_file">Vælg fil</string>
-    <string name="action__yes">Ja</string>
-    <string name="error__details">Detaljer</string>
-    <string name="error__invalid">Ugyldig</string>
-    <string name="error__snackbar_message">Noget gik galt</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privatlivspolitik</string>
@@ -185,17 +173,28 @@
     <string name="ext__meta__title">Titel</string>
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Udvidelse ikke fundet</string>
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <string name="state__disabled">Deaktivéret</string>
     <string name="state__enabled">Aktivéret</string>
     <!-- Enum label and description strings -->
+    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldrig</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis altid</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Vis dynamisk</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Slet tegn præcist</string>
     <string name="enum__swipe_action__delete_word" comment="Enum value label">Slet nuværende ord</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Slet ord præcist</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skjul tastatur</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Indsæt mellemrum</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Flyt musen op</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Flyt musen ned</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Flyt musen venstre</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Flyt musen højre</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Fortryd</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Skift til forrige tastatur</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Altid dag</string>

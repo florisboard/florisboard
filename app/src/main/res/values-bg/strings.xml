@@ -93,8 +93,9 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи на FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Вътрешно хранилище</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Външен доставчик</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Управление на теми (ден)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Управление на теми (нощ)</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Избор на дневна тема</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Избор на нощна тема</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Създаване на празна тема</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Потребителска (от %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
@@ -226,6 +227,7 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим на предложенията</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от съдържанието на междинната памет</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
@@ -298,10 +300,11 @@
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключват се всички функции, които временно работят с вашите входни данни</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка на правописа</string>
+    <string name="pref__spelling__active_spellchecker__label">Проверка на правописа при въвеждане</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Настройка</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват имената от контактите</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват и имената от контактите</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">При проверка на правописа се използват и потребителските речници, ако са включени</string>
     <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Управление на речници</string>
@@ -311,13 +314,16 @@
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файлове на речник и афикси</string>
     <string name="settings__spelling__import__title" comment="Title for the import screen">Внасяне на речник</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Избиране на източник</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Изберете произхода на добавката. По такъв начин ще улесните преобразуването ѝ във вида, в който FlorisBoard я използва.</string>
     <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Внасяне на архив</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Внесете архива като изберете изтегления файл.</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Избиране на език</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Код на език (напр. bg)</string>
     <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Внасяне на афикси/речници</string>
     <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Изберете файл с афикси (.aff)</string>
     <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Изберете файл на речника (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Проверяване на внесеното</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Проверка преди внесяне</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Уверете се, че информацията по-долу е вярна. Ако забележите нещо невярно може да се върнете на предната стъпка и да изберете друг източник или да внесете друг архив.</string>
     <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">От къде да се снабдя с речници?</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard използва Nuspell за проверка на правописа. Това означава, че съществуват огромно количество речници, защото Hunspell се използва и от други софтуерни продукти. Следният списък съдържа само ръчно подбрани източници, с възможност за внасяне. Изтеглете или архива, или файловете на речника, после в помощника за внасяне изберете правилните файлове (важно за правилното разпознаване на формата на архива).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">Ако в списъка липсва вашият език или диалект, потърсете речници на Hunspell и внесете файловете на „aff“ и „dic“.</string>
@@ -343,30 +349,6 @@
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Референцията към обекта за управление на активи е празна</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Лицензи на трети страни</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензи на библиотеките от трети страни, използвани от приложението</string>
-    <!-- Assets strings -->
-    <string name="action__add">Добавяне</string>
-    <string name="action__apply">Прилагане</string>
-    <string name="action__cancel">Отказ</string>
-    <string name="action__cancel_confirm_title">Потвърждаване на отказ</string>
-    <string name="action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
-    <string name="action__default">По подразбиране</string>
-    <string name="action__delete">Изтриване</string>
-    <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>
-    <string name="action__delete_confirm_message">Наистина ли искате да изтриете „{database_name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
-    <string name="action__edit">Редактиране</string>
-    <string name="action__export">Изнасяне</string>
-    <string name="action__import">Внасяне</string>
-    <string name="action__no">Не</string>
-    <string name="action__ok">Добре</string>
-    <string name="action__save">Запазване</string>
-    <string name="action__select">Изберете</string>
-    <string name="action__select_dir">Избиране на папка</string>
-    <string name="action__select_file">Избиране на файл</string>
-    <string name="action__yes">Да</string>
-    <string name="error__title">Грешка</string>
-    <string name="error__details">Подробности</string>
-    <string name="error__invalid">Невалидно</string>
-    <string name="error__snackbar_message">Нещо се обърка</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добре дошли!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Благодарим ви, че използвате {app_name}! Този помощник ще ви преведе през задължителните стъпки, които трябва да предприемете, за да използвате {app_name}.</string>
@@ -380,7 +362,7 @@
     <string name="setup__select_ime__switch_keyboard_btn">Смяна на клавиатура</string>
     <string name="setup__finish_up__title">Завършване</string>
     <string name="setup__finish_up__description_p1">Клавииатурата на {app_name} вече е включена в системата и готова да я настроите според вашите предпочитения.</string>
-    <string name="setup__finish_up__description_p2">Ако се сблъскате с някакви проблеми, дефекти, сривове или просто искате да направите предложение, разгледайте хранилището на проекта от екрана Относно!</string>
+    <string name="setup__finish_up__description_p2">Акосе сблъскате с проблеми, дефекти, сривове или просто искате да направите предложение, разгледайте хранилището на проекта от екрана Относно!</string>
     <string name="setup__finish_up__finish_btn">Започнете да настройвате</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на FlorisBoard</string>
@@ -401,6 +383,7 @@
     <string name="clipboard__disabled__enable_button">История</string>
     <string name="clipboard__empty__title">Междинната памет е празна</string>
     <string name="clipboard__locked__title">Междинната памет е недостъпна</string>
+    <string name="clipboard__locked__message">За достъп до междинната памет отключете устройството.</string>
     <string name="clipboard__group_other">Друго</string>
     <string name="clip__clear_history">Изчистване на историята</string>
     <string name="clip__unpin_item">Освобождаване</string>
@@ -429,6 +412,7 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Използват се за отстраняване на дефекти</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Статистика за динамичната памет</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Показва се информация за динамичната памет в горния десен ъгъл</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Слой за проверка на правописа</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Изтриване на данните от речника към приложението</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Премахват се всички думи от таблицата с речника</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Нулиране на „{flag_name}“</string>
@@ -436,8 +420,13 @@
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Изпробване на доклада на грешка</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">За нарочно създаване на срив</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Системни инструменти на Android</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Общи настройки на Android</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Настройки на сигурността на Android</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системни настройки на Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
+    <string name="ext__meta__components_label_generic">Неизвестен вид | {label}</string>
+    <string name="ext__meta__components_label_theme">Тема | {label}</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Страница</string>
     <string name="ext__meta__id">Идентификатор</string>
@@ -448,7 +437,42 @@
     <string name="ext__meta__title">Заглавие</string>
     <string name="ext__meta__version">Издание</string>
     <string name="ext__error__not_found_description">Няма разширение с идентификатор „{id}“.</string>
+    <string name="ext__editor__create_new_extension">Нова добавка</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Внасяне на добавка с тема</string>
+    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Не е избран файл, който да бъде внесен</string>
+    <!-- Action strings -->
+    <string name="action__add">Добавяне</string>
+    <string name="action__apply">Прилагане</string>
+    <string name="action__cancel">Отказ</string>
+    <string name="action__cancel_confirm_title">Потвърждаване на отказ</string>
+    <string name="action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="action__default">По подразбиране</string>
+    <string name="action__delete">Премахване</string>
+    <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>
+    <string name="action__delete_confirm_message">Наистина ли искате да изтриете „{name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="action__edit">Редактиране</string>
+    <string name="action__export">Изнасяне</string>
+    <string name="action__import">Внасяне</string>
+    <string name="action__no">Не</string>
+    <string name="action__ok">Добре</string>
+    <string name="action__save">Запазване</string>
+    <string name="action__select">Изберете</string>
+    <string name="action__select_dir">Избиране на папка</string>
+    <string name="action__select_dirs">Избиране на папки</string>
+    <string name="action__select_file">Избиране на файл</string>
+    <string name="action__select_files">Избиране на файлове</string>
+    <string name="action__yes">Да</string>
+    <!-- Error strings (generic) -->
+    <string name="error__title">Грешка</string>
+    <string name="error__details">Подробности</string>
+    <string name="error__invalid">Невалидно</string>
+    <string name="error__snackbar_message">Нещо се обърка</string>
+    <string name="error__snackbar_message_template">Нещо се обърка: {error_message}</string>
     <!-- General strings -->
+    <string name="general__no_browser_app_found_for_url">Не е намерено приложение, което да отвори адреса {url}</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портрет</string>
     <string name="screen_orientation__landscape">Пейзаж</string>
