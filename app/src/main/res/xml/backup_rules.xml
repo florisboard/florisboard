@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <include
+        domain="root"
+        path="jetpref_datastore"
+        requireFlags="clientSideEncryption"/>
+    <include
+        domain="file"
+        path="ime"
+        requireFlags="clientSideEncryption"/>
+    <include
+        domain="database"
+        path="floris_user_dictionary.db"
+        requireFlags="clientSideEncryption"/>
+</full-backup-content>
