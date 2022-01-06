@@ -36,12 +36,15 @@
 
     <application
         android:name="dev.patrickgold.florisboard.FlorisApplication"
-        android:allowBackup="false"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/backup_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/floris_app_icon"
         android:label="@string/floris_app_name"
         android:roundIcon="@mipmap/floris_app_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/FlorisAppTheme">
+        android:theme="@style/FlorisAppTheme"
+        tools:targetApi="s">
 
         <!-- IME service -->
         <service
