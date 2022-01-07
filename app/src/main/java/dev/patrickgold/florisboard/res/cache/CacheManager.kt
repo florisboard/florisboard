@@ -53,7 +53,7 @@ class CacheManager(context: Context) {
         private const val ImporterDirName = "importer"
         private const val ExporterDirName = "exporter"
         private const val EditorDirName = "editor"
-        private const val BackUpAndRestoreDirName = "back-up-and-restore"
+        private const val BackupAndRestoreDirName = "backup-and-restore"
     }
 
     private val appContext by context.appContext()
@@ -62,7 +62,7 @@ class CacheManager(context: Context) {
     val importer = WorkspacesContainer(ImporterDirName) { ImporterWorkspace(it) }
     val exporter = WorkspacesContainer(ExporterDirName) { ExporterWorkspace(it) }
     val editor = WorkspacesContainer(EditorDirName) { EditorWorkspace(it) }
-    val backUpAndRestore = WorkspacesContainer(BackUpAndRestoreDirName) { BackupAndRestoreWorkspace(it) }
+    val backupAndRestore = WorkspacesContainer(BackupAndRestoreDirName) { BackupAndRestoreWorkspace(it) }
 
     fun readFromUriIntoCache(uri: Uri) = readFromUriIntoCache(listOf(uri))
 
@@ -176,7 +176,7 @@ class CacheManager(context: Context) {
     }
 
     inner class BackupAndRestoreWorkspace(uuid: String) : Workspace(uuid) {
-        override val dir: FsDir = backUpAndRestore.dir.subDir(uuid)
+        override val dir: FsDir = backupAndRestore.dir.subDir(uuid)
 
         val inputDir: FsDir = dir.subDir(InputDirName)
         val outputDir: FsDir = dir.subDir(OutputDirName)
@@ -191,7 +191,7 @@ class CacheManager(context: Context) {
 
         override fun close() {
             super.close()
-            backUpAndRestore.remove(this)
+            backupAndRestore.remove(this)
         }
     }
 

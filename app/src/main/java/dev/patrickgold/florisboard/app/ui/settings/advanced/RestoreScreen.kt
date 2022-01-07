@@ -25,7 +25,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 
 @Composable
 fun RestoreScreen() = FlorisScreen {
-    title = stringRes(R.string.back_up_and_restore__restore__title)
+    title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
     val navController = LocalNavController.current

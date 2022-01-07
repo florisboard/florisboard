@@ -415,21 +415,21 @@
     <string name="setup__finish_up__finish_btn">Start Customizing</string>
 
     <!-- Back up & Restore -->
-    <string name="back_up_and_restore__title">Back up &amp; Restore</string>
-    <string name="back_up_and_restore__back_up__title">Back up data</string>
-    <string name="back_up_and_restore__back_up__summary">Generate a backup archive of preferences and customizations</string>
-    <string name="back_up_and_restore__back_up__destination">Select backup destination</string>
-    <string name="back_up_and_restore__back_up__destination_file_sys">Local file system</string>
-    <string name="back_up_and_restore__back_up__destination_share_intent">Third-party app via share menu</string>
-    <string name="back_up_and_restore__back_up__files">Select what to back up</string>
-    <string name="back_up_and_restore__back_up__files_jetpref_datastore">Preferences</string>
-    <string name="back_up_and_restore__back_up__files_ime_keyboard">Keyboard extensions</string>
-    <string name="back_up_and_restore__back_up__files_ime_spelling">Spelling extensions / dictionaries</string>
-    <string name="back_up_and_restore__back_up__files_ime_theme">Theme extensions</string>
-    <string name="back_up_and_restore__back_up__success">Successfully exported backup archive!</string>
-    <string name="back_up_and_restore__back_up__failure">Failed to export backup archive: {error_message}</string>
-    <string name="back_up_and_restore__restore__title">Restore data</string>
-    <string name="back_up_and_restore__restore__summary">Restore preferences and customizations from a backup archive</string>
+    <string name="backup_and_restore__title">Back up &amp; Restore</string>
+    <string name="backup_and_restore__back_up__title">Back up data</string>
+    <string name="backup_and_restore__back_up__summary">Generate a backup archive of preferences and customizations</string>
+    <string name="backup_and_restore__back_up__destination">Select backup destination</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Local file system</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Third-party app via share menu</string>
+    <string name="backup_and_restore__back_up__files">Select what to back up</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferences</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Keyboard extensions</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Spelling extensions / dictionaries</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Theme extensions</string>
+    <string name="backup_and_restore__back_up__success">Successfully exported backup archive!</string>
+    <string name="backup_and_restore__back_up__failure">Failed to export backup archive: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Restore data</string>
+    <string name="backup_and_restore__restore__summary">Restore preferences and customizations from a backup archive</string>
 
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard error report</string>

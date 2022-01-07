@@ -133,16 +133,16 @@ fun AdvancedScreen() = FlorisScreen {
             summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
         )
 
-        PreferenceGroup(title = stringRes(R.string.back_up_and_restore__title)) {
+        PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {
             Preference(
                 onClick = { navController.navigate(Routes.Settings.Backup) },
-                title = stringRes(R.string.back_up_and_restore__back_up__title),
-                summary = stringRes(R.string.back_up_and_restore__back_up__summary),
+                title = stringRes(R.string.backup_and_restore__back_up__title),
+                summary = stringRes(R.string.backup_and_restore__back_up__summary),
             )
             Preference(
                 onClick = { navController.navigate(Routes.Settings.Restore) },
-                title = stringRes(R.string.back_up_and_restore__restore__title),
-                summary = stringRes(R.string.back_up_and_restore__restore__summary),
+                title = stringRes(R.string.backup_and_restore__restore__title),
+                summary = stringRes(R.string.backup_and_restore__restore__summary),
             )
         }
     }
