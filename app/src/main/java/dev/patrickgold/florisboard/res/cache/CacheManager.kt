@@ -47,21 +47,22 @@ import java.util.*
 
 class CacheManager(context: Context) {
     companion object {
+        private const val InputDirName = "input"
+        private const val OutputDirName = "output"
+
         private const val ImporterDirName = "importer"
-        private const val ImporterInputDirName = "input"
-        private const val ImporterOutputDirName = "output"
-
         private const val ExporterDirName = "exporter"
-
         private const val EditorDirName = "editor"
+        private const val BackUpAndRestoreDirName = "back-up-and-restore"
     }
 
     private val appContext by context.appContext()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    val importer = WorkspacesContainer<ImporterWorkspace>(ImporterDirName)
-    val exporter = WorkspacesContainer<ExporterWorkspace>(ExporterDirName)
-    val editor = WorkspacesContainer<EditorWorkspace>(EditorDirName)
+    val importer = WorkspacesContainer(ImporterDirName) { ImporterWorkspace(it) }
+    val exporter = WorkspacesContainer(ExporterDirName) { ExporterWorkspace(it) }
+    val editor = WorkspacesContainer(EditorDirName) { EditorWorkspace(it) }
+    val backUpAndRestore = WorkspacesContainer(BackUpAndRestoreDirName) { BackupAndRestoreWorkspace(it) }
 
     fun readFromUriIntoCache(uri: Uri) = readFromUriIntoCache(listOf(uri))
 
@@ -96,11 +97,18 @@ class CacheManager(context: Context) {
         return workspace
     }
 
-    inner class WorkspacesContainer<T : Workspace> internal constructor(val dirName: String) {
+    inner class WorkspacesContainer<T : Workspace> internal constructor(
+        val dirName: String,
+        val factory: (uuid: String) -> T,
+    ) {
         private val workspacesGuard = Mutex(locked = false)
         private val workspaces = mutableListOf<T>()
 
         val dir: FsDir = appContext.cacheDir.subDir(dirName)
+
+        fun new(uuid: String = UUID.randomUUID().toString()): T {
+            return factory(uuid).also { it.mkdirs(); add(it) }
+        }
 
         internal fun add(workspace: T) = scope.launch {
             workspacesGuard.withLock {
@@ -130,6 +138,10 @@ class CacheManager(context: Context) {
             dir.mkdirs()
         }
 
+        fun isOpen() = dir.exists()
+
+        fun isClosed() = !dir.exists()
+
         override fun close() {
             dir.deleteRecursively()
         }
@@ -138,8 +150,8 @@ class CacheManager(context: Context) {
     inner class ImporterWorkspace(uuid: String) : Workspace(uuid) {
         override val dir: FsDir = importer.dir.subDir(uuid)
 
-        val inputDir: FsDir = dir.subDir(ImporterInputDirName)
-        val outputDir: FsDir = dir.subDir(ImporterOutputDirName)
+        val inputDir: FsDir = dir.subDir(InputDirName)
+        val outputDir: FsDir = dir.subDir(OutputDirName)
 
         var inputFileInfos = emptyList<FileInfo>()
 
@@ -161,6 +173,26 @@ class CacheManager(context: Context) {
 
     inner class EditorWorkspace(uuid: String) : Workspace(uuid) {
         override val dir: FsDir = editor.dir.subDir(uuid)
+    }
+
+    inner class BackupAndRestoreWorkspace(uuid: String) : Workspace(uuid) {
+        override val dir: FsDir = backUpAndRestore.dir.subDir(uuid)
+
+        val inputDir: FsDir = dir.subDir(InputDirName)
+        val outputDir: FsDir = dir.subDir(OutputDirName)
+
+        var zipFile: FsFile? = null
+
+        override fun mkdirs() {
+            super.mkdirs()
+            inputDir.mkdirs()
+            outputDir.mkdirs()
+        }
+
+        override fun close() {
+            super.close()
+            backUpAndRestore.remove(this)
+        }
     }
 
     data class FileInfo(

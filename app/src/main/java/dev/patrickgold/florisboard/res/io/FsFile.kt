@@ -54,3 +54,5 @@ inline fun <reified T> FsFile.writeJson(value: T, config: StringFormat = Json) {
     val text = config.encodeToString(value)
     return this.writeText(text)
 }
+
+inline val FsFile/* and FsDir */.parentDir: FsDir? get() = this.parentFile

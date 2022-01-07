@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -188,7 +189,7 @@ fun FlorisOutlinedBox(
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
     shape: Shape = OutlinedBoxShape,
-    content: @Composable () -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     FlorisOutlinedBox(
         modifier = modifier,
@@ -234,7 +235,7 @@ fun FlorisOutlinedBox(
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
     shape: Shape = OutlinedBoxShape,
-    content: @Composable () -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Box(
         modifier = modifier

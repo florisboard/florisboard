@@ -33,6 +33,8 @@ import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.settings.advanced.AdvancedScreen
+import dev.patrickgold.florisboard.app.ui.settings.advanced.BackupScreen
+import dev.patrickgold.florisboard.app.ui.settings.advanced.RestoreScreen
 import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.dictionary.DictionaryScreen
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
@@ -97,6 +99,8 @@ object Routes {
         const val Clipboard = "settings/clipboard"
 
         const val Advanced = "settings/advanced"
+        const val Backup = "settings/advanced/backup"
+        const val Restore = "settings/advanced/restore"
 
         const val About = "settings/about"
         const val ProjectLicense = "settings/about/project-license"
@@ -177,6 +181,8 @@ object Routes {
             composable(Settings.Clipboard) { ClipboardScreen() }
 
             composable(Settings.Advanced) { AdvancedScreen() }
+            composable(Settings.Backup) { BackupScreen() }
+            composable(Settings.Restore) { RestoreScreen() }
 
             composable(Settings.About) { AboutScreen() }
             composable(Settings.ProjectLicense) { ProjectLicenseScreen() }
