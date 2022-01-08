@@ -471,7 +471,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importer une extension de clavier</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Importer l\'extension orthographique / le dictionnaire</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importer l\'extension de thème</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Aucun fichier sélectionné pour l\'importation</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Le fichier ne peut pas être importé. Raison :</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Type de fichier non pris en charge ou non reconnu.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Impossible de remplacer ou de mettre à jour les packages d\'extension par défaut fournis avec les ressources principales de l\'application. Envisagez de mettre à jour l\'application elle-même si vous avez l\'intention d\'utiliser une version plus récente d\'un package d\'extension de base.</string>

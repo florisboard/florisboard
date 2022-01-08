@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.res.cache
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import dev.patrickgold.florisboard.app.ui.settings.advanced.Backup
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.query
 import dev.patrickgold.florisboard.common.android.readToFile
@@ -181,7 +182,10 @@ class CacheManager(context: Context) {
         val inputDir: FsDir = dir.subDir(InputDirName)
         val outputDir: FsDir = dir.subDir(OutputDirName)
 
-        var zipFile: FsFile? = null
+        lateinit var zipFile: FsFile
+        lateinit var metadata: Backup.Metadata
+        var restoreWarningId: Int? = null
+        var restoreErrorId: Int? = null
 
         override fun mkdirs() {
             super.mkdirs()

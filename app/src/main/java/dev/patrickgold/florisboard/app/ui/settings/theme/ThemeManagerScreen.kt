@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.common.android.showLongToast
@@ -133,9 +134,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         if (action == ThemeManagerScreenAction.MANAGE) {
             FlorisOutlinedBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.defaultFlorisOutlinedBox(),
             ) {
                 this@content.Preference(
                     onClick = { context.showShortToast("TODO for 0.3.14-beta09") },
@@ -154,9 +153,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         for ((extensionId, configs) in extGroupedThemes) key(extensionId) {
             val ext = extensionManager.getExtensionById(extensionId)!!
             FlorisOutlinedBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = remember {
                     ext.meta.title
                 },

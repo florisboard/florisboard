@@ -471,7 +471,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">استيراد ملحقات لوحة المفاتيح</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">استيراد ملحقات التهجئة/ القاموس</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">استيراد ملحقات الثيم</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">لم يتم تحديد ملفات للاستيراد</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">الملف لايمكن استرداده. السبب:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">نوع الملف غير مدعوم أو غير معروف.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">تعذر استبدال أو تحديث حزم الإضافات الافتراضية المتوفرة مع أصول التطبيق الأساسية. ضع في اعتبارك تحديث التطبيق نفسه إذا كنت تنوي استخدام إصدار أحدث من حزمة الإضافات الأساسية.</string>

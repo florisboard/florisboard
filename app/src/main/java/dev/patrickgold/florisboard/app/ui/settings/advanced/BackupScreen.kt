@@ -19,8 +19,6 @@ package dev.patrickgold.florisboard.app.ui.settings.advanced
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Checkbox
 import androidx.compose.material.RadioButton
 import androidx.compose.runtime.Composable
@@ -30,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.BuildConfig
@@ -40,6 +37,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.common.android.showLongToast
@@ -61,8 +59,8 @@ object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
     const val METADATA_JSON_NAME = "backup_metadata.json"
 
-    fun defaultFileName(timestamp: Long): String {
-        return "backup_${BuildConfig.APPLICATION_ID}_${BuildConfig.VERSION_CODE}_$timestamp.zip"
+    fun defaultFileName(metadata: Metadata): String {
+        return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
     }
 
     enum class Destination {
@@ -80,16 +78,16 @@ object Backup {
             return jetprefDatastore || imeKeyboard || imeSpelling || imeTheme
         }
     }
-}
 
-@Serializable
-data class BackupMetadata(
-    @SerialName("package")
-    val packageName: String,
-    val versionCode: Int,
-    val versionName: String,
-    val timestamp: Long,
-)
+    @Serializable
+    data class Metadata(
+        @SerialName("package")
+        val packageName: String,
+        val versionCode: Int,
+        val versionName: String,
+        val timestamp: Long,
+    )
+}
 
 @Composable
 fun BackupScreen() = FlorisScreen {
@@ -115,7 +113,7 @@ fun BackupScreen() = FlorisScreen {
                 return@rememberLauncherForActivityResult
             }
             runCatching {
-                context.contentResolver.writeFromFile(uri, backupWorkspace!!.zipFile!!)
+                context.contentResolver.writeFromFile(uri, backupWorkspace!!.zipFile)
                 backupWorkspace!!.close()
             }.onSuccess {
                 context.showLongToast(R.string.backup_and_restore__back_up__success)
@@ -150,15 +148,15 @@ fun BackupScreen() = FlorisScreen {
                 dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH))
             }
         }
-        val metadata = BackupMetadata(
+        workspace.metadata = Backup.Metadata(
             packageName = BuildConfig.APPLICATION_ID,
             versionCode = BuildConfig.VERSION_CODE,
             versionName = BuildConfig.VERSION_NAME,
             timestamp = System.currentTimeMillis(),
         )
-        workspace.inputDir.subFile(Backup.METADATA_JSON_NAME).writeJson(metadata)
-        workspace.zipFile = workspace.outputDir.subFile(Backup.defaultFileName(metadata.timestamp))
-        ZipUtils.zip(workspace.inputDir, workspace.zipFile!!)
+        workspace.inputDir.subFile(Backup.METADATA_JSON_NAME).writeJson(workspace.metadata)
+        workspace.zipFile = workspace.outputDir.subFile(Backup.defaultFileName(workspace.metadata))
+        ZipUtils.zip(workspace.inputDir, workspace.zipFile)
         backupWorkspace = workspace
     }
 
@@ -169,10 +167,10 @@ fun BackupScreen() = FlorisScreen {
             }
             when (backupDestination) {
                 Backup.Destination.FILE_SYS -> {
-                    backUpToFileSystemLauncher.launch(backupWorkspace!!.zipFile!!.name)
+                    backUpToFileSystemLauncher.launch(backupWorkspace!!.zipFile.name)
                 }
                 Backup.Destination.SHARE_INTENT -> {
-                    val uri = FileProvider.getUriForFile(context, Backup.FILE_PROVIDER_AUTHORITY, backupWorkspace!!.zipFile!!)
+                    val uri = FileProvider.getUriForFile(context, Backup.FILE_PROVIDER_AUTHORITY, backupWorkspace!!.zipFile)
                     val shareIntent = ShareCompat.IntentBuilder(context)
                         .setStream(uri)
                         .setType(FileRegistry.BackupArchive.mediaType)
@@ -209,40 +207,26 @@ fun BackupScreen() = FlorisScreen {
 
     content {
         FlorisOutlinedBox(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__back_up__destination),
         ) {
-            JetPrefListItem(
-                modifier = Modifier.rippleClickable {
+            RadioListItem(
+                onClick = {
                     backupDestination = Backup.Destination.FILE_SYS
                 },
-                icon = {
-                    RadioButton(
-                        selected = backupDestination == Backup.Destination.FILE_SYS,
-                        onClick = null,
-                    )
-                },
+                selected = backupDestination == Backup.Destination.FILE_SYS,
                 text = stringRes(R.string.backup_and_restore__back_up__destination_file_sys),
             )
-            JetPrefListItem(
-                modifier = Modifier.rippleClickable {
+            RadioListItem(
+                onClick = {
                     backupDestination = Backup.Destination.SHARE_INTENT
                 },
-                icon = {
-                    RadioButton(
-                        selected = backupDestination == Backup.Destination.SHARE_INTENT,
-                        onClick = null,
-                    )
-                },
+                selected = backupDestination == Backup.Destination.SHARE_INTENT,
                 text = stringRes(R.string.backup_and_restore__back_up__destination_share_intent),
             )
         }
         FlorisOutlinedBox(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__back_up__files),
         ) {
             CheckboxListItem(
@@ -270,7 +254,7 @@ fun BackupScreen() = FlorisScreen {
 }
 
 @Composable
-private fun CheckboxListItem(
+internal fun CheckboxListItem(
     onClick: () -> Unit,
     checked: Boolean,
     text: String,
@@ -281,6 +265,24 @@ private fun CheckboxListItem(
             Checkbox(
                 checked = checked,
                 onCheckedChange = null,
+            )
+        },
+        text = text,
+    )
+}
+
+@Composable
+internal fun RadioListItem(
+    onClick: () -> Unit,
+    selected: Boolean,
+    text: String,
+) {
+    JetPrefListItem(
+        modifier = Modifier.rippleClickable(onClick = onClick),
+        icon = {
+            RadioButton(
+                selected = selected,
+                onClick = null,
             )
         },
         text = text,

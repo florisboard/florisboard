@@ -467,7 +467,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importiere Tastatur-Erweiterung</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Importiere Rechtschreib-Erweiterung / Wörterbuch</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importiere Design-Erweiterung</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Keine Dateien für den Import ausgewählt</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Datei kann nicht importiert werden. Grund:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Nicht unterstützter oder nicht erkannter Datei-Typ.</string>
     <!-- Action strings -->

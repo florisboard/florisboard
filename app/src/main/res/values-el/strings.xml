@@ -457,7 +457,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Εισαγωγή επέκτασης πληκτρολογίου</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Εισαγωγή επέκτασης / λεξικού ορθογραφίας</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Εισαγωγή επέκτασης θέματος</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Δεν έχουν επιλεγεί αρχεία για εισαγωγή</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Το αρχείο δεν μπορεί να εισαχθεί. Αιτία:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Μη υποστηριζόμενος ή μη αναγνωρίσιμος τύπος αρχείου.</string>
     <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Το αρχείο φαίνεται πως είναι αρχείο προέκτασης αλλά η επεξεργασία των δεδομένων του απέτυχε. Είτε το αρχείο είναι αλλοιωμένο είτε αυτό το αρχείο δεν είναι μία προέκταση γενικά.</string>
