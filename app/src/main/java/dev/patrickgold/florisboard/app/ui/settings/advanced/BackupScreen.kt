@@ -46,14 +46,13 @@ import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.ExtensionManager
-import dev.patrickgold.florisboard.res.io.parentDir
 import dev.patrickgold.florisboard.res.io.subDir
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.res.io.writeJson
+import dev.patrickgold.jetpref.datastore.jetprefDatastoreDir
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
 
 object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
@@ -128,8 +127,8 @@ fun BackupScreen() = FlorisScreen {
     fun prepareBackupWorkspace() {
         val workspace = cacheManager.backupAndRestore.new()
         if (backupFilesSelector.jetprefDatastore) {
-            context.filesDir.parentDir!!.subDir("jetpref_datastore").let { dir ->
-                dir.copyRecursively(workspace.inputDir.subDir("jetpref_datastore"))
+            context.jetprefDatastoreDir.let { dir ->
+                dir.copyRecursively(workspace.inputDir.subDir(dir.name))
             }
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
@@ -225,31 +224,43 @@ fun BackupScreen() = FlorisScreen {
                 text = stringRes(R.string.backup_and_restore__back_up__destination_share_intent),
             )
         }
-        FlorisOutlinedBox(
-            modifier = Modifier.defaultFlorisOutlinedBox(),
+        BackupFilesSelector(
+            filesSelector = backupFilesSelector,
             title = stringRes(R.string.backup_and_restore__back_up__files),
-        ) {
-            CheckboxListItem(
-                onClick = { backupFilesSelector.jetprefDatastore = !backupFilesSelector.jetprefDatastore },
-                checked = backupFilesSelector.jetprefDatastore,
-                text = stringRes(R.string.backup_and_restore__back_up__files_jetpref_datastore),
-            )
-            CheckboxListItem(
-                onClick = { backupFilesSelector.imeKeyboard = !backupFilesSelector.imeKeyboard },
-                checked = backupFilesSelector.imeKeyboard,
-                text = stringRes(R.string.backup_and_restore__back_up__files_ime_keyboard),
-            )
-            CheckboxListItem(
-                onClick = { backupFilesSelector.imeSpelling = !backupFilesSelector.imeSpelling },
-                checked = backupFilesSelector.imeSpelling,
-                text = stringRes(R.string.backup_and_restore__back_up__files_ime_spelling),
-            )
-            CheckboxListItem(
-                onClick = { backupFilesSelector.imeTheme = !backupFilesSelector.imeTheme },
-                checked = backupFilesSelector.imeTheme,
-                text = stringRes(R.string.backup_and_restore__back_up__files_ime_theme),
-            )
-        }
+        )
+    }
+}
+
+@Composable
+internal fun BackupFilesSelector(
+    modifier: Modifier = Modifier,
+    filesSelector: Backup.FilesSelector,
+    title: String,
+) {
+    FlorisOutlinedBox(
+        modifier = Modifier.defaultFlorisOutlinedBox(),
+        title = title,
+    ) {
+        CheckboxListItem(
+            onClick = { filesSelector.jetprefDatastore = !filesSelector.jetprefDatastore },
+            checked = filesSelector.jetprefDatastore,
+            text = stringRes(R.string.backup_and_restore__back_up__files_jetpref_datastore),
+        )
+        CheckboxListItem(
+            onClick = { filesSelector.imeKeyboard = !filesSelector.imeKeyboard },
+            checked = filesSelector.imeKeyboard,
+            text = stringRes(R.string.backup_and_restore__back_up__files_ime_keyboard),
+        )
+        CheckboxListItem(
+            onClick = { filesSelector.imeSpelling = !filesSelector.imeSpelling },
+            checked = filesSelector.imeSpelling,
+            text = stringRes(R.string.backup_and_restore__back_up__files_ime_spelling),
+        )
+        CheckboxListItem(
+            onClick = { filesSelector.imeTheme = !filesSelector.imeTheme },
+            checked = filesSelector.imeTheme,
+            text = stringRes(R.string.backup_and_restore__back_up__files_ime_theme),
+        )
     }
 }
 

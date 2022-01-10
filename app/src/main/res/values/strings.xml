@@ -430,7 +430,8 @@
     <string name="backup_and_restore__back_up__failure">Failed to export backup archive: {error_message}</string>
     <string name="backup_and_restore__restore__title">Restore data</string>
     <string name="backup_and_restore__restore__summary">Restore preferences and customizations from a backup archive</string>
-    <string name="backup_and_restore__restore__metadata">Backup archive metadata</string>
+    <string name="backup_and_restore__restore__files">Select what to restore</string>
+    <string name="backup_and_restore__restore__metadata">Selected backup archive</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">This backup archive was generated in another version than current, which is generally supported. Be aware though that minor issues can occur or some preferences may not get transferred properly due to feature differences.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">This backup archive was generated in a third-party app, which is generally not supported. Data losses may occur, restore at your own risk!</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">This backup archive contains invalid metadata. Either it has been corrupted or poorly modified. Restoring from this archive is not possible, please select another one.</string>

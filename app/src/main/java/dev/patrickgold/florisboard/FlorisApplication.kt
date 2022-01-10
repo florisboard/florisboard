@@ -44,7 +44,7 @@ import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
-import dev.patrickgold.jetpref.datastore.JetPrefManager
+import dev.patrickgold.jetpref.datastore.JetPref
 import java.io.File
 import kotlin.Exception
 
@@ -80,7 +80,7 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         try {
-            JetPrefManager.init(saveIntervalMs = 1_000)
+            JetPref.configure(saveIntervalMs = 500)
             Flog.install(
                 context = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
@@ -93,12 +93,12 @@ class FlorisApplication : Application() {
             if (AndroidVersion.ATLEAST_API24_N && !UserManagerCompat.isUserUnlocked(this)) {
                 val context = createDeviceProtectedStorageContext()
                 initICU(context)
-                prefs.initializeForContext(context)
+                prefs.initializeBlocking(context)
                 registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
             } else {
                 initICU(this)
                 cacheDir?.deleteContentsRecursively()
-                prefs.initializeForContext(this)
+                prefs.initializeBlocking(this)
                 clipboardManager.value.initializeForContext(this)
             }
 
@@ -141,7 +141,7 @@ class FlorisApplication : Application() {
                     flogError { e.toString() }
                 }
                 cacheDir?.deleteContentsRecursively()
-                prefs.initializeForContext(this@FlorisApplication)
+                prefs.initializeBlocking(this@FlorisApplication)
                 clipboardManager.value.initializeForContext(this@FlorisApplication)
             }
         }

@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.CardDefaults
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
@@ -53,8 +55,15 @@ import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
+import dev.patrickgold.florisboard.res.ext.ExtensionManager
+import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
 import dev.patrickgold.florisboard.res.io.readJson
+import dev.patrickgold.florisboard.res.io.subDir
 import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.jetpref.datastore.JetPref
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object Restore {
     const val MIN_VERSION_CODE = 64
@@ -76,7 +85,11 @@ fun RestoreScreen() = FlorisScreen {
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
 
+    val restoreFilesSelector = remember { Backup.FilesSelector() }
     var restoreMode by remember { mutableStateOf(Restore.Mode.MERGE) }
+    // TODO: rememberCoroutineScope() is unusable because it provides the scope in a cancelled state, which does
+    //  not make sense at all. I suspect that this is a bug and once it is resolved we can use it here again.
+    val restoreScope = remember { CoroutineScope(Dispatchers.Main) }
     var restoreWorkspace by remember {
         mutableStateOf<CacheManager.BackupAndRestoreWorkspace?>(null)
     }
@@ -115,6 +128,52 @@ fun RestoreScreen() = FlorisScreen {
         },
     )
 
+    suspend fun performRestore() {
+        val prefs by florisPreferenceModel()
+        val workspace = restoreWorkspace!!
+        val shouldReset = restoreMode == Restore.Mode.ERASE_AND_OVERWRITE
+        if (restoreFilesSelector.jetprefDatastore) {
+            val datastoreFile = workspace.outputDir
+                .subDir(JetPref.JETPREF_DIR_NAME)
+                .subFile("${prefs.name}.${JetPref.JETPREF_FILE_EXT}")
+            if (datastoreFile.exists()) {
+                prefs.datastorePersistenceHandler?.loadPrefs(datastoreFile, shouldReset)
+                prefs.datastorePersistenceHandler?.persistPrefs()
+            }
+        }
+        val workspaceFilesDir = workspace.outputDir.subDir("files")
+        if (restoreFilesSelector.imeKeyboard) {
+            val srcDir = workspaceFilesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH)
+            val dstDir = context.filesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH)
+            if (shouldReset) {
+                dstDir.deleteContentsRecursively()
+            }
+            if (srcDir.exists()) {
+                srcDir.copyRecursively(dstDir, overwrite = true)
+            }
+        }
+        if (restoreFilesSelector.imeSpelling) {
+            val srcDir = workspaceFilesDir.subDir(ExtensionManager.IME_SPELLING_PATH)
+            val dstDir = context.filesDir.subDir(ExtensionManager.IME_SPELLING_PATH)
+            if (shouldReset) {
+                dstDir.deleteContentsRecursively()
+            }
+            if (srcDir.exists()) {
+                srcDir.copyRecursively(dstDir, overwrite = true)
+            }
+        }
+        if (restoreFilesSelector.imeTheme) {
+            val srcDir = workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH)
+            val dstDir = context.filesDir.subDir(ExtensionManager.IME_THEME_PATH)
+            if (shouldReset) {
+                dstDir.deleteContentsRecursively()
+            }
+            if (srcDir.exists()) {
+                srcDir.copyRecursively(dstDir, overwrite = true)
+            }
+        }
+    }
+
     bottomBar {
         FlorisButtonBar {
             ButtonBarSpacer()
@@ -127,7 +186,15 @@ fun RestoreScreen() = FlorisScreen {
             )
             ButtonBarButton(
                 onClick = {
-                    //
+                    restoreScope.launch(Dispatchers.Main) {
+                        try {
+                            performRestore()
+                            context.showLongToast(R.string.backup_and_restore__restore__success)
+                            navController.popBackStack()
+                        } catch (e: Throwable) {
+                            context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to e.localizedMessage)
+                        }
+                    }
                 },
                 text = stringRes(R.string.action__restore),
                 enabled = restoreWorkspace != null && restoreWorkspace?.restoreErrorId == null,
@@ -155,23 +222,23 @@ fun RestoreScreen() = FlorisScreen {
                 text = stringRes(R.string.backup_and_restore__restore__mode_erase_and_overwrite),
             )
         }
+        FlorisOutlinedButton(
+            onClick = {
+                runCatching {
+                    restoreDataFromFileSystemLauncher.launch(
+                        FileRegistry.BackupArchive.mediaType
+                    )
+                }.onFailure { error ->
+                    context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
+                }
+            },
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = stringRes(R.string.action__select_file),
+        )
         val workspace = restoreWorkspace
         if (workspace == null) {
-            FlorisOutlinedButton(
-                onClick = {
-                    runCatching {
-                        restoreDataFromFileSystemLauncher.launch(
-                            FileRegistry.BackupArchive.mediaType
-                        )
-                    }.onFailure { error ->
-                        context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
-                    }
-                },
-                modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .align(Alignment.CenterHorizontally),
-                text = stringRes(R.string.action__select_file),
-            )
             Text(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -223,6 +290,12 @@ fun RestoreScreen() = FlorisScreen {
                         fontStyle = FontStyle.Italic,
                     )
                 }
+            }
+            if (workspace.restoreErrorId == null) {
+                BackupFilesSelector(
+                    filesSelector = restoreFilesSelector,
+                    title = stringRes(R.string.backup_and_restore__restore__files),
+                )
             }
         }
     }
