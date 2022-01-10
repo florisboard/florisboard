@@ -20,6 +20,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,9 +61,12 @@ import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subDir
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.util.*
 
 object Restore {
     const val MIN_VERSION_CODE = 64
@@ -250,45 +253,56 @@ fun RestoreScreen() = FlorisScreen {
             FlorisOutlinedBox(
                 modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
-                contentPadding = CardDefaults.ContentPadding,
             ) {
-                Text(
-                    text = remember {
-                        buildString {
-                            append("packageName = ")
-                            appendLine(workspace.metadata.packageName)
-                            appendLine("version = ${workspace.metadata.versionName} (${workspace.metadata.versionCode})")
-                            append("timestamp = ")
-                            append(workspace.metadata.timestamp)
-                        }
+                this@content.Preference(
+                    iconId = R.drawable.ic_code,
+                    title = workspace.metadata.packageName,
+                )
+                this@content.Preference(
+                    iconId = R.drawable.ic_info,
+                    title = "${workspace.metadata.versionName} (${workspace.metadata.versionCode})",
+                )
+                this@content.Preference(
+                    iconId = R.drawable.ic_schedule,
+                    title = remember(workspace.metadata.timestamp) {
+                        val formatter = DateFormat.getDateTimeInstance()
+                        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                        calendar.timeInMillis = workspace.metadata.timestamp
+                        formatter.format(calendar.time)
                     },
-                    style = MaterialTheme.typography.body2,
-                    color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
                 )
                 if (workspace.restoreErrorId != null) {
-                    Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp)
-                        .padding(top = 10.dp, bottom = 8.dp)
-                        .background(MaterialTheme.colors.error.copy(alpha = 0.56f)))
-                    Text(
-                        text = stringRes(workspace.restoreErrorId!!),
-                        style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colors.error,
-                        fontStyle = FontStyle.Italic,
-                    )
+                    Column(modifier = Modifier.padding(CardDefaults.ContentPadding)) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(9.dp)
+                                .padding(bottom = 8.dp)
+                                .background(MaterialTheme.colors.error.copy(alpha = 0.56f))
+                        )
+                        Text(
+                            text = stringRes(workspace.restoreErrorId!!),
+                            style = MaterialTheme.typography.body2,
+                            color = MaterialTheme.colors.error,
+                            fontStyle = FontStyle.Italic,
+                        )
+                    }
                 } else if (workspace.restoreWarningId != null) {
-                    Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp)
-                        .padding(top = 10.dp, bottom = 8.dp)
-                        .background(LocalContentColor.current.copy(alpha = LocalContentAlpha.current)))
-                    Text(
-                        text = stringRes(workspace.restoreErrorId!!),
-                        style = MaterialTheme.typography.body2,
-                        color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
-                        fontStyle = FontStyle.Italic,
-                    )
+                    Column(modifier = Modifier.padding(CardDefaults.ContentPadding)) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(9.dp)
+                                .padding(bottom = 8.dp)
+                                .background(LocalContentColor.current.copy(alpha = LocalContentAlpha.current))
+                        )
+                        Text(
+                            text = stringRes(workspace.restoreErrorId!!),
+                            style = MaterialTheme.typography.body2,
+                            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                            fontStyle = FontStyle.Italic,
+                        )
+                    }
                 }
             }
             if (workspace.restoreErrorId == null) {
