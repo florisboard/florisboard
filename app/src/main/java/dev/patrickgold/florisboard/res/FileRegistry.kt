@@ -20,6 +20,15 @@ import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.io.FsFile
 
 object FileRegistry {
+    val BackupArchive = Entry(
+        type = Type.BINARY,
+        fileExt = "zip",
+        mediaType = "application/zip",
+        alternativeMediaTypes = listOf(
+            "application/octet-stream",
+        ),
+    )
+
     val FlexExtension = Entry(
         type = Type.BINARY,
         fileExt = "flex",

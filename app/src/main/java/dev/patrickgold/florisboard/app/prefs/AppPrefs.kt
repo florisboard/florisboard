@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.app.prefs
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
@@ -33,11 +31,10 @@ import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.util.VersionName
+import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
-import dev.patrickgold.jetpref.datastore.preferenceModel
-import java.time.LocalTime
 
-fun florisPreferenceModel() = preferenceModel(AppPrefs::class, ::AppPrefs)
+fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     val advanced = Advanced()
@@ -555,15 +552,13 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             default = extCoreTheme("floris_night"),
             serializer = ExtensionComponentName.Serializer,
         )
-        @RequiresApi(Build.VERSION_CODES.O)
-        val sunriseTime = localTime(
-            key = "theme__sunrise_time",
-            default = LocalTime.of(6, 0),
-        )
-        @RequiresApi(Build.VERSION_CODES.O)
-        val sunsetTime = localTime(
-            key = "theme__sunset_time",
-            default = LocalTime.of(18, 0),
-        )
+        //val sunriseTime = localTime(
+        //    key = "theme__sunrise_time",
+        //    default = LocalTime.of(6, 0),
+        //)
+        //val sunsetTime = localTime(
+        //    key = "theme__sunset_time",
+        //    default = LocalTime.of(18, 0),
+        //)
     }
 }

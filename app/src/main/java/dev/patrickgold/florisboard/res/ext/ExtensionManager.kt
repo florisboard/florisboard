@@ -63,9 +63,9 @@ val ExtensionJsonConfig = Json {
 
 class ExtensionManager(context: Context) {
     companion object {
-        private const val IME_KEYBOARD_PATH = "ime/keyboard"
-        private const val IME_SPELLING_PATH = "ime/spelling"
-        private const val IME_THEME_PATH = "ime/theme"
+        const val IME_KEYBOARD_PATH = "ime/keyboard"
+        const val IME_SPELLING_PATH = "ime/spelling"
+        const val IME_THEME_PATH = "ime/theme"
     }
 
     private val appContext by context.appContext()

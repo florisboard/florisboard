@@ -144,12 +144,6 @@ class FlorisAppActivity : ComponentActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        prefs.forceSyncToDisk()
-    }
-
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun AppContent() {

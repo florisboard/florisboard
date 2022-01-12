@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.common.android.showLongToast
@@ -213,7 +214,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(horizontal = 16.dp),
-                    text = stringRes(R.string.ext__import__no_files_selected),
+                    text = stringRes(R.string.state__no_files_selected),
                     fontStyle = FontStyle.Italic,
                 )
             }
@@ -251,9 +252,7 @@ private fun FileInfoView(
     fileInfo: CacheManager.FileInfo,
 ) {
     FlorisOutlinedBox(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier.defaultFlorisOutlinedBox(),
         title = fileInfo.file.name,
         subtitle = fileInfo.mediaType ?: "application/unknown",
     ) {

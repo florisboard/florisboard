@@ -29,7 +29,10 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.debug.*
-import java.io.File
+import dev.patrickgold.florisboard.res.io.FsDir
+import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.res.io.subDir
+import dev.patrickgold.florisboard.res.io.subFile
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 
@@ -49,6 +52,7 @@ abstract class CrashUtility private constructor() {
         private const val NOTIFICATION_CHANNEL_ID = "${BuildConfig.APPLICATION_ID}.crashutility"
         private const val NOTIFICATION_ID = 0xFBAD0100
 
+        private const val UNHANDLED_STACKTRACES_DIR_NAME = "unhandled_stacktraces"
         private const val UNHANDLED_STACKTRACE_FILE_EXT = "stacktrace"
 
         private var lastActivityCreated: WeakReference<Activity?> = WeakReference(null)
@@ -82,7 +86,7 @@ abstract class CrashUtility private constructor() {
                             UncaughtExceptionHandler(
                                 WeakReference(application),
                                 WeakReference(oldHandler),
-                                application.filesDir.absolutePath
+                                context.getUstDir(),
                             )
                         )
                         flogInfo(LogTopic.CRASH_UTILITY) {
@@ -174,7 +178,7 @@ abstract class CrashUtility private constructor() {
         fun getUnhandledStacktraces(context: Context?): List<Stacktrace> {
             context ?: return listOf()
             val retList = mutableListOf<Stacktrace>()
-            val ustDir = getUstDir(context)
+            val ustDir = context.getUstDir()
             if (ustDir.isDirectory) {
                 (ustDir.listFiles { pathname ->
                     pathname.name.endsWith(".$UNHANDLED_STACKTRACE_FILE_EXT")
@@ -190,7 +194,7 @@ abstract class CrashUtility private constructor() {
         }
 
         fun hasUnhandledStacktraceFiles(context: Context): Boolean {
-            val ustDir = getUstDir(context)
+            val ustDir = context.getUstDir()
             return if (ustDir.isDirectory) {
                 (ustDir.listFiles { pathname ->
                     pathname.name.endsWith(".$UNHANDLED_STACKTRACE_FILE_EXT")
@@ -234,24 +238,20 @@ abstract class CrashUtility private constructor() {
         /**
          * Gets a reference to the current unhandled stacktrace directory.
          *
-         * @param context The current package context.
          * @return The File object for the directory.
          */
-        private fun getUstDir(context: Context): File {
-            val path = context.filesDir.absolutePath
-            return File(path)
+        private fun Context.getUstDir(): FsDir {
+            return this.noBackupFilesDir.subDir(UNHANDLED_STACKTRACES_DIR_NAME).also { it.mkdirs() }
         }
 
         /**
          * Gets a reference to the stacktrace file for given [timestamp].
          *
-         * @param context The current package context.
          * @param timestamp The timestamp of the stacktrace file to get.
          * @return The File object for the stacktrace file.
          */
-        private fun getUstFile(context: Context, timestamp: Long): File {
-            val path = context.filesDir.absolutePath
-            return File("$path/$timestamp.$UNHANDLED_STACKTRACE_FILE_EXT")
+        private fun Context.getUstFile(timestamp: Long): FsFile {
+            return this.getUstDir().subFile("$timestamp.$UNHANDLED_STACKTRACE_FILE_EXT")
         }
 
         /**
@@ -328,7 +328,7 @@ abstract class CrashUtility private constructor() {
          * @param file The file object.
          * @return The contents of the file or an empty string, if the file does not exist.
          */
-        private fun readFile(file: File): String {
+        private fun readFile(file: FsFile): String {
             val retText = StringBuilder()
             if (file.exists()) {
                 val newLine = System.lineSeparator()
@@ -348,7 +348,7 @@ abstract class CrashUtility private constructor() {
          * @param text The text to write to the file.
          * @return The contents of the file or an empty string, if the file does not exist.
          */
-        private fun writeToFile(file: File, text: String) {
+        private fun writeToFile(file: FsFile, text: String) {
             try {
                 file.writeText(text)
             } catch (e: Exception) {
@@ -372,7 +372,7 @@ abstract class CrashUtility private constructor() {
     class UncaughtExceptionHandler(
         private val application: WeakReference<Application>,
         private val oldHandler: WeakReference<Thread.UncaughtExceptionHandler?>,
-        private val path: String
+        private val ustDir: FsDir,
     ) : Thread.UncaughtExceptionHandler {
         override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
             flogInfo(LogTopic.CRASH_UTILITY) {
@@ -381,13 +381,13 @@ abstract class CrashUtility private constructor() {
             throwable ?: return
             val timestamp = System.currentTimeMillis()
             val stacktrace = Log.getStackTraceString(throwable)
-            val ustFile = File("$path/$timestamp.$UNHANDLED_STACKTRACE_FILE_EXT")
+            val ustFile = ustDir.subFile("$timestamp.$UNHANDLED_STACKTRACE_FILE_EXT")
             writeToFile(ustFile, stacktrace)
             val application = application.get()
             if (application != null) {
                 val lastTimestamp = getLastCrashTimestamp(application)
                 if (lastTimestamp > 0) {
-                    val lastFile = getUstFile(application, lastTimestamp)
+                    val lastFile = application.getUstFile(lastTimestamp)
                     val lastStacktrace = readFile(lastFile)
                     if (lastStacktrace == stacktrace) {
                         // Delete last stacktrace if it matches previous unhandled one

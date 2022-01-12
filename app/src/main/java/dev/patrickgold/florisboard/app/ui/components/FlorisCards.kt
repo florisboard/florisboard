@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,12 +51,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 
-private val IconRequiredSize = 24.dp
-private val IconEndPadding = 8.dp
 
-private val CardContentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+object CardDefaults {
+    val IconRequiredSize = 24.dp
+    val IconSpacing = 8.dp
 
-private val OutlinedBoxShape = RoundedCornerShape(8.dp)
+    val ContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
+}
+
+object BoxDefauls {
+    val OutlinedBoxShape = RoundedCornerShape(8.dp)
+
+    val ContentPadding = PaddingValues(all = 0.dp)
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -65,7 +73,7 @@ fun FlorisSimpleCard(
     secondaryText: String? = null,
     backgroundColor: Color = MaterialTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
-    contentPadding: PaddingValues = CardContentPadding,
+    contentPadding: PaddingValues = CardDefaults.ContentPadding,
     icon: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
@@ -110,7 +118,7 @@ fun FlorisErrorCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = CardContentPadding,
+    contentPadding: PaddingValues = CardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -120,8 +128,8 @@ fun FlorisErrorCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = IconEndPadding)
-                .requiredSize(IconRequiredSize),
+                .padding(end = CardDefaults.IconSpacing)
+                .requiredSize(CardDefaults.IconRequiredSize),
             painter = painterResource(R.drawable.ic_error_outline),
             contentDescription = null,
         ) }) else null,
@@ -135,7 +143,7 @@ fun FlorisWarningCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = CardContentPadding,
+    contentPadding: PaddingValues = CardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -145,8 +153,8 @@ fun FlorisWarningCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = IconEndPadding)
-                .requiredSize(IconRequiredSize),
+                .padding(end = CardDefaults.IconSpacing)
+                .requiredSize(CardDefaults.IconRequiredSize),
             painter = painterResource(R.drawable.ic_warning_outline),
             contentDescription = null,
         ) }) else null,
@@ -160,7 +168,7 @@ fun FlorisInfoCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = CardContentPadding,
+    contentPadding: PaddingValues = CardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -168,8 +176,8 @@ fun FlorisInfoCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = IconEndPadding)
-                .requiredSize(IconRequiredSize),
+                .padding(end = CardDefaults.IconSpacing)
+                .requiredSize(CardDefaults.IconRequiredSize),
             painter = painterResource(R.drawable.ic_info),
             contentDescription = null,
         ) }) else null,
@@ -187,8 +195,9 @@ fun FlorisOutlinedBox(
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-    shape: Shape = OutlinedBoxShape,
-    content: @Composable () -> Unit,
+    shape: Shape = BoxDefauls.OutlinedBoxShape,
+    contentPadding: PaddingValues = BoxDefauls.ContentPadding,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     FlorisOutlinedBox(
         modifier = modifier,
@@ -220,10 +229,13 @@ fun FlorisOutlinedBox(
         borderWidth = borderWidth,
         borderColor = borderColor,
         shape = shape,
+        contentPadding = contentPadding,
         content = content,
     )
 }
 
+// TODO: Rework internal implementation (with same API and visual appearance) of FlorisOutlinedBox
+//  to avoid too much nesting and improve performance
 @Composable
 fun FlorisOutlinedBox(
     modifier: Modifier = Modifier,
@@ -233,8 +245,9 @@ fun FlorisOutlinedBox(
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-    shape: Shape = OutlinedBoxShape,
-    content: @Composable () -> Unit,
+    shape: Shape = BoxDefauls.OutlinedBoxShape,
+    contentPadding: PaddingValues = BoxDefauls.ContentPadding,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -257,7 +270,12 @@ fun FlorisOutlinedBox(
                     subtitle()
                 }
             }
-            content()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(contentPadding),
+                content = content,
+            )
         }
         if (title != null) {
             Box(
@@ -275,4 +293,10 @@ fun FlorisOutlinedBox(
             }
         }
     }
+}
+
+fun Modifier.defaultFlorisOutlinedBox(): Modifier {
+    return this
+        .fillMaxWidth()
+        .padding(vertical = 8.dp, horizontal = 16.dp)
 }

@@ -469,7 +469,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importar extensão do teclado</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Importar extensão/dicionário de ortografia</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importar extensão</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Não selecionou quaisquer ficheiros</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Não foi possível a importação. Motivo:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipo de ficheiros não suportado ou desconhecido.</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Ocorreu um erro inesperado durante a importação. Detalhes:</string>

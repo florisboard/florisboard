@@ -471,7 +471,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import rozszerzenie klawiatury</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Import rozszerzenie pisowni / słownik</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Import rozszerzenia motywu</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Nie zaznaczono pliku do importu</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Pliki nie mogły zostać za importowane. Powód:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Niewspierane lub nierozpoznany typ pliku.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Nie można zastąpić lub zaktualizować domyślnych pakietów rozszerzeń dostarczonych z podstawowymi zasobami aplikacji. Rozważ aktualizację samej aplikacji, jeśli zamierzasz korzystać z nowszej wersji podstawowego pakietu rozszerzeń.</string>

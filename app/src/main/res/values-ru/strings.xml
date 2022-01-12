@@ -471,7 +471,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Импорт расширения клавиатуры</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Импорт расширения орфографии / словаря</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Импорт расширения темы</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Файлы для импорта не выбраны</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Файл не может быть импортирован. Причина:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Неподдерживаемый или неизвестный тип файла.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Невозможно заменить или обновить пакеты расширений по умолчанию. Если вы хотите использовать более новую версию основного пакета расширений, необходимо обновить само приложение.</string>

@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,6 +46,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.common.android.showLongToast
@@ -134,32 +134,26 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         if (action == ThemeManagerScreenAction.MANAGE) {
             FlorisOutlinedBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.defaultFlorisOutlinedBox(),
             ) {
-                Column {
-                    this@content.Preference(
-                        onClick = { context.showShortToast("TODO for 0.3.14-beta09") },
-                        iconId = R.drawable.ic_add,
-                        title = stringRes(R.string.ext__editor__create_new_extension),
-                    )
-                    this@content.Preference(
-                        onClick = { navController.navigate(
-                            Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME, null)
-                        ) },
-                        iconId = R.drawable.ic_input,
-                        title = stringRes(R.string.action__import),
-                    )
-                }
+                this@content.Preference(
+                    onClick = { context.showShortToast("TODO for 0.3.14-beta09") },
+                    iconId = R.drawable.ic_add,
+                    title = stringRes(R.string.ext__editor__create_new_extension),
+                )
+                this@content.Preference(
+                    onClick = { navController.navigate(
+                        Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME, null)
+                    ) },
+                    iconId = R.drawable.ic_input,
+                    title = stringRes(R.string.action__import),
+                )
             }
         }
         for ((extensionId, configs) in extGroupedThemes) key(extensionId) {
             val ext = extensionManager.getExtensionById(extensionId)!!
             FlorisOutlinedBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = remember {
                     ext.meta.title
                 },
@@ -167,59 +161,57 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                 subtitle = extensionId,
                 onSubtitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
             ) {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    for (config in configs) key(extensionId, config.id) {
-                        JetPrefListItem(
-                            modifier = Modifier.rippleClickable {
-                                setTheme(extensionId, config.id)
+                for (config in configs) key(extensionId, config.id) {
+                    JetPrefListItem(
+                        modifier = Modifier.rippleClickable {
+                            setTheme(extensionId, config.id)
+                        },
+                        icon = {
+                            RadioButton(
+                                selected = activeThemeId?.extensionId == extensionId &&
+                                    activeThemeId?.componentId == config.id,
+                                onClick = null,
+                            )
+                        },
+                        text = config.label,
+                        trailing = {
+                            Icon(
+                                modifier = Modifier.size(ButtonDefaults.IconSize),
+                                painter = painterResource(if (config.isNightTheme) {
+                                    R.drawable.ic_dark_mode
+                                } else {
+                                    R.drawable.ic_light_mode
+                                }),
+                                contentDescription = null,
+                                tint = grayColor,
+                            )
+                        },
+                    )
+                }
+                if (action == ThemeManagerScreenAction.MANAGE && extensionManager.canDelete(ext)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 6.dp),
+                    ) {
+                        FlorisTextButton(
+                            onClick = {
+                                themeExtToDelete = ext
                             },
-                            icon = {
-                                RadioButton(
-                                    selected = activeThemeId?.extensionId == extensionId &&
-                                        activeThemeId?.componentId == config.id,
-                                    onClick = null,
-                                )
-                            },
-                            text = config.label,
-                            trailing = {
-                                Icon(
-                                    modifier = Modifier.size(ButtonDefaults.IconSize),
-                                    painter = painterResource(if (config.isNightTheme) {
-                                        R.drawable.ic_dark_mode
-                                    } else {
-                                        R.drawable.ic_light_mode
-                                    }),
-                                    contentDescription = null,
-                                    tint = grayColor,
-                                )
-                            },
+                            icon = painterResource(R.drawable.ic_delete),
+                            text = stringRes(R.string.action__delete),
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colors.error,
+                            ),
                         )
-                    }
-                    if (action == ThemeManagerScreenAction.MANAGE && extensionManager.canDelete(ext)) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 6.dp),
-                        ) {
-                            FlorisTextButton(
-                                onClick = {
-                                    themeExtToDelete = ext
-                                },
-                                icon = painterResource(R.drawable.ic_delete),
-                                text = stringRes(R.string.action__delete),
-                                colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colors.error,
-                                ),
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            FlorisTextButton(
-                                onClick = {
-                                    /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
-                                },
-                                icon = painterResource(R.drawable.ic_edit),
-                                text = stringRes(R.string.action__edit),
-                            )
-                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                        FlorisTextButton(
+                            onClick = {
+                                /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
+                            },
+                            icon = painterResource(R.drawable.ic_edit),
+                            text = stringRes(R.string.action__edit),
+                        )
                     }
                 }
             }

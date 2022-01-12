@@ -442,7 +442,6 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Внасяне на добавка с тема</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Не е избран файл, който да бъде внесен</string>
     <!-- Action strings -->
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>

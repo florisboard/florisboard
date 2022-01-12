@@ -38,7 +38,6 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
@@ -53,7 +52,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.decodeFromString
-import java.time.LocalTime
 import kotlin.properties.Delegates
 
 /**
@@ -235,18 +233,18 @@ class ThemeManager(context: Context) {
                 prefs.theme.dayThemeId.get()
             }
             ThemeMode.FOLLOW_TIME -> {
-                if (AndroidVersion.ATLEAST_API26_O) {
-                    val current = LocalTime.now()
-                    val sunrise = prefs.theme.sunriseTime.get()
-                    val sunset = prefs.theme.sunsetTime.get()
-                    if (current in sunrise..sunset) {
-                        prefs.theme.dayThemeId.get()
-                    } else {
-                        prefs.theme.nightThemeId.get()
-                    }
-                } else {
+                //if (AndroidVersion.ATLEAST_API26_O) {
+                //    val current = LocalTime.now()
+                //    val sunrise = prefs.theme.sunriseTime.get()
+                //    val sunset = prefs.theme.sunsetTime.get()
+                //    if (current in sunrise..sunset) {
+                //        prefs.theme.dayThemeId.get()
+                //    } else {
+                //        prefs.theme.nightThemeId.get()
+                //    }
+                //} else {
                     prefs.theme.nightThemeId.get()
-                }
+                //}
             }
         }
     }

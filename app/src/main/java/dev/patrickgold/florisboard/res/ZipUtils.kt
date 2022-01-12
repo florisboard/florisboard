@@ -70,6 +70,17 @@ object ZipUtils {
         }
     }
 
+    fun zip(srcDir: FsDir, dstFile: FsFile) {
+        check(srcDir.exists() && srcDir.isDirectory) { "Cannot zip standalone file." }
+        dstFile.parentFile?.mkdirs()
+        dstFile.delete()
+        FileOutputStream(dstFile).use { outStream ->
+            ZipOutputStream(outStream).use { zipOut ->
+                zip(srcDir, zipOut, "")
+            }
+        }
+    }
+
     fun zip(context: Context, srcDir: FsDir, uri: Uri) = runCatching {
         check(srcDir.exists() && srcDir.isDirectory) { "Cannot zip standalone file." }
         context.contentResolver.write(uri) { fileOut ->

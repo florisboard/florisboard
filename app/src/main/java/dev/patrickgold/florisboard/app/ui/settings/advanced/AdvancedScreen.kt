@@ -19,18 +19,24 @@ package dev.patrickgold.florisboard.app.ui.settings.advanced
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 @Composable
 fun AdvancedScreen() = FlorisScreen {
     title = stringRes(R.string.settings__advanced__title)
-    previewFieldVisible = true
+    previewFieldVisible = false
+
+    val navController = LocalNavController.current
 
     content {
         ListPreference(
@@ -126,5 +132,18 @@ fun AdvancedScreen() = FlorisScreen {
             title = stringRes(R.string.pref__advanced__force_private_mode__label),
             summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
         )
+
+        PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {
+            Preference(
+                onClick = { navController.navigate(Routes.Settings.Backup) },
+                title = stringRes(R.string.backup_and_restore__back_up__title),
+                summary = stringRes(R.string.backup_and_restore__back_up__summary),
+            )
+            Preference(
+                onClick = { navController.navigate(Routes.Settings.Restore) },
+                title = stringRes(R.string.backup_and_restore__restore__title),
+                summary = stringRes(R.string.backup_and_restore__restore__summary),
+            )
+        }
     }
 }

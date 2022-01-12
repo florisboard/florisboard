@@ -135,6 +135,17 @@
             android:exported="false">
         </provider>
 
+        <!-- Default file provider to share files from the "files" or "cache" dir -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider.file"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
     </application>
 
 </manifest>

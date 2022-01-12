@@ -472,7 +472,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Impor ekstensi keyboard</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Impor ekstensi / kamus pengejaan</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Impor ekstensi tema</string>
-    <string name="ext__import__no_files_selected" comment="Label when no files are selected in the importer screen.">Tidak ada file yang dipilih untuk diimpor</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File tidak dapat diimpor. Alasan:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipe file tidak didukung atau tidak diketahui.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Tidak dapat menggantikan atau memperbarui paket-paket ekstensi bawaan yang disediakan dengan aset inti aplikasi. Pertimbangkan untuk memperbarui aplikasinya sendiri jika Anda ingin memakai paket ekstensi inti dengan versi yang baru.</string>

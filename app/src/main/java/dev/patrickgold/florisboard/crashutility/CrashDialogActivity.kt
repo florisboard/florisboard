@@ -30,11 +30,25 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.debug.*
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
+
+private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, AppPrefs?> {
+    val cachedPreferenceModel = try {
+        florisPreferenceModel()
+    } catch (_: Throwable) {
+        null
+    }
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): AppPrefs? {
+        return cachedPreferenceModel?.getValue(thisRef, property)
+    }
+}
 
 class CrashDialogActivity : ComponentActivity() {
     private var stacktraces: List<CrashUtility.Stacktrace> = listOf()
     private var errorReport: StringBuilder = StringBuilder()
-    private var prefs: AppPrefs? = null
+    private val prefs by SafePreferenceInstanceWrapper()
 
     private val stacktrace by lazy { findViewById<TextView>(R.id.stacktrace) }
     private val reportInstructions by lazy { findViewById<TextView>(R.id.report_instructions) }
@@ -47,13 +61,6 @@ class CrashDialogActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val layout = layoutInflater.inflate(R.layout.crash_dialog, null)
         setContentView(layout)
-
-        // We secure the PrefHelper usage here because the PrefHelper could potentially be the
-        // source of the crash, thus making the crash dialog unusable if not wrapped.
-        try {
-            prefs = florisPreferenceModel().preferenceModel
-        } catch (_: Exception) {
-        }
 
         stacktraces = CrashUtility.getUnhandledStacktraces(this)
         errorReport.apply {
