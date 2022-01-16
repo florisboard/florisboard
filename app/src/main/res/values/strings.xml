@@ -113,7 +113,6 @@
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edit theme</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Add group</string>
@@ -524,8 +523,7 @@
 
     <!-- Extension strings -->
     <string name="ext__meta__components">Bundled components</string>
-    <string name="ext__meta__components_label_generic">Unknown type | {label}</string>
-    <string name="ext__meta__components_label_theme">Theme | {label}</string>
+    <string name="ext__meta__components_theme">Bundled theme components</string>
     <string name="ext__meta__components_none_found">This extension archive does not contain any bundled components.</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Homepage</string>
@@ -539,7 +537,14 @@
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension not found</string>
     <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
+    <string name="ext__editor__title_any">Edit extension</string>
+    <string name="ext__editor__title_keyboard">Edit keyboard extension</string>
+    <string name="ext__editor__title_spelling">Edit spelling extension</string>
+    <string name="ext__editor__title_theme">Edit theme extension</string>
     <string name="ext__editor__create_new_extension">Create new extension</string>
+    <string name="ext__editor__dialog_meta">Manage meta data</string>
+    <string name="ext__editor__dialog_dependencies">Manage dependencies</string>
+    <string name="ext__editor__dialog_files">Manage archive files</string>
     <string name="ext__export__success">Successfully exported extension!</string>
     <string name="ext__export__failure">Failed to export extension: {error_message}</string>
     <string name="ext__import__success">Successfully imported extension!</string>

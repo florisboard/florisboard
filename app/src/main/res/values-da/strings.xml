@@ -62,7 +62,6 @@
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Opret tomt tema</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Brugerdefineret (baseret på %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nyt tema</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redigér tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tilføj gruppe</string>

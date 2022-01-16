@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMeta
+import dev.patrickgold.florisboard.res.ext.ExtensionMetaImpl
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -31,7 +31,7 @@ private const val SERIAL_TYPE = "ime.extension.keyboard"
 @SerialName(SERIAL_TYPE)
 @Serializable
 data class KeyboardExtension(
-    override val meta: ExtensionMeta,
+    override val meta: ExtensionMetaImpl,
     override val dependencies: List<String>? = null,
     val currencySets: List<CurrencySet> = listOf(),
     val layouts: Map<String, List<LayoutArrangementComponent>> = mapOf(),

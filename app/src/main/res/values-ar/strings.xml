@@ -102,7 +102,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ثيم جديد</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم استيراد الثيم بنجاح!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم تصدير الثيم بنجاح!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">تحرير الثيم</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">الاسم</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">النوع</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
@@ -447,8 +446,6 @@
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">لغات النظام</string>
     <!-- Extension strings -->
     <string name="ext__meta__components">العناصر المجمعة</string>
-    <string name="ext__meta__components_label_generic">نوع غير معروف | {label}</string>
-    <string name="ext__meta__components_label_theme">السمة | {label}</string>
     <string name="ext__meta__components_none_found">أرشيف هذا الملحق لا يحتوي على أي عناصر مجمعة.</string>
     <string name="ext__meta__description">التفاصيل</string>
     <string name="ext__meta__homepage">الصفحة الرئيسية</string>

@@ -21,8 +21,8 @@ import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMetaImpl
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -33,7 +33,7 @@ private const val SERIAL_TYPE = "ime.extension.spelling"
 @SerialName(SERIAL_TYPE)
 @Serializable
 data class SpellingExtension(
-    override val meta: ExtensionMeta,
+    override val meta: ExtensionMetaImpl,
     override val dependencies: List<String>? = null,
     val spelling: SpellingExtensionConfig,
 ) : Extension() {
@@ -57,6 +57,7 @@ data class SpellingExtension(
 
     override fun edit() = SpellingExtensionEditor(
         meta.edit(),
+        dependencies?.toMutableList() ?: mutableListOf(),
         workingDir,
         spelling.edit(),
     )
@@ -64,13 +65,14 @@ data class SpellingExtension(
 
 data class SpellingExtensionEditor(
     override val meta: ExtensionMetaEditor,
-    override var workingDir: File?,
+    override val dependencies: MutableList<String>,
+    var workingDir: File?,
     val spelling: SpellingExtensionConfigEditor,
 ) : ExtensionEditor {
-    fun build() = runCatching {
-        SpellingExtension(
-            meta = meta.build().getOrThrow(),
-            spelling = spelling.build().getOrThrow(),
+    override fun build(): SpellingExtension {
+        return SpellingExtension(
+            meta = meta.build(),
+            spelling = spelling.build(),
         ).also {
             it.workingDir = workingDir
         }
@@ -97,7 +99,7 @@ data class SpellingExtensionConfigEditor(
     var affFile: String = "",
     var dicFile: String = "",
 ) {
-    fun build() = runCatching {
+    fun build(): SpellingExtensionConfig {
         val config = SpellingExtensionConfig(
             locale.trim().let { FlorisLocale.from(it) },
             originalSourceId.trim().ifBlank { null },
@@ -106,6 +108,6 @@ data class SpellingExtensionConfigEditor(
         )
         check(config.affFile.isNotBlank()) { "Spelling extension aff file path cannot be blank" }
         check(config.dicFile.isNotBlank()) { "Spelling extension dic file path cannot be blank" }
-        return@runCatching config
+        return config
     }
 }

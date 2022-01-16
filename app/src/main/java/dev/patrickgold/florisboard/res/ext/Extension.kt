@@ -115,5 +115,7 @@ abstract class Extension {
 
 interface ExtensionEditor {
     val meta: ExtensionMetaEditor
-    val workingDir: FsDir?
+    val dependencies: MutableList<String>
+
+    fun build(): Extension
 }

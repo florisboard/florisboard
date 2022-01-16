@@ -81,7 +81,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Тема успішно імпортована!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Тема успішно експортована!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Редагувати тему</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Назва</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Додати групу</string>

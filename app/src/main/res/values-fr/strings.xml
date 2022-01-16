@@ -102,7 +102,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nouveau thème</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thème importé avec succès !</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Thème exporté avec succès !</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Modifier le thème</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nom</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Ajouter un groupe</string>
@@ -447,8 +446,6 @@
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Paramètres régionaux du système</string>
     <!-- Extension strings -->
     <string name="ext__meta__components">Composants groupés</string>
-    <string name="ext__meta__components_label_generic">Type inconnu | {label}</string>
-    <string name="ext__meta__components_label_theme">Thème | {label}</string>
     <string name="ext__meta__components_none_found">Cette archive d\'extension ne contient aucun composant groupé.</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Page d\'accueil</string>

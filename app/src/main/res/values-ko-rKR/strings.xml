@@ -48,7 +48,6 @@
     <string name="pref__theme__source_internal" comment="Label for the theme source field">내부 저장소</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">빈 테마 만들기</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">새 테마</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">테마 편집</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">이름</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">그룹 추가</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">그룹 편집</string>

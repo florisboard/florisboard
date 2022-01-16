@@ -92,7 +92,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">طرح‌زمینه جدید</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم با موفقیت افزوده شد!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم با موفقیت استخراج شد!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ویرایش طرح زمینه</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">نام</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">افزودن گروه</string>

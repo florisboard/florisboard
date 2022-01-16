@@ -34,26 +34,24 @@ import kotlinx.serialization.json.JsonNames
  *
  * Should multiple files exist which match the regex, always the first match will be used.
  */
-@OptIn(ExperimentalSerializationApi::class)
-@Serializable
-data class ExtensionMeta(
+interface ExtensionMeta {
     /**
      * The unique identifier of this extension, adhering to
      * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
      */
-    val id: String,
+    val id: String
 
     /**
      * The version of this extension.
      */
-    val version: String,
+    val version: String
 
     /**
      * The title label of the extension. This title will be shown to the user in the Settings UI.
      *
      * Recommended limit: 50 characters
      */
-    val title: String,
+    val title: String
 
     /**
      * The short description of this extension, will be shown as a summary text in the package list, as
@@ -61,24 +59,24 @@ data class ExtensionMeta(
      *
      * Recommended limit: 80 characters
      */
-    val description: String? = null,
+    val description: String?
 
     /**
      * The keywords for this extension. Useful for searching an extension in the extension store.
      *
      * Recommended limit: 30 characters / keyword
      */
-    val keywords: List<String>? = null,
+    val keywords: List<String>?
 
     /**
      * A link to the homepage of this extension or author.
      */
-    val homepage: String? = null,
+    val homepage: String?
 
     /**
      * A link to this extension's issue tracker.
      */
-    val issueTracker: String? = null,
+    val issueTracker: String?
 
     /**
      * A list of maintainers who (actively) worked on putting the content together for this extension. Note that
@@ -92,34 +90,50 @@ data class ExtensionMeta(
      *
      * Order of the above fields is important for parsing.
      */
-    @JsonNames("authors")
-    val maintainers: List<ExtensionMaintainer>,
+    val maintainers: List<ExtensionMaintainer>
 
     /**
      * A valid license identifier, according to the [SPDX license list](https://spdx.org/licenses/).
      * Use an SPDX license expression if this extension has multiple licenses.
      */
-    val license: String,
-) {
+    val license: String
+}
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
+data class ExtensionMetaImpl(
+    override val id: String,
+    override val version: String,
+    override val title: String,
+    override val description: String? = null,
+    override val keywords: List<String>? = null,
+    override val homepage: String? = null,
+    override val issueTracker: String? = null,
+    @JsonNames("authors")
+    override val maintainers: List<ExtensionMaintainerImpl>,
+    override val license: String,
+) : ExtensionMeta {
+
     fun edit() = ExtensionMetaEditor(
         id, version, title, description ?: "", keywords?.toMutableList() ?: mutableListOf(),
         homepage ?: "", issueTracker ?: "", maintainers.map { it.edit() }.toMutableList(), license
     )
 }
 
-data class ExtensionMetaEditor(
-    var id: String = "",
-    var version: String = "",
-    var title: String = "",
-    var description: String = "",
-    var keywords: MutableList<String> = mutableListOf(),
-    var homepage: String = "",
-    var issueTracker: String = "",
-    var maintainers: MutableList<ExtensionMaintainerEditor> = mutableListOf(),
-    var license: String = "",
-) {
-    fun build() = runCatching {
-        val meta = ExtensionMeta(
+class ExtensionMetaEditor(
+    override var id: String = "",
+    override var version: String = "",
+    override var title: String = "",
+    override var description: String = "",
+    override var keywords: MutableList<String> = mutableListOf(),
+    override var homepage: String = "",
+    override var issueTracker: String = "",
+    override var maintainers: MutableList<ExtensionMaintainerEditor> = mutableListOf(),
+    override var license: String = "",
+) : ExtensionMeta {
+
+    fun build(): ExtensionMetaImpl {
+        val meta = ExtensionMetaImpl(
             id.trim(),
             version.trim(),
             title.trim(),
@@ -127,7 +141,7 @@ data class ExtensionMetaEditor(
             keywords.mapNotNull { it.trim().ifBlank { null } }.ifEmpty { null },
             homepage.trim().ifBlank { null },
             issueTracker.trim().ifBlank { null },
-            maintainers.map { it.build().getOrThrow() },
+            maintainers.map { it.build() },
             license.trim(),
         )
         check(meta.id.isNotBlank()) { "Extension ID cannot be blank" }
@@ -135,6 +149,6 @@ data class ExtensionMetaEditor(
         check(meta.title.isNotBlank()) { "Extension title cannot be blank" }
         check(meta.maintainers.isNotEmpty()) { "At least one extension maintainer must be defined" }
         check(meta.license.isNotBlank()) { "Extension license identifier cannot be blank" }
-        return@runCatching meta
+        return meta
     }
 }

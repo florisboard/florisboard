@@ -24,16 +24,25 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.math.min
 
+interface ExtensionMaintainer {
+    val name: String
+
+    val email: String?
+
+    val url: String?
+}
+
 @Serializable(with = ExtensionMaintainerSerializer::class)
-data class ExtensionMaintainer(
-    val name: String,
-    val email: String? = null,
-    val url: String? = null,
-) {
+data class ExtensionMaintainerImpl(
+    override val name: String,
+    override val email: String? = null,
+    override val url: String? = null,
+) : ExtensionMaintainer {
+
     companion object {
         private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*${'$'}""".toRegex()
 
-        fun from(str: String): ExtensionMaintainer? {
+        fun from(str: String): ExtensionMaintainerImpl? {
             if (str.isBlank() || !ValidationRegex.matches(str)) {
                 return null
             }
@@ -50,11 +59,11 @@ data class ExtensionMaintainer(
             val name = str.substring(nameStart, nameEnd).trim()
             val email = str.substring(emailStart, emailEnd).trim().takeIf { it.isNotBlank() }
             val url = str.substring(urlStart, urlEnd).trim().takeIf { it.isNotBlank() }
-            return ExtensionMaintainer(name, email, url)
+            return ExtensionMaintainerImpl(name, email, url)
         }
 
-        fun fromOrTakeRaw(str: String): ExtensionMaintainer {
-            return from(str) ?: ExtensionMaintainer(str)
+        fun fromOrTakeRaw(str: String): ExtensionMaintainerImpl {
+            return from(str) ?: ExtensionMaintainerImpl(str)
         }
     }
 
@@ -71,30 +80,31 @@ data class ExtensionMaintainer(
     }
 }
 
-data class ExtensionMaintainerEditor(
-    var name: String = "",
-    var email: String = "",
-    var url: String = "",
-) {
-    fun build() = runCatching {
-        val maintainer = ExtensionMaintainer(
+class ExtensionMaintainerEditor(
+    override var name: String = "",
+    override var email: String = "",
+    override var url: String = "",
+) : ExtensionMaintainer {
+
+    fun build(): ExtensionMaintainerImpl {
+        val maintainer = ExtensionMaintainerImpl(
             name.trim(),
             email.trim().ifBlank { null },
             url.trim().ifBlank { null },
         )
         check(maintainer.name.isNotBlank()) { "Extension maintainer name cannot be blank" }
-        return@runCatching maintainer
+        return maintainer
     }
 }
 
-private class ExtensionMaintainerSerializer : KSerializer<ExtensionMaintainer> {
+private class ExtensionMaintainerSerializer : KSerializer<ExtensionMaintainerImpl> {
     override val descriptor = PrimitiveSerialDescriptor("ExtensionMaintainer", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: ExtensionMaintainer) {
+    override fun serialize(encoder: Encoder, value: ExtensionMaintainerImpl) {
         encoder.encodeString(value.toString())
     }
 
-    override fun deserialize(decoder: Decoder): ExtensionMaintainer {
-        return ExtensionMaintainer.fromOrTakeRaw(decoder.decodeString())
+    override fun deserialize(decoder: Decoder): ExtensionMaintainerImpl {
+        return ExtensionMaintainerImpl.fromOrTakeRaw(decoder.decodeString())
     }
 }

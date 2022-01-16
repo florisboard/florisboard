@@ -70,6 +70,9 @@ class ThemeManager(context: Context) {
     var previewThemeId: ExtensionComponentName? by Delegates.observable(null) { _, _, _ ->
         updateActiveTheme()
     }
+    var previewThemeInfo: ThemeInfo? by Delegates.observable(null) { _, _, _ ->
+        updateActiveTheme()
+    }
 
     private val cachedThemeInfos = mutableListOf<ThemeInfo>()
     private val activeThemeGuard = Mutex(locked = false)
@@ -190,6 +193,10 @@ class ThemeManager(context: Context) {
     private fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
             action()
+            previewThemeInfo?.let { previewThemeInfo ->
+                _activeThemeInfo.postValue(previewThemeInfo)
+                return@withLock
+            }
             val activeName = evaluateActiveThemeName()
             val cachedInfo = cachedThemeInfos.find { it.name == activeName }
             if (cachedInfo != null) {
@@ -271,7 +278,7 @@ class ThemeManager(context: Context) {
         companion object {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
-                config = ThemeExtensionComponent(id = "base", label = "Base", authors = listOf()),
+                config = ThemeExtensionComponentImpl(id = "base", label = "Base", authors = listOf()),
                 stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
             )
         }

@@ -80,7 +80,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Uusi teema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Teema tuotu onnistuneesti!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Teema viety onnistuneesti!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Muokkaa teemaa</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nimi</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Tyyppi</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Lisää ryhmä</string>

@@ -19,15 +19,21 @@ package dev.patrickgold.florisboard.res.cache
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.neverEqualPolicy
+import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.app.ui.settings.advanced.Backup
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.query
 import dev.patrickgold.florisboard.common.android.readToFile
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
+import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionJsonConfig
 import dev.patrickgold.florisboard.res.io.FsDir
 import dev.patrickgold.florisboard.res.io.FsFile
@@ -62,7 +68,7 @@ class CacheManager(context: Context) {
 
     val importer = WorkspacesContainer(ImporterDirName) { ImporterWorkspace(it) }
     val exporter = WorkspacesContainer(ExporterDirName) { ExporterWorkspace(it) }
-    val editor = WorkspacesContainer(EditorDirName) { EditorWorkspace(it) }
+    val themeExtEditor = WorkspacesContainer(EditorDirName) { ExtEditorWorkspace<ThemeExtensionEditor>(it) }
     val backupAndRestore = WorkspacesContainer(BackupAndRestoreDirName) { BackupAndRestoreWorkspace(it) }
 
     fun readFromUriIntoCache(uri: Uri) = readFromUriIntoCache(listOf(uri))
@@ -98,7 +104,7 @@ class CacheManager(context: Context) {
         return workspace
     }
 
-    inner class WorkspacesContainer<T : Workspace> internal constructor(
+    open inner class WorkspacesContainer<T : Workspace> internal constructor(
         val dirName: String,
         val factory: (uuid: String) -> T,
     ) {
@@ -172,8 +178,16 @@ class CacheManager(context: Context) {
         override val dir: FsDir = exporter.dir.subDir(uuid)
     }
 
-    inner class EditorWorkspace(uuid: String) : Workspace(uuid) {
-        override val dir: FsDir = editor.dir.subDir(uuid)
+    inner class ExtEditorWorkspace<T : ExtensionEditor>(uuid: String) : Workspace(uuid) {
+        override val dir: FsDir = themeExtEditor.dir.subDir(uuid)
+
+        var editor by mutableStateOf<T?>(null, neverEqualPolicy())
+
+        inline fun update(block: T.() -> Unit) {
+            // Method is designed to only be called when editor has been previously initialized
+            block(editor!!)
+            editor = editor
+        }
     }
 
     inner class BackupAndRestoreWorkspace(uuid: String) : Workspace(uuid) {

@@ -77,7 +77,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         ThemeManagerScreenAction.MANAGE -> R.string.settings__theme_manager__title_manage
         else -> error("Theme manager screen action must not be null")
     })
-    previewFieldVisible = true
+    previewFieldVisible = action != ThemeManagerScreenAction.MANAGE
 
     val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
@@ -207,7 +207,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         Spacer(modifier = Modifier.weight(1f))
                         FlorisTextButton(
                             onClick = {
-                                /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
+                                navController.navigate(Routes.Ext.Edit(ext.meta.id))
                             },
                             icon = painterResource(R.drawable.ic_edit),
                             text = stringRes(R.string.action__edit),

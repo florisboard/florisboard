@@ -102,7 +102,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Neues Design</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Design erfolgreich importiert!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Design erfolgreich exportiert!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Design bearbeiten</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Neue Gruppe</string>
@@ -444,8 +443,6 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Android Einstellungen öffnen</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systemgebietsschema</string>
     <!-- Extension strings -->
-    <string name="ext__meta__components_label_generic">Unbekannter Typ | {label}</string>
-    <string name="ext__meta__components_label_theme">Design | {label}</string>
     <string name="ext__meta__description">Beschreibung</string>
     <string name="ext__meta__homepage">Startseite</string>
     <string name="ext__meta__id">ID</string>

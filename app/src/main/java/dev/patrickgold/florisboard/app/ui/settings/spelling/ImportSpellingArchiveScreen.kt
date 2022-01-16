@@ -193,7 +193,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen {
                     StepButton(
                         onClick = {
                             runCatching {
-                                extensionManager.import(importArchiveEditor!!.build().getOrThrow())
+                                extensionManager.import(importArchiveEditor!!.build())
                             }.fold(
                                 onSuccess = {
                                     navController.popBackStack()

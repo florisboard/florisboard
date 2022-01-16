@@ -102,7 +102,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Новая тема</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Тема успешно импортирована!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Тема успешно экспортирована!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Изменить тему</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Название</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Добавить группу</string>
@@ -447,8 +446,6 @@
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Языки системы</string>
     <!-- Extension strings -->
     <string name="ext__meta__components">Связанные компоненты</string>
-    <string name="ext__meta__components_label_generic">Неизвестный тип | {label}</string>
-    <string name="ext__meta__components_label_theme">Тема | {label}</string>
     <string name="ext__meta__components_none_found">Этот архив расширений не содержит каких-либо связанных компонентов.</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Главная страница</string>

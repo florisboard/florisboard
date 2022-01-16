@@ -103,7 +103,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema baru</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema berhasil diimpor!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema berhasil diekspor!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Sunting tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nama</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Jenis</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tambahkan kelompok</string>
@@ -448,8 +447,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
     <!-- Extension strings -->
     <string name="ext__meta__components">Komponen yang dibundel</string>
-    <string name="ext__meta__components_label_generic">Tipe yang tidak diketahui | {label}</string>
-    <string name="ext__meta__components_label_theme">Tema | {label}</string>
     <string name="ext__meta__components_none_found">Arsip ekstensi ini tidak berisi komponen apa pun yang dibundel.</string>
     <string name="ext__meta__description">Deskripsi</string>
     <string name="ext__meta__homepage">Beranda</string>

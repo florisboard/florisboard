@@ -42,7 +42,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nová téma</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Téma úspešne importovaná!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Téma úspešne importovaná!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Upraviť tému</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Názov</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Pridať skupinu</string>

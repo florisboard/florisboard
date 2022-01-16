@@ -99,7 +99,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ڕووکاری نوێ</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">ڕووکار بەسەرکەتوویی هێنرا!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">ڕووکار بەسەرکەتوویی نێردرا!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ده‌ستکاریکردنی ڕووکار</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">ناو</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">جۆر</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">زیادکردنی گرووپ</string>

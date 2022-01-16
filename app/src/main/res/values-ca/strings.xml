@@ -82,7 +82,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nou tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">El tema s\'ha importat correctament!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">El tema s\'ha exportat correctament!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Editar tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nom</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Tipus</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Afegir grup</string>

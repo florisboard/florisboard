@@ -76,7 +76,6 @@
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">צור ערכת עיצוב חדשה</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">מותאם אישית (בהתבסס על %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ערכת נושא חדשה</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ערוך ערכת נושא</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">שם</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">סוג</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">הוסף קבוצה</string>

@@ -101,7 +101,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Νέο θέμα</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Το θέμα εισήχθη με επιτυχία!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Το θέμα εξήχθη με επιτυχία!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Επεξεργασία θέματος</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Όνομα</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Τύπος</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Προσθήκη ομάδας</string>
@@ -434,8 +433,6 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Συστημικές ρυθμίσεις Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Τοποθεσίες συστήματος</string>
     <!-- Extension strings -->
-    <string name="ext__meta__components_label_generic">Άγνωστος τύπος | {label}</string>
-    <string name="ext__meta__components_label_theme">Θέμα | {label}</string>
     <string name="ext__meta__description">Περιγραφή</string>
     <string name="ext__meta__homepage">Αρχική σελίδα</string>
     <string name="ext__meta__id">Ταυτότητα</string>
