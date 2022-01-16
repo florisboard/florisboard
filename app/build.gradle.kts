@@ -160,7 +160,7 @@ dependencies {
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta03")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta03")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("androidx.room:room-runtime:2.4.0")
     kapt("androidx.room:room-compiler:2.4.0")
 
