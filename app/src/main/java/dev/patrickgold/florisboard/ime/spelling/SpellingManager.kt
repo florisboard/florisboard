@@ -30,8 +30,7 @@ import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainerEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainerImpl
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -205,8 +204,8 @@ class SpellingManager(context: Context) {
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
                         description = manifest.description ?: "",
-                        maintainers = manifest.author?.let { mutableListOf(ExtensionMaintainerImpl.fromOrTakeRaw(it).edit()) }
-                            ?: mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
+                        maintainers = manifest.author?.let { mutableListOf(ExtensionMaintainer.fromOrTakeRaw(it)) }
+                            ?: mutableListOf(ExtensionMaintainer(name = "Unknown")),
                         license = "unknown",
                     ),
                     dependencies = mutableListOf(),
@@ -280,7 +279,7 @@ class SpellingManager(context: Context) {
                         id = ExtensionDefaults.createLocalId("spelling"),
                         version = "0.0.0",
                         title = "FreeOffice import",
-                        maintainers = mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
+                        maintainers = mutableListOf(ExtensionMaintainer(name = "Unknown")),
                         license = "unknown",
                     ),
                     dependencies = mutableListOf(),

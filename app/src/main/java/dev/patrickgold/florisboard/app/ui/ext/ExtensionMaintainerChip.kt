@@ -32,7 +32,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainerImpl
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -91,7 +90,7 @@ fun ExtensionMaintainerChip(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewChipNameOnly() {
-    val maintainer = ExtensionMaintainerImpl(
+    val maintainer = ExtensionMaintainer(
         name = "Jane Doe",
         email = null,
         url = null,
@@ -102,7 +101,7 @@ private fun PreviewChipNameOnly() {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewChipNameAndEmail() {
-    val maintainer = ExtensionMaintainerImpl(
+    val maintainer = ExtensionMaintainer(
         name = "Jane Doe",
         email = "jane.doe@example.com",
         url = null,
@@ -113,7 +112,7 @@ private fun PreviewChipNameAndEmail() {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewChipNameAndUrl() {
-    val maintainer = ExtensionMaintainerImpl(
+    val maintainer = ExtensionMaintainer(
         name = "Jane Doe",
         email = null,
         url = "jane-doe.example.com",

@@ -16,30 +16,38 @@
 
 package dev.patrickgold.florisboard.app.ui.ext
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.FlorisFullscreenDialog
-import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.FlorisScreenWithBottomSheet
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
@@ -49,12 +57,22 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import kotlinx.coroutines.launch
 import java.util.*
 
-private val ComponentCardShape = RoundedCornerShape(8.dp)
 private val TextFieldVerticalPadding = 8.dp
+
+private sealed class SheetAction {
+    object ManageMetaData : SheetAction()
+
+    object ManageDependencies : SheetAction()
+
+    object ManageFiles : SheetAction()
+
+    data class ManageComponent(val id: String) : SheetAction()
+}
 
 @Composable
 fun ExtensionEditScreen(id: String) {
@@ -93,8 +111,9 @@ fun ExtensionEditScreen(id: String) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun EditScreen(ext: Extension, workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
+private fun EditScreen(ext: Extension, workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreenWithBottomSheet {
     title = stringRes(when (ext) {
         is KeyboardExtension -> R.string.ext__editor__title_keyboard
         is SpellingExtension -> R.string.ext__editor__title_spelling
@@ -103,99 +122,180 @@ private fun EditScreen(ext: Extension, workspace: CacheManager.ExtEditorWorkspac
     })
     iconSpaceReserved = false
 
+    val focusManager = LocalFocusManager.current
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val extensionEditor = workspace.editor ?: return@FlorisScreen
-    var dialogMetaEditor by remember { mutableStateOf<ExtensionMetaEditor?>(null) }
+    val scope = rememberCoroutineScope()
+    val extensionEditor = workspace.editor ?: return@FlorisScreenWithBottomSheet
+    var sheetAction by remember { mutableStateOf<SheetAction?>(null) }
+
+    fun setSheetAction(action: SheetAction?) {
+        if (action != null) {
+            sheetAction = action
+            scope.launch {
+                bottomSheetScaffoldState.bottomSheetState.expand()
+            }
+        } else {
+            focusManager.clearFocus(force = true)
+            scope.launch {
+                bottomSheetScaffoldState.bottomSheetState.collapse()
+                sheetAction = null
+            }
+        }
+    }
 
     content {
+        BackHandler {
+            if (sheetAction != null) {
+                setSheetAction(null)
+            } else {
+                navController.popBackStack()
+            }
+        }
+
         Preference(
-            onClick = { dialogMetaEditor = extensionEditor.meta },
-            title = stringRes(R.string.ext__editor__dialog_meta),
+            onClick = { setSheetAction(SheetAction.ManageMetaData) },
+            title = stringRes(R.string.ext__editor__sheet_meta),
             summary = extensionEditor.meta.id,
         )
         Preference(
-            title = stringRes(R.string.ext__editor__dialog_dependencies),
+            title = stringRes(R.string.ext__editor__sheet_dependencies),
             summary = extensionEditor.dependencies.joinToString(),
         )
         Preference(
-            title = stringRes(R.string.ext__editor__dialog_files),
+            title = stringRes(R.string.ext__editor__sheet_files),
             summary = "0",
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         ExtensionComponentListTitleView(ext)
+    }
 
-        if (dialogMetaEditor != null) {
-            FlorisFullscreenDialog(
-                title = stringRes(R.string.ext__editor__dialog_meta),
-                onDismiss = { dialogMetaEditor = null },
-            ) {
-                val editor = dialogMetaEditor
-                if (editor != null) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(horizontal = 8.dp)
-                            .florisVerticalScroll(),
-                    ) {
-                        EditorDialogTextField(
-                            value = editor.id,
-                            onValueChange = { workspace.update { editor.id = it } },
-                            label = stringRes(R.string.ext__meta__id),
-                        )
-                        EditorDialogTextField(
-                            value = editor.version,
-                            onValueChange = { workspace.update { editor.version = it } },
-                            label = stringRes(R.string.ext__meta__version),
-                        )
-                        EditorDialogTextField(
-                            value = editor.title,
-                            onValueChange = { workspace.update { editor.title = it } },
-                            label = stringRes(R.string.ext__meta__title),
-                        )
-                        EditorDialogTextField(
-                            value = editor.description,
-                            onValueChange = { workspace.update { editor.description = it } },
-                            label = stringRes(R.string.ext__meta__description),
-                        )
-                        EditorDialogTextField(
-                            value = editor.homepage,
-                            onValueChange = { workspace.update { editor.homepage = it } },
-                            label = stringRes(R.string.ext__meta__homepage),
-                        )
-                        EditorDialogTextField(
-                            value = editor.issueTracker,
-                            onValueChange = { workspace.update { editor.issueTracker = it } },
-                            label = stringRes(R.string.ext__meta__issue_tracker),
-                        )
-                        EditorDialogTextField(
-                            value = editor.license,
-                            onValueChange = { workspace.update { editor.license = it } },
-                            label = stringRes(R.string.ext__meta__license),
-                        )
-                    }
+    bottomSheet {
+        when (sheetAction) {
+            is SheetAction.ManageMetaData -> {
+                val editor = extensionEditor.meta
+                EditorSheetAppBar(
+                    onDismiss = { setSheetAction(null) },
+                    title = stringRes(R.string.ext__editor__sheet_meta),
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .florisVerticalScroll()
+                        .padding(horizontal = 8.dp),
+                ) {
+                    EditorSheetTextField(
+                        enabled = false,
+                        value = editor.id,
+                        onValueChange = { },
+                        label = stringRes(R.string.ext__meta__id),
+                    )
+                    EditorSheetTextField(
+                        value = editor.version,
+                        onValueChange = { workspace.update { editor.version = it } },
+                        label = stringRes(R.string.ext__meta__version),
+                    )
+                    EditorSheetTextField(
+                        value = editor.title,
+                        onValueChange = { workspace.update { editor.title = it } },
+                        label = stringRes(R.string.ext__meta__title),
+                    )
+                    EditorSheetTextField(
+                        value = editor.description,
+                        onValueChange = { workspace.update { editor.description = it } },
+                        label = stringRes(R.string.ext__meta__description),
+                    )
+                    // TODO: make this list editing experience better
+                    EditorSheetTextField(
+                        value = editor.keywords.joinToString(","),
+                        onValueChange = { v ->
+                            workspace.update {
+                                editor.keywords = v.split(",").map { it.trim() }
+                            }
+                        },
+                        label = stringRes(R.string.ext__meta__keywords),
+                    )
+                    EditorSheetTextField(
+                        value = editor.homepage,
+                        onValueChange = { workspace.update { editor.homepage = it } },
+                        label = stringRes(R.string.ext__meta__homepage),
+                    )
+                    EditorSheetTextField(
+                        value = editor.issueTracker,
+                        onValueChange = { workspace.update { editor.issueTracker = it } },
+                        label = stringRes(R.string.ext__meta__issue_tracker),
+                    )
+                    // TODO: make this list editing experience better
+                    EditorSheetTextField(
+                        value = editor.maintainers.joinToString(","),
+                        onValueChange = { v ->
+                            workspace.update {
+                                editor.maintainers = v
+                                    .split(",")
+                                    .map { ExtensionMaintainer.fromOrTakeRaw(it.trim()) }
+                            }
+                        },
+                        label = stringRes(R.string.ext__meta__maintainers),
+                    )
+                    EditorSheetTextField(
+                        value = editor.license,
+                        onValueChange = { workspace.update { editor.license = it } },
+                        label = stringRes(R.string.ext__meta__license),
+                    )
                 }
             }
+            else -> { }
         }
     }
 }
 
 @Composable
-private fun EditorDialogTextField(
+private fun EditorSheetAppBar(
     modifier: Modifier = Modifier,
+    onDismiss: () -> Unit,
+    title: String,
+) {
+    TopAppBar(
+        navigationIcon = {
+            IconButton(
+                onClick = onDismiss,
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_close),
+                    contentDescription = "Close",
+                )
+            }
+        },
+        title = {
+            Text(
+                text = title,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+            )
+        },
+        backgroundColor = Color.Transparent,
+        elevation = 0.dp,
+    )
+}
+
+@Composable
+private fun EditorSheetTextField(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
     isError: Boolean = false,
 ) {
-    TextField(
+    OutlinedTextField(
         modifier = Modifier
             .padding(vertical = TextFieldVerticalPadding)
             .fillMaxWidth(),
+        enabled = enabled,
         value = value,
         onValueChange = onValueChange,
         label = { Text(text = label) },

@@ -16,11 +16,18 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.BottomSheetState
+import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -28,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
@@ -40,8 +48,16 @@ fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
     scope.Render()
 }
 
+@Composable
+fun FlorisScreenWithBottomSheet(builder: @Composable FlorisScreenWithBottomSheetScope.() -> Unit) {
+    val scope = remember { FlorisScreenWithBottomSheetScopeImpl() }
+    builder(scope)
+    scope.Render()
+}
+
 typealias FlorisScreenActions = @Composable RowScope.() -> Unit
 typealias FlorisScreenBottomBar = @Composable () -> Unit
+typealias FlorisScreenBottomSheet = @Composable ColumnScope.() -> Unit
 typealias FlorisScreenContent = PreferenceUiContent<AppPrefs>
 typealias FlorisScreenFab = @Composable () -> Unit
 
@@ -110,15 +126,98 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
                 Modifier.florisVerticalScroll()
             } else {
                 Modifier
+        }
+            PreferenceLayout(
+                florisPreferenceModel(),
+                modifier = modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                iconSpaceReserved = iconSpaceReserved,
+                content = content,
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+interface FlorisScreenWithBottomSheetScope {
+    var title: String
+
+    var backArrowVisible: Boolean
+
+    val bottomSheetScaffoldState: BottomSheetScaffoldState
+
+    var scrollable: Boolean
+
+    var iconSpaceReserved: Boolean
+
+    fun actions(actions: FlorisScreenActions)
+
+    fun bottomSheet(bottomSheet: FlorisScreenBottomSheet)
+
+    fun floatingActionButton(fab: FlorisScreenFab)
+
+    fun content(content: FlorisScreenContent)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private class FlorisScreenWithBottomSheetScopeImpl : FlorisScreenWithBottomSheetScope {
+    override var title: String by mutableStateOf("")
+    override var backArrowVisible: Boolean by mutableStateOf(true)
+    override lateinit var bottomSheetScaffoldState: BottomSheetScaffoldState
+    override var scrollable: Boolean by mutableStateOf(true)
+    override var iconSpaceReserved: Boolean by mutableStateOf(true)
+
+    private var actions: FlorisScreenActions = { }
+    private var bottomSheet: FlorisScreenBottomSheet = { }
+    private var content: FlorisScreenContent = { }
+    private var fab: FlorisScreenFab = { }
+
+    override fun actions(actions: FlorisScreenActions) {
+        this.actions = actions
+    }
+
+    override fun bottomSheet(bottomSheet: FlorisScreenBottomSheet) {
+        this.bottomSheet = bottomSheet
+    }
+
+    override fun content(content: FlorisScreenContent) {
+        this.content = content
+    }
+
+    override fun floatingActionButton(fab: FlorisScreenFab) {
+        this.fab = fab
+    }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    @Composable
+    fun Render() {
+        val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+            bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+        )
+        this.bottomSheetScaffoldState = bottomSheetScaffoldState
+        BottomSheetScaffold(
+            scaffoldState = bottomSheetScaffoldState,
+            topBar = { FlorisAppBar(title, backArrowVisible, actions) },
+            sheetContent = bottomSheet,
+            sheetBackgroundColor = MaterialTheme.colors.background,
+            sheetGesturesEnabled = false,
+            sheetPeekHeight = 0.dp,
+            floatingActionButton = fab,
+        ) { innerPadding ->
+            val modifier = if (scrollable) {
+                Modifier.florisVerticalScroll()
+            } else {
+                Modifier
             }
-            Box(modifier = modifier.padding(innerPadding)) {
-                PreferenceLayout(
-                    florisPreferenceModel(),
-                    modifier = Modifier.fillMaxWidth(),
-                    iconSpaceReserved = iconSpaceReserved,
-                    content = content,
-                )
-            }
+            PreferenceLayout(
+                florisPreferenceModel(),
+                modifier = modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                iconSpaceReserved = iconSpaceReserved,
+                content = content,
+            )
         }
     }
 }

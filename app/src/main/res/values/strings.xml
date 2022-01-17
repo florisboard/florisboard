@@ -542,9 +542,9 @@
     <string name="ext__editor__title_spelling">Edit spelling extension</string>
     <string name="ext__editor__title_theme">Edit theme extension</string>
     <string name="ext__editor__create_new_extension">Create new extension</string>
-    <string name="ext__editor__dialog_meta">Manage meta data</string>
-    <string name="ext__editor__dialog_dependencies">Manage dependencies</string>
-    <string name="ext__editor__dialog_files">Manage archive files</string>
+    <string name="ext__editor__sheet_meta">Manage meta data</string>
+    <string name="ext__editor__sheet_dependencies">Manage dependencies</string>
+    <string name="ext__editor__sheet_files">Manage archive files</string>
     <string name="ext__export__success">Successfully exported extension!</string>
     <string name="ext__export__failure">Failed to export extension: {error_message}</string>
     <string name="ext__import__success">Successfully imported extension!</string>

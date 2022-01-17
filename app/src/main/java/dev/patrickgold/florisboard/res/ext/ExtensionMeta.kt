@@ -110,13 +110,13 @@ data class ExtensionMetaImpl(
     override val homepage: String? = null,
     override val issueTracker: String? = null,
     @JsonNames("authors")
-    override val maintainers: List<ExtensionMaintainerImpl>,
+    override val maintainers: List<ExtensionMaintainer>,
     override val license: String,
 ) : ExtensionMeta {
 
     fun edit() = ExtensionMetaEditor(
         id, version, title, description ?: "", keywords?.toMutableList() ?: mutableListOf(),
-        homepage ?: "", issueTracker ?: "", maintainers.map { it.edit() }.toMutableList(), license
+        homepage ?: "", issueTracker ?: "", maintainers, license
     )
 }
 
@@ -125,10 +125,10 @@ class ExtensionMetaEditor(
     override var version: String = "",
     override var title: String = "",
     override var description: String = "",
-    override var keywords: MutableList<String> = mutableListOf(),
+    override var keywords: List<String> = emptyList(),
     override var homepage: String = "",
     override var issueTracker: String = "",
-    override var maintainers: MutableList<ExtensionMaintainerEditor> = mutableListOf(),
+    override var maintainers: List<ExtensionMaintainer> = emptyList(),
     override var license: String = "",
 ) : ExtensionMeta {
 
@@ -141,7 +141,7 @@ class ExtensionMetaEditor(
             keywords.mapNotNull { it.trim().ifBlank { null } }.ifEmpty { null },
             homepage.trim().ifBlank { null },
             issueTracker.trim().ifBlank { null },
-            maintainers.map { it.build() },
+            maintainers,
             license.trim(),
         )
         check(meta.id.isNotBlank()) { "Extension ID cannot be blank" }

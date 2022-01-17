@@ -56,7 +56,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainerImpl
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMetaImpl
 
 @Composable
@@ -254,7 +254,7 @@ private fun PreviewExtensionViewerScreen() {
             issueTracker = "https://git.example.com/issues",
             maintainers = listOf(
                 "Max Mustermann <max.mustermann@example.com> (maxmustermann.example.com)",
-            ).map { ExtensionMaintainerImpl.fromOrTakeRaw(it) },
+            ).map { ExtensionMaintainer.fromOrTakeRaw(it) },
             license = "apache-2.0",
         ),
         dependencies = null,
