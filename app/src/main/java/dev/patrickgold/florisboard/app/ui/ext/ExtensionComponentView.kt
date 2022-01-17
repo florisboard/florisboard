@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.ui.ext
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,43 +31,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
-
-@Suppress("NOTHING_TO_INLINE")
-@Composable
-inline fun Extension.rememberComponents(): List<ExtensionComponent> {
-    return remember(this) { this.components() }
-}
-
-@Composable
-fun ExtensionComponentListTitleView(
-    ext: Extension,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        modifier = Modifier.padding(bottom = 8.dp),
-        text = stringRes(when (ext) {
-            is ThemeExtension -> R.string.ext__meta__components_theme
-            else -> R.string.ext__meta__components
-        }),
-        fontWeight = FontWeight.Bold,
-    )
-}
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 
 @Composable
 fun ExtensionComponentNoneFoundView() {
     Text(
+        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
         text = stringRes(R.string.ext__meta__components_none_found),
         fontStyle = FontStyle.Italic,
     )
@@ -82,27 +62,36 @@ fun ExtensionComponentView(
 ) {
     val componentName = remember { ExtensionComponentName(meta.id, component.id).toString() }
     FlorisOutlinedBox(
+        modifier = modifier,
         title = component.label,
         subtitle = componentName,
     ) {
-        when (component) {
-            is ThemeExtensionComponent -> {
-                val text = remember(component) {
-                    buildString {
-                        appendLine("authors = ${component.authors}")
-                        appendLine("isNightTheme = ${component.isNightTheme}")
-                        appendLine("isBorderless = ${component.isBorderless}")
-                        appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
-                        append("stylesheetPath = ${component.stylesheetPath()}")
+        Column(
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = if (onDeleteBtnClick == null && onEditBtnClick == null) 8.dp else 0.dp,
+            ),
+        ) {
+            when (component) {
+                is ThemeExtensionComponent -> {
+                    val text = remember(component) {
+                        buildString {
+                            appendLine("authors = ${component.authors}")
+                            appendLine("isNightTheme = ${component.isNightTheme}")
+                            appendLine("isBorderless = ${component.isBorderless}")
+                            appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
+                            append("stylesheetPath = ${component.stylesheetPath()}")
+                        }
                     }
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.body2,
+                        color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                    )
                 }
-                Text(
-                    text = text,
-                    style = MaterialTheme.typography.body2,
-                    color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
-                )
+                else -> { }
             }
-            else -> { }
         }
         if (onDeleteBtnClick != null || onEditBtnClick != null) {
             Row(
@@ -128,6 +117,28 @@ fun ExtensionComponentView(
                         text = stringRes(R.string.action__edit),
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun <T : ExtensionComponent> PreferenceUiScope<*>.ExtensionComponentListView(
+    modifier: Modifier = Modifier,
+    title: String,
+    components: List<T>,
+    componentGenerator: @Composable (T) -> Unit,
+) {
+    PreferenceGroup(
+        modifier = modifier,
+        title = title,
+        iconSpaceReserved = false,
+    ) {
+        if (components.isEmpty()) {
+            ExtensionComponentNoneFoundView()
+        } else {
+            for (component in components) {
+                componentGenerator(component)
             }
         }
     }

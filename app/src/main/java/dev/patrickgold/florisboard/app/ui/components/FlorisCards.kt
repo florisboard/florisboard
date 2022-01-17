@@ -59,7 +59,7 @@ object CardDefaults {
     val ContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
 }
 
-object BoxDefauls {
+object BoxDefaults {
     val OutlinedBoxShape = RoundedCornerShape(8.dp)
 
     val ContentPadding = PaddingValues(all = 0.dp)
@@ -195,8 +195,8 @@ fun FlorisOutlinedBox(
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-    shape: Shape = BoxDefauls.OutlinedBoxShape,
-    contentPadding: PaddingValues = BoxDefauls.ContentPadding,
+    shape: Shape = BoxDefaults.OutlinedBoxShape,
+    contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     FlorisOutlinedBox(
@@ -245,8 +245,8 @@ fun FlorisOutlinedBox(
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
     borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-    shape: Shape = BoxDefauls.OutlinedBoxShape,
-    contentPadding: PaddingValues = BoxDefauls.ContentPadding,
+    shape: Shape = BoxDefaults.OutlinedBoxShape,
+    contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Box(

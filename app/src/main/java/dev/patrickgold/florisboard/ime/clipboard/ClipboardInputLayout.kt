@@ -59,7 +59,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
+import dev.patrickgold.florisboard.app.ui.components.FlorisIconButtonWithInnerPadding
 import dev.patrickgold.florisboard.app.ui.components.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
@@ -132,7 +132,7 @@ fun ClipboardInputLayout(
                 .snyggBackground(headerStyle.background),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
@@ -147,7 +147,7 @@ fun ClipboardInputLayout(
                 color = headerStyle.foreground.solidColor(),
                 fontSize = headerStyle.fontSize.spSize(),
             )
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
@@ -161,7 +161,7 @@ fun ClipboardInputLayout(
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && popupItem == null,
             )
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = {
                     clipboardManager.clearHistory()
                     context.showShortToast(R.string.clipboard__cleared_history)
@@ -174,7 +174,7 @@ fun ClipboardInputLayout(
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && popupItem == null,
             )
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },

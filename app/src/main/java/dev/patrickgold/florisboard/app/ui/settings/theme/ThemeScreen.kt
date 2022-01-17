@@ -50,11 +50,7 @@ fun ThemeScreen() = FlorisScreen {
         FlorisInfoCard(
             modifier = Modifier.padding(8.dp),
             text = """
-                Themes can currently only be customized by writing (or modifying) a custom theme extension and then importing it, using the new FlexCSS stylesheet format packaged in a flex archive.
-
-                beta09 will provide a full in-app UI which allows to create and modify theme extensions hassle-free in a modern theme editor UI.
-
-                Additionally the theme mode "Follow time" is not available in this beta release.
+                The theme mode "Follow time" is not available in this beta release.
             """.trimIndent()
         )
 

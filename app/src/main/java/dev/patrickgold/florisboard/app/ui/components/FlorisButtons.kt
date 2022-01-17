@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -132,6 +133,34 @@ fun FlorisTextButton(
 
 @Composable
 fun FlorisIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: Painter,
+    enabled: Boolean = true,
+    iconModifier: Modifier = Modifier,
+    iconColor: Color = Color.Unspecified,
+) {
+    IconButton(
+        modifier = modifier,
+        enabled = enabled,
+        onClick = onClick,
+    ) {
+        val contentAlpha = if (enabled) LocalContentAlpha.current else 0.14f
+        val contentColor = iconColor.takeOrElse { LocalContentColor.current }
+        CompositionLocalProvider(
+            LocalContentAlpha provides contentAlpha,
+            LocalContentColor provides contentColor,
+        ) {
+            Icon(
+                painter = icon,
+                contentDescription = null,
+            )
+        }
+    }
+}
+
+@Composable
+fun FlorisIconButtonWithInnerPadding(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: Painter,

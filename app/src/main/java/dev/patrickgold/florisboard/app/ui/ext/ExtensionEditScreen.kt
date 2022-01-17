@@ -18,9 +18,7 @@ package dev.patrickgold.florisboard.app.ui.ext
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
@@ -47,15 +45,20 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreenWithBottomSheet
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -71,7 +74,7 @@ private sealed class SheetAction {
 
     object ManageFiles : SheetAction()
 
-    data class ManageComponent(val id: String) : SheetAction()
+    data class ManageComponent(val editor: ExtensionComponent) : SheetAction()
 }
 
 @Composable
@@ -128,7 +131,7 @@ private fun EditScreen(ext: Extension, workspace: CacheManager.ExtEditorWorkspac
     val extensionManager by context.extensionManager()
 
     val scope = rememberCoroutineScope()
-    val extensionEditor = workspace.editor ?: return@FlorisScreenWithBottomSheet
+    val extEditor = workspace.editor ?: return@FlorisScreenWithBottomSheet
     var sheetAction by remember { mutableStateOf<SheetAction?>(null) }
 
     fun setSheetAction(action: SheetAction?) {
@@ -146,6 +149,13 @@ private fun EditScreen(ext: Extension, workspace: CacheManager.ExtEditorWorkspac
         }
     }
 
+    actions {
+        FlorisIconButton(
+            onClick = { /*TODO*/ },
+            icon = painterResource(R.drawable.ic_save),
+        )
+    }
+
     content {
         BackHandler {
             if (sheetAction != null) {
@@ -155,28 +165,49 @@ private fun EditScreen(ext: Extension, workspace: CacheManager.ExtEditorWorkspac
             }
         }
 
-        Preference(
-            onClick = { setSheetAction(SheetAction.ManageMetaData) },
-            title = stringRes(R.string.ext__editor__sheet_meta),
-            summary = extensionEditor.meta.id,
-        )
-        Preference(
-            title = stringRes(R.string.ext__editor__sheet_dependencies),
-            summary = extensionEditor.dependencies.joinToString(),
-        )
-        Preference(
-            title = stringRes(R.string.ext__editor__sheet_files),
-            summary = "0",
-        )
+        FlorisOutlinedBox(
+            modifier = Modifier.defaultFlorisOutlinedBox(),
+        ) {
+            this@content.Preference(
+                onClick = { setSheetAction(SheetAction.ManageMetaData) },
+                iconId = R.drawable.ic_code,
+                title = stringRes(R.string.ext__editor__sheet_meta),
+            )
+            this@content.Preference(
+                iconId = R.drawable.ic_library_books,
+                title = stringRes(R.string.ext__editor__sheet_dependencies),
+            )
+            this@content.Preference(
+                iconId = R.drawable.ic_file_blank,
+                title = stringRes(R.string.ext__editor__sheet_files),
+            )
+        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        ExtensionComponentListTitleView(ext)
+        when (extEditor) {
+            is ThemeExtensionEditor -> {
+                ExtensionComponentListView(
+                    title = stringRes(R.string.ext__meta__components_theme),
+                    components = extEditor.themes,
+                ) { component ->
+                    ExtensionComponentView(
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
+                        meta = extEditor.meta,
+                        component = component,
+                        onDeleteBtnClick = { workspace.update { extEditor.themes.remove(component) } },
+                        onEditBtnClick = { setSheetAction(SheetAction.ManageComponent(component)) },
+                    )
+                }
+            }
+            else -> {
+                // Render nothing
+            }
+        }
     }
 
     bottomSheet {
         when (sheetAction) {
             is SheetAction.ManageMetaData -> {
-                val editor = extensionEditor.meta
+                val editor = extEditor.meta
                 EditorSheetAppBar(
                     onDismiss = { setSheetAction(null) },
                     title = stringRes(R.string.ext__editor__sheet_meta),

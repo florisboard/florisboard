@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
@@ -158,15 +159,23 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     text = stringRes(R.string.action__export),
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            ExtensionComponentListTitleView(ext)
-            val components = ext.rememberComponents()
-            if (components.isEmpty()) {
-                ExtensionComponentNoneFoundView()
-            } else {
-                for (component in components) {
-                    ExtensionComponentView(ext.meta, component)
+        }
+
+        when (ext) {
+            is ThemeExtension -> {
+                ExtensionComponentListView(
+                    title = stringRes(R.string.ext__meta__components_theme),
+                    components = ext.themes,
+                ) { component ->
+                    ExtensionComponentView(
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
+                        meta = ext.meta,
+                        component = component,
+                    )
                 }
+            }
+            else -> {
+                // Render nothing
             }
         }
 
