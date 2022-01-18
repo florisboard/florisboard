@@ -24,6 +24,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -50,6 +51,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
+import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisUnsavedChangesDialog
@@ -60,6 +62,7 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
+import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
@@ -103,24 +106,35 @@ fun ExtensionEditScreen(id: String) {
         ext: Extension,
     ): W {
         val workspace = container.getWorkspaceByUuid(uuid)
-        return workspace ?: container.new(uuid).also { it.editor = ext.edit() as? T }
+        return workspace ?: container.new(uuid).also { newWorkspace ->
+            val sourceRef = ext.sourceRef
+            checkNotNull(sourceRef) { "Extension source ref must not be null" }
+            newWorkspace.editor = ext.edit() as? T
+            ZipUtils.unzip(context, sourceRef, newWorkspace.dir)
+        }
     }
 
     val ext = extensionManager.getExtensionById(id)
     if (ext != null) {
         val uuid = rememberSaveable { UUID.randomUUID().toString() }
         val cacheWorkspace = remember {
-            when (ext) {
-                is ThemeExtension -> {
-                    getOrCreateWorkspace(uuid, cacheManager.themeExtEditor, ext)
+            runCatching {
+                when (ext) {
+                    is ThemeExtension -> {
+                        getOrCreateWorkspace(uuid, cacheManager.themeExtEditor, ext)
+                    }
+                    else -> null
                 }
-                else -> null
             }
         }
-        if (cacheWorkspace?.editor != null) {
-            ExtensionEditScreenSheetSwitcher(ext, cacheWorkspace)
-        } else {
-            ExtensionNotFoundScreen(id = id)
+        cacheWorkspace.onSuccess { workspace ->
+            if (workspace?.editor != null) {
+                ExtensionEditScreenSheetSwitcher(ext, workspace)
+            } else {
+                ExtensionNotFoundScreen(id = id)
+            }
+        }.onFailure { error ->
+            Text(text = remember(error) { error.stackTraceToString() })
         }
     } else {
         ExtensionNotFoundScreen(id)
@@ -141,6 +155,12 @@ private fun ExtensionEditScreenSheetSwitcher(ext: Extension, workspace: CacheMan
             when (state.currentAction) {
                 EditorAction.ManageMetaData -> {
                     ManageMetaDataScreen(state)
+                }
+                EditorAction.ManageDependencies -> {
+                    ManageDependenciesScreen(state)
+                }
+                EditorAction.ManageFiles -> {
+                    ManageFilesScreen(state)
                 }
                 else -> {
                     // Render nothing
@@ -170,7 +190,11 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
     var showUnsavedChangesDialog by remember { mutableStateOf(false) }
 
     fun handleBackPress() {
-        showUnsavedChangesDialog = true
+        if (workspace.isModified) {
+            showUnsavedChangesDialog = true
+        } else {
+            navController.popBackStack()
+        }
     }
 
     fun handleSave() {
@@ -210,10 +234,12 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
                 title = stringRes(R.string.ext__editor__metadata__title),
             )
             this@content.Preference(
+                onClick = { state.currentAction = EditorAction.ManageDependencies },
                 iconId = R.drawable.ic_library_books,
                 title = stringRes(R.string.ext__editor__dependencies__title),
             )
             this@content.Preference(
+                onClick = { state.currentAction = EditorAction.ManageFiles },
                 iconId = R.drawable.ic_file_blank,
                 title = stringRes(R.string.ext__editor__files__title),
             )
@@ -282,16 +308,19 @@ private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
         Column(modifier = Modifier.padding(MetaDataContentPadding)) {
             EditorSheetTextField(
                 enabled = false,
+                isRequired = true,
                 value = editor.id,
                 onValueChange = { },
                 label = stringRes(R.string.ext__meta__id),
             )
             EditorSheetTextField(
+                isRequired = true,
                 value = editor.version,
                 onValueChange = { workspace.update { editor.version = it } },
                 label = stringRes(R.string.ext__meta__version),
             )
             EditorSheetTextField(
+                isRequired = true,
                 value = editor.title,
                 onValueChange = { workspace.update { editor.title = it } },
                 label = stringRes(R.string.ext__meta__title),
@@ -323,6 +352,7 @@ private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
             )
             // TODO: make this list editing experience better
             EditorSheetTextField(
+                isRequired = true,
                 value = editor.maintainers.joinToString(","),
                 onValueChange = { v ->
                     workspace.update {
@@ -334,6 +364,7 @@ private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
                 label = stringRes(R.string.ext__meta__maintainers),
             )
             EditorSheetTextField(
+                isRequired = true,
                 value = editor.license,
                 onValueChange = { workspace.update { editor.license = it } },
                 label = stringRes(R.string.ext__meta__license),
@@ -343,9 +374,81 @@ private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
 }
 
 @Composable
+private fun ManageDependenciesScreen(state: EditorState) = FlorisScreen {
+    title = stringRes(R.string.ext__editor__dependencies__title)
+
+    val workspace = state.workspace
+    val dependencyList = state.workspace.editor?.dependencies ?: return@FlorisScreen
+
+    fun handleBackPress() {
+        state.currentAction = null
+    }
+
+    navigationIcon {
+        FlorisIconButton(
+            onClick = { handleBackPress() },
+            icon = painterResource(R.drawable.ic_close),
+        )
+    }
+
+    content {
+        BackHandler {
+            handleBackPress()
+        }
+
+        FlorisInfoCard(
+            modifier = Modifier.padding(all = 8.dp),
+            text = """
+                Dependencies are currently not implemented, but are already somewhat
+                integrated as a placeholder for the future.
+                """.trimIndent().replace('\n', ' '),
+        )
+        if (dependencyList.isEmpty()) {
+            Text(text = "no deps found")
+        } else {
+            for (dependency in dependencyList) {
+                Text(text = dependency)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ManageFilesScreen(state: EditorState) = FlorisScreen {
+    title = stringRes(R.string.ext__editor__files__title)
+
+    val workspace = state.workspace
+
+    fun handleBackPress() {
+        state.currentAction = null
+    }
+
+    navigationIcon {
+        FlorisIconButton(
+            onClick = { handleBackPress() },
+            icon = painterResource(R.drawable.ic_close),
+        )
+    }
+
+    content {
+        BackHandler {
+            handleBackPress()
+        }
+
+        FlorisInfoCard(
+            modifier = Modifier.padding(all = 8.dp),
+            text = """
+                Managing archive files is currently not supported.
+                """.trimIndent().replace('\n', ' '),
+        )
+    }
+}
+
+@Composable
 private fun EditorSheetTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    isRequired: Boolean = false,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
@@ -353,11 +456,24 @@ private fun EditorSheetTextField(
 ) {
     val borderColor = MaterialTheme.colors.onSurface.copy(alpha = ButtonDefaults.OutlinedBorderOpacity)
     Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
-        Text(
-            modifier = Modifier.padding(bottom = TextFieldVerticalPadding),
-            text = label,
-            style = MaterialTheme.typography.subtitle2,
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = TextFieldVerticalPadding),
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.subtitle2,
+            )
+            if (isRequired) {
+                Text(
+                    modifier = Modifier.padding(start = 2.dp),
+                    text = "*",
+                    style = MaterialTheme.typography.subtitle2,
+                    color = MaterialTheme.colors.error,
+                )
+            }
+        }
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
             enabled = enabled,

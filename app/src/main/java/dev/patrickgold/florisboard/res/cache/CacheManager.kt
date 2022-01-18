@@ -182,11 +182,13 @@ class CacheManager(context: Context) {
         override val dir: FsDir = themeExtEditor.dir.subDir(uuid)
 
         var editor by mutableStateOf<T?>(null, neverEqualPolicy())
+        var isModified by mutableStateOf(false)
 
         inline fun update(block: T.() -> Unit) {
             // Method is designed to only be called when editor has been previously initialized
             block(editor!!)
             editor = editor
+            isModified = true
         }
     }
 
