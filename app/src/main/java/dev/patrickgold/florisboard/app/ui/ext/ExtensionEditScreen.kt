@@ -56,20 +56,25 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
+import dev.patrickgold.florisboard.app.ui.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import java.util.*
+import kotlin.reflect.KClass
 
 private val TextFieldVerticalPadding = 8.dp
 private val MetaDataContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
@@ -79,17 +84,19 @@ private const val AnimationDuration = 300
 private val ActionScreenEnterTransition = fadeIn(tween(AnimationDuration))
 private val ActionScreenExitTransition = fadeOut(tween(AnimationDuration))
 
-private sealed class EditorAction {
+sealed class EditorAction {
     object ManageMetaData : EditorAction()
 
     object ManageDependencies : EditorAction()
 
     object ManageFiles : EditorAction()
 
+    data class CreateComponent<T : ExtensionComponent>(val type: KClass<T>) : EditorAction()
+
     data class ManageComponent(val editor: ExtensionComponent) : EditorAction()
 }
 
-private class EditorState(val ext: Extension, val workspace: CacheManager.ExtEditorWorkspace<*>) {
+class EditorState(val ext: Extension, val workspace: CacheManager.ExtEditorWorkspace<*>) {
     var currentAction by mutableStateOf<EditorAction?>(null)
 }
 
@@ -152,15 +159,18 @@ private fun ExtensionEditScreenSheetSwitcher(ext: Extension, workspace: CacheMan
             enter = ActionScreenEnterTransition,
             exit = ActionScreenExitTransition,
         ) {
-            when (state.currentAction) {
-                EditorAction.ManageMetaData -> {
+            when (val action = state.currentAction) {
+                is EditorAction.ManageMetaData -> {
                     ManageMetaDataScreen(state)
                 }
-                EditorAction.ManageDependencies -> {
+                is EditorAction.ManageDependencies -> {
                     ManageDependenciesScreen(state)
                 }
-                EditorAction.ManageFiles -> {
+                is EditorAction.ManageFiles -> {
                     ManageFilesScreen(state)
+                }
+                is EditorAction.CreateComponent<*> -> {
+                    CreateComponentScreen(state, action.type)
                 }
                 else -> {
                     // Render nothing
@@ -250,6 +260,9 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
                 ExtensionComponentListView(
                     title = stringRes(R.string.ext__meta__components_theme),
                     components = extEditor.themes,
+                    onCreateBtnClick = {
+                        state.currentAction = EditorAction.CreateComponent(ThemeExtensionComponent::class)
+                    },
                 ) { component ->
                     ExtensionComponentView(
                         modifier = Modifier.defaultFlorisOutlinedBox(),
@@ -441,6 +454,101 @@ private fun ManageFilesScreen(state: EditorState) = FlorisScreen {
                 Managing archive files is currently not supported.
                 """.trimIndent().replace('\n', ' '),
         )
+    }
+}
+
+private enum class CreateFrom {
+    EMPTY,
+    EXISTING;
+}
+
+@Composable
+private fun <T : ExtensionComponent> CreateComponentScreen(state: EditorState, type: KClass<T>) = FlorisScreen {
+    title = stringRes(when (type) {
+        ThemeExtensionComponent::class -> R.string.ext__editor__create_component__title_theme
+        else -> R.string.ext__editor__create_component__title
+    })
+
+    val context = LocalContext.current
+    val themeManager by context.themeManager()
+
+    var createFrom by remember { mutableStateOf(CreateFrom.EMPTY) }
+    val components = remember<Map<ExtensionComponentName, ExtensionComponent>> {
+        when (type) {
+            ThemeExtensionComponent::class -> {
+                themeManager.indexedThemeConfigs.value ?: emptyMap()
+            }
+            else -> {
+                emptyMap()
+            }
+        }
+    }
+    var selectedComponentName by remember { mutableStateOf<ExtensionComponentName?>(null) }
+
+    fun handleBackPress() {
+        state.currentAction = null
+    }
+
+    fun handleCreate() {
+        //
+    }
+
+    navigationIcon {
+        FlorisIconButton(
+            onClick = { handleBackPress() },
+            icon = painterResource(R.drawable.ic_close),
+        )
+    }
+
+    bottomBar {
+        FlorisButtonBar {
+            ButtonBarSpacer()
+            ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
+                handleBackPress()
+            }
+            ButtonBarButton(
+                text = stringRes(R.string.action__create),
+                enabled = createFrom == CreateFrom.EMPTY || selectedComponentName != null,
+            ) {
+                handleCreate()
+            }
+        }
+    }
+
+    content {
+        BackHandler {
+            handleBackPress()
+        }
+
+        FlorisOutlinedBox(
+            modifier = Modifier.defaultFlorisOutlinedBox(),
+        ) {
+            RadioListItem(
+                onClick = { createFrom = CreateFrom.EMPTY },
+                selected = createFrom == CreateFrom.EMPTY,
+                text = stringRes(R.string.ext__editor__create_component__from_empty),
+            )
+            RadioListItem(
+                onClick = { createFrom = CreateFrom.EXISTING },
+                selected = createFrom == CreateFrom.EXISTING,
+                text = stringRes(R.string.ext__editor__create_component__from_existing),
+            )
+        }
+
+        if (createFrom == CreateFrom.EXISTING) {
+            FlorisOutlinedBox(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
+            ) {
+                for ((componentName, component) in components) {
+                    RadioListItem(
+                        onClick = { selectedComponentName = componentName },
+                        selected = selectedComponentName == componentName,
+                        text = component.label,
+                        secondaryText = componentName.toString(),
+                    )
+                }
+            }
+        }
     }
 }
 

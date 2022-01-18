@@ -139,7 +139,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                 this@content.Preference(
                     onClick = { context.showShortToast("TODO for 0.3.14-beta09") },
                     iconId = R.drawable.ic_add,
-                    title = stringRes(R.string.ext__editor__create_new_extension),
+                    title = stringRes(R.string.ext__editor__create_extension__title),
                 )
                 this@content.Preference(
                     onClick = { navController.navigate(

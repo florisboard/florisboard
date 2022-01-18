@@ -434,7 +434,7 @@
     <string name="ext__meta__title">Заглавие</string>
     <string name="ext__meta__version">Издание</string>
     <string name="ext__error__not_found_description">Няма разширение с идентификатор „{id}“.</string>
-    <string name="ext__editor__create_new_extension">Нова добавка</string>
+    <string name="ext__editor__create_extension__title">Нова добавка</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>

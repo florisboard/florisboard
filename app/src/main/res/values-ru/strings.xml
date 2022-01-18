@@ -459,7 +459,7 @@
     <string name="ext__meta__version">Версия</string>
     <string name="ext__error__not_found_title">Расширение не найдено</string>
     <string name="ext__error__not_found_description">Не найдено расширения с ID \"{id}\"</string>
-    <string name="ext__editor__create_new_extension">Создать новое расширение</string>
+    <string name="ext__editor__create_extension__title">Создать новое расширение</string>
     <string name="ext__export__success">Расширение успешно экспортировано!</string>
     <string name="ext__export__failure">Ошибка экспорта расширения: {error_message}</string>
     <string name="ext__import__success">Расширение успешно импортировано!</string>

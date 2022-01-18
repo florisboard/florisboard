@@ -459,7 +459,7 @@
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension introuvable</string>
     <string name="ext__error__not_found_description">Aucune extension avec l\'ID \"{id}\" n\'a pu être trouvée.</string>
-    <string name="ext__editor__create_new_extension">Créer une nouvelle extension</string>
+    <string name="ext__editor__create_extension__title">Créer une nouvelle extension</string>
     <string name="ext__export__success">Extension exportée avec succès !</string>
     <string name="ext__export__failure">Échec de l\'exportation de l\'extension : {error_message}</string>
     <string name="ext__import__success">Extension importée avec succès !</string>

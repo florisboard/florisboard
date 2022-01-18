@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -31,17 +33,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 
 @Composable
 fun ExtensionComponentNoneFoundView() {
@@ -122,18 +125,34 @@ fun ExtensionComponentView(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T : ExtensionComponent> PreferenceUiScope<*>.ExtensionComponentListView(
+fun <T : ExtensionComponent> ExtensionComponentListView(
     modifier: Modifier = Modifier,
     title: String,
     components: List<T>,
+    onCreateBtnClick: (() -> Unit)? = null,
     componentGenerator: @Composable (T) -> Unit,
 ) {
-    PreferenceGroup(
-        modifier = modifier,
-        title = title,
-        iconSpaceReserved = false,
-    ) {
+    Column(modifier = modifier) {
+        ListItem(
+            text = { Text(
+                text = title,
+                color = MaterialTheme.colors.secondary,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            ) },
+            trailing = if (onCreateBtnClick != null) {
+                @Composable {
+                    FlorisIconButton(
+                        onClick = onCreateBtnClick,
+                        icon = painterResource(R.drawable.ic_add),
+                        iconColor = MaterialTheme.colors.secondary,
+                    )
+                }
+            } else { null },
+        )
         if (components.isEmpty()) {
             ExtensionComponentNoneFoundView()
         } else {
