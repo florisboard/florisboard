@@ -22,13 +22,18 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,6 +69,8 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import java.util.*
 
 private val TextFieldVerticalPadding = 8.dp
+private val MetaDataContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
+
 private const val AnimationDuration = 300
 
 private val ActionScreenEnterTransition = fadeIn(tween(AnimationDuration))
@@ -272,64 +279,66 @@ private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
             handleBackPress()
         }
 
-        EditorSheetTextField(
-            enabled = false,
-            value = editor.id,
-            onValueChange = { },
-            label = stringRes(R.string.ext__meta__id),
-        )
-        EditorSheetTextField(
-            value = editor.version,
-            onValueChange = { workspace.update { editor.version = it } },
-            label = stringRes(R.string.ext__meta__version),
-        )
-        EditorSheetTextField(
-            value = editor.title,
-            onValueChange = { workspace.update { editor.title = it } },
-            label = stringRes(R.string.ext__meta__title),
-        )
-        EditorSheetTextField(
-            value = editor.description,
-            onValueChange = { workspace.update { editor.description = it } },
-            label = stringRes(R.string.ext__meta__description),
-        )
-        // TODO: make this list editing experience better
-        EditorSheetTextField(
-            value = editor.keywords.joinToString(","),
-            onValueChange = { v ->
-                workspace.update {
-                    editor.keywords = v.split(",").map { it.trim() }
-                }
-            },
-            label = stringRes(R.string.ext__meta__keywords),
-        )
-        EditorSheetTextField(
-            value = editor.homepage,
-            onValueChange = { workspace.update { editor.homepage = it } },
-            label = stringRes(R.string.ext__meta__homepage),
-        )
-        EditorSheetTextField(
-            value = editor.issueTracker,
-            onValueChange = { workspace.update { editor.issueTracker = it } },
-            label = stringRes(R.string.ext__meta__issue_tracker),
-        )
-        // TODO: make this list editing experience better
-        EditorSheetTextField(
-            value = editor.maintainers.joinToString(","),
-            onValueChange = { v ->
-                workspace.update {
-                    editor.maintainers = v
-                        .split(",")
-                        .map { ExtensionMaintainer.fromOrTakeRaw(it.trim()) }
-                }
-            },
-            label = stringRes(R.string.ext__meta__maintainers),
-        )
-        EditorSheetTextField(
-            value = editor.license,
-            onValueChange = { workspace.update { editor.license = it } },
-            label = stringRes(R.string.ext__meta__license),
-        )
+        Column(modifier = Modifier.padding(MetaDataContentPadding)) {
+            EditorSheetTextField(
+                enabled = false,
+                value = editor.id,
+                onValueChange = { },
+                label = stringRes(R.string.ext__meta__id),
+            )
+            EditorSheetTextField(
+                value = editor.version,
+                onValueChange = { workspace.update { editor.version = it } },
+                label = stringRes(R.string.ext__meta__version),
+            )
+            EditorSheetTextField(
+                value = editor.title,
+                onValueChange = { workspace.update { editor.title = it } },
+                label = stringRes(R.string.ext__meta__title),
+            )
+            EditorSheetTextField(
+                value = editor.description,
+                onValueChange = { workspace.update { editor.description = it } },
+                label = stringRes(R.string.ext__meta__description),
+            )
+            // TODO: make this list editing experience better
+            EditorSheetTextField(
+                value = editor.keywords.joinToString(","),
+                onValueChange = { v ->
+                    workspace.update {
+                        editor.keywords = v.split(",").map { it.trim() }
+                    }
+                },
+                label = stringRes(R.string.ext__meta__keywords),
+            )
+            EditorSheetTextField(
+                value = editor.homepage,
+                onValueChange = { workspace.update { editor.homepage = it } },
+                label = stringRes(R.string.ext__meta__homepage),
+            )
+            EditorSheetTextField(
+                value = editor.issueTracker,
+                onValueChange = { workspace.update { editor.issueTracker = it } },
+                label = stringRes(R.string.ext__meta__issue_tracker),
+            )
+            // TODO: make this list editing experience better
+            EditorSheetTextField(
+                value = editor.maintainers.joinToString(","),
+                onValueChange = { v ->
+                    workspace.update {
+                        editor.maintainers = v
+                            .split(",")
+                            .map { ExtensionMaintainer.fromOrTakeRaw(it.trim()) }
+                    }
+                },
+                label = stringRes(R.string.ext__meta__maintainers),
+            )
+            EditorSheetTextField(
+                value = editor.license,
+                onValueChange = { workspace.update { editor.license = it } },
+                label = stringRes(R.string.ext__meta__license),
+            )
+        }
     }
 }
 
@@ -342,16 +351,25 @@ private fun EditorSheetTextField(
     label: String,
     isError: Boolean = false,
 ) {
-    OutlinedTextField(
-        modifier = modifier
-            .padding(vertical = TextFieldVerticalPadding)
-            .fillMaxWidth(),
-        enabled = enabled,
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(text = label) },
-        isError = isError,
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-    )
+    val borderColor = MaterialTheme.colors.onSurface.copy(alpha = ButtonDefaults.OutlinedBorderOpacity)
+    Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
+        Text(
+            modifier = Modifier.padding(bottom = TextFieldVerticalPadding),
+            text = label,
+            style = MaterialTheme.typography.subtitle2,
+        )
+        OutlinedTextField(
+            modifier = modifier.fillMaxWidth(),
+            enabled = enabled,
+            value = value,
+            onValueChange = onValueChange,
+            isError = isError,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = borderColor,
+                disabledBorderColor = borderColor,
+            )
+        )
+    }
 }
