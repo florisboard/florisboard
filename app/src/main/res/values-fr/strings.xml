@@ -480,8 +480,6 @@
     <string name="action__add">Ajouter</string>
     <string name="action__apply">Appliquer</string>
     <string name="action__cancel">Annuler</string>
-    <string name="action__cancel_confirm_title">Confirmer l\'annulation</string>
-    <string name="action__cancel_confirm_message">Voulez-vous vraiment supprimer les modifications non enregistrées ? Cette action ne peut pas être annulée une fois exécutée.</string>
     <string name="action__default">Par défaut</string>
     <string name="action__delete">Supprimer</string>
     <string name="action__delete_confirm_title">Confirmer la suppression</string>

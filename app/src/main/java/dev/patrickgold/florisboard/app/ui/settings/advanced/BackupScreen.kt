@@ -238,7 +238,7 @@ internal fun BackupFilesSelector(
     title: String,
 ) {
     FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
+        modifier = modifier.defaultFlorisOutlinedBox(),
         title = title,
     ) {
         CheckboxListItem(

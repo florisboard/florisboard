@@ -470,8 +470,6 @@
     <string name="action__add">Hinzufügen</string>
     <string name="action__apply">Übernehmen</string>
     <string name="action__cancel">Abbrechen</string>
-    <string name="action__cancel_confirm_title">Abbruch bestätigen</string>
-    <string name="action__cancel_confirm_message">Möchtest du wirklich alle ungespeicherten Änderungen verwerfen? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
     <string name="action__default">Standard</string>
     <string name="action__delete">Entfernen</string>
     <string name="action__delete_confirm_title">Löschvorgang bestätigen</string>

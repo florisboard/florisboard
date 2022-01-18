@@ -480,8 +480,6 @@
     <string name="action__add">Adicionar</string>
     <string name="action__apply">Aplicar</string>
     <string name="action__cancel">Cancelar</string>
-    <string name="action__cancel_confirm_title">Confirmar cancelamento</string>
-    <string name="action__cancel_confirm_message">Tem certeza que quer descartar alguma mudança não salva? Esta ação não pode ser desfeita uma vez executada.</string>
     <string name="action__default">Padrão</string>
     <string name="action__delete">Deletar</string>
     <string name="action__delete_confirm_title">Confirmar exclusão</string>

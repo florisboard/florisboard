@@ -443,8 +443,6 @@
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>
     <string name="action__cancel">Отказ</string>
-    <string name="action__cancel_confirm_title">Потвърждаване на отказ</string>
-    <string name="action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
     <string name="action__default">По подразбиране</string>
     <string name="action__delete">Премахване</string>
     <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>

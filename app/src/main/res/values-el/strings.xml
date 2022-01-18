@@ -465,8 +465,6 @@
     <string name="action__add">Προσθήκη</string>
     <string name="action__apply">Εφαρμογή</string>
     <string name="action__cancel">Ακύρωση</string>
-    <string name="action__cancel_confirm_title">Επιβεβαίωση ακύρωσης</string>
-    <string name="action__cancel_confirm_message">Είστε βέβαιοι ότι θέλετε να απορρίψετε τυχόν μη αποθηκευμένες αλλαγές; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί εφόσον εκτελεστεί.</string>
     <string name="action__default">Προεπιλογή</string>
     <string name="action__delete">Διαγραφή</string>
     <string name="action__delete_confirm_title">Επιβεβαίωση διαγραφής</string>

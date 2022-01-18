@@ -480,8 +480,6 @@
     <string name="action__add">Добавить</string>
     <string name="action__apply">Применить</string>
     <string name="action__cancel">Отмена</string>
-    <string name="action__cancel_confirm_title">Подтвердить отмену</string>
-    <string name="action__cancel_confirm_message">Вы уверены, что хотите отменить все несохраненные изменения? Это действие нельзя отменить после его выполнения.</string>
     <string name="action__default">По умолчанию</string>
     <string name="action__delete">Удалить</string>
     <string name="action__delete_confirm_title">Подтвердить удаление</string>

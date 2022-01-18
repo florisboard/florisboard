@@ -52,7 +52,7 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 @Composable
 fun HomeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__home__title)
-    backArrowVisible = false
+    navigationIconVisible = false
     previewFieldVisible = true
 
     val navController = LocalNavController.current

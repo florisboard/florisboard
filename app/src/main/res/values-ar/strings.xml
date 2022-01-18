@@ -480,8 +480,6 @@
     <string name="action__add">إضافة</string>
     <string name="action__apply">تطبيق</string>
     <string name="action__cancel">إلغاء</string>
-    <string name="action__cancel_confirm_title">تأكيد الإلغاء</string>
-    <string name="action__cancel_confirm_message">هل أنت متأكد أنك تريد تجاهل أي تغييرات غير محفوظة؟ لا يمكن التراجع عن هذا الإجراء بمجرد تنفيذه.</string>
     <string name="action__default">الإفتراضي</string>
     <string name="action__delete">حذف</string>
     <string name="action__delete_confirm_title">تأكيد الحذف</string>

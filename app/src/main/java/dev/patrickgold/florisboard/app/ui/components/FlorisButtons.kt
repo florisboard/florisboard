@@ -152,6 +152,7 @@ fun FlorisIconButton(
             LocalContentColor provides contentColor,
         ) {
             Icon(
+                modifier = iconModifier,
                 painter = icon,
                 contentDescription = null,
             )

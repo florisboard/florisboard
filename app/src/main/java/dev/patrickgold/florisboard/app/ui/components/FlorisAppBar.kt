@@ -17,26 +17,21 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
 
 @Composable
 fun FlorisAppBar(
     title: String,
-    backArrowVisible: Boolean,
+    navigationIcon: FlorisScreenNavigationIcon?,
     actions: @Composable RowScope.() -> Unit = { },
 ) {
     TopAppBar(
-        navigationIcon = backNavBtn(backArrowVisible),
+        navigationIcon = navigationIcon,
         title = {
             Text(
                 text = title,
@@ -48,20 +43,4 @@ fun FlorisAppBar(
         backgroundColor = Color.Transparent,
         elevation = 0.dp,
     )
-}
-
-@Composable
-private fun backNavBtn(backArrowVisible: Boolean): @Composable (() -> Unit)? {
-    if (!backArrowVisible) return null
-    val navController = LocalNavController.current
-    return {
-        IconButton(
-            onClick = { navController.popBackStack() },
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_arrow_back),
-                contentDescription = "Back",
-            )
-        }
-    }
 }

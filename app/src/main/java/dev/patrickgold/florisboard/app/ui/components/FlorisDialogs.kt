@@ -31,6 +31,7 @@ fun FlorisConfirmDeleteDialog(
     what: String,
 ) {
     JetPrefAlertDialog(
+        modifier = modifier,
         title = stringRes(R.string.action__delete_confirm_title),
         confirmLabel = stringRes(R.string.action__delete),
         onConfirm = onConfirm,
@@ -38,5 +39,27 @@ fun FlorisConfirmDeleteDialog(
         onDismiss = onDismiss,
     ) {
         Text(text = stringRes(R.string.action__delete_confirm_message, "name" to what))
+    }
+}
+
+@Composable
+fun FlorisUnsavedChangesDialog(
+    modifier: Modifier = Modifier,
+    onSave: () -> Unit,
+    onDiscard: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    JetPrefAlertDialog(
+        modifier = modifier,
+        title = stringRes(R.string.action__discard_confirm_title),
+        confirmLabel = stringRes(R.string.action__save),
+        onConfirm = onSave,
+        dismissLabel = stringRes(R.string.action__discard),
+        onDismiss = onDiscard,
+        onOutsideDismissal = onDismiss,
+        neutralLabel = stringRes(R.string.action__cancel),
+        onNeutral = onDismiss,
+    ) {
+        Text(text = stringRes(R.string.action__discard_confirm_message))
     }
 }

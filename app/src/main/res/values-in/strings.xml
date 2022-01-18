@@ -481,8 +481,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="action__add">Tambahkan</string>
     <string name="action__apply">Terapkan</string>
     <string name="action__cancel">Batal</string>
-    <string name="action__cancel_confirm_title">Konfirmasi pembatalan</string>
-    <string name="action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Hapus</string>
     <string name="action__delete_confirm_title">Konfirmasi penghapusan</string>

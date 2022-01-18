@@ -480,8 +480,6 @@
     <string name="action__add">Dodaj</string>
     <string name="action__apply">Zastosuj</string>
     <string name="action__cancel">Anuluj</string>
-    <string name="action__cancel_confirm_title">Potwierdź Anulowanie</string>
-    <string name="action__cancel_confirm_message">Czy na pewno chcesz odrzucić wszystkie niezapisane zmiany? Tej akcji nie można cofnąć.</string>
     <string name="action__default">Domyślne</string>
     <string name="action__delete">Usuń</string>
     <string name="action__delete_confirm_title">Potwierdź usunięcie</string>
