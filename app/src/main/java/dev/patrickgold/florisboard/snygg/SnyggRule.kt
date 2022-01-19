@@ -29,21 +29,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.Comparator
 
-private const val ANNOTATION_MARKER = '@'
-
-private const val ATTRIBUTE_OPEN = '['
-private const val ATTRIBUTE_CLOSE = ']'
-private const val ATTRIBUTE_ASSIGN = '='
-private const val ATTRIBUTE_OR = '|'
-private const val CODES_KEY = "code"
-private const val GROUPS_KEY = "group"
-private const val MODES_KEY = "mode"
-
-private const val SELECTOR_COLON = ':'
-private const val PRESSED_SELECTOR = "pressed"
-private const val FOCUS_SELECTOR = "focus"
-private const val DISABLED_SELECTOR = "disabled"
-
 @Serializable(with = SnyggRuleSerializer::class)
 data class SnyggRule(
     val isAnnotation: Boolean = false,
@@ -55,7 +40,23 @@ data class SnyggRule(
     val focusSelector: Boolean = false,
     val disabledSelector: Boolean = false,
 ) : Comparable<SnyggRule> {
+
     companion object {
+        const val ANNOTATION_MARKER = '@'
+
+        const val ATTRIBUTE_OPEN = '['
+        const val ATTRIBUTE_CLOSE = ']'
+        const val ATTRIBUTE_ASSIGN = '='
+        const val ATTRIBUTE_OR = '|'
+        const val CODES_KEY = "code"
+        const val GROUPS_KEY = "group"
+        const val MODES_KEY = "mode"
+
+        const val SELECTOR_COLON = ':'
+        const val PRESSED_SELECTOR = "pressed"
+        const val FOCUS_SELECTOR = "focus"
+        const val DISABLED_SELECTOR = "disabled"
+
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
             """^(@?)[a-zA-Z0-9-]+(\[(code|group|mode)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()

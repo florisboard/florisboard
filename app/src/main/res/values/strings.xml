@@ -113,6 +113,13 @@
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
+    <string name="settings__theme_editor__" comment="Label of name input">Name</string>
+
+    <string name="snygg__rule_element__keyboard">Keyboard window</string>
+    <string name="snygg__rule_element__key">Key</string>
+    <string name="snygg__rule_element__key_hint">Key hint</string>
+    <string name="snygg__rule_element__key_popup">Key popup</string>
+
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Add group</string>

@@ -25,5 +25,7 @@ enum class SnyggLevel {
     /** A property is intended to be edited by all users **/
     BASIC,
     /** A property is intended to be edited by advanced users **/
-    ADVANCED;
+    ADVANCED,
+    /** A property is intended to be edited by expert users **/
+    EXPERT;
 }

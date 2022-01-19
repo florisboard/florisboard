@@ -37,7 +37,7 @@ interface ThemeExtensionComponent : ExtensionComponent {
     val isMaterialYouAware: Boolean
     val stylesheetPath: String?
 
-    fun stylesheetPath(): String = stylesheetPath ?: "stylesheets/$id.json"
+    fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: "stylesheets/$id.json"
 }
 
 @Serializable
