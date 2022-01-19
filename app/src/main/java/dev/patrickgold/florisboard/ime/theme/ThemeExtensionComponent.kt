@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -66,6 +67,9 @@ class ThemeExtensionComponentEditor(
     override var isMaterialYouAware: Boolean = false,
     override var stylesheetPath: String = "",
 ) : ThemeExtensionComponent {
+
+    var stylesheetPathOnLoad: String? = null
+    var stylesheetEditor: SnyggStylesheetEditor? = null
 
     fun build(): ThemeExtensionComponentImpl {
         val component = ThemeExtensionComponentImpl(

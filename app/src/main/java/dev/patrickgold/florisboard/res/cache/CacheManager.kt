@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
+import dev.patrickgold.florisboard.app.ui.ext.EditorAction
 import dev.patrickgold.florisboard.app.ui.settings.advanced.Backup
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.query
@@ -181,6 +182,8 @@ class CacheManager(context: Context) {
     inner class ExtEditorWorkspace<T : ExtensionEditor>(uuid: String) : Workspace(uuid) {
         override val dir: FsDir = themeExtEditor.dir.subDir(uuid)
 
+        var currentAction by mutableStateOf<EditorAction?>(null)
+        var ext: Extension? = null
         var editor by mutableStateOf<T?>(null, neverEqualPolicy())
         var isModified by mutableStateOf(false)
 

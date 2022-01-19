@@ -57,12 +57,14 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.settings.advanced.RadioListItem
+import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
@@ -96,10 +98,6 @@ sealed class EditorAction {
     data class ManageComponent(val editor: ExtensionComponent) : EditorAction()
 }
 
-class EditorState(val ext: Extension, val workspace: CacheManager.ExtEditorWorkspace<*>) {
-    var currentAction by mutableStateOf<EditorAction?>(null)
-}
-
 @Composable
 fun ExtensionEditScreen(id: String) {
     val context = LocalContext.current
@@ -116,6 +114,7 @@ fun ExtensionEditScreen(id: String) {
         return workspace ?: container.new(uuid).also { newWorkspace ->
             val sourceRef = ext.sourceRef
             checkNotNull(sourceRef) { "Extension source ref must not be null" }
+            newWorkspace.ext = ext
             newWorkspace.editor = ext.edit() as? T
             ZipUtils.unzip(context, sourceRef, newWorkspace.dir)
         }
@@ -136,7 +135,7 @@ fun ExtensionEditScreen(id: String) {
         }
         cacheWorkspace.onSuccess { workspace ->
             if (workspace?.editor != null) {
-                ExtensionEditScreenSheetSwitcher(ext, workspace)
+                ExtensionEditScreenSheetSwitcher(workspace)
             } else {
                 ExtensionNotFoundScreen(id = id)
             }
@@ -149,28 +148,34 @@ fun ExtensionEditScreen(id: String) {
 }
 
 @Composable
-private fun ExtensionEditScreenSheetSwitcher(ext: Extension, workspace: CacheManager.ExtEditorWorkspace<*>) {
-    val state = remember(ext, workspace) { EditorState(ext, workspace) }
-
+private fun ExtensionEditScreenSheetSwitcher(workspace: CacheManager.ExtEditorWorkspace<*>) {
     Box(modifier = Modifier.fillMaxSize()) {
-        EditScreen(state)
+        EditScreen(workspace)
         AnimatedVisibility(
-            visible = state.currentAction != null,
+            visible = workspace.currentAction != null,
             enter = ActionScreenEnterTransition,
             exit = ActionScreenExitTransition,
         ) {
-            when (val action = state.currentAction) {
+            when (val action = workspace.currentAction) {
                 is EditorAction.ManageMetaData -> {
-                    ManageMetaDataScreen(state)
+                    ManageMetaDataScreen(workspace)
                 }
                 is EditorAction.ManageDependencies -> {
-                    ManageDependenciesScreen(state)
+                    ManageDependenciesScreen(workspace)
                 }
                 is EditorAction.ManageFiles -> {
-                    ManageFilesScreen(state)
+                    ManageFilesScreen(workspace)
                 }
                 is EditorAction.CreateComponent<*> -> {
-                    CreateComponentScreen(state, action.type)
+                    CreateComponentScreen(workspace, action.type)
+                }
+                is EditorAction.ManageComponent -> when (action.editor) {
+                    is ThemeExtensionComponentEditor -> {
+                        ThemeEditorScreen(workspace, action.editor)
+                    }
+                    else -> {
+                        // Render nothing
+                    }
                 }
                 else -> {
                     // Render nothing
@@ -183,8 +188,8 @@ private fun ExtensionEditScreenSheetSwitcher(ext: Extension, workspace: CacheMan
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun EditScreen(state: EditorState) = FlorisScreen {
-    title = stringRes(when (state.ext) {
+private fun EditScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
+    title = stringRes(when (workspace.ext) {
         is KeyboardExtension -> R.string.ext__editor__title_keyboard
         is SpellingExtension -> R.string.ext__editor__title_spelling
         is ThemeExtension -> R.string.ext__editor__title_theme
@@ -195,8 +200,7 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val workspace = state.workspace
-    val extEditor = state.workspace.editor ?: return@FlorisScreen
+    val extEditor = workspace.editor ?: return@FlorisScreen
     var showUnsavedChangesDialog by remember { mutableStateOf(false) }
 
     fun handleBackPress() {
@@ -239,17 +243,17 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
             modifier = Modifier.defaultFlorisOutlinedBox(),
         ) {
             this@content.Preference(
-                onClick = { state.currentAction = EditorAction.ManageMetaData },
+                onClick = { workspace.currentAction = EditorAction.ManageMetaData },
                 iconId = R.drawable.ic_code,
                 title = stringRes(R.string.ext__editor__metadata__title),
             )
             this@content.Preference(
-                onClick = { state.currentAction = EditorAction.ManageDependencies },
+                onClick = { workspace.currentAction = EditorAction.ManageDependencies },
                 iconId = R.drawable.ic_library_books,
                 title = stringRes(R.string.ext__editor__dependencies__title),
             )
             this@content.Preference(
-                onClick = { state.currentAction = EditorAction.ManageFiles },
+                onClick = { workspace.currentAction = EditorAction.ManageFiles },
                 iconId = R.drawable.ic_file_blank,
                 title = stringRes(R.string.ext__editor__files__title),
             )
@@ -261,7 +265,7 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
                     title = stringRes(R.string.ext__meta__components_theme),
                     components = extEditor.themes,
                     onCreateBtnClick = {
-                        state.currentAction = EditorAction.CreateComponent(ThemeExtensionComponent::class)
+                        workspace.currentAction = EditorAction.CreateComponent(ThemeExtensionComponent::class)
                     },
                 ) { component ->
                     ExtensionComponentView(
@@ -269,7 +273,7 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
                         meta = extEditor.meta,
                         component = component,
                         onDeleteBtnClick = { workspace.update { extEditor.themes.remove(component) } },
-                        onEditBtnClick = { state.currentAction = EditorAction.ManageComponent(component) },
+                        onEditBtnClick = { workspace.currentAction = EditorAction.ManageComponent(component) },
                     )
                 }
             }
@@ -296,14 +300,13 @@ private fun EditScreen(state: EditorState) = FlorisScreen {
 }
 
 @Composable
-private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
+private fun ManageMetaDataScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
     title = stringRes(R.string.ext__editor__metadata__title)
 
-    val workspace = state.workspace
-    val editor = state.workspace.editor?.meta ?: return@FlorisScreen
+    val editor = workspace.editor?.meta ?: return@FlorisScreen
 
     fun handleBackPress() {
-        state.currentAction = null
+        workspace.currentAction = null
     }
 
     navigationIcon {
@@ -387,14 +390,13 @@ private fun ManageMetaDataScreen(state: EditorState) = FlorisScreen {
 }
 
 @Composable
-private fun ManageDependenciesScreen(state: EditorState) = FlorisScreen {
+private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
     title = stringRes(R.string.ext__editor__dependencies__title)
 
-    val workspace = state.workspace
-    val dependencyList = state.workspace.editor?.dependencies ?: return@FlorisScreen
+    val dependencyList = workspace.editor?.dependencies ?: return@FlorisScreen
 
     fun handleBackPress() {
-        state.currentAction = null
+        workspace.currentAction = null
     }
 
     navigationIcon {
@@ -427,13 +429,11 @@ private fun ManageDependenciesScreen(state: EditorState) = FlorisScreen {
 }
 
 @Composable
-private fun ManageFilesScreen(state: EditorState) = FlorisScreen {
+private fun ManageFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
     title = stringRes(R.string.ext__editor__files__title)
 
-    val workspace = state.workspace
-
     fun handleBackPress() {
-        state.currentAction = null
+        workspace.currentAction = null
     }
 
     navigationIcon {
@@ -463,7 +463,10 @@ private enum class CreateFrom {
 }
 
 @Composable
-private fun <T : ExtensionComponent> CreateComponentScreen(state: EditorState, type: KClass<T>) = FlorisScreen {
+private fun <T : ExtensionComponent> CreateComponentScreen(
+    workspace: CacheManager.ExtEditorWorkspace<*>,
+    type: KClass<T>,
+) = FlorisScreen {
     title = stringRes(when (type) {
         ThemeExtensionComponent::class -> R.string.ext__editor__create_component__title_theme
         else -> R.string.ext__editor__create_component__title
@@ -486,7 +489,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(state: EditorState, t
     var selectedComponentName by remember { mutableStateOf<ExtensionComponentName?>(null) }
 
     fun handleBackPress() {
-        state.currentAction = null
+        workspace.currentAction = null
     }
 
     fun handleCreate() {
