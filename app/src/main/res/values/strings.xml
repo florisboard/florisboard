@@ -113,7 +113,7 @@
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
-    <string name="settings__theme_editor__" comment="Label of name input">Name</string>
+    <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
 
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
