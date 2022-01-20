@@ -38,12 +38,12 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.components.FlorisSimpleCard
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.florisboard.snygg.SnyggRuleEditor
@@ -117,13 +117,19 @@ fun ThemeEditorScreen(
                     onEditRuleBtnClick = { /*TODO*/ },
                     onAddPropertyBtnClick = { },
                 )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    for ((propertyName, propertyValue) in propertySet.properties) {
+                        Text(text = translatePropertyName(propertyName, snyggLevel))
+                        Text(text = propertyValue.toString())
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-private fun SnyggRuleEditor.getElementName(level: SnyggLevel): String {
+private fun SnyggRuleEditor.translateElementName(level: SnyggLevel): String {
     return when(level) {
         SnyggLevel.EXPERT -> null
         else -> when (this.element) {
@@ -131,6 +137,22 @@ private fun SnyggRuleEditor.getElementName(level: SnyggLevel): String {
             FlorisImeUi.Key -> R.string.snygg__rule_element__key
             FlorisImeUi.KeyHint -> R.string.snygg__rule_element__key_hint
             FlorisImeUi.KeyPopup -> R.string.snygg__rule_element__key_popup
+            FlorisImeUi.ClipboardHeader -> R.string.snygg__rule_element__clipboard_header
+            FlorisImeUi.ClipboardItem -> R.string.snygg__rule_element__clipboard_item
+            FlorisImeUi.ClipboardItemPopup -> R.string.snygg__rule_element__clipboard_item_popup
+            FlorisImeUi.OneHandedPanel -> R.string.snygg__rule_element__one_handed_panel
+            FlorisImeUi.SmartbarPrimaryRow -> R.string.snygg__rule_element__smartbar_primary_row
+            FlorisImeUi.SmartbarPrimaryActionRowToggle -> R.string.snygg__rule_element__smartbar_primary_action_row_toggle
+            FlorisImeUi.SmartbarPrimarySecondaryRowToggle -> R.string.snygg__rule_element__smartbar_primary_secondary_row_toggle
+            FlorisImeUi.SmartbarSecondaryRow -> R.string.snygg__rule_element__smartbar_secondary_row
+            FlorisImeUi.SmartbarActionRow -> R.string.snygg__rule_element__smartbar_action_row
+            FlorisImeUi.SmartbarActionButton -> R.string.snygg__rule_element__smartbar_action_button
+            FlorisImeUi.SmartbarCandidateRow -> R.string.snygg__rule_element__smartbar_candidate_row
+            FlorisImeUi.SmartbarCandidateWord -> R.string.snygg__rule_element__smartbar_candidate_word
+            FlorisImeUi.SmartbarCandidateClip -> R.string.snygg__rule_element__smartbar_candidate_clip
+            FlorisImeUi.SmartbarCandidateSpacer -> R.string.snygg__rule_element__smartbar_candidate_spacer
+            FlorisImeUi.SmartbarKey -> R.string.snygg__rule_element__smartbar_key
+            FlorisImeUi.SystemNavBar -> R.string.snygg__rule_element__system_nav_bar
             else -> null
         }
     }.let { resId ->
@@ -139,12 +161,44 @@ private fun SnyggRuleEditor.getElementName(level: SnyggLevel): String {
         } else {
             remember {
                 buildString {
-                    if (this@getElementName.isAnnotation) {
+                    if (this@translateElementName.isAnnotation) {
                         append(SnyggRule.ANNOTATION_MARKER)
                     }
-                    append(this@getElementName.element)
+                    append(this@translateElementName.element)
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun translatePropertyName(propertyName: String, level: SnyggLevel): String {
+    return when(level) {
+        SnyggLevel.EXPERT -> null
+        else -> when (propertyName) {
+            Snygg.Width -> R.string.snygg__property_name__width
+            Snygg.Height -> R.string.snygg__property_name__height
+            Snygg.Background -> R.string.snygg__property_name__background
+            Snygg.Foreground -> R.string.snygg__property_name__foreground
+            Snygg.Border -> R.string.snygg__property_name__border
+            Snygg.BorderTop -> R.string.snygg__property_name__border_top
+            Snygg.BorderBottom -> R.string.snygg__property_name__border_bottom
+            Snygg.BorderStart -> R.string.snygg__property_name__border_start
+            Snygg.BorderEnd -> R.string.snygg__property_name__border_end
+            Snygg.FontFamily -> R.string.snygg__property_name__font_family
+            Snygg.FontSize -> R.string.snygg__property_name__font_size
+            Snygg.FontStyle -> R.string.snygg__property_name__font_style
+            Snygg.FontVariant -> R.string.snygg__property_name__font_variant
+            Snygg.FontWeight -> R.string.snygg__property_name__font_weight
+            Snygg.Shadow -> R.string.snygg__property_name__shadow
+            Snygg.Shape -> R.string.snygg__property_name__shape
+            else -> null
+        }
+    }.let { resId ->
+        if (resId != null) {
+            stringRes(resId)
+        } else {
+            propertyName
         }
     }
 }
@@ -159,7 +213,7 @@ private fun SnyggRuleRow(
     Row(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = rule.getElementName(level),
+                text = rule.translateElementName(level),
                 style = MaterialTheme.typography.body2,
                 fontFamily = FontFamily.Monospace,
             )
