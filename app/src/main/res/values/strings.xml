@@ -151,6 +151,17 @@
     <string name="snygg__property_name__font_weight">Font weight</string>
     <string name="snygg__property_name__shadow">Shadow</string>
     <string name="snygg__property_name__shape">Shape</string>
+    <string name="snygg__property_name__var_primary">Primary color</string>
+    <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>
+    <string name="snygg__property_name__var_secondary">Secondary color</string>
+    <string name="snygg__property_name__var_secondary_variant">Secondary color (variant)</string>
+    <string name="snygg__property_name__var_background">Common background</string>
+    <string name="snygg__property_name__var_surface">Common surface</string>
+    <string name="snygg__property_name__var_surface_variant">Common surface (variant)</string>
+    <string name="snygg__property_name__var_on_primary">Foreground of primary</string>
+    <string name="snygg__property_name__var_on_secondary">Foreground of secondary</string>
+    <string name="snygg__property_name__var_on_background">Foreground of background</string>
+    <string name="snygg__property_name__var_on_surface">Foreground of surface</string>
 
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>

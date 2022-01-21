@@ -28,8 +28,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -150,6 +148,7 @@ fun ThemeEditorScreen(
             } ?: emptyMap()
         }
         for ((rule, propertySet) in stylesheetEditor.rules) key(rule) {
+            val isVariablesRule = rule.isAnnotation && rule.element == "defines"
             val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
             FlorisOutlinedBox(
                 modifier = Modifier
@@ -165,7 +164,7 @@ fun ThemeEditorScreen(
                     )
                     for ((propertyName, propertyValue) in propertySet.properties) {
                         val propertySpec = propertySetSpec?.propertySpec(propertyName)
-                        if (propertySpec != null && propertySpec.level <= snyggLevel) {
+                        if (propertySpec != null && propertySpec.level <= snyggLevel || isVariablesRule) {
                             JetPrefListItem(
                                 modifier = Modifier.rippleClickable {  },
                                 text = translatePropertyName(propertyName, snyggLevel),
@@ -443,6 +442,17 @@ private fun translatePropertyName(propertyName: String, level: SnyggLevel): Stri
             Snygg.FontWeight -> R.string.snygg__property_name__font_weight
             Snygg.Shadow -> R.string.snygg__property_name__shadow
             Snygg.Shape -> R.string.snygg__property_name__shape
+            "--primary" -> R.string.snygg__property_name__var_primary
+            "--primary-variant" -> R.string.snygg__property_name__var_primary_variant
+            "--secondary" -> R.string.snygg__property_name__var_secondary
+            "--secondary-variant" -> R.string.snygg__property_name__var_secondary_variant
+            "--background" -> R.string.snygg__property_name__var_background
+            "--surface" -> R.string.snygg__property_name__var_surface
+            "--surface-variant" -> R.string.snygg__property_name__var_surface_variant
+            "--on-primary" -> R.string.snygg__property_name__var_on_primary
+            "--on-secondary" -> R.string.snygg__property_name__var_on_secondary
+            "--on-background" -> R.string.snygg__property_name__var_on_background
+            "--on-surface" -> R.string.snygg__property_name__var_on_surface
             else -> null
         }
     }.let { resId ->
