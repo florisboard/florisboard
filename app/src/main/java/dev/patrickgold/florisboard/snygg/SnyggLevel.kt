@@ -26,6 +26,6 @@ enum class SnyggLevel : Comparable<SnyggLevel> {
     BASIC,
     /** A property is intended to be edited by advanced users **/
     ADVANCED,
-    /** A property is intended to be edited by expert users **/
-    EXPERT;
+    /** A property is intended to be edited by developers **/
+    DEVELOPER;
 }

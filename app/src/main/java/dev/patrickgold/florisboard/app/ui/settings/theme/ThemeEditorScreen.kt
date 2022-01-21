@@ -18,14 +18,24 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,10 +44,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -59,6 +71,11 @@ import dev.patrickgold.florisboard.snygg.SnyggRuleEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
+import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 @Composable
@@ -84,7 +101,7 @@ fun ThemeEditorScreen(
             }
         }.also { editor.stylesheetEditor = it }
     }
-    var snyggLevel by remember { mutableStateOf(SnyggLevel.BASIC) }
+    var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -102,8 +119,8 @@ fun ThemeEditorScreen(
             onClick = {
                 snyggLevel = when (snyggLevel) {
                     SnyggLevel.BASIC -> SnyggLevel.ADVANCED
-                    SnyggLevel.ADVANCED -> SnyggLevel.EXPERT
-                    SnyggLevel.EXPERT -> SnyggLevel.BASIC
+                    SnyggLevel.ADVANCED -> SnyggLevel.DEVELOPER
+                    SnyggLevel.DEVELOPER -> SnyggLevel.BASIC
                 }
             },
             icon = painterResource(R.drawable.ic_language),
@@ -122,6 +139,15 @@ fun ThemeEditorScreen(
                 text = stringRes(R.string.settings__theme_editor__no_rules_defined),
                 fontStyle = FontStyle.Italic,
             )
+        }
+        val definedVariables = remember(stylesheetEditor.rules) {
+            stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
+                if (rule.isAnnotation && rule.element == "defines") {
+                    propertySet.properties
+                } else {
+                    null
+                }
+            } ?: emptyMap()
         }
         for ((rule, propertySet) in stylesheetEditor.rules) key(rule) {
             val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
@@ -143,7 +169,8 @@ fun ThemeEditorScreen(
                             JetPrefListItem(
                                 modifier = Modifier.rippleClickable {  },
                                 text = translatePropertyName(propertyName, snyggLevel),
-                                secondaryText = propertyValue.toString(),
+                                secondaryText = translatePropertyValue(propertyValue, snyggLevel),
+                                trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                             )
                         }
                     }
@@ -252,10 +279,110 @@ private fun SnyggRuleRow(
     }
 }
 
+object SnyggValueIcon {
+    interface Spec {
+        val borderWith: Dp
+        val boxShape: Shape
+        val elevation: Dp
+        val iconSize: Dp
+        val iconSizeMinusBorder: Dp
+    }
+
+    object Small : Spec {
+        override val borderWith = Dp.Hairline
+        override val boxShape = RoundedCornerShape(4.dp)
+        override val elevation = 4.dp
+        override val iconSize = 16.dp
+        override val iconSizeMinusBorder = 16.dp
+    }
+
+    object Normal : Spec {
+        override val borderWith = 1.dp
+        override val boxShape = RoundedCornerShape(8.dp)
+        override val elevation = 4.dp
+        override val iconSize = 24.dp
+        override val iconSizeMinusBorder = 22.dp
+    }
+}
+
+@Composable
+private fun SnyggValueIcon(
+    value: SnyggValue,
+    definedVariables: Map<String, SnyggValue>,
+    modifier: Modifier = Modifier,
+    spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
+) {
+    when (value) {
+        is SnyggSolidColorValue -> {
+            Surface(
+                modifier = modifier.requiredSize(spec.iconSize),
+                color = MaterialTheme.colors.background,
+                elevation = spec.elevation,
+                shape = spec.boxShape,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(value.color),
+                )
+            }
+        }
+        is SnyggShapeValue -> {
+            Box(
+                modifier = modifier
+                    .requiredSize(spec.iconSizeMinusBorder)
+                    .border(spec.borderWith, MaterialTheme.colors.onBackground, value.shape)
+            )
+        }
+        is SnyggSpSizeValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                painter = painterResource(R.drawable.ic_format_size),
+                contentDescription = null,
+            )
+        }
+        is SnyggDefinedVarValue -> {
+            val realValue = definedVariables[value.key]
+            if (realValue == null) {
+                Icon(
+                    modifier = modifier.requiredSize(spec.iconSize),
+                    painter = painterResource(R.drawable.ic_link),
+                    contentDescription = null,
+                )
+            } else {
+                val smallSpec = SnyggValueIcon.Small
+                Box(modifier = modifier.requiredSize(spec.iconSize)) {
+                    SnyggValueIcon(
+                        modifier = Modifier.offset(x = 8.dp, y = 8.dp),
+                        value = realValue,
+                        definedVariables = definedVariables,
+                        spec = smallSpec,
+                    )
+                    Box(
+                        modifier = Modifier
+                            .offset(x = 1.dp)
+                            .requiredSize(smallSpec.iconSize)
+                            .padding(vertical = 2.dp)
+                            .background(MaterialTheme.colors.background, spec.boxShape),
+                    )
+                    Icon(
+                        modifier = Modifier.requiredSize(smallSpec.iconSize),
+                        painter = painterResource(R.drawable.ic_link),
+                        contentDescription = null,
+                    )
+                }
+            }
+        }
+        else -> {
+            // Render nothing
+        }
+    }
+}
+
 @Composable
 private fun SnyggRuleEditor.translateElementName(level: SnyggLevel): String {
     return when(level) {
-        SnyggLevel.EXPERT -> null
+        SnyggLevel.DEVELOPER -> null
         else -> when (this.element) {
             FlorisImeUi.Keyboard -> R.string.snygg__rule_element__keyboard
             FlorisImeUi.Key -> R.string.snygg__rule_element__key
@@ -298,7 +425,7 @@ private fun SnyggRuleEditor.translateElementName(level: SnyggLevel): String {
 @Composable
 private fun translatePropertyName(propertyName: String, level: SnyggLevel): String {
     return when(level) {
-        SnyggLevel.EXPERT -> null
+        SnyggLevel.DEVELOPER -> null
         else -> when (propertyName) {
             Snygg.Width -> R.string.snygg__property_name__width
             Snygg.Height -> R.string.snygg__property_name__height
@@ -325,4 +452,9 @@ private fun translatePropertyName(propertyName: String, level: SnyggLevel): Stri
             propertyName
         }
     }
+}
+
+@Composable
+private fun translatePropertyValue(propertyValue: SnyggValue, level: SnyggLevel): String {
+    return propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
 }
