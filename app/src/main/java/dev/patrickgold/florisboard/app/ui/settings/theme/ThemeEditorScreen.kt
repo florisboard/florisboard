@@ -25,11 +25,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -40,21 +43,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.FlorisChip
+import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
@@ -65,7 +76,6 @@ import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
-import dev.patrickgold.florisboard.snygg.SnyggRuleEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
@@ -74,7 +84,14 @@ import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+
+private val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
+private val IntListSaver = Saver<List<Int>, ArrayList<Int>>(
+    save = { ArrayList(it) },
+    restore = { it.toList() },
+)
 
 @Composable
 fun ThemeEditorScreen(
@@ -100,6 +117,7 @@ fun ThemeEditorScreen(
         }.also { editor.stylesheetEditor = it }
     }
     var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
+    var snyggRuleToEdit by remember { mutableStateOf<SnyggRule?>(null) }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -122,6 +140,19 @@ fun ThemeEditorScreen(
                 }
             },
             icon = painterResource(R.drawable.ic_language),
+        )
+    }
+
+    floatingActionButton {
+        ExtendedFloatingActionButton(
+            icon = { Icon(
+                painter = painterResource(R.drawable.ic_add),
+                contentDescription = null,
+            ) },
+            text = { Text(
+                text = stringRes(R.string.action__add),
+            ) },
+            onClick = { snyggRuleToEdit = SnyggEmptyRuleForAdding },
         )
     }
 
@@ -159,7 +190,6 @@ fun ThemeEditorScreen(
                     SnyggRuleRow(
                         rule = rule,
                         level = snyggLevel,
-                        onEditRuleBtnClick = { /*TODO*/ },
                         onAddPropertyBtnClick = { },
                     )
                     for ((propertyName, propertyValue) in propertySet.properties) {
@@ -174,36 +204,49 @@ fun ThemeEditorScreen(
                         }
                     }
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 6.dp),
-                ) {
-                    FlorisTextButton(
-                        onClick = { workspace.update { stylesheetEditor.rules.remove(rule) } },
-                        icon = painterResource(R.drawable.ic_delete),
-                        text = stringRes(R.string.action__delete),
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colors.error,
-                        ),
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    FlorisTextButton(
-                        onClick = { },
-                        icon = painterResource(R.drawable.ic_edit),
-                        text = stringRes(R.string.action__edit),
-                    )
+                if (!isVariablesRule) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 6.dp),
+                    ) {
+                        FlorisTextButton(
+                            onClick = { workspace.update { stylesheetEditor.rules.remove(rule) } },
+                            icon = painterResource(R.drawable.ic_delete),
+                            text = stringRes(R.string.action__delete),
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colors.error,
+                            ),
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        FlorisTextButton(
+                            onClick = { snyggRuleToEdit = rule },
+                            icon = painterResource(R.drawable.ic_edit),
+                            text = stringRes(R.string.action__edit),
+                        )
+                    }
                 }
             }
+        }
+
+        val ruleToEdit = snyggRuleToEdit
+        if (ruleToEdit != null) {
+            EditRuleDialog(
+                initRule = ruleToEdit,
+                level = snyggLevel,
+                onConfirmRule = { oldRule, newRule ->
+                    false
+                },
+                onDismiss = { snyggRuleToEdit = null },
+            )
         }
     }
 }
 
 @Composable
 private fun SnyggRuleRow(
-    rule: SnyggRuleEditor,
+    rule: SnyggRule,
     level: SnyggLevel,
-    onEditRuleBtnClick: () -> Unit,
     onAddPropertyBtnClick: () -> Unit,
 ) {
     @Composable
@@ -243,7 +286,7 @@ private fun SnyggRuleRow(
                 .padding(vertical = 8.dp, horizontal = 10.dp),
         ) {
             Text(
-                text = rule.translateElementName(level),
+                text = translateElementName(rule, level),
                 style = MaterialTheme.typography.body2,
                 fontFamily = FontFamily.Monospace,
                 maxLines = 1,
@@ -268,13 +311,133 @@ private fun SnyggRuleRow(
             }
         }
         FlorisTextButton(
-            onClick = { },
+            onClick = onAddPropertyBtnClick,
             icon = painterResource(R.drawable.ic_add),
             text = stringRes(R.string.action__add),
             colors = ButtonDefaults.textButtonColors(
                 contentColor = MaterialTheme.colors.secondary,
             ),
         )
+    }
+}
+
+@Composable
+private fun EditRuleDialog(
+    initRule: SnyggRule,
+    level: SnyggLevel,
+    onConfirmRule: (oldRule: SnyggRule, newRule: SnyggRule) -> Boolean,
+    onDismiss: () -> Unit,
+) {
+    val isAddRuleDialog = initRule == SnyggEmptyRuleForAdding
+    var showSelectAsError by rememberSaveable { mutableStateOf(false) }
+
+    var element by rememberSaveable { mutableStateOf(initRule.element) }
+    val possibleElementNames = remember {
+        listOf(SnyggEmptyRuleForAdding.element) + FlorisImeUiSpec.elements.keys
+    }
+    val possibleElementLabels = possibleElementNames.map { translateElementName(it, level) ?: it }
+    var elementsExpanded by remember { mutableStateOf(false) }
+    var elementsSelectedIndex by remember {
+        val index = possibleElementNames.indexOf(initRule.element).coerceIn(possibleElementNames.indices)
+        mutableStateOf(index)
+    }
+
+    val codes = rememberSaveable(saver = IntListSaver) { initRule.codes.toMutableStateList() }
+    val groups = rememberSaveable(saver = IntListSaver) { initRule.groups.toMutableStateList() }
+    val modes = rememberSaveable(saver = IntListSaver) { initRule.modes.toMutableStateList() }
+    var pressedSelector by rememberSaveable { mutableStateOf(initRule.pressedSelector) }
+    var focusSelector by rememberSaveable { mutableStateOf(initRule.focusSelector) }
+    var disabledSelector by rememberSaveable { mutableStateOf(initRule.disabledSelector) }
+
+    JetPrefAlertDialog(
+        title = stringRes(if (isAddRuleDialog) {
+            R.string.settings__theme_editor__add_rule
+        } else {
+            R.string.settings__theme_editor__edit_rule
+        }),
+        confirmLabel = stringRes(if (isAddRuleDialog) {
+            R.string.action__add
+        } else {
+            R.string.action__apply
+        }),
+        onConfirm = {
+            if (isAddRuleDialog && elementsSelectedIndex == 0) {
+                showSelectAsError = true
+            } else {
+                //
+            }
+        },
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_element)) {
+                FlorisDropdownMenu(
+                    items = possibleElementLabels,
+                    expanded = elementsExpanded,
+                    enabled = isAddRuleDialog,
+                    selectedIndex = elementsSelectedIndex,
+                    isError = showSelectAsError && elementsSelectedIndex == 0,
+                    onSelectItem = { elementsSelectedIndex = it },
+                    onExpandRequest = { elementsExpanded = true },
+                    onDismissRequest = { elementsExpanded = false },
+                )
+            }
+
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
+                Row(modifier = Modifier.florisHorizontalScroll()) {
+                    FlorisChip(
+                        onClick = { pressedSelector = !pressedSelector },
+                        modifier = Modifier.padding(end = 4.dp),
+                        text = when(level) {
+                            SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
+                            else -> stringRes(R.string.snygg__rule_selector__pressed)
+                        },
+                        color = if (pressedSelector) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
+                    FlorisChip(
+                        onClick = { focusSelector = !focusSelector },
+                        modifier = Modifier.padding( end = 4.dp),
+                        text = when(level) {
+                            SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
+                            else -> stringRes(R.string.snygg__rule_selector__focus)
+                        },
+                        color = if (focusSelector) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
+                    FlorisChip(
+                        onClick = { disabledSelector = !disabledSelector },
+                        text = when(level) {
+                            SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
+                            else -> stringRes(R.string.snygg__rule_selector__disabled)
+                        },
+                        color = if (disabledSelector) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
+                }
+            }
+
+            //DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_codes)) {
+            //    FlorisOutlinedTextField(
+            //        modifier = Modifier
+            //            .fillMaxWidth()
+            //            .heightIn(42.dp, 42.dp),
+            //        value = "value",
+            //        onValueChange = {  },
+            //        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            //    )
+            //}
+        }
+    }
+}
+
+@Composable
+private fun DialogProperty(text: String, content: @Composable () -> Unit) {
+    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+        Text(
+            modifier = Modifier.padding(bottom = 8.dp),
+            text = text,
+            style = MaterialTheme.typography.subtitle2,
+        )
+        content()
     }
 }
 
@@ -379,10 +542,22 @@ private fun SnyggValueIcon(
 }
 
 @Composable
-private fun SnyggRuleEditor.translateElementName(level: SnyggLevel): String {
+private fun translateElementName(rule: SnyggRule, level: SnyggLevel): String {
+    return translateElementName(rule.element, level) ?: remember {
+        buildString {
+            if (rule.isAnnotation) {
+                append(SnyggRule.ANNOTATION_MARKER)
+            }
+            append(rule.element)
+        }
+    }
+}
+
+@Composable
+private fun translateElementName(element: String, level: SnyggLevel): String? {
     return when(level) {
         SnyggLevel.DEVELOPER -> null
-        else -> when (this.element) {
+        else -> when (element) {
             FlorisImeUi.Keyboard -> R.string.snygg__rule_element__keyboard
             FlorisImeUi.Key -> R.string.snygg__rule_element__key
             FlorisImeUi.KeyHint -> R.string.snygg__rule_element__key_hint
@@ -405,20 +580,7 @@ private fun SnyggRuleEditor.translateElementName(level: SnyggLevel): String {
             FlorisImeUi.SystemNavBar -> R.string.snygg__rule_element__system_nav_bar
             else -> null
         }
-    }.let { resId ->
-        if (resId != null) {
-            stringRes(resId)
-        } else {
-            remember {
-                buildString {
-                    if (this@translateElementName.isAnnotation) {
-                        append(SnyggRule.ANNOTATION_MARKER)
-                    }
-                    append(this@translateElementName.element)
-                }
-            }
-        }
-    }
+    }.let { if (it != null) { stringRes(it) } else { null } }
 }
 
 @Composable

@@ -182,9 +182,7 @@ class SnyggStylesheet(
     }
 
     fun edit(): SnyggStylesheetEditor {
-        val ruleMap = rules
-            .mapKeys { (rule, _) -> rule.edit() }
-            .mapValues { (_, propertySet) -> propertySet.edit() }
+        val ruleMap = rules.mapValues { (_, propertySet) -> propertySet.edit() }
         return SnyggStylesheetEditor(ruleMap)
     }
 }
@@ -195,8 +193,8 @@ fun SnyggStylesheet(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggSty
     return builder.build()
 }
 
-class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEditor>? = null){
-    val rules = mutableMapOf<SnyggRuleEditor, SnyggPropertySetEditor>()
+class SnyggStylesheetEditor(initRules: Map<SnyggRule, SnyggPropertySetEditor>? = null){
+    val rules = mutableMapOf<SnyggRule, SnyggPropertySetEditor>()
 
     init {
         if (initRules != null) {
@@ -207,11 +205,11 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
     fun annotation(name: String, propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
-        val ruleEditor = SnyggRuleEditor(
+        val rule = SnyggRule(
             isAnnotation = true,
             element = name,
         )
-        rules[ruleEditor] = propertySetEditor
+        rules[rule] = propertySetEditor
     }
 
     fun defines(propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
@@ -229,7 +227,7 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
     ) {
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
-        val ruleEditor = SnyggRuleEditor(
+        val rule = SnyggRule(
             isAnnotation = false,
             element = this,
             codes.toMutableList(),
@@ -239,13 +237,11 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEdit
             focusSelector,
             disabledSelector,
         )
-        rules[ruleEditor] = propertySetEditor
+        rules[rule] = propertySetEditor
     }
 
     fun build(isFullyQualified: Boolean = false): SnyggStylesheet {
-        val rulesMap = rules
-            .mapKeys { (ruleEditor, _) -> ruleEditor.build() }
-            .mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
+        val rulesMap = rules.mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
         return SnyggStylesheet(rulesMap, isFullyQualified)
     }
 }

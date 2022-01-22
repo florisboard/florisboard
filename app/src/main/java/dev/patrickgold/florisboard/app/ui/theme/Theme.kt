@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.app.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -85,3 +87,7 @@ fun FlorisAppTheme(
         content = content,
     )
 }
+
+val Colors.outline: Color
+    @Composable
+    get() = this.onSurface.copy(alpha = ButtonDefaults.OutlinedBorderOpacity)

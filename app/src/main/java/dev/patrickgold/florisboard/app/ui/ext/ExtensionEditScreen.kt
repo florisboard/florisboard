@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -58,6 +57,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeEditorScreen
+import dev.patrickgold.florisboard.app.ui.theme.outline
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
@@ -565,7 +565,7 @@ private fun EditorSheetTextField(
     label: String,
     isError: Boolean = false,
 ) {
-    val borderColor = MaterialTheme.colors.onSurface.copy(alpha = ButtonDefaults.OutlinedBorderOpacity)
+    val borderColor = MaterialTheme.colors.outline
     Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
         Row(
             modifier = Modifier

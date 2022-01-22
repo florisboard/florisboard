@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ui.theme.outline
 
 
 object CardDefaults {
@@ -194,7 +195,7 @@ fun FlorisOutlinedBox(
     subtitle: String? = null,
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+    borderColor: Color = MaterialTheme.colors.outline,
     shape: Shape = BoxDefaults.OutlinedBoxShape,
     contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
@@ -244,7 +245,7 @@ fun FlorisOutlinedBox(
     subtitle: (@Composable () -> Unit)? = null,
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+    borderColor: Color = MaterialTheme.colors.outline,
     shape: Shape = BoxDefaults.OutlinedBoxShape,
     contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,

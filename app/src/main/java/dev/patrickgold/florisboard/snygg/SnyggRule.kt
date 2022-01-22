@@ -149,17 +149,6 @@ data class SnyggRule(
         appendSelector(DISABLED_SELECTOR, disabledSelector)
     }
 
-    fun edit() = SnyggRuleEditor(
-        isAnnotation,
-        element,
-        codes.toMutableList(),
-        groups.toMutableList(),
-        modes.toMutableList(),
-        pressedSelector,
-        focusSelector,
-        disabledSelector,
-    )
-
     private fun comparatorWeight(): Int {
         return (if (codes.isNotEmpty()) 0x01 else 0) +
             (if (groups.isNotEmpty()) 0x02 else 0) +
@@ -190,22 +179,6 @@ data class SnyggRule(
             append(key)
         }
     }
-}
-
-class SnyggRuleEditor(
-    var isAnnotation: Boolean = false,
-    var element: String = "",
-    val codes: MutableList<Int> = mutableListOf(),
-    val groups: MutableList<Int> = mutableListOf(),
-    val modes: MutableList<Int> = mutableListOf(),
-    var pressedSelector: Boolean = false,
-    var focusSelector: Boolean = false,
-    var disabledSelector: Boolean = false,
-) {
-    fun build() = SnyggRule(
-        isAnnotation, element, codes, groups, modes,
-        pressedSelector, focusSelector, disabledSelector,
-    )
 }
 
 @OptIn(ExperimentalSerializationApi::class)

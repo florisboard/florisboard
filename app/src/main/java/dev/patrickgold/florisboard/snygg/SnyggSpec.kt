@@ -21,7 +21,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
 
 open class SnyggSpec(init: SnyggSpecBuilder.() -> Unit) {
-    private val elements: Map<String, SnyggPropertySetSpec>
+    val elements: Map<String, SnyggPropertySetSpec>
 
     init {
         val builder = SnyggSpecBuilder()

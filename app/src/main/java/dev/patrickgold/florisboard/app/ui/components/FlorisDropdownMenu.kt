@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ui.theme.outline
 
 @Composable
 fun FlorisDropdownMenu(
@@ -45,6 +46,7 @@ fun FlorisDropdownMenu(
     expanded: Boolean,
     selectedIndex: Int,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     isError: Boolean = false,
     onSelectItem: (Int) -> Unit = { },
     onExpandRequest: () -> Unit = { },
@@ -55,18 +57,20 @@ fun FlorisDropdownMenu(
         val index = selectedIndex.coerceIn(items.indices)
         val color = if (isError) {
             MaterialTheme.colors.error
+        } else if (!enabled) {
+            MaterialTheme.colors.outline
         } else {
             MaterialTheme.colors.onBackground
         }
         OutlinedButton(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             border = if (isError) {
                 BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
             } else {
                 ButtonDefaults.outlinedBorder
             },
-            onClick = { onExpandRequest() },
+            enabled = enabled,
+            onClick = onExpandRequest,
         ) {
             Text(
                 modifier = Modifier.weight(1.0f),
@@ -79,7 +83,11 @@ fun FlorisDropdownMenu(
             Icon(
                 modifier = Modifier.rotate(indicatorRotation),
                 painter = painterResource(R.drawable.ic_keyboard_arrow_down),
-                tint = color.copy(alpha = ContentAlpha.medium),
+                tint = if (enabled) {
+                    color.copy(alpha = ContentAlpha.medium)
+                } else {
+                    color
+                },
                 contentDescription = "Dropdown indicator",
             )
         }

@@ -114,6 +114,13 @@
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
+    <string name="settings__theme_editor__add_rule">Add rule</string>
+    <string name="settings__theme_editor__edit_rule">Edit rule</string>
+    <string name="settings__theme_editor__rule_element">Target element</string>
+    <string name="settings__theme_editor__rule_codes">Codes</string>
+    <string name="settings__theme_editor__rule_groups">Groups</string>
+    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_selectors">Selectors</string>
 
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
@@ -135,6 +142,9 @@
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
     <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
     <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
+    <string name="snygg__rule_selector__pressed">Pressed</string>
+    <string name="snygg__rule_selector__focus">Focused</string>
+    <string name="snygg__rule_selector__disabled">Disabled</string>
     <string name="snygg__property_name__width">Width</string>
     <string name="snygg__property_name__height">Height</string>
     <string name="snygg__property_name__background">Background</string>

@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.app.ui.theme.outline
 
 @Composable
 fun RowScope.FlorisBulletSpacer(
@@ -39,6 +40,6 @@ fun RowScope.FlorisBulletSpacer(
             .padding(horizontal = 8.dp)
             .size(4.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f)),
+            .background(MaterialTheme.colors.outline),
     )
 }

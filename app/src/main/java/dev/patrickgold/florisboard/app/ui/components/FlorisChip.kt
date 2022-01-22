@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -43,16 +44,19 @@ fun FlorisChip(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     enabled: Boolean = true,
-    color: Color = MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.BackgroundOpacity),
+    color: Color = Color.Unspecified,
     shape: Shape = CircleShape,
     @DrawableRes leadingIcons: List<Int> = listOf(),
     @DrawableRes trailingIcons: List<Int> = listOf(),
 ) {
+    val backgroundColor = color.takeOrElse {
+        MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.BackgroundOpacity)
+    }
     Surface(
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
-        color = color,
+        color = backgroundColor,
         shape = shape,
     ) {
         Row(
