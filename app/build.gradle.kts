@@ -155,6 +155,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
     implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation("com.google.accompanist:accompanist-flowlayout:0.20.2")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta03")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta03")

@@ -25,17 +25,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -46,17 +45,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
@@ -67,6 +68,9 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
+import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
@@ -88,9 +92,9 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 private val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
-private val IntListSaver = Saver<List<Int>, ArrayList<Int>>(
+private val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
     save = { ArrayList(it) },
-    restore = { it.toList() },
+    restore = { it.toMutableStateList() },
 )
 
 @Composable
@@ -343,6 +347,7 @@ private fun EditRuleDialog(
     }
 
     val codes = rememberSaveable(saver = IntListSaver) { initRule.codes.toMutableStateList() }
+    var editCodeDialogValue by rememberSaveable { mutableStateOf<Int?>(null) }
     val groups = rememberSaveable(saver = IntListSaver) { initRule.groups.toMutableStateList() }
     val modes = rememberSaveable(saver = IntListSaver) { initRule.modes.toMutableStateList() }
     var pressedSelector by rememberSaveable { mutableStateOf(initRule.pressedSelector) }
@@ -415,28 +420,125 @@ private fun EditRuleDialog(
                 }
             }
 
-            //DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_codes)) {
-            //    FlorisOutlinedTextField(
-            //        modifier = Modifier
-            //            .fillMaxWidth()
-            //            .heightIn(42.dp, 42.dp),
-            //        value = "value",
-            //        onValueChange = {  },
-            //        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            //    )
-            //}
+            DialogProperty(
+                text = stringRes(R.string.settings__theme_editor__rule_codes),
+                iconTrailingTitle = {
+                    FlorisIconButton(
+                        onClick = { editCodeDialogValue = NATIVE_NULLPTR },
+                        icon = painterResource(R.drawable.ic_add),
+                    )
+                }
+            ) {
+                if (codes.isEmpty()) {
+                    Text(
+                        text = stringRes(R.string.settings__theme_editor__no_codes_defined),
+                        fontStyle = FontStyle.Italic,
+                    )
+                }
+                FlowRow {
+                    for (code in codes) {
+                        FlorisChip(
+                            onClick = { editCodeDialogValue = code },
+                            text = code.toString(),
+                            shape = MaterialTheme.shapes.medium
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    val initCodeValue = editCodeDialogValue
+    if (initCodeValue != null) {
+        var inputCodeString by rememberSaveable(initCodeValue) { mutableStateOf(initCodeValue.toString()) }
+        val showKeyCodesHelp by rememberSaveable(initCodeValue) { mutableStateOf(false) }
+        var errorId by rememberSaveable(initCodeValue) { mutableStateOf<Int?>(null) }
+        JetPrefAlertDialog(
+            title = stringRes(if (initCodeValue == NATIVE_NULLPTR) {
+                R.string.settings__theme_editor__add_code
+            } else {
+                R.string.settings__theme_editor__edit_code
+            }),
+            confirmLabel = stringRes(if (initCodeValue == NATIVE_NULLPTR) {
+                R.string.action__add
+            } else {
+                R.string.action__apply
+            }),
+            onConfirm = {
+                val code = inputCodeString.trim().toIntOrNull(radix = 10)
+                when {
+                    code == null || (code !in KeyCode.Spec.CHARACTERS && code !in KeyCode.Spec.INTERNAL) -> {
+                        errorId = R.string.settings__theme_editor__code_invalid
+                    }
+                    code == initCodeValue -> {
+                        editCodeDialogValue = null
+                    }
+                    codes.contains(code) -> {
+                        errorId = R.string.settings__theme_editor__code_already_exists
+                    }
+                    else -> {
+                        codes.add(code)
+                        editCodeDialogValue = null
+                    }
+                }
+            },
+            dismissLabel = stringRes(R.string.action__cancel),
+            onDismiss = {
+                editCodeDialogValue = null
+            },
+            neutralLabel = if (initCodeValue != NATIVE_NULLPTR) {
+                stringRes(R.string.action__delete)
+            } else {
+                null
+            },
+            onNeutral = {
+                codes.remove(initCodeValue)
+                editCodeDialogValue = null
+            },
+        ) {
+            Column {
+                OutlinedTextField(
+                    value = inputCodeString,
+                    onValueChange = { v ->
+                        inputCodeString = v
+                        errorId = null
+                    },
+                    isError = errorId != null,
+                )
+                val id = errorId
+                if (id != null) {
+                    Text(
+                        text = stringRes(id).curlyFormat(
+                            "c_min" to KeyCode.Spec.CHARACTERS_MIN,
+                            "c_max" to KeyCode.Spec.CHARACTERS_MAX,
+                            "i_min" to KeyCode.Spec.INTERNAL_MIN,
+                            "i_max" to KeyCode.Spec.INTERNAL_MAX,
+                        ),
+                        color = MaterialTheme.colors.error,
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun DialogProperty(text: String, content: @Composable () -> Unit) {
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
-        Text(
-            modifier = Modifier.padding(bottom = 8.dp),
-            text = text,
-            style = MaterialTheme.typography.subtitle2,
-        )
+private fun DialogProperty(
+    text: String,
+    iconTrailingTitle: @Composable () -> Unit = { },
+    content: @Composable () -> Unit,
+) {
+    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 8.dp),
+                text = text,
+                style = MaterialTheme.typography.subtitle2,
+            )
+            iconTrailingTitle()
+        }
         content()
     }
 }
