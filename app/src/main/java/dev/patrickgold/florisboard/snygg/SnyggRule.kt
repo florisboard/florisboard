@@ -22,6 +22,7 @@ import androidx.compose.runtime.saveable.Saver
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -80,7 +81,17 @@ data class SnyggRule(
                 else /* a.isAnnotation == b.isAnnotation */ -> {
                     when (val elem = a.element.compareTo(b.element)) {
                         0 -> a.comparatorWeight() - b.comparatorWeight()
-                        else -> elem
+                        else -> when {
+                            a.element == FlorisImeUi.Keyboard -> -1
+                            b.element == FlorisImeUi.Keyboard -> 1
+                            a.element == FlorisImeUi.Key -> -1
+                            b.element == FlorisImeUi.Key -> 1
+                            a.element == FlorisImeUi.KeyHint -> -1
+                            b.element == FlorisImeUi.KeyHint -> 1
+                            a.element == FlorisImeUi.KeyPopup -> -1
+                            b.element == FlorisImeUi.KeyPopup -> 1
+                            else -> elem
+                        }
                     }
                 }
             }

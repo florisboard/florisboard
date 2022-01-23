@@ -30,6 +30,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
@@ -44,6 +47,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -83,6 +87,7 @@ import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
+import dev.patrickgold.florisboard.snygg.SnyggPropertySetEditor
 import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
@@ -94,6 +99,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import kotlinx.coroutines.launch
 
 private val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
 private val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
@@ -107,7 +113,9 @@ fun ThemeEditorScreen(
     editor: ThemeExtensionComponentEditor,
 ) = FlorisScreen {
     title = stringRes(R.string.ext__editor__edit_component__title_theme)
+    scrollable = false
 
+    val scope = rememberCoroutineScope()
     val stylesheetEditor = remember {
         editor.stylesheetEditor ?: run {
             val stylesheetPath = editor.stylesheetPath()
@@ -164,7 +172,6 @@ fun ThemeEditorScreen(
         )
     }
 
-    // TODO: lazy column??
     content {
         BackHandler {
             handleBackPress()
@@ -186,58 +193,70 @@ fun ThemeEditorScreen(
                 }
             } ?: emptyMap()
         }
-        for ((rule, propertySet) in stylesheetEditor.rules) key(rule) {
-            val isVariablesRule = rule.isAnnotation && rule.element == "defines"
-            val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
-            FlorisOutlinedBox(
-                modifier = Modifier
-                    .padding(vertical = 8.dp, horizontal = 16.dp)
-                    .fillMaxWidth(),
-            ) {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    SnyggRuleRow(
-                        rule = rule,
-                        level = snyggLevel,
-                        onAddPropertyBtnClick = { },
-                    )
-                    for ((propertyName, propertyValue) in propertySet.properties) {
-                        val propertySpec = propertySetSpec?.propertySpec(propertyName)
-                        if (propertySpec != null && propertySpec.level <= snyggLevel || isVariablesRule) {
-                            JetPrefListItem(
-                                modifier = Modifier.rippleClickable {  },
-                                text = translatePropertyName(propertyName, snyggLevel),
-                                secondaryText = translatePropertyValue(propertyValue, snyggLevel),
-                                trailing = { SnyggValueIcon(propertyValue, definedVariables) },
+
+        // TODO: (priority = low)
+        //  Floris scrollbar does not like lazy lists with non-constant item heights.
+        //  Consider building a custom scrollbar tailored for this list specifically.
+        val lazyListState = rememberLazyListState()
+        LazyColumn(
+            //modifier = Modifier.florisScrollbar(lazyListState, isVertical = true),
+            state = lazyListState,
+        ) {
+            items(stylesheetEditor.rules.entries.toList()) { (rule, propertySet) -> key(rule) {
+                val isVariablesRule = rule.isAnnotation && rule.element == "defines"
+                val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
+                FlorisOutlinedBox(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        SnyggRuleRow(
+                            rule = rule,
+                            level = snyggLevel,
+                            onAddPropertyBtnClick = { },
+                        )
+                        for ((propertyName, propertyValue) in propertySet.properties) {
+                            val propertySpec = propertySetSpec?.propertySpec(propertyName)
+                            if (propertySpec != null && propertySpec.level <= snyggLevel || isVariablesRule) {
+                                JetPrefListItem(
+                                    modifier = Modifier.rippleClickable {  },
+                                    text = translatePropertyName(propertyName, snyggLevel),
+                                    secondaryText = translatePropertyValue(propertyValue, snyggLevel),
+                                    trailing = { SnyggValueIcon(propertyValue, definedVariables) },
+                                )
+                            }
+                        }
+                    }
+                    if (!isVariablesRule) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 6.dp),
+                        ) {
+                            FlorisTextButton(
+                                onClick = { workspace.update { stylesheetEditor.rules.remove(rule) } },
+                                icon = painterResource(R.drawable.ic_delete),
+                                text = stringRes(R.string.action__delete),
+                                colors = ButtonDefaults.textButtonColors(
+                                    contentColor = MaterialTheme.colors.error,
+                                ),
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            FlorisTextButton(
+                                onClick = { snyggRuleToEdit = rule },
+                                icon = painterResource(R.drawable.ic_edit),
+                                text = stringRes(R.string.action__edit),
                             )
                         }
                     }
                 }
-                if (!isVariablesRule) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 6.dp),
-                    ) {
-                        FlorisTextButton(
-                            onClick = { workspace.update { stylesheetEditor.rules.remove(rule) } },
-                            icon = painterResource(R.drawable.ic_delete),
-                            text = stringRes(R.string.action__delete),
-                            colors = ButtonDefaults.textButtonColors(
-                                contentColor = MaterialTheme.colors.error,
-                            ),
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        FlorisTextButton(
-                            onClick = { snyggRuleToEdit = rule },
-                            icon = painterResource(R.drawable.ic_edit),
-                            text = stringRes(R.string.action__edit),
-                        )
-                    }
-                }
+            } }
+
+            item {
+                Spacer(modifier = Modifier.height(72.dp))
             }
         }
-
-        Spacer(modifier = Modifier.height(72.dp))
 
         val ruleToEdit = snyggRuleToEdit
         if (ruleToEdit != null) {
@@ -256,12 +275,26 @@ fun ThemeEditorScreen(
                         }
                         else -> workspace.update {
                             val set = rules.remove(oldRule)
-                            if (set != null) {
-                                rules[newRule] = set
-                                snyggRuleToEdit = null
-                                true
-                            } else {
-                                false
+                            when {
+                                set != null -> {
+                                    rules[newRule] = set
+                                    snyggRuleToEdit = null
+                                    scope.launch {
+                                        lazyListState.animateScrollToItem(index = rules.keys.indexOf(newRule))
+                                    }
+                                    true
+                                }
+                                oldRule == SnyggEmptyRuleForAdding -> {
+                                    rules[newRule] = SnyggPropertySetEditor()
+                                    snyggRuleToEdit = null
+                                    scope.launch {
+                                        lazyListState.animateScrollToItem(index = rules.keys.indexOf(newRule))
+                                    }
+                                    true
+                                }
+                                else -> {
+                                    false
+                                }
                             }
                         }
                     }
@@ -282,8 +315,8 @@ private fun SnyggRuleRow(
     fun Selector(text: String) {
         Text(
             modifier = Modifier
-                .background(MaterialTheme.colors.primaryVariant)
-                .padding(end = 4.dp),
+                .padding(end = 8.dp)
+                .background(MaterialTheme.colors.primaryVariant),
             text = text,
             style = MaterialTheme.typography.body2,
             fontFamily = FontFamily.Monospace,
@@ -536,7 +569,7 @@ private fun EditRuleDialog(
         var inputCodeString by rememberSaveable(initCodeValue) { mutableStateOf(initCodeValue.toString()) }
         var showKeyCodesHelp by rememberSaveable(initCodeValue) { mutableStateOf(false) }
         var showError by rememberSaveable(initCodeValue) { mutableStateOf(false) }
-        var errorId by rememberSaveable(initCodeValue) { mutableStateOf<Int>(NATIVE_NULLPTR) }
+        var errorId by rememberSaveable(initCodeValue) { mutableStateOf(NATIVE_NULLPTR) }
         JetPrefAlertDialog(
             title = stringRes(if (initCodeValue == NATIVE_NULLPTR) {
                 R.string.settings__theme_editor__add_code

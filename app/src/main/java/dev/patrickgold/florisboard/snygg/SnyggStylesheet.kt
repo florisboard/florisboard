@@ -29,6 +29,7 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
+import java.util.*
 
 val SnyggStylesheetJsonConfig = Json
 
@@ -194,7 +195,7 @@ fun SnyggStylesheet(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggSty
 }
 
 class SnyggStylesheetEditor(initRules: Map<SnyggRule, SnyggPropertySetEditor>? = null){
-    val rules = mutableMapOf<SnyggRule, SnyggPropertySetEditor>()
+    val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
 
     init {
         if (initRules != null) {
