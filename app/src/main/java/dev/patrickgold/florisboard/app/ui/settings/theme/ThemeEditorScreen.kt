@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -62,6 +64,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
+import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
@@ -70,6 +73,7 @@ import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
@@ -121,7 +125,7 @@ fun ThemeEditorScreen(
         }.also { editor.stylesheetEditor = it }
     }
     var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
-    var snyggRuleToEdit by remember { mutableStateOf<SnyggRule?>(null) }
+    var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.Saver) { mutableStateOf(null) }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -154,7 +158,7 @@ fun ThemeEditorScreen(
                 contentDescription = null,
             ) },
             text = { Text(
-                text = stringRes(R.string.action__add),
+                text = stringRes(R.string.settings__theme_editor__add_rule),
             ) },
             onClick = { snyggRuleToEdit = SnyggEmptyRuleForAdding },
         )
@@ -233,13 +237,34 @@ fun ThemeEditorScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(72.dp))
+
         val ruleToEdit = snyggRuleToEdit
         if (ruleToEdit != null) {
             EditRuleDialog(
                 initRule = ruleToEdit,
                 level = snyggLevel,
                 onConfirmRule = { oldRule, newRule ->
-                    false
+                    val rules = stylesheetEditor.rules
+                    when {
+                        oldRule == newRule -> {
+                            snyggRuleToEdit = null
+                            true
+                        }
+                        rules.contains(newRule) -> {
+                            false
+                        }
+                        else -> workspace.update {
+                            val set = rules.remove(oldRule)
+                            if (set != null) {
+                                rules[newRule] = set
+                                snyggRuleToEdit = null
+                                true
+                            } else {
+                                false
+                            }
+                        }
+                    }
                 },
                 onDismiss = { snyggRuleToEdit = null },
             )
@@ -334,14 +359,14 @@ private fun EditRuleDialog(
 ) {
     val isAddRuleDialog = initRule == SnyggEmptyRuleForAdding
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
+    var showAlreadyExistsError by rememberSaveable { mutableStateOf(false) }
 
-    var element by rememberSaveable { mutableStateOf(initRule.element) }
     val possibleElementNames = remember {
         listOf(SnyggEmptyRuleForAdding.element) + FlorisImeUiSpec.elements.keys
     }
     val possibleElementLabels = possibleElementNames.map { translateElementName(it, level) ?: it }
     var elementsExpanded by remember { mutableStateOf(false) }
-    var elementsSelectedIndex by remember {
+    var elementsSelectedIndex by rememberSaveable {
         val index = possibleElementNames.indexOf(initRule.element).coerceIn(possibleElementNames.indices)
         mutableStateOf(index)
     }
@@ -349,7 +374,9 @@ private fun EditRuleDialog(
     val codes = rememberSaveable(saver = IntListSaver) { initRule.codes.toMutableStateList() }
     var editCodeDialogValue by rememberSaveable { mutableStateOf<Int?>(null) }
     val groups = rememberSaveable(saver = IntListSaver) { initRule.groups.toMutableStateList() }
-    val modes = rememberSaveable(saver = IntListSaver) { initRule.modes.toMutableStateList() }
+    var modeNormal by rememberSaveable { mutableStateOf(initRule.modes.contains(InputMode.NORMAL.value)) }
+    var modeShiftLock by rememberSaveable { mutableStateOf(initRule.modes.contains(InputMode.SHIFT_LOCK.value)) }
+    var modeCapsLock by rememberSaveable { mutableStateOf(initRule.modes.contains(InputMode.CAPS_LOCK.value)) }
     var pressedSelector by rememberSaveable { mutableStateOf(initRule.pressedSelector) }
     var focusSelector by rememberSaveable { mutableStateOf(initRule.focusSelector) }
     var disabledSelector by rememberSaveable { mutableStateOf(initRule.disabledSelector) }
@@ -369,13 +396,36 @@ private fun EditRuleDialog(
             if (isAddRuleDialog && elementsSelectedIndex == 0) {
                 showSelectAsError = true
             } else {
-                //
+                val newRule = SnyggRule(
+                    element = possibleElementNames[elementsSelectedIndex],
+                    codes = codes.toList(),
+                    groups = groups.toList(),
+                    modes = buildList {
+                        if (modeNormal) { add(InputMode.NORMAL.value) }
+                        if (modeShiftLock) { add(InputMode.SHIFT_LOCK.value) }
+                        if (modeCapsLock) { add(InputMode.CAPS_LOCK.value) }
+                    },
+                    pressedSelector = pressedSelector,
+                    focusSelector = focusSelector,
+                    disabledSelector = disabledSelector,
+                )
+                if (!onConfirmRule(initRule, newRule)) {
+                    showAlreadyExistsError = true
+                }
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
     ) {
         Column {
+            AnimatedVisibility(visible = showAlreadyExistsError) {
+                Text(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    text = stringRes(R.string.settings__theme_editor__rule_already_exists),
+                    color = MaterialTheme.colors.error,
+                )
+            }
+
             DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_element)) {
                 FlorisDropdownMenu(
                     items = possibleElementLabels,
@@ -394,7 +444,7 @@ private fun EditRuleDialog(
                     FlorisChip(
                         onClick = { pressedSelector = !pressedSelector },
                         modifier = Modifier.padding(end = 4.dp),
-                        text = when(level) {
+                        text = when (level) {
                             SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__pressed)
                         },
@@ -403,7 +453,7 @@ private fun EditRuleDialog(
                     FlorisChip(
                         onClick = { focusSelector = !focusSelector },
                         modifier = Modifier.padding( end = 4.dp),
-                        text = when(level) {
+                        text = when (level) {
                             SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__focus)
                         },
@@ -411,7 +461,7 @@ private fun EditRuleDialog(
                     )
                     FlorisChip(
                         onClick = { disabledSelector = !disabledSelector },
-                        text = when(level) {
+                        text = when (level) {
                             SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__disabled)
                         },
@@ -422,15 +472,17 @@ private fun EditRuleDialog(
 
             DialogProperty(
                 text = stringRes(R.string.settings__theme_editor__rule_codes),
-                iconTrailingTitle = {
+                trailingIconTitle = {
                     FlorisIconButton(
                         onClick = { editCodeDialogValue = NATIVE_NULLPTR },
+                        modifier = Modifier.offset(x = 12.dp),
                         icon = painterResource(R.drawable.ic_add),
                     )
-                }
+                },
             ) {
                 if (codes.isEmpty()) {
                     Text(
+                        modifier = Modifier.padding(vertical = 4.dp),
                         text = stringRes(R.string.settings__theme_editor__no_codes_defined),
                         fontStyle = FontStyle.Italic,
                     )
@@ -440,9 +492,40 @@ private fun EditRuleDialog(
                         FlorisChip(
                             onClick = { editCodeDialogValue = code },
                             text = code.toString(),
-                            shape = MaterialTheme.shapes.medium
+                            shape = MaterialTheme.shapes.medium,
                         )
                     }
+                }
+            }
+
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_modes)) {
+                Row(modifier = Modifier.florisHorizontalScroll()) {
+                    FlorisChip(
+                        onClick = { modeNormal = !modeNormal },
+                        modifier = Modifier.padding(end = 4.dp),
+                        text = when (level) {
+                            SnyggLevel.DEVELOPER -> remember { "m:${InputMode.NORMAL.toString().lowercase()}" }
+                            else -> stringRes(R.string.enum__input_mode__normal)
+                        },
+                        color = if (modeNormal) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
+                    FlorisChip(
+                        onClick = { modeShiftLock = !modeShiftLock },
+                        modifier = Modifier.padding(end = 4.dp),
+                        text = when (level) {
+                            SnyggLevel.DEVELOPER -> remember { "m:${InputMode.SHIFT_LOCK.toString().lowercase()}" }
+                            else -> stringRes(R.string.enum__input_mode__shift_lock)
+                        },
+                        color = if (modeShiftLock) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
+                    FlorisChip(
+                        onClick = { modeCapsLock = !modeCapsLock },
+                        text = when (level) {
+                            SnyggLevel.DEVELOPER -> remember { "m:${InputMode.CAPS_LOCK.toString().lowercase()}" }
+                            else -> stringRes(R.string.enum__input_mode__caps_lock)
+                        },
+                        color = if (modeCapsLock) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
                 }
             }
         }
@@ -451,8 +534,9 @@ private fun EditRuleDialog(
     val initCodeValue = editCodeDialogValue
     if (initCodeValue != null) {
         var inputCodeString by rememberSaveable(initCodeValue) { mutableStateOf(initCodeValue.toString()) }
-        val showKeyCodesHelp by rememberSaveable(initCodeValue) { mutableStateOf(false) }
-        var errorId by rememberSaveable(initCodeValue) { mutableStateOf<Int?>(null) }
+        var showKeyCodesHelp by rememberSaveable(initCodeValue) { mutableStateOf(false) }
+        var showError by rememberSaveable(initCodeValue) { mutableStateOf(false) }
+        var errorId by rememberSaveable(initCodeValue) { mutableStateOf<Int>(NATIVE_NULLPTR) }
         JetPrefAlertDialog(
             title = stringRes(if (initCodeValue == NATIVE_NULLPTR) {
                 R.string.settings__theme_editor__add_code
@@ -469,12 +553,14 @@ private fun EditRuleDialog(
                 when {
                     code == null || (code !in KeyCode.Spec.CHARACTERS && code !in KeyCode.Spec.INTERNAL) -> {
                         errorId = R.string.settings__theme_editor__code_invalid
+                        showError = true
                     }
                     code == initCodeValue -> {
                         editCodeDialogValue = null
                     }
                     codes.contains(code) -> {
                         errorId = R.string.settings__theme_editor__code_already_exists
+                        showError = true
                     }
                     else -> {
                         codes.add(code)
@@ -495,20 +581,40 @@ private fun EditRuleDialog(
                 codes.remove(initCodeValue)
                 editCodeDialogValue = null
             },
+            trailingIconTitle = {
+                FlorisIconButton(
+                    onClick = { showKeyCodesHelp = !showKeyCodesHelp },
+                    modifier = Modifier.offset(x = 12.dp),
+                    icon = painterResource(R.drawable.ic_help_outline),
+                )
+            },
         ) {
             Column {
+                AnimatedVisibility(visible = showKeyCodesHelp) {
+                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                        Text(text = stringRes(R.string.settings__theme_editor__code_help_text))
+                        FlorisHyperlinkText(
+                            text = "Characters (unicode-table.com)",
+                            url = stringRes(R.string.florisboard__character_key_codes_url),
+                        )
+                        FlorisHyperlinkText(
+                            text = "Internal (github.com)",
+                            url = stringRes(R.string.florisboard__internal_key_codes_url),
+                        )
+                    }
+                }
                 OutlinedTextField(
                     value = inputCodeString,
                     onValueChange = { v ->
                         inputCodeString = v
-                        errorId = null
+                        showError = false
                     },
-                    isError = errorId != null,
+                    isError = showError,
                 )
-                val id = errorId
-                if (id != null) {
+                AnimatedVisibility(visible = showError) {
                     Text(
-                        text = stringRes(id).curlyFormat(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = stringRes(errorId).curlyFormat(
                             "c_min" to KeyCode.Spec.CHARACTERS_MIN,
                             "c_max" to KeyCode.Spec.CHARACTERS_MAX,
                             "i_min" to KeyCode.Spec.INTERNAL_MIN,
@@ -525,7 +631,7 @@ private fun EditRuleDialog(
 @Composable
 private fun DialogProperty(
     text: String,
-    iconTrailingTitle: @Composable () -> Unit = { },
+    trailingIconTitle: @Composable () -> Unit = { },
     content: @Composable () -> Unit,
 ) {
     Column(modifier = Modifier.padding(bottom = 8.dp)) {
@@ -537,7 +643,7 @@ private fun DialogProperty(
                 text = text,
                 style = MaterialTheme.typography.subtitle2,
             )
-            iconTrailingTitle()
+            trailingIconTitle()
         }
         content()
     }

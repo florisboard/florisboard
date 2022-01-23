@@ -116,11 +116,13 @@
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
+    <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
     <string name="settings__theme_editor__add_code">Add code</string>
     <string name="settings__theme_editor__edit_code">Edit code</string>
     <string name="settings__theme_editor__no_codes_defined">No codes defined.</string>
     <string name="settings__theme_editor__code_already_exists">This key code is already defined.</string>
     <string name="settings__theme_editor__code_invalid">This key code is not valid. Ensure that the key code is within the range of {c_min} to {c_max} for characters or {i_min} to {i_max} for internal special keys.</string>
+    <string name="settings__theme_editor__code_help_text">The following links will help you to find the corresponding key code:</string>
     <string name="settings__theme_editor__rule_element">Target element</string>
     <string name="settings__theme_editor__rule_codes">Codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>

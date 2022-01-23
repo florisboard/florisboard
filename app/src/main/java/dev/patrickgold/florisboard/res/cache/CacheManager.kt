@@ -187,11 +187,12 @@ class CacheManager(context: Context) {
         var editor by mutableStateOf<T?>(null, neverEqualPolicy())
         var isModified by mutableStateOf(false)
 
-        inline fun update(block: T.() -> Unit) {
+        inline fun <R> update(block: T.() -> R): R {
             // Method is designed to only be called when editor has been previously initialized
-            block(editor!!)
+            val ret = block(editor!!)
             editor = editor
             isModified = true
+            return ret
         }
     }
 

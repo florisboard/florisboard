@@ -16,6 +16,9 @@
 
 package dev.patrickgold.florisboard.snygg
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -82,6 +85,11 @@ data class SnyggRule(
                 }
             }
         }
+
+        val Saver = Saver<MutableState<SnyggRule?>, String>(
+            save = { it.toString() },
+            restore = { mutableStateOf(from(it)) },
+        )
 
         fun from(raw: String): SnyggRule? {
             val str = raw.trim().curlyFormat { placeholders[it]?.toString() }
