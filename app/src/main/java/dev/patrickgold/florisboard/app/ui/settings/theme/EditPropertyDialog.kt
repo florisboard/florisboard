@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -28,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -35,8 +38,12 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
+import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
@@ -54,6 +61,7 @@ internal fun EditPropertyDialog(
     propertySetSpec: SnyggPropertySetSpec?,
     initProperty: PropertyInfo,
     level: SnyggLevel,
+    definedVariables: Map<String, SnyggValue>,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -63,6 +71,32 @@ internal fun EditPropertyDialog(
 
     var propertyName by rememberSaveable {
         mutableStateOf(if (isAddPropertyDialog && propertySetSpec == null) { "" } else { initProperty.name })
+    }
+    var propertyValueEncoder by remember {
+        mutableStateOf(if (isAddPropertyDialog && propertySetSpec == null) {
+            SnyggImplicitInheritValue
+        } else {
+            initProperty.value.encoder()
+        })
+    }
+    var propertyValue by remember {
+        mutableStateOf(if (isAddPropertyDialog && propertySetSpec == null) {
+            SnyggImplicitInheritValue
+        } else {
+            initProperty.value
+        })
+    }
+
+    fun isPropertyNameValid(): Boolean {
+        return propertyName.isNotBlank() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+    }
+
+    fun isPropertyValueValid(): Boolean {
+        return when (val value = propertyValue) {
+            is SnyggImplicitInheritValue -> false
+            is SnyggDefinedVarValue -> value.key.isNotBlank()
+            else -> true
+        }
     }
 
     JetPrefAlertDialog(
@@ -77,7 +111,7 @@ internal fun EditPropertyDialog(
             R.string.action__apply
         }),
         onConfirm = {
-            if (isAddPropertyDialog && (propertyName.isBlank() || propertyName == SnyggEmptyPropertyInfoForAdding.name)) {
+            if (!isPropertyNameValid() || !isPropertyValueValid()) {
                 showSelectAsError = true
             } else {
                 //
@@ -85,7 +119,7 @@ internal fun EditPropertyDialog(
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
-        neutralLabel = stringRes(R.string.action__delete),
+        neutralLabel = if (!isAddPropertyDialog) { stringRes(R.string.action__delete) } else { null },
         onNeutral = onDelete,
     ) {
         Column {
@@ -101,10 +135,39 @@ internal fun EditPropertyDialog(
                 PropertyNameInput(
                     propertySetSpec = propertySetSpec,
                     name = propertyName,
-                    onNameChange = { propertyName = it },
+                    onNameChange = { name ->
+                        if (propertySetSpec != null) {
+                            propertyValueEncoder = SnyggImplicitInheritValue
+                        }
+                        propertyName = name
+                    },
                     level = level,
                     isAddPropertyDialog = isAddPropertyDialog,
                     showSelectAsError = showSelectAsError,
+                )
+            }
+
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__property_value)) {
+                PropertyValueEncoderDropdown(
+                    supportedEncoders = remember(propertyName) {
+                        propertySetSpec?.propertySpec(propertyName)?.encoders ?: SnyggVarValueEncoders
+                    },
+                    encoder = propertyValueEncoder,
+                    onEncoderChange = { encoder ->
+                        propertyValueEncoder = encoder
+                        propertyValue = encoder.defaultValue()
+                    },
+                    enabled = isPropertyNameValid(),
+                    isError = showSelectAsError && propertyValueEncoder == SnyggImplicitInheritValue,
+                )
+
+                PropertyValueEditor(
+                    value = propertyValue,
+                    onValueChange = { propertyValue = it },
+                    level = level,
+                    definedVariables = definedVariables,
+                    enabled = isPropertyNameValid() && propertyValueEncoder != SnyggImplicitInheritValue,
+                    isError = showSelectAsError && !isPropertyValueValid(),
                 )
             }
         }
@@ -148,5 +211,86 @@ private fun PropertyNameInput(
             enabled = isAddPropertyDialog,
             isError = showSelectAsError && name.isBlank(),
         )
+    }
+}
+
+@Composable
+private fun PropertyValueEncoderDropdown(
+    supportedEncoders: List<SnyggValueEncoder>,
+    encoder: SnyggValueEncoder,
+    onEncoderChange: (SnyggValueEncoder) -> Unit,
+    enabled: Boolean = true,
+    isError: Boolean = false,
+) {
+    val encoders = remember(supportedEncoders) {
+        listOf(SnyggImplicitInheritValue) + supportedEncoders
+    }
+    var expanded by remember { mutableStateOf(false) }
+    val selectedIndex = remember(encoder) {
+        encoders.indexOf(encoder).coerceIn(encoders.indices)
+    }
+    FlorisDropdownMenu(
+        items = encoders,
+        labelProvider = { translatePropertyValueEncoderName(it) },
+        expanded = expanded,
+        enabled = enabled,
+        selectedIndex = selectedIndex,
+        isError = isError,
+        onSelectItem = { index ->
+            onEncoderChange(encoders[index])
+        },
+        onExpandRequest = { expanded = true },
+        onDismissRequest = { expanded = false },
+    )
+}
+
+@Composable
+private fun PropertyValueEditor(
+    value: SnyggValue,
+    onValueChange: (SnyggValue) -> Unit,
+    level: SnyggLevel,
+    definedVariables: Map<String, SnyggValue>,
+    enabled: Boolean = true,
+    isError: Boolean = false,
+) {
+    when (value) {
+        is SnyggDefinedVarValue -> {
+            val variableKeys = remember(definedVariables) {
+                listOf("") + definedVariables.keys.toList()
+            }
+            val selectedIndex by remember(variableKeys, value.key) {
+                mutableStateOf(variableKeys.indexOf(value.key).coerceIn(variableKeys.indices))
+            }
+            var expanded by remember { mutableStateOf(false) }
+            Row(
+                modifier = Modifier.padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FlorisDropdownMenu(
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .weight(1f),
+                    items = variableKeys,
+                    labelProvider = { translatePropertyName(it, level) },
+                    expanded = expanded,
+                    selectedIndex = selectedIndex,
+                    enabled = enabled,
+                    isError = isError,
+                    onSelectItem = { index ->
+                        onValueChange(SnyggDefinedVarValue(variableKeys[index]))
+                    },
+                    onExpandRequest = { expanded = true },
+                    onDismissRequest = { expanded = false },
+                )
+                SnyggValueIcon(
+                    value = value,
+                    definedVariables = definedVariables,
+                    modifier = Modifier.offset(y = (-2).dp),
+                )
+            }
+        }
+        else -> {
+            // Render nothing
+        }
     }
 }

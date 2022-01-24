@@ -44,6 +44,8 @@ data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue
             function(Rectangle) { nothing() }
         }
 
+        override fun defaultValue() = SnyggRectangleShapeValue(RectangleShape)
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRectangleShapeValue)
             val map = SnyggIdToValueMap.new()
@@ -78,6 +80,8 @@ data class SnyggCutCornerShapeDpValue(
                 }
             }
         }
+
+        override fun defaultValue() = SnyggCutCornerShapeDpValue(CutCornerShape(0.dp), 0.dp, 0.dp, 0.dp, 0.dp)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCutCornerShapeDpValue)
@@ -126,6 +130,8 @@ data class SnyggCutCornerShapePercentValue(
             }
         }
 
+        override fun defaultValue() = SnyggCutCornerShapePercentValue(CutCornerShape(0), 0, 0, 0, 0)
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCutCornerShapePercentValue)
             val map = SnyggIdToValueMap.new(
@@ -173,6 +179,8 @@ data class SnyggRoundedCornerShapeDpValue(
             }
         }
 
+        override fun defaultValue() = SnyggRoundedCornerShapeDpValue(RoundedCornerShape(0.dp), 0.dp, 0.dp, 0.dp, 0.dp)
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRoundedCornerShapeDpValue)
             val map = SnyggIdToValueMap.new(
@@ -219,6 +227,8 @@ data class SnyggRoundedCornerShapePercentValue(
                 }
             }
         }
+
+        override fun defaultValue() = SnyggRoundedCornerShapePercentValue(RoundedCornerShape(0), 0, 0, 0, 0)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRoundedCornerShapePercentValue)

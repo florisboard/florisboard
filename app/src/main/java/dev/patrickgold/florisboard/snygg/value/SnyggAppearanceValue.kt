@@ -84,6 +84,8 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
             },
         )
 
+        override fun defaultValue() = SnyggSolidColorValue(Color.Black)
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSolidColorValue)
             val map = SnyggIdToValueMap.new(

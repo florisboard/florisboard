@@ -75,7 +75,6 @@ import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
-import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetEditor
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.SnyggRule
@@ -87,6 +86,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeDpValue
@@ -317,6 +317,7 @@ fun ThemeEditorScreen(
                 propertySetSpec = snyggPropertySetSpecForEditing,
                 initProperty = propertyToEdit,
                 level = snyggLevel,
+                definedVariables = definedVariables,
                 onDelete = {
                     workspace.update {
                         snyggPropertySetForEditing?.properties?.remove(propertyToEdit.name)
@@ -614,10 +615,16 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
             else -> null
         }
     }.let { resId ->
-        if (resId != null) {
-            stringRes(resId)
-        } else {
-            propertyName
+        when {
+            resId != null -> {
+                stringRes(resId)
+            }
+            propertyName.isBlank() -> {
+                stringRes(R.string.general__select_dropdown_value_placeholder)
+            }
+            else -> {
+                propertyName
+            }
         }
     }
 }
@@ -630,13 +637,14 @@ internal fun translatePropertyValue(propertyValue: SnyggValue, level: SnyggLevel
 @Composable
 internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): String {
     return when (encoder) {
+        SnyggImplicitInheritValue -> R.string.general__select_dropdown_value_placeholder
         SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggSolidColorValue -> R.string.snygg__property_value__solid_color
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
         SnyggCutCornerShapeDpValue -> R.string.snygg__property_value__cut_corner_shape_dp
         SnyggCutCornerShapePercentValue -> R.string.snygg__property_value__cut_corner_shape_percent
-        SnyggRoundedCornerShapeDpValue -> R.string.snygg__property_value__cut_corner_shape_dp
-        SnyggRoundedCornerShapePercentValue -> R.string.snygg__property_value__cut_corner_shape_percent
+        SnyggRoundedCornerShapeDpValue -> R.string.snygg__property_value__rounded_corner_shape_dp
+        SnyggRoundedCornerShapePercentValue -> R.string.snygg__property_value__rounded_corner_shape_percent
         SnyggDpSizeValue -> R.string.snygg__property_value__dp_size
         SnyggSpSizeValue -> R.string.snygg__property_value__sp_size
         SnyggPercentageSizeValue -> R.string.snygg__property_value__percentage_size

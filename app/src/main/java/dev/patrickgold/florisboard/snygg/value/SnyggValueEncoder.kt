@@ -39,6 +39,11 @@ interface SnyggValueEncoder {
         get() = emptyList()
 
     /**
+     * Returns a default value for this encoder, used for dynamic theme building in a user interface.
+     */
+    fun defaultValue(): SnyggValue
+
+    /**
      * Serialize given Snygg value [v] and return a String representation of it. This method is exception-free, which
      * means it must **never** throw an exception. If an error during serialization occurs, it should be returned as a
      * failed result.

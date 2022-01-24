@@ -41,30 +41,36 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.theme.outline
 
 @Composable
-fun FlorisDropdownMenu(
-    items: List<String>,
+fun <T : Any> FlorisDropdownMenu(
+    items: List<T>,
     expanded: Boolean,
     selectedIndex: Int,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
+    labelProvider: (@Composable (T) -> String)? = null,
     onSelectItem: (Int) -> Unit = { },
     onExpandRequest: () -> Unit = { },
     onDismissRequest: () -> Unit = { },
 ) {
+    @Composable
+    fun asString(v: T): String {
+        return labelProvider?.invoke(v) ?: v.toString()
+    }
+
     Box(modifier = modifier.wrapContentSize(Alignment.TopStart)) {
         val indicatorRotation by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
         val index = selectedIndex.coerceIn(items.indices)
-        val color = if (isError) {
-            MaterialTheme.colors.error
-        } else if (!enabled) {
+        val color = if (!enabled) {
             MaterialTheme.colors.outline
+        } else if (isError) {
+            MaterialTheme.colors.error
         } else {
             MaterialTheme.colors.onBackground
         }
         OutlinedButton(
             modifier = Modifier.fillMaxWidth(),
-            border = if (isError) {
+            border = if (isError && enabled) {
                 BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
             } else {
                 ButtonDefaults.outlinedBorder
@@ -74,7 +80,7 @@ fun FlorisDropdownMenu(
         ) {
             Text(
                 modifier = Modifier.weight(1.0f),
-                text = items[index],
+                text = asString(items[index]),
                 textAlign = TextAlign.Start,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
@@ -102,7 +108,7 @@ fun FlorisDropdownMenu(
                         onDismissRequest()
                     },
                 ) {
-                    Text(text = item)
+                    Text(text = asString(item))
                 }
             }
         }
