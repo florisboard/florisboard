@@ -75,20 +75,30 @@ import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
+import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetEditor
+import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeDpValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeDpValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
 
-internal val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
 internal val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
     save = { ArrayList(it) },
     restore = { it.toMutableStateList() },
@@ -121,6 +131,9 @@ fun ThemeEditorScreen(
     }
     var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
     var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.Saver) { mutableStateOf(null) }
+    var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
+    var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
+    var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -201,13 +214,21 @@ fun ThemeEditorScreen(
                         SnyggRuleRow(
                             rule = rule,
                             level = snyggLevel,
-                            onAddPropertyBtnClick = { },
+                            onAddPropertyBtnClick = {
+                                snyggPropertySetForEditing = propertySet
+                                snyggPropertySetSpecForEditing = propertySetSpec
+                                snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding
+                            },
                         )
                         for ((propertyName, propertyValue) in propertySet.properties) {
                             val propertySpec = propertySetSpec?.propertySpec(propertyName)
                             if (propertySpec != null && propertySpec.level <= snyggLevel || isVariablesRule) {
                                 JetPrefListItem(
-                                    modifier = Modifier.rippleClickable {  },
+                                    modifier = Modifier.rippleClickable {
+                                        snyggPropertySetForEditing = propertySet
+                                        snyggPropertySetSpecForEditing = propertySetSpec
+                                        snyggPropertyToEdit = PropertyInfo(propertyName, propertyValue)
+                                    },
                                     text = translatePropertyName(propertyName, snyggLevel),
                                     secondaryText = translatePropertyValue(propertyValue, snyggLevel),
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
@@ -287,6 +308,22 @@ fun ThemeEditorScreen(
                     }
                 },
                 onDismiss = { snyggRuleToEdit = null },
+            )
+        }
+
+        val propertyToEdit = snyggPropertyToEdit
+        if (propertyToEdit != null) {
+            EditPropertyDialog(
+                propertySetSpec = snyggPropertySetSpecForEditing,
+                initProperty = propertyToEdit,
+                level = snyggLevel,
+                onDelete = {
+                    workspace.update {
+                        snyggPropertySetForEditing?.properties?.remove(propertyToEdit.name)
+                    }
+                    snyggPropertyToEdit = null
+                },
+                onDismiss = { snyggPropertyToEdit = null },
             )
         }
     }
@@ -514,7 +551,7 @@ internal fun translateElementName(rule: SnyggRule, level: SnyggLevel): String {
 
 @Composable
 internal fun translateElementName(element: String, level: SnyggLevel): String? {
-    return when(level) {
+    return when (level) {
         SnyggLevel.DEVELOPER -> null
         else -> when (element) {
             FlorisImeUi.Keyboard -> R.string.snygg__rule_element__keyboard
@@ -544,7 +581,7 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
 
 @Composable
 internal fun translatePropertyName(propertyName: String, level: SnyggLevel): String {
-    return when(level) {
+    return when (level) {
         SnyggLevel.DEVELOPER -> null
         else -> when (propertyName) {
             Snygg.Width -> R.string.snygg__property_name__width
@@ -588,4 +625,22 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
 @Composable
 internal fun translatePropertyValue(propertyValue: SnyggValue, level: SnyggLevel): String {
     return propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
+}
+
+@Composable
+internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): String {
+    return when (encoder) {
+        SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
+        SnyggSolidColorValue -> R.string.snygg__property_value__solid_color
+        SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
+        SnyggCutCornerShapeDpValue -> R.string.snygg__property_value__cut_corner_shape_dp
+        SnyggCutCornerShapePercentValue -> R.string.snygg__property_value__cut_corner_shape_percent
+        SnyggRoundedCornerShapeDpValue -> R.string.snygg__property_value__cut_corner_shape_dp
+        SnyggRoundedCornerShapePercentValue -> R.string.snygg__property_value__cut_corner_shape_percent
+        SnyggDpSizeValue -> R.string.snygg__property_value__dp_size
+        SnyggSpSizeValue -> R.string.snygg__property_value__sp_size
+        SnyggPercentageSizeValue -> R.string.snygg__property_value__percentage_size
+        SnyggDefinedVarValue -> R.string.snygg__property_value__defined_var
+        else -> null
+    }.let { if (it != null) { stringRes(it) } else { encoder::class.simpleName ?: "" } }.toString()
 }

@@ -53,6 +53,8 @@ import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
+internal val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
+
 @Composable
 internal fun EditRuleDialog(
     initRule: SnyggRule,

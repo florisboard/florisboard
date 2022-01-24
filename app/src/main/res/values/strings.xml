@@ -117,17 +117,21 @@
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
+    <string name="settings__theme_editor__rule_element">Target element</string>
+    <string name="settings__theme_editor__rule_codes">Codes</string>
+    <string name="settings__theme_editor__rule_groups">Groups</string>
+    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add code</string>
     <string name="settings__theme_editor__edit_code">Edit code</string>
     <string name="settings__theme_editor__no_codes_defined">No codes defined.</string>
     <string name="settings__theme_editor__code_already_exists">This key code is already defined.</string>
     <string name="settings__theme_editor__code_invalid">This key code is not valid. Ensure that the key code is within the range of {c_min} to {c_max} for characters or {i_min} to {i_max} for internal special keys.</string>
     <string name="settings__theme_editor__code_help_text">The following links will help you to find the corresponding key code:</string>
-    <string name="settings__theme_editor__rule_element">Target element</string>
-    <string name="settings__theme_editor__rule_codes">Codes</string>
-    <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_modes">Modes</string>
-    <string name="settings__theme_editor__rule_selectors">Selectors</string>
+    <string name="settings__theme_editor__add_property">Add property</string>
+    <string name="settings__theme_editor__edit_property">Edit property</string>
+    <string name="settings__theme_editor__property_already_exists">A property with this name already exists within the current rule.</string>
+    <string name="settings__theme_editor__property_name">Property name</string>
 
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
@@ -179,6 +183,18 @@
     <string name="snygg__property_name__var_on_secondary">Foreground of secondary</string>
     <string name="snygg__property_name__var_on_background">Foreground of background</string>
     <string name="snygg__property_name__var_on_surface">Foreground of surface</string>
+    <string name="snygg__property_value__explicit_inherit">Inherit</string>
+    <string name="snygg__property_value__solid_color">Solid color</string>
+    <string name="snygg__property_value__image_ref">Image reference</string>
+    <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Cut corner shape (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Cut corner shape (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Cut corner shape (%)</string>
+    <string name="snygg__property_value__dp_size">Size (dp)</string>
+    <string name="snygg__property_value__sp_size">Size (sp)</string>
+    <string name="snygg__property_value__percentage_size">Size (%)</string>
+    <string name="snygg__property_value__defined_var">Defined var reference</string>
 
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
