@@ -1,25 +1,34 @@
 {
   "all": {
     "е": {
-      "main": [
-        { "$": "auto_text_key", "code":  1105, "label": "ё" }
+      "main": { "$": "auto_text_key", "code":  234, "label": "ê" },
+      "relevant": [{ "$": "auto_text_key", "code":  1105, "label": "ё" }]
+    },
+    "у": {
+      "main": { "$": "auto_text_key", "code":  1263, "label": "ӯ" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  1118, "label": "ў" },
+        { "$": "auto_text_key", "code":  1265, "label": "ӱ" },
+        { "$": "auto_text_key", "code":  375, "label": "ŷ" }
       ]
     },
-    "ь": {
-      "main": [
-        { "$": "auto_text_key", "code":  1098, "label": "ъ" }
+    "г": {
+      "main": { "$": "auto_text_key", "code":  1169, "label": "ґ" }
+    },
+    "і": {
+      "main": { "$": "auto_text_key", "code":  1123, "label": "î" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  1123, "label": "ѣ" },
+        { "$": "auto_text_key", "code":  1111, "label": "ї" }
       ]
     },
     "о": {
-        "main": [
-          { "$": "auto_text_key", "code":  -255, "label": "̄о" }
-        ]
-      },
-      "у": {
-        "main": [
-          { "$": "auto_text_key", "code":  1263, "label": "̄ӯ" }
-        ]
-      },
+      "main": { "$": "auto_text_key", "code":  333, "label": "ō" },
+      "relevant": [{ "$": "auto_text_key", "code":  244, "label": "ô" }]
+    },
+    "ь": {
+      "main": { "$": "auto_text_key", "code":  1098, "label": "ъ" }
+    },
     "~right": {
       "main": { "code":   44, "label": "," },
       "relevant": [
@@ -45,12 +54,6 @@
     "~right": {
       "main": { "code": -255, "label": ".com" },
       "relevant": [
-        { "code": -255, "label": ".hu" },
-        { "code": -255, "label": ".hr" },
-        { "code": -255, "label": ".pl" },
-        { "code": -255, "label": ".sk" },
-        { "code": -255, "label": ".rs" },
-        { "code": -255, "label": ".ua" },
         { "code": -255, "label": ".edu" },
         { "code": -255, "label": ".org" },
         { "code": -255, "label": ".net" }
