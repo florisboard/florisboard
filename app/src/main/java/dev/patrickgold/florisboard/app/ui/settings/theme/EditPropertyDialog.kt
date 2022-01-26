@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
@@ -207,7 +207,7 @@ private fun PropertyNameInput(
             onDismissRequest = { propertiesExpanded = false },
         )
     } else {
-        OutlinedTextField(
+        FlorisOutlinedTextField(
             value = name,
             onValueChange = onNameChange,
             enabled = isAddPropertyDialog,

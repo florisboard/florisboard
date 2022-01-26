@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import dev.patrickgold.florisboard.R
@@ -82,6 +83,7 @@ fun <T : Any> FlorisDropdownMenu(
                 modifier = Modifier.weight(1.0f),
                 text = asString(items[index]),
                 textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Normal,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 color = color,
@@ -142,6 +144,7 @@ fun FlorisDropdownLikeButton(
                 modifier = Modifier.weight(1.0f),
                 text = item,
                 textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Normal,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 color = color,
