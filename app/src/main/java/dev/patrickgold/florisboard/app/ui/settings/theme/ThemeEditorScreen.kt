@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -65,7 +66,6 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
@@ -214,6 +214,10 @@ fun ThemeEditorScreen(
                         SnyggRuleRow(
                             rule = rule,
                             level = snyggLevel,
+                            showEditBtn = !isVariablesRule,
+                            onEditRuleBtnClick = {
+                                snyggRuleToEdit = rule
+                            },
                             onAddPropertyBtnClick = {
                                 snyggPropertySetForEditing = propertySet
                                 snyggPropertySetSpecForEditing = propertySetSpec
@@ -235,28 +239,6 @@ fun ThemeEditorScreen(
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                 )
                             }
-                        }
-                    }
-                    if (!isVariablesRule) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 6.dp),
-                        ) {
-                            FlorisTextButton(
-                                onClick = { workspace.update { stylesheetEditor.rules.remove(rule) } },
-                                icon = painterResource(R.drawable.ic_delete),
-                                text = stringRes(R.string.action__delete),
-                                colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colors.error,
-                                ),
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            FlorisTextButton(
-                                onClick = { snyggRuleToEdit = rule },
-                                icon = painterResource(R.drawable.ic_edit),
-                                text = stringRes(R.string.action__edit),
-                            )
                         }
                     }
                 }
@@ -308,6 +290,10 @@ fun ThemeEditorScreen(
                         }
                     }
                 },
+                onDeleteRule = { rule ->
+                    stylesheetEditor.rules.remove(rule)
+                    snyggRuleToEdit = null
+                },
                 onDismiss = { snyggRuleToEdit = null },
             )
         }
@@ -335,6 +321,8 @@ fun ThemeEditorScreen(
 private fun SnyggRuleRow(
     rule: SnyggRule,
     level: SnyggLevel,
+    showEditBtn: Boolean,
+    onEditRuleBtnClick: () -> Unit,
     onAddPropertyBtnClick: () -> Unit,
 ) {
     @Composable
@@ -407,13 +395,19 @@ private fun SnyggRuleRow(
                 AttributesList(text = "modes", list = remember(rule.modes) { rule.modes.toString() })
             }
         }
-        FlorisTextButton(
+        if (showEditBtn) {
+            FlorisIconButton(
+                onClick = onEditRuleBtnClick,
+                icon = painterResource(R.drawable.ic_edit),
+                iconColor = MaterialTheme.colors.primary,
+                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+            )
+        }
+        FlorisIconButton(
             onClick = onAddPropertyBtnClick,
             icon = painterResource(R.drawable.ic_add),
-            text = stringRes(R.string.action__add),
-            colors = ButtonDefaults.textButtonColors(
-                contentColor = MaterialTheme.colors.secondary,
-            ),
+            iconColor = MaterialTheme.colors.secondary,
+            iconModifier = Modifier.size(ButtonDefaults.IconSize),
         )
     }
 }
@@ -511,7 +505,9 @@ internal fun SnyggValueIcon(
                 )
             } else {
                 val smallSpec = SnyggValueIcon.Small
-                Box(modifier = modifier.requiredSize(spec.iconSize).offset(y = (-2).dp)) {
+                Box(modifier = modifier
+                    .requiredSize(spec.iconSize)
+                    .offset(y = (-2).dp)) {
                     SnyggValueIcon(
                         modifier = Modifier.offset(x = 8.dp, y = 8.dp),
                         value = realValue,

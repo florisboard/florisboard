@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -60,6 +61,7 @@ internal fun EditRuleDialog(
     initRule: SnyggRule,
     level: SnyggLevel,
     onConfirmRule: (oldRule: SnyggRule, newRule: SnyggRule) -> Boolean,
+    onDeleteRule: (rule: SnyggRule) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val isAddRuleDialog = initRule == SnyggEmptyRuleForAdding
@@ -121,6 +123,13 @@ internal fun EditRuleDialog(
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
+        neutralLabel = if (!isAddRuleDialog) {
+            stringRes(R.string.action__delete)
+        } else {
+            null
+        },
+        neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.error),
+        onNeutral = { onDeleteRule(initRule) },
     ) {
         Column {
             AnimatedVisibility(visible = showAlreadyExistsError) {
@@ -282,6 +291,7 @@ internal fun EditRuleDialog(
             } else {
                 null
             },
+            neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.error),
             onNeutral = {
                 codes.remove(initCodeValue)
                 editCodeDialogValue = null
