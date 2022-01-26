@@ -291,7 +291,9 @@ fun ThemeEditorScreen(
                     }
                 },
                 onDeleteRule = { rule ->
-                    stylesheetEditor.rules.remove(rule)
+                    workspace.update {
+                        stylesheetEditor.rules.remove(rule)
+                    }
                     snyggRuleToEdit = null
                 },
                 onDismiss = { snyggRuleToEdit = null },

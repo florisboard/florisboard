@@ -195,7 +195,7 @@
     <string name="snygg__property_value__dp_size">Size (dp)</string>
     <string name="snygg__property_value__sp_size">Size (sp)</string>
     <string name="snygg__property_value__percentage_size">Size (%)</string>
-    <string name="snygg__property_value__defined_var">Defined var reference</string>
+    <string name="snygg__property_value__defined_var">Var reference</string>
 
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>

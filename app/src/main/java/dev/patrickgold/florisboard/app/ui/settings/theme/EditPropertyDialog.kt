@@ -20,6 +20,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -130,6 +131,9 @@ internal fun EditPropertyDialog(
         onDismiss = onDismiss,
         neutralLabel = if (!isAddPropertyDialog) { stringRes(R.string.action__delete) } else { null },
         onNeutral = onDelete,
+        neutralColors = ButtonDefaults.textButtonColors(
+            contentColor = MaterialTheme.colors.error,
+        ),
     ) {
         Column {
             AnimatedVisibility(visible = showAlreadyExistsError) {
