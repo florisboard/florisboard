@@ -133,10 +133,6 @@ android {
             it.useJUnitPlatform()
         }
     }
-
-    lint {
-        isAbortOnError = false
-    }
 }
 
 tasks.withType<Test> {
