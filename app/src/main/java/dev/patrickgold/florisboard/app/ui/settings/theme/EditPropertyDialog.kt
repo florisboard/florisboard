@@ -44,7 +44,10 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
 import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
+import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterialUi
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
+import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     name = "- select -",
@@ -166,7 +169,6 @@ internal fun EditPropertyDialog(
                     onValueChange = { propertyValue = it },
                     level = level,
                     definedVariables = definedVariables,
-                    enabled = isPropertyNameValid() && propertyValueEncoder != SnyggImplicitInheritValue,
                     isError = showSelectAsError && !isPropertyValueValid(),
                 )
             }
@@ -244,13 +246,13 @@ private fun PropertyValueEncoderDropdown(
     )
 }
 
+@OptIn(ExperimentalJetPrefMaterialUi::class)
 @Composable
 private fun PropertyValueEditor(
     value: SnyggValue,
     onValueChange: (SnyggValue) -> Unit,
     level: SnyggLevel,
     definedVariables: Map<String, SnyggValue>,
-    enabled: Boolean = true,
     isError: Boolean = false,
 ) {
     when (value) {
@@ -274,7 +276,6 @@ private fun PropertyValueEditor(
                     labelProvider = { translatePropertyName(it, level) },
                     expanded = expanded,
                     selectedIndex = selectedIndex,
-                    enabled = enabled,
                     isError = isError,
                     onSelectItem = { index ->
                         onValueChange(SnyggDefinedVarValue(variableKeys[index]))
@@ -283,9 +284,33 @@ private fun PropertyValueEditor(
                     onDismissRequest = { expanded = false },
                 )
                 SnyggValueIcon(
+                    modifier = Modifier.offset(y = (-2).dp),
                     value = value,
                     definedVariables = definedVariables,
-                    modifier = Modifier.offset(y = (-2).dp),
+                )
+            }
+        }
+        is SnyggSolidColorValue -> {
+            Column(modifier = Modifier.padding(top = 8.dp)) {
+                Row(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(end = 12.dp)
+                            .weight(1f),
+                        text = value.encoder().serialize(value).getOrDefault("?"),
+                    )
+                    SnyggValueIcon(
+                        value = value,
+                        definedVariables = definedVariables,
+                    )
+                }
+                val state = rememberJetPrefColorPickerState(initColor = value.color)
+                JetPrefColorPicker(
+                    onColorChange = { onValueChange(SnyggSolidColorValue(it)) },
+                    state = state,
                 )
             }
         }
