@@ -231,6 +231,7 @@ fun ThemeEditorScreen(
                                     },
                                     text = translatePropertyName(propertyName, snyggLevel),
                                     secondaryText = translatePropertyValue(propertyValue, snyggLevel),
+                                    singleLineSecondaryText = true,
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                 )
                             }
@@ -510,7 +511,7 @@ internal fun SnyggValueIcon(
                 )
             } else {
                 val smallSpec = SnyggValueIcon.Small
-                Box(modifier = modifier.requiredSize(spec.iconSize)) {
+                Box(modifier = modifier.requiredSize(spec.iconSize).offset(y = (-2).dp)) {
                     SnyggValueIcon(
                         modifier = Modifier.offset(x = 8.dp, y = 8.dp),
                         value = realValue,

@@ -123,6 +123,7 @@ fun FlorisOutlinedTextField(
     val isFocused by interactionSource.collectIsFocusedAsState()
 
     BasicTextField(
+        modifier = modifier.padding(vertical = 4.dp),
         value = value,
         onValueChange = onValueChange,
         enabled = enabled,

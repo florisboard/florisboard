@@ -55,10 +55,10 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
 data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = SpUnit, min = 0.0f)
+            float(id = Size, unit = SpUnit, min = 1.0f)
         }
 
-        override fun defaultValue() = SnyggSpSizeValue(0.sp)
+        override fun defaultValue() = SnyggSpSizeValue(24.sp)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSpSizeValue)

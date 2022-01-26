@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -31,7 +30,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isSpecified
+import androidx.compose.ui.unit.isUnspecified
+import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
@@ -41,6 +45,7 @@ import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
 import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
@@ -98,6 +103,7 @@ internal fun EditPropertyDialog(
         return when (val value = propertyValue) {
             is SnyggImplicitInheritValue -> false
             is SnyggDefinedVarValue -> value.key.isNotBlank()
+            is SnyggSpSizeValue -> value.sp.isSpecified && value.sp.value >= 1f
             else -> true
         }
     }
@@ -284,7 +290,6 @@ private fun PropertyValueEditor(
                     onDismissRequest = { expanded = false },
                 )
                 SnyggValueIcon(
-                    modifier = Modifier.offset(y = (-2).dp),
                     value = value,
                     definedVariables = definedVariables,
                 )
@@ -311,6 +316,32 @@ private fun PropertyValueEditor(
                 JetPrefColorPicker(
                     onColorChange = { onValueChange(SnyggSolidColorValue(it)) },
                     state = state,
+                )
+            }
+        }
+        is SnyggSpSizeValue -> {
+            var sizeStr by remember {
+                val sp = value.sp.takeUnless { it.isUnspecified } ?: SnyggSpSizeValue.defaultValue().sp
+                mutableStateOf(sp.value.toString())
+            }
+            Row(
+                modifier = Modifier.padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FlorisOutlinedTextField(
+                    modifier = Modifier.weight(1f),
+                    value = sizeStr,
+                    onValueChange = { value ->
+                        sizeStr = value
+                        val size = sizeStr.toFloatOrNull()?.let { SnyggSpSizeValue(it.sp) }
+                        onValueChange(size ?: SnyggSpSizeValue(TextUnit.Unspecified))
+                    },
+                    isError = value.sp.isUnspecified || value.sp.value < 1f,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "sp",
+                    fontFamily = FontFamily.Monospace,
                 )
             }
         }
