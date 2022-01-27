@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.text.key
 
 object KeyCode {
     object Spec {
-        const val CHARACTERS_MIN = SPACE
+        const val CHARACTERS_MIN = 1
         const val CHARACTERS_MAX = 65535
         val CHARACTERS = CHARACTERS_MIN..CHARACTERS_MAX
 
