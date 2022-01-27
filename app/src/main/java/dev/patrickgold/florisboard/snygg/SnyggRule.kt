@@ -31,15 +31,14 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.Comparator
 
 @Serializable(with = SnyggRuleSerializer::class)
 data class SnyggRule(
     val isAnnotation: Boolean = false,
     val element: String,
-    val codes: List<Int> = listOf(),
-    val groups: List<Int> = listOf(),
-    val modes: List<Int> = listOf(),
+    val codes: List<Int> = emptyList(),
+    val groups: List<Int> = emptyList(),
+    val modes: List<Int> = emptyList(),
     val pressedSelector: Boolean = false,
     val focusSelector: Boolean = false,
     val disabledSelector: Boolean = false,
@@ -73,29 +72,6 @@ data class SnyggRule(
             "m:shiftlock" to InputMode.SHIFT_LOCK.value,
             "m:capslock" to InputMode.CAPS_LOCK.value,
         )
-
-        val Comparator = Comparator<SnyggRule> { a, b ->
-            when {
-                a.isAnnotation && !b.isAnnotation -> -1
-                !a.isAnnotation && b.isAnnotation -> 1
-                else /* a.isAnnotation == b.isAnnotation */ -> {
-                    when (val elem = a.element.compareTo(b.element)) {
-                        0 -> a.comparatorWeight() - b.comparatorWeight()
-                        else -> when {
-                            a.element == FlorisImeUi.Keyboard -> -1
-                            b.element == FlorisImeUi.Keyboard -> 1
-                            a.element == FlorisImeUi.Key -> -1
-                            b.element == FlorisImeUi.Key -> 1
-                            a.element == FlorisImeUi.KeyHint -> -1
-                            b.element == FlorisImeUi.KeyHint -> 1
-                            a.element == FlorisImeUi.KeyPopup -> -1
-                            b.element == FlorisImeUi.KeyPopup -> 1
-                            else -> elem
-                        }
-                    }
-                }
-            }
-        }
 
         val Saver = Saver<MutableState<SnyggRule?>, String>(
             save = { it.toString() },
@@ -151,10 +127,6 @@ data class SnyggRule(
         }
     }
 
-    override fun compareTo(other: SnyggRule): Int {
-        return Comparator.compare(this, other)
-    }
-
     override fun toString() = buildString {
         if (isAnnotation) {
             append(ANNOTATION_MARKER)
@@ -166,15 +138,6 @@ data class SnyggRule(
         appendSelector(PRESSED_SELECTOR, pressedSelector)
         appendSelector(FOCUS_SELECTOR, focusSelector)
         appendSelector(DISABLED_SELECTOR, disabledSelector)
-    }
-
-    private fun comparatorWeight(): Int {
-        return (if (codes.isNotEmpty()) 0x01 else 0) +
-            (if (groups.isNotEmpty()) 0x02 else 0) +
-            (if (modes.isNotEmpty()) 0x04 else 0) +
-            (if (pressedSelector) 0x08 else 0) +
-            (if (focusSelector) 0x10 else 0) +
-            (if (disabledSelector) 0x20 else 0)
     }
 
     private fun StringBuilder.appendAttribute(key: String, entries: List<Int>) {
@@ -197,6 +160,84 @@ data class SnyggRule(
             append(SELECTOR_COLON)
             append(key)
         }
+    }
+
+    override fun compareTo(other: SnyggRule): Int {
+        if (this == other) return 0
+        return when {
+            this.isAnnotation && !other.isAnnotation -> -1
+            !this.isAnnotation && other.isAnnotation -> 1
+            else -> when (val elem = this.element.compareTo(other.element)) {
+                0 -> when (val diff = this.comparatorWeight() - other.comparatorWeight()) {
+                    0 -> {
+                        this.codes.indices.firstNotNullOfOrNull { n ->
+                            (this.codes[n].compareTo(other.codes[n])).takeIf { it != 0 }
+                        } ?: this.groups.indices.firstNotNullOfOrNull { n ->
+                            (this.groups[n].compareTo(other.groups[n])).takeIf { it != 0 }
+                        } ?: this.modes.indices.firstNotNullOfOrNull { n ->
+                            (this.modes[n].compareTo(other.modes[n])).takeIf { it != 0 }
+                        }!!
+                    }
+                    else -> diff
+                }
+                else -> when {
+                    this.element == FlorisImeUi.Keyboard -> -1
+                    other.element == FlorisImeUi.Keyboard -> 1
+                    this.element == FlorisImeUi.Key -> -1
+                    other.element == FlorisImeUi.Key -> 1
+                    this.element == FlorisImeUi.KeyHint -> -1
+                    other.element == FlorisImeUi.KeyHint -> 1
+                    this.element == FlorisImeUi.KeyPopup -> -1
+                    other.element == FlorisImeUi.KeyPopup -> 1
+                    else -> elem
+                }
+            }
+        }
+    }
+
+    private fun comparatorWeight(): Int {
+        return (if (codes.isNotEmpty()) 0x01 else 0) +
+            (if (groups.isNotEmpty()) 0x02 else 0) +
+            (if (modes.isNotEmpty()) 0x04 else 0) +
+            (if (pressedSelector) 0x08 else 0) +
+            (if (focusSelector) 0x10 else 0) +
+            (if (disabledSelector) 0x20 else 0)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SnyggRule
+
+        if (isAnnotation != other.isAnnotation) return false
+        if (element != other.element) return false
+        if (!codes.containsAll(other.codes) || !other.codes.containsAll(codes)) return false
+        if (!groups.containsAll(other.groups) || !other.groups.containsAll(groups)) return false
+        if (!modes.containsAll(other.modes) || !other.modes.containsAll(modes)) return false
+        if (pressedSelector != other.pressedSelector) return false
+        if (focusSelector != other.focusSelector) return false
+        if (disabledSelector != other.disabledSelector) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = isAnnotation.hashCode()
+        result = 31 * result + element.hashCode()
+        for (code in codes.sorted()) {
+            result = 31 * result + code.hashCode()
+        }
+        for (group in groups.sorted()) {
+            result = 31 * result + group.hashCode()
+        }
+        for (mode in modes.sorted()) {
+            result = 31 * result + mode.hashCode()
+        }
+        result = 31 * result + pressedSelector.hashCode()
+        result = 31 * result + focusSelector.hashCode()
+        result = 31 * result + disabledSelector.hashCode()
+        return result
     }
 }
 

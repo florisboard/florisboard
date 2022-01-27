@@ -132,6 +132,12 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-Xopt-in=io.kotest.common.ExperimentalKotest",
+            )
+        }
     }
 }
 
@@ -161,10 +167,11 @@ dependencies {
     implementation("androidx.room:room-runtime:2.4.0")
     kapt("androidx.room:room-compiler:2.4.0")
 
-    testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
-    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
-    testImplementation("io.kotest:kotest-property:4.6.3")
-    testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.4.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
+    testImplementation("io.kotest:kotest-property:5.1.0")
+    testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.5.0")
+    testImplementation("nl.jqno.equalsverifier:equalsverifier:3.8.3")
 
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
