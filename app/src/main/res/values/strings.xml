@@ -190,8 +190,8 @@
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Cut corner shape (%)</string>
-    <string name="snygg__property_value__rounded_corner_shape_dp">Cut corner shape (dp)</string>
-    <string name="snygg__property_value__rounded_corner_shape_percent">Cut corner shape (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Rounded corner shape (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Rounded corner shape (%)</string>
     <string name="snygg__property_value__dp_size">Size (dp)</string>
     <string name="snygg__property_value__sp_size">Size (sp)</string>
     <string name="snygg__property_value__percentage_size">Size (%)</string>

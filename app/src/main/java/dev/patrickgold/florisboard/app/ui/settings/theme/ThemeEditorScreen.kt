@@ -307,6 +307,17 @@ fun ThemeEditorScreen(
                 initProperty = propertyToEdit,
                 level = snyggLevel,
                 definedVariables = definedVariables,
+                onConfirmNewValue = { name, value ->
+                    val properties = snyggPropertySetForEditing?.properties ?: return@EditPropertyDialog false
+                    if (propertyToEdit == SnyggEmptyPropertyInfoForAdding && properties.containsKey(name)) {
+                        return@EditPropertyDialog false
+                    }
+                    workspace.update {
+                        properties[name] = value
+                    }
+                    snyggPropertyToEdit = null
+                    true
+                },
                 onDelete = {
                     workspace.update {
                         snyggPropertySetForEditing?.properties?.remove(propertyToEdit.name)

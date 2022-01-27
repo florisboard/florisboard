@@ -71,6 +71,7 @@ internal fun EditPropertyDialog(
     initProperty: PropertyInfo,
     level: SnyggLevel,
     definedVariables: Map<String, SnyggValue>,
+    onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -124,7 +125,9 @@ internal fun EditPropertyDialog(
             if (!isPropertyNameValid() || !isPropertyValueValid()) {
                 showSelectAsError = true
             } else {
-                //
+                if (!onConfirmNewValue(propertyName, propertyValue)) {
+                    showAlreadyExistsError = true
+                }
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
