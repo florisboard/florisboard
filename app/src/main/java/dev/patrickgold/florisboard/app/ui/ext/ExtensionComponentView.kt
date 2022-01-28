@@ -63,7 +63,7 @@ fun ExtensionComponentView(
     onDeleteBtnClick: (() -> Unit)? = null,
     onEditBtnClick: (() -> Unit)? = null,
 ) {
-    val componentName = remember { ExtensionComponentName(meta.id, component.id).toString() }
+    val componentName = remember(meta.id, component.id) { ExtensionComponentName(meta.id, component.id).toString() }
     FlorisOutlinedBox(
         modifier = modifier,
         title = component.label,
@@ -78,7 +78,10 @@ fun ExtensionComponentView(
         ) {
             when (component) {
                 is ThemeExtensionComponent -> {
-                    val text = remember(component) {
+                    val text = remember(
+                        component.authors, component.isNightTheme, component.isBorderless,
+                        component.isMaterialYouAware, component.stylesheetPath(),
+                    ) {
                         buildString {
                             appendLine("authors = ${component.authors}")
                             appendLine("isNightTheme = ${component.isNightTheme}")

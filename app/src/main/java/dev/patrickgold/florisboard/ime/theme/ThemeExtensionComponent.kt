@@ -54,14 +54,14 @@ data class ThemeExtensionComponentImpl(
 ) : ThemeExtensionComponent {
 
     fun edit() = ThemeExtensionComponentEditor(
-        id, label, authors.toMutableList(), isNightTheme, isBorderless, isMaterialYouAware, stylesheetPath ?: "",
+        id, label, authors, isNightTheme, isBorderless, isMaterialYouAware, stylesheetPath ?: "",
     )
 }
 
 class ThemeExtensionComponentEditor(
     override var id: String = "",
     override var label: String = "",
-    override val authors: MutableList<String> = mutableListOf(),
+    override var authors: List<String> = emptyList(),
     override var isNightTheme: Boolean = true,
     override var isBorderless: Boolean = false,
     override var isMaterialYouAware: Boolean = false,

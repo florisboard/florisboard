@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
@@ -40,6 +41,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -65,8 +67,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
@@ -96,6 +101,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
 
@@ -134,6 +140,7 @@ fun ThemeEditorScreen(
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
     var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
+    var showEditComponentInfoDialog by remember { mutableStateOf(false) }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -202,6 +209,15 @@ fun ThemeEditorScreen(
             //modifier = Modifier.florisScrollbar(lazyListState, isVertical = true),
             state = lazyListState,
         ) {
+            item {
+                ExtensionComponentView(
+                    modifier = Modifier.defaultFlorisOutlinedBox(),
+                    meta = workspace.editor!!.meta,
+                    component = editor,
+                    onEditBtnClick = { showEditComponentInfoDialog = true },
+                )
+            }
+
             items(stylesheetEditor.rules.entries.toList()) { (rule, propertySet) -> key(rule) {
                 val isVariablesRule = rule.isAnnotation && rule.element == "defines"
                 val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
@@ -246,6 +262,60 @@ fun ThemeEditorScreen(
 
             item {
                 Spacer(modifier = Modifier.height(72.dp))
+            }
+        }
+
+        if (showEditComponentInfoDialog) {
+            JetPrefAlertDialog(
+                title = stringRes(R.string.ext__editor__metadata__title),
+                confirmLabel = stringRes(R.string.action__ok),
+                onConfirm = { showEditComponentInfoDialog = false },
+                onDismiss = { showEditComponentInfoDialog = false },
+            ) {
+                Column {
+                    DialogProperty(text = stringRes(R.string.ext__meta__id)) {
+                        FlorisOutlinedTextField(
+                            value = editor.id,
+                            onValueChange = { workspace.update { editor.id = it } },
+                        )
+                    }
+                    DialogProperty(text = stringRes(R.string.ext__meta__label)) {
+                        FlorisOutlinedTextField(
+                            value = editor.label,
+                            onValueChange = { workspace.update { editor.label = it } },
+                        )
+                    }
+                    DialogProperty(text = stringRes(R.string.ext__meta__authors)) {
+                        FlorisOutlinedTextField(
+                            value = editor.authors.joinToString(","),
+                            onValueChange = { workspace.update { editor.authors = it.split(",") } },
+                        )
+                    }
+                    JetPrefListItem(
+                        modifier = Modifier.toggleable(editor.isNightTheme) { newState ->
+                            workspace.update { editor.isNightTheme = newState }
+                        },
+                        text = stringRes(R.string.settings__theme_editor__component_meta_is_night_theme),
+                        trailing = {
+                            Switch(checked = editor.isNightTheme, onCheckedChange = null)
+                        },
+                    )
+                    JetPrefListItem(
+                        modifier = Modifier.toggleable(editor.isBorderless) { newState ->
+                            workspace.update { editor.isBorderless = newState }
+                        },
+                        text = stringRes(R.string.settings__theme_editor__component_meta_is_borderless),
+                        trailing = {
+                            Switch(checked = editor.isBorderless, onCheckedChange = null)
+                        },
+                    )
+                    DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_stylesheet_path)) {
+                        FlorisOutlinedTextField(
+                            value = editor.stylesheetPath,
+                            onValueChange = { workspace.update { editor.stylesheetPath = it } },
+                        )
+                    }
+                }
             }
         }
 

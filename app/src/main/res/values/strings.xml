@@ -133,6 +133,9 @@
     <string name="settings__theme_editor__property_already_exists">A property with this name already exists within the current rule.</string>
     <string name="settings__theme_editor__property_name">Property name</string>
     <string name="settings__theme_editor__property_value">Property value</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
 
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
@@ -606,6 +609,7 @@
 
 
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
     <string name="ext__meta__components_theme">Bundled theme components</string>
     <string name="ext__meta__components_none_found">This extension archive does not contain any bundled components.</string>
@@ -614,6 +618,7 @@
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Issue tracker</string>
     <string name="ext__meta__keywords">Keywords</string>
+    <string name="ext__meta__label">Label</string>
     <string name="ext__meta__license">License</string>
     <string name="ext__meta__maintainers">Maintainers</string>
     <string name="ext__meta__maintainers_by">By: {maintainers}</string>
