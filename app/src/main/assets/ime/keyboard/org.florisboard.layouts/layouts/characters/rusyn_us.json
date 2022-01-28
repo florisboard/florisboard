@@ -23,8 +23,9 @@
       { "$": "auto_text_key", "code": 1076 , "label": "д" },
       { "$": "auto_text_key", "code": 1092 , "label": "ф" },
       { "$": "auto_text_key", "code": 1169 , "label": "ґ" },
+      { "$": "auto_text_key", "code": 1067 , "label": "ы" },
       { "$": "auto_text_key", "code":  1075, "label": "г" },
-      { "$": "auto_text_key", "code": 1100 , "label": "ь" },
+      { "$": "auto_text_key", "code": 1078 , "label": "ж" },
       { "$": "auto_text_key", "code":  1082, "label": "к" },
       { "$": "auto_text_key", "code": 1083 , "label": "л" },
       { "$": "auto_text_key", "code":  1096, "label": "ш" },
@@ -40,6 +41,6 @@
       { "$": "auto_text_key", "code":  1085, "label": "н" },
       { "$": "auto_text_key", "code": 1084 , "label": "м" },
       { "$": "auto_text_key", "code": 1080 , "label": "и" },
-      { "$": "auto_text_key", "code": 1078 , "label": "ж" }
+      { "$": "auto_text_key", "code": 1100 , "label": "ь" }
     ]
   ]
