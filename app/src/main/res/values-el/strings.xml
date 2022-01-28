@@ -101,60 +101,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Νέο θέμα</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Το θέμα εισήχθη με επιτυχία!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Το θέμα εξήχθη με επιτυχία!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Όνομα</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Τύπος</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Προσθήκη ομάδας</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Επεξεργασία ομάδας</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Προσθήκη χαρακτηριστικού</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Επεξεργασία χαρακτηριστικού</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Επεξεργασία ονόματος θέματος</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Αναφορά</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Ομάδα</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Χαρακτηριστικό</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Συμπαγές χρώμα</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Γραμμικό ντεγκραντέ</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Ακτινικό ντεγκραντέ</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Εναλλαγή</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Κατάσταση</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Άλλο</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Κείμενο</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Προεπισκόπηση της τιμής του θέματος</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Παρακαλώ εισάγετε ένα όνομα για το θέμα.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Παρακαλώ εισάγετε ένα όνομα ομάδας το οποίο περιέχει μόνο γράμματα (a-z και/ή A-Z), άνω και κάτω τελεία (:) για υποομαδοποίηση ή επιπλέον αριθμούς (0-9), κυματοειδή γραμμή (~) και κάτω παύλες (_) για την ετικέτα του πλήκτρου.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Παρακαλώ εισάγετε ένα όνομα για την ομάδα.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Αυτό το όνομα ομάδας υπάρχει ήδη μέσα σε αυτό το θέμα. Παρακαλώ επιλέξτε κάποιο άλλο.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Παρακαλώ εισάγετε ένα όνομα χαρακτηριστικού το οποίο περιέχει μόνο τα γράμματα a-z και/ή A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Παρακαλώ εισάγετε ένα όνομα χαρακτηριστικού.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Αυτό το όνομα χαρακτηριστικού υπάρχει ήδη μέσα σε αυτήν την ομάδα. Παρακαλώ ορίστε κάποιο άλλο.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Παράθυρο &amp; Σύστημα</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Πληκτρολόγιο</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Πλήκτρο</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Πλήκτρο (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Περιεχόμενο μέσων</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Λειτουργία ενός χεριού</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Αναδυόμενο παράθυρο</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Ιδιωτική λειτουργία</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Έξυπνη Μπάρα</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Πλήκτρο έξυπνης μπάρας</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Διάταξη πλήρους οθόνης τοπίου</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Πλήκτρο δράσης πλήρους οθόνης τοπίου</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Διαδρομή ολίσθησης</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Προσαρμοσμένη ομάδα (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Χρώμα φόντου</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Χρώμα φόντου (ενεργό)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Χρώμα φόντου (πατημένο)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Χρώμα προσκηνίου</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Χρώμα προσκηνίου (εναλλακτικό)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Χρώμα προσκηνίου (πατημένο)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Εμφάνιση περιθωρίων</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Κυρίως χρώμα</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Κυρίως χρώμα (σκούρο)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Δευτερεύον χρώμα</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Χρώμα μπάρας πλοήγησης</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Σκούρο προσκήνιο μπάρας πλοήγησης</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Ημιδιαφανές χρώμα</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Χρώμα κειμένου</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Προσαρμοσμένο χαρακτηριστικό (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ήχος &amp; Δόνηση</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ηχητική ανάδραση / Ήχοι</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ενεργοποίηση ηχητικής ανάδρασης</string>

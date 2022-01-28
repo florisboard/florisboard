@@ -48,21 +48,6 @@
     <string name="pref__theme__source_internal" comment="Label for the theme source field">내부 저장소</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">빈 테마 만들기</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">새 테마</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">이름</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">그룹 추가</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">그룹 편집</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">속성 추가</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">속성 편집</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">테마 이름 편집</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">그룹</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">속성</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">단색</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">기타</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">테마 이름을 입력해 주세요.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">창 및 시스템</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">키보드</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">사생활 보호 모드</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">배경 색상</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">키보드</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->

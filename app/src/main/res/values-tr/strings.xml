@@ -99,60 +99,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Yeni tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema başarıyla içe aktarıldı!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema başarıyla dışa aktarıldı!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">İsim</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Türü</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Grup ekle</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Grubu düzenle</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Özellik ekle</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Özellikleri düzenle</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Tema ismini düzenle</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referans</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grup</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Özellik</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Tek renk</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Doğrusal gradyan</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Dairesel gradyan</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Düğme</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Durum</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Diğer</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Metin</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Tema değeri önizlemesi</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Lütfen bir tema ismi girin.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Lütfen alt-gruplar için yalnızca harf (a-z ve/veya A-Z), iki nokta üst üste (:) içeren veya anahyar etiketi için rakam (0-9), yaklaşık (~) ve alt çizgi (_) içeren bir grup ismi girin.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Lütfen bir grup ismi girin.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Girdiğiniz grup ismi bu temada zaten mevcut. Lütfen başka bir isim girin.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Lütfen sadece a-z ve/veya A-Z harflerini içeren sembol adını girin.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Lütfen sembol adını girin.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Bu sembol adı zaten bu grup içinde bulunuyor. Lütfen başka bir tane belirleyin.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Pencere &amp; Sistemi</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Klavye</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tuş</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tuş (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Medya içeriği</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Tek el</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Açılır pencere</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Gizlilik modu</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Akıllı çubuk</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Akıllı çubuk tuşu</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Yatay tam ekran görünümü</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Yatay tam ekran tuşu</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Kaydırma izi</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Özel grup (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Arkaplan rengi</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Arka plan rengi (aktif)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Arka plan rengi (basılı)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Ön plan rengi</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Ön plan rengi (alternatif)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Ön plan rengi (basılı)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Çerçeveyi göster</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Ana renk</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Ana renk (karanlık)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Vurgu rengi</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Gezinme çubuğu rengi</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Gezinme çubuğu karanlık ön plan</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Yarı transparan renk</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Metin rengi</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Özel sembol (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ses &amp; Titreşim</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>

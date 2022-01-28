@@ -98,60 +98,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nuovo tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importato correttamente!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema esportato correttamente!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nome</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Tipo</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Aggiungi gruppo</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Modifica gruppo</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Aggiungi attributo</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Modifica attributo</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Modifica il nome del tema</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenze</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppo</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attributo</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Colore</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradiente lineare</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradiente radiale</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Interruttore</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stato</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Altro</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Testo</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Anteprima del tema</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Inserisci un nome per il tema.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Inserire un nome al gruppo che contenga solo lettere (a–z e/o A–Z), due punti (:) per il sottogruppo oppure numeri (0–9), tilde (~) e sottolineature (_) per la chiave etichetta.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Inserisci il nome del gruppo.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Esiste già un gruppo con questo nome nel tema. Per favore scegline un altro.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Si prega d\'inserire un nome dell\'attributo che contiene solo le lettere a–z e/o A–Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Inserisci il nome dell\'attributo.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Esiste già un gruppo con questo nome nel tema. Per favore scegline un altro.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Finestra &amp; Sistema</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastiera</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tasto</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tasto (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Contesto multimediale</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Ad una mano</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Modalità privata</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Pulsante smartbar</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Layout a schermo intero orizzontale</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Pulsante d\'azione a schermo intero orizzontale</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Percorso di scorrimento</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Gruppo personalizzato (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Colore sfondo</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Colore sfondo (attivo)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Colore sfondo (premuto)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Colore di testo</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Colore di testo (alternativo)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Colore di testo (premuto)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Mostra bordi</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Colore principale</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Colore principale (scuro)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Colore in rilievo</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Colore della barra di navigazione</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Colore scuro di primo piano della barra di navigazione</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Colore semi-trasparente</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Colore del testo</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attributo personalizzato (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suoni &amp; Vibrazione</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suoni</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Attiva feedback audio</string>

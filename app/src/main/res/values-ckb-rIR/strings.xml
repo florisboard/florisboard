@@ -99,60 +99,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ڕووکاری نوێ</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">ڕووکار بەسەرکەتوویی هێنرا!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">ڕووکار بەسەرکەتوویی نێردرا!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">ناو</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">جۆر</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">زیادکردنی گرووپ</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">دەستکاریکردنی گرووپ</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">زیادکردنی تایبەتمەندی</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">دەستکاریکردنی تایبەتمەندی</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">دەستکاریکردنی ناو</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">سەرچاوە</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">گرووپ</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">تایبەتمەندی</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">تاک ڕەنگ</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">هەمەڕەنگ</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">ڕەنگی بریقەدار</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">گۆڕین</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">دۆخ</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">جۆری تر</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">نوسین</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">ڕێژەی پیشاندانی ڕووکار</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">تکایە ناوی ڕووکار بنوسە</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">تکایە ناوی گروپ بنووسە کە تەنها پیتی (a-z و/یان A-Z) لەخۆ بگرێت، کۆلۆن (:) بۆ ژێر-گروپکردن یان ژمارە زیادەکان (0-9), (~) و ژێرهێڵەکان (_) بۆ ناولێنانی کلیلەکە.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">تکایە ناوی گرووپ بنوسە</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">ئەم ناوی گرووپە بوونی هەیە، تکایە دانەیەکی تر بنوسە.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">تکایە ناوی تایبەتمەندی بنووسە کە تەنها پیتەکانی a-z و/یان A-Z ی تێدا بێت.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">تکایە ناوی تایبەتمەندی بنوسە</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">ئەم ناوە بوونی هەیە لە گرووپدا، تکایە دانەیەکی تر بنوسە.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">ڕووکەش</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">تەختەکلیل</string>
-    <string name="settings__theme__group_key" comment="Theme group label">دوگمە</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">دوگمە (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">لیستی میدیا</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">بەکارهێنان بە یەک دەست</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">بچووکراوەی پیت</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">دۆخی تایبەت</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">بەشی سەرەوە</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">دوگمەکانی بەشی سەرەوە</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">فرمانی دوگمەی نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">پیشاندانی هێما</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">گرووپی تایبەت (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">ڕەنگی پشتتەوە</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">ڕەنگی پشتەوە (چالاک)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">ڕەنگی پشت شاشە (دەسلێدراو)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">ڕەنگی لاوەکی</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">ڕەنگی لاوەکی (جێگرەوە)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">ڕەنگی لاوەکی (دەسلێدراو)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">پیشاندانی لێوار</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">ڕەنگی بنەڕەتی</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">ڕەنگی بنەڕەتی (تاریک)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">ڕەنگی لاوەکی</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">ڕەنگی بەشی خوارەوە</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">پشت شاشەی تاریکی بەشی خوارەوە</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">ڕەنکی نیمچە کاڵ</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">رەنگی نوسین</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">بەهای تایبەت (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">ڕێکخستنی دەنگ و لەرزین</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">کاریگەری دەنگ / دەستلێدان</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">چالاککردنی کاریگەری دەنگی</string>

@@ -101,60 +101,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Темата е внесена успешно!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Темата е изнесена успешно!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Вид</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Добавяне на група</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Редактиране на група</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Добавяне на атрибут</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Редактиране на атрибут</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Преименуване на тема</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референция</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Атрибут</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Плътен цвят</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Линеен градиент</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Радиален градиент</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Превключвател</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Състояние</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Преглед на стойността на темата</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Въведете име на темата.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Въведете име на групата, което да съдържа само букви (a–z и/или A–Z), двоеточие (:) за подгрупиране или допълнително числа (0–9), тилда (~) или долна черта (_) за етикет на клавиш.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Въведете име на групата.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Група с такова име вече съществува в темата. Посочете друго.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Въведете име на атрибут, което съдържа само буквите a-z и/или A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Въведете име на атрибут.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Атрибут с такова име вече съществува в групата. Посочете друго.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Прозорец и система</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Клавиатура</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Клавиши</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Клавиш (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Медиен контекст</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Работа с една ръка</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Изскачаща подсказка</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Поверителен режим</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Интелигентна лента</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Бутон за интелигентна лента</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Клавиатура на цял екран (пейзаж)</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Бутон към клавиатура на цял екран (пейзаж)</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Следа от плъзгане</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Потребителска група (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Цвят на фона</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Цвят на фона (активен)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Цвят на фона (натиснат)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Цвят на текста</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Цвят на текста (алтернативен)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Цвят на текста (натиснат)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Показване на кант</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Основен цвят</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Основен цвят (тъмен)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Цвят на акцента</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Цвят на лентата за навигация</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Лента за навигация с тъмен текст</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачен цвят</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвят на текста</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Потребителски атрибут (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>

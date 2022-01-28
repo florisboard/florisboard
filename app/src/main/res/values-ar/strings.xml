@@ -102,60 +102,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ثيم جديد</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم استيراد الثيم بنجاح!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم تصدير الثيم بنجاح!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">الاسم</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">النوع</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">تحرير المجموعة</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">إضافة خاصية</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">تحرير الصفة</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">تحرير اسم السمة</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">المرجع</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">المجموعة</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">الخاصية</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">لون كامل</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">تدرّج خطي</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">تدرّج شعاعي</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">تبديل</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">الحالة</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">أخرى</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">النص</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">معاينة قيم السمة</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">يرجى إدخال اسم المظهر.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">الرجاء إدخال اسم مجموعة يحتوي فقط على أحرف (a-z و / أو A-Z) ، والنقطتان (:) للتجميع الفرعي أو بالإضافة إلى الأرقام (0–9) ، والمده (~) والتسطير (_) للمفتاح ضع الكلمة المناسبة.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">الرجاء إدخال اسم المجموعة.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">اسم هذه المجموعة موجود بالفعل في هذا الموضوع. الرجاء اختيار واحد آخر.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">الرجاء إدخال اسم وصفي يحتوي فقط على الأحرف a-z و / أو A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">الرجاء إدخال اسم الخاصية.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">الاسم الوصفي هذا موجود بالفعل داخل هذه المجموعة. يرجى تحديد واحد آخر.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
-    <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">المفتاح (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">سياق الوسائط</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">وضع اليد الواحدة</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">نافذة منبثقة</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">الوضع الخاص</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">الشريط الذكـي</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">زر الشريط الذكي</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">تخطيط ملء الشاشة الأفقي</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">زر إجراء ملء الشاشة الأفقي</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">مسار التمرير</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">مجموعات مخصصة (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">لون الخلفية</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">لون الخلفية (مفعل)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">لون الخلفية (عند الضغط)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">لون الواجهة</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">لون المقدمة (بديل)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">لون الخلفية (عند الضغط)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">عرض الحدود</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">اللون الأساسي</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">اللون الأساسي (داكن)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">اللون الثانوي</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">لون شريط التصفّح</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">الواجهة الداكنة لشريط التصفّح</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">لون شبه شفاف</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">لون النص</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">وصف مخصص (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">الصوت والاهتزاز</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ردود الفعل الصوتية / الأصوات</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">تمكين التاثيرات الصوتية</string>

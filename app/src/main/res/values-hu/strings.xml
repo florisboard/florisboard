@@ -82,60 +82,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Új téma</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Téma sikeresen importálva!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Téma sikeresen exportálva!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Név</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Típus</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Csoport hozzáadása</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Csoport szerkesztése</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Tulajdonság hozzáadása</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Tulajdonság szerkesztése</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Téma nevének szerkesztése</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Hivatkozás</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Csoport</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Tulajdonság</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Egyszínű</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineáris átmenet</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Sugaras átmenet</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Kapcsoló</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Állapot</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Egyéb</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Szöveg</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">A téma értékének előnézete</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Adjon meg egy témanevet.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Adjon meg egy csoportnevet, amely csak betűket (a-z és/vagy A-Z) tartalmaz, vagy kettőspontot (:) a további csoportosításhoz, vagy további számokat (0–9), hullámvonalat (~) és aláhúzást (_) a billentyűcímkéhez.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Adjon meg egy csoportnevet.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Ez a csoportnév már létezik ebben a témában. Adjon meg egy másikat.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Adjon meg egy tulajdonságnevet, amely csak a-z és/vagy A-Z betűket tartalmaz.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Adjon meg egy tulajdonságnevet.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Ez a tulajdonságnév már létezik ebben a csoportban. Adjon meg egy másikat.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Ablak és rendszer</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Billentyűzet</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Billentyű</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Billentyű (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Média kontextus</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Egykezes</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Felugró gomb</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privát mód</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Okossáv</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Okossáv gomb</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Teljes képernyős fekvő elrendezés</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Teljes képernyős fekvő elrendezés gombja</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Csúszási nyomvonal</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Egyéni csoport (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Háttérszín</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Háttérszín (aktív)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Háttérszín (lenyomva)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Előtérszín</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Előtérszín (alternatív)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Előtérszín (lenyomva)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Szegély megjelenítése</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Elsődleges szín</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Elsődleges szín (sötét)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Kiemelőszín</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Navigációs sáv színe</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Navigációs sáv sötét előtér</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Félig átlátszó szín</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Szövegszín</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Egyéni tulajdonság (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Billentyűzet</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Másodlagos számsor</string>

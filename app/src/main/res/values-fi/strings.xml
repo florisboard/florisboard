@@ -80,51 +80,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Uusi teema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Teema tuotu onnistuneesti!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Teema viety onnistuneesti!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nimi</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Tyyppi</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Lisää ryhmä</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Muokkaa ryhmää</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Lisää määrite</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Muokkaa määritettä</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Muokkaa teeman nimeä</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenssi</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Ryhmä</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Määrite</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Tasainen väri</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineaarinen liukuväri</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Säteittäinen liukuväri</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Kytkin</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Tila</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Muu</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teksti</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Syötä teeman nimi.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Syötä ryhmälle nimi, joka sisältää vain kirjaimia (a–z ja/tai A–Z), kaksoispisteitä (:) alaryhmitystä varten tai numeroita (0–9), tilde-merkkejä (~) tai alaviivoja (_).</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Syötä ryhmän nimi.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Tässä teemassa on jo tämän niminen ryhmä. Valitse toinen nimi.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Syötä määritteelle nimi, jossa on vain kirjaimia a-z ja/tai A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Syötä määritteen nimi.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Tässä ryhmässä on jo tämän niminen määre. Valitse toinen nimi.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Ikkuna &amp; järjestelmä</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Näppäimistö</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Painike</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Näppäin (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Mediakonteksti</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Yksikätinen</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Yksityinen tila</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Älypalkki</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Älypalkin painike</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Taustaväri</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Taustaväri (aktiivisena)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Taustaväri (painettuna)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Merkin väri</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Merkin väri (vaihtoehtoinen)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Näytä reunukset</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Ensisijainen väri</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Ensisijainen väri (tumma teema)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Korostusväri</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Navigointipalkin väri</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Navigointipalkin tummat painikkeet</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstin väri</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Näppäimistö</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Numerorivi</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Näytä toimintopainike</string>

@@ -85,60 +85,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nieuw thema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thema succesvol geïnporteerd!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Thema succesvol geëxporteerd!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Naam</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Groep toevoegen</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Bewerk groep</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Kenmerk toevoegen</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Kenmerken bewerken</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Bewerk themanaam</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referentie</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Groep</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Kenmerk</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Effen kleur</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineair kleurverloop</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiaal kleurverloop</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Wissel</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Status</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Overige</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Voorbeeld van de themawaarde</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Voer een naam voor het thema in.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Voer een groepsnaam in die enkel letters (a-z en/of A-Z), dubbelpunt (:) voor ondergroepering of bijkomend nummers (0-9), tilde (~) of underscores (_) voor het sleutellabel bevat.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vul een groepsnaam in.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Deze groepsnaam bestaat al binnen dit thema. Kies een andere naam.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vul een kenmerknaam in die enkel de letters a-z en/of A-Z bevat.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vul de naam van het kenmerk in.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Deze kenmerknaam bestaat al binnen deze groep. Kies een andere naam.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Venster &amp; Systeem</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Toetsenbord</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Toets</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Sleutel (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Mediacontext</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Met één hand</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Pop-up</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privémodus</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Slimme Balk</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Knop voor Slimme Balk</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Landschapsmodus volledig scherm indeling</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Landschapsmodus volledig scherm functieknop</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Glijspoor</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Aangepaste groep (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Achtergrondkleur</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Achtergrondkleur (wanneer actief)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Achtergrondkleur (wanneer ingedrukt)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Voorgrondkleur</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Voorgrondkleur (alternatief)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Voorgrondkleur (wanneer ingedrukt)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Rand weergeven</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primaire kleur</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primaire kleur (Donker)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Accentkleur</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Kleur navigatiebalk</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Navigatiebalk donkere voorgrond</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Semi-transparante kleur</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstkleur</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Aangepast kenmerk (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid &amp; vibraties</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>

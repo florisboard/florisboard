@@ -81,60 +81,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Тема успішно імпортована!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Тема успішно експортована!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Назва</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Додати групу</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Редагувати групу</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Додати атрибут</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Редагувати атрибут</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Змінити назву теми</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Посилання</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Атрибут</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Суцільний колір</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Лінійний градієнт</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Радіальний градієнт</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Перемикач</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Стан</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Інше</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Попередній перегляд значення теми</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Будь ласка введіть назву теми.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Будь ласка, введіть назву групи, яка має лише латинські букви (a-z та/або A-Z), двокрапки (:) для підгрупи або додаткові цифри (0-9), тильду (~) та підкреслювання (_) для мітки.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Будь ласка, введіть назву групи.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Ця назва групи вже є в цій темі. Будь ласка, введіть іншу.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Будь ласка, введіть назву атрибута, яка має лише латинські символи a-z та/або A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Будь ласка, введіть назву атрибута.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Ця назва атрибута вже є в цій темі. Будь ласка, введіть іншу.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Вікно &amp; Система</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Клавіатура</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Клавіша</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Клавіша (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Медіа контекст</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Однорукий</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Спливаюча підказка</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Приватний режим</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Розумна панель</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Кнопка розумної панелі</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Клавіатура на цілий екран (пейзаж)</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Кнопка дії клавіатури на цілий екран (пейзаж)</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Безперервний слід</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Користувацька група (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Колір фону</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Колір фону (активний)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Колір фону (натиснутий)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Колір переднього плану</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Колір переднього плану (альтернативний)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Колір переднього плану (натиснутий)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Показати рамку</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Основний колір</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Основний колір (темний)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Колір відтінку</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Колір панелі навігації</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Панель навігації темного переднього плану</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Напівпрозорий колір</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Колір тексту</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Користувацький атрибут (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Клавіатура</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Рядок з цифрами</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Підказка в строці з цифрами</string>

@@ -99,60 +99,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema nû</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Têma têvedan bi serkeftî!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema bi serketî hat îxrackirin!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nav</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Cure</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Komê lê zêde bike</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Komê biguherîne</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Taybetmendiyê lê zêde bike</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Taybetmendiyê biguherîne</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Navê tema biguherîne</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referans</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kom</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Taybetî</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Rengê tarî</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradyana xêzî</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradyana Gloverî</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Biguherîne</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Dox</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Din</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Nivîs</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Pêşdîtin ji bo nirxa tema</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Ji kerema xwe re navekî dirbê têkeve.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Ji kerema xwe re navekî grûpê ku tenê tîpên (a-z û/an A-Z) tê de hene, kolon (:) ji bo hejmarên bin-komkirin an jî wekî din (0-9), nîşana nêzike (~) û binê (_) ji bo etîketa sereke.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Ji kerema xwe re navê komê têkeve.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Navê vê komê jixwe di vê dirbê de heye. Ji kerema xwe yekî din hilbijêre.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Ji kerema xwe re navekî taybet binivîse ku tenê tîpên a-z û/an A-Z hene.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Ji kerema xwe navê taybetiyê binav bike.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Navê vê taybetmendiyê jixwe di nava vê komê de heye. Ji kerema xwe re yeka din diyar bikin.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Pace &amp; Pergal</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Klavye</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Kilîd</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Mifte (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Têkiliya medyayê</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Yek-destî</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Moda taybet</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Bişkojka Smartbar</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Rêzkirina dîmendera tije ya peyzgeh</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Bişkojka çalakiya dîmender tije ya peyzgeh</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Şopa şemitîn</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Koma servîsê (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Rengê Paşrûyê</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Rengê rûerdê (çalak)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Rengê rûerdê (pêlêkirî)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Rengê rûerdê</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Rengê rûerdê (Altêrnatîf)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Rengê rûerdê (zextkirî)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Sînor nîşan bide</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Rengê sereke</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Rengê sereke (Tarî)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Rengê devkî</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Rengê darka navîgasyonê</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Darikên navîgasyonê pêşûya tarî</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Nîv rengê şeffaf</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Rengê nivîsarê</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Taybetmendiya taybet (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Deng &amp; Vibrasyon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>

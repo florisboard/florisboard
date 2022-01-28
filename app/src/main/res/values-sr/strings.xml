@@ -36,21 +36,6 @@
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Интерна Меморија</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Направи нову тему</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Додај групу</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Измени групу</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Додај особину</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Измени особину</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референца</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Особина</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Стање</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Тастатура</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Кључ</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Приватни мод</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Тастатура</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->

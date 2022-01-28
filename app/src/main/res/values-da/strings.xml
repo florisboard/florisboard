@@ -62,32 +62,6 @@
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Opret tomt tema</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Brugerdefineret (baseret på %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nyt tema</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tilføj gruppe</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Redigér gruppe</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Redigér tema navn</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Reference</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppe</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Skift</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Andet</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Vindue &amp; System</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tast</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-håndstilstand</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privattilstand</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBjælke</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartbjælke knap</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Baggrundsfarve</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Baggrundsfarve (aktiv)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Forgrundsfarve</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Forgrundsfarve (alternativ)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Vis kant</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primær farve</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primær farve (mørk)</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarve</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktivér lydfeedback</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsvarighed</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstyrke</string>

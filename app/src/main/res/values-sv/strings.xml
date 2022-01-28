@@ -66,48 +66,6 @@
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Skapa tomt tema</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Anpassat (baserad på %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nytt tema</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Namn</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Lägg till grupp</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Redigera grupp</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Lägg till egenskap</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Redigera egenskap</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referens</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupp</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Egenskap</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Enfärgad</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Linjär gradient</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiell gradient</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Byt</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Tillstånd</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Annat</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Förhandsvisning av temavärde</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Vänligen ange ett tema namn.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vänligen ange ett grupp namn.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vänligen ange ett egenskapsnamn som bara innehåller följande bokstäver a-z och/eller A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vänligen ange ett egenskapsnamn.</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tangentbord</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tangent</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tangent (%s)</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Enhandad</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privatläge</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartremsa</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartremsa knapp</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Anpassad grupp (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Bakgrundsfärg</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Bakgrundsfärg (aktiv)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Bakgrundsfärg (intryckt)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Förgrundsfärg</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Förgrundsfärg (alternativt)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Förgrundsfärg (intryckt)</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primärfärg</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primärfärg (mörk)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Accentfärg</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Navigeringsremsans färg</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Mörk förgrund för navigeringsremsan</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Textfärg</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tangentbord</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Sifferrad</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>

@@ -51,35 +51,6 @@
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interna memorija</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Kreiraj praznu temu</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova tema</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Ime</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Tip</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Dodaj grupu</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Uredi grupu</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Dodaj atribut</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Uredi atribut</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenca</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupa</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Drugo</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Molimo unesite ime teme.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Molimo unesite ime grupe.</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatura</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Taster</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Taster (%s)</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privatni modus</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Boja pozadine</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Boja pozadine (aktivan)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Boja pozadine (pritisnut)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Boja teksta</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Boja teksta (alternativno)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Boja teksta (pritisnut)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Prikaži okvir</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primarna boja</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primarna boja (tamna)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Boja akcenta</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Boja trake za navigaciju</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Boja teksta</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatura</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Red sa brojevima</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raspored</string>

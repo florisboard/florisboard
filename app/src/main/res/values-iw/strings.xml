@@ -76,58 +76,6 @@
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">צור ערכת עיצוב חדשה</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">מותאם אישית (בהתבסס על %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ערכת נושא חדשה</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">שם</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">סוג</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">הוסף קבוצה</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">ערוך קבוצה</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">הוסף מאפיין</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">ערוך מאפיין</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">התייחסות</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">קבוצה</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">מאפיין</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">צבע אחיד</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">מדרג ליניארי</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">מדרג רדיאלי</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">החלף</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">מצב</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">אחר</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">טקסט</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">תצוגה מקדימה של ערך הנושא</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">אנא הכנס שם ערכת נושא.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">אנא הזן שם קבוצה המכיל רק אותיות (a–z ו / או A–Z), נקודתיים (:) לקבוצת משנה או בנוסף מספרים (0–9), טילדה (~) וקו תחתון (_) למפתח. תווית.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">אנא הזן שם קבוצה.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">שם קבוצה זה כבר קיים בערכת נושא זו. אנא בחר שם אחר.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">אנא הזן שם מאפיין המכיל רק אותיות a-z ו / או A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">אנא הזן שם מאפיין.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">שם מאפיין זה כבר קיים בקבוצה זו. אנא ציין אחד אחר.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">חלון ומערכת</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">מקלדת</string>
-    <string name="settings__theme__group_key" comment="Theme group label">מקש</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">מפתח (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">אזור המֶדְיָה</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">ביד אחת</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">חלון קופץ</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">מצב פרטיות</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">שורה חכמה</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">כפתור שורה חכמה</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">פריסת מסך מלא לרוחב</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">כפתור פעולה מסך מלא לרוחב</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">קבוצה מותאמת אישית (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">צבע רקע</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">צבע רקע (מופעל)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">צבע רקע (לחוץ)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">צבע החזית</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">צבע חזית (חלופי)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">צבע חזית (לחוץ)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">הצג גבול</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">צבע ראשי</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">צבע ראשי (כהה)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">צבע הדגשה</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">צבע סרגל הניווט</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">סרגל ניווט בעל רקע חזית כהה</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">צבע שקוף למחצה</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">צבע טקסט</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">מאפיין מותאם אישית (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">מקלדת</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>

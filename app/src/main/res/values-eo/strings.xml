@@ -47,33 +47,6 @@
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Krei malplenan etoson</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Propra (bazita sur %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova etoso</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nomo</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Tipo</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Aldoni grupon</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Redakti grupon</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Aldoni atributon</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Redakti atributon</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenco</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupo</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atributo</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Baskuli</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stato</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Alia</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teksto</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Klavaro</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Klavo</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privata reĝimo</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Propra grubo (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Fona koloro</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Fona koloro (aktiva)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Malfona koloro</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Malfona koloro (alternativa)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Montri konturon</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Ĉefa koloro</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Ĉefa koloro (malluma)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Akcenta koloro</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Teksta koloro</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Propra atributo (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>

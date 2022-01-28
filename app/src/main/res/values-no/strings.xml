@@ -88,60 +88,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nytt tema</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importert!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema eksportert!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Legg til gruppe</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Rediger gruppe</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Legg til attributt</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Rediger attributt</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Rediger temanavn</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referanse</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppe</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attributt</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Solid farge</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineær gradient</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiell gradient</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Bytt</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Tilstand</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Annet</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Forhåndsvisning av temaverdien</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Vennligst angi et temanavn.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Vennligst angi et gruppenavn som bare inneholder bokstaver (a–z og/eller A–Z), kolon (:) for undergruppering eller i tillegg nummer (0–9), tilde (~) og underlinjer (_) for nøkkelverdien.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vennligst angi et gruppenavn.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Dette gruppenavnet finnes allerede i dette temaet. Vennligst velg et annet.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vennligst angi et attributtnavn som bare inneholder bokstavene a-z og/eller A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vennligst angi et attributtnavn.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Dette attributtnavnet finnes allerede i denne gruppen. Vennligst velg et annet.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Vindu &amp; System</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tast</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tast (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-håndt</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privat modus</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartbar-knapp</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Fullskjermmodus i landskap</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Landskap-fullskjerm handling knapp</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Glidespor</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Egendefinert gruppe (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Bakgrunnsfarge</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Bakgrunnsfarge (aktiv)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Bakgrunnsfarge (inntrykket)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Forgrunnsfarge</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Forgrunnsfarge (alternativ)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Forgrunnsfarge (inntrykket)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Vis kanter</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primærfarge</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primærfarge (mørk)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Aksentfarge</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Navigasjonsbar-farge</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Mørk navigasjonsbar-farge forgrunn</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Halvgjennomsiktig farge</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarge</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Egendefinert attributt (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>

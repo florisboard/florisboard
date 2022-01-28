@@ -103,60 +103,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema baru</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema berhasil diimpor!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema berhasil diekspor!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nama</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Jenis</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tambahkan kelompok</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Sunting kelompok</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Tambahkan atribut</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Sunting atribut</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Sunting nama tema</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referensi</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kelompok</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Warna baku</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradiasi linear</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradiasi radial</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Beralih</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Keadaan</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Lainnya</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teka</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Pratinjau nilai tema</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Harap masukkan nama tema.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Harap masukkan nama grup yang hanya berisi huruf (a–z dan/atau A–Z), titik dua (:) untuk sub-pengelompokan atau tambahan angka (0–9), tilde (~) dan garis bawah (_) untuk kunci label.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Harap masukkan nama kelompok.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Nama grup ini sudah ada dalam tema ini. Harap memilih nama yang lain.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Harap masukkan nama atribut yang hanya mengandung huruf a-z dan/atau A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Harap masukkan nama atribut.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Nama atribut ini sudah ada dalam grup ini. Harap tentukan nama yang lain.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Window &amp; Sistem</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Papan ketik</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tombol</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tombol (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Konteks media</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Satu-tangan</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Kemunculan</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Mode pribadi</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Tombol Smartbar</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Tata letak layar penuh lanskap</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Tombol aksi layar penuh lanskap</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Jejak geser</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grup kustom (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Warna latar belakang</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Warna latar belakang (aktif)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Warna latar belakang (ditekan)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Warna latar depan</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Warna latar depan (alternatif)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Warna latar depan (ditekan)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Tampilkan batas</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Warna utama</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Warna utama (gelap)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Warna aksen</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Warna bilah navigasi</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Latar depan gelap bilah navigasi</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Warna semi transparan</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Warna teks</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atribut kustom (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suara &amp; Getaran</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suara</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktifkan feedback audio</string>

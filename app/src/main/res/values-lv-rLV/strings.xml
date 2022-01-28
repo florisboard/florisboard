@@ -102,60 +102,6 @@
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Jauns izskats</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Izskats veiksmīgi ievietots!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Izskats veiksmīgi izdots!</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nosaukums</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Veids</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Pievienot kopu</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Labot kopu</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Pievienot pazīmi</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Labot pazīmi</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Labot izskata nosaukumu</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Saikne</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kopa</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Pazīme</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Tīrtoņa krāsa</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Vienvirziena krāsu pāreja</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Apļveida krāsu pāreja</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Slēdzis</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stāvoklis</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Cits</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teksts</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Priekšskatīt izskata vērtību</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Lūgums ievadīt izskata nosaukumu.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Jāievada kopas nosaukums, kas satur tikai burtus (a–z un/vai A–Z), kols (:) apakškopām vai papildus ciparus (0–9), tildi (~) un apakšsvītras (_) taustiņa apzīmējumam.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Lūgums ievadīt kopas nosaukumu.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Šāds kopas nosaukums jau pastāv šajā izskatā. Lūgums izvēlēties citu.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Lūgums ievadīt pazīmes nosaukumu, kas satur tikai burtus a-z un/vai A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Lūgums ievadīt pazīmes nosaukumu.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Šāds pazīmes nosaukums šajā kopā jau pastāv. Lūgums norādīt citu.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Logs un sistēma</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatūra</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Taustiņš</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Taustiņš (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Informācijas nesēju kopums</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Vienrocīgs</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Uznirstošais lodziņš</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Slepenais stāvoklis</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Viedjosla</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Viedjoslas poga</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Līmeniska pilnekrāna izkārtojums</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Līmeniska pilnekrāna izkārtojuma darbības poga</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Slīdēšanas pēdas</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Pielāgota kopa (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Fona krāsa</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Fona krāsa (izmantots)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Fona krāsa (piespiests)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Priekšplāna krāsa</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Fonta izmēra reizinātājs (statenisks novietojums)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Priekšplāna krāsa (piespiests)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Rādīt malu</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Pamatkrāsa</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Pamatkrāsa (tumšs)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Uzsvara krāsa</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Pārlūkošanas joslas krāsa</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Pārlūkošanas joslas tumšs priekšplāns</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Puscaurspīdīga krāsa</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Teksta krāsa</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Pielāgota pazīme (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Skaņas un trīcēšana</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
