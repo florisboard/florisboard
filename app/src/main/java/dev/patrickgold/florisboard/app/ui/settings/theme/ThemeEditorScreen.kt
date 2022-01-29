@@ -124,7 +124,7 @@ fun ThemeEditorScreen(
             val stylesheetPath = editor.stylesheetPath()
             editor.stylesheetPathOnLoad = stylesheetPath
             val stylesheetFile = workspace.dir.subFile(stylesheetPath)
-            if (stylesheetFile.exists()) {
+            val stylesheetEditor = if (stylesheetFile.exists()) {
                 try {
                     stylesheetFile.readJson<SnyggStylesheet>(SnyggStylesheetJsonConfig).edit()
                 } catch (e: Throwable) {
@@ -133,6 +133,10 @@ fun ThemeEditorScreen(
             } else {
                 SnyggStylesheetEditor()
             }
+            if (stylesheetEditor.rules.none { (rule, _) -> rule.isAnnotation && rule.element == "defines" }) {
+                stylesheetEditor.rules[SnyggRule(isAnnotation = true, element = "defines")] = SnyggPropertySetEditor()
+            }
+            stylesheetEditor
         }.also { editor.stylesheetEditor = it }
     }
     var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
@@ -184,13 +188,6 @@ fun ThemeEditorScreen(
             handleBackPress()
         }
 
-        if (stylesheetEditor.rules.isEmpty()) {
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                text = stringRes(R.string.settings__theme_editor__no_rules_defined),
-                fontStyle = FontStyle.Italic,
-            )
-        }
         val definedVariables = remember(stylesheetEditor.rules) {
             stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
                 if (rule.isAnnotation && rule.element == "defines") {
@@ -210,12 +207,21 @@ fun ThemeEditorScreen(
             state = lazyListState,
         ) {
             item {
-                ExtensionComponentView(
-                    modifier = Modifier.defaultFlorisOutlinedBox(),
-                    meta = workspace.editor!!.meta,
-                    component = editor,
-                    onEditBtnClick = { showEditComponentInfoDialog = true },
-                )
+                Column {
+                    ExtensionComponentView(
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
+                        meta = workspace.editor!!.meta,
+                        component = editor,
+                        onEditBtnClick = { showEditComponentInfoDialog = true },
+                    )
+                    if (stylesheetEditor.rules.isEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                            text = stringRes(R.string.settings__theme_editor__no_rules_defined),
+                            fontStyle = FontStyle.Italic,
+                        )
+                    }
+                }
             }
 
             items(stylesheetEditor.rules.entries.toList()) { (rule, propertySet) -> key(rule) {
@@ -498,10 +504,11 @@ private fun SnyggRuleRow(
 @Composable
 internal fun DialogProperty(
     text: String,
+    modifier: Modifier = Modifier,
     trailingIconTitle: @Composable () -> Unit = { },
     content: @Composable () -> Unit,
 ) {
-    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+    Column(modifier = modifier.padding(bottom = 8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 modifier = Modifier

@@ -16,6 +16,10 @@
 
 package dev.patrickgold.florisboard.res.ext
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -48,11 +52,21 @@ data class ExtensionComponentName(
     companion object {
         private const val DELIMITER = ":"
 
-        fun from(str: String) = runCatching<ExtensionComponentName> {
+        fun from(str: String): ExtensionComponentName {
             val data = str.split(DELIMITER)
             check(data.size == 2) { "Extension component name must be of format <ext_id>:<comp_id>" }
-            ExtensionComponentName(data[0], data[1])
+            return ExtensionComponentName(data[0], data[1])
         }
+
+        val Saver = Saver<ExtensionComponentName?, String>(
+            save = { it.toString() },
+            restore = { tryOrNull { from(it) } },
+        )
+
+        val StateSaver = Saver<MutableState<ExtensionComponentName?>, String>(
+            save = { it.value.toString() },
+            restore = { mutableStateOf(tryOrNull { from(it) }) },
+        )
     }
 
     override fun toString(): String {
@@ -67,15 +81,15 @@ data class ExtensionComponentName(
         }
 
         override fun serialize(encoder: Encoder, value: ExtensionComponentName) {
-            encoder.encodeString("${value.extensionId}:${value.componentId}")
+            encoder.encodeString(value.toString())
         }
 
         override fun deserialize(value: String): ExtensionComponentName? {
-            return from(value).getOrNull()
+            return tryOrNull { from(value) }
         }
 
         override fun deserialize(decoder: Decoder): ExtensionComponentName {
-            return from(decoder.decodeString()).getOrThrow()
+            return from(decoder.decodeString())
         }
     }
 }

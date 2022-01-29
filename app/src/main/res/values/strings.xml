@@ -580,6 +580,7 @@
     <string name="ext__editor__create_component__title_theme">Create theme component</string>
     <string name="ext__editor__create_component__from_empty">Empty component</string>
     <string name="ext__editor__create_component__from_existing">From existing component</string>
+    <string name="ext__editor__create_component__from_empty_warning">Creating and configuring an empty component may be hard if you are new to {app_name} or if you are unfamiliar with the specifics. Consider copying an existing component and modifying it to your likings if that is the case.</string>
     <string name="ext__editor__create_extension__title">Create new extension</string>
     <string name="ext__editor__edit_component__title">Edit component</string>
     <string name="ext__editor__edit_component__title_theme">Edit theme component</string>

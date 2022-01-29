@@ -37,7 +37,8 @@ import kotlinx.serialization.json.JsonNames
 interface ExtensionMeta {
     /**
      * The unique identifier of this extension, adhering to
-     * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
+     * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html)
+     * and this regex: `^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$`
      */
     val id: String
 

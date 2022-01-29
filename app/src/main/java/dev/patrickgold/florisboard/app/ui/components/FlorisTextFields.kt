@@ -17,8 +17,6 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
@@ -32,6 +30,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -49,6 +48,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.ui.theme.outline
+import dev.patrickgold.florisboard.common.ValidationResult
 
 @Composable
 fun FlorisOutlinedTextField(
@@ -63,6 +63,9 @@ fun FlorisOutlinedTextField(
     singleLine: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
     isError: Boolean = false,
+    showValidationHint: Boolean = true,
+    showValidationError: Boolean = false,
+    validationResult: ValidationResult? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
@@ -88,6 +91,9 @@ fun FlorisOutlinedTextField(
         singleLine = singleLine,
         maxLines = maxLines,
         isError = isError,
+        showValidationHint = showValidationHint,
+        showValidationError = showValidationError,
+        validationResult = validationResult,
         visualTransformation = visualTransformation,
         interactionSource = interactionSource,
         shape = shape,
@@ -108,6 +114,9 @@ fun FlorisOutlinedTextField(
     singleLine: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
     isError: Boolean = false,
+    showValidationHint: Boolean = true,
+    showValidationError: Boolean = false,
+    validationResult: ValidationResult? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
@@ -121,6 +130,7 @@ fun FlorisOutlinedTextField(
     }
     val mergedTextStyle = textStyle.copy(color = textColor)
     val isFocused by interactionSource.collectIsFocusedAsState()
+    val isErrorState = isError || (showValidationError && validationResult?.isInvalid() == true)
 
     BasicTextField(
         modifier = modifier.padding(vertical = 4.dp),
@@ -134,12 +144,12 @@ fun FlorisOutlinedTextField(
         singleLine = singleLine,
         maxLines = maxLines,
         visualTransformation = visualTransformation,
-        cursorBrush = SolidColor(colors.cursorColor(isError).value),
+        cursorBrush = SolidColor(colors.cursorColor(isErrorState).value),
         decorationBox = { innerTextField ->
             Surface(
                 modifier = modifier.fillMaxWidth(),
                 color = colors.backgroundColor(enabled).value,
-                border = if (isError && enabled) {
+                border = if (isErrorState && enabled) {
                     BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
                 } else if (isFocused) {
                     BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.primary)
@@ -164,4 +174,20 @@ fun FlorisOutlinedTextField(
             }
         },
     )
+
+    if (showValidationHint && validationResult?.isValid() == true && validationResult.hasHintMessage()) {
+        Text(
+            text = validationResult.hintMessage(),
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.56f),
+        )
+    }
+
+    if (showValidationError && validationResult?.isInvalid() == true && validationResult.hasErrorMessage()) {
+        Text(
+            text = validationResult.errorMessage(),
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.error,
+        )
+    }
 }

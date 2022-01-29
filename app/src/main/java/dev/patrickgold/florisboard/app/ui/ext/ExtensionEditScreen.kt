@@ -52,13 +52,17 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.settings.advanced.RadioListItem
+import dev.patrickgold.florisboard.app.ui.settings.theme.DialogProperty
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.app.ui.theme.outline
 import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.common.android.showLongToast
+import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
@@ -73,6 +77,7 @@ import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import java.util.*
@@ -475,7 +480,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
     val context = LocalContext.current
     val themeManager by context.themeManager()
 
-    var createFrom by remember { mutableStateOf(CreateFrom.EMPTY) }
+    var createFrom by rememberSaveable { mutableStateOf(CreateFrom.EXISTING) }
     val components = remember<Map<ExtensionComponentName, ExtensionComponent>> {
         when (type) {
             ThemeExtensionComponent::class -> {
@@ -486,14 +491,56 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
             }
         }
     }
-    var selectedComponentName by remember { mutableStateOf<ExtensionComponentName?>(null) }
+    var selectedComponentName by rememberSaveable(saver = ExtensionComponentName.StateSaver) {
+        mutableStateOf(null)
+    }
+    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+
+    var newId by rememberSaveable { mutableStateOf("") }
+    val newIdValidation = rememberValidationResult(ExtensionValidation.ComponentId, newId)
+    var newLabel by rememberSaveable { mutableStateOf("") }
+    val newLabelValidation = rememberValidationResult(ExtensionValidation.ComponentLabel, newLabel)
+    var newAuthors by rememberSaveable { mutableStateOf("") }
+    val newAuthorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, newAuthors)
 
     fun handleBackPress() {
         workspace.currentAction = null
     }
 
     fun handleCreate() {
-        //
+        if (newIdValidation.isInvalid() || newLabelValidation.isInvalid() || newAuthorsValidation.isInvalid()) {
+            showValidationErrors = true
+        } else {
+            when (val editor = workspace.editor) {
+                is ThemeExtensionEditor -> {
+                    when (createFrom) {
+                        CreateFrom.EMPTY -> {
+                            if (editor.themes.find { it.id == newId } != null) {
+                                context.showLongToast("A theme with this ID already exists!")
+                            } else {
+                                val componentEditor = ThemeExtensionComponentEditor(
+                                    id = newId,
+                                    label = newLabel,
+                                    authors = newAuthors.split(",").filter { it.isNotBlank() },
+                                )
+                                editor.themes.add(componentEditor)
+                                workspace.currentAction = null
+                            }
+                        }
+                        CreateFrom.EXISTING -> {
+                            //
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun hasSufficientInfoForCreating(): Boolean {
+        return when (createFrom) {
+            CreateFrom.EMPTY -> newId.isNotBlank() && newLabel.isNotBlank() && newAuthors.isNotBlank()
+            CreateFrom.EXISTING -> components.containsKey(selectedComponentName)
+        }
     }
 
     navigationIcon {
@@ -511,7 +558,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
             }
             ButtonBarButton(
                 text = stringRes(R.string.action__create),
-                enabled = createFrom == CreateFrom.EMPTY || selectedComponentName != null,
+                enabled = hasSufficientInfoForCreating(),
             ) {
                 handleCreate()
             }
@@ -527,14 +574,14 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
             modifier = Modifier.defaultFlorisOutlinedBox(),
         ) {
             RadioListItem(
-                onClick = { createFrom = CreateFrom.EMPTY },
-                selected = createFrom == CreateFrom.EMPTY,
-                text = stringRes(R.string.ext__editor__create_component__from_empty),
-            )
-            RadioListItem(
                 onClick = { createFrom = CreateFrom.EXISTING },
                 selected = createFrom == CreateFrom.EXISTING,
                 text = stringRes(R.string.ext__editor__create_component__from_existing),
+            )
+            RadioListItem(
+                onClick = { createFrom = CreateFrom.EMPTY },
+                selected = createFrom == CreateFrom.EMPTY,
+                text = stringRes(R.string.ext__editor__create_component__from_empty),
             )
         }
 
@@ -550,6 +597,44 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                         secondaryText = componentName.toString(),
                     )
                 }
+            }
+        } else if (createFrom == CreateFrom.EMPTY) {
+            FlorisInfoCard(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
+                text = stringRes(R.string.ext__editor__create_component__from_empty_warning),
+            )
+            DialogProperty(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringRes(R.string.ext__meta__id),
+            ) {
+                FlorisOutlinedTextField(
+                    value = newId,
+                    onValueChange = { newId = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = newIdValidation,
+                )
+            }
+            DialogProperty(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringRes(R.string.ext__meta__label),
+            ) {
+                FlorisOutlinedTextField(
+                    value = newLabel,
+                    onValueChange = { newLabel = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = newLabelValidation,
+                )
+            }
+            DialogProperty(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringRes(R.string.ext__meta__authors),
+            ) {
+                FlorisOutlinedTextField(
+                    value = newAuthors,
+                    onValueChange = { newAuthors = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = newAuthorsValidation,
+                )
             }
         }
     }
