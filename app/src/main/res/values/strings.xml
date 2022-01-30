@@ -137,6 +137,8 @@
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
 
+    <string name="snygg__rule_element__defines">Variables</string>
+    <string name="snygg__rule_element__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>

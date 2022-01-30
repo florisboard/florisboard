@@ -57,6 +57,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -73,11 +74,13 @@ import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
+import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.res.io.readJson
@@ -145,12 +148,12 @@ fun ThemeEditorScreen(
             stylesheetEditor
         }.also { editor.stylesheetEditor = it }
     }
-    var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
+    var snyggLevel by rememberSaveable { mutableStateOf(SnyggLevel.ADVANCED) }
     var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.StateSaver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
     var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
-    var showEditComponentInfoDialog by remember { mutableStateOf(false) }
+    var showEditComponentMetaDialog by rememberSaveable { mutableStateOf(false) }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -218,7 +221,7 @@ fun ThemeEditorScreen(
                         modifier = Modifier.defaultFlorisOutlinedBox(),
                         meta = workspace.editor!!.meta,
                         component = editor,
-                        onEditBtnClick = { showEditComponentInfoDialog = true },
+                        onEditBtnClick = { showEditComponentMetaDialog = true },
                     )
                     if (stylesheetEditor.rules.isEmpty() ||
                         (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.keys.all { it.isDefinedVariablesRule() })
@@ -254,6 +257,14 @@ fun ThemeEditorScreen(
                                 snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding
                             },
                         )
+                        if (isVariablesRule) {
+                            Text(
+                                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
+                                text = stringRes(R.string.snygg__rule_element__defines_description),
+                                style = MaterialTheme.typography.body2,
+                                fontStyle = FontStyle.Italic,
+                            )
+                        }
                         for ((propertyName, propertyValue) in propertySet.properties) {
                             val propertySpec = propertySetSpec?.propertySpec(propertyName)
                             if (propertySpec != null && propertySpec.level <= snyggLevel || isVariablesRule) {
@@ -279,12 +290,12 @@ fun ThemeEditorScreen(
             }
         }
 
-        if (showEditComponentInfoDialog) {
+        if (showEditComponentMetaDialog) {
             ComponentMetaEditorDialog(
                 workspace = workspace,
                 editor = editor,
-                onConfirm = { showEditComponentInfoDialog = false },
-                onDismiss = { showEditComponentInfoDialog = false },
+                onConfirm = { showEditComponentMetaDialog = false },
+                onDismiss = { showEditComponentMetaDialog = false },
             )
         }
 
@@ -376,13 +387,14 @@ private fun ComponentMetaEditorDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val context = LocalContext.current
     var showValidationErrors by rememberSaveable { mutableStateOf(false) }
 
     var id by rememberSaveable { mutableStateOf(editor.id) }
     val idValidation = rememberValidationResult(ExtensionValidation.ComponentId, id)
     var label by rememberSaveable { mutableStateOf(editor.label) }
     val labelValidation = rememberValidationResult(ExtensionValidation.ComponentLabel, label)
-    var authors by rememberSaveable { mutableStateOf(editor.authors.joinToString(",")) }
+    var authors by rememberSaveable { mutableStateOf(editor.authors.joinToString("\n")) }
     val authorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, authors)
     var isNightTheme by rememberSaveable { mutableStateOf(editor.isNightTheme) }
     var isBorderless by rememberSaveable { mutableStateOf(editor.isBorderless) }
@@ -400,11 +412,13 @@ private fun ComponentMetaEditorDialog(
                 stylesheetPathValidation.isValid()
             if (!allFieldsValid) {
                 showValidationErrors = true
+            } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
+                context.showLongToast("A theme with this ID already exists!")
             } else {
                 workspace.update {
                     editor.id = id.trim()
                     editor.label = label.trim()
-                    editor.authors = authors.split(",").map { it.trim() }.filter { it.isNotBlank() }
+                    editor.authors = authors.lines().map { it.trim() }.filter { it.isNotBlank() }
                     editor.isNightTheme = isNightTheme
                     editor.isBorderless = isBorderless
                     editor.isMaterialYouAware = isMaterialYouAware
@@ -422,6 +436,7 @@ private fun ComponentMetaEditorDialog(
                 FlorisOutlinedTextField(
                     value = id,
                     onValueChange = { id = it },
+                    singleLine = true,
                     showValidationError = showValidationErrors,
                     validationResult = idValidation,
                 )
@@ -430,6 +445,7 @@ private fun ComponentMetaEditorDialog(
                 FlorisOutlinedTextField(
                     value = label,
                     onValueChange = { label = it },
+                    singleLine = true,
                     showValidationError = showValidationErrors,
                     validationResult = labelValidation,
                 )
@@ -460,6 +476,7 @@ private fun ComponentMetaEditorDialog(
                 FlorisOutlinedTextField(
                     value = stylesheetPath,
                     onValueChange = { stylesheetPath = it },
+                    singleLine = true,
                     placeholder = if (stylesheetPath.isEmpty()) {
                         ThemeExtensionComponent.defaultStylesheetPath(id.trim())
                     } else {
@@ -709,6 +726,7 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
         else -> when (element) {
+            "defines" -> R.string.snygg__rule_element__defines
             FlorisImeUi.Keyboard -> R.string.snygg__rule_element__keyboard
             FlorisImeUi.Key -> R.string.snygg__rule_element__key
             FlorisImeUi.KeyHint -> R.string.snygg__rule_element__key_hint

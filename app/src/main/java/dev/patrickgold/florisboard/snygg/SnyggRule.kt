@@ -72,7 +72,7 @@ data class SnyggRule(
         )
 
         val StateSaver = Saver<MutableState<SnyggRule?>, String>(
-            save = { it.value.toString() },
+            save = { it.value?.toString() ?: "" },
             restore = { mutableStateOf(from(it)) },
         )
 

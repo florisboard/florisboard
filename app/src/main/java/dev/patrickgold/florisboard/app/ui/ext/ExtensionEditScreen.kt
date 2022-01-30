@@ -515,13 +515,13 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 is ThemeExtensionEditor -> {
                     when (createFrom) {
                         CreateFrom.EMPTY -> {
-                            if (editor.themes.find { it.id == newId } != null) {
+                            if (editor.themes.find { it.id == newId.trim() } != null) {
                                 context.showLongToast("A theme with this ID already exists!")
                             } else {
                                 val componentEditor = ThemeExtensionComponentEditor(
-                                    id = newId,
-                                    label = newLabel,
-                                    authors = newAuthors.split(",").filter { it.isNotBlank() },
+                                    id = newId.trim(),
+                                    label = newLabel.trim(),
+                                    authors = newAuthors.lines().map { it.trim() }.filter { it.isNotBlank() },
                                 )
                                 editor.themes.add(componentEditor)
                                 workspace.currentAction = null
@@ -610,6 +610,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 FlorisOutlinedTextField(
                     value = newId,
                     onValueChange = { newId = it },
+                    singleLine = true,
                     showValidationError = showValidationErrors,
                     validationResult = newIdValidation,
                 )
@@ -621,6 +622,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 FlorisOutlinedTextField(
                     value = newLabel,
                     onValueChange = { newLabel = it },
+                    singleLine = true,
                     showValidationError = showValidationErrors,
                     validationResult = newLabelValidation,
                 )

@@ -19,7 +19,10 @@ package dev.patrickgold.florisboard.res.ext
 import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.common.ValidationRule
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 
+// TODO: (priority=medium)
+//  make all strings available for localize
 object ExtensionValidation {
     private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*${'$'}""".toRegex()
     private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
@@ -65,7 +68,7 @@ object ExtensionValidation {
         forKlass = ExtensionComponent::class
         forProperty = "authors"
         validator { str ->
-            val authors = str.split(",").filter { it.isNotBlank() }
+            val authors = str.lines().filter { it.isNotBlank() }
             when {
                 authors.isEmpty() -> resultInvalid(error = "Please enter at least one valid author")
                 else -> resultValid()
@@ -84,6 +87,18 @@ object ExtensionValidation {
                     resultInvalid(error = "Please enter a valid stylesheet path matching $ThemeComponentStylesheetPathRegex")
                 }
                 else -> resultValid()
+            }
+        }
+    }
+
+    val ThemeComponentVariableName = ValidationRule<String> {
+        forKlass = SnyggStylesheet::class
+        forProperty = "propertyName"
+        validator { str ->
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a variable name")
+                str == "-" || str.startsWith("--") -> resultValid()
+                else -> resultValid(hint = "By convention a FlorisCSS variable name starts with two dashes (--)")
             }
         }
     }

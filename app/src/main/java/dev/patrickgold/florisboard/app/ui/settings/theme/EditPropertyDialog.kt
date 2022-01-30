@@ -41,6 +41,9 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
+import dev.patrickgold.florisboard.common.ValidationResult
+import dev.patrickgold.florisboard.common.rememberValidationResult
+import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
@@ -82,6 +85,7 @@ internal fun EditPropertyDialog(
     var propertyName by rememberSaveable {
         mutableStateOf(if (isAddPropertyDialog && propertySetSpec == null) { "" } else { initProperty.name })
     }
+    val propertyNameValidation = rememberValidationResult(ExtensionValidation.ThemeComponentVariableName, propertyName)
     var propertyValueEncoder by remember {
         mutableStateOf(if (isAddPropertyDialog && propertySetSpec == null) {
             SnyggImplicitInheritValue
@@ -151,6 +155,7 @@ internal fun EditPropertyDialog(
                 PropertyNameInput(
                     propertySetSpec = propertySetSpec,
                     name = propertyName,
+                    nameValidation = propertyNameValidation,
                     onNameChange = { name ->
                         if (propertySetSpec != null) {
                             propertyValueEncoder = SnyggImplicitInheritValue
@@ -193,6 +198,7 @@ internal fun EditPropertyDialog(
 private fun PropertyNameInput(
     propertySetSpec: SnyggPropertySetSpec?,
     name: String,
+    nameValidation: ValidationResult,
     onNameChange: (String) -> Unit,
     level: SnyggLevel,
     isAddPropertyDialog: Boolean,
@@ -224,7 +230,9 @@ private fun PropertyNameInput(
             value = name,
             onValueChange = onNameChange,
             enabled = isAddPropertyDialog,
-            isError = showSelectAsError && name.isBlank(),
+            showValidationHint = isAddPropertyDialog,
+            showValidationError = showSelectAsError,
+            validationResult = nameValidation,
         )
     }
 }

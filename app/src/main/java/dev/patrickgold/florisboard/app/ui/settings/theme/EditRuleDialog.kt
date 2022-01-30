@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +43,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
+import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
@@ -318,13 +318,14 @@ internal fun EditRuleDialog(
                         )
                     }
                 }
-                OutlinedTextField(
+                FlorisOutlinedTextField(
                     value = inputCodeString,
                     onValueChange = { v ->
                         inputCodeString = v
                         showError = false
                     },
                     isError = showError,
+                    singleLine = true,
                 )
                 AnimatedVisibility(visible = showError) {
                     Text(
