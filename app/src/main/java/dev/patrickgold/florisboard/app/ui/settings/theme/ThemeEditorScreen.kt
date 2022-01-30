@@ -86,6 +86,8 @@ import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
+import dev.patrickgold.florisboard.snygg.definedVariablesRule
+import dev.patrickgold.florisboard.snygg.isDefinedVariablesRule
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeDpValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
@@ -133,14 +135,14 @@ fun ThemeEditorScreen(
             } else {
                 SnyggStylesheetEditor()
             }
-            if (stylesheetEditor.rules.none { (rule, _) -> rule.isAnnotation && rule.element == "defines" }) {
-                stylesheetEditor.rules[SnyggRule(isAnnotation = true, element = "defines")] = SnyggPropertySetEditor()
+            if (stylesheetEditor.rules.none { (rule, _) -> rule.isDefinedVariablesRule() }) {
+                stylesheetEditor.rules[SnyggRule.definedVariablesRule()] = SnyggPropertySetEditor()
             }
             stylesheetEditor
         }.also { editor.stylesheetEditor = it }
     }
     var snyggLevel by remember { mutableStateOf(SnyggLevel.ADVANCED) }
-    var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.Saver) { mutableStateOf(null) }
+    var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.StateSaver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
     var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
@@ -190,7 +192,7 @@ fun ThemeEditorScreen(
 
         val definedVariables = remember(stylesheetEditor.rules) {
             stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
-                if (rule.isAnnotation && rule.element == "defines") {
+                if (rule.isDefinedVariablesRule()) {
                     propertySet.properties
                 } else {
                     null
@@ -214,7 +216,9 @@ fun ThemeEditorScreen(
                         component = editor,
                         onEditBtnClick = { showEditComponentInfoDialog = true },
                     )
-                    if (stylesheetEditor.rules.isEmpty()) {
+                    if (stylesheetEditor.rules.isEmpty() ||
+                        (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.keys.all { it.isDefinedVariablesRule() })
+                    ) {
                         Text(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
                             text = stringRes(R.string.settings__theme_editor__no_rules_defined),
@@ -225,7 +229,7 @@ fun ThemeEditorScreen(
             }
 
             items(stylesheetEditor.rules.entries.toList()) { (rule, propertySet) -> key(rule) {
-                val isVariablesRule = rule.isAnnotation && rule.element == "defines"
+                val isVariablesRule = rule.isDefinedVariablesRule()
                 val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
                 FlorisOutlinedBox(
                     modifier = Modifier

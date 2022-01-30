@@ -23,16 +23,14 @@ import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = SnyggRuleSerializer::class)
+@Serializable(with = SnyggRule.Serializer::class)
 data class SnyggRule(
     val isAnnotation: Boolean = false,
     val element: String,
@@ -73,8 +71,8 @@ data class SnyggRule(
             "m:capslock" to InputMode.CAPS_LOCK.value,
         )
 
-        val Saver = Saver<MutableState<SnyggRule?>, String>(
-            save = { it.toString() },
+        val StateSaver = Saver<MutableState<SnyggRule?>, String>(
+            save = { it.value.toString() },
             restore = { mutableStateOf(from(it)) },
         )
 
@@ -163,7 +161,6 @@ data class SnyggRule(
     }
 
     override fun compareTo(other: SnyggRule): Int {
-        if (this == other) return 0
         return when {
             this.isAnnotation && !other.isAnnotation -> -1
             !this.isAnnotation && other.isAnnotation -> 1
@@ -176,7 +173,7 @@ data class SnyggRule(
                             (this.groups[n].compareTo(other.groups[n])).takeIf { it != 0 }
                         } ?: this.modes.indices.firstNotNullOfOrNull { n ->
                             (this.modes[n].compareTo(other.modes[n])).takeIf { it != 0 }
-                        }!!
+                        } ?: 0
                     }
                     else -> diff
                 }
@@ -239,18 +236,24 @@ data class SnyggRule(
         result = 31 * result + disabledSelector.hashCode()
         return result
     }
+
+    object Serializer : KSerializer<SnyggRule> {
+        override val descriptor = PrimitiveSerialDescriptor("SnyggRule", PrimitiveKind.STRING)
+
+        override fun serialize(encoder: Encoder, value: SnyggRule) {
+            encoder.encodeString(value.toString())
+        }
+
+        override fun deserialize(decoder: Decoder): SnyggRule {
+            return from(decoder.decodeString()) ?: SnyggRule(element = "invalid")
+        }
+    }
 }
 
-@OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = SnyggRule::class)
-class SnyggRuleSerializer : KSerializer<SnyggRule> {
-    override val descriptor = PrimitiveSerialDescriptor("SnyggRule", PrimitiveKind.STRING)
+fun SnyggRule.Companion.definedVariablesRule(): SnyggRule {
+    return SnyggRule(isAnnotation = true, element = "defines")
+}
 
-    override fun serialize(encoder: Encoder, value: SnyggRule) {
-        encoder.encodeString(value.toString())
-    }
-
-    override fun deserialize(decoder: Decoder): SnyggRule {
-        return SnyggRule.from(decoder.decodeString()) ?: SnyggRule(element = "invalid")
-    }
+fun SnyggRule.isDefinedVariablesRule(): Boolean {
+    return this.isAnnotation && this.element == "defines"
 }

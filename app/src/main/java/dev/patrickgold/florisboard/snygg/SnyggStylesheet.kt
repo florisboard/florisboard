@@ -268,7 +268,7 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
         for ((rule, rawProperties) in rawRuleMap) {
             // FIXME: hardcoding which spec to use, the selection should happen dynamically
             val stylesheetSpec = FlorisImeUiSpec
-            if (rule.isAnnotation && rule.element == "defines") {
+            if (rule.isDefinedVariablesRule()) {
                 val parsedProperties = rawProperties.mapValues { (_, rawValue) ->
                     SnyggVarValueEncoders.firstNotNullOfOrNull { it.deserialize(rawValue).getOrNull() }
                         ?: SnyggImplicitInheritValue
