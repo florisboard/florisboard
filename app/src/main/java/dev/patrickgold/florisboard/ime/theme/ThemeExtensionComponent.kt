@@ -29,6 +29,12 @@ inline fun extCoreTheme(id: String) = ExtensionComponentName(
 )
 
 interface ThemeExtensionComponent : ExtensionComponent {
+    companion object {
+        fun defaultStylesheetPath(id: String): String {
+            return "stylesheets/$id.json"
+        }
+    }
+
     override val id: String
     override val label: String
     override val authors: List<String>
@@ -37,7 +43,7 @@ interface ThemeExtensionComponent : ExtensionComponent {
     val isMaterialYouAware: Boolean
     val stylesheetPath: String?
 
-    fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: "stylesheets/$id.json"
+    fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
 }
 
 @Serializable

@@ -62,6 +62,7 @@ fun FlorisOutlinedTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
+    placeholder: String? = null,
     isError: Boolean = false,
     showValidationHint: Boolean = true,
     showValidationError: Boolean = false,
@@ -90,6 +91,7 @@ fun FlorisOutlinedTextField(
         keyboardActions = keyboardActions,
         singleLine = singleLine,
         maxLines = maxLines,
+        placeholder = placeholder,
         isError = isError,
         showValidationHint = showValidationHint,
         showValidationError = showValidationError,
@@ -113,6 +115,7 @@ fun FlorisOutlinedTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
+    placeholder: String? = null,
     isError: Boolean = false,
     showValidationHint: Boolean = true,
     showValidationError: Boolean = false,
@@ -169,6 +172,13 @@ fun FlorisOutlinedTextField(
                 ) {
                     ProvideTextStyle(value = mergedTextStyle) {
                         innerTextField()
+                    }
+                    if (!placeholder.isNullOrBlank()) {
+                        Text(
+                            text = placeholder,
+                            style = MaterialTheme.typography.body2,
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.56f),
+                        )
                     }
                 }
             }

@@ -70,11 +70,13 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
+import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
@@ -400,19 +402,20 @@ private fun ComponentMetaEditorDialog(
                 showValidationErrors = true
             } else {
                 workspace.update {
-                    editor.id = id
-                    editor.label = label
-                    editor.authors = authors.split(",")
+                    editor.id = id.trim()
+                    editor.label = label.trim()
+                    editor.authors = authors.split(",").map { it.trim() }.filter { it.isNotBlank() }
                     editor.isNightTheme = isNightTheme
                     editor.isBorderless = isBorderless
                     editor.isMaterialYouAware = isMaterialYouAware
-                    editor.stylesheetPath = stylesheetPath
+                    editor.stylesheetPath = stylesheetPath.trim()
                 }
                 onConfirm()
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
+        scrollModifier = Modifier.florisVerticalScroll(),
     ) {
         Column {
             DialogProperty(text = stringRes(R.string.ext__meta__id)) {
@@ -457,6 +460,11 @@ private fun ComponentMetaEditorDialog(
                 FlorisOutlinedTextField(
                     value = stylesheetPath,
                     onValueChange = { stylesheetPath = it },
+                    placeholder = if (stylesheetPath.isEmpty()) {
+                        ThemeExtensionComponent.defaultStylesheetPath(id.trim())
+                    } else {
+                        null
+                    },
                     showValidationError = showValidationErrors,
                     validationResult = stylesheetPathValidation,
                 )
