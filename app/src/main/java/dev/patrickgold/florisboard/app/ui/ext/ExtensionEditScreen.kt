@@ -69,6 +69,7 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
@@ -78,6 +79,9 @@ import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
+import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.florisboard.res.io.writeJson
+import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import java.util.*
@@ -202,8 +206,6 @@ private fun EditScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisSc
     })
 
     val navController = LocalNavController.current
-    val context = LocalContext.current
-    val extensionManager by context.extensionManager()
 
     val extEditor = workspace.editor ?: return@FlorisScreen
     var showUnsavedChangesDialog by remember { mutableStateOf(false) }
@@ -478,13 +480,22 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
     })
 
     val context = LocalContext.current
+    val extensionManager by context.extensionManager()
     val themeManager by context.themeManager()
 
     var createFrom by rememberSaveable { mutableStateOf(CreateFrom.EXISTING) }
+    val extId = workspace.editor?.meta?.id ?: "null"
     val components = remember<Map<ExtensionComponentName, ExtensionComponent>> {
-        when (type) {
-            ThemeExtensionComponent::class -> {
-                themeManager.indexedThemeConfigs.value ?: emptyMap()
+        when (val editor = workspace.editor) {
+            is ThemeExtensionEditor -> buildMap {
+                for (theme in editor.themes) {
+                    put(ExtensionComponentName(extId, theme.id), theme)
+                }
+                for ((componentName, theme) in themeManager.indexedThemeConfigs.value ?: emptyMap()) {
+                    if (componentName.extensionId != extId) {
+                        put(componentName, theme)
+                    }
+                }
             }
             else -> {
                 emptyMap()
@@ -508,14 +519,16 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
     }
 
     fun handleCreate() {
-        if (newIdValidation.isInvalid() || newLabelValidation.isInvalid() || newAuthorsValidation.isInvalid()) {
+        val invalid = createFrom == CreateFrom.EMPTY && (newIdValidation.isInvalid() ||
+            newLabelValidation.isInvalid() || newAuthorsValidation.isInvalid())
+        if (invalid) {
             showValidationErrors = true
         } else {
             when (val editor = workspace.editor) {
                 is ThemeExtensionEditor -> {
                     when (createFrom) {
                         CreateFrom.EMPTY -> {
-                            if (editor.themes.find { it.id == newId.trim() } != null) {
+                            if (editor.themes.any { it.id == newId.trim() }) {
                                 context.showLongToast("A theme with this ID already exists!")
                             } else {
                                 val componentEditor = ThemeExtensionComponentEditor(
@@ -528,7 +541,53 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                             }
                         }
                         CreateFrom.EXISTING -> {
-                            //
+                            val componentName = selectedComponentName ?: return
+                            val componentId = if (editor.themes.any { it.id == componentName.componentId }) {
+                                var suffix = 1
+                                var tempId: String
+                                do {
+                                    tempId = "${componentName.componentId}_${suffix++}"
+                                } while (editor.themes.any { it.id == tempId })
+                                tempId
+                            } else {
+                                componentName.componentId
+                            }
+                            if (componentName.extensionId == extId) {
+                                val component = editor.themes.find { it.id == componentName.componentId } ?: return
+                                val componentEditor = component.let { c ->
+                                    ThemeExtensionComponentEditor(
+                                        componentId, c.label, c.authors, c.isNightTheme, c.isBorderless,
+                                        c.isMaterialYouAware, stylesheetPath = "",
+                                    ).also { it.stylesheetEditor = c.stylesheetEditor }
+                                }
+                                if (componentEditor.stylesheetEditor != null) {
+                                    val stylesheet = componentEditor.stylesheetEditor!!.build()
+                                    val stylesheetFile = workspace.dir.subFile(componentEditor.stylesheetPath())
+                                    stylesheetFile.parentFile?.mkdirs()
+                                    stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
+                                    componentEditor.stylesheetEditor = null
+                                } else {
+                                    val srcStylesheetFile = workspace.dir.subFile(component.stylesheetPath())
+                                    val dstStylesheetFile = workspace.dir.subFile(componentEditor.stylesheetPath())
+                                    dstStylesheetFile.parentFile?.mkdirs()
+                                    srcStylesheetFile.copyTo(dstStylesheetFile, overwrite = true)
+                                }
+                                editor.themes.add(componentEditor)
+                            } else {
+                                val component = themeManager.indexedThemeConfigs.value?.get(componentName) ?: return
+                                val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
+                                componentEditor.id = componentId
+                                componentEditor.stylesheetPath = ""
+                                val externalExt = extensionManager.getExtensionById(componentName.extensionId) ?: return
+                                val stylesheetJson = ZipUtils.readFileFromArchive(
+                                    context, externalExt.sourceRef!!, component.stylesheetPath()
+                                ).getOrNull() ?: return
+                                val dstStylesheetFile = workspace.dir.subFile(componentEditor.stylesheetPath())
+                                dstStylesheetFile.parentFile?.mkdirs()
+                                dstStylesheetFile.writeText(stylesheetJson)
+                                editor.themes.add(componentEditor)
+                            }
+                            workspace.currentAction = null
                         }
                     }
                 }

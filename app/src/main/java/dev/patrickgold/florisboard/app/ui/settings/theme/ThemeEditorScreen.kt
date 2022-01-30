@@ -80,6 +80,7 @@ import dev.patrickgold.florisboard.app.ui.components.rememberPreviewFieldControl
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.common.android.showLongToast
+import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
@@ -189,6 +190,7 @@ fun ThemeEditorScreen(
                     SnyggLevel.ADVANCED -> SnyggLevel.DEVELOPER
                     SnyggLevel.DEVELOPER -> SnyggLevel.BASIC
                 }
+                context.showShortToast("level = $snyggLevel")
             },
             icon = painterResource(R.drawable.ic_language),
         )
@@ -450,7 +452,7 @@ private fun ComponentMetaEditorDialog(
                 stylesheetPathValidation.isValid()
             if (!allFieldsValid) {
                 showValidationErrors = true
-            } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
+            } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.any { it.id == id.trim() } != null) {
                 context.showLongToast("A theme with this ID already exists!")
             } else {
                 workspace.update {
