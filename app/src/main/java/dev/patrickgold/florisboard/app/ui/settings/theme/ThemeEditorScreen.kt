@@ -72,10 +72,12 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
+import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.res.cache.CacheManager
+import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.res.io.readJson
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.snygg.Snygg
@@ -276,57 +278,12 @@ fun ThemeEditorScreen(
         }
 
         if (showEditComponentInfoDialog) {
-            JetPrefAlertDialog(
-                title = stringRes(R.string.ext__editor__metadata__title),
-                confirmLabel = stringRes(R.string.action__ok),
+            ComponentMetaEditorDialog(
+                workspace = workspace,
+                editor = editor,
                 onConfirm = { showEditComponentInfoDialog = false },
                 onDismiss = { showEditComponentInfoDialog = false },
-            ) {
-                Column {
-                    DialogProperty(text = stringRes(R.string.ext__meta__id)) {
-                        FlorisOutlinedTextField(
-                            value = editor.id,
-                            onValueChange = { workspace.update { editor.id = it } },
-                        )
-                    }
-                    DialogProperty(text = stringRes(R.string.ext__meta__label)) {
-                        FlorisOutlinedTextField(
-                            value = editor.label,
-                            onValueChange = { workspace.update { editor.label = it } },
-                        )
-                    }
-                    DialogProperty(text = stringRes(R.string.ext__meta__authors)) {
-                        FlorisOutlinedTextField(
-                            value = editor.authors.joinToString(","),
-                            onValueChange = { workspace.update { editor.authors = it.split(",") } },
-                        )
-                    }
-                    JetPrefListItem(
-                        modifier = Modifier.toggleable(editor.isNightTheme) { newState ->
-                            workspace.update { editor.isNightTheme = newState }
-                        },
-                        text = stringRes(R.string.settings__theme_editor__component_meta_is_night_theme),
-                        trailing = {
-                            Switch(checked = editor.isNightTheme, onCheckedChange = null)
-                        },
-                    )
-                    JetPrefListItem(
-                        modifier = Modifier.toggleable(editor.isBorderless) { newState ->
-                            workspace.update { editor.isBorderless = newState }
-                        },
-                        text = stringRes(R.string.settings__theme_editor__component_meta_is_borderless),
-                        trailing = {
-                            Switch(checked = editor.isBorderless, onCheckedChange = null)
-                        },
-                    )
-                    DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_stylesheet_path)) {
-                        FlorisOutlinedTextField(
-                            value = editor.stylesheetPath,
-                            onValueChange = { workspace.update { editor.stylesheetPath = it } },
-                        )
-                    }
-                }
-            }
+            )
         }
 
         val ruleToEdit = snyggRuleToEdit
@@ -406,6 +363,104 @@ fun ThemeEditorScreen(
                 },
                 onDismiss = { snyggPropertyToEdit = null },
             )
+        }
+    }
+}
+
+@Composable
+private fun ComponentMetaEditorDialog(
+    workspace: CacheManager.ExtEditorWorkspace<*>,
+    editor: ThemeExtensionComponentEditor,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+
+    var id by rememberSaveable { mutableStateOf(editor.id) }
+    val idValidation = rememberValidationResult(ExtensionValidation.ComponentId, id)
+    var label by rememberSaveable { mutableStateOf(editor.label) }
+    val labelValidation = rememberValidationResult(ExtensionValidation.ComponentLabel, label)
+    var authors by rememberSaveable { mutableStateOf(editor.authors.joinToString(",")) }
+    val authorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, authors)
+    var isNightTheme by rememberSaveable { mutableStateOf(editor.isNightTheme) }
+    var isBorderless by rememberSaveable { mutableStateOf(editor.isBorderless) }
+    val isMaterialYouAware by rememberSaveable { mutableStateOf(editor.isMaterialYouAware) }
+    var stylesheetPath by rememberSaveable { mutableStateOf(editor.stylesheetPath) }
+    val stylesheetPathValidation = rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath)
+
+    JetPrefAlertDialog(
+        title = stringRes(R.string.ext__editor__metadata__title),
+        confirmLabel = stringRes(R.string.action__apply),
+        onConfirm = {
+            val allFieldsValid = idValidation.isValid() &&
+                labelValidation.isValid() &&
+                authorsValidation.isValid() &&
+                stylesheetPathValidation.isValid()
+            if (!allFieldsValid) {
+                showValidationErrors = true
+            } else {
+                workspace.update {
+                    editor.id = id
+                    editor.label = label
+                    editor.authors = authors.split(",")
+                    editor.isNightTheme = isNightTheme
+                    editor.isBorderless = isBorderless
+                    editor.isMaterialYouAware = isMaterialYouAware
+                    editor.stylesheetPath = stylesheetPath
+                }
+                onConfirm()
+            }
+        },
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+    ) {
+        Column {
+            DialogProperty(text = stringRes(R.string.ext__meta__id)) {
+                FlorisOutlinedTextField(
+                    value = id,
+                    onValueChange = { id = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = idValidation,
+                )
+            }
+            DialogProperty(text = stringRes(R.string.ext__meta__label)) {
+                FlorisOutlinedTextField(
+                    value = label,
+                    onValueChange = { label = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = labelValidation,
+                )
+            }
+            DialogProperty(text = stringRes(R.string.ext__meta__authors)) {
+                FlorisOutlinedTextField(
+                    value = authors,
+                    onValueChange = { authors = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = authorsValidation,
+                )
+            }
+            JetPrefListItem(
+                modifier = Modifier.toggleable(isNightTheme) { isNightTheme = it },
+                text = stringRes(R.string.settings__theme_editor__component_meta_is_night_theme),
+                trailing = {
+                    Switch(checked = isNightTheme, onCheckedChange = null)
+                },
+            )
+            JetPrefListItem(
+                modifier = Modifier.toggleable(isBorderless) { isBorderless = it },
+                text = stringRes(R.string.settings__theme_editor__component_meta_is_borderless),
+                trailing = {
+                    Switch(checked = isBorderless, onCheckedChange = null)
+                },
+            )
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_stylesheet_path)) {
+                FlorisOutlinedTextField(
+                    value = stylesheetPath,
+                    onValueChange = { stylesheetPath = it },
+                    showValidationError = showValidationErrors,
+                    validationResult = stylesheetPathValidation,
+                )
+            }
         }
     }
 }

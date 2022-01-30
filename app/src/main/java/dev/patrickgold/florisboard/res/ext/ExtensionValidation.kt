@@ -18,10 +18,12 @@ package dev.patrickgold.florisboard.res.ext
 
 import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.common.ValidationRule
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 
 object ExtensionValidation {
     private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*${'$'}""".toRegex()
     private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
+    private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*${'$'}""".toRegex()
 
     val MetaId = ValidationRule<String> {
         forKlass = ExtensionMeta::class
@@ -70,4 +72,20 @@ object ExtensionValidation {
             }
         }
     }
+
+    val ThemeComponentStylesheetPath = ValidationRule<String> {
+        forKlass = ThemeExtensionComponent::class
+        forProperty = "stylesheetPath"
+        validator { str ->
+            when {
+                str.isEmpty() -> resultValid()
+                str.isBlank() -> resultInvalid(error = "The stylesheet path must not be blank")
+                !ThemeComponentStylesheetPathRegex.matches(str) -> {
+                    resultInvalid(error = "Please enter a valid stylesheet path matching $ThemeComponentStylesheetPathRegex")
+                }
+                else -> resultValid()
+            }
+        }
+    }
 }
+
