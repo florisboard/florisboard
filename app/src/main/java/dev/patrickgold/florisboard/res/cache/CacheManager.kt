@@ -185,13 +185,15 @@ class CacheManager(context: Context) {
         var currentAction by mutableStateOf<EditorAction?>(null)
         var ext: Extension? = null
         var editor by mutableStateOf<T?>(null, neverEqualPolicy())
-        var isModified by mutableStateOf(false)
+        var version by mutableStateOf(0)
+
+        val isModified get() = version > 0
 
         inline fun <R> update(block: T.() -> R): R {
             // Method is designed to only be called when editor has been previously initialized
             val ret = block(editor!!)
             editor = editor
-            isModified = true
+            version++
             return ret
         }
     }

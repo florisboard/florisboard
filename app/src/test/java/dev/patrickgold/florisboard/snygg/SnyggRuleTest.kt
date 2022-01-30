@@ -90,6 +90,10 @@ class SnyggRuleTest : FunSpec({
                     SnyggRule(element = "test", codes = listOf(11)),
                 ),
                 row(
+                    SnyggRule(element = "test", codes = listOf(10)),
+                    SnyggRule(element = "test", codes = listOf(10,11)),
+                ),
+                row(
                     SnyggRule(element = "test", groups = listOf(10)),
                     SnyggRule(element = "test", groups = listOf(11)),
                 ),

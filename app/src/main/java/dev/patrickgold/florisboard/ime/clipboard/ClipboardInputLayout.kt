@@ -63,6 +63,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisIconButtonWithInnerPa
 import dev.patrickgold.florisboard.app.ui.components.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
+import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.theme.Green500
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidKeyguardManager
@@ -346,7 +347,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 text = stringRes(R.string.clipboard__empty__title),
                 color = itemStyle.foreground.solidColor(),
-                fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                 fontWeight = FontWeight.Bold,
             )
             Text(
@@ -381,7 +382,7 @@ fun ClipboardInputLayout(
                         modifier = Modifier.padding(bottom = 8.dp),
                         text = stringRes(R.string.clipboard__disabled__title),
                         color = itemStyle.foreground.solidColor(),
-                        fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                        fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
@@ -422,7 +423,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 text = stringRes(R.string.clipboard__locked__title),
                 color = itemStyle.foreground.solidColor(),
-                fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                 fontWeight = FontWeight.Bold,
             )
             Text(
@@ -470,7 +471,7 @@ private fun ClipCategoryTitle(
         text = text.uppercase(),
         color = style.foreground.solidColor(),
         fontWeight = FontWeight.Bold,
-        fontSize = style.fontSize.spSize() * 0.8f,
+        fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )
 }
 

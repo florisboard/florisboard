@@ -277,6 +277,9 @@ internal fun EditRuleDialog(
                         showError = true
                     }
                     else -> {
+                        if (initCodeValue != NATIVE_NULLPTR) {
+                            codes.remove(initCodeValue)
+                        }
                         codes.add(code)
                         editCodeDialogValue = null
                     }

@@ -44,6 +44,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -58,6 +60,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -70,8 +73,10 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
+import dev.patrickgold.florisboard.app.ui.components.rememberPreviewFieldController
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.common.android.showLongToast
@@ -81,6 +86,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.res.io.readJson
@@ -110,8 +116,10 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
+import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
@@ -127,7 +135,13 @@ fun ThemeEditorScreen(
     title = stringRes(R.string.ext__editor__edit_component__title_theme)
     scrollable = false
 
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val themeManager by context.themeManager()
+
     val scope = rememberCoroutineScope()
+    val previewFieldController = rememberPreviewFieldController().also { it.isVisible = true }
+
     val stylesheetEditor = remember {
         editor.stylesheetEditor ?: run {
             val stylesheetPath = editor.stylesheetPath()
@@ -148,6 +162,7 @@ fun ThemeEditorScreen(
             stylesheetEditor
         }.also { editor.stylesheetEditor = it }
     }
+
     var snyggLevel by rememberSaveable { mutableStateOf(SnyggLevel.ADVANCED) }
     var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.StateSaver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
@@ -192,9 +207,32 @@ fun ThemeEditorScreen(
         )
     }
 
+    bottomBar {
+        PreviewKeyboardField(previewFieldController)
+    }
+
     content {
         BackHandler {
             handleBackPress()
+        }
+
+        LaunchedEffect(showEditComponentMetaDialog, snyggRuleToEdit, snyggPropertyToEdit) {
+            val visible = showEditComponentMetaDialog || snyggRuleToEdit != null || snyggPropertyToEdit != null
+            if (visible) {
+                focusManager.clearFocus()
+            } else {
+                delay(250)
+                previewFieldController.focusRequester.requestFocus()
+            }
+        }
+
+        DisposableEffect(workspace.version) {
+            themeManager.previewThemeInfo = ThemeManager.ThemeInfo.DEFAULT.copy(
+                stylesheet = stylesheetEditor.build().compileToFullyQualified(FlorisImeUiSpec),
+            )
+            onDispose {
+                themeManager.previewThemeInfo = null
+            }
         }
 
         val definedVariables = remember(stylesheetEditor.rules) {

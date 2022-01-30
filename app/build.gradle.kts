@@ -132,12 +132,6 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
-
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs + listOf(
-                "-Xopt-in=io.kotest.common.ExperimentalKotest",
-            )
-        }
     }
 }
 

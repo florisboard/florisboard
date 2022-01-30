@@ -166,14 +166,19 @@ data class SnyggRule(
             !this.isAnnotation && other.isAnnotation -> 1
             else -> when (val elem = this.element.compareTo(other.element)) {
                 0 -> when (val diff = this.comparatorWeight() - other.comparatorWeight()) {
-                    0 -> {
-                        this.codes.indices.firstNotNullOfOrNull { n ->
-                            (this.codes[n].compareTo(other.codes[n])).takeIf { it != 0 }
-                        } ?: this.groups.indices.firstNotNullOfOrNull { n ->
-                            (this.groups[n].compareTo(other.groups[n])).takeIf { it != 0 }
-                        } ?: this.modes.indices.firstNotNullOfOrNull { n ->
-                            (this.modes[n].compareTo(other.modes[n])).takeIf { it != 0 }
-                        } ?: 0
+                    0 -> when {
+                        this.codes.size != other.codes.size -> this.codes.size.compareTo(other.codes.size)
+                        this.groups.size != other.groups.size -> this.groups.size.compareTo(other.groups.size)
+                        this.modes.size != other.modes.size -> this.modes.size.compareTo(other.modes.size)
+                        else -> {
+                            this.codes.indices.firstNotNullOfOrNull { n ->
+                                (this.codes[n].compareTo(other.codes[n])).takeIf { it != 0 }
+                            } ?: this.groups.indices.firstNotNullOfOrNull { n ->
+                                (this.groups[n].compareTo(other.groups[n])).takeIf { it != 0 }
+                            } ?: this.modes.indices.firstNotNullOfOrNull { n ->
+                                (this.modes[n].compareTo(other.modes[n])).takeIf { it != 0 }
+                            } ?: 0
+                        }
                     }
                     else -> diff
                 }

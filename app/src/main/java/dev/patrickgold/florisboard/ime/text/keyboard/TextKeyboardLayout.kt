@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.common.Pointer
 import dev.patrickgold.florisboard.common.PointerMap
@@ -278,7 +279,7 @@ private fun TextKeyButton(
         isPressed = key.isPressed && key.isEnabled,
         isDisabled = !key.isEnabled,
     )
-    val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {
+    val fontSize = keyStyle.fontSize.spSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
         KeyCode.VIEW_CHARACTERS,
         KeyCode.VIEW_SYMBOLS,
         KeyCode.VIEW_SYMBOLS2 -> 0.80f
@@ -317,7 +318,7 @@ private fun TextKeyButton(
                 mode = renderInfo.state.inputMode.value,
                 isPressed = key.isPressed,
             )
-            val hintFontSize = keyHintStyle.fontSize.spSize() * fontSizeMultiplier
+            val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
             Text(
                 modifier = Modifier
                     .padding(end = (key.visibleBounds.width / 12f).toDp())

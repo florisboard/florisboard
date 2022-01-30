@@ -430,7 +430,11 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun BoxScope.ImeUi() {
-        val keyboardStyle = FlorisImeTheme.style.get(FlorisImeUi.Keyboard)
+        val activeState by keyboardManager.observeActiveState()
+        val keyboardStyle = FlorisImeTheme.style.get(
+            element = FlorisImeUi.Keyboard,
+            mode = activeState.inputMode.value,
+        )
         SnyggSurface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -472,7 +476,6 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                         .weight(keyboardWeight)
                         .wrapContentHeight(),
                 ) {
-                    val activeState by keyboardManager.observeActiveState()
                     when (activeState.imeUiMode) {
                         ImeUiMode.TEXT -> TextInputLayout()
                         ImeUiMode.MEDIA -> {}
