@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
@@ -61,11 +59,6 @@ data class ExtensionComponentName(
         val Saver = Saver<ExtensionComponentName?, String>(
             save = { it.toString() },
             restore = { tryOrNull { from(it) } },
-        )
-
-        val StateSaver = Saver<MutableState<ExtensionComponentName?>, String>(
-            save = { it.value.toString() },
-            restore = { mutableStateOf(tryOrNull { from(it) }) },
         )
     }
 

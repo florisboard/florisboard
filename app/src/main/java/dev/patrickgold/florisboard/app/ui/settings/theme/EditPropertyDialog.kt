@@ -17,13 +17,21 @@
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,15 +47,26 @@ import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.components.DpSizeSaver
+import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
+import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.common.ValidationResult
+import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
@@ -67,6 +86,23 @@ data class PropertyInfo(
     val name: String,
     val value: SnyggValue,
 )
+
+private enum class ShapeCorner {
+    TOP_START,
+    TOP_END,
+    BOTTOM_END,
+    BOTTOM_START;
+
+    @Composable
+    fun label(): String {
+        return stringRes(when (this) {
+            TOP_START -> R.string.enum__shape_corner__top_start
+            TOP_END -> R.string.enum__shape_corner__top_end
+            BOTTOM_END -> R.string.enum__shape_corner__bottom_end
+            BOTTOM_START -> R.string.enum__shape_corner__bottom_start
+        })
+    }
+}
 
 @Composable
 internal fun EditPropertyDialog(
@@ -358,6 +394,335 @@ private fun PropertyValueEditor(
                     text = "sp",
                     fontFamily = FontFamily.Monospace,
                 )
+            }
+        }
+        is SnyggShapeValue -> when (value) {
+            is SnyggDpShapeValue -> {
+                var showDialogInitDp by rememberSaveable(stateSaver = DpSizeSaver) {
+                    mutableStateOf(0.dp)
+                }
+                var showDialogForCorner by rememberSaveable {
+                    mutableStateOf<ShapeCorner?>(null)
+                }
+                var topStart by rememberSaveable(stateSaver = DpSizeSaver) {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerDpShapeValue -> value.topStart
+                        is SnyggRoundedCornerDpShapeValue -> value.topStart
+                    })
+                }
+                var topEnd by rememberSaveable(stateSaver = DpSizeSaver) {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerDpShapeValue -> value.topEnd
+                        is SnyggRoundedCornerDpShapeValue -> value.topEnd
+                    })
+                }
+                var bottomEnd by rememberSaveable(stateSaver = DpSizeSaver) {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerDpShapeValue -> value.bottomEnd
+                        is SnyggRoundedCornerDpShapeValue -> value.bottomEnd
+                    })
+                }
+                var bottomStart by rememberSaveable(stateSaver = DpSizeSaver) {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerDpShapeValue -> value.bottomStart
+                        is SnyggRoundedCornerDpShapeValue -> value.bottomStart
+                    })
+                }
+                val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
+                    when (value) {
+                        is SnyggCutCornerDpShapeValue -> {
+                            CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                        is SnyggRoundedCornerDpShapeValue -> {
+                            RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                    }
+                }
+                LaunchedEffect(shape) {
+                    onValueChange(when (value) {
+                        is SnyggCutCornerDpShapeValue -> {
+                            SnyggCutCornerDpShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                        is SnyggRoundedCornerDpShapeValue -> {
+                            SnyggRoundedCornerDpShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                    })
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    Column {
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitDp = topStart
+                                showDialogForCorner = ShapeCorner.TOP_START
+                            },
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topStart.value),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitDp = bottomStart
+                                showDialogForCorner = ShapeCorner.BOTTOM_START
+                            },
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomStart.value),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .requiredSize(40.dp)
+                            .border(1.dp, MaterialTheme.colors.onBackground, shape),
+                    )
+                    Column {
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitDp = topEnd
+                                showDialogForCorner = ShapeCorner.TOP_END
+                            },
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topEnd.value),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitDp = bottomEnd
+                                showDialogForCorner = ShapeCorner.BOTTOM_END
+                            },
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomEnd.value),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                    }
+                }
+                val dialogForCorner = showDialogForCorner
+                if (dialogForCorner != null) {
+                    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+                    var size by rememberSaveable {
+                        mutableStateOf(showDialogInitDp.value.toString())
+                    }
+                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
+                    JetPrefAlertDialog(
+                        title = dialogForCorner.label(),
+                        confirmLabel = stringRes(R.string.action__apply),
+                        onConfirm = {
+                            if (sizeValidation.isInvalid()) {
+                                showValidationErrors = true
+                            } else {
+                                val sizeDp = size.toFloat().dp
+                                when (dialogForCorner) {
+                                    ShapeCorner.TOP_START -> topStart = sizeDp
+                                    ShapeCorner.TOP_END -> topEnd = sizeDp
+                                    ShapeCorner.BOTTOM_END -> bottomEnd = sizeDp
+                                    ShapeCorner.BOTTOM_START -> bottomStart = sizeDp
+                                }
+                                showDialogForCorner = null
+                            }
+                        },
+                        dismissLabel = stringRes(R.string.action__cancel),
+                        onDismiss = {
+                            showDialogForCorner = null
+                        },
+                    ) {
+                        Column {
+                            FlorisOutlinedTextField(
+                                value = size,
+                                onValueChange = { size = it },
+                                showValidationError = showValidationErrors,
+                                validationResult = sizeValidation,
+                            )
+                            FlorisTextButton(
+                                onClick = {
+                                    if (sizeValidation.isInvalid()) {
+                                        showValidationErrors = true
+                                    } else {
+                                        val sizeDp = size.toFloat().dp
+                                        topStart = sizeDp
+                                        topEnd = sizeDp
+                                        bottomEnd = sizeDp
+                                        bottomStart = sizeDp
+                                        showDialogForCorner = null
+                                    }
+                                },
+                                modifier = Modifier.align(Alignment.End),
+                                text = stringRes(R.string.settings__theme_editor__property_value_shape_apply_for_all_corners),
+                            )
+                        }
+                    }
+                }
+            }
+            is SnyggPercentageShapeValue -> {
+                var showDialogInitPercentage by rememberSaveable {
+                    mutableStateOf(0)
+                }
+                var showDialogForCorner by rememberSaveable {
+                    mutableStateOf<ShapeCorner?>(null)
+                }
+                var topStart by rememberSaveable {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerPercentageShapeValue -> value.topStart
+                        is SnyggRoundedCornerPercentageShapeValue -> value.topStart
+                    })
+                }
+                var topEnd by rememberSaveable {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerPercentageShapeValue -> value.topEnd
+                        is SnyggRoundedCornerPercentageShapeValue -> value.topEnd
+                    })
+                }
+                var bottomEnd by rememberSaveable {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerPercentageShapeValue -> value.bottomEnd
+                        is SnyggRoundedCornerPercentageShapeValue -> value.bottomEnd
+                    })
+                }
+                var bottomStart by rememberSaveable {
+                    mutableStateOf(when (value) {
+                        is SnyggCutCornerPercentageShapeValue -> value.bottomStart
+                        is SnyggRoundedCornerPercentageShapeValue -> value.bottomStart
+                    })
+                }
+                val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
+                    when (value) {
+                        is SnyggCutCornerPercentageShapeValue -> {
+                            CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                        is SnyggRoundedCornerPercentageShapeValue -> {
+                            RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                    }
+                }
+                LaunchedEffect(shape) {
+                    onValueChange(when (value) {
+                        is SnyggCutCornerPercentageShapeValue -> {
+                            SnyggCutCornerPercentageShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                        is SnyggRoundedCornerPercentageShapeValue -> {
+                            SnyggRoundedCornerPercentageShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                    })
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    Column {
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitPercentage = topStart
+                                showDialogForCorner = ShapeCorner.TOP_START
+                            },
+                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topStart),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitPercentage = bottomStart
+                                showDialogForCorner = ShapeCorner.BOTTOM_START
+                            },
+                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to bottomStart),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .requiredSize(40.dp)
+                            .border(1.dp, MaterialTheme.colors.onBackground, shape),
+                    )
+                    Column {
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitPercentage = topEnd
+                                showDialogForCorner = ShapeCorner.TOP_END
+                            },
+                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topEnd),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                showDialogInitPercentage = bottomEnd
+                                showDialogForCorner = ShapeCorner.BOTTOM_END
+                            },
+                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to bottomEnd),
+                            shape = MaterialTheme.shapes.medium,
+                        )
+                    }
+                }
+                val dialogForCorner = showDialogForCorner
+                if (dialogForCorner != null) {
+                    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+                    var size by rememberSaveable {
+                        mutableStateOf(showDialogInitPercentage.toString())
+                    }
+                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentageShapeValue, size)
+                    JetPrefAlertDialog(
+                        title = dialogForCorner.label(),
+                        confirmLabel = stringRes(R.string.action__apply),
+                        onConfirm = {
+                            if (sizeValidation.isInvalid()) {
+                                showValidationErrors = true
+                            } else {
+                                val sizePercentage = size.toInt()
+                                when (showDialogForCorner) {
+                                    ShapeCorner.TOP_START -> topStart = sizePercentage
+                                    ShapeCorner.TOP_END -> topEnd = sizePercentage
+                                    ShapeCorner.BOTTOM_END -> bottomEnd = sizePercentage
+                                    ShapeCorner.BOTTOM_START -> bottomStart = sizePercentage
+                                    else -> { }
+                                }
+                                showDialogForCorner = null
+                            }
+                        },
+                        dismissLabel = stringRes(R.string.action__cancel),
+                        onDismiss = {
+                            showDialogForCorner = null
+                        },
+                    ) {
+                        Column {
+                            FlorisOutlinedTextField(
+                                value = size,
+                                onValueChange = { size = it },
+                                showValidationError = showValidationErrors,
+                                validationResult = sizeValidation,
+                            )
+                            FlorisTextButton(
+                                onClick = {
+                                    if (sizeValidation.isInvalid()) {
+                                        showValidationErrors = true
+                                    } else {
+                                        val sizePercentage = size.toInt()
+                                        topStart = sizePercentage
+                                        topEnd = sizePercentage
+                                        bottomEnd = sizePercentage
+                                        bottomStart = sizePercentage
+                                        showDialogForCorner = null
+                                    }
+                                },
+                                modifier = Modifier.align(Alignment.End),
+                                text = stringRes(R.string.settings__theme_editor__property_value_shape_apply_for_all_corners),
+                            )
+                        }
+                    }
+                }
+            }
+            else -> {
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .requiredSize(40.dp)
+                            .border(1.dp, MaterialTheme.colors.onBackground, value.shape),
+                    )
+                }
             }
         }
         else -> {

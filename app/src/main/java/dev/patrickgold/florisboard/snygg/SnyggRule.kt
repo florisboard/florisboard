@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.snygg
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.text.key.InputMode
@@ -71,9 +69,9 @@ data class SnyggRule(
             "m:capslock" to InputMode.CAPS_LOCK.value,
         )
 
-        val StateSaver = Saver<MutableState<SnyggRule?>, String>(
-            save = { it.value?.toString() ?: "" },
-            restore = { mutableStateOf(from(it)) },
+        val Saver = Saver<SnyggRule?, String>(
+            save = { it?.toString() ?: "" },
+            restore = { from(it) },
         )
 
         fun from(raw: String): SnyggRule? {

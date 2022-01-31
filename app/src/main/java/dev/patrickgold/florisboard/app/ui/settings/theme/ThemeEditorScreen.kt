@@ -102,16 +102,16 @@ import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.snygg.definedVariablesRule
 import dev.patrickgold.florisboard.snygg.isDefinedVariablesRule
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeDpValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapePercentValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeDpValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapePercentValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
@@ -165,7 +165,7 @@ fun ThemeEditorScreen(
     }
 
     var snyggLevel by rememberSaveable { mutableStateOf(SnyggLevel.ADVANCED) }
-    var snyggRuleToEdit by rememberSaveable(saver = SnyggRule.StateSaver) { mutableStateOf(null) }
+    var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
     var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
@@ -853,10 +853,10 @@ internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): Stri
         SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggSolidColorValue -> R.string.snygg__property_value__solid_color
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
-        SnyggCutCornerShapeDpValue -> R.string.snygg__property_value__cut_corner_shape_dp
-        SnyggCutCornerShapePercentValue -> R.string.snygg__property_value__cut_corner_shape_percent
-        SnyggRoundedCornerShapeDpValue -> R.string.snygg__property_value__rounded_corner_shape_dp
-        SnyggRoundedCornerShapePercentValue -> R.string.snygg__property_value__rounded_corner_shape_percent
+        SnyggCutCornerDpShapeValue -> R.string.snygg__property_value__cut_corner_shape_dp
+        SnyggCutCornerPercentageShapeValue -> R.string.snygg__property_value__cut_corner_shape_percent
+        SnyggRoundedCornerDpShapeValue -> R.string.snygg__property_value__rounded_corner_shape_dp
+        SnyggRoundedCornerPercentageShapeValue -> R.string.snygg__property_value__rounded_corner_shape_percent
         SnyggDpSizeValue -> R.string.snygg__property_value__dp_size
         SnyggSpSizeValue -> R.string.snygg__property_value__sp_size
         SnyggPercentageSizeValue -> R.string.snygg__property_value__percentage_size

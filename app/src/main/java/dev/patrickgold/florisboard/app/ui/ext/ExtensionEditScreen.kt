@@ -502,7 +502,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
             }
         }
     }
-    var selectedComponentName by rememberSaveable(saver = ExtensionComponentName.StateSaver) {
+    var selectedComponentName by rememberSaveable(stateSaver = ExtensionComponentName.Saver) {
         mutableStateOf(null)
     }
     var showValidationErrors by rememberSaveable { mutableStateOf(false) }

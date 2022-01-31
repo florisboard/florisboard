@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 
@@ -31,3 +34,8 @@ infix fun TextUnit.safeTimes(other: Double): TextUnit {
 infix fun TextUnit.safeTimes(other: Int): TextUnit {
     return if (this.isUnspecified) this else this.times(other)
 }
+
+val DpSizeSaver = Saver<Dp, Float>(
+    save = { it.value },
+    restore = { it.dp },
+)

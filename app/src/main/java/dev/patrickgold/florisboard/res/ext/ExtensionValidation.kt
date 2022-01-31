@@ -20,6 +20,8 @@ import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.common.ValidationRule
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
 
 // TODO: (priority=medium)
 //  make all strings available for localize
@@ -99,6 +101,35 @@ object ExtensionValidation {
                 str.isBlank() -> resultInvalid(error = "Please enter a variable name")
                 str == "-" || str.startsWith("--") -> resultValid()
                 else -> resultValid(hint = "By convention a FlorisCSS variable name starts with two dashes (--)")
+            }
+        }
+    }
+
+    val SnyggDpShapeValue = ValidationRule<String> {
+        forKlass = SnyggDpShapeValue::class
+        forProperty = "corner"
+        validator { str ->
+            val floatValue = str.toFloatOrNull()
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a dp size")
+                floatValue == null -> resultInvalid(error = "Please enter a valid number")
+                floatValue < 0f -> resultInvalid(error = "Please enter a positive number (>=0)")
+                else -> resultValid()
+            }
+        }
+    }
+
+    val SnyggPercentageShapeValue = ValidationRule<String> {
+        forKlass = SnyggPercentageShapeValue::class
+        forProperty = "corner"
+        validator { str ->
+            val intValue = str.toIntOrNull()
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a percent size")
+                intValue == null -> resultInvalid(error = "Please enter a valid number")
+                intValue < 0 -> resultInvalid(error = "Please enter a positive number (>=0)")
+                intValue > 50 -> resultValid(hint = "Any value above 50% will behave as if you set 50%, consider lowering your percent size")
+                else -> resultValid()
             }
         }
     }

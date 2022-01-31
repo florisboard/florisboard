@@ -133,6 +133,7 @@
     <string name="settings__theme_editor__property_already_exists">A property with this name already exists within the current rule.</string>
     <string name="settings__theme_editor__property_name">Property name</string>
     <string name="settings__theme_editor__property_value">Property value</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Apply for all corners</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
@@ -687,6 +688,11 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Places the secondary row between the primary row and the text keyboard</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Places the secondary row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
+
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>
