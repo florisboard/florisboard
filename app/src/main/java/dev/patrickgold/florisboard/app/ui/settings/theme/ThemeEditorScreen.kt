@@ -147,7 +147,7 @@ fun ThemeEditorScreen(
         editor.stylesheetEditor ?: run {
             val stylesheetPath = editor.stylesheetPath()
             editor.stylesheetPathOnLoad = stylesheetPath
-            val stylesheetFile = workspace.dir.subFile(stylesheetPath)
+            val stylesheetFile = workspace.extDir.subFile(stylesheetPath)
             val stylesheetEditor = if (stylesheetFile.exists()) {
                 try {
                     stylesheetFile.readJson<SnyggStylesheet>(SnyggStylesheetJsonConfig).edit()
@@ -452,7 +452,7 @@ private fun ComponentMetaEditorDialog(
                 stylesheetPathValidation.isValid()
             if (!allFieldsValid) {
                 showValidationErrors = true
-            } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.any { it.id == id.trim() } != null) {
+            } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
                 context.showLongToast("A theme with this ID already exists!")
             } else {
                 workspace.update {

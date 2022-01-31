@@ -76,7 +76,9 @@ import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionJsonConfig
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.res.io.subFile
@@ -125,7 +127,7 @@ fun ExtensionEditScreen(id: String) {
             checkNotNull(sourceRef) { "Extension source ref must not be null" }
             newWorkspace.ext = ext
             newWorkspace.editor = ext.edit() as? T
-            ZipUtils.unzip(context, sourceRef, newWorkspace.dir)
+            ZipUtils.unzip(context, sourceRef, newWorkspace.extDir)
         }
     }
 
@@ -205,6 +207,7 @@ private fun EditScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisSc
         else -> R.string.ext__editor__title_any
     })
 
+    val context = LocalContext.current
     val navController = LocalNavController.current
 
     val extEditor = workspace.editor ?: return@FlorisScreen
@@ -214,12 +217,39 @@ private fun EditScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisSc
         if (workspace.isModified) {
             showUnsavedChangesDialog = true
         } else {
+            workspace.close()
             navController.popBackStack()
         }
     }
 
     fun handleSave() {
-        /*TODO*/
+        val manifest = extEditor.build()
+        val manifestFile = workspace.saverDir.subFile(ExtensionDefaults.MANIFEST_FILE_NAME)
+        manifestFile.writeJson(manifest, ExtensionJsonConfig)
+        when (extEditor) {
+            is ThemeExtensionEditor -> {
+                for (theme in extEditor.themes) {
+                    val stylesheetFile = workspace.saverDir.subFile(theme.stylesheetPath())
+                    stylesheetFile.parentFile?.mkdirs()
+                    val stylesheetEditor = theme.stylesheetEditor
+                    if (stylesheetEditor != null) {
+                        val stylesheet = stylesheetEditor.build()
+                        stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
+                    } else {
+                        val unmodifiedStylesheetFile = workspace.extDir.subFile(theme.stylesheetPath())
+                        if (unmodifiedStylesheetFile.exists()) {
+                            unmodifiedStylesheetFile.copyTo(stylesheetFile, overwrite = true)
+                        }
+                    }
+                }
+            }
+            else -> { }
+        }
+        val flexArchiveFile = workspace.dir.subFile(ExtensionDefaults.createFlexName(extEditor.meta.id))
+        ZipUtils.zip(workspace.saverDir, flexArchiveFile)
+        flexArchiveFile.copyTo(workspace.ext!!.sourceRef!!.absoluteFile(context), overwrite = true)
+        workspace.close()
+        navController.popBackStack()
     }
 
     navigationIcon {
@@ -562,13 +592,13 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 }
                                 if (componentEditor.stylesheetEditor != null) {
                                     val stylesheet = componentEditor.stylesheetEditor!!.build()
-                                    val stylesheetFile = workspace.dir.subFile(componentEditor.stylesheetPath())
+                                    val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                     stylesheetFile.parentFile?.mkdirs()
                                     stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
                                     componentEditor.stylesheetEditor = null
                                 } else {
-                                    val srcStylesheetFile = workspace.dir.subFile(component.stylesheetPath())
-                                    val dstStylesheetFile = workspace.dir.subFile(componentEditor.stylesheetPath())
+                                    val srcStylesheetFile = workspace.extDir.subFile(component.stylesheetPath())
+                                    val dstStylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                     dstStylesheetFile.parentFile?.mkdirs()
                                     srcStylesheetFile.copyTo(dstStylesheetFile, overwrite = true)
                                 }
@@ -582,7 +612,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 val stylesheetJson = ZipUtils.readFileFromArchive(
                                     context, externalExt.sourceRef!!, component.stylesheetPath()
                                 ).getOrNull() ?: return
-                                val dstStylesheetFile = workspace.dir.subFile(componentEditor.stylesheetPath())
+                                val dstStylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                 dstStylesheetFile.parentFile?.mkdirs()
                                 dstStylesheetFile.writeText(stylesheetJson)
                                 editor.themes.add(componentEditor)

@@ -182,12 +182,21 @@ class CacheManager(context: Context) {
     inner class ExtEditorWorkspace<T : ExtensionEditor>(uuid: String) : Workspace(uuid) {
         override val dir: FsDir = themeExtEditor.dir.subDir(uuid)
 
+        val extDir: FsDir = dir.subDir("ext")
+        val saverDir: FsDir = dir.subDir("saver")
+
         var currentAction by mutableStateOf<EditorAction?>(null)
         var ext: Extension? = null
         var editor by mutableStateOf<T?>(null, neverEqualPolicy())
         var version by mutableStateOf(0)
 
         val isModified get() = version > 0
+
+        override fun mkdirs() {
+            super.mkdirs()
+            extDir.mkdirs()
+            saverDir.mkdirs()
+        }
 
         inline fun <R> update(block: T.() -> R): R {
             // Method is designed to only be called when editor has been previously initialized
