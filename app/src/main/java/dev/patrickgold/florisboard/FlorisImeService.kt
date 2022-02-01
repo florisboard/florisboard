@@ -86,7 +86,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
@@ -185,6 +184,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     private val prefs by florisPreferenceModel()
     private val keyboardManager by keyboardManager()
+    private val themeManager by themeManager()
     private val nlpManager by nlpManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
@@ -331,7 +331,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
             }
-            val stylesBundle = ThemeManager.createInlineSuggestionUiStyleBundle(this)
+            val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
             val spec = InlinePresentationSpec.Builder(InlineSuggestionUiSmallestSize, InlineSuggestionUiBiggestSize)
                 .setStyle(stylesBundle)
                 .build()
