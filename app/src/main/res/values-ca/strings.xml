@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mou el teclat a l\'esquerra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mou el teclat a la dreta.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Mode privat</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -40,11 +39,6 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Preferències</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ajuda</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Inici</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclat</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Escritura</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestos</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Predeterminat</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
     <string name="settings__home__title" comment="Title of the Home screen">Benvingut a {app_name}</string>
@@ -65,7 +59,6 @@
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Sembla que no heu configurat cap subtipus. Com a alternativa s\'utilitzarà el subtipus anglès/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Aquest subtipus ja existeix!</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinit</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode del tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora de trenc d\'alba</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora de posta de sol</string>
@@ -77,11 +70,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Emmagatzematge intern</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crear un nou tema</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalitzat (basat en %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nou tema</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">El tema s\'ha importat correctament!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">El tema s\'ha exportat correctament!</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclat</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Número de fila</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Número d\'indicació de fila</string>

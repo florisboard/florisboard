@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Przesuń klawiaturę w lewo.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Przesuń klawiaturę w prawo.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Tryb prywatny</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -41,11 +40,6 @@
     <string name="settings__title" comment="Title of Settings">Ustawienia</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Wypróbuj swoją konfigurację</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Pomoc</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Strona główna</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klawiatura</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Wpisywanie</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Motyw</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesty</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Domyślne</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Domyślne systemowe</string>
     <string name="settings__home__title" comment="Title of the Home screen">Witaj w {app_name}</string>
@@ -82,7 +76,6 @@
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nie zainstalowano)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Układy</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Motyw</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Niezdefiniowany</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tryb motywu</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Czas wschodu słońca</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Czas zachodu słońca</string>
@@ -97,11 +90,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Wybierz motyw dzienny</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Wybierz motyw nocny</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Utwórz pusty motyw</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Niestandardowy (w oparciu o %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nowy motyw</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Motyw został pomyślnie zaimportowany!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Motyw został pomyślnie wyeksportowany!</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Dźwięki &amp; Wibracje</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Dźwięki</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Włącz feedback audio</string>

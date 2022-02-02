@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Flytt tastaturet til venstre.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Flytt tastaturet til høyre.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Privat modus</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -41,11 +40,6 @@
     <string name="settings__title" comment="Title of Settings">Innstillinger</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prøv oppsettet ditt</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Hjelp</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Hjem</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tastatur</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Skriver</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Bevegelser</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
     <string name="settings__home__title" comment="Title of the Home screen">Velkommen til {app_name}</string>
@@ -71,7 +65,6 @@
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ikke installert)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tegnoppsett</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Udefinert</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema-modus</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Soloppgangstid</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Solnedgangstid</string>
@@ -83,11 +76,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Ressurser</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern Lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ekstern Leverandør</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Opprett tomt tema</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Egendefinert (basert på %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nytt tema</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importert!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema eksportert!</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>

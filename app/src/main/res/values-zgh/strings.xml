@@ -18,9 +18,6 @@
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">ⵕⵥⵎ ⵜⵉⵙⵖⴰⵍ.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ⵜⵉⵙⵖⴰⵍ</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">ⴰⵙⵏⵓⴱⴳ</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">ⴰⵏⴰⵙⵉⵡ</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">ⵜⵉⵔⵔⴰ</string>
     <string name="settings__home__title" comment="Title of the Home screen">ⴱⵔⵔⴽ ⴳ {app_name}</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">ⴰⵏⴰⵙⵉⵡ</string>
     <!-- Smartbar strings -->

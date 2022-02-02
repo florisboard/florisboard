@@ -10,12 +10,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Move keyboard to the left.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Move keyboard to the right.</string>
 
-    <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Private mode</string>
-<!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
-
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -47,11 +41,6 @@
     <string name="settings__title" comment="Title of Settings">Settings</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Try out your setup</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Home</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Keyboard</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Typing</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Theme</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestures</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">System default</string>
 
@@ -91,7 +80,6 @@
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Undefined</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sunrise time</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
@@ -107,11 +95,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Select day theme</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Create empty theme</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Custom (based on %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">New theme</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
