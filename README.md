@@ -18,10 +18,10 @@ fully respecting your privacy. Currently in early-beta state.
 </tr>
 <tr>
 <td valign="top">
-<p><i>Major versions only, 1 release per 1-3 months</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
+<p><i>Major versions only, 1 release per 1-5 months</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
 </td>
 <td valign="top">
-<p><i>Beta versions, 1-2 releases per week</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
+<p><i>Beta versions, up to 1-2 releases per week</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
 </td>
 </tr>
 <tr>
