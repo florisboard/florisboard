@@ -59,10 +59,11 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
+import dev.patrickgold.florisboard.app.ui.components.FlorisIconButtonWithInnerPadding
 import dev.patrickgold.florisboard.app.ui.components.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
+import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.theme.Green500
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidKeyguardManager
@@ -132,7 +133,7 @@ fun ClipboardInputLayout(
                 .snyggBackground(headerStyle.background),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
@@ -147,7 +148,7 @@ fun ClipboardInputLayout(
                 color = headerStyle.foreground.solidColor(),
                 fontSize = headerStyle.fontSize.spSize(),
             )
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
@@ -161,7 +162,7 @@ fun ClipboardInputLayout(
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && popupItem == null,
             )
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = {
                     clipboardManager.clearHistory()
                     context.showShortToast(R.string.clipboard__cleared_history)
@@ -174,7 +175,7 @@ fun ClipboardInputLayout(
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && popupItem == null,
             )
-            FlorisIconButton(
+            FlorisIconButtonWithInnerPadding(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
@@ -346,7 +347,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 text = stringRes(R.string.clipboard__empty__title),
                 color = itemStyle.foreground.solidColor(),
-                fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                 fontWeight = FontWeight.Bold,
             )
             Text(
@@ -381,7 +382,7 @@ fun ClipboardInputLayout(
                         modifier = Modifier.padding(bottom = 8.dp),
                         text = stringRes(R.string.clipboard__disabled__title),
                         color = itemStyle.foreground.solidColor(),
-                        fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                        fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
@@ -422,7 +423,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 text = stringRes(R.string.clipboard__locked__title),
                 color = itemStyle.foreground.solidColor(),
-                fontSize = itemStyle.fontSize.spSize() * 1.1f,
+                fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                 fontWeight = FontWeight.Bold,
             )
             Text(
@@ -470,7 +471,7 @@ private fun ClipCategoryTitle(
         text = text.uppercase(),
         color = style.foreground.solidColor(),
         fontWeight = FontWeight.Bold,
-        fontSize = style.fontSize.spSize() * 0.8f,
+        fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )
 }
 

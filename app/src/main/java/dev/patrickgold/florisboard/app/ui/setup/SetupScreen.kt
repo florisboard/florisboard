@@ -61,7 +61,7 @@ private object Step {
 @Composable
 fun SetupScreen() = FlorisScreen {
     title = stringRes(R.string.setup__title)
-    backArrowVisible = false
+    navigationIconVisible = false
     scrollable = false
 
     val navController = LocalNavController.current

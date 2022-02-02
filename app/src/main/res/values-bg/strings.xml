@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Премества клавиатурата отляво.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Премества клавиатурата отдясно.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Поверителен режим</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -41,11 +40,6 @@
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Изпробвайте настройките тук</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Помощ</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Начало</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Клавиатура</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Въвеждане</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жестове</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По подразбиране</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">По подразбиране от системата</string>
     <string name="settings__home__title" comment="Title of the Home screen">Добре дошли във {app_name}</string>
@@ -81,7 +75,6 @@
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не е инсталирано)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Подредби</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим на тема</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Време на изгрев</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Време на залез</string>
@@ -96,66 +89,6 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Избор на дневна тема</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Избор на нощна тема</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Създаване на празна тема</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Потребителска (от %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Темата е внесена успешно!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Темата е изнесена успешно!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Редактиране на тема</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Вид</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Добавяне на група</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Редактиране на група</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Добавяне на атрибут</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Редактиране на атрибут</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Преименуване на тема</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референция</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Атрибут</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Плътен цвят</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Линеен градиент</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Радиален градиент</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Превключвател</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Състояние</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Преглед на стойността на темата</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Въведете име на темата.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Въведете име на групата, което да съдържа само букви (a–z и/или A–Z), двоеточие (:) за подгрупиране или допълнително числа (0–9), тилда (~) или долна черта (_) за етикет на клавиш.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Въведете име на групата.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Група с такова име вече съществува в темата. Посочете друго.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Въведете име на атрибут, което съдържа само буквите a-z и/или A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Въведете име на атрибут.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Атрибут с такова име вече съществува в групата. Посочете друго.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Прозорец и система</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Клавиатура</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Клавиши</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Клавиш (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Медиен контекст</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Работа с една ръка</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Изскачаща подсказка</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Поверителен режим</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Интелигентна лента</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Бутон за интелигентна лента</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Клавиатура на цял екран (пейзаж)</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Бутон към клавиатура на цял екран (пейзаж)</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Следа от плъзгане</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Потребителска група (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Цвят на фона</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Цвят на фона (активен)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Цвят на фона (натиснат)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Цвят на текста</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Цвят на текста (алтернативен)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Цвят на текста (натиснат)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Показване на кант</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Основен цвят</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Основен цвят (тъмен)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Цвят на акцента</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Цвят на лентата за навигация</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Лента за навигация с тъмен текст</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачен цвят</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвят на текста</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Потребителски атрибут (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
@@ -425,8 +358,6 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системни настройки на Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
-    <string name="ext__meta__components_label_generic">Неизвестен вид | {label}</string>
-    <string name="ext__meta__components_label_theme">Тема | {label}</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Страница</string>
     <string name="ext__meta__id">Идентификатор</string>
@@ -437,7 +368,7 @@
     <string name="ext__meta__title">Заглавие</string>
     <string name="ext__meta__version">Издание</string>
     <string name="ext__error__not_found_description">Няма разширение с идентификатор „{id}“.</string>
-    <string name="ext__editor__create_new_extension">Нова добавка</string>
+    <string name="ext__editor__create_extension__title">Нова добавка</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
@@ -446,8 +377,6 @@
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>
     <string name="action__cancel">Отказ</string>
-    <string name="action__cancel_confirm_title">Потвърждаване на отказ</string>
-    <string name="action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
     <string name="action__default">По подразбиране</string>
     <string name="action__delete">Премахване</string>
     <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>

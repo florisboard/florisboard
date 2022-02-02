@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.snygg.value
 
 import androidx.compose.ui.graphics.Color
+import kotlin.math.roundToInt
 
 sealed interface SnyggAppearanceValue : SnyggValue
 
@@ -83,12 +84,14 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
             },
         )
 
+        override fun defaultValue() = SnyggSolidColorValue(Color.Black)
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSolidColorValue)
             val map = SnyggIdToValueMap.new(
-                RgbaColor.RedId to (v.color.red * RgbaColor.RedMax),
-                RgbaColor.GreenId to (v.color.green * RgbaColor.GreenMax),
-                RgbaColor.BlueId to (v.color.blue * RgbaColor.BlueMax),
+                RgbaColor.RedId to (v.color.red * RgbaColor.RedMax).roundToInt(),
+                RgbaColor.GreenId to (v.color.green * RgbaColor.GreenMax).roundToInt(),
+                RgbaColor.BlueId to (v.color.blue * RgbaColor.BlueMax).roundToInt(),
                 RgbaColor.AlphaId to v.color.alpha,
             )
             return@runCatching spec.pack(map)

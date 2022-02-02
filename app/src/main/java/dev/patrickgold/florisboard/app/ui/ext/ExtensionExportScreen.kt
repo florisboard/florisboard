@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 fun ExtensionExportScreen(id: String) {
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
+
     val ext = extensionManager.getExtensionById(id)
     if (ext != null) {
         ExportScreen(ext)

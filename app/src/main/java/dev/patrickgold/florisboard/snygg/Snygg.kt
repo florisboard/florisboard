@@ -26,6 +26,7 @@ object Snygg {
     const val Height = "height"
 
     const val Background = "background"
+    const val Foreground = "foreground"
 
     const val Border = "border"
     const val BorderTop = "border-top"
@@ -38,8 +39,6 @@ object Snygg {
     const val FontStyle = "font-style"
     const val FontVariant = "font-variant"
     const val FontWeight = "font-weight"
-
-    const val Foreground = "foreground"
 
     const val Shadow = "shadow"
 

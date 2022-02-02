@@ -6,7 +6,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Помери тастатуру улево.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Помери тастатуру удесно.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Приватни мод</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -24,34 +23,12 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Подешавања</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Помоћ</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Почетна</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Тастатура</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Подразумевано</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Подразумевано</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинисано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Мод теме</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Изабрана тема</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Интерна Меморија</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Направи нову тему</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Измени тему</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Додај групу</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Измени групу</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Додај особину</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Измени особину</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референца</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Особина</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Стање</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Тастатура</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Кључ</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Приватни мод</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Тастатура</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->

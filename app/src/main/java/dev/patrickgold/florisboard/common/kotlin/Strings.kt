@@ -55,6 +55,10 @@ fun String.curlyFormat(argValueFactory: (argName: String) -> String?): String {
 }
 
 fun String.curlyFormat(vararg args: CurlyArg): String {
+    return this.curlyFormat(args.asList())
+}
+
+fun String.curlyFormat(args: List<CurlyArg>): String {
     if (args.isEmpty()) return this
     val sb = StringBuilder(this)
     for ((n, arg) in args.withIndex()) {

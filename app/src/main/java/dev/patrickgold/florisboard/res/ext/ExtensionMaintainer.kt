@@ -58,8 +58,6 @@ data class ExtensionMaintainer(
         }
     }
 
-    fun edit() = ExtensionMaintainerEditor(name, email ?: "", url ?: "")
-
     override fun toString() = buildString {
         append(name)
         if (email != null && email.isNotBlank()) {
@@ -68,22 +66,6 @@ data class ExtensionMaintainer(
         if (url != null && url.isNotBlank()) {
             append(" ($url)")
         }
-    }
-}
-
-data class ExtensionMaintainerEditor(
-    var name: String = "",
-    var email: String = "",
-    var url: String = "",
-) {
-    fun build() = runCatching {
-        val maintainer = ExtensionMaintainer(
-            name.trim(),
-            email.trim().ifBlank { null },
-            url.trim().ifBlank { null },
-        )
-        check(maintainer.name.isNotBlank()) { "Extension maintainer name cannot be blank" }
-        return@runCatching maintainer
     }
 }
 

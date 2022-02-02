@@ -63,6 +63,8 @@ object SnyggExplicitInheritValue : SnyggValue, SnyggValueEncoder {
         keywords(keywords = listOf(Inherit))
     }
 
+    override fun defaultValue() = this
+
     override fun serialize(v: SnyggValue) = runCatching<String> {
         return@runCatching Inherit
     }
@@ -90,6 +92,8 @@ object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
         keywords(keywords = listOf(ImplicitInherit))
     }
 
+    override fun defaultValue() = this
+
     override fun serialize(v: SnyggValue) = runCatching<String> {
         error("Implicit inherit is not meant to be serialized")
     }
@@ -105,10 +109,10 @@ val SnyggVarValueEncoders = listOf(
     SnyggSolidColorValue,
     SnyggImageRefValue,
     SnyggRectangleShapeValue,
-    SnyggCutCornerShapeDpValue,
-    SnyggCutCornerShapePercentValue,
-    SnyggRoundedCornerShapeDpValue,
-    SnyggRoundedCornerShapePercentValue,
+    SnyggCutCornerDpShapeValue,
+    SnyggCutCornerPercentageShapeValue,
+    SnyggRoundedCornerDpShapeValue,
+    SnyggRoundedCornerPercentageShapeValue,
     SnyggDpSizeValue,
     SnyggSpSizeValue,
     SnyggPercentageSizeValue,

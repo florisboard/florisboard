@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan papan ketik ke kiri.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan papan ketik ke kanan.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Mode pribadi</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -41,11 +40,6 @@
     <string name="settings__title" comment="Title of Settings">Pengaturan</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Coba pengaturan Anda</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Bantuan</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Beranda</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Papan Ketik</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Mengetik</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestur</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Standar sistem</string>
     <string name="settings__home__title" comment="Title of the Home screen">Selamat datang ke {app_name}</string>
@@ -83,7 +77,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (tidak terpasang)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tata Letak</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tidak ditetapkan</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Waktu matahari terbit</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Waktu matahari terbenam</string>
@@ -98,66 +91,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Pilih tema pagi</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Pilih tema malam</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Kelola tema terpasang</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Buat tema kosong</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Kustom (berdasarkan %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema baru</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema berhasil diimpor!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema berhasil diekspor!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Sunting tema</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nama</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Jenis</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tambahkan kelompok</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Sunting kelompok</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Tambahkan atribut</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Sunting atribut</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Sunting nama tema</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referensi</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kelompok</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Warna baku</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradiasi linear</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradiasi radial</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Beralih</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Keadaan</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Lainnya</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teka</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Pratinjau nilai tema</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Harap masukkan nama tema.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Harap masukkan nama grup yang hanya berisi huruf (a–z dan/atau A–Z), titik dua (:) untuk sub-pengelompokan atau tambahan angka (0–9), tilde (~) dan garis bawah (_) untuk kunci label.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Harap masukkan nama kelompok.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Nama grup ini sudah ada dalam tema ini. Harap memilih nama yang lain.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Harap masukkan nama atribut yang hanya mengandung huruf a-z dan/atau A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Harap masukkan nama atribut.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Nama atribut ini sudah ada dalam grup ini. Harap tentukan nama yang lain.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Window &amp; Sistem</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Papan ketik</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tombol</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tombol (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Konteks media</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Satu-tangan</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Kemunculan</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Mode pribadi</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Tombol Smartbar</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Tata letak layar penuh lanskap</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Tombol aksi layar penuh lanskap</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Jejak geser</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grup kustom (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Warna latar belakang</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Warna latar belakang (aktif)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Warna latar belakang (ditekan)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Warna latar depan</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Warna latar depan (alternatif)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Warna latar depan (ditekan)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Tampilkan batas</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Warna utama</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Warna utama (gelap)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Warna aksen</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Warna bilah navigasi</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Latar depan gelap bilah navigasi</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Warna semi transparan</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Warna teks</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atribut kustom (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suara &amp; Getaran</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suara</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktifkan feedback audio</string>
@@ -448,8 +381,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
     <!-- Extension strings -->
     <string name="ext__meta__components">Komponen yang dibundel</string>
-    <string name="ext__meta__components_label_generic">Tipe yang tidak diketahui | {label}</string>
-    <string name="ext__meta__components_label_theme">Tema | {label}</string>
     <string name="ext__meta__components_none_found">Arsip ekstensi ini tidak berisi komponen apa pun yang dibundel.</string>
     <string name="ext__meta__description">Deskripsi</string>
     <string name="ext__meta__homepage">Beranda</string>
@@ -463,7 +394,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__meta__version">Versi</string>
     <string name="ext__error__not_found_title">Ekstensi tidak ditemukan</string>
     <string name="ext__error__not_found_description">Tidak ada ekstensi dengan ID \"{id}\" yang ditemukan.</string>
-    <string name="ext__editor__create_new_extension">Buat ekstensi baru</string>
+    <string name="ext__editor__create_extension__title">Buat ekstensi baru</string>
     <string name="ext__export__success">Berhasil mengekspor ekstensi!</string>
     <string name="ext__export__failure">Gagal untuk mengekspor ekstensi: {error_message}</string>
     <string name="ext__import__success">Berhasil mengimpor ekstensi!</string>
@@ -484,8 +415,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="action__add">Tambahkan</string>
     <string name="action__apply">Terapkan</string>
     <string name="action__cancel">Batal</string>
-    <string name="action__cancel_confirm_title">Konfirmasi pembatalan</string>
-    <string name="action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Hapus</string>
     <string name="action__delete_confirm_title">Konfirmasi penghapusan</string>

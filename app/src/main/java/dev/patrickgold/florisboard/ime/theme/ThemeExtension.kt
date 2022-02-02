@@ -17,51 +17,43 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionComponent
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-private const val SERIAL_TYPE = "ime.extension.theme"
-
-@SerialName(SERIAL_TYPE)
+@SerialName(ThemeExtension.SERIAL_TYPE)
 @Serializable
-data class ThemeExtension(
+class ThemeExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
-    val themes: List<ThemeExtensionComponent>,
+    val themes: List<ThemeExtensionComponentImpl>,
 ) : Extension() {
+
+    companion object {
+        const val SERIAL_TYPE = "ime.extension.theme"
+    }
 
     override fun serialType() = SERIAL_TYPE
 
     override fun components() = themes
 
-    override fun edit(): ExtensionEditor {
-        TODO("Not yet implemented")
-    }
+    override fun edit() = ThemeExtensionEditor(
+        meta = meta,
+        dependencies = dependencies?.toMutableList() ?: mutableListOf(),
+        themes = themes.map { it.edit() }.toMutableList(),
+    )
 }
 
-@Serializable
-data class ThemeExtensionComponent(
-    override val id: String,
-    override val label: String,
-    override val authors: List<String>,
-    @SerialName("isNight")
-    val isNightTheme: Boolean = true,
-    val isBorderless: Boolean = false,
-    val isMaterialYouAware: Boolean = false,
-    @SerialName("stylesheet")
-    val stylesheetPath: String? = null,
-) : ExtensionComponent {
-    fun stylesheetPath() = "stylesheets/$id.json"
-}
+class ThemeExtensionEditor(
+    override var meta: ExtensionMeta,
+    override val dependencies: MutableList<String>,
+    val themes: MutableList<ThemeExtensionComponentEditor>,
+) : ExtensionEditor {
 
-@Suppress("NOTHING_TO_INLINE")
-inline fun extCoreTheme(id: String): ExtensionComponentName {
-    return ExtensionComponentName(
-        extensionId = "org.florisboard.themes",
-        componentId = id,
+    override fun build() = ThemeExtension(
+        meta = meta,
+        dependencies = dependencies.takeUnless { it.isEmpty() }?.toList(),
+        themes = themes.map { it.build() },
     )
 }

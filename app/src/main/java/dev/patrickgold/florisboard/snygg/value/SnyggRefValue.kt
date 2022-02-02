@@ -28,6 +28,8 @@ data class SnyggImageRefValue(val relPath: String) : SnyggRefValue {
             function(name = ImageFunction) { string(id = RelPath, regex = RefMatcher) }
         }
 
+        override fun defaultValue() = SnyggImageRefValue("")
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggImageRefValue)
             val map = SnyggIdToValueMap.new(RelPath to v.relPath)

@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Toetsenbord naar links verplaatsen.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Toetsenbord naar rechts verplaatsen.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Privémodus</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -41,11 +40,6 @@
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Probeer je nieuwe instellingen</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Startscherm</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Toetsenbord</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Typen</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Thema</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gebaren</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standaard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systeemstandaard</string>
     <string name="settings__home__title" comment="Title of the Home screen">Welkom bij {app_name}</string>
@@ -68,7 +62,6 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (niet geïnstalleerd)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Thema</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Zonsondergang</string>
@@ -80,66 +73,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Florisboard Apponderdelen</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interne opslag</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Gebruik externe provider</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Nieuw thema maken</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Aangepast (gebaseerd op %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nieuw thema</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thema succesvol geïnporteerd!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Thema succesvol geëxporteerd!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Thema bewerken</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Naam</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Groep toevoegen</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Bewerk groep</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Kenmerk toevoegen</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Kenmerken bewerken</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Bewerk themanaam</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referentie</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Groep</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Kenmerk</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Effen kleur</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineair kleurverloop</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiaal kleurverloop</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Wissel</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Status</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Overige</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Voorbeeld van de themawaarde</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Voer een naam voor het thema in.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Voer een groepsnaam in die enkel letters (a-z en/of A-Z), dubbelpunt (:) voor ondergroepering of bijkomend nummers (0-9), tilde (~) of underscores (_) voor het sleutellabel bevat.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vul een groepsnaam in.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Deze groepsnaam bestaat al binnen dit thema. Kies een andere naam.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vul een kenmerknaam in die enkel de letters a-z en/of A-Z bevat.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vul de naam van het kenmerk in.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Deze kenmerknaam bestaat al binnen deze groep. Kies een andere naam.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Venster &amp; Systeem</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Toetsenbord</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Toets</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Sleutel (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Mediacontext</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Met één hand</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Pop-up</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privémodus</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Slimme Balk</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Knop voor Slimme Balk</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Landschapsmodus volledig scherm indeling</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Landschapsmodus volledig scherm functieknop</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Glijspoor</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Aangepaste groep (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Achtergrondkleur</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Achtergrondkleur (wanneer actief)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Achtergrondkleur (wanneer ingedrukt)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Voorgrondkleur</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Voorgrondkleur (alternatief)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Voorgrondkleur (wanneer ingedrukt)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Rand weergeven</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primaire kleur</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primaire kleur (Donker)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Accentkleur</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Kleur navigatiebalk</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Navigatiebalk donkere voorgrond</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Semi-transparante kleur</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstkleur</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Aangepast kenmerk (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid &amp; vibraties</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>

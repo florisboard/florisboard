@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
@@ -53,7 +54,7 @@ fun PopupBaseBox(
     val popupStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.KeyPopup,
     )
-    val fontSize = popupStyle.fontSize.spSize() * fontSizeMultiplier
+    val fontSize = popupStyle.fontSize.spSize() safeTimes fontSizeMultiplier
     SnyggSurface(
         modifier = modifier,
         background = popupStyle.background,
@@ -124,7 +125,7 @@ fun PopupExtBox(
                     } else {
                         popupStyle
                     }
-                    val elemFontSize = elemStyle.fontSize.spSize() * fontSizeMultiplier *
+                    val elemFontSize = elemStyle.fontSize.spSize() safeTimes fontSizeMultiplier safeTimes
                         if (element.data.code == KeyCode.URI_COMPONENT_TLD) { 0.6f } else { 1.0f }
                     Box(
                         modifier = Modifier

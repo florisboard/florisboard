@@ -69,7 +69,7 @@ fun ExtensionMaintainerChip(
                 if (maintainer.email != null) {
                     FlorisChip(
                         onClick = { context.launchUrl("mailto:${maintainer.email}") },
-                        text = maintainer.email,
+                        text = maintainer.email.toString(),
                         leadingIcons = listOf(R.drawable.ic_email),
                         shape = RoundedCornerShape(4.dp),
                     )

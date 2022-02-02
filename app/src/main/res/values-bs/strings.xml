@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pomjeri tastaturu lijevo.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pomjeri tastaturu desno.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Privatni modus</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -33,15 +32,10 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Podešavanja</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Pomoć</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Dom</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tastatura</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Tipkanje</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standardno</string>
     <string name="settings__home__title" comment="Title of the Home screen">Dobrodošli u {app_name}</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj pod-tip</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedefinisano</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Vrijeme izlaska sunca</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Vrijeme zalaska sunca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dnevna tema</string>
@@ -49,38 +43,6 @@
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Odabrana tema</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adaptiraj boje prema aplikaciji</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interna memorija</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Kreiraj praznu temu</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova tema</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Uredi temu</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Ime</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Tip</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Dodaj grupu</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Uredi grupu</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Dodaj atribut</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Uredi atribut</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenca</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupa</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Drugo</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Molimo unesite ime teme.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Molimo unesite ime grupe.</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatura</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Taster</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Taster (%s)</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privatni modus</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Boja pozadine</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Boja pozadine (aktivan)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Boja pozadine (pritisnut)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Boja teksta</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Boja teksta (alternativno)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Boja teksta (pritisnut)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Prikaži okvir</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primarna boja</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primarna boja (tamna)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Boja akcenta</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Boja trake za navigaciju</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Boja teksta</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatura</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Red sa brojevima</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raspored</string>

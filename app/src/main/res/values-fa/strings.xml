@@ -9,7 +9,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">جابه‌جایی صفحه کلید به سمت چپ.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">جابه‌جایی صفحه کلید به سمت راست.</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">حالت خصوصی</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -40,11 +39,6 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
     <string name="settings__help" comment="General label for help buttons in Settings">راهنمایی</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">خانه</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">صفحه کلید</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">نوشتن</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">تم</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">اشارات</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">پیشفرض</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
     <string name="settings__home__title" comment="Title of the Home screen">خوش آمدید به {app_name}</string>
@@ -75,7 +69,6 @@
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (نصب نشده)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">چیدمان ها</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">تم</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">حالت طرح‌زمینه</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">زمان طلوع</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">زمان غروب</string>
@@ -87,66 +80,6 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">ابزار های برنامه فلوریس بورد</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">حافظه داخلی</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">ارائه دهنده خارجی</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">ساختن طرح‌زمینه خالی</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">سفارشی (بر اساس %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">طرح‌زمینه جدید</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم با موفقیت افزوده شد!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم با موفقیت استخراج شد!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ویرایش طرح زمینه</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">نام</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">افزودن گروه</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">ویرایش گروه</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">افزودن ویژگی</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">ویرایش ویژگی</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">ویرایش نام طرح زمینه</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">مرجع</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">گروه</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">ویژگی</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">رنگ ثابت</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">گراد خطی</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">گراد شعاعی</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">تعویض</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">حالت</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">ديگر</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">متن</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">پیش‌نمایش مقدار طرح زمینه</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">لطفا نام طرح زمینه را وارد کنید.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">لطفا نام گروهی را وارد کنید که فقط حاوی حروف (a-z و/یا A-Z) باشد، دونقطه (:) برای زیرگروه ها و یا اعداد (0-9)، آکولاد (~) و زیرخط (_) برای عنوان هر کلید می باشد.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">لطفا یک نام گروه وارد کنید.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">گروهی با این نام در طراحی زمینه وجود دارد. لطفا نام دیگری انتخاب کنید.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">لطفا نام یک ویژگی را وارد کنید که فقط حاوی حروف a-z و/یا A-Z باشد.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">لطفا نام ویژگی را وارد کنید.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">خصوصیتی با این نام در طراحی زمینه وجود دارد. لطفا مورد دیگری را مشخص کنید.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">پنجره &amp; سیستم</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">صفحه‌کلید</string>
-    <string name="settings__theme__group_key" comment="Theme group label">کلید</string>
-    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">کلید (%s)</string>
-    <string name="settings__theme__group_media" comment="Theme group label">متن رسانه</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">یک دستی</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">پنجره</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">حالت خصوصی</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">نوار هوشمند</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">دکمه نوار نوشمند</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">حالت چیدمان تمام صفحه افقی</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">دکمه عملیات در حالت تمام صفحه افقی</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">دنباله پرواز</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">گروه سفارشی (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">رنگ پس‌زمینه</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">رنگ پس زمینه (هنگام فعال بودن)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">رنگ پس زمینه (در صورت فشار)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">رنگ روی‌زمینه</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">رنگ روی‌زمینه (جایگزین)</string>
-    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">رنگ پس زمینه (در صورت فشار)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">نمایش مرزها</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">رنگ اصلی</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">رنگ اصلی (تاریک)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">رنگ ثانویه</string>
-    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">رنگ نوار پیمایش</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">پیش زمینه تاریک نوار پیمایش</string>
-    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">رنگ نیمه شفاف</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">رنگ متن</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">مشخصات سفارشی (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">صداها &amp; لرزش</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">صدای بازخورد / صداها</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">فعالسازی صدای بازخورد</string>

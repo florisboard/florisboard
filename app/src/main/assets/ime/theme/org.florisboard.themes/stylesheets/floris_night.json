@@ -153,6 +153,6 @@
   },
 
   "system-nav-bar": {
-    "background": "#212121"
+    "background": "var(--background)"
   }
 }

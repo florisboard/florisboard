@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ui.theme.outline
 
 
 object CardDefaults {
@@ -59,7 +60,7 @@ object CardDefaults {
     val ContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
 }
 
-object BoxDefauls {
+object BoxDefaults {
     val OutlinedBoxShape = RoundedCornerShape(8.dp)
 
     val ContentPadding = PaddingValues(all = 0.dp)
@@ -194,9 +195,9 @@ fun FlorisOutlinedBox(
     subtitle: String? = null,
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-    shape: Shape = BoxDefauls.OutlinedBoxShape,
-    contentPadding: PaddingValues = BoxDefauls.ContentPadding,
+    borderColor: Color = MaterialTheme.colors.outline,
+    shape: Shape = BoxDefaults.OutlinedBoxShape,
+    contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     FlorisOutlinedBox(
@@ -244,9 +245,9 @@ fun FlorisOutlinedBox(
     subtitle: (@Composable () -> Unit)? = null,
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-    shape: Shape = BoxDefauls.OutlinedBoxShape,
-    contentPadding: PaddingValues = BoxDefauls.ContentPadding,
+    borderColor: Color = MaterialTheme.colors.outline,
+    shape: Shape = BoxDefaults.OutlinedBoxShape,
+    contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Box(

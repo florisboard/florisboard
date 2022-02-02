@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import dev.patrickgold.florisboard.app.ui.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.ui.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsScreen
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
@@ -116,6 +117,11 @@ object Routes {
     }
 
     object Ext {
+        const val Edit = "ext/edit/{id}?create={serial_type}"
+        fun Edit(id: String, serialType: String? = null): String {
+            return Edit.curlyFormat("id" to id, "serial_type" to (serialType ?: ""))
+        }
+
         const val Export = "ext/export/{id}"
         fun Export(id: String) = Export.curlyFormat("id" to id)
 
@@ -195,11 +201,18 @@ object Routes {
                 AndroidSettingsScreen(name)
             }
 
+            composable(Ext.Edit) { navBackStack ->
+                val extensionId = navBackStack.arguments?.getString("id")
+                val serialType = navBackStack.arguments?.getString("serial_type")
+                ExtensionEditScreen(
+                    id = extensionId.toString(),
+                    createSerialType = serialType.takeIf { it != null && it.isNotBlank() },
+                )
+            }
             composable(Ext.Export) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionExportScreen(id = extensionId.toString())
             }
-
             composable(Ext.Import) { navBackStack ->
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
                     ExtensionImportScreenType.values().firstOrNull { it.id == typeId }
@@ -207,7 +220,6 @@ object Routes {
                 val uuid = navBackStack.arguments?.getString("uuid")?.takeIf { it != "null" }
                 ExtensionImportScreen(type, uuid)
             }
-
             composable(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionViewScreen(id = extensionId.toString())

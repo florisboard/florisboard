@@ -50,9 +50,9 @@ import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
@@ -77,7 +77,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         ThemeManagerScreenAction.MANAGE -> R.string.settings__theme_manager__title_manage
         else -> error("Theme manager screen action must not be null")
     })
-    previewFieldVisible = true
+    previewFieldVisible = action != ThemeManagerScreenAction.MANAGE
 
     val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
@@ -85,15 +85,12 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     val extensionManager by context.extensionManager()
     val themeManager by context.themeManager()
 
-    val indexedThemeConfigs by themeManager.indexedThemeConfigs.observeAsNonNullState()
+    val indexedThemeExtensions by extensionManager.themes.observeAsNonNullState()
     val selectedManagerThemeId = remember { mutableStateOf<ExtensionComponentName?>(null) }
-    val extGroupedThemes = remember(indexedThemeConfigs) {
-        buildMap<String, MutableList<ThemeExtensionComponent>> {
-            for ((componentName, config) in indexedThemeConfigs) {
-                if (!containsKey(componentName.extensionId)) {
-                    put(componentName.extensionId, mutableListOf())
-                }
-                get(componentName.extensionId)!!.add(config)
+    val extGroupedThemes = remember(indexedThemeExtensions) {
+        buildMap<String, List<ThemeExtensionComponent>> {
+            for (ext in indexedThemeExtensions) {
+                put(ext.meta.id, ext.themes)
             }
         }.mapValues { (_, configs) -> configs.sortedBy { it.label } }
     }
@@ -137,9 +134,11 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                 modifier = Modifier.defaultFlorisOutlinedBox(),
             ) {
                 this@content.Preference(
-                    onClick = { context.showShortToast("TODO for 0.3.14-beta09") },
+                    onClick = { navController.navigate(
+                        Routes.Ext.Edit("null", ThemeExtension.SERIAL_TYPE)
+                    ) },
                     iconId = R.drawable.ic_add,
-                    title = stringRes(R.string.ext__editor__create_new_extension),
+                    title = stringRes(R.string.ext__editor__title_create_theme),
                 )
                 this@content.Preference(
                     onClick = { navController.navigate(
@@ -154,9 +153,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
             val ext = extensionManager.getExtensionById(extensionId)!!
             FlorisOutlinedBox(
                 modifier = Modifier.defaultFlorisOutlinedBox(),
-                title = remember {
-                    ext.meta.title
-                },
+                title = ext.meta.title,
                 onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
                 subtitle = extensionId,
                 onSubtitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
@@ -207,7 +204,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         Spacer(modifier = Modifier.weight(1f))
                         FlorisTextButton(
                             onClick = {
-                                /*TODO*/context.showShortToast("TODO for 0.3.14-beta09")
+                                navController.navigate(Routes.Ext.Edit(ext.meta.id))
                             },
                             icon = painterResource(R.drawable.ic_edit),
                             text = stringRes(R.string.action__edit),

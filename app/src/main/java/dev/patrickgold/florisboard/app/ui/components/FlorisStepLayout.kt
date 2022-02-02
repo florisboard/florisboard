@@ -60,6 +60,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.app.ui.theme.outline
 
 private val StepHeaderPaddingVertical = 16.dp
 private val StepHeaderNumberBoxSize = 40.dp
@@ -198,7 +199,7 @@ private fun ColumnScope.Step(
     val autoStepId by stepState.getCurrentAuto()
     val backgroundColor = when (ownStepId) {
         currentStepId -> primaryColor
-        else -> MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+        else -> MaterialTheme.colors.outline
     }
     val contentVisible = ownStepId == currentStepId
     StepHeader(

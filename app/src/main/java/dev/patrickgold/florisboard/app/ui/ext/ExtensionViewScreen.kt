@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.ext
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,11 +27,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -44,12 +40,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -58,23 +50,21 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.common.android.showLongToast
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionComponent
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
-
-private val ComponentCardShape = RoundedCornerShape(8.dp)
 
 @Composable
 fun ExtensionViewScreen(id: String) {
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
+
     val ext = extensionManager.getExtensionById(id)
     if (ext != null) {
         ViewScreen(ext)
@@ -169,13 +159,24 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     text = stringRes(R.string.action__export),
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = stringRes(R.string.ext__meta__components),
-                fontWeight = FontWeight.Bold,
-            )
-            ExtensionComponentListView(ext)
+        }
+
+        when (ext) {
+            is ThemeExtension -> {
+                ExtensionComponentListView(
+                    title = stringRes(R.string.ext__meta__components_theme),
+                    components = ext.themes,
+                ) { component ->
+                    ExtensionComponentView(
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
+                        meta = ext.meta,
+                        component = component,
+                    )
+                }
+            }
+            else -> {
+                // Render nothing
+            }
         }
 
         if (extToDelete != null) {
@@ -198,82 +199,6 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
             )
         }
     }
-}
-
-@Composable
-private fun ExtensionComponentListView(ext: Extension) {
-    val components = ext.rememberComponents()
-    if (components.isEmpty()) {
-        ExtensionComponentNoneFoundView()
-    } else {
-        for (component in components) {
-            ExtensionComponentView(ext, component) {
-                when (component) {
-                    is ThemeExtensionComponent -> {
-                        val text = remember(component) {
-                            buildString {
-                                appendLine("authors = ${component.authors}")
-                                appendLine("isNightTheme = ${component.isNightTheme}")
-                                appendLine("isBorderless = ${component.isBorderless}")
-                                appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
-                                append("stylesheetPath = ${component.stylesheetPath()}")
-                            }
-                        }
-                        Text(
-                            text = text,
-                            style = MaterialTheme.typography.body2,
-                            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
-                        )
-                    }
-                    else -> {
-                        ExtensionComponentNoneFoundView()
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ExtensionComponentView(
-    ext: Extension,
-    component: ExtensionComponent,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    val componentName = remember { ExtensionComponentName(ext.meta.id, component.id) }
-    Column(
-        modifier = modifier
-            .padding(vertical = 8.dp)
-            .fillMaxWidth()
-            .border(1.dp, MaterialTheme.colors.onSurface.copy(alpha = 0.12f), ComponentCardShape)
-            .padding(vertical = 8.dp, horizontal = 14.dp),
-    ) {
-        Text(
-            text = stringRes(when (component) {
-                is ThemeExtensionComponent -> R.string.ext__meta__components_label_theme
-                else -> R.string.ext__meta__components_label_generic
-            }, "label" to component.label),
-            style = MaterialTheme.typography.subtitle2,
-        )
-        Text(
-            modifier = Modifier.padding(bottom = 8.dp),
-            text = remember { componentName.toString() },
-            color = LocalContentColor.current.copy(alpha = 0.56f),
-            fontWeight = FontWeight.Normal,
-            fontFamily = FontFamily.Monospace,
-            fontSize = 10.sp,
-        )
-        content()
-    }
-}
-
-@Composable
-private fun ExtensionComponentNoneFoundView() {
-    Text(
-        text = stringRes(R.string.ext__meta__components_none_found),
-        fontStyle = FontStyle.Italic,
-    )
 }
 
 @Composable
@@ -343,7 +268,7 @@ private fun PreviewExtensionViewerScreen() {
         ),
         dependencies = null,
         themes = listOf(
-            ThemeExtensionComponent(id = "test", label = "Test", authors = listOf(), stylesheetPath = "test.json"),
+            ThemeExtensionComponentImpl(id = "test", label = "Test", authors = listOf(), stylesheetPath = "test.json"),
         ),
     )
     ViewScreen(ext = testExtension)

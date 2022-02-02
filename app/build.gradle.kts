@@ -133,10 +133,6 @@ android {
             it.useJUnitPlatform()
         }
     }
-
-    lint {
-        isAbortOnError = false
-    }
 }
 
 tasks.withType<Test> {
@@ -155,19 +151,21 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
     implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation("com.google.accompanist:accompanist-flowlayout:0.20.2")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta03")
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta03")
-    implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta03")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta05")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta05")
+    implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta05")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("androidx.room:room-runtime:2.4.0")
     kapt("androidx.room:room-compiler:2.4.0")
 
-    testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
-    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
-    testImplementation("io.kotest:kotest-property:4.6.3")
-    testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.4.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
+    testImplementation("io.kotest:kotest-property:5.1.0")
+    testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.5.0")
+    testImplementation("nl.jqno.equalsverifier:equalsverifier:3.8.3")
 
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")

@@ -238,7 +238,7 @@ internal fun BackupFilesSelector(
     title: String,
 ) {
     FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
+        modifier = modifier.defaultFlorisOutlinedBox(),
         title = title,
     ) {
         CheckboxListItem(
@@ -287,6 +287,7 @@ internal fun RadioListItem(
     onClick: () -> Unit,
     selected: Boolean,
     text: String,
+    secondaryText: String? = null,
 ) {
     JetPrefListItem(
         modifier = Modifier.rippleClickable(onClick = onClick),
@@ -297,5 +298,6 @@ internal fun RadioListItem(
             )
         },
         text = text,
+        secondaryText = secondaryText,
     )
 }

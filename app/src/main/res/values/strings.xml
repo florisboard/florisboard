@@ -10,12 +10,6 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Move keyboard to the left.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Move keyboard to the right.</string>
 
-    <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Private mode</string>
-<!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
-
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -47,11 +41,6 @@
     <string name="settings__title" comment="Title of Settings">Settings</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Try out your setup</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Home</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Keyboard</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Typing</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Theme</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestures</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">System default</string>
 
@@ -91,7 +80,6 @@
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Undefined</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sunrise time</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
@@ -107,69 +95,96 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Select day theme</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Create empty theme</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Custom (based on %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">New theme</string>
-    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
-    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edit theme</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Add group</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Edit group</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Add attribute</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Edit attribute</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Edit theme name</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Reference</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Group</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attribute</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Solid color</string>
-    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Linear gradient</string>
-    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radial gradient</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Switch</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">State</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Other</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Preview of the theme value</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Please enter a theme name.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Please enter a group name which only contain letters (a–z and/or A–Z), colons (:) for sub–grouping or additionally numbers (0–9), tilde (~) and underlines (_) for the key label.</string>
-    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Please enter a group name.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">This group name already exists within this theme. Please choose another one.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Please enter an attribute name which only contain the letters a-z and/or A-Z.</string>
-    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Please enter an attribute name.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">This attribute name already exists within this group. Please specify another one.</string>
+    <string name="settings__theme_editor__add_rule">Add rule</string>
+    <string name="settings__theme_editor__edit_rule">Edit rule</string>
+    <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
+    <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
+    <string name="settings__theme_editor__rule_element">Target element</string>
+    <string name="settings__theme_editor__rule_codes">Codes</string>
+    <string name="settings__theme_editor__rule_groups">Groups</string>
+    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_selectors">Selectors</string>
+    <string name="settings__theme_editor__add_code">Add code</string>
+    <string name="settings__theme_editor__edit_code">Edit code</string>
+    <string name="settings__theme_editor__no_codes_defined">No codes defined.</string>
+    <string name="settings__theme_editor__code_already_exists">This key code is already defined.</string>
+    <string name="settings__theme_editor__code_invalid">This key code is not valid. Ensure that the key code is within the range of {c_min} to {c_max} for characters or {i_min} to {i_max} for internal special keys.</string>
+    <string name="settings__theme_editor__code_help_text">The following links will help you to find the corresponding key code:</string>
+    <string name="settings__theme_editor__add_property">Add property</string>
+    <string name="settings__theme_editor__edit_property">Edit property</string>
+    <string name="settings__theme_editor__property_already_exists">A property with this name already exists within the current rule.</string>
+    <string name="settings__theme_editor__property_name">Property name</string>
+    <string name="settings__theme_editor__property_value">Property value</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Apply for all corners</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
 
-    <string name="settings__theme__group_window"                comment="Theme group label">Window &amp; System</string>
-    <string name="settings__theme__group_keyboard"              comment="Theme group label">Keyboard</string>
-    <string name="settings__theme__group_key"                   comment="Theme group label">Key</string>
-    <string name="settings__theme__group_key_specific"          comment="Theme group label (%s is specific modifier)">Key (%s)</string>
-    <string name="settings__theme__group_media"                 comment="Theme group label">Media context</string>
-    <string name="settings__theme__group_oneHanded"             comment="Theme group label">One-handed</string>
-    <string name="settings__theme__group_popup"                 comment="Theme group label">Popup</string>
-    <string name="settings__theme__group_privateMode"           comment="Theme group label">Private mode</string>
-    <string name="settings__theme__group_smartbar"              comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton"        comment="Theme group label">Smartbar button</string>
-    <string name="settings__theme__group_extractEditLayout"     comment="Theme group label">Landscape fullscreen layout</string>
-    <string name="settings__theme__group_extractActionButton"   comment="Theme group label">Landscape fullscreen action button</string>
-    <string name="settings__theme__group_glideTrail"            comment="Theme group label">Glide trail</string>
-    <string name="settings__theme__group_custom"                comment="Theme group label (%s is custom group name)">Custom group (%s)</string>
-
-    <string name="settings__theme__attr_background"             comment="Theme attribute label">Background color</string>
-    <string name="settings__theme__attr_backgroundActive"       comment="Theme attribute label">Background color (active)</string>
-    <string name="settings__theme__attr_backgroundPressed"      comment="Theme attribute label">Background color (pressed)</string>
-    <string name="settings__theme__attr_foreground"             comment="Theme attribute label">Foreground color</string>
-    <string name="settings__theme__attr_foregroundAlt"          comment="Theme attribute label">Foreground color (alternative)</string>
-    <string name="settings__theme__attr_foregroundPressed"      comment="Theme attribute label">Foreground color (pressed)</string>
-    <string name="settings__theme__attr_showBorder"             comment="Theme attribute label">Show border</string>
-    <string name="settings__theme__attr_colorPrimary"           comment="Theme attribute label">Primary color</string>
-    <string name="settings__theme__attr_colorPrimaryDark"       comment="Theme attribute label">Primary color (dark)</string>
-    <string name="settings__theme__attr_colorAccent"            comment="Theme attribute label">Accent color</string>
-    <string name="settings__theme__attr_navBarColor"            comment="Theme attribute label">Navigation bar color</string>
-    <string name="settings__theme__attr_navBarLight"            comment="Theme attribute label">Navigation bar dark foreground</string>
-    <string name="settings__theme__attr_semiTransparentColor"   comment="Theme attribute label">Semi transparent color</string>
-    <string name="settings__theme__attr_textColor"              comment="Theme attribute label">Text color</string>
-    <string name="settings__theme__attr_custom"                 comment="Theme attribute label (%s is custom attribute name)">Custom attribute (%s)</string>
+    <string name="snygg__rule_element__defines">Variables</string>
+    <string name="snygg__rule_element__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
+    <string name="snygg__rule_element__keyboard">Keyboard window</string>
+    <string name="snygg__rule_element__key">Key</string>
+    <string name="snygg__rule_element__key_hint">Key hint</string>
+    <string name="snygg__rule_element__key_popup">Key popup</string>
+    <string name="snygg__rule_element__clipboard_header">Clipboard header</string>
+    <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
+    <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
+    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primary action row toggle</string>
+    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Smartbar primary secondary row toggle</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secondary row</string>
+    <string name="snygg__rule_element__smartbar_action_row">Smartbar action row</string>
+    <string name="snygg__rule_element__smartbar_action_button">Smartbar action button</string>
+    <string name="snygg__rule_element__smartbar_candidate_row">Smartbar candidate row</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
+    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
+    <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
+    <string name="snygg__rule_selector__pressed">Pressed</string>
+    <string name="snygg__rule_selector__focus">Focused</string>
+    <string name="snygg__rule_selector__disabled">Disabled</string>
+    <string name="snygg__property_name__width">Width</string>
+    <string name="snygg__property_name__height">Height</string>
+    <string name="snygg__property_name__background">Background</string>
+    <string name="snygg__property_name__foreground">Foreground</string>
+    <string name="snygg__property_name__border">Border</string>
+    <string name="snygg__property_name__border_top">Border top</string>
+    <string name="snygg__property_name__border_bottom">Border bottom</string>
+    <string name="snygg__property_name__border_start">Border start</string>
+    <string name="snygg__property_name__border_end">Border end</string>
+    <string name="snygg__property_name__font_family">Font family</string>
+    <string name="snygg__property_name__font_size">Font size</string>
+    <string name="snygg__property_name__font_style">Font style</string>
+    <string name="snygg__property_name__font_variant">Font variant</string>
+    <string name="snygg__property_name__font_weight">Font weight</string>
+    <string name="snygg__property_name__shadow">Shadow</string>
+    <string name="snygg__property_name__shape">Shape</string>
+    <string name="snygg__property_name__var_primary">Primary color</string>
+    <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>
+    <string name="snygg__property_name__var_secondary">Secondary color</string>
+    <string name="snygg__property_name__var_secondary_variant">Secondary color (variant)</string>
+    <string name="snygg__property_name__var_background">Common background</string>
+    <string name="snygg__property_name__var_surface">Common surface</string>
+    <string name="snygg__property_name__var_surface_variant">Common surface (variant)</string>
+    <string name="snygg__property_name__var_on_primary">Foreground of primary</string>
+    <string name="snygg__property_name__var_on_secondary">Foreground of secondary</string>
+    <string name="snygg__property_name__var_on_background">Foreground of background</string>
+    <string name="snygg__property_name__var_on_surface">Foreground of surface</string>
+    <string name="snygg__property_value__explicit_inherit">Inherit</string>
+    <string name="snygg__property_value__solid_color">Solid color</string>
+    <string name="snygg__property_value__image_ref">Image reference</string>
+    <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Cut corner shape (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Rounded corner shape (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Rounded corner shape (%)</string>
+    <string name="snygg__property_value__dp_size">Size (dp)</string>
+    <string name="snygg__property_value__sp_size">Size (sp)</string>
+    <string name="snygg__property_value__percentage_size">Size (%)</string>
+    <string name="snygg__property_value__defined_var">Var reference</string>
 
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
@@ -523,15 +538,16 @@
 
 
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
-    <string name="ext__meta__components_label_generic">Unknown type | {label}</string>
-    <string name="ext__meta__components_label_theme">Theme | {label}</string>
+    <string name="ext__meta__components_theme">Bundled theme components</string>
     <string name="ext__meta__components_none_found">This extension archive does not contain any bundled components.</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Homepage</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Issue tracker</string>
     <string name="ext__meta__keywords">Keywords</string>
+    <string name="ext__meta__label">Label</string>
     <string name="ext__meta__license">License</string>
     <string name="ext__meta__maintainers">Maintainers</string>
     <string name="ext__meta__maintainers_by">By: {maintainers}</string>
@@ -539,7 +555,26 @@
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension not found</string>
     <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
-    <string name="ext__editor__create_new_extension">Create new extension</string>
+    <string name="ext__editor__title_create_any">Create extension</string>
+    <string name="ext__editor__title_create_keyboard">Create keyboard extension</string>
+    <string name="ext__editor__title_create_spelling">Create spelling extension</string>
+    <string name="ext__editor__title_create_theme">Create theme extension</string>
+    <string name="ext__editor__title_edit_any">Edit extension</string>
+    <string name="ext__editor__title_edit_keyboard">Edit keyboard extension</string>
+    <string name="ext__editor__title_edit_spelling">Edit spelling extension</string>
+    <string name="ext__editor__title_edit_theme">Edit theme extension</string>
+    <string name="ext__editor__metadata__title">Manage meta data</string>
+    <string name="ext__editor__metadata__title_invalid">Invalid meta data</string>
+    <string name="ext__editor__metadata__message_invalid">The meta data for this extension is not valid, please check the meta data editor for details!</string>
+    <string name="ext__editor__dependencies__title">Manage dependencies</string>
+    <string name="ext__editor__files__title">Manage archive files</string>
+    <string name="ext__editor__create_component__title">Create component</string>
+    <string name="ext__editor__create_component__title_theme">Create theme component</string>
+    <string name="ext__editor__create_component__from_empty">Empty component</string>
+    <string name="ext__editor__create_component__from_existing">From existing component</string>
+    <string name="ext__editor__create_component__from_empty_warning">Creating and configuring an empty component may be hard if you are new to {app_name} or if you are unfamiliar with the specifics. Consider copying an existing component and modifying it to your likings if that is the case.</string>
+    <string name="ext__editor__edit_component__title">Edit component</string>
+    <string name="ext__editor__edit_component__title_theme">Edit theme component</string>
     <string name="ext__export__success">Successfully exported extension!</string>
     <string name="ext__export__failure">Failed to export extension: {error_message}</string>
     <string name="ext__import__success">Successfully imported extension!</string>
@@ -563,12 +598,14 @@
     <string name="action__apply">Apply</string>
     <string name="action__back_up">Back up</string>
     <string name="action__cancel">Cancel</string>
-    <string name="action__cancel_confirm_title">Confirm cancel</string>
-    <string name="action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
+    <string name="action__create">Create</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Delete</string>
     <string name="action__delete_confirm_title">Confirm delete</string>
     <string name="action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
+    <string name="action__discard">Discard</string>
+    <string name="action__discard_confirm_title">Unsaved changes</string>
+    <string name="action__discard_confirm_message">Are you sure you want to discard your unsaved changes? This action can not be undone once executed.</string>
     <string name="action__edit">Edit</string>
     <string name="action__export">Export</string>
     <string name="action__import">Import</string>
@@ -592,6 +629,7 @@
 
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
 
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
@@ -638,6 +676,11 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Places the secondary row between the primary row and the text keyboard</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Places the secondary row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
+
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>

@@ -29,10 +29,9 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainerEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File
@@ -200,15 +199,16 @@ class SpellingManager(context: Context) {
                 tempDictDir.mkdirs()
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
-                    meta = ExtensionMetaEditor(
+                    meta = ExtensionMeta(
                         id = ExtensionDefaults.createLocalId("spelling"),
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
                         description = manifest.description ?: "",
-                        maintainers = manifest.author?.let { mutableListOf(ExtensionMaintainer.fromOrTakeRaw(it).edit()) }
-                            ?: mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
+                        maintainers = manifest.author?.let { mutableListOf(ExtensionMaintainer.fromOrTakeRaw(it)) }
+                            ?: mutableListOf(ExtensionMaintainer(name = "Unknown")),
                         license = "unknown",
                     ),
+                    dependencies = mutableListOf(),
                     workingDir = tempDictDir,
                     spelling = SpellingExtensionConfigEditor().apply {
                         locale = supportedLocale.languageTag()
@@ -275,13 +275,14 @@ class SpellingManager(context: Context) {
                 tempDictDir.mkdirs()
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
-                    meta = ExtensionMetaEditor(
+                    meta = ExtensionMeta(
                         id = ExtensionDefaults.createLocalId("spelling"),
                         version = "0.0.0",
                         title = "FreeOffice import",
-                        maintainers = mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
+                        maintainers = mutableListOf(ExtensionMaintainer(name = "Unknown")),
                         license = "unknown",
                     ),
+                    dependencies = mutableListOf(),
                     workingDir = tempDictDir,
                     spelling = SpellingExtensionConfigEditor().apply {
                         locale = supportedLocale!!.languageTag()

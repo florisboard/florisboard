@@ -21,7 +21,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 /**
- * Interface for an `extension.json` file, which serves as a configuration of an extension
+ * Class for an `extension.json` file, which serves as a configuration of an extension
  * package for FlorisBoard (`.flex` archive files).
  *
  * Files which are always read (case sensitive):
@@ -39,7 +39,8 @@ import kotlinx.serialization.json.JsonNames
 data class ExtensionMeta(
     /**
      * The unique identifier of this extension, adhering to
-     * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
+     * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html)
+     * and this regex: `^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$`
      */
     val id: String,
 
@@ -100,41 +101,4 @@ data class ExtensionMeta(
      * Use an SPDX license expression if this extension has multiple licenses.
      */
     val license: String,
-) {
-    fun edit() = ExtensionMetaEditor(
-        id, version, title, description ?: "", keywords?.toMutableList() ?: mutableListOf(),
-        homepage ?: "", issueTracker ?: "", maintainers.map { it.edit() }.toMutableList(), license
-    )
-}
-
-data class ExtensionMetaEditor(
-    var id: String = "",
-    var version: String = "",
-    var title: String = "",
-    var description: String = "",
-    var keywords: MutableList<String> = mutableListOf(),
-    var homepage: String = "",
-    var issueTracker: String = "",
-    var maintainers: MutableList<ExtensionMaintainerEditor> = mutableListOf(),
-    var license: String = "",
-) {
-    fun build() = runCatching {
-        val meta = ExtensionMeta(
-            id.trim(),
-            version.trim(),
-            title.trim(),
-            description.trim().ifBlank { null },
-            keywords.mapNotNull { it.trim().ifBlank { null } }.ifEmpty { null },
-            homepage.trim().ifBlank { null },
-            issueTracker.trim().ifBlank { null },
-            maintainers.map { it.build().getOrThrow() },
-            license.trim(),
-        )
-        check(meta.id.isNotBlank()) { "Extension ID cannot be blank" }
-        check(meta.version.isNotBlank()) { "Extension version string cannot be blank" }
-        check(meta.title.isNotBlank()) { "Extension title cannot be blank" }
-        check(meta.maintainers.isNotEmpty()) { "At least one extension maintainer must be defined" }
-        check(meta.license.isNotBlank()) { "Extension license identifier cannot be blank" }
-        return@runCatching meta
-    }
-}
+)

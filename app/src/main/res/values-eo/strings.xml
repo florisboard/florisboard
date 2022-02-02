@@ -5,7 +5,6 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Atendi</string>
     <!-- One-handed strings -->
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Privata reĝimo</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -27,11 +26,6 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Agordoj</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Helpo</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Hejmo</string>
-    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klavaro</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Tajpado</string>
-    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Etoso</string>
-    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestoj</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Defaŭlta</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistema defaŭlta</string>
     <string name="settings__home__title" comment="Title of the Home screen">Bonvenon al {app_name}</string>
@@ -39,42 +33,10 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redakti subspeco</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ĉi tiu subtipo jam ekzistas!</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Etoso</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedifinita</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selektado etoso</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Krei malplenan etoson</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Propra (bazita sur %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nova etoso</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redakti etoson</string>
-    <string name="settings__theme_editor__name_label" comment="Label of name input">Nomo</string>
-    <string name="settings__theme_editor__type_label" comment="Label of type input">Tipo</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Aldoni grupon</string>
-    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Redakti grupon</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Aldoni atributon</string>
-    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Redakti atributon</string>
-    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenco</string>
-    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupo</string>
-    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atributo</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Baskuli</string>
-    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stato</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Alia</string>
-    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teksto</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Klavaro</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Klavo</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privata reĝimo</string>
-    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Propra grubo (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Fona koloro</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Fona koloro (aktiva)</string>
-    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Malfona koloro</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Malfona koloro (alternativa)</string>
-    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Montri konturon</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Ĉefa koloro</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Ĉefa koloro (malluma)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Akcenta koloro</string>
-    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Teksta koloro</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Propra atributo (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>

@@ -33,6 +33,8 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
             float(id = Size, unit = DpUnit, min = 0.0f)
         }
 
+        override fun defaultValue() = SnyggDpSizeValue(0.dp)
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggDpSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.dp.value)
@@ -53,8 +55,10 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
 data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = SpUnit, min = 0.0f)
+            float(id = Size, unit = SpUnit, min = 1.0f)
         }
+
+        override fun defaultValue() = SnyggSpSizeValue(24.sp)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSpSizeValue)
@@ -78,6 +82,8 @@ data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
         override val spec = SnyggValueSpec {
             percentageFloat(id = Size)
         }
+
+        override fun defaultValue() = SnyggPercentageSizeValue(0f)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggPercentageSizeValue)

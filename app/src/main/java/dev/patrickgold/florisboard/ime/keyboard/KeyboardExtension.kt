@@ -26,9 +26,7 @@ import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-private const val SERIAL_TYPE = "ime.extension.keyboard"
-
-@SerialName(SERIAL_TYPE)
+@SerialName(KeyboardExtension.SERIAL_TYPE)
 @Serializable
 data class KeyboardExtension(
     override val meta: ExtensionMeta,
@@ -38,6 +36,10 @@ data class KeyboardExtension(
     val popupMappings: List<PopupMappingComponent> = listOf(),
     val subtypePresets: List<SubtypePreset> = listOf(),
 ) : Extension() {
+
+    companion object {
+        const val SERIAL_TYPE = "ime.extension.keyboard"
+    }
 
     override fun serialType() = SERIAL_TYPE
 

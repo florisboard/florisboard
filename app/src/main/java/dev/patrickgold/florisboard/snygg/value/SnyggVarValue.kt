@@ -27,6 +27,8 @@ data class SnyggDefinedVarValue(val key: String) : SnyggVarValue {
             function(name = "var") { string(id = VarKey, regex = VarRegex) }
         }
 
+        override fun defaultValue() = SnyggDefinedVarValue("")
+
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggDefinedVarValue)
             val map = SnyggIdToValueMap.new(VarKey to v.key)

@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,6 +27,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
@@ -44,11 +46,12 @@ typealias FlorisScreenActions = @Composable RowScope.() -> Unit
 typealias FlorisScreenBottomBar = @Composable () -> Unit
 typealias FlorisScreenContent = PreferenceUiContent<AppPrefs>
 typealias FlorisScreenFab = @Composable () -> Unit
+typealias FlorisScreenNavigationIcon = @Composable () -> Unit
 
 interface FlorisScreenScope {
     var title: String
 
-    var backArrowVisible: Boolean
+    var navigationIconVisible: Boolean
 
     var previewFieldVisible: Boolean
 
@@ -60,22 +63,31 @@ interface FlorisScreenScope {
 
     fun bottomBar(bottomBar: FlorisScreenBottomBar)
 
+    fun content(content: FlorisScreenContent)
+
     fun floatingActionButton(fab: FlorisScreenFab)
 
-    fun content(content: FlorisScreenContent)
+    fun navigationIcon(navigationIcon: FlorisScreenNavigationIcon)
 }
 
 private class FlorisScreenScopeImpl : FlorisScreenScope {
     override var title: String by mutableStateOf("")
-    override var backArrowVisible: Boolean by mutableStateOf(true)
+    override var navigationIconVisible: Boolean by mutableStateOf(true)
     override var previewFieldVisible: Boolean by mutableStateOf(false)
     override var scrollable: Boolean by mutableStateOf(true)
     override var iconSpaceReserved: Boolean by mutableStateOf(true)
 
-    private var actions: FlorisScreenActions = { }
-    private var bottomBar: FlorisScreenBottomBar = { }
-    private var content: FlorisScreenContent = { }
-    private var fab: FlorisScreenFab = { }
+    private var actions: FlorisScreenActions = @Composable { }
+    private var bottomBar: FlorisScreenBottomBar = @Composable { }
+    private var content: FlorisScreenContent = @Composable { }
+    private var fab: FlorisScreenFab = @Composable { }
+    private var navigationIcon: FlorisScreenNavigationIcon = @Composable {
+        val navController = LocalNavController.current
+        FlorisIconButton(
+            onClick = { navController.popBackStack() },
+            icon = painterResource(R.drawable.ic_arrow_back),
+        )
+    }
 
     override fun actions(actions: FlorisScreenActions) {
         this.actions = actions
@@ -93,6 +105,10 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
         this.fab = fab
     }
 
+    override fun navigationIcon(navigationIcon: FlorisScreenNavigationIcon) {
+        this.navigationIcon = navigationIcon
+    }
+
     @Composable
     fun Render() {
         val previewFieldController = LocalPreviewFieldController.current
@@ -102,7 +118,7 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
         }
 
         Scaffold(
-            topBar = { FlorisAppBar(title, backArrowVisible, actions) },
+            topBar = { FlorisAppBar(title, navigationIcon.takeIf { navigationIconVisible }, actions) },
             bottomBar = bottomBar,
             floatingActionButton = fab,
         ) { innerPadding ->
@@ -110,15 +126,15 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
                 Modifier.florisVerticalScroll()
             } else {
                 Modifier
-            }
-            Box(modifier = modifier.padding(innerPadding)) {
-                PreferenceLayout(
-                    florisPreferenceModel(),
-                    modifier = Modifier.fillMaxWidth(),
-                    iconSpaceReserved = iconSpaceReserved,
-                    content = content,
-                )
-            }
+        }
+            PreferenceLayout(
+                florisPreferenceModel(),
+                modifier = modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth(),
+                iconSpaceReserved = iconSpaceReserved,
+                content = content,
+            )
         }
     }
 }

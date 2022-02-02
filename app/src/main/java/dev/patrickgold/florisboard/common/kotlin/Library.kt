@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui.ext
+package dev.patrickgold.florisboard.common.kotlin
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionComponent
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
-@Suppress("NOTHING_TO_INLINE")
-@Composable
-inline fun Extension.rememberComponents(): List<ExtensionComponent> {
-    return remember(this) { this.components() }
+inline fun <R> tryOrNull(block: () -> R): R? {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return try {
+        block()
+    } catch (_: Throwable) {
+        null
+    }
 }
