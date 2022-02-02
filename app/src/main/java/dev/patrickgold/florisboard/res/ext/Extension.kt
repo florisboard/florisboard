@@ -114,7 +114,7 @@ abstract class Extension {
 }
 
 interface ExtensionEditor {
-    val meta: ExtensionMetaEditor
+    var meta: ExtensionMeta
     val dependencies: MutableList<String>
 
     fun build(): Extension

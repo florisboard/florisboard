@@ -134,3 +134,7 @@ fun <T : Any> ValidationRule(scope: ValidationRuleBuilder<T>.() -> Unit): Valida
     scope(builder)
     return builder.build()
 }
+
+fun <T : Any> validate(rule: ValidationRule<T>, value: T): ValidationResult {
+    return rule.validator.invoke(ValidationResult.Companion, value)
+}

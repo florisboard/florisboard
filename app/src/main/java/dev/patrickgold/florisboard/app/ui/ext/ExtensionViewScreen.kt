@@ -58,7 +58,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaImpl
+import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 
 @Composable
 fun ExtensionViewScreen(id: String) {
@@ -253,7 +253,7 @@ private fun ExtensionMetaRowScrollableChips(
 @Composable
 private fun PreviewExtensionViewerScreen() {
     val testExtension = ThemeExtension(
-        meta = ExtensionMetaImpl(
+        meta = ExtensionMeta(
             id = "com.example.theme.test",
             version = "2.4.3",
             title = "Test theme",

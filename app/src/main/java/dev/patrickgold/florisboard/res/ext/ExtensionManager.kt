@@ -155,6 +155,7 @@ class ExtensionManager(context: Context) {
         }
 
         init {
+            value = emptyList()
             ioScope.launch {
                 internalModuleDir.mkdirs()
                 staticExtensions = indexAssetsModule()

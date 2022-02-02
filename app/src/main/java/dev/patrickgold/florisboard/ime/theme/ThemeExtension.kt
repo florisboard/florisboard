@@ -18,40 +18,41 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaImpl
+import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-private const val SERIAL_TYPE = "ime.extension.theme"
-
-@SerialName(SERIAL_TYPE)
+@SerialName(ThemeExtension.SERIAL_TYPE)
 @Serializable
 class ThemeExtension(
-    override val meta: ExtensionMetaImpl,
+    override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
     val themes: List<ThemeExtensionComponentImpl>,
 ) : Extension() {
+
+    companion object {
+        const val SERIAL_TYPE = "ime.extension.theme"
+    }
 
     override fun serialType() = SERIAL_TYPE
 
     override fun components() = themes
 
     override fun edit() = ThemeExtensionEditor(
-        meta = meta.edit(),
+        meta = meta,
         dependencies = dependencies?.toMutableList() ?: mutableListOf(),
         themes = themes.map { it.edit() }.toMutableList(),
     )
 }
 
 class ThemeExtensionEditor(
-    override val meta: ExtensionMetaEditor,
+    override var meta: ExtensionMeta,
     override val dependencies: MutableList<String>,
     val themes: MutableList<ThemeExtensionComponentEditor>,
 ) : ExtensionEditor {
 
     override fun build() = ThemeExtension(
-        meta = meta.build(),
+        meta = meta,
         dependencies = dependencies.takeUnless { it.isEmpty() }?.toList(),
         themes = themes.map { it.build() },
     )

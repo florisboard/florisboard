@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.res.ext
 
 import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.common.ValidationRule
+import dev.patrickgold.florisboard.common.validate
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
@@ -26,7 +27,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
 // TODO: (priority=medium)
 //  make all strings available for localize
 object ExtensionValidation {
-    private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*${'$'}""".toRegex()
+    private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*${'$'}""".toRegex()
     private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
     private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*${'$'}""".toRegex()
 
@@ -34,10 +35,55 @@ object ExtensionValidation {
         forKlass = ExtensionMeta::class
         forProperty = "id"
         validator { str ->
-            if (MetaIdRegex.matches(str)) {
-                resultValid()
-            } else {
-                resultInvalid("Package name does not match regex $MetaIdRegex")
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a package name")
+                MetaIdRegex.matches(str) -> resultValid()
+                else -> resultInvalid("Package name does not match regex $MetaIdRegex")
+            }
+        }
+    }
+
+    val MetaVersion = ValidationRule<String> {
+        forKlass = ExtensionMeta::class
+        forProperty = "version"
+        validator { str ->
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a version")
+                else -> resultValid()
+            }
+        }
+    }
+
+    val MetaTitle = ValidationRule<String> {
+        forKlass = ExtensionMeta::class
+        forProperty = "title"
+        validator { str ->
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a title")
+                else -> resultValid()
+            }
+        }
+    }
+
+    val MetaMaintainers = ValidationRule<String> {
+        forKlass = ExtensionMeta::class
+        forProperty = "maintainers"
+        validator { str ->
+            val maintainers = str.lines().filter { it.isNotBlank() }
+            when {
+                maintainers.isEmpty() -> resultInvalid(error = "Please enter at least one valid maintainer")
+                else -> resultValid()
+            }
+        }
+    }
+
+    val MetaLicense = ValidationRule<String> {
+        forKlass = ExtensionMeta::class
+        forProperty = "license"
+        validator { str ->
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a license identifier")
+                else -> resultValid()
             }
         }
     }
@@ -135,3 +181,12 @@ object ExtensionValidation {
     }
 }
 
+fun ExtensionMeta.validate(): Boolean {
+    return with(ExtensionValidation) {
+        validate(MetaId, id).isValid() &&
+            validate(MetaVersion, version).isValid() &&
+            validate(MetaTitle, title).isValid() &&
+            validate(MetaMaintainers, maintainers.joinToString("\n")).isValid() &&
+            validate(MetaLicense, license).isValid()
+    }
+}

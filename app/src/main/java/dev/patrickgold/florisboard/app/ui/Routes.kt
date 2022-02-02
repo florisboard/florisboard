@@ -117,8 +117,10 @@ object Routes {
     }
 
     object Ext {
-        const val Edit = "ext/edit/{id}"
-        fun Edit(id: String) = Edit.curlyFormat("id" to id)
+        const val Edit = "ext/edit/{id}?create={serial_type}"
+        fun Edit(id: String, serialType: String? = null): String {
+            return Edit.curlyFormat("id" to id, "serial_type" to (serialType ?: ""))
+        }
 
         const val Export = "ext/export/{id}"
         fun Export(id: String) = Export.curlyFormat("id" to id)
@@ -201,7 +203,11 @@ object Routes {
 
             composable(Ext.Edit) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
-                ExtensionEditScreen(id = extensionId.toString())
+                val serialType = navBackStack.arguments?.getString("serial_type")
+                ExtensionEditScreen(
+                    id = extensionId.toString(),
+                    createSerialType = serialType.takeIf { it != null && it.isNotBlank() },
+                )
             }
             composable(Ext.Export) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")

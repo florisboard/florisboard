@@ -21,22 +21,23 @@ import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaImpl
+import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.io.File
 
-private const val SERIAL_TYPE = "ime.extension.spelling"
-
-@SerialName(SERIAL_TYPE)
+@SerialName(SpellingExtension.SERIAL_TYPE)
 @Serializable
 data class SpellingExtension(
-    override val meta: ExtensionMetaImpl,
+    override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
     val spelling: SpellingExtensionConfig,
 ) : Extension() {
+
+    companion object {
+        const val SERIAL_TYPE = "ime.extension.spelling"
+    }
 
     @Transient var dict: SpellingDict? = null
 
@@ -56,7 +57,7 @@ data class SpellingExtension(
     }
 
     override fun edit() = SpellingExtensionEditor(
-        meta.edit(),
+        meta = meta,
         dependencies?.toMutableList() ?: mutableListOf(),
         workingDir,
         spelling.edit(),
@@ -64,14 +65,14 @@ data class SpellingExtension(
 }
 
 data class SpellingExtensionEditor(
-    override val meta: ExtensionMetaEditor,
+    override var meta: ExtensionMeta,
     override val dependencies: MutableList<String>,
     var workingDir: File?,
     val spelling: SpellingExtensionConfigEditor,
 ) : ExtensionEditor {
     override fun build(): SpellingExtension {
         return SpellingExtension(
-            meta = meta.build(),
+            meta = meta,
             spelling = spelling.build(),
         ).also {
             it.workingDir = workingDir

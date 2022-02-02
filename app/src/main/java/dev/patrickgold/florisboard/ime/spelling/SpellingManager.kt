@@ -31,7 +31,7 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File
@@ -199,7 +199,7 @@ class SpellingManager(context: Context) {
                 tempDictDir.mkdirs()
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
-                    meta = ExtensionMetaEditor(
+                    meta = ExtensionMeta(
                         id = ExtensionDefaults.createLocalId("spelling"),
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
@@ -275,7 +275,7 @@ class SpellingManager(context: Context) {
                 tempDictDir.mkdirs()
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
-                    meta = ExtensionMetaEditor(
+                    meta = ExtensionMeta(
                         id = ExtensionDefaults.createLocalId("spelling"),
                         version = "0.0.0",
                         title = "FreeOffice import",
