@@ -1,0 +1,63 @@
+{
+  "all": {
+    "е": {
+      "main": { "$": "auto_text_key", "code":  234, "label": "ê" },
+      "relevant": [{ "$": "auto_text_key", "code":  1105, "label": "ё" }]
+    },
+    "у": {
+      "main": { "$": "auto_text_key", "code":  1263, "label": "ӯ" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  1118, "label": "ў" },
+        { "$": "auto_text_key", "code":  1265, "label": "ӱ" },
+        { "$": "auto_text_key", "code":  375, "label": "ŷ" }
+      ]
+    },
+    "г": {
+      "main": { "$": "auto_text_key", "code":  1169, "label": "ґ" }
+    },
+    "і": {
+      "main": { "$": "auto_text_key", "code":  1123, "label": "î" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  1123, "label": "ѣ" },
+        { "$": "auto_text_key", "code":  1111, "label": "ї" }
+      ]
+    },
+    "о": {
+      "main": { "$": "auto_text_key", "code":  333, "label": "ō" },
+      "relevant": [{ "$": "auto_text_key", "code":  244, "label": "ô" }]
+    },
+    "ь": {
+      "main": { "$": "auto_text_key", "code":  1098, "label": "ъ" }
+    },
+    "~right": {
+      "main": { "code":   44, "label": "," },
+      "relevant": [
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":   34, "label": "\"" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   39, "label": "'" },
+        { "code":   64, "label": "@" },
+        { "code":   59, "label": ";" },
+        { "code":   47, "label": "/" },
+        { "code":   40, "label": "(" },
+        { "code":   41, "label": ")" },
+        { "code":   35, "label": "#" },
+        { "code":   33, "label": "!" },
+        { "code":   63, "label": "?" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" }
+      ]
+    }
+  }
+}

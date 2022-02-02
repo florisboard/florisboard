@@ -236,6 +236,18 @@
         "direction": "ltr"
       },
       {
+        "id": "rusyn",
+        "label": "Rusyn",
+        "authors": [ "svvvst" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "rusyn_us",
+        "label": "Rusyn (Phonetic)",
+        "authors": [ "svvvst" ],
+        "direction": "ltr"
+      },
+      {
         "id": "sangaline",
         "label": "Sangaline",
         "authors": [ "jeremiah-miller", "sangaline" ],

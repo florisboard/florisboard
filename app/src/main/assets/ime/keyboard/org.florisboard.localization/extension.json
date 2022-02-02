@@ -151,6 +151,10 @@
       "authors": [ "williamtheaker", "33kk" ]
     },
     {
+      "id": "rue",
+      "authors": [ "svvvst" ]
+    },
+    {
       "id": "sk",
       "authors": [ "stefan-misik", "majso" ]
     },
@@ -465,6 +469,15 @@
       "popupMapping": "org.florisboard.localization:ru",
       "preferred": {
         "characters": "org.florisboard.layouts:jcuken_russian"
+      }
+    },
+    {
+      "languageTag": "rue",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:rue",
+      "preferred": {
+        "characters": "org.florisboard.layouts:rusyn"
       }
     },
     {
