@@ -1,0 +1,4 @@
+This release adds a completely new stylesheet editor and the ability to back up and restore your settings/custom
+extensions. Some functionality available in beta05 may be missing, please see the detailed changelog for this.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta09
