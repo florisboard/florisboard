@@ -109,13 +109,11 @@ fun HomeScreen() = FlorisScreen {
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Current version: ${BuildConfig.VERSION_NAME}\n")
-                    Text("List of unavailable features (and when they will get re-implemented):\n")
-                    Text(" - In-app theme customization (beta09) -> Theme import/export of custom themes is already possible, also the new engine is already pretty advanced and usable with imported theme extensions")
-                    Text(" - Glide typing bug fixes (beta09) -> glide works somewhat but long words tend to not get recognized")
-                    Text(" - Emoji view (beta10)")
-                    Text(" - Landscape fullscreen input (beta10)")
-                    Text(" - Word suggestions (will just show word + a number to test out if the UI works) (beta10+, new suggestion algorithm 0.3.15/16)\n")
-                    Text("Please do not file issues that these features do not work while the current version is below the intended re-implementation version. Thank you!\n")
+                    Text("List of unavailable features, will get implemented/fixed in the upcoming beta releases:\n")
+                    Text(" - Glide typing bug fixes -> glide works somewhat but long words tend to not get recognized")
+                    Text(" - Basic emoji view")
+                    Text(" - Word suggestions (will just show word + a number to test out if the UI works) (new suggestions in 0.4.0)\n")
+                    Text("Please do not file issues that above features do not work (especially word suggestions, it is more than known by now and the major goal for 0.4.0 after the preference rework and its hotfix phase has been completed). Thank you!\n")
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
