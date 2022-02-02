@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Moda yek destî bigire.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Klavyeyê ber bi çepê ve bibe.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Klavyeyê ber bi rastê ve bibe.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojîyan</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Hestnîşan</string>
@@ -87,6 +83,9 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Hebûnên Sepan</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Depoya Navxweyî</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Pêşkêşkerê Derve</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Rûkarê ronahiyê hilbijêre</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Rûkarê tarî hilbijêre</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Rûkarên sazkirî bi rê ve bibe</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Deng &amp; Vibrasyon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>
@@ -98,9 +97,14 @@
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Dengê kilîta dirêj ya çapameniyê</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Dengên çalakiya dubarekirî ya bişkokê</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Dengên jestê skrîp</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Dengên bilez ên tevgerê nîşan dide</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Bersivdana haptîkî / Vibrasyon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Paşvegerên bextewar çalak bike</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrate ji bo bûyerên têketinê, girêdayî mîhengên pergalê</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Eyarên denga system îhmal bike</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Maweya tewrîbûnê</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Hêza tewrîbûnê</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrasyona çapemeniyê ya sereke</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavye</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rêza hejmar</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rêza jimareya nîşankirî</string>
@@ -157,6 +161,7 @@
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Ji bo hemû zimanan</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Rêvebirê pergala vekirî UI</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Peyv</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Koda ziman (vebijarkî)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Jest &amp; Bi şemitandin binivîse</string>
     <string name="pref__glide__title" comment="Preference group title">Bi şemitandin binivîse</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Bi şemitandin binivîse çalak bike</string>
@@ -184,15 +189,27 @@
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Mijara mîhengan</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ronî</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tarî</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Reş AMOLED</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Ziman</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Ji ber sînordarkirina pergalê her dem di Android 10+ de çalak e</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tu taybetiyên ku divê bi daneyên xwe yên têvel bi demkî bixebite neçalak bike</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rastnivîs</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Verastkera rastnivîsê bi kar bîne</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Ziman</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[BI CIH NAYÊ ANÎN] Ji kesan navan bi kar bîne</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Kontrolkera rastnivîsê dê têketinên ferhengên bikarhêneran bibîne, heke ev çalak bin</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Ferhengan bi rê ve bibe</string>
     <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} sazkirî</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Niha ferhengên kontrolkirina nivîsandinê nehatine barkirin. Ya yekem bi bişkoja \'+\' li jêr lê zêde bike!</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Pêvek / Arşîv</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Dosyeya Ferheng + Affix</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">Ferhenga nû veguheze hundir</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Çavkanî hilbijêre</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Arşîva veguheze hundir</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Niha bi hilbijartina dosyayê di dîyaloga bijarkerê dosyayê arşîvê veguheze hundir.</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Ziman hilbijêre</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Koda ziman (mînak en_US, ku)</string>
     <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Veguheztinê piştrast bike</string>
@@ -209,10 +226,36 @@
     <string name="about__changelog__title" comment="Preference title">Lîsteya guhertinan</string>
     <string name="about__changelog__summary" comment="Preference summary">Çi nû ye</string>
     <string name="about__privacy_policy__title" comment="Preference title">Polîtîqa Taybetîyê</string>
+    <string name="about__project_license__title" comment="Preference title">Lîsansa projeyê</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard di binê lîsansê de ye {license_name}</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Lîsansên partiya sêyem</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Lîsansên pirtûkxaneyên sêyemîn ên di vê sepanê de cih digirin</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Hûn bi xêr hatin!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Spas ji bo bikaranîna {app_name}! Ev sazkirina bilez, ji bo bikarînana {app_name} di cîhaza xwe da gavên pêwîst rê dide we.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Polîtîkaya nepenîtiyê</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Depo</string>
+    <string name="setup__enable_ime__title">Çalak kirin {app_name}</string>
+    <string name="setup__enable_ime__description">Android berîya ku hûn bikarin wê bi kar bînin, hewce dike ku her klavyeya taybet cuda çalak bibe. Pergala <i>Ziman û Têketin</i> Mîhengan veke, çalak bike \"{app_name}\".</string>
+    <string name="setup__enable_ime__open_settings_btn">Mîhengên pergalê vekin</string>
+    <string name="setup__select_ime__title">Hilbijartin {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} niha di pergala we de çalak e. Ji bo bikarînana çalak, bi hilbijartina di dîyaloga bijartinê ya têketinê re derbasî {app_name} bibe!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Klavyeyê biguherîne</string>
+    <string name="setup__finish_up__title">Bi dawî bû</string>
+    <string name="setup__finish_up__description_p1">{app_name} niha di pergalê de çalak e û amade ye ku ji hêla we ve were xwemalîkirin.</string>
+    <string name="setup__finish_up__description_p2">Heke hûn bi pirsgirêk, xeletî, qezayan an jî bi tenê dixwazin pêşnîyazekê bikin, li depoya projeyê binêrin ji ekrana der barê ekranê!</string>
     <string name="setup__finish_up__finish_btn">Dest Bi Taybetkirinê Bike</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Yêdek &amp; Nûvdekirin kirin</string>
+    <string name="backup_and_restore__back_up__title">Daneyên paşde bikin</string>
+    <string name="backup_and_restore__back_up__summary">Arşîvek hilanînê ya tercih û xwerûyan biafirînin</string>
+    <string name="backup_and_restore__back_up__destination">Cihê hilanînê hilbijêrin</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Pergala pelên system</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Sepana sêyem bi rêya menuya parvekirinê</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Vebijark</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Pêvekên klavyeyê</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Pêvekên rukarê</string>
+    <string name="backup_and_restore__restore__title">Daneyan vegerîne</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Ji ber nelirêtîyê xemgîn im, lê FlorisBoard ji ber xeletîyeka nelibendê têk çû.</string>
@@ -259,11 +302,40 @@
     <string name="ext__meta__title">Sernav</string>
     <string name="ext__meta__version">Guherto</string>
     <!-- Action strings -->
+    <string name="action__default">Rawêj</string>
+    <string name="action__delete">Jêbirin</string>
+    <string name="action__delete_confirm_title">Jêbirinê piştrast bike</string>
+    <string name="action__delete_confirm_message">Tu dixwazî \"{name}\" jê bibî? Ev çalakî nikare bi carekê ve were îdamkirin.</string>
+    <string name="action__edit">Destkarî</string>
+    <string name="action__export">Hinardin</string>
+    <string name="action__import">Veberhêne</string>
+    <string name="action__no">Na</string>
+    <string name="action__ok">Başe</string>
+    <string name="action__restore">Nûvdekirin</string>
+    <string name="action__save">Berhevkirin</string>
+    <string name="action__select">Hilbijartin</string>
+    <string name="action__select_dir">Cilbend hilbijér in</string>
+    <string name="action__select_dirs">Pêvekan hilbijêre</string>
+    <string name="action__select_file">Pelî hilbijêre</string>
+    <string name="action__select_files">Pelgeyan Hilbijêre</string>
+    <string name="action__yes">Erê</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Çewtî</string>
+    <string name="error__details">Hûrgulî</string>
+    <string name="error__invalid">Seqet</string>
+    <string name="error__snackbar_message">Tiştek çewt çû</string>
+    <string name="error__snackbar_message_template">Tiştek çewt çû: {error_message}</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Portre</string>
+    <string name="screen_orientation__landscape">Dorhalî</string>
+    <string name="screen_orientation__vertical">Stûnî</string>
+    <string name="screen_orientation__horizontal">Berwar</string>
     <!-- State strings -->
     <string name="state__disabled">Hat neçalakkirin</string>
+    <string name="state__enabled">Çalakkirî</string>
+    <string name="state__no_file_selected">Pelge nehatiye Hilbijartin</string>
+    <string name="state__no_files_selected">Pelge nehatiye Hilbijartin</string>
     <!-- Enum label and description strings -->
     <string name="enum__input_mode__normal" comment="Enum value label">Asayî</string>
     <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>

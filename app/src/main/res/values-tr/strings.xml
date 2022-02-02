@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tek el modunu kapat.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Klavyeyi sola kaydır.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Klavyeyi sağa kaydır.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojiler</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emojiler</string>
@@ -303,6 +299,7 @@
     <string name="setup__finish_up__title">Tamamen Bitir</string>
     <string name="setup__finish_up__description_p1">{app_name} sistemde etkin ve özelleştirilmeye hazır.</string>
     <string name="setup__finish_up__finish_btn">Özelleştirmeye Başla</string>
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Üzgünüz, ancak FlorisBoard bilinmeyen bir hatadan dolayı çöktü.</string>

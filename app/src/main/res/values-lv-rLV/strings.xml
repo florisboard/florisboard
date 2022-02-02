@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Aizvērt vienrocīgo ievadi.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pārvietot tastatūru uz kreiso pusi.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pārvietot tastatūru uz labo pusi.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Sajūtu rakstzīmes</string>
@@ -307,6 +303,33 @@
     <string name="setup__finish_up__description_p1">{app_name} tagad ir iespējots un ir gatavs pielāgojumiem.</string>
     <string name="setup__finish_up__description_p2">Ja tiek pamanītas kādas nepilnības, kļūdas, avārijas vai ir vēlme kaut ko ieteikt, apskati projekta glabātavu, kuras saite ir sadaļā \"Par\"!</string>
     <string name="setup__finish_up__finish_btn">Sākt pielāgošanu</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Rezerves kopēšana un atjaunošana</string>
+    <string name="backup_and_restore__back_up__title">Veikt datu rezerves kopēšanu</string>
+    <string name="backup_and_restore__back_up__summary">Izveido iestatījumu un pielāgojumu rezerves kopiju arhīvu</string>
+    <string name="backup_and_restore__back_up__destination">Atlasīt rezerves kopijas saglabāšanas vietu</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Vietējā datņu sistēma</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Trešās puses lietotne ar kopīgošanas izvēlni</string>
+    <string name="backup_and_restore__back_up__files">Atlasīt, kam veidot rezerves kopiju</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Uzstādījumi</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Tastatūras paplašinājumi</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Pareizrakstības paplašinājumi / vārdnīcas</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Izskata paplašinājumi</string>
+    <string name="backup_and_restore__back_up__success">Rezerves kopiju arhīvs tika veiksmīgi izdots.</string>
+    <string name="backup_and_restore__back_up__failure">Neizdevās izdot rezerves kopiju arhīvu: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Atjaunot datus</string>
+    <string name="backup_and_restore__restore__summary">Atjauno uzstādījumus un pielāgojumus no rezerves kopiju arhīva</string>
+    <string name="backup_and_restore__restore__files">Atlasīt, ko atjaunot</string>
+    <string name="backup_and_restore__restore__metadata">Atlasīts rezerves kopiju arhīvs</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Šis rezerves kopiju arhīvs tika izveidots ne pašreizējā lietotnes laidienā, kas kopumā ir atbalstīts. Jāņem vērā, ka var būt mazas nepilnības vai atsevišķi uzstādījumi var netikt pienācīgi pārsūtīti iespēju atšķirību dēļ.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Šis rezerves kopiju arhīvs tika izveidots trešās puses lietotnē, kas kopumā netiek atbalstīts. Ir iespējami datu zudumi, un šāda veida atjaunošana ir katra paša ziņā.</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Šis rezerves kopiju arhīvs satur nederīgus metadatus. Vai nu tas ir bojāts, vai arī nepienācīgi pārveidots. Atjaunošana no šī arhīva nav iespējama, lūgums atlasīt citu.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Šis rezerves kopiju arhīvs nesatur atjaunojamas datnes, lūgums atlasīt citu.</string>
+    <string name="backup_and_restore__restore__mode">Atjaunošanas veids</string>
+    <string name="backup_and_restore__restore__mode_merge">Apvienot ar pašreizējiem datiem</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Dzēst un pārrakstīt pašreizējos datus</string>
+    <string name="backup_and_restore__restore__success">Dati veiksmīgi atjaunoti.</string>
+    <string name="backup_and_restore__restore__failure">Neizdevās atjaunot datus: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorsBoard avarēja neparedzētas kļūdas dēļ.</string>
@@ -357,6 +380,8 @@
     <string name="pref__clipboard__clean_up_after__label">Noņemt vecos vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Galvenā vienuma notīrīšana dzēš arī jaunāko vēstures ierakstu</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Izstrādātāju rīki</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Iespējot izstrādātāju rīkus</string>
@@ -365,6 +390,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Rādīt galveno vienumu</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Pārklāj pašreizējo galveno starpliktuves vienumu</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Rādīt pareizrakstības pārklājumu</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Pārklāj pašreizējo pareizrakstības iznākumu atkļūdošanai</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atiestatīt iezīmi \"{flag_name}\"</string>
@@ -377,6 +404,8 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Sistēmas Android iestatījumi</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistēmas lokalizācijas</string>
     <!-- Extension strings -->
+    <string name="ext__meta__components">Iekļautās sastāvdaļas</string>
+    <string name="ext__meta__components_none_found">Šis paplašinājumu arhīvs nesatur iekļautās sastāvdaļas.</string>
     <string name="ext__meta__description">Apraksts</string>
     <string name="ext__meta__homepage">Mājaslapa</string>
     <string name="ext__meta__id">Id</string>
@@ -384,12 +413,55 @@
     <string name="ext__meta__keywords">Atslēgvārdi</string>
     <string name="ext__meta__license">Licence</string>
     <string name="ext__meta__maintainers">Uzturētāji</string>
+    <string name="ext__meta__maintainers_by">Autori: {maintainers}</string>
     <string name="ext__meta__title">Nosaukums</string>
     <string name="ext__meta__version">Laidiens</string>
     <string name="ext__error__not_found_title">Paplašinājums nav atrasts</string>
     <string name="ext__error__not_found_description">Netika atrasts neviens paplašinājums ar Id \"{id}\".</string>
+    <string name="ext__export__success">Papildinājums veiksmīgi izdots.</string>
+    <string name="ext__export__failure">Neizdevās izdot paplašinājumu: {error_message}</string>
+    <string name="ext__import__success">Paplašinājums veiksmīgi ievietots.</string>
+    <string name="ext__import__failure">Neizdevās ievietot paplašinājumu: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Iekļaut paplašinājumu</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Ievietot tastatūras paplašinājumu</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Ievietot pareizrakstības paplašinājumu/vārdnīcu</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Ievietot izskata paplašinājumu</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Datni nevar ievietot. Iemesls:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Neatbalstīts vai neatpazīts datnes veids.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Nav iespējams aizvietot vai atjaunināt noklusējuma paplašinājumu pakotnes ar lietotnes kodola līdzekļiem. Ieteicams apsvērt lietotnes atjaunināšanu, ja ir iecerēts izmantot jaunākas kodola paplašinājumu pakotnes laidienu.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Izskatās, ka datne ir paplašinājumu arhīvs, bet tā satura apstrāde neizdevās. Vai nu arhīvs ir bojāts, vai arī šī datne nesatur paplašinājumus.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Ir vajadzīgs paplašinājumu arhīvs ar virknes veidu \"{expected_serial_type}\", bet tas ir \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Vajadzīga nesējdatne (attēls, skaņa, fonts u.c.), bet tika iesniegts paplašinājumu arhīvs.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Nepieciešams paplašinājumu arhīvs, bet tika atrasta nesējdatne (attēls, skaņa, fonts u.c.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Notika neparedzēta kļūda ievietošanas laikā. Tika sniegts sekojošais izklāsts:</string>
     <!-- Action strings -->
+    <string name="action__add">Pievienot</string>
+    <string name="action__apply">Pielietot</string>
+    <string name="action__back_up">Veikt rezerves kopēšanu</string>
+    <string name="action__cancel">Atcelt</string>
+    <string name="action__default">Noklusējums</string>
+    <string name="action__delete">Izdzēst</string>
+    <string name="action__delete_confirm_title">Apstiprināt izdzēšanu</string>
+    <string name="action__delete_confirm_message">Vai tiešām izdzēst \"{name}\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="action__edit">Labot</string>
+    <string name="action__export">Izdot</string>
+    <string name="action__import">Iekļaut</string>
+    <string name="action__no">Nē</string>
+    <string name="action__ok">Labi</string>
+    <string name="action__restore">Atjaunot</string>
+    <string name="action__save">Saglabāt</string>
+    <string name="action__select">Atlasīt</string>
+    <string name="action__select_dir">Atlasīt mapi</string>
+    <string name="action__select_dirs">Atlasīt mapes</string>
+    <string name="action__select_file">Atlasīt datni</string>
+    <string name="action__select_files">Atlasīt datnes</string>
+    <string name="action__yes">Jā</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Kļūda</string>
+    <string name="error__details">Izklāsts</string>
+    <string name="error__invalid">Nederīgs</string>
+    <string name="error__snackbar_message">Kaut kas ir noticis nepareizi</string>
+    <string name="error__snackbar_message_template">Kaut kas nogāja greizi: {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Netika atrasta neviena pārlūka lietotne URL {url} atvēršanai</string>
     <!-- Screen orientation strings -->
@@ -400,7 +472,14 @@
     <!-- State strings -->
     <string name="state__disabled">Atspējots</string>
     <string name="state__enabled">Iespējots</string>
+    <string name="state__no_dir_selected">Nav atlasīta mape</string>
+    <string name="state__no_dirs_selected">Nav atlasītas mapes</string>
+    <string name="state__no_file_selected">Nav atlasīta datne</string>
+    <string name="state__no_files_selected">Nav atlasītas datnes</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Ierasts (3 kolonnas)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Mainīgs platums</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Mainīgs platums un ritināms</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Uzsvara zīmēm ir priekšroka</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir galvenā uzsvara zīme vai norādes rakstzīme, ja galvenā uzsvara zīme nav pieejama</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Norādei ir priekšroka</string>

@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tutup mode satu-tangan.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan papan ketik ke kiri.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan papan ketik ke kanan.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
@@ -308,6 +304,33 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__finish_up__description_p1">{app_name} sekarang sudah diaktifkan di sistem ini dan siap untuk disesuaikan oleh Anda.</string>
     <string name="setup__finish_up__description_p2">Jika Anda mengalami masalah, bug, crash, atau hanya ingin membuat saran, lihat repositori proyek di layar tentang!</string>
     <string name="setup__finish_up__finish_btn">Mulai Menyesuaikan</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Cadangkan &amp; Pulihkan</string>
+    <string name="backup_and_restore__back_up__title">Cadangkan data</string>
+    <string name="backup_and_restore__back_up__summary">Membuat sebuah cadangan arsip preferensi dan kustomisasi</string>
+    <string name="backup_and_restore__back_up__destination">Pilih tujuan cadangan</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Sistem folder lokal</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Aplikasi pihak ketiga via menu pembagian</string>
+    <string name="backup_and_restore__back_up__files">Pilih apa yang akan dicadangkan</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferensi</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Ekstensi keyboard</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Ekstensi / kamus ejaan</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Ekstensi tema</string>
+    <string name="backup_and_restore__back_up__success">Berhasil mengekspor arsip cadangan!</string>
+    <string name="backup_and_restore__back_up__failure">Gagal untuk mengekspor arsip cadangan: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Pulihkan data</string>
+    <string name="backup_and_restore__restore__summary">Pulihkan preferensi dan kustomisasi dari sebuah arsip cadangan</string>
+    <string name="backup_and_restore__restore__files">Pilih apa yang akan dipulihkan</string>
+    <string name="backup_and_restore__restore__metadata">Arsip cadangan dipilih</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Arsip cadangan ini dibuat di versi lain daripada saat ini, yang biasanya didukung. Dicatat bahwa masalah-masalah minor dapat terjadi atau beberapa preferensi tidak dapat dipindahkan dengan benar karena perbedaan fitur-fitur.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Arsip cadangan ini dibuat oleh sebuah aplikasi pihak ketiga, yang biasanya tidak didukung. Kehilangan data mungkin terjadi, hanya pulihkan dengan risiko Anda sendiri!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Arsip cadangan ini terdapat metadata yang tidak valid. Arsip cadangannya mungkin telah terkorupsi atau dimodifikasi dengan tidak benar. Memulihkan dari arsip ini tidak memungkinkan, mohon pilih yang lain.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Arsip cadangan ini tidak mempunyai file apa pun untuk dipulihkan, mohon pilih yang lain.</string>
+    <string name="backup_and_restore__restore__mode">Mode pemulihan</string>
+    <string name="backup_and_restore__restore__mode_merge">Gabung dengan data saat ini</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Hapus dan timpa data saat ini</string>
+    <string name="backup_and_restore__restore__success">Berhasil memulihkan data!</string>
+    <string name="backup_and_restore__restore__failure">Gagal untuk memulihkan data: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Laporan kesalahan FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Maaf atas ketidaknyamanan ini, tetapi FlorisBoard mogok karena kesalahan yang tidak terduga.</string>
@@ -358,6 +381,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__clean_up_after__label">Bersihkan item lama setelah</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
     <string name="pref__clipboard__max_history_size__label">Batas ukuran riwayat</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Membersihkan klip utama memengaruhi riwayat</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Membersihkan klip utama juga menghapus entri riwayat terkini</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Alat pengembang</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Aktifkan alat pengembang</string>
@@ -394,7 +419,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__meta__version">Versi</string>
     <string name="ext__error__not_found_title">Ekstensi tidak ditemukan</string>
     <string name="ext__error__not_found_description">Tidak ada ekstensi dengan ID \"{id}\" yang ditemukan.</string>
-    <string name="ext__editor__create_extension__title">Buat ekstensi baru</string>
     <string name="ext__export__success">Berhasil mengekspor ekstensi!</string>
     <string name="ext__export__failure">Gagal untuk mengekspor ekstensi: {error_message}</string>
     <string name="ext__import__success">Berhasil mengimpor ekstensi!</string>
@@ -414,6 +438,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Action strings -->
     <string name="action__add">Tambahkan</string>
     <string name="action__apply">Terapkan</string>
+    <string name="action__back_up">Cadangkan</string>
     <string name="action__cancel">Batal</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Hapus</string>
@@ -424,6 +449,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="action__import">Impor</string>
     <string name="action__no">Tidak</string>
     <string name="action__ok">Oke</string>
+    <string name="action__restore">Pulihkan</string>
     <string name="action__save">Simpan</string>
     <string name="action__select">Pilih</string>
     <string name="action__select_dir">Pilih direktori</string>
@@ -447,6 +473,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- State strings -->
     <string name="state__disabled">Dinonaktifkan</string>
     <string name="state__enabled">Diaktifkan</string>
+    <string name="state__no_dir_selected">Tidak ada direktori yang dipilih</string>
+    <string name="state__no_dirs_selected">Tidak ada direktori yang dipilih</string>
+    <string name="state__no_file_selected">Tidak ada file yang dipilih</string>
+    <string name="state__no_files_selected">Tidak ada file yang dipilih</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasik (3 baris)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Lebar dinamis</string>

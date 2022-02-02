@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">غلق وضع اليد الواحدة.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">نقل لوحة المفاتيح إلى اليسار.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">نقل لوحة المفاتيح إلى اليمين.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">رموز تعبيرية</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">رموز المشاعر</string>
@@ -307,6 +303,33 @@
     <string name="setup__finish_up__description_p1">تم تمكين{app_name} في النظام وجاهز للتخصيص بأسلوبك.</string>
     <string name="setup__finish_up__description_p2">إذا واجهت أي مشاكل أو أخطاء أو أعطال أو اذا كنت ترغب فقط في تقديم اقتراح ، تحقق من مستودع المشروع من شاشة \"حول التطبيق\"!</string>
     <string name="setup__finish_up__finish_btn">أبدأ بالتخصيص</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">النسخ الإحتياطي و الإستعادة</string>
+    <string name="backup_and_restore__back_up__title">النسخ الاحتياطي للبيانات</string>
+    <string name="backup_and_restore__back_up__summary">قم بإنشاء أرشيف احتياطي للتفضيلات والتخصيصات</string>
+    <string name="backup_and_restore__back_up__destination">اختر مسار النسخ الاحتياطي</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">الملفات المحلية</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">تطبيق الجهة الخارجية عبر ميزة المشاركة</string>
+    <string name="backup_and_restore__back_up__files">حدد ما يتم نسخه احتياطيا</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">تفضيلات</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">ملحقات لوحة المفاتيح</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">ملحقات التهجئة/ القاموس</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">ملحقات السمات</string>
+    <string name="backup_and_restore__back_up__success">تم تصدير أرشيف النسخة الاحتياطية بنجاح!</string>
+    <string name="backup_and_restore__back_up__failure">فشل في تصدير أرشيف الاضافات: {error_message}</string>
+    <string name="backup_and_restore__restore__title">إستعادة البيانات</string>
+    <string name="backup_and_restore__restore__summary">استعادة التفضيلات والتخصيصات من أرشيف النسخة الاحتياطية</string>
+    <string name="backup_and_restore__restore__files">حدد عناصر للاسترداد</string>
+    <string name="backup_and_restore__restore__metadata">اختر أرشيف النسخة الاحتياطية</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">تم إنشاء أرشيف النسخ الاحتياطي هذا في إصدار آخر غير الإصدار الحالي ، والذي يتم دعمه بشكل عام. كن على علم بأنه قد تحدث مشكلات بسيطة أو قد لا يتم نقل بعض التفضيلات بشكل صحيح بسبب اختلافات في الميزات.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">تم إنشاء أرشيف النسخ الاحتياطي هذا في تطبيق تابع لجهة خارجية ، وهو غير مدعوم بشكل عام. قد تحدث خسائر في البيانات ، قم باستعادتها على مسؤوليتك الخاصة!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">يحتوي أرشيف النسخ الاحتياطي هذا على بيانات تعريف غير صالحة. إما أنه تالف أو تم تعديله بشكل سيئ. الاستعادة من هذا الأرشيف غير ممكنة ، يرجى تحديد واحد آخر.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">لا يحتوي أرشيف النسخ الاحتياطي هذا على أي ملفات لاستعادتها ، يرجى تحديد ملف آخر.</string>
+    <string name="backup_and_restore__restore__mode">وضع الإستعادة</string>
+    <string name="backup_and_restore__restore__mode_merge">دمج مع البيانات الحالية</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">مسح و الكتابة فوق البيانات الحالية</string>
+    <string name="backup_and_restore__restore__success">تمت استعادة البيانات بنجاح!</string>
+    <string name="backup_and_restore__restore__failure">فشل في استرداد البيانات: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>
@@ -357,6 +380,8 @@
     <string name="pref__clipboard__clean_up_after__label">تنظيف العناصر القديمة بعد</string>
     <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
     <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">مسح الحافظة الأساسية يؤثر على السجل</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">يؤدي مسح السجل الأساسي للحافظة أيضًا إلى حذف آخر إدخال للمحفوظات</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">أدوات المطور</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">تفعيل أدوات المطور</string>
@@ -393,7 +418,6 @@
     <string name="ext__meta__version">الإصدار</string>
     <string name="ext__error__not_found_title">الملحق غير موجود</string>
     <string name="ext__error__not_found_description">تعذر العثور على ملحق بالمعرف \"{id}\".</string>
-    <string name="ext__editor__create_extension__title">أنشئ إضافة جديدة</string>
     <string name="ext__export__success">تم تصدير الإضافة بنجاح!</string>
     <string name="ext__export__failure">فشل في تصدير ألإضافة: {error_message}</string>
     <string name="ext__import__success">تمّ استيراد الاضافة بنجاح!</string>
@@ -413,6 +437,7 @@
     <!-- Action strings -->
     <string name="action__add">إضافة</string>
     <string name="action__apply">تطبيق</string>
+    <string name="action__back_up">نسخ احتياطي</string>
     <string name="action__cancel">إلغاء</string>
     <string name="action__default">الإفتراضي</string>
     <string name="action__delete">حذف</string>
@@ -423,6 +448,7 @@
     <string name="action__import">استيراد</string>
     <string name="action__no">لا</string>
     <string name="action__ok">حسنًا</string>
+    <string name="action__restore">إستعادة</string>
     <string name="action__save">حفظ</string>
     <string name="action__select">اختيار</string>
     <string name="action__select_dir">اختر مسار</string>
@@ -446,6 +472,10 @@
     <!-- State strings -->
     <string name="state__disabled">معطّل</string>
     <string name="state__enabled">ممكن</string>
+    <string name="state__no_dir_selected">لم يتم تحديد مسار</string>
+    <string name="state__no_dirs_selected">لم يتم تحديد مسار</string>
+    <string name="state__no_file_selected">لم يتم تحديد أي ملف</string>
+    <string name="state__no_files_selected">لم تحدد أي ملفات</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">كلاسيكي(3 أعمدة)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">عرض ديناميكي</string>

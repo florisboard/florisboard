@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fechar modo de uma mão.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -307,6 +303,33 @@
     <string name="setup__finish_up__description_p1">{app_name} está agora ativado no sistema e já pode ser personalizado ao seu gosto.</string>
     <string name="setup__finish_up__description_p2">Se encontrar erros, problemas ou se quiser sugerir melhorias, aceda ao repositório do projeto através do ecrã Acerca!</string>
     <string name="setup__finish_up__finish_btn">Iniciar personalização</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Backup e restauro</string>
+    <string name="backup_and_restore__back_up__title">Copiar dados</string>
+    <string name="backup_and_restore__back_up__summary">Gerar um ficheiro de backup das preferências e das personalizações</string>
+    <string name="backup_and_restore__back_up__destination">Selecione o destino</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Sistema de ficheiros local</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Aplicação de terceiros através de partilha</string>
+    <string name="backup_and_restore__back_up__files">Selecione os dados a copiar</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferências</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Extensões de teclado</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Extensões/dicionários de ortografia</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Extensões de temas</string>
+    <string name="backup_and_restore__back_up__success">Backup criado com sucesso!</string>
+    <string name="backup_and_restore__back_up__failure">Falha ao criar o backup: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Restaurar dados</string>
+    <string name="backup_and_restore__restore__summary">Restaurar preferências e personalizações de um backup</string>
+    <string name="backup_and_restore__restore__files">Selecione os dados a restaurar</string>
+    <string name="backup_and_restore__restore__metadata">Arquivo selecionado</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Este arquivo foi gerado com uma versão mais antiga da aplicação que, normalmente, é funcional. Contudo, tenha em atenção de que podem ocorrer alguns erros e algumas preferências podem não ser restauradas corretamente.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Este arquivo foi criado com uma aplicação de terceiros que, normalmente, não é funcional. Pode perder alguns dados e deve utilizar esta opção por sua conta e risco!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Este arquivo possui dados inválidos. É provavél que esteja corrompido e modificado incorretamente. Não é possível restaurar os dados.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Este arquivo não possui quaisquer dados para restaurar. Por favor escolha outro.</string>
+    <string name="backup_and_restore__restore__mode">Modo de restauro</string>
+    <string name="backup_and_restore__restore__mode_merge">Juntar com os dados atuais</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Apagar e substituir os dados atuais</string>
+    <string name="backup_and_restore__restore__success">Dados restaurados com sucesso!</string>
+    <string name="backup_and_restore__restore__failure">Falha ao restaurar dados: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Relatório de erros do FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Desculpe o inconveniente mas a aplicação encerrou devido a um problema desconhecido.</string>
@@ -357,6 +380,8 @@
     <string name="pref__clipboard__clean_up_after__label">Remover itens antigos após</string>
     <string name="pref__clipboard__limit_history_size__label">Limitar histórico</string>
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Limpeza do item principal afeta o histórico</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Ao limpar o item principal também remove a entrada do histórico</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Ferramentas de programação</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ativar ferramentas de programação</string>
@@ -391,7 +416,6 @@
     <string name="ext__meta__version">Versão</string>
     <string name="ext__error__not_found_title">Extensão não encontrada</string>
     <string name="ext__error__not_found_description">Não foi possível encontrar a extensão coma ID \"{id}\".</string>
-    <string name="ext__editor__create_extension__title">Criar nova extensão</string>
     <string name="ext__export__success">Extensão exportada com sucesso!</string>
     <string name="ext__export__failure">Falha ao exportar a extensão: {error_message}</string>
     <string name="ext__import__success">Extensão importada com sucesso!</string>
@@ -406,6 +430,7 @@
     <!-- Action strings -->
     <string name="action__add">Adicionar</string>
     <string name="action__apply">Aplicar</string>
+    <string name="action__back_up">Criar backup</string>
     <string name="action__cancel">Cancelar</string>
     <string name="action__default">Padrão</string>
     <string name="action__delete">Eliminar</string>
@@ -416,6 +441,7 @@
     <string name="action__import">Importar</string>
     <string name="action__no">Não</string>
     <string name="action__ok">OK</string>
+    <string name="action__restore">Restaurar</string>
     <string name="action__save">Guardar</string>
     <string name="action__select">Selecionar</string>
     <string name="action__select_dir">Selecionar diretório</string>
@@ -439,6 +465,10 @@
     <!-- State strings -->
     <string name="state__disabled">Desativada</string>
     <string name="state__enabled">Ativada</string>
+    <string name="state__no_dir_selected">Nenhum diretório selecionado</string>
+    <string name="state__no_dirs_selected">Nenhum diretório selecionado</string>
+    <string name="state__no_file_selected">Nenhum ficheiro selecionado</string>
+    <string name="state__no_files_selected">Nenhum ficheiro selecionado</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Clássico (3 colunas)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largura dinâmica</string>

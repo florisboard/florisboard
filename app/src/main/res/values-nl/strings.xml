@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Sluit eenhandige modus.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Toetsenbord naar links verplaatsen.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Toetsenbord naar rechts verplaatsen.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -45,8 +41,12 @@
     <string name="settings__home__title" comment="Title of the Home screen">Welkom bij {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is niet ingeschakeld in het systeem en zal dus niet beschikbaar zijn als een invoermethode in de invoermethode-kiezer. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is niet geselecteerd als de standaard invoermethode. Klik hier om dit probleem op te lossen.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Talen &amp; Indelingen</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Indeling toevoegen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Voorkeurstaal</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup-indeling</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tekenlayout</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primaire symbolenlayout</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Secundaire symbolenlayout</string>
@@ -58,9 +58,19 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Telefoon primaire layout</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefoon secundaire layout</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Selecteer taal</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Taal zoeken</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Geen taal gevonden voor \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; kies &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Aanbevolen presets voor subtypes</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Geen aanbevolen presets beschikbaar. Druk op de onderstaande knop om alle presets te weergeven.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Subtype presets</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Toon alle</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Het lijkt erop dat je geen indelingen hebt geconfigureerd. Als terugval wordt de indeling Engels / QWERTY gebruikt!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Één of meer velden zijn nog niet ingevuld. Kies a.u.b. een optie voor deze velden.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (niet geïnstalleerd)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Indelingen</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Thema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
@@ -73,6 +83,9 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Florisboard Apponderdelen</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interne opslag</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Gebruik externe provider</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecteer dagthema</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecteer nachtthema</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Geïnstalleerde thema\'s beheren</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid &amp; vibraties</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>
@@ -94,21 +107,39 @@
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger trillingen rechtstreeks in plaats van Android\'s haptische feedback functieset</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trillingsduur</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Deze functie vereist hardwarematige besturing van de trillingssterkte, en wordt niet ondersteund door uw apparaat</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Deze functie vereist hardwarematige besturing van de trillingssterkte, en is alleen beschikbaar op Android 8.0 of nieuwer</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Trilling voor langdurige toetsaanslag</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Trilling voor herhaalde toetsaanslagen</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Trilling voor veeggebaar</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Trilling voor veeggebaar</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">bijv. toetsen, knoppen, emoji\'s</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">bijv. popup menu</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">bijv. backspace</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">niet geïmplementeerd</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">bijv. gebaar voor cursorbediening</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Toetsenbord</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Toon nummerrij boven de alfabettoetsen</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Nummerrij hinten</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symbolen hinten</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Toon functietoets</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Toont een instelbare functietoets naast de spatiebalk</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Functietoets actie</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Vermenigvuldigingsfactor tekengrootte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Indeling</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Eenhandige modus</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Toetsenbordbreedte in eenhandige modus</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landschapsmodus volledig scherm invoer</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Toetsenbordhoogte</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Toetsafstand</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Marge onderkant</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsdruk</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-up zichtbaarheid</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-up tonen als je op een toets drukt</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Symbool pop-ups meenemen in accent pop-up</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Symbool pop-ups toevoegen aan de accent pop-ups van de standaardindeling</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Vertraging voor lange toetsdruk</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spatiebalk wisselt terug naar tekenlayout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">De spatiebalk indrukken wisselt automatisch terug naar tekenmodus wanneer in symbool- of nummermodus</string>
@@ -116,8 +147,20 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Slimme Balk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
+    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primaire rij</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Spiegel knoppen op deze rij</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Spiegelt de knoppen op de actierij horizontaal</string>
+    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secundaire rij</string>
+    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Secundaire rij inschakelen</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Voegt een tweede rij toe om meer bedieningselementen te tonen</string>
+    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Locatie secundaire rij</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Actierij</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Automatisch uit-/samenvouwen</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Vouwt automatisch de actierij samen- of uit op basis van de huidige toestand</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggesties &amp; Verbeteringen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Suggesties van autofill-services op dezelfde regel weergeven (wachtwoordbeheerders, …)</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
     <string name="pref__correction__title" comment="Preference group title">Verbeteringen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-kapitalisatie</string>
@@ -222,6 +265,7 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Welkom!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacybeleid</string>
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrashed omwille van een onverwachte fout.</string>
@@ -281,13 +325,40 @@
     <string name="ext__error__not_found_title">Extensie niet gevonden</string>
     <string name="ext__error__not_found_description">Er kon geen extensie met ID \"{id}\" gevonden worden.</string>
     <!-- Action strings -->
+    <string name="action__no">Nee</string>
+    <string name="action__ok">Oké</string>
+    <string name="action__save">Opslaan</string>
+    <string name="action__select">Kies</string>
+    <string name="action__select_dir">Map kiezen</string>
+    <string name="action__select_dirs">Mappen kiezen</string>
+    <string name="action__select_file">Bestand kiezen</string>
+    <string name="action__select_files">Bestanden kiezen</string>
+    <string name="action__yes">Ja</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Fout</string>
+    <string name="error__details">Details</string>
+    <string name="error__invalid">Ongeldig</string>
+    <string name="error__snackbar_message">Er is iets fout gegaan</string>
+    <string name="error__snackbar_message_template">Er is iets fout gegaan: {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Geen browser app gevonden voor het afhandelen van URL {url}</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Staand</string>
+    <string name="screen_orientation__landscape">Liggend</string>
+    <string name="screen_orientation__vertical">Verticaal</string>
+    <string name="screen_orientation__horizontal">Horizontaal</string>
     <!-- State strings -->
     <string name="state__disabled">Uitgeschakeld</string>
+    <string name="state__enabled">Ingeschakeld</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klassiek (3 kolommen)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamische breedte</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamische breedte &amp; scrollbaar</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent krijgt prioriteit</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Het eerste geselecteerde teken na een lange indruk is altijd het primaire accent, of het hint symbool als er geen primair accent beschikbaar is</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint krijgt prioriteit</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Het eerste geselecteerde teken na een lange indruk is altijd het hint symbool, of het primaire accent als er geen hint symbool beschikbaar is</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Slimme prioriteiten</string>
     <string name="enum__input_mode__normal" comment="Enum value label">Normaal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nooit tonen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Altijd tonen</string>

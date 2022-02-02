@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Luk enkelt-håndstilstand.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Flyt tastatur til venstre.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Flyt tastatur til højre.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Humørikoner</string>
@@ -116,6 +112,7 @@
     <string name="setup__enable_ime__title">Aktivér {app_name}</string>
     <string name="setup__select_ime__title">Vælg {app_name}</string>
     <string name="setup__select_ime__switch_keyboard_btn">Skift tastatur</string>
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>

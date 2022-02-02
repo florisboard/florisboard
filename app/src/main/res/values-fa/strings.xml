@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">بستن حالت یک دستی.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">جابه‌جایی صفحه کلید به سمت چپ.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">جابه‌جایی صفحه کلید به سمت راست.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">شکلک‌ها</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -59,6 +55,7 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">چیدمان ردیف اعداد</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">چیدمان اصلی موبایل</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی موبایل</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">انتخاب زبان</string>
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">جستجو برای یک زبان</string>
     <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">نمی توان زبانی مشابه با \"{search_term}\" یافت.</string>
     <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; انتخاب &#8210;</string>
@@ -214,6 +211,7 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">خوش آمدید!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سیاست حفظ حریم خصوصی</string>
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>

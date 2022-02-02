@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Odaberi mod za jednu ruku.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pomjeri tastaturu lijevo.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pomjeri tastaturu desno.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
@@ -69,6 +65,7 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Izvorni kod</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Dobrodošli!</string>
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>
     <!-- Clipboard strings -->

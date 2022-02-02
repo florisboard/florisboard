@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Закрыть режим одной руки</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Переместить клавиатуру влево.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Переместить клавиатуру вправо.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Эмодзи</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Смайлики</string>
@@ -95,7 +91,7 @@
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Игнорировать системные настройки аудиоотклика</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведенные настройки, даже если звук в системе отключен. Не используются, когда отключен системный рингтон</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведённые настройки, даже если звук в системе отключён. Не используются, когда отключён системный рингтон.</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Громкость звука при вводе</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук нажатия кнопки</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук долгого нажатия кнопки</string>
@@ -106,7 +102,7 @@
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Использовать виброотклик</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибрирация при вводе в зависимости от системных настроек</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Игнорировать системные настройки виброотклика</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведенные настройки, даже если в системе виброотклик отключен</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведённые настройки, даже если в системе виброотклик отключён</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Использовать вибрацию напрямую</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Использовать функцию вибрации напрямую вместо использования набора функций виброотклика Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продолжительность вибрации</string>
@@ -178,11 +174,11 @@
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Пользовательские словари</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарем пользователя</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарём пользователя</string>
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей в системном пользовательском словаре</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Использовать внутренний словарь пользователя</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся во внутреннем словаре пользователя</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарем пользователя</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарём пользователя</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Внутренний словарь пользователя</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системный словарь пользователя</string>
@@ -230,8 +226,8 @@
     <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темная</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Темная AMOLED</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
@@ -294,11 +290,11 @@
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензии сторонних библиотек, используемых в данном приложении</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добро пожаловать!</string>
-    <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за выбор {app_name}! Это небольшое руководство проведет вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за выбор {app_name}! Это небольшое руководство проведёт вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Политика конфиденциальности</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Репозиторий</string>
     <string name="setup__enable_ime__title">Включить {app_name}</string>
-    <string name="setup__enable_ime__description">Android требует, чтобы каждая пользовательская клавиатура была включена отдельно, прежде чем вы сможете ее использовать. Откройте системные <i>Настройки языка и ввода</i> и там включите \"{app_name}\".</string>
+    <string name="setup__enable_ime__description">Android требует, чтобы каждая пользовательская клавиатура была включена отдельно, прежде чем вы сможете её использовать. Откройте системные <i>Настройки языка и ввода</i> и там включите \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Открыть системные настройки</string>
     <string name="setup__select_ime__title">Выбрать {app_name}</string>
     <string name="setup__select_ime__description">Теперь приложение {app_name} включено. Чтобы им пользоваться, переключитесь на {app_name}, выбрав в диалоговом окне указания способа ввода.</string>
@@ -307,19 +303,46 @@
     <string name="setup__finish_up__description_p1">Приложение \"{app_name}\" теперь включено в системе и готово к настройке вами.</string>
     <string name="setup__finish_up__description_p2">Если вы столкнулись с какими-либо проблемами, ошибками, сбоями или просто хотите внести предложение, загляните в репозиторий проекта из раздела \'О программе\'!</string>
     <string name="setup__finish_up__finish_btn">Начните настройку!</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Резервное копирование и восстановление</string>
+    <string name="backup_and_restore__back_up__title">Резервирование данных</string>
+    <string name="backup_and_restore__back_up__summary">Создание резервной копии настроек</string>
+    <string name="backup_and_restore__back_up__destination">Выберите место хранения</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Локальное хранилище</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Стороннее приложение через меню \'Поделиться\'</string>
+    <string name="backup_and_restore__back_up__files">Выберите сохраняемые данные</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Настройки</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Клавиатурные расширения</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Расширения для правописания / словари</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Расширения оформления</string>
+    <string name="backup_and_restore__back_up__success">Резервное копирование выполнено!</string>
+    <string name="backup_and_restore__back_up__failure">Невозможно создать резервную копию: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Восстановление данных</string>
+    <string name="backup_and_restore__restore__summary">Восстановление настроек из резервной копии</string>
+    <string name="backup_and_restore__restore__files">Выберите восстанавливаемые данные</string>
+    <string name="backup_and_restore__restore__metadata">Выберите файл резервной копии</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Этот файл резервной копии был создан в версии приложения, отличной от текущей поддерживаемой. Имейте в виду, что могут возникнуть незначительные проблемы или некоторые настройки могут быть восстановлены неправильно из-за различий в функционале.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Файл резервной копии был создан в стороннем приложении, которое поддерживается не полностью. Возможна потеря данных, восстанавливайте на свой страх и риск!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Этот файл резервной копии содержит недопустимые метаданные. Либо он поврежден, либо неправильно изменен. Восстановление из этого файла невозможно, выберите другой.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Этот файл резервной копии не содержит данных для восстановления, выберите другой.</string>
+    <string name="backup_and_restore__restore__mode">Режим восстановления</string>
+    <string name="backup_and_restore__restore__mode_merge">Слияние с текущими данными</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Стереть и перезаписать текущие данные</string>
+    <string name="backup_and_restore__restore__success">Данные восстановлены!</string>
+    <string name="backup_and_restore__restore__failure">Невозможно восстановить данные: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Сообщение об ошибке FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошел сбой из-за непредвиденной ошибки.</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошёл сбой из-за непредвиденной ошибки.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Если хотите сообщить об этой ошибке, сначала проверьте трекер проблем на GitHub, не сообщалось ли уже о вашем сбое.\nЕсли нет, скопируйте сгенерированный журнал ошибки и откройте новую проблему. Используйте шаблон \"%s\" и заполните описание, шаги для воспроизведения ошибки и вставьте сгенерированный журнал в конце. Это поможет сделать FlorisBoard лучше и стабильнее для всех. Спасибо!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копировать в системный буфер обмена</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Скопировано в системный буфер обмена</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Невозможно скопировать в системный буфер обмена: компонент менеджера буфера обмена не найден</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Открыть трекер проблем (GitHub)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Закрыть</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчеты об ошибках FlorisBoard</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчёты об ошибках FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard перестал работать…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Нажмите, чтобы увидеть детали об ошибке</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, в работе FlorisBoard постоянно возникают проблемы…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, FlorisBoard постоянно перестаёт работать…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Буфер обмена</string>
@@ -357,6 +380,8 @@
     <string name="pref__clipboard__clean_up_after__label">Очистить старые элементы через</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничить размер истории</string>
     <string name="pref__clipboard__max_history_size__label">Максимальный размер истории</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Очистка основного клипа влияет на историю</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">При очистке основного клипа также удаляется последняя запись в истории</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Инструменты разработчика</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Включить инструменты разработчика</string>
@@ -393,7 +418,6 @@
     <string name="ext__meta__version">Версия</string>
     <string name="ext__error__not_found_title">Расширение не найдено</string>
     <string name="ext__error__not_found_description">Не найдено расширения с ID \"{id}\"</string>
-    <string name="ext__editor__create_extension__title">Создать новое расширение</string>
     <string name="ext__export__success">Расширение успешно экспортировано!</string>
     <string name="ext__export__failure">Ошибка экспорта расширения: {error_message}</string>
     <string name="ext__import__success">Расширение успешно импортировано!</string>
@@ -413,6 +437,7 @@
     <!-- Action strings -->
     <string name="action__add">Добавить</string>
     <string name="action__apply">Применить</string>
+    <string name="action__back_up">Резервирование</string>
     <string name="action__cancel">Отмена</string>
     <string name="action__default">По умолчанию</string>
     <string name="action__delete">Удалить</string>
@@ -423,6 +448,7 @@
     <string name="action__import">Импорт</string>
     <string name="action__no">Нет</string>
     <string name="action__ok">OK</string>
+    <string name="action__restore">Восстановление</string>
     <string name="action__save">Сохранить</string>
     <string name="action__select">Выбрать</string>
     <string name="action__select_dir">Выбрать папку</string>
@@ -446,6 +472,10 @@
     <!-- State strings -->
     <string name="state__disabled">Отключено</string>
     <string name="state__enabled">Включено</string>
+    <string name="state__no_dir_selected">Каталог не выбран</string>
+    <string name="state__no_dirs_selected">Каталоги не выбраны</string>
+    <string name="state__no_file_selected">Файл не выбран</string>
+    <string name="state__no_files_selected">Файлы не выбраны</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Классика (3 колонки)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамическая ширина</string>
@@ -498,7 +528,7 @@
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Переключиться на предыдущую раскладку</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Переключиться на следующую раскладку</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Всегда светлая</string>
-    <string name="enum__theme_mode__always_night" comment="Enum value label">Всегда темная</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Всегда тёмная</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Следовать системе</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">Следовать времени</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Переключиться на эмодзи</string>

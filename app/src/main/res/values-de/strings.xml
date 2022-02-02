@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Einhandmodus schließen.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Tastatur nach links verschieben.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Tastatur nach rechts verschieben.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -69,7 +65,7 @@
     <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Vorgeschlagene Eingabestile</string>
     <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Keine vorgeschlagenen Voreinstellungen verfügbar. Verwende die Schaltfläche unten, um alle Untertyp-Voreinstellungen anzuzeigen.</string>
     <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Vorkonfigurierte Eingabestile</string>
-    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Alles zeigen</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Alle anzeigen</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Es scheinen keine benutzerdefinierten Eingabestile konfiguriert zu sein. Als Ausweichlösung wird daher der Eingabestil English/QWERTY benutzt!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dieser Eingabestil ist bereits vorhanden!</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">In mindestens einem Feld ist kein Wert ausgewählt. Bitte wähle einen Wert für das Feld / die Felder.</string>
@@ -217,14 +213,14 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere Gesten / Gesten Schwellenwerte</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Nach oben wischen</string>
-    <string name="pref__gestures__swipe_down__label" comment="Preference title">Nach unten streichen</string>
-    <string name="pref__gestures__swipe_left__label" comment="Preference title">Nach links streichen</string>
-    <string name="pref__gestures__swipe_right__label" comment="Preference title">Nach rechts streichen</string>
-    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Leertaste nach oben streichen</string>
-    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Leertaste nach links streichen</string>
-    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Leertaste nach rechts streichen</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Nach unten wischen</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Nach links wischen</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Nach rechts wischen</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Leertaste nach oben wischen</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Leertaste nach links wischen</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Leertaste nach rechts wischen</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Leertaste lang drücken</string>
-    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Löschtaste nach links streichen</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Löschtaste nach links wischen</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Gesten-Distanzschwelle</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Erweitert</string>
@@ -307,6 +303,33 @@
     <string name="setup__finish_up__description_p1">{app_name} ist nun im System aktiviert und bereit von dir angepasst zu werden.</string>
     <string name="setup__finish_up__description_p2">Falls dir irgendwelche Probleme, Bugs oder Abstürze begegnen, oder du einfach einen Vorschlag machen möchtest, besuche einfach die GitHub Seite des Projekts (zu finden im About \"Über die App\" Screen)!</string>
     <string name="setup__finish_up__finish_btn">Anpassung beginnen</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Sichern &amp; Wiederherstellen</string>
+    <string name="backup_and_restore__back_up__title">Daten sichern</string>
+    <string name="backup_and_restore__back_up__summary">Erstelle ein Backup der Einstellungen und Personalisierungen</string>
+    <string name="backup_and_restore__back_up__destination">Wähle den Speicherort der Sicherung</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Lokales Dateisystem</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Drittanbieter-Apps über das Teilen-Menü</string>
+    <string name="backup_and_restore__back_up__files">Auswählen, wovon eine Sicherung erstellt werden soll</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Einstellungen</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Tastaturerweiterungen</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Rechtschreibeerweiterungen / Wörterbücher</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Design-Erweiterungen</string>
+    <string name="backup_and_restore__back_up__success">Sicherung wurde erfolgreich exportiert!</string>
+    <string name="backup_and_restore__back_up__failure">Exportieren des Sicherungsarchivs fehlgeschlagen: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Daten wiederherstellen</string>
+    <string name="backup_and_restore__restore__summary">Einstellungen und Personalisierungen aus einer Sicherung wiederherstellen</string>
+    <string name="backup_and_restore__restore__files">Wähle aus, was wiederhergestellt werden soll</string>
+    <string name="backup_and_restore__restore__metadata">Ausgewählte Sicherungsarchive</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Dieses Sicherungsarchiv wurde in einer anderen als der aktuellen Version erstellt, was grundsätzlich unterstützt wird. Beachte jedoch, dass kleinere Probleme auftreten können oder einige Einstellungen aufgrund von Funktionsunterschieden möglicherweise nicht richtig übertragen werden.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Dieses Sicherungsarchiv wurde in einer Drittanbieter-App erstellt, was grundsätzlich nicht unterstützt wird. Es kann zu Datenverlust kommen, Wiederherstellung auf eigene Gefahr!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Dieses Sicherungsarchiv enthält ungültige Metadaten. Entweder ist die Datei beschädigt oder sie wurde falsch modifiziert. Das Wiederherstellen dieser Datei ist nicht möglich, bitte eine andere wählen.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Dieses Sicherungsarchiv enthält keine wiederherstellbaren Dateien, bitte ein anderes auswählen.</string>
+    <string name="backup_and_restore__restore__mode">Wiederherstellungsmodus</string>
+    <string name="backup_and_restore__restore__mode_merge">Mit aktuellen Daten zusammenführen</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Aktuelle Daten löschen und überschreiben</string>
+    <string name="backup_and_restore__restore__success">Daten erfolgreich wiederhergestellt!</string>
+    <string name="backup_and_restore__restore__failure">Wiederherstellung der Daten fehlgeschlagen: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard Fehlermeldung</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Entschuldigung für die Unannehmlichkeiten, aber FlorisBoard ist aufgrund eines unerwarteten Fehlers abgestürzt.</string>
@@ -357,6 +380,8 @@
     <string name="pref__clipboard__clean_up_after__label">Alte Elemente bereinigen nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Das Löschen des aktiven Elements betrifft den Verlauf</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Durch das Löschen des aktiven Elements wird auch das neueste Verlaufselement entfernt</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Entwicklerwerkzeuge</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Entwickler-Werkzeuge ein/aus</string>
@@ -365,18 +390,22 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Blende den Heap-Speicherverbrauch und die maximale Größe in der oberen rechten Ecke ein</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Zeige aktives Element</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Zeigt das aktuell aktive Element der Zwischenablage</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Zeige Rechtschreibprüfungs-Overlay</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Blendet die aktuellen Ergebnisse der Rechtschreibprüfung fürs Debugging ein</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Interne Benutzerwörterbuch-Datenbank leeren</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Leert alle Wörter von der Wörterbuch-Datenbank</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\"-Einstellung zurücksetzen</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Debug Aktion: Setup Bildschirm erneut anzeigen</string>
-    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test-Absturzbericht Ansicht</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Ansicht des Absturzberichts testen</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug-Aktion, um absichtlich einen Absturz zu verursachen</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android-Systemwerkzeuge</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globale Android-Einstellungen</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Sichere Android-Einstellungen</string>
-    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Android Einstellungen öffnen</string>
-    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systemgebietsschema</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Android System-Einstellungen</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systemgebietsschemata</string>
     <!-- Extension strings -->
+    <string name="ext__meta__components">Gebündelte Komponenten</string>
+    <string name="ext__meta__components_none_found">Dieses Erweiterungsarchiv enthält keine gebündelten Komponenten.</string>
     <string name="ext__meta__description">Beschreibung</string>
     <string name="ext__meta__homepage">Startseite</string>
     <string name="ext__meta__id">ID</string>
@@ -389,7 +418,6 @@
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Erweiterung nicht gefunden</string>
     <string name="ext__error__not_found_description">Es konnte keine Erweiterung mit der ID \"{id}\" gefunden werden.</string>
-    <string name="ext__editor__create_extension__title">Neue Erweiterung erstellen</string>
     <string name="ext__export__success">Erweiterung erfolgreich exportiert!</string>
     <string name="ext__export__failure">Erweiterung exportieren fehlgeschlagen: {error_message}</string>
     <string name="ext__import__success">Erweiterung erfolgreich importiert!</string>
@@ -400,19 +428,27 @@
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importiere Design-Erweiterung</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Datei kann nicht importiert werden. Grund:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Nicht unterstützter oder nicht erkannter Datei-Typ.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Das Standarderweiterungspaket, das mit der App mitgeliefert wird, konnte nicht ersetzt oder aktualisiert werden. Aktualisiere die App, wenn du eine neuere Version des Standarderweiterungspakets nutzen möchtest.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Die Datei scheint ein Erweiterungsarchiv zu sein, aber das Parsen der Archivdaten ist fehlgeschlagen. Entweder ist das Archiv beschädigt oder diese Datei ist gar keine Erweiterung.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Ein Erweiterungsarchiv des seriellen Typs \"{expected_serial_type}\" wurde erwartet, aber \"{actual_serial_type}\" wurde gefunden.</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Eine Mediendatei (Bild, Audio, Text, etc.) wurde erwartet, aber ein Erweiterungsarchiv wurde gefunden.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Ein Erweiterungsarchiv wurde erwartet, aber eine Mediendatei (Bild, Audio, Text, etc.) wurde gefunden.</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Beim Import ist ein unerwarteter Fehler aufgetreten. Folgende Angaben wurden gemacht:</string>
     <!-- Action strings -->
     <string name="action__add">Hinzufügen</string>
     <string name="action__apply">Übernehmen</string>
+    <string name="action__back_up">Sicherung erstellen</string>
     <string name="action__cancel">Abbrechen</string>
     <string name="action__default">Standard</string>
     <string name="action__delete">Entfernen</string>
     <string name="action__delete_confirm_title">Löschvorgang bestätigen</string>
-    <string name="action__delete_confirm_message">Sind Sie sicher, dass Sie \"{name}\" löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
+    <string name="action__delete_confirm_message">Bist du sicher, dass du \"{name}\" löschen möchtest? Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
     <string name="action__edit">Bearbeiten</string>
     <string name="action__export">Exportieren</string>
     <string name="action__import">Importieren</string>
     <string name="action__no">Nein</string>
     <string name="action__ok">Okay</string>
+    <string name="action__restore">Wiederherstellen</string>
     <string name="action__save">Speichern</string>
     <string name="action__select">Auswählen</string>
     <string name="action__select_dir">Verzeichnis auswählen</string>
@@ -436,6 +472,10 @@
     <!-- State strings -->
     <string name="state__disabled">Deaktiviert</string>
     <string name="state__enabled">Aktiviert</string>
+    <string name="state__no_dir_selected">Kein Verzeichnis ausgewählt</string>
+    <string name="state__no_dirs_selected">Keine Verzeichnisse ausgewählt</string>
+    <string name="state__no_file_selected">Keine Datei ausgewählt</string>
+    <string name="state__no_files_selected">Keine Dateien ausgewählt</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klassisch (3 Spalten)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamische Breite</string>
@@ -447,6 +487,7 @@
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Intelligente Priorisierung</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, wird je nach Sprache und Layout dynamisch, entweder als Hauptakzent oder als Hinweissymbol festgelegt</string>
     <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Feststelltaste</string>
     <string name="enum__input_mode__caps_lock" comment="Enum value label">Feststelltaste</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nie anzeigen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>

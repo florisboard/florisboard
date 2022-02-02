@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Κλείσιμο λειτουργίας ενός χεριού.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Μεταφορά πληκτρολογίου στα αριστερά.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Μεταφορά πληκτρολογίου στα δεξιά.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Εικονίδια Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Εικονίδια emoticon</string>
@@ -50,6 +46,7 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Προσθήκη υποτύπου</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Επεξεργασία υποτύπου</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Κύρια γλώσσα</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Τοποθέτηση αναδυόμενων παραθύρων</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Διάταξη χαρακτήρων</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Πρωτεύουσα διάταξη συμβόλων</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Δευτερεύουσα διάταξη συμβόλων</string>
@@ -151,11 +148,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
     <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Πρωτεύουσα σειρά</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Αντιστροφή των πλήκτρων εναλλαγής σειράς</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Αντιστρέφει τα πλήκτρα εναλλαγής της δευτερεύουσας και της σειράς ενεργειών</string>
     <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Δευτερεύουσα σειρά</string>
     <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Ενεργοποίηση δευτερεύουσας σειράς</string>
     <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Προσθήκη μίας προεκτάσιμης δεύτερης σειράς επιτρέποντας περισσότερους χειρισμούς να εμφανιστούν</string>
     <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Τοποθέτηση δευτερεύουσας σειράς</string>
     <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Σειρά ενεργειών</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Αυτόματη προέκταση/σύμπτυξη</string>
+    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Προεκτείνει/συμπτύσσει αυτόματα τη σειρά ενεργειών βάσει της τρέχουσας κατάστασης</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Προτάσεις &amp; Διορθώσεις</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
@@ -300,6 +301,11 @@
     <string name="setup__finish_up__description_p1">{app_name} είναι τώρα ενεργοποιημένο στο σύστημα και έτοιμο να προσαρμοστεί από εσάς.</string>
     <string name="setup__finish_up__description_p2">Εάν αντιμετωπίσετε τυχόν θέματα, προβλήματα, σφάλματα ή απλώς θέλετε να κάνετε μία πρόταση, ρίξτε μία ματιά στο αποθετήριο από το πεδίο σχετικά με!</string>
     <string name="setup__finish_up__finish_btn">Ξεκινήστε την προσαρμογή</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__restore__title">Επαναφορά δεδομένων</string>
+    <string name="backup_and_restore__restore__mode">Λειτουργία επαναφοράς</string>
+    <string name="backup_and_restore__restore__success">Επιτυχής επαναφορά δεδομένων!</string>
+    <string name="backup_and_restore__restore__failure">Αποτυχία επαναφοράς δεδομένων: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, αλλά το FlorisBoard έχει τερματιστεί απροσδόκητα εξαιτίας ενός απρόσμενου σφάλματος.</string>
@@ -317,10 +323,12 @@
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Πρόχειρο</string>
     <string name="clipboard__disabled__title">Το ιστορικό προχείρου είναι προς το παρόν απενεργοποιημένο</string>
+    <string name="clipboard__disabled__message">Το ιστορικό προχείρου του {app_name} σας επιτρέπει να αποθηκεύσετε και να προσβείτε γρήγορα σε κείμενο και εικόνες που αντιγράφετε, με τη δυνατότητα να καρφιτσώσετε στοιχεία, να ρυθμίσετε τον αυτόματο καθαρισμό και να θέσετε ένα μέγιστο όριο στοιχείων.</string>
     <string name="clipboard__disabled__enable_button">Ενεργοποίηση ιστορικού του προχείρου</string>
     <string name="clipboard__empty__title">Το πρόχειρό σας είναι κενό</string>
     <string name="clipboard__empty__message">Αφού αντιγράψετε αποκόμματα κειμένου ή εικόνες θα εμφανιστούν εδώ.</string>
     <string name="clipboard__locked__title">Το πρόχειρό σας είναι κλειδωμένο</string>
+    <string name="clipboard__locked__message">Για να αποκτήσετε πρόσβαση στο ιστορικό προχείρου, παρακαλώ ξεκλειδώστε πρώτα τη συσκευή σας.</string>
     <string name="clipboard__group_pinned">Καρφιτσωμένα</string>
     <string name="clipboard__group_recent">Πρόσφατα</string>
     <string name="clipboard__group_other">Άλλο</string>
@@ -331,6 +339,7 @@
     <string name="clip__paste_item">Επικόλληση</string>
     <string name="clip__back_to_text_input">Πίσω στην εισαγωγή κειμένου</string>
     <string name="clip__cant_paste">Η εφαρμογή αυτή δεν επιτρέπει την επικόλληση του περιεχομένου.</string>
+    <string name="clipboard__cleared_primary_clip">Το κύριο απόκομμα διαγράφηκε</string>
     <string name="clipboard__cleared_history">Το ιστορικό διαγράφηκε</string>
     <string name="clipboard__cleared_full_history">Το πλήρες ιστορικό διαγράφηκε</string>
     <string name="settings__clipboard__title">Πρόχειρο</string>
@@ -347,12 +356,16 @@
     <string name="pref__clipboard__clean_up_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
     <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
     <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Η διαγραφή του κυρίου αποκόμματος επηρεάζει το ιστορικό</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Διαγράφοντας το κύριο απόκομμα διαγράφεται επίσης η νεότερη καταχώριση στο ιστορικό</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Εργαλεία προγραμματιστή</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ενεργοποίηση εργαλείων προγραμματιστή</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Εργαλεία σχεδιασμένα συγκεκριμένα για αποσφαλμάτωση κι επίλυση προβλημάτων</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Εμφάνιση στατιστικών μνήμης σωρού</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Δημιουργεί ένα επικάλυμμα με τη χρήση της μνήμης σωρού και του μέγιστου μεγέθους στην πάνω-δεξιά γωνία</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Προβολή στατιστικών μνήμης σωρού</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Προβάλλει ένα επικάλυμμα με τη χρήση της μνήμης σωρού και του μέγιστου μεγέθους στην πάνω-δεξιά γωνία</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Προβολή κυρίου αποκόμματος</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Προβάλλει ένα επικάλυμμα με το τρέχον κύριο απόκομμα του προχείρου</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Εμφάνιση επικαλύμματος ορθογραφικού ελέγχου</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Δημιουργεί επικάλυμμα με τα τρέχοντα αποτελέσματα ορθογραφικού ελέγχου για αποσφαλμάτωση</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Διαγραφή βάσης δεδομένων εσωτερικού λεξικού χρήστη</string>
@@ -379,14 +392,13 @@
     <string name="ext__meta__version">Έκδοση</string>
     <string name="ext__error__not_found_title">Η επέκταση δε βρέθηκε</string>
     <string name="ext__error__not_found_description">Καμία επέκταση με ταυτότητα \"{id}\" δε βρέθηκε.</string>
-    <string name="ext__editor__create_extension__title">Δημιουργία νέας επέκτασης</string>
     <string name="ext__export__success">Επιτυχής εξαγωγή επέκτασης!</string>
     <string name="ext__export__failure">Αποτυχία εξαγωγής επέκτασης: {error_message}</string>
     <string name="ext__import__success">Επιτυχής εισαγωγή επέκτασης!</string>
     <string name="ext__import__failure">Αποτυχία εισαγωγής επέκτασης: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Εισαγωγή επέκτασης</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Εισαγωγή επέκτασης πληκτρολογίου</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Εισαγωγή επέκτασης / λεξικού ορθογραφίας</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Εισαγωγή επέκτασης / λεξικού ορθογραφικού ελέγχου</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Εισαγωγή επέκτασης θέματος</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Το αρχείο δεν μπορεί να εισαχθεί. Αιτία:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Μη υποστηριζόμενος ή μη αναγνωρίσιμος τύπος αρχείου.</string>
@@ -408,6 +420,7 @@
     <string name="action__import">Εισαγωγή</string>
     <string name="action__no">Όχι</string>
     <string name="action__ok">ΟΚ</string>
+    <string name="action__restore">Επαναφορά</string>
     <string name="action__save">Αποθήκευση</string>
     <string name="action__select">Επολογή</string>
     <string name="action__select_dir">Επιλογή φακέλου</string>
@@ -431,6 +444,10 @@
     <!-- State strings -->
     <string name="state__disabled">Απενεργοποιημένο</string>
     <string name="state__enabled">Ενεργοποιημένο</string>
+    <string name="state__no_dir_selected">Δεν έχει επιλεγεί φάκελος</string>
+    <string name="state__no_dirs_selected">Δεν έχουν επιλεγεί φάκελοι</string>
+    <string name="state__no_file_selected">Δεν έχει επιλεγεί αρχείο</string>
+    <string name="state__no_files_selected">Δεν έχουν επιλεγεί αρχεία</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Κλασσικό (3 στήλες)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Δυναμικό πλάτος</string>

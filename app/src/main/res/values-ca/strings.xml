@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tanca el mode d\'una mà.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mou el teclat a l\'esquerra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mou el teclat a la dreta.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticones</string>
@@ -38,14 +34,19 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si visible, indica que el mode privat està actiu. Quan es fa clic, es mostra informació sobre el mode privat.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Preferències</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prova la configuració</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ajuda</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Predeterminat</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
     <string name="settings__home__title" comment="Title of the Home screen">Benvingut a {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i per tant no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per resoldre aquest problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per resoldre aquest problema.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomes &amp; Disposicions</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipus</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar el subtipus</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Idioma principal</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapatge emergent</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposició dels caràcters</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposició primària dels símbols</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària dels símbols</string>
@@ -56,8 +57,20 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposició de la fila numèrica</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposició primària del telèfon</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària del telèfon</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Selecció d\'idioma</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Cerca un idioma</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">No s\'ha pogut trobar una coincidència d\'idioma amb \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; selecciona &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Preconfiguracions de subtipus suggerides</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">No hi ha disponibles preconfiguracions suggerides. Utilitzeu el botó de sota per veure tots els predefinits de subtipus.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Preconfiguracions de subtipus</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Mostrar-ho tot</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Sembla que no heu configurat cap subtipus. Com a alternativa s\'utilitzarà el subtipus anglès/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Aquest subtipus ja existeix!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almenys un camp no té cap valor seleccionat. Trieu un valor per al(s) camp(s).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (no instal·lat)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Dissenys</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode del tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora de trenc d\'alba</string>
@@ -70,6 +83,12 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Emmagatzematge intern</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecciona el tema del dia</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecciona el tema de nit</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; vibracions</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retroacció hàptica / Sons</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilita la retroacció hàptica</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclat</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Número de fila</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Número d\'indicació de fila</string>
@@ -103,6 +122,7 @@
     <!-- About UI strings -->
     <string name="about__version__title" comment="Preference title">Versió</string>
     <!-- Setup UI strings -->
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
     <string name="clipboard__group_other">Altres</string>

@@ -8,10 +8,6 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fermer le mode à une main.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Déplacez le clavier vers la gauche.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Déplacez le clavier vers la droite.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Émojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Émoticônes</string>
@@ -307,6 +303,33 @@
     <string name="setup__finish_up__description_p1">{app_name} est maintenant activé dans le système et prêt à être personnalisé par vous.</string>
     <string name="setup__finish_up__description_p2">Si vous rencontrez des problèmes, des bogues, des pannes ou si vous voulez simplement faire une suggestion, consultez le dépôt du projet à partir de l\'écran \" à propos \" !</string>
     <string name="setup__finish_up__finish_btn">Commencer à personnaliser !</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Sauvegarder &amp; Restaurer</string>
+    <string name="backup_and_restore__back_up__title">Sauvegarder les données</string>
+    <string name="backup_and_restore__back_up__summary">Générer une archive de sauvegarde de vos préférences et personnalisations</string>
+    <string name="backup_and_restore__back_up__destination">Sélectionner une destination pour la sauvegarde</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Système de fichier local</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Application tierce via le menu de partage</string>
+    <string name="backup_and_restore__back_up__files">Sélectionner les informations à sauvegarder</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Paramètres</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Extensions de clavier</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Extensions de dictionnaires</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Extensions de thème</string>
+    <string name="backup_and_restore__back_up__success">Archive de sauvegarde exportée avec succès !</string>
+    <string name="backup_and_restore__back_up__failure">Impossible d\'exporter l\'archive de sauvegarde : {error_message}</string>
+    <string name="backup_and_restore__restore__title">Restaurer les données</string>
+    <string name="backup_and_restore__restore__summary">Restaurer les paramètres et les personnalisations depuis une archive de sauvegarde</string>
+    <string name="backup_and_restore__restore__files">Sélectionner les éléments à restaurer</string>
+    <string name="backup_and_restore__restore__metadata">Archive de sauvegarde sélectionnée</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Cette archive de sauvegarde a été générée dans une autre version, ce qui est en général supporté. Faites attention cependant : des problèmes mineurs peuvent apparaitre et quelques paramètres peuvent être perdus à cause des différence de fonctionnalité.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Cette archive de sauvegarde a été générée par une application tierce, ce qui est en général non supporté. Des pertes de données peuvent avoir lieu, restaurez à vos risques et périls !</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Cette archive de sauvegarde contient des métadonnées invalides. Elle a été corrompue ou mal modifiée. Il est impossible de restaurer depuis cette archive, merci d\'en sélectionner une autre.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Cette archive de sauvegarde ne contient aucun fichier à restaurer, merci d\'en sélectionner une autre.</string>
+    <string name="backup_and_restore__restore__mode">Mode de restauration</string>
+    <string name="backup_and_restore__restore__mode_merge">Fusionner avec les données actuelles</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Écraser les données actuelles</string>
+    <string name="backup_and_restore__restore__success">Données restaurées avec succès !</string>
+    <string name="backup_and_restore__restore__failure">Impossible de restaurer les données : {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Rapport d\'erreur de FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Désolé pour le désagrément, mais FlorisBoard a crashé en raison d\'une erreur inattendue.</string>
@@ -357,6 +380,8 @@
     <string name="pref__clipboard__clean_up_after__label">Nettoyer les vieux éléments après</string>
     <string name="pref__clipboard__limit_history_size__label">Taille limite de l\'historique</string>
     <string name="pref__clipboard__max_history_size__label">Taille maximale de l\'historique</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Effacer l\'attache principale affecte l\'historique</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Effacer l\'attache principale supprime aussi le dernier élément de l\'historique</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Outils de développement</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Activer les outils de développeur</string>
@@ -393,7 +418,6 @@
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension introuvable</string>
     <string name="ext__error__not_found_description">Aucune extension avec l\'ID \"{id}\" n\'a pu être trouvée.</string>
-    <string name="ext__editor__create_extension__title">Créer une nouvelle extension</string>
     <string name="ext__export__success">Extension exportée avec succès !</string>
     <string name="ext__export__failure">Échec de l\'exportation de l\'extension : {error_message}</string>
     <string name="ext__import__success">Extension importée avec succès !</string>
@@ -413,6 +437,7 @@
     <!-- Action strings -->
     <string name="action__add">Ajouter</string>
     <string name="action__apply">Appliquer</string>
+    <string name="action__back_up">Sauvegarder</string>
     <string name="action__cancel">Annuler</string>
     <string name="action__default">Par défaut</string>
     <string name="action__delete">Supprimer</string>
@@ -423,6 +448,7 @@
     <string name="action__import">Importer</string>
     <string name="action__no">Non</string>
     <string name="action__ok">Ok</string>
+    <string name="action__restore">Restaurer</string>
     <string name="action__save">Enregistrer</string>
     <string name="action__select">Sélectionner</string>
     <string name="action__select_dir">Sélectionner un dossier</string>
@@ -446,6 +472,10 @@
     <!-- State strings -->
     <string name="state__disabled">Désactivé</string>
     <string name="state__enabled">Activé</string>
+    <string name="state__no_dir_selected">Aucun dossier sélectionné</string>
+    <string name="state__no_dirs_selected">Aucun dossier sélectionné</string>
+    <string name="state__no_file_selected">Aucun fichier sélectionné</string>
+    <string name="state__no_files_selected">Aucun fichier sélectionné</string>
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classique (3 colonnes)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largeur dynamique</string>

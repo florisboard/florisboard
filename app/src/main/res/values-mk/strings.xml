@@ -3,10 +3,6 @@
     <!-- One-handed strings -->
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Помести ја тастатурата налево.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Помести ја тастатурата надесно.</string>
-    <!-- Private mode info dialog strings -->
-    <!--
-    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
--->
     <!-- Media strings -->
     <!-- Emoji strings -->
     <string name="emoji__category__people_body" comment="Emoji category name">Луѓе &amp; Тело</string>
@@ -32,6 +28,7 @@
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Setup UI strings -->
+    <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
     <string name="clip__delete_item">Избриши</string>
