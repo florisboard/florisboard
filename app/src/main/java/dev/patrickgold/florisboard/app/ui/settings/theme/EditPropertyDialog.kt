@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CutCornerShape
@@ -39,6 +40,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -50,8 +52,10 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.DpSizeSaver
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
+import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.common.ValidationResult
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.common.rememberValidationResult
@@ -347,6 +351,8 @@ private fun PropertyValueEditor(
             }
         }
         is SnyggSolidColorValue -> {
+            val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
+            var showEditColorStrDialog by rememberSaveable { mutableStateOf<String?>(null) }
             Column(modifier = Modifier.padding(top = 8.dp)) {
                 Row(
                     modifier = Modifier.padding(vertical = 8.dp),
@@ -354,20 +360,87 @@ private fun PropertyValueEditor(
                 ) {
                     Text(
                         modifier = Modifier
+                            .rippleClickable {
+                                showEditColorStrDialog = SnyggSolidColorValue
+                                    .serialize(value)
+                                    .getOrNull()
+                            }
                             .padding(end = 12.dp)
                             .weight(1f),
                         text = value.encoder().serialize(value).getOrDefault("?"),
+                        style = MaterialTheme.typography.body2,
+                        fontFamily = FontFamily.Monospace,
                     )
                     SnyggValueIcon(
                         value = value,
                         definedVariables = definedVariables,
                     )
                 }
-                val state = rememberJetPrefColorPickerState(initColor = value.color)
                 JetPrefColorPicker(
                     onColorChange = { onValueChange(SnyggSolidColorValue(it)) },
-                    state = state,
+                    state = colorPickerState,
                 )
+            }
+            val editorColorStrDialog = showEditColorStrDialog
+            if (editorColorStrDialog != null) {
+                var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+                var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
+                var colorStr by rememberSaveable { mutableStateOf(editorColorStrDialog) }
+                val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggSolidColorValue, colorStr)
+                JetPrefAlertDialog(
+                    title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),
+                    confirmLabel = stringRes(R.string.action__apply),
+                    onConfirm = {
+                        if (colorStrValidation.isInvalid()) {
+                            showValidationErrors = true
+                        } else {
+                            val newValue = SnyggSolidColorValue.deserialize(colorStr.trim()).getOrThrow()
+                            onValueChange(newValue)
+                            colorPickerState.setColor((newValue as SnyggSolidColorValue).color)
+                            showEditColorStrDialog = null
+                        }
+                    },
+                    dismissLabel = stringRes(R.string.action__cancel),
+                    onDismiss = {
+                        showEditColorStrDialog = null
+                    },
+                    trailingIconTitle = {
+                        FlorisIconButton(
+                            onClick = { showSyntaxHelp = !showSyntaxHelp },
+                            modifier = Modifier.offset(x = 12.dp),
+                            icon = painterResource(R.drawable.ic_help_outline),
+                        )
+                    },
+                ) {
+                    Column {
+                        AnimatedVisibility(visible = showSyntaxHelp) {
+                            Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                                Text(text = "Supported color string syntax's:")
+                                Text(
+                                    text = """
+                                        #RRGGBBAA
+                                         -> all in 00h..FFh
+                                        #RRGGBB
+                                         -> all in 00h..FFh
+                                        rgba(r,g,b,a)
+                                         -> r,g,b in 0..255
+                                         -> a in 0.0..1.0
+                                        rgb(r,g,b)
+                                         -> r,g,b in 0..255
+                                    """.trimIndent(),
+                                    style = MaterialTheme.typography.body2,
+                                    fontFamily = FontFamily.Monospace,
+                                )
+                            }
+                        }
+                        FlorisOutlinedTextField(
+                            value = colorStr,
+                            onValueChange =  { colorStr = it },
+                            showValidationError = showValidationErrors,
+                            validationResult = colorStrValidation,
+                        )
+                    }
+                }
             }
         }
         is SnyggSpSizeValue -> {

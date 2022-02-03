@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 
 // TODO: (priority=medium)
 //  make all strings available for localize
@@ -160,6 +161,21 @@ object ExtensionValidation {
                 str.isBlank() -> resultInvalid(error = "Please enter a dp size")
                 floatValue == null -> resultInvalid(error = "Please enter a valid number")
                 floatValue < 0f -> resultInvalid(error = "Please enter a positive number (>=0)")
+                else -> resultValid()
+            }
+        }
+    }
+
+    val SnyggSolidColorValue = ValidationRule<String> {
+        forKlass = SnyggSolidColorValue::class
+        forProperty = "color"
+        validator { input ->
+            val str = input.trim()
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a color string")
+                dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                    resultInvalid(error = "Please enter a valid color string")
+                }
                 else -> resultValid()
             }
         }
