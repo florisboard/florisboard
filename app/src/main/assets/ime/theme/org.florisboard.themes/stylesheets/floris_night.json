@@ -78,6 +78,10 @@
     "shape": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
   },
 
+  "glide-trail": {
+    "foreground": "var(--primary)"
+  },
+
   "one-handed-panel": {
     "background": "#1b5e20",
     "foreground": "#eeeeee"

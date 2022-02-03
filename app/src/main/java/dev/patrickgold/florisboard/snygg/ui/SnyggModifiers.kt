@@ -49,10 +49,10 @@ fun Modifier.snyggClip(
     return this.clip(shape.shape())
 }
 
-fun SnyggValue.solidColor(): Color {
+fun SnyggValue.solidColor(default: Color = Color.Transparent): Color {
     return when (this) {
         is SnyggSolidColorValue -> this.color
-        else -> Color.Transparent
+        else -> default
     }
 }
 

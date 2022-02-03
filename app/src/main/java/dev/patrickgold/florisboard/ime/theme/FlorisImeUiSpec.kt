@@ -104,6 +104,10 @@ object FlorisImeUiSpec : SnyggSpec({
         shape()
     }
 
+    element(FlorisImeUi.GlideTrail) {
+        foreground()
+    }
+
     element(FlorisImeUi.OneHandedPanel) {
         background()
         foreground()

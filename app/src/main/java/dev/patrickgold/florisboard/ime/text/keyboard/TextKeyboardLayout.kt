@@ -115,6 +115,8 @@ fun TextKeyboardLayout(
 
     val glideEnabled by prefs.glide.enabled.observeAsState()
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
+    val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
+        .foreground.solidColor(default = Color.Green)
 
     val keyboard = renderInfo.keyboard
     val controller = remember { TextKeyboardLayoutController(context) }.also {
@@ -156,7 +158,8 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_MOVE,
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
-                    MotionEvent.ACTION_CANCEL -> {
+                    MotionEvent.ACTION_CANCEL
+                    -> {
                         val clonedEvent = MotionEvent.obtain(event)
                         touchEventChannel
                             .trySend(clonedEvent)
@@ -183,12 +186,14 @@ fun TextKeyboardLayout(
                             controller.fadingGlide,
                             targetDist,
                             controller.fadingGlideRadius,
-                            radiusReductionFactor
+                            radiusReductionFactor,
+                            glideTrailColor,
                         )
                     }
                     if (controller.isGliding && controller.glideDataForDrawing.isNotEmpty()) {
                         controller.drawGlideTrail(
-                            this, controller.glideDataForDrawing, targetDist, radius, radiusReductionFactor
+                            this, controller.glideDataForDrawing, targetDist, radius,
+                            radiusReductionFactor, glideTrailColor,
                         )
                     }
                 }
@@ -882,6 +887,7 @@ private class TextKeyboardLayoutController(
         targetDist: Float,
         initialRadius: Float,
         radiusReductionFactor: Float,
+        color: Color,
     ) {
         var radius = initialRadius
         var drawnPoints = 0
@@ -903,7 +909,7 @@ private class TextKeyboardLayoutController(
                     gestureData[i].first.x * (1 - j.toFloat() / numPoints) + gestureData[i - 1].first.x * (j.toFloat() / numPoints)
                 val intermediateY =
                     gestureData[i].first.y * (1 - j.toFloat() / numPoints) + gestureData[i - 1].first.y * (j.toFloat() / numPoints)
-                drawScope.drawCircle(Color.Green, radius, center = Offset(intermediateX, intermediateY))
+                drawScope.drawCircle(color, radius, center = Offset(intermediateX, intermediateY))
                 drawnPoints += 1
                 prevX = intermediateX
                 prevY = intermediateY

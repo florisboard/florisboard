@@ -118,6 +118,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(12.dp)
     }
 
+    FlorisImeUi.GlideTrail {
+        foreground = `var`("primary")
+    }
+
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)

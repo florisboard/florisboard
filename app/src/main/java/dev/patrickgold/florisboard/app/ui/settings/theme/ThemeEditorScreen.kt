@@ -774,6 +774,7 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
             FlorisImeUi.ClipboardHeader -> R.string.snygg__rule_element__clipboard_header
             FlorisImeUi.ClipboardItem -> R.string.snygg__rule_element__clipboard_item
             FlorisImeUi.ClipboardItemPopup -> R.string.snygg__rule_element__clipboard_item_popup
+            FlorisImeUi.GlideTrail -> R.string.snygg__rule_element__glide_trail
             FlorisImeUi.OneHandedPanel -> R.string.snygg__rule_element__one_handed_panel
             FlorisImeUi.SmartbarPrimaryRow -> R.string.snygg__rule_element__smartbar_primary_row
             FlorisImeUi.SmartbarPrimaryActionRowToggle -> R.string.snygg__rule_element__smartbar_primary_action_row_toggle

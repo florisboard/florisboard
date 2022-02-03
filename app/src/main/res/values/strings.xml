@@ -131,6 +131,7 @@
     <string name="snygg__rule_element__clipboard_header">Clipboard header</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
+    <string name="snygg__rule_element__glide_trail">Glide trail</string>
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
     <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primary action row toggle</string>
