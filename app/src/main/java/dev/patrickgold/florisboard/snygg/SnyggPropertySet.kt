@@ -21,10 +21,10 @@ import androidx.annotation.IntRange
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import dev.patrickgold.florisboard.snygg.value.RgbaColor
+import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
@@ -170,7 +170,11 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     }
 
     fun rectangleShape(): SnyggRectangleShapeValue {
-        return SnyggRectangleShapeValue(RectangleShape)
+        return SnyggRectangleShapeValue()
+    }
+
+    fun circleShape(): SnyggCircleShapeValue {
+        return SnyggCircleShapeValue()
     }
 
     fun cutCornerShape(cornerSize: Dp): SnyggCutCornerDpShapeValue {

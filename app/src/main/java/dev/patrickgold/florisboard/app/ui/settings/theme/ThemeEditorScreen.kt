@@ -102,6 +102,7 @@ import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.snygg.definedVariablesRule
 import dev.patrickgold.florisboard.snygg.isDefinedVariablesRule
+import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
@@ -854,6 +855,7 @@ internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): Stri
         SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggSolidColorValue -> R.string.snygg__property_value__solid_color
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
+        SnyggCircleShapeValue -> R.string.snygg__property_value__circle_shape
         SnyggCutCornerDpShapeValue -> R.string.snygg__property_value__cut_corner_shape_dp
         SnyggCutCornerPercentageShapeValue -> R.string.snygg__property_value__cut_corner_shape_percent
         SnyggRoundedCornerDpShapeValue -> R.string.snygg__property_value__rounded_corner_shape_dp

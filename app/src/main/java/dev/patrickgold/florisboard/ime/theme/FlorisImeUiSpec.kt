@@ -20,6 +20,7 @@ import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpecBuilder
 import dev.patrickgold.florisboard.snygg.SnyggSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
@@ -55,10 +56,11 @@ fun SnyggPropertySetSpecBuilder.shape() {
         level = SnyggLevel.ADVANCED,
         supportedValues(
             SnyggRectangleShapeValue,
-            SnyggCutCornerDpShapeValue,
-            SnyggCutCornerPercentageShapeValue,
+            SnyggCircleShapeValue,
             SnyggRoundedCornerDpShapeValue,
             SnyggRoundedCornerPercentageShapeValue,
+            SnyggCutCornerDpShapeValue,
+            SnyggCutCornerPercentageShapeValue,
         ),
     )
 }

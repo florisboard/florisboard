@@ -93,12 +93,12 @@
   "smartbar-primary-action-row-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
-    "shape": "rounded-corner(50%, 50%, 50%, 50%)"
+    "shape": "circle()"
   },
   "smartbar-primary-secondary-row-toggle": {
     "background": "transparent",
     "foreground": "#121212",
-    "shape": "rounded-corner(50%, 50%, 50%, 50%)"
+    "shape": "circle()"
   },
 
   "smartbar-secondary-row": {
@@ -111,7 +111,7 @@
   "smartbar-action-button": {
     "background": "transparent",
     "foreground": "#121212",
-    "shape": "rounded-corner(50%, 50%, 50%, 50%)"
+    "shape": "circle()"
   },
 
   "smartbar-candidate-row": {

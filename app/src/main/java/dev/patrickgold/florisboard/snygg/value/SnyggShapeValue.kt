@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.RectangleShape
@@ -29,6 +30,7 @@ private const val CornerSizeBottomEnd = "cornerSizeBottomEnd"
 private const val CornerSizeBottomStart = "cornerSizeBottomStart"
 
 private const val Rectangle = "rectangle"
+private const val Circle = "circle"
 private const val CutCorner = "cut-corner"
 private const val RoundedCorner = "rounded-corner"
 
@@ -54,13 +56,13 @@ sealed interface SnyggPercentageShapeValue : SnyggShapeValue {
     val bottomStart: Int
 }
 
-data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue {
+data class SnyggRectangleShapeValue(override val shape: Shape = RectangleShape) : SnyggShapeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
             function(Rectangle) { nothing() }
         }
 
-        override fun defaultValue() = SnyggRectangleShapeValue(RectangleShape)
+        override fun defaultValue() = SnyggRectangleShapeValue()
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRectangleShapeValue)
@@ -71,7 +73,31 @@ data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = SnyggIdToValueMap.new()
             spec.parse(v, map)
-            return@runCatching SnyggRectangleShapeValue(shape = RectangleShape)
+            return@runCatching SnyggRectangleShapeValue()
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
+data class SnyggCircleShapeValue(override val shape: Shape = CircleShape) : SnyggShapeValue {
+    companion object : SnyggValueEncoder {
+        override val spec = SnyggValueSpec {
+            function(Circle) { nothing() }
+        }
+
+        override fun defaultValue() = SnyggCircleShapeValue()
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggCircleShapeValue)
+            val map = SnyggIdToValueMap.new()
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = SnyggIdToValueMap.new()
+            spec.parse(v, map)
+            return@runCatching SnyggCircleShapeValue()
         }
     }
 
