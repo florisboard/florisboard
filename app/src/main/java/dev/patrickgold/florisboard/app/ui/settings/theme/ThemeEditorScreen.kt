@@ -845,7 +845,13 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
 
 @Composable
 internal fun translatePropertyValue(propertyValue: SnyggValue, level: SnyggLevel): String {
-    return propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
+    return when (level) {
+        SnyggLevel.DEVELOPER -> null
+        else -> when (propertyValue) {
+            is SnyggDefinedVarValue -> translatePropertyName(propertyValue.key, level)
+            else -> null
+        }
+    } ?: propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
 }
 
 @Composable
