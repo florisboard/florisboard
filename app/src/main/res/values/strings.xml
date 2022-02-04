@@ -175,6 +175,9 @@
     <string name="snygg__property_name__var_on_secondary">Foreground of secondary</string>
     <string name="snygg__property_name__var_on_background">Foreground of background</string>
     <string name="snygg__property_name__var_on_surface">Foreground of surface</string>
+    <string name="snygg__property_name__var_on_surface_variant">Foreground of surface (variant)</string>
+    <string name="snygg__property_name__var_shape">Common shape</string>
+    <string name="snygg__property_name__var_shape_variant">Common shape (variant)</string>
     <string name="snygg__property_value__explicit_inherit">Inherit</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
     <string name="snygg__property_value__image_ref">Image reference</string>

@@ -8,10 +8,12 @@
     "--surface": "#ffffff",
     "--surface-variant": "#f5f5f5",
 
-    "--on-primary": "#000000",
-    "--on-secondary": "#000000",
-    "--on-background": "#000000",
-    "--on-surface": "#000000"
+    "--on-background": "#121212",
+    "--on-surface": "#000000",
+    "--on-surface-variant": "#5f5f5f",
+
+    "--shape": "rounded-corner(8dp, 8dp, 8dp, 8dp)",
+    "--shape-variant": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
   },
 
   "keyboard": {
@@ -22,7 +24,7 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
+    "shape": "var(--shape)"
   },
   "key:pressed": {
     "background": "var(--surface-variant)",
@@ -30,30 +32,30 @@
   },
   "key[code={c:enter}]": {
     "background": "var(--primary)",
-    "foreground": "#ffffff"
+    "foreground": "var(--on-surface)"
   },
   "key[code={c:enter}]:pressed": {
     "background": "var(--primary-variant)",
-    "foreground": "#ffffff"
+    "foreground": "var(--on-surface)"
   },
   "key[code={c:shift}][mode={m:capslock}]": {
     "foreground": "var(--secondary)"
   },
   "key[code={c:space}]": {
     "background": "var(--surface)",
-    "foreground": "#909090",
+    "foreground": "var(--on-surface-variant)",
     "font-size": "12sp"
   },
   "key-hint": {
     "background": "transparent",
-    "foreground": "#b8b8b8",
+    "foreground": "var(--on-surface-variant)",
     "font-size": "12sp"
   },
   "key-popup": {
     "background": "#eeeeee",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
+    "shape": "var(--shape)"
   },
   "key-popup:focus": {
     "background": "#bdbdbd",
@@ -69,13 +71,13 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shape": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
+    "shape": "var(--shape-variant)"
   },
   "clipboard-item-popup": {
-    "background": "var(--surface)",
+    "background": "var(--surface-variant)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shape": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
+    "shape": "var(--shape-variant)"
   },
 
   "glide-trail": {
@@ -97,7 +99,7 @@
   },
   "smartbar-primary-secondary-row-toggle": {
     "background": "transparent",
-    "foreground": "#121212",
+    "foreground": "var(--on-surface-variant)",
     "shape": "circle()"
   },
 
@@ -110,7 +112,7 @@
   },
   "smartbar-action-button": {
     "background": "transparent",
-    "foreground": "#121212",
+    "foreground": "var(--on-background)",
     "shape": "circle()"
   },
 
@@ -119,37 +121,37 @@
   },
   "smartbar-candidate-word": {
     "background": "transparent",
-    "foreground": "#121212",
+    "foreground": "var(--on-background)",
     "font-size": "14sp",
     "shape": "rectangle()"
   },
   "smartbar-candidate-word:pressed": {
     "background": "var(--surface)",
-    "foreground": "#121212"
+    "foreground": "var(--on-background)"
   },
   "smartbar-candidate-clip": {
     "background": "transparent",
-    "foreground": "#121212",
+    "foreground": "var(--on-background)",
     "font-size": "14sp",
     "shape": "rounded-corner(8%, 8%, 8%, 8%)"
   },
   "smartbar-candidate-clip:pressed": {
     "background": "var(--surface)",
-    "foreground": "#121212"
+    "foreground": "var(--on-background)"
   },
   "smartbar-candidate-spacer": {
-    "foreground": "#ffffff40"
+    "foreground": "var(--surface)"
   },
 
   "smartbar-key": {
     "background": "transparent",
-    "foreground": "#121212",
+    "foreground": "var(--on-background)",
     "font-size": "18sp",
-    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
+    "shape": "var(--shape)"
   },
   "smartbar-key:pressed": {
     "background": "var(--surface)",
-    "foreground": "#121212"
+    "foreground": "var(--on-surface)"
   },
   "smartbar-key:disabled": {
     "background": "transparent",

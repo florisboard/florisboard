@@ -826,6 +826,9 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
             "--on-secondary" -> R.string.snygg__property_name__var_on_secondary
             "--on-background" -> R.string.snygg__property_name__var_on_background
             "--on-surface" -> R.string.snygg__property_name__var_on_surface
+            "--on-surface-variant" -> R.string.snygg__property_name__var_on_surface_variant
+            "--shape" -> R.string.snygg__property_name__var_shape
+            "--shape-variant" -> R.string.snygg__property_name__var_shape_variant
             else -> null
         }
     }.let { resId ->

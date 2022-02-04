@@ -44,8 +44,6 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         "surface" to rgbaColor(66, 66, 66)
         "surfaceVariant" to rgbaColor(97, 97, 97)
 
-        "onPrimary" to rgbaColor(255, 255, 255)
-        "onSecondary" to rgbaColor(255, 255, 255)
         "onBackground" to rgbaColor(255, 255, 255)
         "onSurface" to rgbaColor(255, 255, 255)
     }
