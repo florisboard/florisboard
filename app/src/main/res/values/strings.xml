@@ -543,7 +543,7 @@
     <!-- Extension strings -->
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
-    <string name="ext__meta__components_theme">Bundled theme components</string>
+    <string name="ext__meta__components_theme">Bundled themes</string>
     <string name="ext__meta__components_none_found">This extension archive does not contain any bundled components.</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Homepage</string>
@@ -572,9 +572,9 @@
     <string name="ext__editor__dependencies__title">Manage dependencies</string>
     <string name="ext__editor__files__title">Manage archive files</string>
     <string name="ext__editor__create_component__title">Create component</string>
-    <string name="ext__editor__create_component__title_theme">Create theme component</string>
-    <string name="ext__editor__create_component__from_empty">Empty component</string>
-    <string name="ext__editor__create_component__from_existing">From existing component</string>
+    <string name="ext__editor__create_component__title_theme">Create theme</string>
+    <string name="ext__editor__create_component__from_empty">Empty</string>
+    <string name="ext__editor__create_component__from_existing">From existing</string>
     <string name="ext__editor__create_component__from_empty_warning">Creating and configuring an empty component may be hard if you are new to {app_name} or if you are unfamiliar with the specifics. Consider copying an existing component and modifying it to your likings if that is the case.</string>
     <string name="ext__editor__edit_component__title">Edit component</string>
     <string name="ext__editor__edit_component__title_theme">Edit theme component</string>
