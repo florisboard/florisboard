@@ -26,7 +26,7 @@ import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
@@ -156,9 +156,9 @@ internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): Stri
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
         SnyggCircleShapeValue -> R.string.snygg__property_value__circle_shape
         SnyggCutCornerDpShapeValue -> R.string.snygg__property_value__cut_corner_shape_dp
-        SnyggCutCornerPercentageShapeValue -> R.string.snygg__property_value__cut_corner_shape_percent
+        SnyggCutCornerPercentShapeValue -> R.string.snygg__property_value__cut_corner_shape_percent
         SnyggRoundedCornerDpShapeValue -> R.string.snygg__property_value__rounded_corner_shape_dp
-        SnyggRoundedCornerPercentageShapeValue -> R.string.snygg__property_value__rounded_corner_shape_percent
+        SnyggRoundedCornerPercentShapeValue -> R.string.snygg__property_value__rounded_corner_shape_percent
         SnyggDpSizeValue -> R.string.snygg__property_value__dp_size
         SnyggSpSizeValue -> R.string.snygg__property_value__sp_size
         SnyggPercentageSizeValue -> R.string.snygg__property_value__percentage_size

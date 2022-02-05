@@ -34,6 +34,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
@@ -100,7 +101,9 @@ import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.snygg.definedVariablesRule
 import dev.patrickgold.florisboard.snygg.isDefinedVariablesRule
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
@@ -687,7 +690,7 @@ internal fun SnyggValueIcon(
             Box(
                 modifier = modifier
                     .requiredSize(spec.iconSizeMinusBorder)
-                    .border(spec.borderWith, MaterialTheme.colors.onBackground, value.shape)
+                    .border(spec.borderWith, MaterialTheme.colors.onBackground, value.alwaysPercentShape())
             )
         }
         is SnyggSpSizeValue -> {
@@ -734,5 +737,29 @@ internal fun SnyggValueIcon(
         else -> {
             // Render nothing
         }
+    }
+}
+
+private const val AlwaysPercentUpscaleFactor = 3
+
+fun SnyggShapeValue.alwaysPercentShape(): Shape {
+    return when (this) {
+        is SnyggRoundedCornerDpShapeValue -> {
+            RoundedCornerShape(
+                this.topStart.value.toInt() * AlwaysPercentUpscaleFactor,
+                this.topEnd.value.toInt() * AlwaysPercentUpscaleFactor,
+                this.bottomEnd.value.toInt() * AlwaysPercentUpscaleFactor,
+                this.bottomStart.value.toInt() * AlwaysPercentUpscaleFactor,
+            )
+        }
+        is SnyggCutCornerDpShapeValue -> {
+            CutCornerShape(
+                this.topStart.value.toInt() * AlwaysPercentUpscaleFactor,
+                this.topEnd.value.toInt() * AlwaysPercentUpscaleFactor,
+                this.bottomEnd.value.toInt() * AlwaysPercentUpscaleFactor,
+                this.bottomStart.value.toInt() * AlwaysPercentUpscaleFactor,
+            )
+        }
+        else -> this.shape
     }
 }

@@ -63,13 +63,13 @@ import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
-import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
@@ -574,7 +574,7 @@ private fun PropertyValueEditor(
                 if (dialogForCorner != null) {
                     var showValidationErrors by rememberSaveable { mutableStateOf(false) }
                     var size by rememberSaveable {
-                        mutableStateOf(showDialogInitDp.value.toString())
+                        mutableStateOf(showDialogInitDp.value.toString().removeSuffix(".0"))
                     }
                     val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
                     JetPrefAlertDialog(
@@ -626,7 +626,7 @@ private fun PropertyValueEditor(
                     }
                 }
             }
-            is SnyggPercentageShapeValue -> {
+            is SnyggPercentShapeValue -> {
                 var showDialogInitPercentage by rememberSaveable {
                     mutableStateOf(0)
                 }
@@ -635,45 +635,45 @@ private fun PropertyValueEditor(
                 }
                 var topStart by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.topStart
-                        is SnyggRoundedCornerPercentageShapeValue -> value.topStart
+                        is SnyggCutCornerPercentShapeValue -> value.topStart
+                        is SnyggRoundedCornerPercentShapeValue -> value.topStart
                     })
                 }
                 var topEnd by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.topEnd
-                        is SnyggRoundedCornerPercentageShapeValue -> value.topEnd
+                        is SnyggCutCornerPercentShapeValue -> value.topEnd
+                        is SnyggRoundedCornerPercentShapeValue -> value.topEnd
                     })
                 }
                 var bottomEnd by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.bottomEnd
-                        is SnyggRoundedCornerPercentageShapeValue -> value.bottomEnd
+                        is SnyggCutCornerPercentShapeValue -> value.bottomEnd
+                        is SnyggRoundedCornerPercentShapeValue -> value.bottomEnd
                     })
                 }
                 var bottomStart by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.bottomStart
-                        is SnyggRoundedCornerPercentageShapeValue -> value.bottomStart
+                        is SnyggCutCornerPercentShapeValue -> value.bottomStart
+                        is SnyggRoundedCornerPercentShapeValue -> value.bottomStart
                     })
                 }
                 val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
                     when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> {
+                        is SnyggCutCornerPercentShapeValue -> {
                             CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
                         }
-                        is SnyggRoundedCornerPercentageShapeValue -> {
+                        is SnyggRoundedCornerPercentShapeValue -> {
                             RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     }
                 }
                 LaunchedEffect(shape) {
                     onValueChange(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> {
-                            SnyggCutCornerPercentageShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        is SnyggCutCornerPercentShapeValue -> {
+                            SnyggCutCornerPercentShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
                         }
-                        is SnyggRoundedCornerPercentageShapeValue -> {
-                            SnyggRoundedCornerPercentageShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        is SnyggRoundedCornerPercentShapeValue -> {
+                            SnyggRoundedCornerPercentShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
                         }
                     })
                 }
@@ -732,7 +732,7 @@ private fun PropertyValueEditor(
                     var size by rememberSaveable {
                         mutableStateOf(showDialogInitPercentage.toString())
                     }
-                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentageShapeValue, size)
+                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentShapeValue, size)
                     JetPrefAlertDialog(
                         title = dialogForCorner.label(),
                         confirmLabel = stringRes(R.string.action__apply),

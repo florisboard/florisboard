@@ -22,10 +22,10 @@ import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpecBuilder
 import dev.patrickgold.florisboard.snygg.SnyggSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 
@@ -58,9 +58,9 @@ fun SnyggPropertySetSpecBuilder.shape() {
             SnyggRectangleShapeValue,
             SnyggCircleShapeValue,
             SnyggRoundedCornerDpShapeValue,
-            SnyggRoundedCornerPercentageShapeValue,
+            SnyggRoundedCornerPercentShapeValue,
             SnyggCutCornerDpShapeValue,
-            SnyggCutCornerPercentageShapeValue,
+            SnyggCutCornerPercentShapeValue,
         ),
     )
 }

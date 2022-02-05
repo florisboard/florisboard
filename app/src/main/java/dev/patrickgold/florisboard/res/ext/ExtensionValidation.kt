@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.common.validate
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 
 // TODO: (priority=medium)
@@ -152,20 +152,6 @@ object ExtensionValidation {
         }
     }
 
-    val SnyggDpShapeValue = ValidationRule<String> {
-        forKlass = SnyggDpShapeValue::class
-        forProperty = "corner"
-        validator { str ->
-            val floatValue = str.toFloatOrNull()
-            when {
-                str.isBlank() -> resultInvalid(error = "Please enter a dp size")
-                floatValue == null -> resultInvalid(error = "Please enter a valid number")
-                floatValue < 0f -> resultInvalid(error = "Please enter a positive number (>=0)")
-                else -> resultValid()
-            }
-        }
-    }
-
     val SnyggSolidColorValue = ValidationRule<String> {
         forKlass = SnyggSolidColorValue::class
         forProperty = "color"
@@ -181,8 +167,22 @@ object ExtensionValidation {
         }
     }
 
-    val SnyggPercentageShapeValue = ValidationRule<String> {
-        forKlass = SnyggPercentageShapeValue::class
+    val SnyggDpShapeValue = ValidationRule<String> {
+        forKlass = SnyggDpShapeValue::class
+        forProperty = "corner"
+        validator { str ->
+            val floatValue = str.toFloatOrNull()
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a dp size")
+                floatValue == null -> resultInvalid(error = "Please enter a valid number")
+                floatValue < 0f -> resultInvalid(error = "Please enter a positive number (>=0)")
+                else -> resultValid()
+            }
+        }
+    }
+
+    val SnyggPercentShapeValue = ValidationRule<String> {
+        forKlass = SnyggPercentShapeValue::class
         forProperty = "corner"
         validator { str ->
             val intValue = str.toIntOrNull()

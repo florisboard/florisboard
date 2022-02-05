@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.TextUnit
 import dev.patrickgold.florisboard.snygg.value.RgbaColor
 import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImageRefValue
@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
@@ -196,8 +196,8 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         )
     }
 
-    fun cutCornerShape(cornerSize: Int): SnyggCutCornerPercentageShapeValue {
-        return SnyggCutCornerPercentageShapeValue(
+    fun cutCornerShape(cornerSize: Int): SnyggCutCornerPercentShapeValue {
+        return SnyggCutCornerPercentShapeValue(
             shape = CutCornerShape(cornerSize),
             cornerSize, cornerSize, cornerSize, cornerSize,
         )
@@ -208,8 +208,8 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         topEnd: Int,
         bottomEnd: Int,
         bottomStart: Int,
-    ): SnyggCutCornerPercentageShapeValue {
-        return SnyggCutCornerPercentageShapeValue(
+    ): SnyggCutCornerPercentShapeValue {
+        return SnyggCutCornerPercentShapeValue(
             shape = CutCornerShape(topStart, topEnd, bottomEnd, bottomStart),
             topStart, topEnd, bottomEnd, bottomStart,
         )
@@ -234,8 +234,8 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         )
     }
 
-    fun roundedCornerShape(cornerSize: Int): SnyggRoundedCornerPercentageShapeValue {
-        return SnyggRoundedCornerPercentageShapeValue(
+    fun roundedCornerShape(cornerSize: Int): SnyggRoundedCornerPercentShapeValue {
+        return SnyggRoundedCornerPercentShapeValue(
             shape = RoundedCornerShape(cornerSize),
             cornerSize, cornerSize, cornerSize, cornerSize,
         )
@@ -246,8 +246,8 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         topEnd: Int,
         bottomEnd: Int,
         bottomStart: Int,
-    ): SnyggRoundedCornerPercentageShapeValue {
-        return SnyggRoundedCornerPercentageShapeValue(
+    ): SnyggRoundedCornerPercentShapeValue {
+        return SnyggRoundedCornerPercentShapeValue(
             shape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart),
             topStart, topEnd, bottomEnd, bottomStart,
         )
