@@ -96,6 +96,9 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
 
+    <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
+    <string name="settings__theme_editor__fine_tune__level">Editing level</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Display colors as</string>
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
@@ -634,6 +637,7 @@
     <string name="error__snackbar_message_template">Something went wrong: {error_message}</string>
 
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">e.g. {example}</string>
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
 
@@ -656,6 +660,9 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
+
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
 
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>
@@ -687,6 +694,13 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
+
+    <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Only color properties are shown, properties and rules are translated.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Advanced</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">All properties are shown, properties and rules are translated.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Developer</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">All properties are shown, properties and rules are displayed as written in the stylesheet file itself.</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>

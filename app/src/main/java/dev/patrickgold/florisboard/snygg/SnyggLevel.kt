@@ -16,6 +16,11 @@
 
 package dev.patrickgold.florisboard.snygg
 
+import androidx.compose.runtime.Composable
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+
 /**
  * SnyggLevel indicates if a rule property is intended to be edited by all users (BASIC) or only by advanced users
  * (ADVANCED). This level is intended for theme editor UIs to hide certain properties in a "basic" mode, for the Snygg
@@ -28,4 +33,28 @@ enum class SnyggLevel : Comparable<SnyggLevel> {
     ADVANCED,
     /** A property is intended to be edited by developers **/
     DEVELOPER;
+
+    companion object {
+        @Composable
+        fun listEntries() = listPrefEntries {
+            entry(
+                key = BASIC,
+                label = stringRes(R.string.enum__snygg_level__basic),
+                description = stringRes(R.string.enum__snygg_level__basic__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = ADVANCED,
+                label = stringRes(R.string.enum__snygg_level__advanced),
+                description = stringRes(R.string.enum__snygg_level__advanced__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = DEVELOPER,
+                label = stringRes(R.string.enum__snygg_level__developer),
+                description = stringRes(R.string.enum__snygg_level__developer__description),
+                showDescriptionOnlyIfSelected = true,
+            )
+        }
+    }
 }

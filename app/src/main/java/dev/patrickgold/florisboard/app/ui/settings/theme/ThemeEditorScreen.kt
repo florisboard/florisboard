@@ -69,6 +69,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
@@ -81,7 +82,6 @@ import dev.patrickgold.florisboard.app.ui.components.rememberPreviewFieldControl
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
@@ -109,6 +109,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.delay
@@ -127,6 +128,7 @@ fun ThemeEditorScreen(
     title = stringRes(R.string.ext__editor__edit_component__title_theme)
     scrollable = false
 
+    val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val themeManager by context.themeManager()
@@ -155,12 +157,14 @@ fun ThemeEditorScreen(
         }.also { editor.stylesheetEditor = it }
     }
 
-    var snyggLevel by rememberSaveable { mutableStateOf(SnyggLevel.ADVANCED) }
+    val snyggLevel by prefs.theme.editorLevel.observeAsState()
+    val displayColorsAs by prefs.theme.editorDisplayColorsAs.observeAsState()
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
     var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
     var showEditComponentMetaDialog by rememberSaveable { mutableStateOf(false) }
+    var showFineTuneDialog by rememberSaveable { mutableStateOf(false) }
 
     fun handleBackPress() {
         workspace.currentAction = null
@@ -175,15 +179,8 @@ fun ThemeEditorScreen(
 
     actions {
         FlorisIconButton(
-            onClick = {
-                snyggLevel = when (snyggLevel) {
-                    SnyggLevel.BASIC -> SnyggLevel.ADVANCED
-                    SnyggLevel.ADVANCED -> SnyggLevel.DEVELOPER
-                    SnyggLevel.DEVELOPER -> SnyggLevel.BASIC
-                }
-                context.showShortToast("level = $snyggLevel")
-            },
-            icon = painterResource(R.drawable.ic_language),
+            onClick = { showFineTuneDialog = true },
+            icon = painterResource(R.drawable.ic_tune),
         )
     }
 
@@ -209,8 +206,9 @@ fun ThemeEditorScreen(
             handleBackPress()
         }
 
-        LaunchedEffect(showEditComponentMetaDialog, snyggRuleToEdit, snyggPropertyToEdit) {
-            val visible = showEditComponentMetaDialog || snyggRuleToEdit != null || snyggPropertyToEdit != null
+        LaunchedEffect(showEditComponentMetaDialog, showFineTuneDialog, snyggRuleToEdit, snyggPropertyToEdit) {
+            val visible = showEditComponentMetaDialog || showFineTuneDialog ||
+                snyggRuleToEdit != null || snyggPropertyToEdit != null
             if (visible) {
                 focusManager.clearFocus()
             } else {
@@ -306,7 +304,7 @@ fun ThemeEditorScreen(
                                         snyggPropertyToEdit = PropertyInfo(propertyName, propertyValue)
                                     },
                                     text = translatePropertyName(propertyName, snyggLevel),
-                                    secondaryText = translatePropertyValue(propertyValue, snyggLevel),
+                                    secondaryText = translatePropertyValue(propertyValue, snyggLevel, displayColorsAs),
                                     singleLineSecondaryText = true,
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                 )
@@ -328,6 +326,10 @@ fun ThemeEditorScreen(
                 onConfirm = { showEditComponentMetaDialog = false },
                 onDismiss = { showEditComponentMetaDialog = false },
             )
+        }
+
+        if (showFineTuneDialog) {
+            FineTuneDialog(onDismiss = { showFineTuneDialog = false })
         }
 
         val ruleToEdit = snyggRuleToEdit
@@ -387,6 +389,7 @@ fun ThemeEditorScreen(
                 propertySetSpec = snyggPropertySetSpecForEditing,
                 initProperty = propertyToEdit,
                 level = snyggLevel,
+                displayColorsAs = displayColorsAs,
                 definedVariables = definedVariables,
                 onConfirmNewValue = { name, value ->
                     val properties = snyggPropertySetForEditing?.properties ?: return@EditPropertyDialog false

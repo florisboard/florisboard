@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
+import dev.patrickgold.florisboard.snygg.value.RgbaColor
 import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
@@ -39,6 +40,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
+import kotlin.math.roundToInt
 
 @Composable
 internal fun translateElementName(rule: SnyggRule, level: SnyggLevel): String {
@@ -137,14 +139,43 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
 }
 
 @Composable
-internal fun translatePropertyValue(propertyValue: SnyggValue, level: SnyggLevel): String {
-    return when (level) {
-        SnyggLevel.DEVELOPER -> null
-        else -> when (propertyValue) {
-            is SnyggDefinedVarValue -> translatePropertyName(propertyValue.key, level)
-            else -> null
+internal fun translatePropertyValue(
+    propertyValue: SnyggValue,
+    level: SnyggLevel,
+    displayColorsAs: DisplayColorsAs,
+): String {
+    return when (propertyValue) {
+        is SnyggSolidColorValue -> remember(propertyValue.color, displayColorsAs) {
+            val color = propertyValue.color
+            when (displayColorsAs) {
+                DisplayColorsAs.HEX8 -> buildString {
+                    append("#")
+                    append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
+                    append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
+                    append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
+                    append((color.alpha * 0xFF).roundToInt().toString(16))
+                }
+                DisplayColorsAs.RGBA -> buildString {
+                    append("rgba(")
+                    append((color.red * RgbaColor.RedMax).roundToInt())
+                    append(",")
+                    append((color.green * RgbaColor.GreenMax).roundToInt())
+                    append(",")
+                    append((color.blue * RgbaColor.BlueMax).roundToInt())
+                    append(",")
+                    append(color.alpha)
+                    append(")")
+                }
+            }
         }
-    } ?: propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
+        else -> when (level) {
+            SnyggLevel.DEVELOPER -> null
+            else -> when (propertyValue) {
+                is SnyggDefinedVarValue -> translatePropertyName(propertyValue.key, level)
+                else -> null
+            }
+        } ?: propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
+    }
 }
 
 @Composable

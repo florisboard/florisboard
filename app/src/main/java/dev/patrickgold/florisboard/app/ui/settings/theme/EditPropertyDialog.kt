@@ -113,6 +113,7 @@ internal fun EditPropertyDialog(
     propertySetSpec: SnyggPropertySetSpec?,
     initProperty: PropertyInfo,
     level: SnyggLevel,
+    displayColorsAs: DisplayColorsAs,
     definedVariables: Map<String, SnyggValue>,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
@@ -226,6 +227,7 @@ internal fun EditPropertyDialog(
                     value = propertyValue,
                     onValueChange = { propertyValue = it },
                     level = level,
+                    displayColorsAs = displayColorsAs,
                     definedVariables = definedVariables,
                     isError = showSelectAsError && !isPropertyValueValid(),
                 )
@@ -313,6 +315,7 @@ private fun PropertyValueEditor(
     value: SnyggValue,
     onValueChange: (SnyggValue) -> Unit,
     level: SnyggLevel,
+    displayColorsAs: DisplayColorsAs,
     definedVariables: Map<String, SnyggValue>,
     isError: Boolean = false,
 ) {
@@ -367,7 +370,7 @@ private fun PropertyValueEditor(
                             }
                             .padding(end = 12.dp)
                             .weight(1f),
-                        text = value.encoder().serialize(value).getOrDefault("?"),
+                        text = translatePropertyValue(value, level, displayColorsAs),
                         style = MaterialTheme.typography.body2,
                         fontFamily = FontFamily.Monospace,
                     )
