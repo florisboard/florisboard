@@ -18,30 +18,22 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -59,14 +51,12 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -101,13 +91,6 @@ import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
 import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.snygg.definedVariablesRule
 import dev.patrickgold.florisboard.snygg.isDefinedVariablesRule
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -638,131 +621,5 @@ internal fun DialogProperty(
             trailingIconTitle()
         }
         content()
-    }
-}
-
-object SnyggValueIcon {
-    interface Spec {
-        val borderWith: Dp
-        val boxShape: Shape
-        val elevation: Dp
-        val iconSize: Dp
-        val iconSizeMinusBorder: Dp
-    }
-
-    object Small : Spec {
-        override val borderWith = Dp.Hairline
-        override val boxShape = RoundedCornerShape(4.dp)
-        override val elevation = 4.dp
-        override val iconSize = 16.dp
-        override val iconSizeMinusBorder = 16.dp
-    }
-
-    object Normal : Spec {
-        override val borderWith = 1.dp
-        override val boxShape = RoundedCornerShape(8.dp)
-        override val elevation = 4.dp
-        override val iconSize = 24.dp
-        override val iconSizeMinusBorder = 22.dp
-    }
-}
-
-@Composable
-internal fun SnyggValueIcon(
-    value: SnyggValue,
-    definedVariables: Map<String, SnyggValue>,
-    modifier: Modifier = Modifier,
-    spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
-) {
-    when (value) {
-        is SnyggSolidColorValue -> {
-            Surface(
-                modifier = modifier.requiredSize(spec.iconSize),
-                color = MaterialTheme.colors.background,
-                elevation = spec.elevation,
-                shape = spec.boxShape,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(value.color),
-                )
-            }
-        }
-        is SnyggShapeValue -> {
-            Box(
-                modifier = modifier
-                    .requiredSize(spec.iconSizeMinusBorder)
-                    .border(spec.borderWith, MaterialTheme.colors.onBackground, value.alwaysPercentShape())
-            )
-        }
-        is SnyggSpSizeValue -> {
-            Icon(
-                modifier = modifier.requiredSize(spec.iconSize),
-                painter = painterResource(R.drawable.ic_format_size),
-                contentDescription = null,
-            )
-        }
-        is SnyggDefinedVarValue -> {
-            val realValue = definedVariables[value.key]
-            if (realValue == null) {
-                Icon(
-                    modifier = modifier.requiredSize(spec.iconSize),
-                    painter = painterResource(R.drawable.ic_link),
-                    contentDescription = null,
-                )
-            } else {
-                val smallSpec = SnyggValueIcon.Small
-                Box(modifier = modifier
-                    .requiredSize(spec.iconSize)
-                    .offset(y = (-2).dp)) {
-                    SnyggValueIcon(
-                        modifier = Modifier.offset(x = 8.dp, y = 8.dp),
-                        value = realValue,
-                        definedVariables = definedVariables,
-                        spec = smallSpec,
-                    )
-                    Box(
-                        modifier = Modifier
-                            .offset(x = 1.dp)
-                            .requiredSize(smallSpec.iconSize)
-                            .padding(vertical = 2.dp)
-                            .background(MaterialTheme.colors.background, spec.boxShape),
-                    )
-                    Icon(
-                        modifier = Modifier.requiredSize(smallSpec.iconSize),
-                        painter = painterResource(R.drawable.ic_link),
-                        contentDescription = null,
-                    )
-                }
-            }
-        }
-        else -> {
-            // Render nothing
-        }
-    }
-}
-
-private const val AlwaysPercentUpscaleFactor = 3
-
-fun SnyggShapeValue.alwaysPercentShape(): Shape {
-    return when (this) {
-        is SnyggRoundedCornerDpShapeValue -> {
-            RoundedCornerShape(
-                this.topStart.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.topEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomStart.value.toInt() * AlwaysPercentUpscaleFactor,
-            )
-        }
-        is SnyggCutCornerDpShapeValue -> {
-            CutCornerShape(
-                this.topStart.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.topEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomStart.value.toInt() * AlwaysPercentUpscaleFactor,
-            )
-        }
-        else -> this.shape
     }
 }
