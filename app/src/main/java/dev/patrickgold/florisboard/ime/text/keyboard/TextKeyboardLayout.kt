@@ -510,7 +510,10 @@ private class TextKeyboardLayoutController(
                                 pointer
                             ) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp
                         ) {
-                            if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
+                            if (pointer.hasTriggeredGestureMove &&
+                                pointer.initialKey?.computedData?.code == KeyCode.DELETE &&
+                                prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
+                                prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
                                 activeEditorInstance?.apply {
                                     if (selection.isSelectionMode) {
                                         deleteBackwards()
@@ -737,7 +740,7 @@ private class TextKeyboardLayoutController(
 
         return when (event.type) {
             SwipeGesture.Type.TOUCH_MOVE -> when (prefs.gestures.deleteKeySwipeLeft.get()) {
-                SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
+                SwipeAction.DELETE_CHARACTERS_PRECISELY, SwipeAction.SELECT_CHARACTERS_PRECISELY -> {
                     activeEditorInstance?.apply {
                         if (abs(event.relUnitCountX) > 0) {
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
@@ -753,7 +756,7 @@ private class TextKeyboardLayoutController(
                     pointer.shouldBlockNextUp = true
                     true
                 }
-                SwipeAction.DELETE_WORDS_PRECISELY -> {
+                SwipeAction.DELETE_WORDS_PRECISELY, SwipeAction.SELECT_WORDS_PRECISELY -> {
                     activeEditorInstance?.apply {
                         if (abs(event.relUnitCountX) > 0) {
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)

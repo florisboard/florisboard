@@ -42,6 +42,8 @@ enum class SwipeAction {
     MOVE_CURSOR_START_OF_PAGE,
     MOVE_CURSOR_END_OF_PAGE,
     REDO,
+    SELECT_CHARACTERS_PRECISELY,
+    SELECT_WORDS_PRECISELY,
     SHIFT,
     SHOW_INPUT_METHOD_PICKER,
     SWITCH_TO_PREV_SUBTYPE,
@@ -160,6 +162,14 @@ enum class SwipeAction {
             entry(
                 key = DELETE_WORDS_PRECISELY,
                 label = stringRes(R.string.enum__swipe_action__delete_words_precisely),
+            )
+            entry(
+                key = SELECT_CHARACTERS_PRECISELY,
+                label = stringRes(R.string.enum__swipe_action__select_characters_precisely),
+            )
+            entry(
+                key = SELECT_WORDS_PRECISELY,
+                label = stringRes(R.string.enum__swipe_action__select_words_precisely),
             )
         }
     }

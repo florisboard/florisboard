@@ -727,6 +727,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Redo</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Undo</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Select characters precisely</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Select words precisely</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Show input method picker</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
