@@ -474,8 +474,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * enabled by the user.
      */
     private fun handleSpace(ev: InputKeyEvent) = activeEditorInstance?.apply {
-        if (prefs.keyboard.spaceBarSwitchesToCharacters.get() && activeState.keyboardMode != KeyboardMode.CHARACTERS) {
-            activeState.keyboardMode = KeyboardMode.CHARACTERS
+        if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
+            when (activeState.keyboardMode) {
+                KeyboardMode.NUMERIC_ADVANCED,
+                KeyboardMode.SYMBOLS,
+                KeyboardMode.SYMBOLS2 -> {
+                    activeState.keyboardMode = KeyboardMode.CHARACTERS
+                }
+                else -> {
+                    // Do nothing
+                }
+            }
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
             if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
