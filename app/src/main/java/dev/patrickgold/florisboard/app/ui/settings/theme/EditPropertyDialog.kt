@@ -544,10 +544,10 @@ private fun PropertyValueEditor(
                 LaunchedEffect(shape) {
                     onValueChange(when (value) {
                         is SnyggCutCornerDpShapeValue -> {
-                            SnyggCutCornerDpShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                            SnyggCutCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                         is SnyggRoundedCornerDpShapeValue -> {
-                            SnyggRoundedCornerDpShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                            SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     })
                 }
@@ -700,10 +700,10 @@ private fun PropertyValueEditor(
                 LaunchedEffect(shape) {
                     onValueChange(when (value) {
                         is SnyggCutCornerPercentShapeValue -> {
-                            SnyggCutCornerPercentShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                            SnyggCutCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                         is SnyggRoundedCornerPercentShapeValue -> {
-                            SnyggRoundedCornerPercentShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                            SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     })
                 }
