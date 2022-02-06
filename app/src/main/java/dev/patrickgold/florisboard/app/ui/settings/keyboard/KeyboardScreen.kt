@@ -72,6 +72,11 @@ fun KeyboardScreen() = FlorisScreen {
             entries = UtilityKeyAction.listEntries(),
             visibleIf = { prefs.keyboard.utilityKeyEnabled isEqualTo true },
         )
+        SwitchPreference(
+            prefs.keyboard.spaceBarLanguageDisplayEnabled,
+            title = stringRes(R.string.pref__keyboard__space_bar_language_display_enabled__label),
+            summary = stringRes(R.string.pref__keyboard__space_bar_language_display_enabled__summary),
+        )
         DialogSliderPreference(
             primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
             secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,

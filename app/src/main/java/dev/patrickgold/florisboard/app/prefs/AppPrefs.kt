@@ -354,6 +354,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__utility_key_action",
             default = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
         )
+        val spaceBarLanguageDisplayEnabled = boolean(
+            key = "keyboard__space_bar_language_display_enabled",
+            default = true,
+        )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",
             default = 100,

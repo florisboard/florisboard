@@ -302,6 +302,13 @@ private fun TextKeyButton(
         clip = true,
     ) {
         key.label?.let { label ->
+            if (key.computedData.code == KeyCode.SPACE) {
+                val prefs by florisPreferenceModel()
+                val displayLanguageName by prefs.keyboard.spaceBarLanguageDisplayEnabled.observeAsState()
+                if (!displayLanguageName) {
+                    return@let
+                }
+            }
             Text(
                 modifier = Modifier
                     .wrapContentSize()

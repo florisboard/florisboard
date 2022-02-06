@@ -237,6 +237,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Show utility key</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Shows a configurable utility key next to space bar</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Display language on space bar</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Displays the current active language name on the space bar</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
