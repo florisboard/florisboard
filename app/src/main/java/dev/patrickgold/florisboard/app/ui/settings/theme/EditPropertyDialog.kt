@@ -355,22 +355,22 @@ private fun PropertyValueEditor(
         }
         is SnyggSolidColorValue -> {
             val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
-            var showEditColorStrDialog by rememberSaveable { mutableStateOf<String?>(null) }
+            val colorPickerStr = translatePropertyValue(value, level, displayColorsAs)
+            var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
             Column(modifier = Modifier.padding(top = 8.dp)) {
                 Row(
-                    modifier = Modifier.padding(vertical = 8.dp),
+                    modifier = Modifier
+                        .rippleClickable {
+                            showEditColorStrDialog = true
+                        }
+                        .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         modifier = Modifier
-                            .rippleClickable {
-                                showEditColorStrDialog = SnyggSolidColorValue
-                                    .serialize(value)
-                                    .getOrNull()
-                            }
                             .padding(end = 12.dp)
                             .weight(1f),
-                        text = translatePropertyValue(value, level, displayColorsAs),
+                        text = colorPickerStr,
                         style = MaterialTheme.typography.body2,
                         fontFamily = FontFamily.Monospace,
                     )
@@ -384,11 +384,10 @@ private fun PropertyValueEditor(
                     state = colorPickerState,
                 )
             }
-            val editorColorStrDialog = showEditColorStrDialog
-            if (editorColorStrDialog != null) {
+            if (showEditColorStrDialog) {
                 var showValidationErrors by rememberSaveable { mutableStateOf(false) }
                 var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
-                var colorStr by rememberSaveable { mutableStateOf(editorColorStrDialog) }
+                var colorStr by rememberSaveable { mutableStateOf(colorPickerStr) }
                 val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggSolidColorValue, colorStr)
                 JetPrefAlertDialog(
                     title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),
@@ -400,12 +399,12 @@ private fun PropertyValueEditor(
                             val newValue = SnyggSolidColorValue.deserialize(colorStr.trim()).getOrThrow()
                             onValueChange(newValue)
                             colorPickerState.setColor((newValue as SnyggSolidColorValue).color)
-                            showEditColorStrDialog = null
+                            showEditColorStrDialog = false
                         }
                     },
                     dismissLabel = stringRes(R.string.action__cancel),
                     onDismiss = {
-                        showEditColorStrDialog = null
+                        showEditColorStrDialog = false
                     },
                     trailingIconTitle = {
                         FlorisIconButton(
@@ -418,7 +417,7 @@ private fun PropertyValueEditor(
                     Column {
                         AnimatedVisibility(visible = showSyntaxHelp) {
                             Column(modifier = Modifier.padding(bottom = 16.dp)) {
-                                Text(text = "Supported color string syntax's:")
+                                Text(text = "Supported color string syntaxes:")
                                 Text(
                                     text = """
                                         #RRGGBBAA
