@@ -165,7 +165,7 @@
     <string name="snygg__property_name__font_style">Font style</string>
     <string name="snygg__property_name__font_variant">Font variant</string>
     <string name="snygg__property_name__font_weight">Font weight</string>
-    <string name="snygg__property_name__shadow">Shadow</string>
+    <string name="snygg__property_name__shadow_elevation">Shadow elevation</string>
     <string name="snygg__property_name__shape">Shape</string>
     <string name="snygg__property_name__var_primary">Primary color</string>
     <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>

@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.snygg.SnyggSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
@@ -50,6 +51,13 @@ fun SnyggPropertySetSpecBuilder.fontSize() {
         supportedValues(SnyggSpSizeValue),
     )
 }
+fun SnyggPropertySetSpecBuilder.shadow() {
+    property(
+        name = Snygg.ShadowElevation,
+        level = SnyggLevel.ADVANCED,
+        supportedValues(SnyggDpSizeValue),
+    )
+}
 fun SnyggPropertySetSpecBuilder.shape() {
     property(
         name = Snygg.Shape,
@@ -73,6 +81,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
     element(FlorisImeUi.KeyHint) {
@@ -85,6 +94,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
 
@@ -97,12 +107,14 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
     element(FlorisImeUi.ClipboardItemPopup) {
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
 
@@ -121,11 +133,13 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarPrimaryActionRowToggle) {
         background()
         foreground()
+        shadow()
         shape()
     }
     element(FlorisImeUi.SmartbarPrimarySecondaryRowToggle) {
         background()
         foreground()
+        shadow()
         shape()
     }
 
@@ -139,6 +153,7 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarActionButton) {
         background()
         foreground()
+        shadow()
         shape()
     }
 
@@ -165,6 +180,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
 

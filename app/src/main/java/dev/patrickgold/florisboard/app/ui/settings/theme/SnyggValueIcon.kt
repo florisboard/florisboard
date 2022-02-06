@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
@@ -96,6 +97,13 @@ internal fun SnyggValueIcon(
                 modifier = modifier
                     .requiredSize(spec.iconSizeMinusBorder)
                     .border(spec.borderWith, MaterialTheme.colors.onBackground, value.alwaysPercentShape())
+            )
+        }
+        is SnyggDpSizeValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                painter = painterResource(R.drawable.ic_straighten),
+                contentDescription = null,
             )
         }
         is SnyggSpSizeValue -> {

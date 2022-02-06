@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
@@ -66,6 +67,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -443,6 +445,32 @@ private fun PropertyValueEditor(
                         )
                     }
                 }
+            }
+        }
+        is SnyggDpSizeValue -> {
+            var sizeStr by remember {
+                val dp = value.dp.takeUnless { it.isUnspecified } ?: SnyggDpSizeValue.defaultValue().dp
+                mutableStateOf(dp.value.toString())
+            }
+            Row(
+                modifier = Modifier.padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FlorisOutlinedTextField(
+                    modifier = Modifier.weight(1f),
+                    value = sizeStr,
+                    onValueChange = { value ->
+                        sizeStr = value
+                        val size = sizeStr.toFloatOrNull()?.let { SnyggDpSizeValue(it.dp) }
+                        onValueChange(size ?: SnyggDpSizeValue(Dp.Unspecified))
+                    },
+                    isError = value.dp.isUnspecified || value.dp.value < 1f,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "dp",
+                    fontFamily = FontFamily.Monospace,
+                )
             }
         }
         is SnyggSpSizeValue -> {

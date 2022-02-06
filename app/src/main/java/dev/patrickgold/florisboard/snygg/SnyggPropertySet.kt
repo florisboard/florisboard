@@ -44,6 +44,7 @@ class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
     val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
 
     val background = properties[Snygg.Background] ?: SnyggImplicitInheritValue
+    val foreground = properties[Snygg.Foreground] ?: SnyggImplicitInheritValue
 
     val borderTop = properties[Snygg.BorderTop] ?: properties[Snygg.Border] ?: SnyggImplicitInheritValue
     val borderBottom = properties[Snygg.BorderBottom] ?: properties[Snygg.Border] ?: SnyggImplicitInheritValue
@@ -56,9 +57,7 @@ class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
     val fontVariant = properties[Snygg.FontVariant] ?: SnyggImplicitInheritValue
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggImplicitInheritValue
 
-    val foreground = properties[Snygg.Foreground] ?: SnyggImplicitInheritValue
-
-    val shadow = properties[Snygg.Shadow] ?: SnyggImplicitInheritValue
+    val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggImplicitInheritValue
 
     val shape = properties[Snygg.Shape] ?: SnyggImplicitInheritValue
 
@@ -107,6 +106,9 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var background: SnyggValue?
         get() =  getProperty(Snygg.Background)
         set(v) = setProperty(Snygg.Background, v)
+    var foreground: SnyggValue?
+        get() =  getProperty(Snygg.Foreground)
+        set(v) = setProperty(Snygg.Foreground, v)
 
     var borderTop: SnyggValue?
         get() =  getProperty(Snygg.BorderTop)
@@ -137,13 +139,9 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         get() =  getProperty(Snygg.FontWeight)
         set(v) = setProperty(Snygg.FontWeight, v)
 
-    var foreground: SnyggValue?
-        get() =  getProperty(Snygg.Foreground)
-        set(v) = setProperty(Snygg.Foreground, v)
-
-    var shadow: SnyggValue?
-        get() =  getProperty(Snygg.Shadow)
-        set(v) = setProperty(Snygg.Shadow, v)
+    var shadowElevation: SnyggValue?
+        get() =  getProperty(Snygg.ShadowElevation)
+        set(v) = setProperty(Snygg.ShadowElevation, v)
 
     var shape: SnyggValue?
         get() =  getProperty(Snygg.Shape)

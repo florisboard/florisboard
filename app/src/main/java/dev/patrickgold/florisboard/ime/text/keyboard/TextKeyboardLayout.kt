@@ -297,8 +297,9 @@ private fun TextKeyButton(
             .requiredSize(key.visibleBounds.size.toDpSize())
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
         background = keyStyle.background,
-        clip = true,
+        elevation = keyStyle.shadowElevation,
         shape = keyStyle.shape,
+        clip = true,
     ) {
         key.label?.let { label ->
             Text(

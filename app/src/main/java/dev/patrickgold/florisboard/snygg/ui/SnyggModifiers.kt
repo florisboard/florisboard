@@ -19,11 +19,13 @@ package dev.patrickgold.florisboard.snygg.ui
 import androidx.compose.foundation.background
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
@@ -41,6 +43,15 @@ fun Modifier.snyggBackground(
         )
         else -> this
     }
+}
+
+fun Modifier.snyggShadow(
+    style: SnyggPropertySet,
+    elevation: Dp = style.shadowElevation.dpSize(),
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    // TODO: find a performant way to implement shadow color
+    return this.shadow(elevation, shape, clip = false)
 }
 
 fun Modifier.snyggClip(

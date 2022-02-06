@@ -55,6 +55,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = `var`("surface")
         foreground = `var`("onSurface")
         fontSize = size(22.sp)
+        shadowElevation = size(2.dp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(pressedSelector = true) {

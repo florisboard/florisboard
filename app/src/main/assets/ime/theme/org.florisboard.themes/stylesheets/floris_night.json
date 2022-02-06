@@ -24,6 +24,7 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
+    "shadow-elevation": "2dp",
     "shape": "var(--shape)"
   },
   "key:pressed": {
@@ -55,6 +56,7 @@
     "background": "#757575",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
+    "shadow-elevation": "2dp",
     "shape": "var(--shape)"
   },
   "key-popup:focus": {
@@ -71,12 +73,14 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
+    "shadow-elevation": "2dp",
     "shape": "var(--shape-variant)"
   },
   "clipboard-item-popup": {
     "background": "var(--surface-variant)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
+    "shadow-elevation": "2dp",
     "shape": "var(--shape-variant)"
   },
 
@@ -95,6 +99,7 @@
   "smartbar-primary-action-row-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
+    "shadow-elevation": "2dp",
     "shape": "circle()"
   },
   "smartbar-primary-secondary-row-toggle": {

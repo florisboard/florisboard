@@ -105,7 +105,7 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
             Snygg.FontStyle -> R.string.snygg__property_name__font_style
             Snygg.FontVariant -> R.string.snygg__property_name__font_variant
             Snygg.FontWeight -> R.string.snygg__property_name__font_weight
-            Snygg.Shadow -> R.string.snygg__property_name__shadow
+            Snygg.ShadowElevation -> R.string.snygg__property_name__shadow_elevation
             Snygg.Shape -> R.string.snygg__property_name__shape
             "--primary" -> R.string.snygg__property_name__var_primary
             "--primary-variant" -> R.string.snygg__property_name__var_primary_variant
