@@ -44,6 +44,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -91,6 +92,7 @@ fun SmartbarActionRow() = with(LocalDensity.current) {
                         .padding(4.dp)
                         .fillMaxHeight()
                         .aspectRatio(1f)
+                        .snyggShadow(moreStyle)
                         .snyggBackground(moreStyle.background, moreStyle.shape),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -128,6 +130,7 @@ fun SmartbarActionRow() = with(LocalDensity.current) {
                             .padding(4.dp)
                             .fillMaxHeight()
                             .aspectRatio(1f)
+                            .snyggShadow(buttonStyle)
                             .snyggBackground(buttonStyle.background, buttonStyle.shape),
                         contentAlignment = Alignment.Center,
                     ) {

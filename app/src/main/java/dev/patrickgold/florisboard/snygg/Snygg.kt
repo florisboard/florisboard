@@ -40,7 +40,7 @@ object Snygg {
     const val FontVariant = "font-variant"
     const val FontWeight = "font-weight"
 
-    const val Shadow = "shadow"
+    const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"
 }

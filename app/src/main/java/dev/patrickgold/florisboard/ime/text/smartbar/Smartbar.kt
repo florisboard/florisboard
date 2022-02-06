@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -140,6 +141,7 @@ private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.
                     .padding(4.dp)
                     .fillMaxHeight()
                     .aspectRatio(1f)
+                    .snyggShadow(actionsToggleStyle)
                     .snyggBackground(actionsToggleStyle.background, actionsToggleStyle.shape),
                 contentAlignment = Alignment.Center,
             ) {
@@ -201,6 +203,7 @@ private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.
                     .padding(4.dp)
                     .fillMaxHeight()
                     .aspectRatio(1f)
+                    .snyggShadow(secondaryToggleStyle)
                     .snyggBackground(secondaryToggleStyle.background, secondaryToggleStyle.shape),
                 contentAlignment = Alignment.Center,
             ) {

@@ -44,8 +44,6 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         "surface" to rgbaColor(66, 66, 66)
         "surfaceVariant" to rgbaColor(97, 97, 97)
 
-        "onPrimary" to rgbaColor(255, 255, 255)
-        "onSecondary" to rgbaColor(255, 255, 255)
         "onBackground" to rgbaColor(255, 255, 255)
         "onSurface" to rgbaColor(255, 255, 255)
     }
@@ -57,6 +55,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = `var`("surface")
         foreground = `var`("onSurface")
         fontSize = size(22.sp)
+        shadowElevation = size(2.dp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(pressedSelector = true) {
@@ -118,6 +117,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(12.dp)
     }
 
+    FlorisImeUi.GlideTrail {
+        foreground = `var`("primary")
+    }
+
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)
@@ -129,12 +132,12 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.SmartbarPrimaryActionRowToggle {
         background = `var`("surface")
         foreground = `var`("onSurface")
-        shape = roundedCornerShape(50)
+        shape = circleShape()
     }
     FlorisImeUi.SmartbarPrimarySecondaryRowToggle {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(144, 144, 144)
-        shape = roundedCornerShape(50)
+        shape = circleShape()
     }
 
     FlorisImeUi.SmartbarSecondaryRow {
@@ -147,7 +150,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.SmartbarActionButton {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        shape = roundedCornerShape(50)
+        shape = circleShape()
     }
 
     FlorisImeUi.SmartbarCandidateRow {

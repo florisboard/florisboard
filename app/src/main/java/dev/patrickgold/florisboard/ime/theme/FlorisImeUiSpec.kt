@@ -20,11 +20,13 @@ import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpecBuilder
 import dev.patrickgold.florisboard.snygg.SnyggSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 
@@ -49,16 +51,24 @@ fun SnyggPropertySetSpecBuilder.fontSize() {
         supportedValues(SnyggSpSizeValue),
     )
 }
+fun SnyggPropertySetSpecBuilder.shadow() {
+    property(
+        name = Snygg.ShadowElevation,
+        level = SnyggLevel.ADVANCED,
+        supportedValues(SnyggDpSizeValue),
+    )
+}
 fun SnyggPropertySetSpecBuilder.shape() {
     property(
         name = Snygg.Shape,
         level = SnyggLevel.ADVANCED,
         supportedValues(
             SnyggRectangleShapeValue,
-            SnyggCutCornerDpShapeValue,
-            SnyggCutCornerPercentageShapeValue,
+            SnyggCircleShapeValue,
             SnyggRoundedCornerDpShapeValue,
-            SnyggRoundedCornerPercentageShapeValue,
+            SnyggRoundedCornerPercentShapeValue,
+            SnyggCutCornerDpShapeValue,
+            SnyggCutCornerPercentShapeValue,
         ),
     )
 }
@@ -71,6 +81,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
     element(FlorisImeUi.KeyHint) {
@@ -83,6 +94,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
 
@@ -95,13 +107,19 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
     element(FlorisImeUi.ClipboardItemPopup) {
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
+    }
+
+    element(FlorisImeUi.GlideTrail) {
+        foreground()
     }
 
     element(FlorisImeUi.OneHandedPanel) {
@@ -115,11 +133,13 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarPrimaryActionRowToggle) {
         background()
         foreground()
+        shadow()
         shape()
     }
     element(FlorisImeUi.SmartbarPrimarySecondaryRowToggle) {
         background()
         foreground()
+        shadow()
         shape()
     }
 
@@ -133,6 +153,7 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarActionButton) {
         background()
         foreground()
+        shadow()
         shape()
     }
 
@@ -159,6 +180,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         fontSize()
+        shadow()
         shape()
     }
 

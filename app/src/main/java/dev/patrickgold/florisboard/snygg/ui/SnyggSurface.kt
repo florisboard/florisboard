@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
@@ -50,15 +49,16 @@ fun SnyggSurface(
     border: BorderStroke? = null,
     clip: Boolean = false,
     contentPadding: PaddingValues = NoContentPadding,
-    elevation: Dp = 0.dp,
+    elevation: SnyggValue? = null,
     clickAndSemanticsModifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    val elevationDp = elevation?.dpSize() ?: 0.dp
     val shapeValue = shape?.shape() ?: RectangleShape
     val color = background.solidColor()
     val contentColor = contentColorFor(color)
     val elevationOverlay = LocalElevationOverlay.current
-    val absoluteElevation = LocalAbsoluteElevation.current + elevation
+    val absoluteElevation = LocalAbsoluteElevation.current + elevationDp
     val backgroundColor = if (color == MaterialTheme.colors.surface && elevationOverlay != null) {
         elevationOverlay.apply(color, absoluteElevation)
     } else {
@@ -70,7 +70,7 @@ fun SnyggSurface(
     ) {
         Box(
             modifier
-                .shadow(elevation, shapeValue, clip = false)
+                .shadow(elevationDp, shapeValue, clip = false)
                 .then(if (border != null) Modifier.border(border, shapeValue) else Modifier)
                 .then(if (clip) Modifier.clip(shapeValue) else Modifier)
                 .background(

@@ -96,6 +96,9 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
 
+    <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
+    <string name="settings__theme_editor__fine_tune__level">Editing level</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Display colors as</string>
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
@@ -117,6 +120,7 @@
     <string name="settings__theme_editor__property_name">Property name</string>
     <string name="settings__theme_editor__property_value">Property value</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Apply for all corners</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Edit color string</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
@@ -130,6 +134,7 @@
     <string name="snygg__rule_element__clipboard_header">Clipboard header</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
+    <string name="snygg__rule_element__glide_trail">Glide trail</string>
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
     <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primary action row toggle</string>
@@ -160,7 +165,7 @@
     <string name="snygg__property_name__font_style">Font style</string>
     <string name="snygg__property_name__font_variant">Font variant</string>
     <string name="snygg__property_name__font_weight">Font weight</string>
-    <string name="snygg__property_name__shadow">Shadow</string>
+    <string name="snygg__property_name__shadow_elevation">Shadow elevation</string>
     <string name="snygg__property_name__shape">Shape</string>
     <string name="snygg__property_name__var_primary">Primary color</string>
     <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>
@@ -173,10 +178,14 @@
     <string name="snygg__property_name__var_on_secondary">Foreground of secondary</string>
     <string name="snygg__property_name__var_on_background">Foreground of background</string>
     <string name="snygg__property_name__var_on_surface">Foreground of surface</string>
+    <string name="snygg__property_name__var_on_surface_variant">Foreground of surface (variant)</string>
+    <string name="snygg__property_name__var_shape">Common shape</string>
+    <string name="snygg__property_name__var_shape_variant">Common shape (variant)</string>
     <string name="snygg__property_value__explicit_inherit">Inherit</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
     <string name="snygg__property_value__image_ref">Image reference</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
+    <string name="snygg__property_value__circle_shape">Circle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Cut corner shape (%)</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Rounded corner shape (dp)</string>
@@ -540,7 +549,7 @@
     <!-- Extension strings -->
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
-    <string name="ext__meta__components_theme">Bundled theme components</string>
+    <string name="ext__meta__components_theme">Bundled themes</string>
     <string name="ext__meta__components_none_found">This extension archive does not contain any bundled components.</string>
     <string name="ext__meta__description">Description</string>
     <string name="ext__meta__homepage">Homepage</string>
@@ -569,9 +578,9 @@
     <string name="ext__editor__dependencies__title">Manage dependencies</string>
     <string name="ext__editor__files__title">Manage archive files</string>
     <string name="ext__editor__create_component__title">Create component</string>
-    <string name="ext__editor__create_component__title_theme">Create theme component</string>
-    <string name="ext__editor__create_component__from_empty">Empty component</string>
-    <string name="ext__editor__create_component__from_existing">From existing component</string>
+    <string name="ext__editor__create_component__title_theme">Create theme</string>
+    <string name="ext__editor__create_component__from_empty">Empty</string>
+    <string name="ext__editor__create_component__from_existing">From existing</string>
     <string name="ext__editor__create_component__from_empty_warning">Creating and configuring an empty component may be hard if you are new to {app_name} or if you are unfamiliar with the specifics. Consider copying an existing component and modifying it to your likings if that is the case.</string>
     <string name="ext__editor__edit_component__title">Edit component</string>
     <string name="ext__editor__edit_component__title_theme">Edit theme component</string>
@@ -628,6 +637,7 @@
     <string name="error__snackbar_message_template">Something went wrong: {error_message}</string>
 
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">e.g. {example}</string>
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
 
@@ -650,6 +660,9 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
+
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
 
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>
@@ -681,6 +694,13 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
+
+    <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Only color properties are shown, properties and rules are translated.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Advanced</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">All properties are shown, properties and rules are translated.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Developer</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">All properties are shown, properties and rules are displayed as written in the stylesheet file itself.</string>
 
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>

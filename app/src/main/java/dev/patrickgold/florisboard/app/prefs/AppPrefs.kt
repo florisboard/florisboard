@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.prefs
 
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -30,6 +31,7 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
@@ -560,5 +562,13 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         //    key = "theme__sunset_time",
         //    default = LocalTime.of(18, 0),
         //)
+        val editorDisplayColorsAs = enum(
+            key = "theme__editor_display_colors_as",
+            default = DisplayColorsAs.HEX8,
+        )
+        val editorLevel = enum(
+            key = "theme__editor_level",
+            default = SnyggLevel.ADVANCED,
+        )
     }
 }

@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CutCornerShape
@@ -39,7 +40,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
@@ -50,8 +53,10 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.DpSizeSaver
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
+import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.common.ValidationResult
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.common.rememberValidationResult
@@ -59,13 +64,14 @@ import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
-import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
@@ -109,6 +115,7 @@ internal fun EditPropertyDialog(
     propertySetSpec: SnyggPropertySetSpec?,
     initProperty: PropertyInfo,
     level: SnyggLevel,
+    displayColorsAs: DisplayColorsAs,
     definedVariables: Map<String, SnyggValue>,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
@@ -222,6 +229,7 @@ internal fun EditPropertyDialog(
                     value = propertyValue,
                     onValueChange = { propertyValue = it },
                     level = level,
+                    displayColorsAs = displayColorsAs,
                     definedVariables = definedVariables,
                     isError = showSelectAsError && !isPropertyValueValid(),
                 )
@@ -309,6 +317,7 @@ private fun PropertyValueEditor(
     value: SnyggValue,
     onValueChange: (SnyggValue) -> Unit,
     level: SnyggLevel,
+    displayColorsAs: DisplayColorsAs,
     definedVariables: Map<String, SnyggValue>,
     isError: Boolean = false,
 ) {
@@ -347,26 +356,120 @@ private fun PropertyValueEditor(
             }
         }
         is SnyggSolidColorValue -> {
+            val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
+            val colorPickerStr = translatePropertyValue(value, level, displayColorsAs)
+            var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
             Column(modifier = Modifier.padding(top = 8.dp)) {
                 Row(
-                    modifier = Modifier.padding(vertical = 8.dp),
+                    modifier = Modifier
+                        .rippleClickable {
+                            showEditColorStrDialog = true
+                        }
+                        .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         modifier = Modifier
                             .padding(end = 12.dp)
                             .weight(1f),
-                        text = value.encoder().serialize(value).getOrDefault("?"),
+                        text = colorPickerStr,
+                        style = MaterialTheme.typography.body2,
+                        fontFamily = FontFamily.Monospace,
                     )
                     SnyggValueIcon(
                         value = value,
                         definedVariables = definedVariables,
                     )
                 }
-                val state = rememberJetPrefColorPickerState(initColor = value.color)
                 JetPrefColorPicker(
                     onColorChange = { onValueChange(SnyggSolidColorValue(it)) },
-                    state = state,
+                    state = colorPickerState,
+                )
+            }
+            if (showEditColorStrDialog) {
+                var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+                var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
+                var colorStr by rememberSaveable { mutableStateOf(colorPickerStr) }
+                val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggSolidColorValue, colorStr)
+                JetPrefAlertDialog(
+                    title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),
+                    confirmLabel = stringRes(R.string.action__apply),
+                    onConfirm = {
+                        if (colorStrValidation.isInvalid()) {
+                            showValidationErrors = true
+                        } else {
+                            val newValue = SnyggSolidColorValue.deserialize(colorStr.trim()).getOrThrow()
+                            onValueChange(newValue)
+                            colorPickerState.setColor((newValue as SnyggSolidColorValue).color)
+                            showEditColorStrDialog = false
+                        }
+                    },
+                    dismissLabel = stringRes(R.string.action__cancel),
+                    onDismiss = {
+                        showEditColorStrDialog = false
+                    },
+                    trailingIconTitle = {
+                        FlorisIconButton(
+                            onClick = { showSyntaxHelp = !showSyntaxHelp },
+                            modifier = Modifier.offset(x = 12.dp),
+                            icon = painterResource(R.drawable.ic_help_outline),
+                        )
+                    },
+                ) {
+                    Column {
+                        AnimatedVisibility(visible = showSyntaxHelp) {
+                            Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                                Text(text = "Supported color string syntaxes:")
+                                Text(
+                                    text = """
+                                        #RRGGBBAA
+                                         -> all in 00h..FFh
+                                        #RRGGBB
+                                         -> all in 00h..FFh
+                                        rgba(r,g,b,a)
+                                         -> r,g,b in 0..255
+                                         -> a in 0.0..1.0
+                                        rgb(r,g,b)
+                                         -> r,g,b in 0..255
+                                    """.trimIndent(),
+                                    style = MaterialTheme.typography.body2,
+                                    fontFamily = FontFamily.Monospace,
+                                )
+                            }
+                        }
+                        FlorisOutlinedTextField(
+                            value = colorStr,
+                            onValueChange =  { colorStr = it },
+                            showValidationError = showValidationErrors,
+                            validationResult = colorStrValidation,
+                        )
+                    }
+                }
+            }
+        }
+        is SnyggDpSizeValue -> {
+            var sizeStr by remember {
+                val dp = value.dp.takeUnless { it.isUnspecified } ?: SnyggDpSizeValue.defaultValue().dp
+                mutableStateOf(dp.value.toString())
+            }
+            Row(
+                modifier = Modifier.padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FlorisOutlinedTextField(
+                    modifier = Modifier.weight(1f),
+                    value = sizeStr,
+                    onValueChange = { value ->
+                        sizeStr = value
+                        val size = sizeStr.toFloatOrNull()?.let { SnyggDpSizeValue(it.dp) }
+                        onValueChange(size ?: SnyggDpSizeValue(Dp.Unspecified))
+                    },
+                    isError = value.dp.isUnspecified || value.dp.value < 1f,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "dp",
+                    fontFamily = FontFamily.Monospace,
                 )
             }
         }
@@ -441,10 +544,10 @@ private fun PropertyValueEditor(
                 LaunchedEffect(shape) {
                     onValueChange(when (value) {
                         is SnyggCutCornerDpShapeValue -> {
-                            SnyggCutCornerDpShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                            SnyggCutCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                         is SnyggRoundedCornerDpShapeValue -> {
-                            SnyggRoundedCornerDpShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                            SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     })
                 }
@@ -501,7 +604,7 @@ private fun PropertyValueEditor(
                 if (dialogForCorner != null) {
                     var showValidationErrors by rememberSaveable { mutableStateOf(false) }
                     var size by rememberSaveable {
-                        mutableStateOf(showDialogInitDp.value.toString())
+                        mutableStateOf(showDialogInitDp.value.toString().removeSuffix(".0"))
                     }
                     val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
                     JetPrefAlertDialog(
@@ -553,7 +656,7 @@ private fun PropertyValueEditor(
                     }
                 }
             }
-            is SnyggPercentageShapeValue -> {
+            is SnyggPercentShapeValue -> {
                 var showDialogInitPercentage by rememberSaveable {
                     mutableStateOf(0)
                 }
@@ -562,45 +665,45 @@ private fun PropertyValueEditor(
                 }
                 var topStart by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.topStart
-                        is SnyggRoundedCornerPercentageShapeValue -> value.topStart
+                        is SnyggCutCornerPercentShapeValue -> value.topStart
+                        is SnyggRoundedCornerPercentShapeValue -> value.topStart
                     })
                 }
                 var topEnd by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.topEnd
-                        is SnyggRoundedCornerPercentageShapeValue -> value.topEnd
+                        is SnyggCutCornerPercentShapeValue -> value.topEnd
+                        is SnyggRoundedCornerPercentShapeValue -> value.topEnd
                     })
                 }
                 var bottomEnd by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.bottomEnd
-                        is SnyggRoundedCornerPercentageShapeValue -> value.bottomEnd
+                        is SnyggCutCornerPercentShapeValue -> value.bottomEnd
+                        is SnyggRoundedCornerPercentShapeValue -> value.bottomEnd
                     })
                 }
                 var bottomStart by rememberSaveable {
                     mutableStateOf(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> value.bottomStart
-                        is SnyggRoundedCornerPercentageShapeValue -> value.bottomStart
+                        is SnyggCutCornerPercentShapeValue -> value.bottomStart
+                        is SnyggRoundedCornerPercentShapeValue -> value.bottomStart
                     })
                 }
                 val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
                     when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> {
+                        is SnyggCutCornerPercentShapeValue -> {
                             CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
                         }
-                        is SnyggRoundedCornerPercentageShapeValue -> {
+                        is SnyggRoundedCornerPercentShapeValue -> {
                             RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     }
                 }
                 LaunchedEffect(shape) {
                     onValueChange(when (value) {
-                        is SnyggCutCornerPercentageShapeValue -> {
-                            SnyggCutCornerPercentageShapeValue(shape as CutCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        is SnyggCutCornerPercentShapeValue -> {
+                            SnyggCutCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
-                        is SnyggRoundedCornerPercentageShapeValue -> {
-                            SnyggRoundedCornerPercentageShapeValue(shape as RoundedCornerShape, topStart, topEnd, bottomEnd, bottomStart)
+                        is SnyggRoundedCornerPercentShapeValue -> {
+                            SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
                         }
                     })
                 }
@@ -659,7 +762,7 @@ private fun PropertyValueEditor(
                     var size by rememberSaveable {
                         mutableStateOf(showDialogInitPercentage.toString())
                     }
-                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentageShapeValue, size)
+                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentShapeValue, size)
                     JetPrefAlertDialog(
                         title = dialogForCorner.label(),
                         confirmLabel = stringRes(R.string.action__apply),

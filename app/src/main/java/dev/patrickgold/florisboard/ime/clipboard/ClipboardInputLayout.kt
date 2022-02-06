@@ -81,6 +81,7 @@ import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.snygg.ui.snyggClip
+import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -202,6 +203,7 @@ fun ClipboardInputLayout(
                 .fillMaxWidth()
                 .padding(ItemMargin),
             background = style.background,
+            elevation = style.shadowElevation,
             shape = style.shape,
             clip = true,
             contentPadding = ItemPadding,
@@ -293,6 +295,7 @@ fun ClipboardInputLayout(
                     Column(
                         modifier = Modifier
                             .padding(ItemMargin)
+                            .snyggShadow(popupStyle)
                             .snyggBackground(popupStyle.background, popupStyle.shape)
                             .snyggClip(popupStyle.shape),
                     ) {

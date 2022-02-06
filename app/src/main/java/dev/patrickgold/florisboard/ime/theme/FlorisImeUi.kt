@@ -26,6 +26,8 @@ object FlorisImeUi {
     const val ClipboardItem = "clipboard-item"
     const val ClipboardItemPopup = "clipboard-item-popup"
 
+    const val GlideTrail = "glide-trail"
+
     const val OneHandedPanel = "one-handed-panel"
 
     const val SmartbarPrimaryRow = "smartbar-primary-row"

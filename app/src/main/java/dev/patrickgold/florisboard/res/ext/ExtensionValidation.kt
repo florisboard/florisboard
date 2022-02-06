@@ -22,7 +22,8 @@ import dev.patrickgold.florisboard.common.validate
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggPercentageShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggPercentShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 
 // TODO: (priority=medium)
 //  make all strings available for localize
@@ -151,6 +152,21 @@ object ExtensionValidation {
         }
     }
 
+    val SnyggSolidColorValue = ValidationRule<String> {
+        forKlass = SnyggSolidColorValue::class
+        forProperty = "color"
+        validator { input ->
+            val str = input.trim()
+            when {
+                str.isBlank() -> resultInvalid(error = "Please enter a color string")
+                dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                    resultInvalid(error = "Please enter a valid color string")
+                }
+                else -> resultValid()
+            }
+        }
+    }
+
     val SnyggDpShapeValue = ValidationRule<String> {
         forKlass = SnyggDpShapeValue::class
         forProperty = "corner"
@@ -165,8 +181,8 @@ object ExtensionValidation {
         }
     }
 
-    val SnyggPercentageShapeValue = ValidationRule<String> {
-        forKlass = SnyggPercentageShapeValue::class
+    val SnyggPercentShapeValue = ValidationRule<String> {
+        forKlass = SnyggPercentShapeValue::class
         forProperty = "corner"
         validator { str ->
             val intValue = str.toIntOrNull()

@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.RectangleShape
@@ -29,6 +30,7 @@ private const val CornerSizeBottomEnd = "cornerSizeBottomEnd"
 private const val CornerSizeBottomStart = "cornerSizeBottomStart"
 
 private const val Rectangle = "rectangle"
+private const val Circle = "circle"
 private const val CutCorner = "cut-corner"
 private const val RoundedCorner = "rounded-corner"
 
@@ -46,7 +48,7 @@ sealed interface SnyggDpShapeValue : SnyggShapeValue {
     val bottomStart: Dp
 }
 
-sealed interface SnyggPercentageShapeValue : SnyggShapeValue {
+sealed interface SnyggPercentShapeValue : SnyggShapeValue {
     override val shape: Shape
     val topStart: Int
     val topEnd: Int
@@ -54,13 +56,13 @@ sealed interface SnyggPercentageShapeValue : SnyggShapeValue {
     val bottomStart: Int
 }
 
-data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue {
+data class SnyggRectangleShapeValue(override val shape: Shape = RectangleShape) : SnyggShapeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
             function(Rectangle) { nothing() }
         }
 
-        override fun defaultValue() = SnyggRectangleShapeValue(RectangleShape)
+        override fun defaultValue() = SnyggRectangleShapeValue()
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRectangleShapeValue)
@@ -71,7 +73,31 @@ data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = SnyggIdToValueMap.new()
             spec.parse(v, map)
-            return@runCatching SnyggRectangleShapeValue(shape = RectangleShape)
+            return@runCatching SnyggRectangleShapeValue()
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
+data class SnyggCircleShapeValue(override val shape: Shape = CircleShape) : SnyggShapeValue {
+    companion object : SnyggValueEncoder {
+        override val spec = SnyggValueSpec {
+            function(Circle) { nothing() }
+        }
+
+        override fun defaultValue() = SnyggCircleShapeValue()
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggCircleShapeValue)
+            val map = SnyggIdToValueMap.new()
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = SnyggIdToValueMap.new()
+            spec.parse(v, map)
+            return@runCatching SnyggCircleShapeValue()
         }
     }
 
@@ -79,11 +105,11 @@ data class SnyggRectangleShapeValue(override val shape: Shape) : SnyggShapeValue
 }
 
 data class SnyggCutCornerDpShapeValue(
-    override val shape: CutCornerShape,
     override val topStart: Dp,
     override val topEnd: Dp,
     override val bottomEnd: Dp,
     override val bottomStart: Dp,
+    override val shape: CutCornerShape = CutCornerShape(topStart, topEnd, bottomEnd, bottomStart),
 ) : SnyggDpShapeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
@@ -97,7 +123,7 @@ data class SnyggCutCornerDpShapeValue(
             }
         }
 
-        override fun defaultValue() = SnyggCutCornerDpShapeValue(CutCornerShape(0.dp), 0.dp, 0.dp, 0.dp, 0.dp)
+        override fun defaultValue() = SnyggCutCornerDpShapeValue(0.dp, 0.dp, 0.dp, 0.dp)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCutCornerDpShapeValue)
@@ -117,23 +143,20 @@ data class SnyggCutCornerDpShapeValue(
             val topEnd = map.getOrThrow<Int>(CornerSizeTopEnd).dp
             val bottomEnd = map.getOrThrow<Int>(CornerSizeBottomEnd).dp
             val bottomStart = map.getOrThrow<Int>(CornerSizeBottomStart).dp
-            return@runCatching SnyggCutCornerDpShapeValue(
-                shape = CutCornerShape(topStart, topEnd, bottomEnd, bottomStart),
-                topStart, topEnd, bottomEnd, bottomStart,
-            )
+            return@runCatching SnyggCutCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
         }
     }
 
     override fun encoder() = Companion
 }
 
-data class SnyggCutCornerPercentageShapeValue(
-    override val shape: CutCornerShape,
+data class SnyggCutCornerPercentShapeValue(
     override val topStart: Int,
     override val topEnd: Int,
     override val bottomEnd: Int,
     override val bottomStart: Int,
-) : SnyggPercentageShapeValue {
+    override val shape: CutCornerShape = CutCornerShape(topStart, topEnd, bottomEnd, bottomStart),
+) : SnyggPercentShapeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
             function(CutCorner) {
@@ -146,10 +169,10 @@ data class SnyggCutCornerPercentageShapeValue(
             }
         }
 
-        override fun defaultValue() = SnyggCutCornerPercentageShapeValue(CutCornerShape(0), 0, 0, 0, 0)
+        override fun defaultValue() = SnyggCutCornerPercentShapeValue(0, 0, 0, 0)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggCutCornerPercentageShapeValue)
+            require(v is SnyggCutCornerPercentShapeValue)
             val map = SnyggIdToValueMap.new(
                 CornerSizeTopStart to v.topStart,
                 CornerSizeTopEnd to v.topEnd,
@@ -166,10 +189,7 @@ data class SnyggCutCornerPercentageShapeValue(
             val topEnd = map.getOrThrow<Int>(CornerSizeTopEnd)
             val bottomEnd = map.getOrThrow<Int>(CornerSizeBottomEnd)
             val bottomStart = map.getOrThrow<Int>(CornerSizeBottomStart)
-            return@runCatching SnyggCutCornerPercentageShapeValue(
-                shape = CutCornerShape(topStart, topEnd, bottomEnd, bottomStart),
-                topStart, topEnd, bottomEnd, bottomStart,
-            )
+            return@runCatching SnyggCutCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
         }
     }
 
@@ -177,11 +197,11 @@ data class SnyggCutCornerPercentageShapeValue(
 }
 
 data class SnyggRoundedCornerDpShapeValue(
-    override val shape: RoundedCornerShape,
     override val topStart: Dp,
     override val topEnd: Dp,
     override val bottomEnd: Dp,
     override val bottomStart: Dp,
+    override val shape: RoundedCornerShape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart),
 ) : SnyggDpShapeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
@@ -195,7 +215,7 @@ data class SnyggRoundedCornerDpShapeValue(
             }
         }
 
-        override fun defaultValue() = SnyggRoundedCornerDpShapeValue(RoundedCornerShape(0.dp), 0.dp, 0.dp, 0.dp, 0.dp)
+        override fun defaultValue() = SnyggRoundedCornerDpShapeValue(0.dp, 0.dp, 0.dp, 0.dp)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRoundedCornerDpShapeValue)
@@ -215,23 +235,20 @@ data class SnyggRoundedCornerDpShapeValue(
             val topEnd = map.getOrThrow<Float>(CornerSizeTopEnd).dp
             val bottomEnd = map.getOrThrow<Float>(CornerSizeBottomEnd).dp
             val bottomStart = map.getOrThrow<Float>(CornerSizeBottomStart).dp
-            return@runCatching SnyggRoundedCornerDpShapeValue(
-                shape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart),
-                topStart, topEnd, bottomEnd, bottomStart,
-            )
+            return@runCatching SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
         }
     }
 
     override fun encoder() = Companion
 }
 
-data class SnyggRoundedCornerPercentageShapeValue(
-    override val shape: RoundedCornerShape,
+data class SnyggRoundedCornerPercentShapeValue(
     override val topStart: Int,
     override val topEnd: Int,
     override val bottomEnd: Int,
     override val bottomStart: Int,
-) : SnyggPercentageShapeValue {
+    override val shape: RoundedCornerShape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart),
+) : SnyggPercentShapeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
             function(RoundedCorner) {
@@ -244,10 +261,10 @@ data class SnyggRoundedCornerPercentageShapeValue(
             }
         }
 
-        override fun defaultValue() = SnyggRoundedCornerPercentageShapeValue(RoundedCornerShape(0), 0, 0, 0, 0)
+        override fun defaultValue() = SnyggRoundedCornerPercentShapeValue(0, 0, 0, 0)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggRoundedCornerPercentageShapeValue)
+            require(v is SnyggRoundedCornerPercentShapeValue)
             val map = SnyggIdToValueMap.new(
                 CornerSizeTopStart to v.topStart,
                 CornerSizeTopEnd to v.topEnd,
@@ -264,10 +281,7 @@ data class SnyggRoundedCornerPercentageShapeValue(
             val topEnd = map.getOrThrow<Int>(CornerSizeTopEnd)
             val bottomEnd = map.getOrThrow<Int>(CornerSizeBottomEnd)
             val bottomStart = map.getOrThrow<Int>(CornerSizeBottomStart)
-            return@runCatching SnyggRoundedCornerPercentageShapeValue(
-                shape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart),
-                topStart, topEnd, bottomEnd, bottomStart,
-            )
+            return@runCatching SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
         }
     }
 

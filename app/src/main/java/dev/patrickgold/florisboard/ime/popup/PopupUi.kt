@@ -41,6 +41,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 
@@ -58,6 +59,7 @@ fun PopupBaseBox(
     SnyggSurface(
         modifier = modifier,
         background = popupStyle.background,
+        elevation = popupStyle.shadowElevation,
         shape = popupStyle.shape,
         clip = true,
     ) {
@@ -107,6 +109,7 @@ fun PopupExtBox(
     )
     Column(
         modifier = modifier
+            .snyggShadow(popupStyle)
             .snyggBackground(popupStyle.background, popupStyle.shape),
     ) {
         for (row in elements.asReversed()) {
