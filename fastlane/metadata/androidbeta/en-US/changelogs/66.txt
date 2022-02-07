@@ -1,0 +1,3 @@
+This release improves the theme editor based on early feedback, as well as fixes some other minor things.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta10
