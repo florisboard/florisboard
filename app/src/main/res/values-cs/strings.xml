@@ -56,8 +56,17 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primární telefonní rozložení</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární telefonní rozložení</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Vybrat jazyk</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Hledat jazyk</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Nebyl nalezen žádný jazyk pro \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; vybrat &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Doporučená přednastavení podtypů</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Přednastavení podtypů</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Zobrazit všechny</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá se, že jste nenakonfigurovali žádné podtypy. Jako fallback bude použit podtyp angličtina/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nenainstalováno)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rozložení</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Motiv</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Režim motivu</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Čas východu slunce</string>
@@ -70,6 +79,33 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Podklady aplikace FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Externí poskytovatel</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Vyberte denní motiv</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vyberte noční motiv</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
+    <string name="settings__theme_editor__add_rule">Přidat pravidlo</string>
+    <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
+    <string name="settings__theme_editor__rule_element">Cílový prvek</string>
+    <string name="settings__theme_editor__rule_codes">Kódy</string>
+    <string name="settings__theme_editor__rule_groups">Skupiny</string>
+    <string name="settings__theme_editor__rule_modes">Režimy</string>
+    <string name="settings__theme_editor__rule_selectors">Selektory</string>
+    <string name="settings__theme_editor__add_code">Přidat kód</string>
+    <string name="settings__theme_editor__edit_code">Upravit kód</string>
+    <string name="settings__theme_editor__no_codes_defined">Nejsou definovány žádné kódy.</string>
+    <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
+    <string name="settings__theme_editor__add_property">Přidat vlastnost</string>
+    <string name="settings__theme_editor__edit_property">Upravit vlastnost</string>
+    <string name="settings__theme_editor__property_already_exists">Vlastnost s tímto názvem již v aktuálním pravidle existuje.</string>
+    <string name="settings__theme_editor__property_name">Název vlastnosti</string>
+    <string name="settings__theme_editor__property_value">Hodnota vlastnosti</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Použít pro všechny rohy</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
+    <string name="snygg__rule_element__defines">Proměnné</string>
+    <string name="snygg__rule_element__keyboard">Okno klávesnice</string>
+    <string name="snygg__rule_element__key">Klávesa</string>
+    <string name="snygg__rule_element__key_hint">Nápovědy klávesy</string>
+    <string name="snygg__rule_element__key_popup">Vyskakovací okno klávesy</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klávesnice</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Řádek čísel</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Řádek čísel s návrhy</string>
@@ -127,7 +163,7 @@
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
-    <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta &amp; Psaní tahem</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta a psaní tahem</string>
     <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posouváním přes jeho písmena</string>

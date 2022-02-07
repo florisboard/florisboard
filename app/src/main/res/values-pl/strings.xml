@@ -86,6 +86,43 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Wybierz motyw dzienny</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Wybierz motyw nocny</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
+    <string name="settings__theme_editor__add_rule">Dodaj regułę</string>
+    <string name="settings__theme_editor__edit_rule">Edytuj regułę</string>
+    <string name="settings__theme_editor__no_rules_defined">Ten arkusz stylów nie ma żadnych zdefiniowanych reguł. Dodaj regułę, aby rozpocząć dostosowywanie tego arkusza stylów.</string>
+    <string name="settings__theme_editor__rule_already_exists">Ta reguła arkusza stylów jest już zdefiniowana.</string>
+    <string name="settings__theme_editor__rule_element">Element docelowy</string>
+    <string name="settings__theme_editor__rule_codes">Kody</string>
+    <string name="settings__theme_editor__rule_groups">Grupy</string>
+    <string name="settings__theme_editor__rule_modes">Tryby</string>
+    <string name="settings__theme_editor__rule_selectors">Selektory</string>
+    <string name="settings__theme_editor__add_code">Dodaj kod</string>
+    <string name="settings__theme_editor__edit_code">Edytuj kod</string>
+    <string name="settings__theme_editor__no_codes_defined">Brak zdefiniowanych kodów.</string>
+    <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
+    <string name="settings__theme_editor__add_property">Dodaj właściwość</string>
+    <string name="settings__theme_editor__edit_property">Edytuj właściwość</string>
+    <string name="settings__theme_editor__property_already_exists">Właściwość o tej nazwie już istnieje w obecnej regule.</string>
+    <string name="settings__theme_editor__property_name">Nazwa właściwości</string>
+    <string name="settings__theme_editor__property_value">Wartość właściwości</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Zastosuj do wszystkich kątów</string>
+    <string name="snygg__rule_element__defines">Zmienne</string>
+    <string name="snygg__rule_element__defines_description">Zdefiniuj zmienne w tej regule, aby ponownie użyć pospolitych kolorów lub rozmiarów w twoim arkuszu stylów.</string>
+    <string name="snygg__rule_element__keyboard">Okno klawiatury</string>
+    <string name="snygg__rule_element__key">Klawisz</string>
+    <string name="snygg__rule_selector__pressed">Naciśnięty</string>
+    <string name="snygg__property_name__width">Szerokość</string>
+    <string name="snygg__property_name__height">Wysokość</string>
+    <string name="snygg__property_name__background">Tło</string>
+    <string name="snygg__property_value__explicit_inherit">Odziedzicz</string>
+    <string name="snygg__property_value__solid_color">Jednolity kolor</string>
+    <string name="snygg__property_value__rectangle_shape">Kształt prostokąta</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Kształt ze ściętymi kątami (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Kształt ze ściętymi kątami (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Kształt z zaokrąglonymi kątami (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Kształt z zaokrąglonymi kątami (%)</string>
+    <string name="snygg__property_value__dp_size">Rozmiar (dp)</string>
+    <string name="snygg__property_value__sp_size">Rozmiar (sp)</string>
+    <string name="snygg__property_value__percentage_size">Rozmiar (%)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Dźwięki &amp; Wibracje</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Dźwięki</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Włącz feedback audio</string>
@@ -404,6 +441,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Ustawienia systemowe Androida</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Lokale systemowe</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Autorzy</string>
     <string name="ext__meta__components">Dołączone komponenty</string>
     <string name="ext__meta__components_none_found">To archiwum rozszerzeń nie zawiera żadnych dołączonych komponentów.</string>
     <string name="ext__meta__description">Opis</string>
@@ -411,6 +449,7 @@
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Lista problemów</string>
     <string name="ext__meta__keywords">Słowa kluczowe</string>
+    <string name="ext__meta__label">Etykieta</string>
     <string name="ext__meta__license">Licencja</string>
     <string name="ext__meta__maintainers">Twórcy aplikacji</string>
     <string name="ext__meta__maintainers_by">Przez: {maintainers}</string>
@@ -418,6 +457,23 @@
     <string name="ext__meta__version">Wersja</string>
     <string name="ext__error__not_found_title">Nie znaleziono rozszerzenia</string>
     <string name="ext__error__not_found_description">Nie znaleziono rozszerzenia o ID \"{id}\".</string>
+    <string name="ext__editor__title_create_any">Utwórz rozszerzenie</string>
+    <string name="ext__editor__title_create_keyboard">Utwórz rozszerzenie klawiatury</string>
+    <string name="ext__editor__title_create_spelling">Utwórz rozszerzenie literowania</string>
+    <string name="ext__editor__title_create_theme">Utwórz rozszerzenie stylu</string>
+    <string name="ext__editor__title_edit_any">Edytuj rozszerzenie</string>
+    <string name="ext__editor__title_edit_keyboard">Edytuj rozszerzenie klawiatury</string>
+    <string name="ext__editor__title_edit_spelling">Edytuj rozszerzenie literowania</string>
+    <string name="ext__editor__title_edit_theme">Edytuj rozszerzenie stylu</string>
+    <string name="ext__editor__metadata__title">Zarządzaj metadanymi</string>
+    <string name="ext__editor__metadata__title_invalid">Nieprawidłowe metadane</string>
+    <string name="ext__editor__metadata__message_invalid">Metadane do tego rozszerzenia są nieprawidłowe, sprawdź metadane po detale!</string>
+    <string name="ext__editor__dependencies__title">Zarządzaj zależnościami</string>
+    <string name="ext__editor__files__title">Zarządzaj plikami archiwalnymi</string>
+    <string name="ext__editor__create_component__title">Utwórz komponent</string>
+    <string name="ext__editor__create_component__from_empty_warning">Tworzenie i konfigurowanie pustego komponentu może być trudne, jeżeli jesteś nowy do {app_name}, lub jeżeli jesteś niezaznajomiony ze specyfikacjami. Rozważ skopiowanie istniejącego komponentu i zmodyfikowanie go do twoich upodobań, jeżeli tak jest.</string>
+    <string name="ext__editor__edit_component__title">Edytuj komponent</string>
+    <string name="ext__editor__edit_component__title_theme">Edytuj komponent stylu</string>
     <string name="ext__export__success">Pomyślnie wyeksportowano rozszerzenie!</string>
     <string name="ext__export__failure">Eksportowanie rozszerzenia nie powiodło się: {error_message}</string>
     <string name="ext__import__success">Pomyślnie zaimportowano rozszerzenie!</string>
@@ -439,10 +495,14 @@
     <string name="action__apply">Zastosuj</string>
     <string name="action__back_up">Kopia zapasowa</string>
     <string name="action__cancel">Anuluj</string>
+    <string name="action__create">Utwórz</string>
     <string name="action__default">Domyślne</string>
     <string name="action__delete">Usuń</string>
     <string name="action__delete_confirm_title">Potwierdź usunięcie</string>
     <string name="action__delete_confirm_message">Czy na pewno chcesz usunąć \"{name}\"? Tej akcji nie można cofnąć po jej wykonaniu.</string>
+    <string name="action__discard">Odrzuć</string>
+    <string name="action__discard_confirm_title">Niezapisane zmiany</string>
+    <string name="action__discard_confirm_message">Czy na pewno chcesz odrzucić twoje niezapisane zmiany? Tej akcji nie można cofnąć po jej wykonaniu.</string>
     <string name="action__edit">Edytuj</string>
     <string name="action__export">Eksportuj</string>
     <string name="action__import">Importuj</string>
@@ -464,6 +524,7 @@
     <string name="error__snackbar_message_template">Coś poszło nie tak: {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Nie znaleziono aplikacji do obsługi URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; wybierz &#45;</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portret</string>
     <string name="screen_orientation__landscape">Orientacja pozioma</string>

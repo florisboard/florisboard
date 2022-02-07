@@ -87,6 +87,103 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Pilih tema pagi</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Pilih tema malam</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Kelola tema terpasang</string>
+    <string name="settings__theme_editor__fine_tune__title">Editor lanjutan</string>
+    <string name="settings__theme_editor__fine_tune__level">Tingkat pengeditan</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Tampilkan warna-warna sebagai</string>
+    <string name="settings__theme_editor__add_rule">Tambahkan aturan</string>
+    <string name="settings__theme_editor__edit_rule">Ubah aturan</string>
+    <string name="settings__theme_editor__no_rules_defined">Lembar gaya ini tidak memiliki aturan yang didefinisikan. Tambahkan sebuah aturan untuk mulai menyesuaikan lembar gaya ini.</string>
+    <string name="settings__theme_editor__rule_already_exists">Aturan lembar gaya ini telah didefinisikan.</string>
+    <string name="settings__theme_editor__rule_element">Elemen target</string>
+    <string name="settings__theme_editor__rule_codes">Kode</string>
+    <string name="settings__theme_editor__rule_groups">Grup</string>
+    <string name="settings__theme_editor__rule_modes">Mode</string>
+    <string name="settings__theme_editor__rule_selectors">Pemilih</string>
+    <string name="settings__theme_editor__add_code">Tambahkan kode</string>
+    <string name="settings__theme_editor__edit_code">Edit kode</string>
+    <string name="settings__theme_editor__no_codes_defined">Tidak ada kode yang didefinisikan.</string>
+    <string name="settings__theme_editor__code_already_exists">Kode tombol ini telah didefinisikan.</string>
+    <string name="settings__theme_editor__code_invalid">Kode tombol ini tidak valid. Pastikan bahwa kode kunci dalam jangkauan dari {c_min} sampai {c_max} untuk karakter atau {i_min} sampai {i_max} untuk tombol internal spesial.</string>
+    <string name="settings__theme_editor__code_help_text">Tautan berikut ini akan membantu Anda menemukan kode tombol yang sesuai:</string>
+    <string name="settings__theme_editor__add_property">Tambahkan properti</string>
+    <string name="settings__theme_editor__edit_property">Edit properti</string>
+    <string name="settings__theme_editor__property_already_exists">Sebuah properti dengan nama ini sudah ada dalam aturan saat ini.</string>
+    <string name="settings__theme_editor__property_name">Nama properti</string>
+    <string name="settings__theme_editor__property_value">Nilai properti</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Terapkan untuk semua sudut</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Edit string warna</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Apakah tema malam</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Apakah ada tepian</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Jalur lembar gaya</string>
+    <string name="snygg__rule_element__defines">Variabel</string>
+    <string name="snygg__rule_element__defines_description">Definisikan variable dalam aturan ini untuk menggunakan ulang warna atau ukuran umum di lembar gaya Anda.</string>
+    <string name="snygg__rule_element__keyboard">Jendela keyboard</string>
+    <string name="snygg__rule_element__key">Tombol</string>
+    <string name="snygg__rule_element__key_hint">Petunjuk tombol</string>
+    <string name="snygg__rule_element__key_popup">Popup tombol</string>
+    <string name="snygg__rule_element__clipboard_header">Tajukan papan klip</string>
+    <string name="snygg__rule_element__clipboard_item">Item papan klip</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Popup item papan klip</string>
+    <string name="snygg__rule_element__glide_trail">Jejak geser</string>
+    <string name="snygg__rule_element__one_handed_panel">Panel satu-tangan</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Barisan utama smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Pengalih baris tindakan utama smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Pengalih baris tindakan sekunder smartbar</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Barisan sekunder smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_row">Barisan tindakan smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_button">Tombol tindakan smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_row">Calon barisan smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Calon kata smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Calon klip smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Calon pembelah smartbar</string>
+    <string name="snygg__rule_element__smartbar_key">Tombol smartbar</string>
+    <string name="snygg__rule_element__system_nav_bar">Bilah navigasi sistem</string>
+    <string name="snygg__rule_selector__pressed">Ditekan</string>
+    <string name="snygg__rule_selector__focus">Difokus</string>
+    <string name="snygg__rule_selector__disabled">Dinonaktifkan</string>
+    <string name="snygg__property_name__width">Lebar</string>
+    <string name="snygg__property_name__height">Tinggi</string>
+    <string name="snygg__property_name__background">Latar belakang</string>
+    <string name="snygg__property_name__foreground">Latar depan</string>
+    <string name="snygg__property_name__border">Tepian</string>
+    <string name="snygg__property_name__border_top">Tepian atas</string>
+    <string name="snygg__property_name__border_bottom">Tepian bawah</string>
+    <string name="snygg__property_name__border_start">Awalan tepian</string>
+    <string name="snygg__property_name__border_end">Tepian akhir</string>
+    <string name="snygg__property_name__font_family">Keluarga font</string>
+    <string name="snygg__property_name__font_size">Ukuran font</string>
+    <string name="snygg__property_name__font_style">Gaya font</string>
+    <string name="snygg__property_name__font_variant">Varian font</string>
+    <string name="snygg__property_name__font_weight">Berat font</string>
+    <string name="snygg__property_name__shadow_elevation">Ketinggian bayangan</string>
+    <string name="snygg__property_name__shape">Bentuk</string>
+    <string name="snygg__property_name__var_primary">Warna utama</string>
+    <string name="snygg__property_name__var_primary_variant">Warna utama (varian)</string>
+    <string name="snygg__property_name__var_secondary">Warna sekunder</string>
+    <string name="snygg__property_name__var_secondary_variant">Warna sekunder (varian)</string>
+    <string name="snygg__property_name__var_background">Latar belakang umum</string>
+    <string name="snygg__property_name__var_surface">Permukaan umum</string>
+    <string name="snygg__property_name__var_surface_variant">Permukaan umum (varian)</string>
+    <string name="snygg__property_name__var_on_primary">Latar depan primer</string>
+    <string name="snygg__property_name__var_on_secondary">Latar depan sekunder</string>
+    <string name="snygg__property_name__var_on_background">Latar depan latar belakang</string>
+    <string name="snygg__property_name__var_on_surface">Latar depan permukaan</string>
+    <string name="snygg__property_name__var_on_surface_variant">Latar depan permukaan (varian)</string>
+    <string name="snygg__property_name__var_shape">Bentuk umum</string>
+    <string name="snygg__property_name__var_shape_variant">Bentuk umum (varian)</string>
+    <string name="snygg__property_value__explicit_inherit">Warisan</string>
+    <string name="snygg__property_value__solid_color">Warna padat</string>
+    <string name="snygg__property_value__image_ref">Referensi gambar</string>
+    <string name="snygg__property_value__rectangle_shape">Bentuk persegi panjang</string>
+    <string name="snygg__property_value__circle_shape">Bentuk lingkaran</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Potong bentuk sudut (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Potong bentuk sudut (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Pembulatan bentuk sudut (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Pembulatan bentuk sudut (%)</string>
+    <string name="snygg__property_value__dp_size">Ukuran (dp)</string>
+    <string name="snygg__property_value__sp_size">Ukuran (sp)</string>
+    <string name="snygg__property_value__percentage_size">Ukuran (%)</string>
+    <string name="snygg__property_value__defined_var">Referensi var</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suara &amp; Getaran</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suara</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktifkan feedback audio</string>
@@ -126,8 +223,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Petunjuk baris nomor</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Simbol yang diisyaratkan</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Tampilkan tombol utilitas</string>
-    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Menampilkan tombol utilitas yang dapat dikonfigurasi di sebelah bilah spasi</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Menampilkan tombol utilitas yang dapat dikonfigurasi di sebelah batang spasi</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Aksi tombol utilitas</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Tampilkan bahasa pada batang spasi</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Menampilkan nama bahasa aktif saat ini pada batang spasi</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pengganda ukuran font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Tata letak</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode satu-tangan</string>
@@ -405,13 +504,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Pengaturan sistem Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Pembuat</string>
     <string name="ext__meta__components">Komponen yang dibundel</string>
+    <string name="ext__meta__components_theme">Tema terbundel</string>
     <string name="ext__meta__components_none_found">Arsip ekstensi ini tidak berisi komponen apa pun yang dibundel.</string>
     <string name="ext__meta__description">Deskripsi</string>
     <string name="ext__meta__homepage">Beranda</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Pelacak masalah</string>
     <string name="ext__meta__keywords">Kata kunci</string>
+    <string name="ext__meta__label">Label</string>
     <string name="ext__meta__license">Lisensi</string>
     <string name="ext__meta__maintainers">Pengelola</string>
     <string name="ext__meta__maintainers_by">Oleh: {maintainers}</string>
@@ -419,6 +521,26 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__meta__version">Versi</string>
     <string name="ext__error__not_found_title">Ekstensi tidak ditemukan</string>
     <string name="ext__error__not_found_description">Tidak ada ekstensi dengan ID \"{id}\" yang ditemukan.</string>
+    <string name="ext__editor__title_create_any">Buat ekstensi</string>
+    <string name="ext__editor__title_create_keyboard">Buat ekstensi keyboard</string>
+    <string name="ext__editor__title_create_spelling">Buat ekstensi pengejaan</string>
+    <string name="ext__editor__title_create_theme">Buat ekstensi tema</string>
+    <string name="ext__editor__title_edit_any">Edit ekstensi</string>
+    <string name="ext__editor__title_edit_keyboard">Edit ekstensi keyboard</string>
+    <string name="ext__editor__title_edit_spelling">Edit ekstensi pengejaan</string>
+    <string name="ext__editor__title_edit_theme">Edit ekstensi tema</string>
+    <string name="ext__editor__metadata__title">Kelola metadata</string>
+    <string name="ext__editor__metadata__title_invalid">Metadata tidak valid</string>
+    <string name="ext__editor__metadata__message_invalid">Metadata untuk ekstensi ini tidak valid, mohon periksa editor metadata untuk detailnya!</string>
+    <string name="ext__editor__dependencies__title">Kelola ketergantungan</string>
+    <string name="ext__editor__files__title">Kelola file arsip</string>
+    <string name="ext__editor__create_component__title">Buat komponen</string>
+    <string name="ext__editor__create_component__title_theme">Buat tema</string>
+    <string name="ext__editor__create_component__from_empty">Kosong</string>
+    <string name="ext__editor__create_component__from_existing">Dari yang sudah ada</string>
+    <string name="ext__editor__create_component__from_empty_warning">Membuat dan mengkonfigurasi komponen kosong mungkin sulit jika Anda baru mengenal {app_name} atau jika Anda tidak terbiasa dengan spesifikasinya. Pertimbangkan untuk menyalin komponen yang ada dan memodifikasinya sesuai keinginan Anda.</string>
+    <string name="ext__editor__edit_component__title">Edit komponen</string>
+    <string name="ext__editor__edit_component__title_theme">Edit komponen tema</string>
     <string name="ext__export__success">Berhasil mengekspor ekstensi!</string>
     <string name="ext__export__failure">Gagal untuk mengekspor ekstensi: {error_message}</string>
     <string name="ext__import__success">Berhasil mengimpor ekstensi!</string>
@@ -440,10 +562,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="action__apply">Terapkan</string>
     <string name="action__back_up">Cadangkan</string>
     <string name="action__cancel">Batal</string>
+    <string name="action__create">Buat</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Hapus</string>
     <string name="action__delete_confirm_title">Konfirmasi penghapusan</string>
     <string name="action__delete_confirm_message">Apakah Anda yakin ingin menghapus \"{name}\"? Tindakan ini tidak dapat dibatalkan setelah dilakukan.</string>
+    <string name="action__discard">Buang</string>
+    <string name="action__discard_confirm_title">Perubahan belum disimpan</string>
+    <string name="action__discard_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dieksekusi.</string>
     <string name="action__edit">Edit</string>
     <string name="action__export">Ekspor</string>
     <string name="action__import">Impor</string>
@@ -464,7 +590,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="error__snackbar_message">Terjadi kesalahan</string>
     <string name="error__snackbar_message_template">Terjadi kesalahan: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">mis. {example}</string>
     <string name="general__no_browser_app_found_for_url">Tidak ada aplikasi peramban untuk menangani URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; pilih &#45;</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Potret</string>
     <string name="screen_orientation__landscape">Lanskap</string>
@@ -481,6 +609,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasik (3 baris)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Lebar dinamis</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Lebar dinamis &amp; dapat digulir</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Heksadesimal</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Merah Hijau Biru Alpha</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksen diprioritaskan</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan aksen utama, atau simbol petunjuk jika tidak ada aksen utama yang tersedia</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Petunjuk diprioritaskan</string>
@@ -502,6 +632,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara baris utama dan keyboard teks</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Tampilkan UI aplikasi</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Menempatkan baris sekunder sebagai overlay di atas UI aplikasi, tanpa mempengaruhi ketinggian UI keyboard. Dicatat bahwa penempatannya mungkin membuat kolom input aplikasi sebagian digambar terlalu banyak</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Awalan atas</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Akhiran atas</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Akhiran bawah</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Awalan bawah</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Dasar</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Hanya properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Tingkat lanjut</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Semua properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Pengembang</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Semua properti ditampilkan, properti dan aturan ditampilkan seperti yang tertulis di file lembar gayanya.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Gunakan bahasa sistem</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Gunakan subtipe-subtipe keyboard</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Tidak ada aksi</string>
@@ -524,6 +664,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Ulangi</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Urungkan</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Pilih karakter secara tepat</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Pilih kata secara tepat</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Tampilkan pemilih metode masukan</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Beralih ke papan ketik sebelumnya</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Beralih ke subtipe sebelumnya</string>

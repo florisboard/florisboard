@@ -86,6 +86,103 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecionar tema diurno</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecionar tema noturno</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gerenciar temas instalados</string>
+    <string name="settings__theme_editor__fine_tune__title">Editor de ajuste fino</string>
+    <string name="settings__theme_editor__fine_tune__level">Nível de edição</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Exibir cores como</string>
+    <string name="settings__theme_editor__add_rule">Adicionar regra</string>
+    <string name="settings__theme_editor__edit_rule">Editar regra</string>
+    <string name="settings__theme_editor__no_rules_defined">Esta folha de estilo não tem regras definidas. Adicione uma regra para começar a personalizar esta folha de estilo.</string>
+    <string name="settings__theme_editor__rule_already_exists">Esta regra de folha de estilo já está definida.</string>
+    <string name="settings__theme_editor__rule_element">Elemento de destino</string>
+    <string name="settings__theme_editor__rule_codes">Códigos</string>
+    <string name="settings__theme_editor__rule_groups">Grupos</string>
+    <string name="settings__theme_editor__rule_modes">Modos</string>
+    <string name="settings__theme_editor__rule_selectors">Seletores</string>
+    <string name="settings__theme_editor__add_code">Adicionar código</string>
+    <string name="settings__theme_editor__edit_code">Editar código</string>
+    <string name="settings__theme_editor__no_codes_defined">Nenhum código definido.</string>
+    <string name="settings__theme_editor__code_already_exists">Este código de tecla já está definido.</string>
+    <string name="settings__theme_editor__code_invalid">Este código de tecla não é válido. Certifique-se de que o código da tecla esteja dentro do intervalo de {c_min} até {c_max} para caracteres ou {i_min} até {i_max} para teclas especiais internas.</string>
+    <string name="settings__theme_editor__code_help_text">Os links a seguir ajudarão você a encontrar o código da tecla correspondente:</string>
+    <string name="settings__theme_editor__add_property">Adicionar propriedade</string>
+    <string name="settings__theme_editor__edit_property">Editar propriedade</string>
+    <string name="settings__theme_editor__property_already_exists">Já existe uma propriedade com este nome na regra atual.</string>
+    <string name="settings__theme_editor__property_name">Nome da propriedade</string>
+    <string name="settings__theme_editor__property_value">Valor da propriedade</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Aplicar para todos os cantos</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Editar sequência de cores</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">É tema noturno</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">É sem bordas</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Caminho da folha de estilo</string>
+    <string name="snygg__rule_element__defines">Variáveis</string>
+    <string name="snygg__rule_element__defines_description">Defina variáveis ​​dentro desta regra para reutilizar cores ou tamanhos comuns em sua folha de estilo.</string>
+    <string name="snygg__rule_element__keyboard">Janela do teclado</string>
+    <string name="snygg__rule_element__key">Tecla</string>
+    <string name="snygg__rule_element__key_hint">Dica da tecla</string>
+    <string name="snygg__rule_element__key_popup">Pop-up da tecla</string>
+    <string name="snygg__rule_element__clipboard_header">Cabeçalho da área de transferência</string>
+    <string name="snygg__rule_element__clipboard_item">Item da área de transferência</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Pop-up do item da área de transferência</string>
+    <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
+    <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Alternância de linha de ação primária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Alternância de linha secundária primária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_action_row">Linha de ação da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_action_button">Botão de ação da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_row">Linha candidata da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
+    <string name="snygg__rule_element__system_nav_bar">Barra de navegação do sistema</string>
+    <string name="snygg__rule_selector__pressed">Pressionado</string>
+    <string name="snygg__rule_selector__focus">Focado</string>
+    <string name="snygg__rule_selector__disabled">Desativado</string>
+    <string name="snygg__property_name__width">Largura</string>
+    <string name="snygg__property_name__height">Altura</string>
+    <string name="snygg__property_name__background">Fundo</string>
+    <string name="snygg__property_name__foreground">Primeiro plano</string>
+    <string name="snygg__property_name__border">Borda</string>
+    <string name="snygg__property_name__border_top">Borda superior</string>
+    <string name="snygg__property_name__border_bottom">Borda inferior</string>
+    <string name="snygg__property_name__border_start">Início da borda</string>
+    <string name="snygg__property_name__border_end">Final da borda</string>
+    <string name="snygg__property_name__font_family">Família da fonte</string>
+    <string name="snygg__property_name__font_size">Tamanho da fonte</string>
+    <string name="snygg__property_name__font_style">Estilo da fonte</string>
+    <string name="snygg__property_name__font_variant">Variante da fonte</string>
+    <string name="snygg__property_name__font_weight">Espessura da fonte</string>
+    <string name="snygg__property_name__shadow_elevation">Elevação da sombra</string>
+    <string name="snygg__property_name__shape">Forma</string>
+    <string name="snygg__property_name__var_primary">Cor primária</string>
+    <string name="snygg__property_name__var_primary_variant">Cor primária (variante)</string>
+    <string name="snygg__property_name__var_secondary">Cor secundária</string>
+    <string name="snygg__property_name__var_secondary_variant">Cor secundária (variante)</string>
+    <string name="snygg__property_name__var_background">Fundo comum</string>
+    <string name="snygg__property_name__var_surface">Superfície comum</string>
+    <string name="snygg__property_name__var_surface_variant">Superfície comum (variante)</string>
+    <string name="snygg__property_name__var_on_primary">Primeiro plano do primário</string>
+    <string name="snygg__property_name__var_on_secondary">Primeiro plano do secundário</string>
+    <string name="snygg__property_name__var_on_background">Primeiro plano do fundo</string>
+    <string name="snygg__property_name__var_on_surface">Primeiro plano da superfície</string>
+    <string name="snygg__property_name__var_on_surface_variant">Primeiro plano da superfície (variante)</string>
+    <string name="snygg__property_name__var_shape">Forma comum</string>
+    <string name="snygg__property_name__var_shape_variant">Forma comum (variante)</string>
+    <string name="snygg__property_value__explicit_inherit">Herdar</string>
+    <string name="snygg__property_value__solid_color">Cor sólida</string>
+    <string name="snygg__property_value__image_ref">Referência da imagem</string>
+    <string name="snygg__property_value__rectangle_shape">Forma retangular</string>
+    <string name="snygg__property_value__circle_shape">Forma de círculo</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Corte em formato de canto (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Corte em formato de canto (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Forma de canto arredondado (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Forma de canto arredondado (%)</string>
+    <string name="snygg__property_value__dp_size">Tamanho (dp)</string>
+    <string name="snygg__property_value__sp_size">Tamanho (sp)</string>
+    <string name="snygg__property_value__percentage_size">Tamanho (%)</string>
+    <string name="snygg__property_value__defined_var">Referência da Var</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons e Vibração</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Resposta de Áudio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ativar resposta de áudio</string>
@@ -127,6 +224,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar tecla de utilidade</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra uma tecla de utilidade configurável ao lado da barra de espaço</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ação da tecla de utilidade</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Exibir idioma na barra de espaço</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Exibe o nome do idioma ativo atual na barra de espaço</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho de fonte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo uma mão</string>
@@ -404,13 +503,16 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Configurações do sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Localização do sistema</string>
     <!-- Extension strings -->
-    <string name="ext__meta__components">Componentes empacotados</string>
-    <string name="ext__meta__components_none_found">Este arquivo de extensão não contém nenhum componente empacotado.</string>
+    <string name="ext__meta__authors">Autores</string>
+    <string name="ext__meta__components">Componentes agrupados</string>
+    <string name="ext__meta__components_theme">Temas agrupados</string>
+    <string name="ext__meta__components_none_found">Este arquivo de extensão não contém nenhum componente agrupado.</string>
     <string name="ext__meta__description">Descrição</string>
     <string name="ext__meta__homepage">Página inicial</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Rastreador de problemas</string>
     <string name="ext__meta__keywords">Palavras-chave</string>
+    <string name="ext__meta__label">Etiqueta</string>
     <string name="ext__meta__license">Licença</string>
     <string name="ext__meta__maintainers">Mantedores</string>
     <string name="ext__meta__maintainers_by">Por: {maintainers}</string>
@@ -418,6 +520,26 @@
     <string name="ext__meta__version">Versão</string>
     <string name="ext__error__not_found_title">Extensão não encontrada</string>
     <string name="ext__error__not_found_description">Nenhuma extensão com o ID \"{id}\" pode ser encontrada.</string>
+    <string name="ext__editor__title_create_any">Criar extensão</string>
+    <string name="ext__editor__title_create_keyboard">Criar extensão de teclado</string>
+    <string name="ext__editor__title_create_spelling">Criar extensão de ortografia</string>
+    <string name="ext__editor__title_create_theme">Criar extensão de tema</string>
+    <string name="ext__editor__title_edit_any">Editar extensão</string>
+    <string name="ext__editor__title_edit_keyboard">Editar extensão de teclado</string>
+    <string name="ext__editor__title_edit_spelling">Editar extensão de ortografia</string>
+    <string name="ext__editor__title_edit_theme">Editar extensão de tema</string>
+    <string name="ext__editor__metadata__title">Gerenciar metadados</string>
+    <string name="ext__editor__metadata__title_invalid">Metadados inválidos</string>
+    <string name="ext__editor__metadata__message_invalid">Os metadados para esta extensão não são válidos, verifique o editor de metadados para obter detalhes!</string>
+    <string name="ext__editor__dependencies__title">Gerenciar dependências</string>
+    <string name="ext__editor__files__title">Gerenciar arquivos compactados</string>
+    <string name="ext__editor__create_component__title">Criar componente</string>
+    <string name="ext__editor__create_component__title_theme">Criar tema</string>
+    <string name="ext__editor__create_component__from_empty">Vazio</string>
+    <string name="ext__editor__create_component__from_existing">De existente</string>
+    <string name="ext__editor__create_component__from_empty_warning">Criar e configurar um componente vazio pode ser difícil se você for novo no {app_name} ou se você não estiver familiarizado com os detalhes. Considere copiar um componente existente e modificá-lo ao seu gosto, se for o caso.</string>
+    <string name="ext__editor__edit_component__title">Editar componente</string>
+    <string name="ext__editor__edit_component__title_theme">Editar componente de tema</string>
     <string name="ext__export__success">Extensão exportada com sucesso!</string>
     <string name="ext__export__failure">Falha ao exportar extensão: {error_message}</string>
     <string name="ext__import__success">Extensão importada com sucesso!</string>
@@ -439,10 +561,14 @@
     <string name="action__apply">Aplicar</string>
     <string name="action__back_up">Fazer backup</string>
     <string name="action__cancel">Cancelar</string>
+    <string name="action__create">Criar</string>
     <string name="action__default">Padrão</string>
     <string name="action__delete">Deletar</string>
     <string name="action__delete_confirm_title">Confirmar exclusão</string>
     <string name="action__delete_confirm_message">Você tem certeza que deseja excluir \"{name}\"? Esta ação não pode ser desfeita uma vez executada.</string>
+    <string name="action__discard">Descartar</string>
+    <string name="action__discard_confirm_title">Alterações não salvas</string>
+    <string name="action__discard_confirm_message">Tem certeza de que deseja descartar as alterações não salvas? Esta ação não pode ser desfeita uma vez executada.</string>
     <string name="action__edit">Editar</string>
     <string name="action__export">Exportar</string>
     <string name="action__import">Importar</string>
@@ -463,7 +589,9 @@
     <string name="error__snackbar_message">Algo deu errado</string>
     <string name="error__snackbar_message_template">Algo deu errado: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">p. ex. {example}</string>
     <string name="general__no_browser_app_found_for_url">Nenhum aplicativo de navegador encontrado para lidar com a URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; selecionar &#45;</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Retrato</string>
     <string name="screen_orientation__landscape">Paisagem</string>
@@ -480,6 +608,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Clássico (3 colunas)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largura dinâmica</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largura dinâmica e rolável</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Vermelho Verde Azul Alfa</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">O acento é priorizado</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é sempre o acento principal ou a sugestão de símbolo se nenhum acento principal estiver disponível</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">A sugestão é priorizada</string>
@@ -501,6 +631,16 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Coloca a linha secundária entre a linha primária e o teclado de texto</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Sobreposição da UI do aplicativo</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição acima da UI do aplicativo, sem afetar a altura da UI do teclado resultante. Observe que este posicionamento pode fazer com que o campo de entrada do aplicativo fique parcialmente coberto</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Início da parte superior</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Final da parte superior</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Final da parte inferior</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Início da parte inferior</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Apenas propriedades de cor são mostradas, propriedades e regras são traduzidas.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Todas as propriedades são mostradas, propriedades e regras são traduzidas.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Desenvolvedor</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Todas as propriedades são mostradas, as propriedades e regras são exibidas conforme escrito no próprio arquivo de folha de estilo.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Usar idiomas do sistema</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Usar subtipos de teclado</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nenhuma ação</string>
@@ -523,6 +663,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Refazer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Desfazer</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Selecionar os caracteres com precisão</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Selecionar as palavras com precisão</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Mostrar alternador de teclado</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Mudar para teclado anterior</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Mudar para formato de digitação anterior</string>

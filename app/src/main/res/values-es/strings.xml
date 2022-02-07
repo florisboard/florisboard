@@ -86,6 +86,36 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Elegir tema claro</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Elegir tema oscuro</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestionar temas instalados</string>
+    <string name="settings__theme_editor__add_rule">Añadir regla</string>
+    <string name="settings__theme_editor__edit_rule">Editar regla</string>
+    <string name="settings__theme_editor__rule_codes">Códigos</string>
+    <string name="settings__theme_editor__rule_groups">Grupos</string>
+    <string name="settings__theme_editor__rule_modes">Modos</string>
+    <string name="settings__theme_editor__rule_selectors">Selectores</string>
+    <string name="settings__theme_editor__add_code">Añadir código</string>
+    <string name="settings__theme_editor__edit_code">Editar código</string>
+    <string name="snygg__rule_element__key">Tecla</string>
+    <string name="snygg__rule_element__key_popup">Tecla emergente</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Fila principal de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Fila secundaria de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_action_row">Fila de acción de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_key">Tecla de barra inteligente</string>
+    <string name="snygg__rule_element__system_nav_bar">Barra de navegación de sistema</string>
+    <string name="snygg__rule_selector__disabled">Deshabilitado</string>
+    <string name="snygg__property_name__width">Anchura</string>
+    <string name="snygg__property_name__height">Altura</string>
+    <string name="snygg__property_name__border">Borde</string>
+    <string name="snygg__property_name__border_top">Borde superior</string>
+    <string name="snygg__property_name__border_bottom">Borde inferior</string>
+    <string name="snygg__property_name__border_start">Inicio de borde</string>
+    <string name="snygg__property_name__border_end">Final de borde</string>
+    <string name="snygg__property_name__font_family">Familia de fuente</string>
+    <string name="snygg__property_name__font_size">Tamaño de fuente</string>
+    <string name="snygg__property_name__font_style">Estilo de fuente</string>
+    <string name="snygg__property_name__font_variant">Variante de fuente</string>
+    <string name="snygg__property_name__shape">Forma</string>
+    <string name="snygg__property_name__var_primary">Color principal</string>
+    <string name="snygg__property_name__var_secondary">Color secundario</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sonidos &amp; Vibración</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Respuesta de audio / Sonidos</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilitar respuesta de audio</string>

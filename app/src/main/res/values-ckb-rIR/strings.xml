@@ -86,6 +86,45 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">ڕووکارەکانی دۆخی ڕووناک</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">ڕووکارەکانی دۆخی تاریک</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">ڕێکخستنی رووکارەکان</string>
+    <string name="settings__theme_editor__fine_tune__level">شێوازی دەستکاریکردن</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">پیشاندانی ڕەنگەکان بەشێوەی</string>
+    <string name="settings__theme_editor__add_rule">زیادکردن</string>
+    <string name="settings__theme_editor__edit_rule">دەستکاریکردن</string>
+    <string name="settings__theme_editor__rule_codes">کۆد</string>
+    <string name="settings__theme_editor__rule_groups">گرووپ</string>
+    <string name="settings__theme_editor__rule_modes">شێواز</string>
+    <string name="settings__theme_editor__rule_selectors">هەڵبژاردن</string>
+    <string name="settings__theme_editor__add_code">زیادکردنی کۆد</string>
+    <string name="settings__theme_editor__edit_code">دەستکاریکردنی کۆد</string>
+    <string name="settings__theme_editor__no_codes_defined">کۆد نەنوسراوە</string>
+    <string name="settings__theme_editor__code_already_exists">ئەم دوگمەیە پێشتر زیادکراوە</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">ڕووکاری تاریکە</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">بێ لێوار</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">شوێنی هەڵگرتن</string>
+    <string name="snygg__rule_element__key">دوگمەی</string>
+    <string name="snygg__rule_element__key_hint">پیتە لاوەکییەکان</string>
+    <string name="snygg__rule_element__key_popup">بچووککراوەی پیت</string>
+    <string name="snygg__rule_element__clipboard_header">سەرەوەی لەبەرگیراوەکان</string>
+    <string name="snygg__rule_element__clipboard_item">لەبەرگیراوەکان</string>
+    <string name="snygg__rule_element__clipboard_item_popup">فرمانەکانی لەبەرگیراوەکان</string>
+    <string name="snygg__rule_element__glide_trail">هێڵی نووسین بەسەریەکەوە</string>
+    <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
+    <string name="snygg__rule_element__smartbar_primary_row">ڕەنگی سەرەکی بەشی سەرەوە</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">ڕەنگی دووەمی بەشی سەرەوە</string>
+    <string name="snygg__rule_element__smartbar_key">دوگمەی ئامرازەکان</string>
+    <string name="snygg__property_value__explicit_inherit">بنەڕەتی</string>
+    <string name="snygg__property_value__solid_color">ڕەنگ</string>
+    <string name="snygg__property_value__image_ref">وێنە</string>
+    <string name="snygg__property_value__rectangle_shape">چوارگۆشەیی</string>
+    <string name="snygg__property_value__circle_shape">بازنەیی</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">گۆشە چوارگۆشەیی (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">گۆشە چوارگۆشەیی (٪)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">گۆشە بازنەیی (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">گۆشە بازنەیی (٪)</string>
+    <string name="snygg__property_value__dp_size">قەبارە (dp)</string>
+    <string name="snygg__property_value__sp_size">قەبارە (sp)</string>
+    <string name="snygg__property_value__percentage_size">قەبارە (٪)</string>
+    <string name="snygg__property_value__defined_var">سەرچاوە</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">ڕێکخستنی دەنگ و لەرزین</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">کاریگەری دەنگ / دەستلێدان</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">چالاککردنی کاریگەری دەنگی</string>
@@ -127,6 +166,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">پیشاندانی دوگمەی فرمان</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">پیشاندانی دوگمەی ئامرازی دەستکاریکردن لە تەنیشت دوگمەی بۆشایی</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">فرمانی دوگمەی ئامراز</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">ناوی زمان</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">پیشاندان یان شاردنەوەی ناوی زمان لەسەر دوگمەی بۆشایی</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">قەبارەی فۆنت</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">شێوازەکان</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">بەکارهێنان بە یەک دەست</string>
@@ -405,13 +446,16 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">ڕێکخستنەکانی سیستەمی ئەندرۆید</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">زمانەکانی سیستەم</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">دیزاینەر</string>
     <string name="ext__meta__components">زیادکراوەکان</string>
+    <string name="ext__meta__components_theme">ڕووکارە دروستکراوەکان</string>
     <string name="ext__meta__components_none_found">ئەم فایلە ئەرشیفە هیچ پێکهاتەیەکی لەخۆ نەگرتووە.</string>
     <string name="ext__meta__description">زانیاری</string>
     <string name="ext__meta__homepage">پەڕەی سەرەکی</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">دۆزەرەوەی هەڵە</string>
     <string name="ext__meta__keywords">کلیلە ووشە</string>
+    <string name="ext__meta__label">ناو</string>
     <string name="ext__meta__license">مۆڵەت</string>
     <string name="ext__meta__maintainers">گەشەپێدەر</string>
     <string name="ext__meta__maintainers_by">لەلایەن: {maintainers}</string>
@@ -419,6 +463,20 @@
     <string name="ext__meta__version">وەشان</string>
     <string name="ext__error__not_found_title">زیادکراو نەدۆزرایەوە</string>
     <string name="ext__error__not_found_description">هیچ زیادکراوێک بەناوی \"{id}\" نەدۆزرایەوە.</string>
+    <string name="ext__editor__title_create_any">دروستکردن</string>
+    <string name="ext__editor__title_create_keyboard">دروستکردنی زیادکراوی تەختەکلیل</string>
+    <string name="ext__editor__title_create_spelling">دروستکردنی زیادکراوی ڕاستکردنەوەی نووسین</string>
+    <string name="ext__editor__title_create_theme">دروستکردنی ڕووکار</string>
+    <string name="ext__editor__title_edit_any">دەستکاریکردن</string>
+    <string name="ext__editor__title_edit_keyboard">دەستکاریکردنی زیادکراوی تەختەکلیل</string>
+    <string name="ext__editor__title_edit_spelling">دەستکاریکردنی زیادکراوی ڕاستکردنەوەی نووسین</string>
+    <string name="ext__editor__title_edit_theme">دەستکاریکردنی ڕووکار</string>
+    <string name="ext__editor__metadata__title">ڕێکخستنی سەرچاوەکان</string>
+    <string name="ext__editor__metadata__title_invalid">داتای سەرچاوە نادروستە</string>
+    <string name="ext__editor__create_component__title_theme">دروستکردنی ڕووکار</string>
+    <string name="ext__editor__create_component__from_empty">دروستکردن لە سەرەتاوە</string>
+    <string name="ext__editor__create_component__from_existing">دروستکردن لە ڕووکارەکانەوە</string>
+    <string name="ext__editor__create_component__from_empty_warning">دروستکردنی ڕووکارێکی بەتاڵ لەسەرەتاوە بۆ {app_name} لەوانەیە گران بێت و شارەزایی پێویستە ئەگەر بەکارهێنەرێکی نوێی بەرنامەکەیت یان شارەزایی کۆد و سەرچاوەکانی دیزاین نەبیت!</string>
     <string name="ext__export__success">زیادکراو بەسەرکەوتوویی هەڵگیرا!</string>
     <string name="ext__export__failure">هەڵگرتنی زیادکراو سەرکەوتو نەبوو: {error_message}</string>
     <string name="ext__import__success">زیادکراو بەسەرکەوتوویی هێنرا!</string>
@@ -440,10 +498,14 @@
     <string name="action__apply">جێبەجێکردن</string>
     <string name="action__back_up">پاشەکەوتکردن</string>
     <string name="action__cancel">پاشگەزبونەوە</string>
+    <string name="action__create">دروستکردن</string>
     <string name="action__default">بنەڕەتی</string>
     <string name="action__delete">سڕینەوە</string>
     <string name="action__delete_confirm_title">دڵنیاکردنەوە</string>
     <string name="action__delete_confirm_message">ئایا دڵنیایت لە سڕینەوەی \"{name}\"؟ ئەم فرمانە ناتوانرێ بگەرێندرێتەوە کە یەکجار جێبەجێکرا.</string>
+    <string name="action__discard">فەرامۆشکردن</string>
+    <string name="action__discard_confirm_title">گۆڕانکاری پاشکەوتنەکراو</string>
+    <string name="action__discard_confirm_message">ئایا دڵنیایت لەوەی دەتەوێت گۆڕانکاریە هەڵنەگیراوەکان پشتگوێ بخەیت؟ ئەم کارە ناکرێت یەکجار جێبەجێکرا ناتوانرێ بگەڕێتەوە.</string>
     <string name="action__edit">دەستکاری</string>
     <string name="action__export">هەڵگرتن</string>
     <string name="action__import">هێنان</string>

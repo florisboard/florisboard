@@ -86,6 +86,24 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Выбрать светлую тему</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Выбрать установленные темы</string>
+    <string name="settings__theme_editor__add_rule">Добавить правило</string>
+    <string name="settings__theme_editor__edit_rule">Изменить правило</string>
+    <string name="settings__theme_editor__no_rules_defined">В таблице стилей не определены правила. Добавьте правило, чтобы начать её настройку.</string>
+    <string name="settings__theme_editor__rule_codes">Коды</string>
+    <string name="settings__theme_editor__rule_groups">Группы</string>
+    <string name="settings__theme_editor__rule_modes">Режимы</string>
+    <string name="settings__theme_editor__add_code">Добавить код</string>
+    <string name="settings__theme_editor__edit_code">Редактировать код</string>
+    <string name="settings__theme_editor__no_codes_defined">Коды не заданы.</string>
+    <string name="settings__theme_editor__code_already_exists">Этот код уже используется.</string>
+    <string name="settings__theme_editor__add_property">Добавить свойство</string>
+    <string name="settings__theme_editor__edit_property">Изменить свойство</string>
+    <string name="settings__theme_editor__property_name">Название свойства</string>
+    <string name="settings__theme_editor__property_value">Значения свойства</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Это без полей</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
+    <string name="snygg__rule_element__defines">Переменные</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
@@ -127,6 +145,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Показать служебную клавишу</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Показывает настраиваемую служебную клавишу рядом с пробелом</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Действие служебной клавиши</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Показывать язык на кнопке пробела</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Показывать название текущего активного языка на кнопке пробела</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
@@ -523,6 +543,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Повторить</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Отменить</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Точное выделение символов</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Точное выделение слов</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Показать выбор способа ввода</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Переключиться на предыдущую клавиатуру</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Переключиться на предыдущую раскладку</string>

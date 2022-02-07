@@ -86,6 +86,42 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Tages-Design auswählen</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Nacht-Design auswählen</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Installierte Designs verwalten</string>
+    <string name="settings__theme_editor__add_rule">Regel hinzufügen</string>
+    <string name="settings__theme_editor__edit_rule">Regel bearbeiten</string>
+    <string name="settings__theme_editor__no_rules_defined">Das stylesheet hat keine Regeln definiert. Fügen Sie eine Regel hinzu, um dieses stylesheet anzupassen.</string>
+    <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
+    <string name="settings__theme_editor__rule_element">Zielelement</string>
+    <string name="settings__theme_editor__rule_codes">Codes</string>
+    <string name="settings__theme_editor__rule_groups">Gruppen</string>
+    <string name="settings__theme_editor__rule_modes">Modi</string>
+    <string name="settings__theme_editor__rule_selectors">Selektoren</string>
+    <string name="settings__theme_editor__add_code">Code hinzufügen</string>
+    <string name="settings__theme_editor__edit_code">Code bearbeiten</string>
+    <string name="settings__theme_editor__no_codes_defined">Keine Codes definiert.</string>
+    <string name="settings__theme_editor__code_already_exists">Dieser Schlüsselcode ist bereits definiert.</string>
+    <string name="settings__theme_editor__code_invalid">Dieser Schlüsselcode ist nicht gültig. Stellen Sie sicher, dass der Schlüsselcode innerhalb der Spanne von {c_min} bis {c_max} für Zeichen, oder von {i_min} bis {i_max} für interne Spezialschlüssel liegt.</string>
+    <string name="settings__theme_editor__code_help_text">Der folgende Link wird Ihnen helfen den entsprechenden Schlüsselcode zu finden:</string>
+    <string name="settings__theme_editor__add_property">Eigenschaft hinzufügen</string>
+    <string name="settings__theme_editor__edit_property">Eigenschaft bearbeiten</string>
+    <string name="settings__theme_editor__property_already_exists">Eine Eigenschaft mit diesem Namen existiert bereits i der momentanen Regel.</string>
+    <string name="settings__theme_editor__property_name">Eigenschaftsname</string>
+    <string name="settings__theme_editor__property_value">Eigenschaftswert</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Auf alle Ecken anwenden</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Ist Nachtthema</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Ist randlos</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheetpfad</string>
+    <string name="snygg__rule_element__defines">Variablen</string>
+    <string name="snygg__rule_element__defines_description">Definieren Sie Variablen innerhalb dieser Regel um häufigere Farben oder Größen in ihrem Stylesheet wiederzuverwenden.</string>
+    <string name="snygg__rule_element__keyboard">Tastaturfenster</string>
+    <string name="snygg__rule_element__key">Taste</string>
+    <string name="snygg__rule_element__key_hint">Tastenhinweis</string>
+    <string name="snygg__rule_element__key_popup">Tasten Pop-Up</string>
+    <string name="snygg__rule_element__clipboard_header">Zwischenablagekopfzeile</string>
+    <string name="snygg__rule_element__clipboard_item">Zwischenablagenitem</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Zwischensblagenitem-Popup</string>
+    <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Smartbsr primäre Zeile</string>
+    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primäre Aktionszeile Schalter</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ton &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ton Rückmeldung / Klänge</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ton Rückmeldung aktivieren</string>
@@ -127,6 +163,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Utility-Taste anzeigen</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zeigt eine konfigurierbare Utility-Taste neben der Leertaste an</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility-Taste Aktion</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Sprache auf Leertaste anzeigen</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Zeigt den Namen der momentan aktiven Sprache auf der Leertaste an</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Schriftgröße</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Einhandmodus</string>
@@ -523,6 +561,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Umschalt</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Wiederherstellen</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Rückgängig</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Zeichen präzise auswählen</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Wörter präzise auswählen</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Auswahl der Eingabemethode anzeigen</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Wechsle zur vorherigen Tastatur</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Wechsle zum vorherigen Subtyp</string>
