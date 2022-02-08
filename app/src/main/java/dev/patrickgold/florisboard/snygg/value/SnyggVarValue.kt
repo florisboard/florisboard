@@ -16,15 +16,16 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
+import dev.patrickgold.florisboard.res.ext.ExtensionValidation
+
 private const val VarKey = "varKey"
-private val VarRegex = """^[a-zA-Z0-9-_]+${'$'}""".toRegex()
 
 sealed interface SnyggVarValue : SnyggValue
 
 data class SnyggDefinedVarValue(val key: String) : SnyggVarValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            function(name = "var") { string(id = VarKey, regex = VarRegex) }
+            function(name = "var") { string(id = VarKey, regex = ExtensionValidation.ThemeComponentVariableNameRegex) }
         }
 
         override fun defaultValue() = SnyggDefinedVarValue("")

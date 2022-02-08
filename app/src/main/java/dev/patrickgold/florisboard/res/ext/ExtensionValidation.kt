@@ -31,6 +31,7 @@ object ExtensionValidation {
     private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*${'$'}""".toRegex()
     private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
     private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*${'$'}""".toRegex()
+    val ThemeComponentVariableNameRegex = """^[a-zA-Z0-9-_]+${'$'}""".toRegex()
 
     val MetaId = ValidationRule<String> {
         forKlass = ExtensionMeta::class
@@ -143,10 +144,14 @@ object ExtensionValidation {
     val ThemeComponentVariableName = ValidationRule<String> {
         forKlass = SnyggStylesheet::class
         forProperty = "propertyName"
-        validator { str ->
+        validator { input ->
+            val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = "Please enter a variable name")
                 str == "-" || str.startsWith("--") -> resultValid()
+                !ThemeComponentVariableNameRegex.matches(str) -> {
+                    resultInvalid(error = "Please enter a valid variable name matching $ThemeComponentVariableNameRegex")
+                }
                 else -> resultValid(hint = "By convention a FlorisCSS variable name starts with two dashes (--)")
             }
         }

@@ -28,6 +28,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -40,8 +42,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -145,7 +149,7 @@ internal fun EditPropertyDialog(
     }
 
     fun isPropertyNameValid(): Boolean {
-        return propertyName.isNotBlank() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+        return propertyNameValidation.isValid() && propertyName != SnyggEmptyPropertyInfoForAdding.name
     }
 
     fun isPropertyValueValid(): Boolean {
@@ -270,10 +274,14 @@ private fun PropertyNameInput(
             onDismissRequest = { propertiesExpanded = false },
         )
     } else {
+        val focusManager = LocalFocusManager.current
         FlorisOutlinedTextField(
             value = name,
             onValueChange = onNameChange,
             enabled = isAddPropertyDialog,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            singleLine = true,
             showValidationHint = isAddPropertyDialog,
             showValidationError = showSelectAsError,
             validationResult = nameValidation,
