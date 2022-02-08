@@ -25,6 +25,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.takeOrElse
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
@@ -47,7 +49,7 @@ fun Modifier.snyggBackground(
 
 fun Modifier.snyggShadow(
     style: SnyggPropertySet,
-    elevation: Dp = style.shadowElevation.dpSize(),
+    elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp },
     shape: Shape = style.shape.shape(),
 ): Modifier {
     // TODO: find a performant way to implement shadow color

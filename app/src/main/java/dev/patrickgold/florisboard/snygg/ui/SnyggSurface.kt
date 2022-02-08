@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.takeOrElse
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
 private val NoContentPadding = PaddingValues(all = 0.dp)
@@ -53,7 +54,7 @@ fun SnyggSurface(
     clickAndSemanticsModifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val elevationDp = elevation?.dpSize() ?: 0.dp
+    val elevationDp = elevation?.dpSize()?.takeOrElse { 0.dp } ?: 0.dp
     val shapeValue = shape?.shape() ?: RectangleShape
     val color = background.solidColor()
     val contentColor = contentColorFor(color)
