@@ -1,0 +1,4 @@
+This release is a hotfix release for Android 9 devices where a missing elevation attribute can
+consistently crash the keyboard UI.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta11
