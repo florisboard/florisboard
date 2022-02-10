@@ -93,54 +93,6 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     var wordList by remember { mutableStateOf(emptyList<UserDictionaryEntry>()) }
     var userDictionaryEntryForDialog by remember { mutableStateOf<UserDictionaryEntry?>(null) }
 
-    val importDictionary = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri ->
-            // If uri is null it indicates that the selection activity was cancelled (mostly
-            // by pressing the back button), so we don't display an error message here.
-            if (uri == null) return@rememberLauncherForActivityResult
-            val db = when (type) {
-                UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDatabase()
-                UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
-            }
-            if (db == null) {
-                context.showLongToast("Database handle is null, failed to import")
-                return@rememberLauncherForActivityResult
-            }
-            runCatching {
-                db.importCombinedList(context, uri)
-            }.onSuccess {
-                context.showLongToast(R.string.settings__udm__dictionary_import_success)
-            }.onFailure { error ->
-                context.showLongToast("Error: ${error.localizedMessage}")
-            }
-        },
-    )
-
-    val exportDictionary = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument(),
-        onResult = { uri ->
-            // If uri is null it indicates that the selection activity was cancelled (mostly
-            // by pressing the back button), so we don't display an error message here.
-            if (uri == null) return@rememberLauncherForActivityResult
-            val db = when (type) {
-                UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDatabase()
-                UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
-            }
-            if (db == null) {
-                context.showLongToast("Database handle is null, failed to export")
-                return@rememberLauncherForActivityResult
-            }
-            runCatching {
-                db.exportCombinedList(context, uri)
-            }.onSuccess {
-                context.showLongToast(R.string.settings__udm__dictionary_export_success)
-            }.onFailure { error ->
-                context.showLongToast("Error: ${error.localizedMessage}")
-            }
-        },
-    )
-
     fun userDictionaryDao(): UserDictionaryDao? {
         return when (type) {
             UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDao()
@@ -175,6 +127,55 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
         }
     }
 
+    val importDictionary = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            // If uri is null it indicates that the selection activity was cancelled (mostly
+            // by pressing the back button), so we don't display an error message here.
+            if (uri == null) return@rememberLauncherForActivityResult
+            val db = when (type) {
+                UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDatabase()
+                UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
+            }
+            if (db == null) {
+                context.showLongToast("Database handle is null, failed to import")
+                return@rememberLauncherForActivityResult
+            }
+            runCatching {
+                db.importCombinedList(context, uri)
+            }.onSuccess {
+                buildUi()
+                context.showLongToast(R.string.settings__udm__dictionary_import_success)
+            }.onFailure { error ->
+                context.showLongToast("Error: ${error.localizedMessage}")
+            }
+        },
+    )
+
+    val exportDictionary = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument(),
+        onResult = { uri ->
+            // If uri is null it indicates that the selection activity was cancelled (mostly
+            // by pressing the back button), so we don't display an error message here.
+            if (uri == null) return@rememberLauncherForActivityResult
+            val db = when (type) {
+                UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDatabase()
+                UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
+            }
+            if (db == null) {
+                context.showLongToast("Database handle is null, failed to export")
+                return@rememberLauncherForActivityResult
+            }
+            runCatching {
+                db.exportCombinedList(context, uri)
+            }.onSuccess {
+                context.showLongToast(R.string.settings__udm__dictionary_export_success)
+            }.onFailure { error ->
+                context.showLongToast("Error: ${error.localizedMessage}")
+            }
+        },
+    )
+
     navigationIcon {
         FlorisIconButton(
             onClick = {
@@ -204,16 +205,25 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             onDismissRequest = { expanded = false },
         ) {
             DropdownMenuItem(
-                onClick = { importDictionary.launch("*/*") },
+                onClick = {
+                    importDictionary.launch("*/*")
+                    expanded = false
+                },
                 content = { Text(text = stringRes(R.string.action__import)) },
             )
             DropdownMenuItem(
-                onClick = { exportDictionary.launch("my-personal-dictionary.clb") },
+                onClick = {
+                    exportDictionary.launch("my-personal-dictionary.clb")
+                    expanded = false
+                },
                 content = { Text(text = stringRes(R.string.action__export)) },
             )
             if (type == UserDictionaryType.SYSTEM) {
                 DropdownMenuItem(
-                    onClick = { context.launchActivity { it.action = SystemUserDictionaryUiIntentAction } },
+                    onClick = {
+                        context.launchActivity { it.action = SystemUserDictionaryUiIntentAction }
+                        expanded = false
+                    },
                     content = { Text(text = stringRes(R.string.settings__udm__open_system_manager_ui)) },
                 )
             }
