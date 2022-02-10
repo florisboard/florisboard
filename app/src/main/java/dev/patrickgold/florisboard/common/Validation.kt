@@ -31,20 +31,28 @@ sealed class ValidationResult {
             return Valid()
         }
 
+        fun resultValid(hint: String): ValidationResult {
+            return Valid(hintMessageStr = hint)
+        }
+
         fun resultValid(@StringRes hint: Int): ValidationResult {
             return Valid(hintMessageId = hint)
         }
 
-        fun resultValid(hint: String): ValidationResult {
-            return Valid(hintMessageStr = hint)
+        fun resultValid(@StringRes hint: Int, vararg args: CurlyArg): ValidationResult {
+            return Valid(hintMessageId = hint, args = args.toList())
+        }
+
+        fun resultInvalid(error: String): ValidationResult {
+            return Invalid(errorMessageStr = error)
         }
 
         fun resultInvalid(@StringRes error: Int): ValidationResult {
             return Invalid(errorMessageId = error)
         }
 
-        fun resultInvalid(error: String): ValidationResult {
-            return Invalid(errorMessageStr = error)
+        fun resultInvalid(@StringRes error: Int, vararg args: CurlyArg): ValidationResult {
+            return Invalid(errorMessageId = error, args = args.toList())
         }
     }
 

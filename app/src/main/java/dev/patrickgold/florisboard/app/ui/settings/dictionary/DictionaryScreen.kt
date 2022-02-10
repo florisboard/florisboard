@@ -17,9 +17,10 @@
 package dev.patrickgold.florisboard.app.ui.settings.dictionary
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
@@ -29,7 +30,7 @@ fun DictionaryScreen() = FlorisScreen {
     title = stringRes(R.string.settings__dictionary__title)
     previewFieldVisible = true
 
-    val context = LocalContext.current
+    val navController = LocalNavController.current
 
     content {
         SwitchPreference(
@@ -40,7 +41,7 @@ fun DictionaryScreen() = FlorisScreen {
         Preference(
             title = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__label),
             summary = stringRes(R.string.pref__dictionary__manage_system_user_dictionary__summary),
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate(Routes.Settings.UserDictionary(UserDictionaryType.SYSTEM)) },
             enabledIf = { prefs.dictionary.enableSystemUserDictionary isEqualTo true },
         )
         SwitchPreference(
@@ -51,7 +52,7 @@ fun DictionaryScreen() = FlorisScreen {
         Preference(
             title = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__label),
             summary = stringRes(R.string.pref__dictionary__manage_floris_user_dictionary__summary),
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate(Routes.Settings.UserDictionary(UserDictionaryType.FLORIS)) },
             enabledIf = { prefs.dictionary.enableFlorisUserDictionary isEqualTo true },
         )
     }
