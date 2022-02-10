@@ -308,22 +308,23 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal User Dictionary</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System User Dictionary</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequency: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequency: %d | Shortcut: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">This user dictionary does not contain any words.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequency: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequency: {freq} | Shortcut: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For all languages</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Open system manager UI</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">User dictionary imported successfully!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">User dictionary exported successfully!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Add word entry</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit word entry</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Add word</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit word</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Word</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Please enter a word!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">This word contains invalid characters.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequency (between %d and %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a frequency value!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a valid number within the specified bounds!</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Please enter a word</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Please enter a word matching {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequency (between {f_min} and {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a frequency value</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a valid number within the specified bounds</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Shortcut (optional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">This shortcut contains invalid characters.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Please enter a shortcut matching {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 

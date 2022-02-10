@@ -38,6 +38,8 @@ import dev.patrickgold.florisboard.app.ui.settings.advanced.BackupScreen
 import dev.patrickgold.florisboard.app.ui.settings.advanced.RestoreScreen
 import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.dictionary.DictionaryScreen
+import dev.patrickgold.florisboard.app.ui.settings.dictionary.UserDictionaryScreen
+import dev.patrickgold.florisboard.app.ui.settings.dictionary.UserDictionaryType
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
@@ -94,6 +96,8 @@ object Routes {
         const val ImportSpellingAffDic = "settings/spelling/import-aff-dic"
 
         const val Dictionary = "settings/dictionary"
+        const val UserDictionary = "settings/dictionary/user-dictionary/{type}"
+        fun UserDictionary(type: UserDictionaryType) = UserDictionary.curlyFormat("type" to type.id)
 
         const val Gestures = "settings/gestures"
 
@@ -181,6 +185,12 @@ object Routes {
             composable(Settings.ImportSpellingArchive) { ImportSpellingArchiveScreen() }
 
             composable(Settings.Dictionary) { DictionaryScreen() }
+            composable(Settings.UserDictionary) { navBackStack ->
+                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
+                    UserDictionaryType.values().firstOrNull { it.id == typeId }
+                }
+                UserDictionaryScreen(type!!)
+            }
 
             composable(Settings.Gestures) { GesturesScreen() }
 

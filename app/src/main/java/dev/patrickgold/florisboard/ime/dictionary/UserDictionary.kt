@@ -33,8 +33,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.res.ExternalContentUtils
+import dev.patrickgold.florisboard.common.ValidationRule
+import dev.patrickgold.florisboard.common.android.readText
+import dev.patrickgold.florisboard.common.android.writeText
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 
 private const val WORDS_TABLE = "words"
@@ -132,8 +136,8 @@ interface UserDictionaryDatabase {
 
     fun reset()
 
-    fun importCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.readTextFromUri(context, uri,6_192_000) { src ->
+    fun importCombinedList(context: Context, uri: Uri) {
+        context.contentResolver.readText(uri) { src ->
             var isFirstLine = true
             src.forEachLine { line ->
                 if (isFirstLine) {
@@ -144,41 +148,45 @@ interface UserDictionaryDatabase {
                     var freq: Int? = null
                     var locale: String? = null
                     var shortcut: String? = null
-                    line.split(';').forEach { property ->
+                    for (property in line.split(';')) {
                         val keyValuePair = property.split('=')
-                        if (keyValuePair.size == 2) {
-                            val key = keyValuePair[0].trim().lowercase()
-                            val value = keyValuePair[1].trim()
-                            when (key) {
-                                "w", "word" -> word = value.ifBlank { null }
-                                "f", "freq" -> runCatching { value.toInt(10) }.onSuccess {
-                                    freq = it.coerceIn(FREQUENCY_MIN, FREQUENCY_MAX)
+                        check(keyValuePair.size == 2) { "Error at source line `$line`: Key-Value pair expected, but either only key or too many values provided" }
+                        val key = keyValuePair[0].trim().lowercase()
+                        val value = keyValuePair[1].trim()
+                        when (key) {
+                            "w", "word" -> word = value.ifBlank { null }
+                            "f", "freq" -> {
+                                val number = value.toIntOrNull(10)
+                                checkNotNull(number) { "Error at source line `$line`: Freq is not a valid decimal number" }
+                                check(number in FREQUENCY_MIN..FREQUENCY_MAX) {
+                                    "Error at source line `$line`: Freq not within range of $FREQUENCY_MIN and $FREQUENCY_MAX"
                                 }
-                                "l", "locale" -> locale = when (value) {
-                                    "all", "null", "" -> null
-                                    else -> value.ifBlank { null }
-                                }
-                                "s", "shortcut" -> shortcut = value.ifBlank { null }
+                                freq = number
                             }
+                            "l", "locale" -> locale = when (value) {
+                                "all", "null", "" -> null
+                                else -> value.ifBlank { null }
+                            }
+                            "s", "shortcut" -> shortcut = value.ifBlank { null }
                         }
                     }
-                    if (word != null && freq != null) {
-                        val alreadyExistingEntries = userDictionaryDao().queryExact(
-                            word!!, locale?.let { FlorisLocale.fromTag(it) }
-                        )
-                        if (alreadyExistingEntries.isNotEmpty()) {
-                            userDictionaryDao().update(UserDictionaryEntry(alreadyExistingEntries[0].id, word!!, freq!!, locale, shortcut))
-                        } else {
-                            userDictionaryDao().insert(UserDictionaryEntry(0, word!!, freq!!, locale, shortcut))
-                        }
+                    checkNotNull(word) { "Error at source line `$line`: Word cannot be empty or missing" }
+                    checkNotNull(freq) { "Error at source line `$line`: Freq cannot be empty or missing" }
+                    val alreadyExistingEntries = userDictionaryDao().queryExact(
+                        word, locale?.let { FlorisLocale.fromTag(it) },
+                    )
+                    if (alreadyExistingEntries.isNotEmpty()) {
+                        userDictionaryDao().update(UserDictionaryEntry(alreadyExistingEntries[0].id, word, freq, locale, shortcut))
+                    } else {
+                        userDictionaryDao().insert(UserDictionaryEntry(0, word, freq, locale, shortcut))
                     }
                 }
             }
         }
     }
 
-    fun exportCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.writeTextToUri(context, uri) { dst ->
+    fun exportCombinedList(context: Context, uri: Uri) {
+        context.contentResolver.writeText(uri) { dst ->
             StringBuilder().apply {
                 append("dictionary=")
                 append(uri.lastPathSegment)
@@ -459,5 +467,62 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
 
     override fun reset() {
         TODO("Not yet implemented")
+    }
+}
+
+object UserDictionaryValidation {
+    private val WordRegex = """^[^\s;,]+${'$'}""".toRegex()
+
+    val Word = ValidationRule<String> {
+        forKlass = UserDictionaryEntry::class
+        forProperty = "word"
+        validator { input ->
+            val str = input.trim()
+            when {
+                input.isBlank() -> resultInvalid(error = R.string.settings__udm__dialog__word_error_empty)
+                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__word_error_invalid, "regex" to WordRegex)
+                else -> resultValid()
+            }
+        }
+    }
+
+    val Freq = ValidationRule<String> {
+        forKlass = UserDictionaryEntry::class
+        forProperty = "freq"
+        validator { input ->
+            val freq = input.trim().toIntOrNull(10)
+            when {
+                input.isBlank() -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_empty)
+                freq == null -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_empty)
+                freq < FREQUENCY_MIN || freq > FREQUENCY_MAX -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_invalid)
+                else -> resultValid()
+            }
+        }
+    }
+
+    val Shortcut = ValidationRule<String> {
+        forKlass = UserDictionaryEntry::class
+        forProperty = "shortcut"
+        validator { input ->
+            val str = input.trim()
+            when {
+                input.isBlank() -> resultValid() // Is optional
+                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__shortcut_error_invalid, "regex" to WordRegex)
+                else -> resultValid()
+            }
+        }
+    }
+
+    val Locale = ValidationRule<String> {
+        forKlass = UserDictionaryEntry::class
+        forProperty = "locale"
+        validator { input ->
+            val str = input.trim()
+            when {
+                input.isBlank() -> resultValid() // Is optional
+                tryOrNull { FlorisLocale.fromTag(str) } == null -> resultInvalid(error = R.string.settings__udm__dialog__locale_error_invalid)
+                else -> resultValid()
+            }
+        }
     }
 }
