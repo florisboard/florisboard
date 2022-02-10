@@ -134,12 +134,25 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         }
 
         fun showUi() {
+            val ims = FlorisImeServiceReference.get() ?: return
             if (AndroidVersion.ATLEAST_API28_P) {
-                FlorisImeServiceReference.get()?.requestShowSelf(0)
+                ims.requestShowSelf(0)
+            } else {
+                @Suppress("DEPRECATION")
+                ims.systemServiceOrNull(InputMethodManager::class)
+                    ?.showSoftInputFromInputMethod(ims.currentInputBinding.connectionToken, 0)
             }
         }
 
         fun hideUi() {
+            val ims = FlorisImeServiceReference.get() ?: return
+            if (AndroidVersion.ATLEAST_API28_P) {
+                ims.requestHideSelf(0)
+            } else {
+                @Suppress("DEPRECATION")
+                ims.systemServiceOrNull(InputMethodManager::class)
+                    ?.hideSoftInputFromInputMethod(ims.currentInputBinding.connectionToken, 0)
+            }
             FlorisImeServiceReference.get()?.requestHideSelf(0)
         }
 
