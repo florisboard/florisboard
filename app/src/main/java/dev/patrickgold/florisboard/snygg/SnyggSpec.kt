@@ -58,7 +58,7 @@ class SnyggPropertySetSpecBuilder {
     private var supportedProperties = mutableListOf<SnyggPropertySpec>()
 
     fun supportedValues(vararg encoders: SnyggValueEncoder) = listOf(
-        SnyggExplicitInheritValue, SnyggDefinedVarValue, *encoders,
+        *encoders, SnyggDefinedVarValue, SnyggExplicitInheritValue,
     )
 
     fun property(name: String, level: SnyggLevel, supportedValues: List<SnyggValueEncoder>) {
