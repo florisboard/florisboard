@@ -80,6 +80,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.snygg.ui.snyggClip
 import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
@@ -131,7 +132,7 @@ fun ClipboardInputLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight)
-                .snyggBackground(headerStyle.background),
+                .snyggBackground(headerStyle),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButtonWithInnerPadding(
@@ -202,9 +203,7 @@ fun ClipboardInputLayout(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(ItemMargin),
-            background = style.background,
-            elevation = style.shadowElevation,
-            shape = style.shape,
+            style = style,
             clip = true,
             contentPadding = ItemPadding,
             clickAndSemanticsModifier = Modifier.combinedClickable(
@@ -296,8 +295,9 @@ fun ClipboardInputLayout(
                         modifier = Modifier
                             .padding(ItemMargin)
                             .snyggShadow(popupStyle)
-                            .snyggBackground(popupStyle.background, popupStyle.shape)
-                            .snyggClip(popupStyle.shape),
+                            .snyggBorder(popupStyle)
+                            .snyggBackground(popupStyle)
+                            .snyggClip(popupStyle),
                     ) {
                         PopupAction(
                             iconId = R.drawable.ic_pin,
@@ -376,8 +376,7 @@ fun ClipboardInputLayout(
                     .padding(ItemMargin)
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                background = itemStyle.background,
-                shape = itemStyle.shape,
+                style = itemStyle,
                 contentPadding = ItemPadding,
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {

@@ -144,11 +144,7 @@
     <string name="snygg__property_name__height">Altura</string>
     <string name="snygg__property_name__background">Fundo</string>
     <string name="snygg__property_name__foreground">Primeiro plano</string>
-    <string name="snygg__property_name__border">Borda</string>
-    <string name="snygg__property_name__border_top">Borda superior</string>
-    <string name="snygg__property_name__border_bottom">Borda inferior</string>
-    <string name="snygg__property_name__border_start">Início da borda</string>
-    <string name="snygg__property_name__border_end">Final da borda</string>
+    <string name="snygg__property_name__border_color">Borda</string>
     <string name="snygg__property_name__font_family">Família da fonte</string>
     <string name="snygg__property_name__font_size">Tamanho da fonte</string>
     <string name="snygg__property_name__font_style">Estilo da fonte</string>

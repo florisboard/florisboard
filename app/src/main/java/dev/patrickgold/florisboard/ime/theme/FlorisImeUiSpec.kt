@@ -44,7 +44,19 @@ fun SnyggPropertySetSpecBuilder.foreground() {
         supportedValues(SnyggSolidColorValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.fontSize() {
+fun SnyggPropertySetSpecBuilder.border() {
+    property(
+        name = Snygg.BorderColor,
+        level = SnyggLevel.ADVANCED,
+        supportedValues(SnyggSolidColorValue),
+    )
+    property(
+        name = Snygg.BorderWidth,
+        level = SnyggLevel.ADVANCED,
+        supportedValues(SnyggDpSizeValue),
+    )
+}
+fun SnyggPropertySetSpecBuilder.font() {
     property(
         name = Snygg.FontSize,
         level = SnyggLevel.ADVANCED,
@@ -80,42 +92,45 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.Key) {
         background()
         foreground()
-        fontSize()
-        shadow()
+        font()
         shape()
+        shadow()
+        border()
     }
     element(FlorisImeUi.KeyHint) {
         background()
         foreground()
-        fontSize()
-        shape()
+        font()
     }
     element(FlorisImeUi.KeyPopup) {
         background()
         foreground()
-        fontSize()
-        shadow()
+        font()
         shape()
+        shadow()
+        border()
     }
 
     element(FlorisImeUi.ClipboardHeader) {
         background()
         foreground()
-        fontSize()
+        font()
     }
     element(FlorisImeUi.ClipboardItem) {
         background()
         foreground()
-        fontSize()
-        shadow()
+        font()
         shape()
+        shadow()
+        border()
     }
     element(FlorisImeUi.ClipboardItemPopup) {
         background()
         foreground()
-        fontSize()
-        shadow()
+        font()
         shape()
+        shadow()
+        border()
     }
 
     element(FlorisImeUi.GlideTrail) {
@@ -133,14 +148,16 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarPrimaryActionRowToggle) {
         background()
         foreground()
-        shadow()
         shape()
+        shadow()
+        border()
     }
     element(FlorisImeUi.SmartbarPrimarySecondaryRowToggle) {
         background()
         foreground()
-        shadow()
         shape()
+        shadow()
+        border()
     }
 
     element(FlorisImeUi.SmartbarSecondaryRow) {
@@ -153,8 +170,9 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarActionButton) {
         background()
         foreground()
-        shadow()
         shape()
+        shadow()
+        border()
     }
 
     element(FlorisImeUi.SmartbarCandidateRow) {
@@ -163,13 +181,13 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarCandidateWord) {
         background()
         foreground()
-        fontSize()
+        font()
         shape()
     }
     element(FlorisImeUi.SmartbarCandidateClip) {
         background()
         foreground()
-        fontSize()
+        font()
         shape()
     }
     element(FlorisImeUi.SmartbarCandidateSpacer) {
@@ -179,9 +197,10 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarKey) {
         background()
         foreground()
-        fontSize()
-        shadow()
+        font()
         shape()
+        shadow()
+        border()
     }
 
     element(FlorisImeUi.SystemNavBar) {

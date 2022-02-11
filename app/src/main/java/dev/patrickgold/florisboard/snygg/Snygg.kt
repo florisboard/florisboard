@@ -28,11 +28,9 @@ object Snygg {
     const val Background = "background"
     const val Foreground = "foreground"
 
-    const val Border = "border"
-    const val BorderTop = "border-top"
-    const val BorderBottom = "border-bottom"
-    const val BorderStart = "border-start"
-    const val BorderEnd = "border-end"
+    const val BorderColor = "border-color"
+    const val BorderStyle = "border-style"
+    const val BorderWidth = "border-width"
 
     const val FontFamily = "font-family"
     const val FontSize = "font-size"

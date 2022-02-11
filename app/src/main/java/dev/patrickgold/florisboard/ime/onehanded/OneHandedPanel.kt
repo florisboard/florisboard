@@ -46,7 +46,7 @@ fun RowScope.OneHandedPanel(
     Column(
         modifier = modifier
             .weight(weight)
-            .snyggBackground(oneHandedPanelStyle.background),
+            .snyggBackground(oneHandedPanelStyle),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {

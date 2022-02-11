@@ -44,10 +44,9 @@ class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
     val background = properties[Snygg.Background] ?: SnyggImplicitInheritValue
     val foreground = properties[Snygg.Foreground] ?: SnyggImplicitInheritValue
 
-    val borderTop = properties[Snygg.BorderTop] ?: properties[Snygg.Border] ?: SnyggImplicitInheritValue
-    val borderBottom = properties[Snygg.BorderBottom] ?: properties[Snygg.Border] ?: SnyggImplicitInheritValue
-    val borderStart = properties[Snygg.BorderStart] ?: properties[Snygg.Border] ?: SnyggImplicitInheritValue
-    val borderEnd = properties[Snygg.BorderEnd] ?: properties[Snygg.Border] ?: SnyggImplicitInheritValue
+    val borderColor = properties[Snygg.BorderColor] ?: SnyggImplicitInheritValue
+    val borderStyle = properties[Snygg.BorderStyle] ?: SnyggImplicitInheritValue
+    val borderWidth = properties[Snygg.BorderWidth] ?: SnyggImplicitInheritValue
 
     val fontFamily = properties[Snygg.FontFamily] ?: SnyggImplicitInheritValue
     val fontSize = properties[Snygg.FontSize] ?: SnyggImplicitInheritValue
@@ -108,18 +107,15 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         get() =  getProperty(Snygg.Foreground)
         set(v) = setProperty(Snygg.Foreground, v)
 
-    var borderTop: SnyggValue?
-        get() =  getProperty(Snygg.BorderTop)
-        set(v) = setProperty(Snygg.BorderTop, v)
-    var borderBottom: SnyggValue?
-        get() =  getProperty(Snygg.BorderBottom)
-        set(v) = setProperty(Snygg.BorderBottom, v)
-    var borderStart: SnyggValue?
-        get() =  getProperty(Snygg.BorderStart)
-        set(v) = setProperty(Snygg.BorderStart, v)
-    var borderEnd: SnyggValue?
-        get() =  getProperty(Snygg.BorderEnd)
-        set(v) = setProperty(Snygg.BorderEnd, v)
+    var borderColor: SnyggValue?
+        get() =  getProperty(Snygg.BorderColor)
+        set(v) = setProperty(Snygg.BorderColor, v)
+    var borderStyle: SnyggValue?
+        get() =  getProperty(Snygg.BorderStyle)
+        set(v) = setProperty(Snygg.BorderStyle, v)
+    var borderWidth: SnyggValue?
+        get() =  getProperty(Snygg.BorderWidth)
+        set(v) = setProperty(Snygg.BorderWidth, v)
 
     var fontFamily: SnyggValue?
         get() =  getProperty(Snygg.FontFamily)

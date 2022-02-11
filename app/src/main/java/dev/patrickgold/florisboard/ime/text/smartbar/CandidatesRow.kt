@@ -78,7 +78,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
         Row(
             modifier = modifier
                 .fillMaxSize()
-                .snyggBackground(rowStyle.background)
+                .snyggBackground(rowStyle)
                 .florisHorizontalScroll(),
         ) {
             for (inlineSuggestion in inlineSuggestions) {
@@ -89,7 +89,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
         Row(
             modifier = modifier
                 .fillMaxSize()
-                .snyggBackground(rowStyle.background)
+                .snyggBackground(rowStyle)
                 .then(
                     if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
                         Modifier.florisHorizontalScroll()
@@ -131,7 +131,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                                 .width(1.dp)
                                 .fillMaxHeight(0.6f)
                                 .align(Alignment.CenterVertically)
-                                .snyggBackground(spacerStyle.foreground),
+                                .snyggBackground(spacerStyle),
                         )
                     }
                     CandidateItem(
@@ -172,7 +172,7 @@ private fun CandidateItem(
 
     Row(
         modifier = modifier
-            .snyggBackground(style.background, style.shape)
+            .snyggBackground(style)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {

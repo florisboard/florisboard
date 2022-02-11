@@ -155,11 +155,9 @@
     <string name="snygg__property_name__height">Height</string>
     <string name="snygg__property_name__background">Background</string>
     <string name="snygg__property_name__foreground">Foreground</string>
-    <string name="snygg__property_name__border">Border</string>
-    <string name="snygg__property_name__border_top">Border top</string>
-    <string name="snygg__property_name__border_bottom">Border bottom</string>
-    <string name="snygg__property_name__border_start">Border start</string>
-    <string name="snygg__property_name__border_end">Border end</string>
+    <string name="snygg__property_name__border_color">Border color</string>
+    <string name="snygg__property_name__border_style">Border style</string>
+    <string name="snygg__property_name__border_width">Border width</string>
     <string name="snygg__property_name__font_family">Font family</string>
     <string name="snygg__property_name__font_size">Font size</string>
     <string name="snygg__property_name__font_style">Font style</string>
