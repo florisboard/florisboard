@@ -151,7 +151,7 @@ internal fun translatePropertyValue(
                     append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
-                    append((color.alpha * 0xFF).roundToInt().toString(16))
+                    append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
                 }
                 DisplayColorsAs.RGBA -> buildString {
                     append("rgba(")
