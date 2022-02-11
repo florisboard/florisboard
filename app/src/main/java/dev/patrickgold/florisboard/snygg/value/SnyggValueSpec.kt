@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
+import dev.patrickgold.florisboard.common.kotlin.toStringWithoutDotZero
+
 interface SnyggValueSpec {
     val id: String?
 
@@ -74,7 +76,7 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
         check(value.coerceIn(min, max) == value)
         return buildString {
             prefix?.let { append(it) }
-            append(value)
+            append((value as Number).toStringWithoutDotZero())
             suffix?.let { append(it) }
             unit?.let { append(it) }
         }
