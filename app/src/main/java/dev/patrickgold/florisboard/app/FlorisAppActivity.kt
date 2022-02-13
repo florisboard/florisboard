@@ -19,8 +19,6 @@ package dev.patrickgold.florisboard.app
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -109,29 +107,12 @@ class FlorisAppActivity : ComponentActivity() {
                     ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
                         Surface(color = MaterialTheme.colors.background) {
                             SystemUiApp()
-                            if (isDatastoreReady) {
-                                AppContent()
-                            }
+                            AppContent()
                         }
                     }
                 }
             }
         }
-
-        // PreDraw observer for SplashScreen
-        val content = findViewById<View>(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (isDatastoreReady) {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }
-        )
     }
 
     override fun onPause() {
