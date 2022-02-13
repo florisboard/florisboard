@@ -352,6 +352,7 @@
 
     <string name="settings__advanced__title" comment="Title of Advanced settings">Advanced</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Settings theme</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">System default (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Light</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dark</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dark</string>

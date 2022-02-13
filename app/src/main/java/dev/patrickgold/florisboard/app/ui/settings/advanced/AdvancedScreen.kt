@@ -48,6 +48,10 @@ fun AdvancedScreen() = FlorisScreen {
                     label = stringRes(R.string.settings__system_default),
                 )
                 entry(
+                    key = AppTheme.AUTO_AMOLED,
+                    label = stringRes(R.string.pref__advanced__settings_theme__auto_amoled),
+                )
+                entry(
                     key = AppTheme.LIGHT,
                     label = stringRes(R.string.pref__advanced__settings_theme__light),
                 )

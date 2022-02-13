@@ -59,9 +59,10 @@ import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
+    AUTO_AMOLED("auto_amoled"),
     LIGHT("light"),
     DARK("dark"),
-    AMOLED_DARK("amoled_dark"),
+    AMOLED_DARK("amoled_dark");
 }
 
 val LocalNavController = staticCompositionLocalOf<NavController> {
