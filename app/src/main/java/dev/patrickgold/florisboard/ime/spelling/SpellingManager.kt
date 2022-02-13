@@ -24,11 +24,11 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.common.android.read
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
@@ -42,7 +42,7 @@ class SpellingManager(context: Context) {
     companion object {
         private const val SOURCE_ID_RAW: String = "raw"
 
-        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 25_165_820 // 24 MiB
+        private const val IMPORT_ARCHIVE_MAX_SIZE: Long = 25_165_820 // 24 MiB
         private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
         private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
 
@@ -367,9 +367,9 @@ class SpellingManager(context: Context) {
     private fun saveTempFile(uri: Uri) = runCatching<File> {
         val tempFile = File(appContext.cacheDir, IMPORT_ARCHIVE_TEMP_NAME)
         tempFile.deleteRecursively() // Just to make sure we clean up old mess
-        ExternalContentUtils.readFromUri(appContext, uri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
+        appContext.contentResolver.read(uri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
             tempFile.outputStream().use { os -> bis.copyTo(os) }
-        }.getOrThrow()
+        }
         tempFile
     }
 
