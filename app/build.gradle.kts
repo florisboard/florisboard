@@ -75,7 +75,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc03"
+        kotlinCompilerExtensionVersion = "1.1.0"
     }
 
     externalNativeBuild {
@@ -144,13 +144,13 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.autofill:autofill:1.1.0")
     implementation("androidx.collection:collection-ktx:1.2.0")
-    implementation("androidx.compose.material:material:1.1.0-rc03")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-rc03")
-    implementation("androidx.compose.ui:ui:1.1.0-rc03")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-rc03")
+    implementation("androidx.compose.material:material:1.1.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0")
+    implementation("androidx.compose.ui:ui:1.1.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-beta01")
-    implementation("androidx.navigation:navigation-compose:2.4.0")
+    implementation("androidx.navigation:navigation-compose:2.4.1")
     implementation("com.google.accompanist:accompanist-flowlayout:0.20.2")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta06")
