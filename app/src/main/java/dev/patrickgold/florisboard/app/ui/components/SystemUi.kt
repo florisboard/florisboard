@@ -42,18 +42,17 @@ import dev.patrickgold.florisboard.common.android.AndroidVersion
 fun SystemUiApp() {
     val systemUiController = rememberFlorisSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
-    val backgroundColor = MaterialTheme.colors.background
 
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = backgroundColor,
+            color = Color.Transparent,
             darkIcons = useDarkIcons,
         )
         if (AndroidVersion.ATLEAST_API26_O) {
             systemUiController.setNavigationBarColor(
-                color = backgroundColor,
+                color = Color.Transparent,
                 darkIcons = useDarkIcons,
-                navigationBarContrastEnforced = true,
+                navigationBarContrastEnforced = false,
             )
         }
     }
@@ -194,4 +193,3 @@ private class FlorisSystemUiController(
         return if (context is ContextWrapper) context.findWindow() else null
     }
 }
-

@@ -58,6 +58,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.LocalWindowInsets
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -143,7 +144,7 @@ fun ThemeEditorScreen(
     val snyggLevel by prefs.theme.editorLevel.observeAsState()
     val displayColorsAs by prefs.theme.editorDisplayColorsAs.observeAsState()
     val displayKbdAfterDialogs by prefs.theme.editorDisplayKbdAfterDialogs.observeAsState()
-    var oldFocusState = remember { false }
+    var oldFocusState by remember { mutableStateOf(false) }
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
@@ -191,11 +192,12 @@ fun ThemeEditorScreen(
             handleBackPress()
         }
 
+        val isImeVisible = LocalWindowInsets.current.ime.isVisible
         LaunchedEffect(showEditComponentMetaDialog, showFineTuneDialog, snyggRuleToEdit, snyggPropertyToEdit) {
             val visible = showEditComponentMetaDialog || showFineTuneDialog ||
                 snyggRuleToEdit != null || snyggPropertyToEdit != null
             if (visible) {
-                oldFocusState = previewFieldController.isFocused
+                oldFocusState = isImeVisible
                 focusManager.clearFocus()
             } else {
                 delay(250)

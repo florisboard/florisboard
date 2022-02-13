@@ -39,6 +39,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
@@ -98,15 +101,17 @@ class FlorisAppActivity : ComponentActivity() {
         }
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
-                    Surface(color = MaterialTheme.colors.background) {
-                        SystemUiApp()
-                        if (isDatastoreReady) {
-                            AppContent()
+                    ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
+                        Surface(color = MaterialTheme.colors.background) {
+                            SystemUiApp()
+                            if (isDatastoreReady) {
+                                AppContent()
+                            }
                         }
                     }
                 }
@@ -160,7 +165,11 @@ class FlorisAppActivity : ComponentActivity() {
                 dismissLabel = stringRes(R.string.action__cancel),
                 neutralLabel = stringRes(R.string.action__default),
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .navigationBarsWithImePadding(),
+                ) {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),
                         navController = navController,
