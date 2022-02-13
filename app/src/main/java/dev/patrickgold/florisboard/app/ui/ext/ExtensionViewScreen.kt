@@ -119,7 +119,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
             if (!ext.meta.homepage.isNullOrBlank()) {
                 ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__homepage)) {
                     FlorisHyperlinkText(
-                        text = FlorisRef.from(ext.meta.homepage!!).authority,
+                        text = FlorisRef.fromUrl(ext.meta.homepage!!).authority,
                         url = ext.meta.homepage!!,
                     )
                 }
@@ -127,7 +127,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
             if (!ext.meta.issueTracker.isNullOrBlank()) {
                 ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__issue_tracker)) {
                     FlorisHyperlinkText(
-                        text = FlorisRef.from(ext.meta.issueTracker!!).authority,
+                        text = FlorisRef.fromUrl(ext.meta.issueTracker!!).authority,
                         url = ext.meta.issueTracker!!,
                     )
                 }

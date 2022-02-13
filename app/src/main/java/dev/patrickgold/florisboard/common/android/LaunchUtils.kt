@@ -19,29 +19,22 @@ package dev.patrickgold.florisboard.common.android
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.annotation.StringRes
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.kotlin.CurlyArg
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
-private const val URL_HTTP_PREFIX = "http://"
-private const val URL_HTTPS_PREFIX = "https://"
-private const val URL_MAILTO_PREFIX = "mailto:"
-
 fun Context.launchUrl(url: String) {
-    val link = when {
-        url.startsWith(URL_HTTP_PREFIX) ||
-            url.startsWith(URL_HTTPS_PREFIX) ||
-            url.startsWith(URL_MAILTO_PREFIX) -> url
-        else -> "$URL_HTTPS_PREFIX$url"
+    val intent = Intent().also {
+        it.action = Intent.ACTION_VIEW
+        it.data = FlorisRef.fromUrl(url).uri
+        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     try {
         this.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
