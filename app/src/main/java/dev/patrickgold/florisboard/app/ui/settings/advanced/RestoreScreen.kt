@@ -297,7 +297,7 @@ fun RestoreScreen() = FlorisScreen {
                                 .background(LocalContentColor.current.copy(alpha = LocalContentAlpha.current))
                         )
                         Text(
-                            text = stringRes(workspace.restoreErrorId!!),
+                            text = stringRes(workspace.restoreWarningId!!),
                             style = MaterialTheme.typography.body2,
                             color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
                             fontStyle = FontStyle.Italic,
