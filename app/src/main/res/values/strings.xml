@@ -99,6 +99,7 @@
     <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
     <string name="settings__theme_editor__fine_tune__level">Editing level</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Display colors as</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Display keyboard after dialogs</string>
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
@@ -665,6 +666,13 @@
 
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
+
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Always show</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Always show the keyboard after closing any editor dialog</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Never show</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Never show the keyboard after closing any editor dialog</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Remember last state</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Only show the keyboard after closing any editor dialog if it was previously visible</string>
 
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>

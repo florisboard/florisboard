@@ -142,6 +142,8 @@ fun ThemeEditorScreen(
 
     val snyggLevel by prefs.theme.editorLevel.observeAsState()
     val displayColorsAs by prefs.theme.editorDisplayColorsAs.observeAsState()
+    val displayKbdAfterDialogs by prefs.theme.editorDisplayKbdAfterDialogs.observeAsState()
+    var oldFocusState = remember { false }
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
@@ -193,10 +195,23 @@ fun ThemeEditorScreen(
             val visible = showEditComponentMetaDialog || showFineTuneDialog ||
                 snyggRuleToEdit != null || snyggPropertyToEdit != null
             if (visible) {
+                oldFocusState = previewFieldController.isFocused
                 focusManager.clearFocus()
             } else {
                 delay(250)
-                previewFieldController.focusRequester.requestFocus()
+                when (displayKbdAfterDialogs) {
+                    DisplayKbdAfterDialogs.ALWAYS -> {
+                        previewFieldController.focusRequester.requestFocus()
+                    }
+                    DisplayKbdAfterDialogs.NEVER -> {
+                        // Do nothing
+                    }
+                    DisplayKbdAfterDialogs.REMEMBER -> {
+                        if (oldFocusState) {
+                            previewFieldController.focusRequester.requestFocus()
+                        }
+                    }
+                }
             }
         }
 

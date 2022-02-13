@@ -40,6 +40,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.key.Key
@@ -70,6 +71,7 @@ fun rememberPreviewFieldController(): PreviewFieldController {
 
 class PreviewFieldController {
     val focusRequester = FocusRequester()
+    var isFocused by mutableStateOf(false)
     var isVisible by mutableStateOf(false)
     var text by mutableStateOf(TextFieldValue(""))
 }
@@ -100,7 +102,8 @@ fun PreviewKeyboardField(
                         }
                         false
                     }
-                    .focusRequester(controller.focusRequester),
+                    .focusRequester(controller.focusRequester)
+                    .onFocusChanged { controller.isFocused = it.isFocused },
                 value = controller.text,
                 onValueChange = { controller.text = it },
                 placeholder = {

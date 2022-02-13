@@ -47,6 +47,11 @@ fun FineTuneDialog(onDismiss: () -> Unit) {
                 title = stringRes(R.string.settings__theme_editor__fine_tune__display_colors_as),
                 entries = DisplayColorsAs.listEntries(),
             )
+            ListPreference(
+                listPref = prefs.theme.editorDisplayKbdAfterDialogs,
+                title = stringRes(R.string.settings__theme_editor__fine_tune__display_kbd_after_dialogs),
+                entries = DisplayKbdAfterDialogs.listEntries(),
+            )
         }
     }
 }
