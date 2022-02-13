@@ -315,6 +315,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = true
+        themeManager.updateActiveTheme()
     }
 
     override fun onWindowHidden() {

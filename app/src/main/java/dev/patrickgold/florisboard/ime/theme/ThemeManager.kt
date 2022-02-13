@@ -118,7 +118,7 @@ class ThemeManager(context: Context) {
      * Updates the current theme ref and loads the corresponding theme, as well as notifies all
      * callback receivers about the new theme.
      */
-    private fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
+    fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
             action()
             previewThemeInfo?.let { previewThemeInfo ->
