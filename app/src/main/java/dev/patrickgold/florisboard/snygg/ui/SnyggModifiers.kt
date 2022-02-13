@@ -17,12 +17,14 @@
 package dev.patrickgold.florisboard.snygg.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -35,31 +37,45 @@ import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
 fun Modifier.snyggBackground(
-    background: SnyggValue,
-    shape: SnyggValue? = null,
+    style: SnyggPropertySet,
+    shape: Shape = style.shape.shape(),
 ): Modifier {
-    return when (background) {
+    return when (val bg = style.background) {
         is SnyggSolidColorValue -> this.background(
-            color = background.color,
-            shape = shape?.shape() ?: RectangleShape,
+            color = bg.color,
+            shape = shape,
         )
         else -> this
     }
 }
 
+fun Modifier.snyggBorder(
+    style: SnyggPropertySet,
+    width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
+    color: Color = style.borderColor.solidColor(default = Color.Unspecified),
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    return if (color.isSpecified) {
+        this.border(width, color, shape)
+    } else {
+        this
+    }
+}
+
+fun Modifier.snyggClip(
+    style: SnyggPropertySet,
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    return this.clip(shape)
+}
+
 fun Modifier.snyggShadow(
     style: SnyggPropertySet,
-    elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp },
+    elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     shape: Shape = style.shape.shape(),
 ): Modifier {
     // TODO: find a performant way to implement shadow color
     return this.shadow(elevation, shape, clip = false)
-}
-
-fun Modifier.snyggClip(
-    shape: SnyggValue,
-): Modifier {
-    return this.clip(shape.shape())
 }
 
 fun SnyggValue.solidColor(default: Color = Color.Transparent): Color {

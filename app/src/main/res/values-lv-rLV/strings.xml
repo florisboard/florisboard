@@ -126,11 +126,7 @@
     <string name="snygg__property_name__width">Platums</string>
     <string name="snygg__property_name__height">Augstums</string>
     <string name="snygg__property_name__foreground">Priekšplāns</string>
-    <string name="snygg__property_name__border">Apmale</string>
-    <string name="snygg__property_name__border_top">Augšējā apmale</string>
-    <string name="snygg__property_name__border_bottom">Apakšējā apmale</string>
-    <string name="snygg__property_name__border_start">Apmales sākums</string>
-    <string name="snygg__property_name__border_end">Apmales beigas</string>
+    <string name="snygg__property_name__border_color">Apmale</string>
     <string name="snygg__property_name__font_family">Fontu saime</string>
     <string name="snygg__property_name__font_size">Burtu lielums</string>
     <string name="snygg__property_name__font_weight">Burtu biezums</string>

@@ -315,6 +315,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = true
+        themeManager.updateActiveTheme()
     }
 
     override fun onWindowHidden() {
@@ -456,7 +457,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 .onGloballyPositioned { coords -> inputViewSize = coords.size }
                 // Do not remove below line or touch input may get stuck
                 .pointerInteropFilter { false },
-            background = keyboardStyle.background,
+            style = keyboardStyle,
         ) {
             val configuration = LocalConfiguration.current
             val bottomOffset by if (configuration.isOrientationPortrait()) {

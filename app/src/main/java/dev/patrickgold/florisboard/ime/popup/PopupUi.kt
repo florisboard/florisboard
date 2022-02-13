@@ -41,6 +41,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
@@ -58,9 +59,7 @@ fun PopupBaseBox(
     val fontSize = popupStyle.fontSize.spSize() safeTimes fontSizeMultiplier
     SnyggSurface(
         modifier = modifier,
-        background = popupStyle.background,
-        elevation = popupStyle.shadowElevation,
-        shape = popupStyle.shape,
+        style = popupStyle,
         clip = true,
     ) {
         key.label?.let { label ->
@@ -110,7 +109,8 @@ fun PopupExtBox(
     Column(
         modifier = modifier
             .snyggShadow(popupStyle)
-            .snyggBackground(popupStyle.background, popupStyle.shape),
+            .snyggBorder(popupStyle)
+            .snyggBackground(popupStyle),
     ) {
         for (row in elements.asReversed()) {
             Row(
@@ -135,7 +135,7 @@ fun PopupExtBox(
                             .size(elemWidth, elemHeight)
                             .run {
                                 if (activeElementIndex == element.orderedIndex) {
-                                    snyggBackground(elemStyle.background, elemStyle.shape)
+                                    snyggBackground(elemStyle)
                                 } else {
                                     this
                                 }

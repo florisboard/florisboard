@@ -144,11 +144,7 @@
     <string name="snygg__property_name__height">الارتفاع</string>
     <string name="snygg__property_name__background">الخلفية</string>
     <string name="snygg__property_name__foreground">المقدمة</string>
-    <string name="snygg__property_name__border">الحدود</string>
-    <string name="snygg__property_name__border_top">الحد العلوي</string>
-    <string name="snygg__property_name__border_bottom">الحد السفلي</string>
-    <string name="snygg__property_name__border_start">بداية الحد</string>
-    <string name="snygg__property_name__border_end">نهاية الحد</string>
+    <string name="snygg__property_name__border_color">الحدود</string>
     <string name="snygg__property_name__font_family">عائلة الخط</string>
     <string name="snygg__property_name__font_size">حجم الخط</string>
     <string name="snygg__property_name__font_style">نوع الخط</string>

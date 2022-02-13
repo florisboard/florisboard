@@ -95,11 +95,9 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
             Snygg.Height -> R.string.snygg__property_name__height
             Snygg.Background -> R.string.snygg__property_name__background
             Snygg.Foreground -> R.string.snygg__property_name__foreground
-            Snygg.Border -> R.string.snygg__property_name__border
-            Snygg.BorderTop -> R.string.snygg__property_name__border_top
-            Snygg.BorderBottom -> R.string.snygg__property_name__border_bottom
-            Snygg.BorderStart -> R.string.snygg__property_name__border_start
-            Snygg.BorderEnd -> R.string.snygg__property_name__border_end
+            Snygg.BorderColor -> R.string.snygg__property_name__border_color
+            Snygg.BorderStyle -> R.string.snygg__property_name__border_style
+            Snygg.BorderWidth -> R.string.snygg__property_name__border_width
             Snygg.FontFamily -> R.string.snygg__property_name__font_family
             Snygg.FontSize -> R.string.snygg__property_name__font_size
             Snygg.FontStyle -> R.string.snygg__property_name__font_style
@@ -153,7 +151,7 @@ internal fun translatePropertyValue(
                     append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
-                    append((color.alpha * 0xFF).roundToInt().toString(16))
+                    append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
                 }
                 DisplayColorsAs.RGBA -> buildString {
                     append("rgba(")

@@ -63,6 +63,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.common.ValidationResult
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.common.kotlin.toStringWithoutDotZero
 import dev.patrickgold.florisboard.common.rememberValidationResult
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
@@ -458,7 +459,7 @@ private fun PropertyValueEditor(
         is SnyggDpSizeValue -> {
             var sizeStr by remember {
                 val dp = value.dp.takeUnless { it.isUnspecified } ?: SnyggDpSizeValue.defaultValue().dp
-                mutableStateOf(dp.value.toString())
+                mutableStateOf(dp.value.toStringWithoutDotZero())
             }
             Row(
                 modifier = Modifier.padding(top = 8.dp),
@@ -472,7 +473,7 @@ private fun PropertyValueEditor(
                         val size = sizeStr.toFloatOrNull()?.let { SnyggDpSizeValue(it.dp) }
                         onValueChange(size ?: SnyggDpSizeValue(Dp.Unspecified))
                     },
-                    isError = value.dp.isUnspecified || value.dp.value < 1f,
+                    isError = value.dp.isUnspecified || value.dp.value < 0f,
                 )
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
@@ -484,7 +485,7 @@ private fun PropertyValueEditor(
         is SnyggSpSizeValue -> {
             var sizeStr by remember {
                 val sp = value.sp.takeUnless { it.isUnspecified } ?: SnyggSpSizeValue.defaultValue().sp
-                mutableStateOf(sp.value.toString())
+                mutableStateOf(sp.value.toStringWithoutDotZero())
             }
             Row(
                 modifier = Modifier.padding(top = 8.dp),
@@ -572,7 +573,7 @@ private fun PropertyValueEditor(
                                 showDialogInitDp = topStart
                                 showDialogForCorner = ShapeCorner.TOP_START
                             },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topStart.value),
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topStart.value.toStringWithoutDotZero()),
                             shape = MaterialTheme.shapes.medium,
                         )
                         FlorisChip(
@@ -580,7 +581,7 @@ private fun PropertyValueEditor(
                                 showDialogInitDp = bottomStart
                                 showDialogForCorner = ShapeCorner.BOTTOM_START
                             },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomStart.value),
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomStart.value.toStringWithoutDotZero()),
                             shape = MaterialTheme.shapes.medium,
                         )
                     }
@@ -595,7 +596,7 @@ private fun PropertyValueEditor(
                                 showDialogInitDp = topEnd
                                 showDialogForCorner = ShapeCorner.TOP_END
                             },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topEnd.value),
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topEnd.value.toStringWithoutDotZero()),
                             shape = MaterialTheme.shapes.medium,
                         )
                         FlorisChip(
@@ -603,7 +604,7 @@ private fun PropertyValueEditor(
                                 showDialogInitDp = bottomEnd
                                 showDialogForCorner = ShapeCorner.BOTTOM_END
                             },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomEnd.value),
+                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomEnd.value.toStringWithoutDotZero()),
                             shape = MaterialTheme.shapes.medium,
                         )
                     }
@@ -612,7 +613,7 @@ private fun PropertyValueEditor(
                 if (dialogForCorner != null) {
                     var showValidationErrors by rememberSaveable { mutableStateOf(false) }
                     var size by rememberSaveable {
-                        mutableStateOf(showDialogInitDp.value.toString().removeSuffix(".0"))
+                        mutableStateOf(showDialogInitDp.value.toStringWithoutDotZero())
                     }
                     val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
                     JetPrefAlertDialog(

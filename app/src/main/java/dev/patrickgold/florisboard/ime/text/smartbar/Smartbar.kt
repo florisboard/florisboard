@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -142,7 +143,8 @@ private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .snyggShadow(actionsToggleStyle)
-                    .snyggBackground(actionsToggleStyle.background, actionsToggleStyle.shape),
+                    .snyggBorder(actionsToggleStyle)
+                    .snyggBackground(actionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
                 val rotation by animateFloatAsState(
@@ -204,7 +206,8 @@ private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .snyggShadow(secondaryToggleStyle)
-                    .snyggBackground(secondaryToggleStyle.background, secondaryToggleStyle.shape),
+                    .snyggBorder(secondaryToggleStyle)
+                    .snyggBackground(secondaryToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
                 AnimatedVisibility(
@@ -248,7 +251,7 @@ private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight)
-            .snyggBackground(rowStyle.background),
+            .snyggBackground(rowStyle),
     ) {
         if (primaryRowFlipToggles) {
             SecondaryRowToggle()
@@ -279,7 +282,7 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) = key(FlorisImeU
             modifier = modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight)
-                .snyggBackground(rowStyle.background),
+                .snyggBackground(rowStyle),
         )
     }
 }

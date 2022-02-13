@@ -296,9 +296,7 @@ private fun TextKeyButton(
         modifier = Modifier
             .requiredSize(key.visibleBounds.size.toDpSize())
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
-        background = keyStyle.background,
-        elevation = keyStyle.shadowElevation,
-        shape = keyStyle.shape,
+        style = keyStyle,
         clip = true,
     ) {
         key.label?.let { label ->
@@ -337,7 +335,7 @@ private fun TextKeyButton(
                     .padding(end = (key.visibleBounds.width / 12f).toDp())
                     .wrapContentSize()
                     .align(Alignment.TopEnd)
-                    .snyggBackground(keyHintStyle.background, keyHintStyle.shape),
+                    .snyggBackground(keyHintStyle),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),
                 fontFamily = FontFamily.Monospace,

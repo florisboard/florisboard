@@ -104,11 +104,7 @@
     <string name="snygg__rule_selector__disabled">Deshabilitado</string>
     <string name="snygg__property_name__width">Anchura</string>
     <string name="snygg__property_name__height">Altura</string>
-    <string name="snygg__property_name__border">Borde</string>
-    <string name="snygg__property_name__border_top">Borde superior</string>
-    <string name="snygg__property_name__border_bottom">Borde inferior</string>
-    <string name="snygg__property_name__border_start">Inicio de borde</string>
-    <string name="snygg__property_name__border_end">Final de borde</string>
+    <string name="snygg__property_name__border_color">Borde</string>
     <string name="snygg__property_name__font_family">Familia de fuente</string>
     <string name="snygg__property_name__font_size">Tamaño de fuente</string>
     <string name="snygg__property_name__font_style">Estilo de fuente</string>

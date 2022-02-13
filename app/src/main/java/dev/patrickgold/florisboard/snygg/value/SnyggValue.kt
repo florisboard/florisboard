@@ -107,7 +107,7 @@ object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
 
 val SnyggVarValueEncoders = listOf(
     SnyggSolidColorValue,
-    SnyggImageRefValue,
+    //SnyggImageRefValue,
     SnyggRectangleShapeValue,
     SnyggCircleShapeValue,
     SnyggRoundedCornerDpShapeValue,

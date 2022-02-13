@@ -145,11 +145,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__property_name__height">Tinggi</string>
     <string name="snygg__property_name__background">Latar belakang</string>
     <string name="snygg__property_name__foreground">Latar depan</string>
-    <string name="snygg__property_name__border">Tepian</string>
-    <string name="snygg__property_name__border_top">Tepian atas</string>
-    <string name="snygg__property_name__border_bottom">Tepian bawah</string>
-    <string name="snygg__property_name__border_start">Awalan tepian</string>
-    <string name="snygg__property_name__border_end">Tepian akhir</string>
+    <string name="snygg__property_name__border_color">Tepian</string>
     <string name="snygg__property_name__font_family">Keluarga font</string>
     <string name="snygg__property_name__font_size">Ukuran font</string>
     <string name="snygg__property_name__font_style">Gaya font</string>
