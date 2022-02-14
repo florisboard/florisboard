@@ -1,0 +1,5 @@
+- Add UI for user dictionary editing
+- Add border customizations for themes
+- Fix a lot of theme-related issues
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta12
