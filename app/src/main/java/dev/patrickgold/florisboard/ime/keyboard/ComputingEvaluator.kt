@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -29,6 +30,8 @@ interface ComputingEvaluator {
     fun activeSubtype(): Subtype
 
     fun context(): Context?
+
+    fun displayLanguageNamesIn(): DisplayLanguageNamesIn
 
     fun evaluateEnabled(data: KeyData): Boolean
 
@@ -47,6 +50,8 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun activeSubtype(): Subtype = Subtype.DEFAULT
 
     override fun context(): Context? = null
+
+    override fun displayLanguageNamesIn() = DisplayLanguageNamesIn.NATIVE_LOCALE
 
     override fun evaluateEnabled(data: KeyData): Boolean = true
 
@@ -71,8 +76,11 @@ fun ComputingEvaluator.computeLabel(data: KeyData): String? {
             KeyCode.PHONE_WAIT -> evaluator.context()?.getString(R.string.key__phone_wait)
             KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                 when (evaluator.keyboard().mode) {
-                    KeyboardMode.CHARACTERS -> {
-                        evaluator.activeSubtype().primaryLocale.let { it.displayName() }
+                    KeyboardMode.CHARACTERS -> evaluator.activeSubtype().primaryLocale.let { locale ->
+                        when (displayLanguageNamesIn()) {
+                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                        }
                     }
                     else -> null
                 }

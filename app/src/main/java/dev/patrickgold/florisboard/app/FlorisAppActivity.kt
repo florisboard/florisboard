@@ -19,8 +19,6 @@ package dev.patrickgold.florisboard.app
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -39,6 +37,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
@@ -59,9 +60,10 @@ import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
+    AUTO_AMOLED("auto_amoled"),
     LIGHT("light"),
     DARK("dark"),
-    AMOLED_DARK("amoled_dark"),
+    AMOLED_DARK("amoled_dark");
 }
 
 val LocalNavController = staticCompositionLocalOf<NavController> {
@@ -97,35 +99,20 @@ class FlorisAppActivity : ComponentActivity() {
         }
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
-                    Surface(color = MaterialTheme.colors.background) {
-                        SystemUiApp()
-                        if (isDatastoreReady) {
+                    ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
+                        Surface(color = MaterialTheme.colors.background) {
+                            SystemUiApp()
                             AppContent()
                         }
                     }
                 }
             }
         }
-
-        // PreDraw observer for SplashScreen
-        val content = findViewById<View>(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (isDatastoreReady) {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }
-        )
     }
 
     override fun onPause() {
@@ -159,7 +146,11 @@ class FlorisAppActivity : ComponentActivity() {
                 dismissLabel = stringRes(R.string.action__cancel),
                 neutralLabel = stringRes(R.string.action__default),
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .navigationBarsWithImePadding(),
+                ) {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),
                         navController = navController,

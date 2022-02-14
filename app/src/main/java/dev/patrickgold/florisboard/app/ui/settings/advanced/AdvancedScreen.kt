@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.ui.settings.advanced
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -25,6 +26,8 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -41,11 +44,16 @@ fun AdvancedScreen() = FlorisScreen {
     content {
         ListPreference(
             prefs.advanced.settingsTheme,
+            iconId = R.drawable.ic_palette,
             title = stringRes(R.string.pref__advanced__settings_theme__label),
             entries = listPrefEntries {
                 entry(
                     key = AppTheme.AUTO,
                     label = stringRes(R.string.settings__system_default),
+                )
+                entry(
+                    key = AppTheme.AUTO_AMOLED,
+                    label = stringRes(R.string.pref__advanced__settings_theme__auto_amoled),
                 )
                 entry(
                     key = AppTheme.LIGHT,
@@ -63,6 +71,7 @@ fun AdvancedScreen() = FlorisScreen {
         )
         ListPreference(
             prefs.advanced.settingsLanguage,
+            iconId = R.drawable.ic_language,
             title = stringRes(R.string.pref__advanced__settings_language__label),
             entries = listPrefEntries {
                 listOf(
@@ -112,14 +121,19 @@ fun AdvancedScreen() = FlorisScreen {
                             label = stringRes(R.string.settings__system_default),
                         )
                     } else {
+                        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
                         val locale = FlorisLocale.fromTag(languageTag)
-                        entry(locale.languageTag(), locale.displayName(locale))
+                        entry(locale.languageTag(), when (displayLanguageNamesIn) {
+                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                        })
                     }
                 }
             }
         )
         SwitchPreference(
             prefs.advanced.showAppIcon,
+            iconId = R.drawable.ic_preview,
             title = stringRes(R.string.pref__advanced__show_app_icon__label),
             summary = when {
                 AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__advanced__show_app_icon__summary_atleast_q)
@@ -129,6 +143,7 @@ fun AdvancedScreen() = FlorisScreen {
         )
         SwitchPreference(
             prefs.advanced.forcePrivateMode,
+            iconId = R.drawable.ic_security,
             title = stringRes(R.string.pref__advanced__force_private_mode__label),
             summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
         )
@@ -136,11 +151,13 @@ fun AdvancedScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {
             Preference(
                 onClick = { navController.navigate(Routes.Settings.Backup) },
+                iconId = R.drawable.ic_archive,
                 title = stringRes(R.string.backup_and_restore__back_up__title),
                 summary = stringRes(R.string.backup_and_restore__back_up__summary),
             )
             Preference(
                 onClick = { navController.navigate(Routes.Settings.Restore) },
+                iconId = R.drawable.ic_settings_backup_restore,
                 title = stringRes(R.string.backup_and_restore__restore__title),
                 summary = stringRes(R.string.backup_and_restore__restore__summary),
             )

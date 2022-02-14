@@ -44,6 +44,7 @@ data class Library(val name: String, val licenseText: String)
 fun ThirdPartyLicensesScreen() = FlorisScreen {
     title = stringRes(R.string.about__third_party_licenses__title)
     scrollable = false
+    iconSpaceReserved = false
 
     val context = LocalContext.current
 

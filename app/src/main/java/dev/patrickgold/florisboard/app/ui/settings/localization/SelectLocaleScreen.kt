@@ -43,10 +43,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 const val SelectLocaleScreenResultLanguageTag = "SelectLocaleScreen.languageTag"
@@ -56,9 +59,19 @@ fun SelectLocaleScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__subtype_select_locale)
     scrollable = false
 
+    val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
+
+    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
     var searchTermValue by remember { mutableStateOf(TextFieldValue()) }
-    val systemLocales = remember { FlorisLocale.installedSystemLocales().sortedBy { it.displayName() } }
+    val systemLocales = remember(displayLanguageNamesIn) {
+        FlorisLocale.installedSystemLocales().sortedBy { locale ->
+            when (displayLanguageNamesIn) {
+                DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+            }.lowercase()
+        }
+    }
     val filteredSystemLocales = remember(searchTermValue) {
         if (searchTermValue.text.isBlank()) {
             systemLocales
@@ -121,7 +134,10 @@ fun SelectLocaleScreen() = FlorisScreen {
                                 ?.set(SelectLocaleScreenResultLanguageTag, systemLocale.languageTag())
                             navController.popBackStack()
                         },
-                        text = systemLocale.displayName(),
+                        text = when (displayLanguageNamesIn) {
+                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> systemLocale.displayName()
+                            DisplayLanguageNamesIn.NATIVE_LOCALE -> systemLocale.displayName(systemLocale)
+                        },
                     )
                 }
             }

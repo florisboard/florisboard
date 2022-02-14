@@ -75,6 +75,10 @@ fun FlorisAppTheme(
             isSystemInDarkTheme() -> DarkColorPalette
             else -> LightColorPalette
         }
+        AppTheme.AUTO_AMOLED -> when {
+            isSystemInDarkTheme() -> AmoledDarkColorPalette
+            else -> LightColorPalette
+        }
         AppTheme.LIGHT -> LightColorPalette
         AppTheme.DARK -> DarkColorPalette
         AppTheme.AMOLED_DARK -> AmoledDarkColorPalette

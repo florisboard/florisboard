@@ -43,12 +43,14 @@ import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.jetpref.material.ui.checkeredBackground
 
 object SnyggValueIcon {
     interface Spec {
         val borderWith: Dp
         val boxShape: Shape
         val elevation: Dp
+        val gridSize: Dp
         val iconSize: Dp
         val iconSizeMinusBorder: Dp
     }
@@ -57,6 +59,7 @@ object SnyggValueIcon {
         override val borderWith = Dp.Hairline
         override val boxShape = RoundedCornerShape(4.dp)
         override val elevation = 4.dp
+        override val gridSize = 2.dp
         override val iconSize = 16.dp
         override val iconSizeMinusBorder = 16.dp
     }
@@ -65,6 +68,7 @@ object SnyggValueIcon {
         override val borderWith = 1.dp
         override val boxShape = RoundedCornerShape(8.dp)
         override val elevation = 4.dp
+        override val gridSize = 3.dp
         override val iconSize = 24.dp
         override val iconSizeMinusBorder = 22.dp
     }
@@ -88,6 +92,7 @@ internal fun SnyggValueIcon(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
+                        .checkeredBackground(gridSize = spec.gridSize)
                         .background(value.color),
                 )
             }

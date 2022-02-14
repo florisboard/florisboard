@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.app.prefs
 
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayColorsAs
+import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -436,6 +438,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     val localization = Localization()
     inner class Localization {
+        val displayLanguageNamesIn = enum(
+            key = "localization__display_language_names_in",
+            default = DisplayLanguageNamesIn.NATIVE_LOCALE,
+        )
         val activeSubtypeId = long(
             key = "localization__active_subtype_id",
             default = Subtype.DEFAULT.id,
@@ -569,6 +575,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val editorDisplayColorsAs = enum(
             key = "theme__editor_display_colors_as",
             default = DisplayColorsAs.HEX8,
+        )
+        val editorDisplayKbdAfterDialogs = enum(
+            key = "theme__editor_display_kbd_after_dialogs",
+            default = DisplayKbdAfterDialogs.REMEMBER,
         )
         val editorLevel = enum(
             key = "theme__editor_level",

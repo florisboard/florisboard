@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisButtonBar
@@ -61,6 +62,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
@@ -72,11 +74,11 @@ import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import java.util.*
 
 private val SelectComponentName = ExtensionComponentName("00", "00")
 private val SelectLayoutMap = SubtypeLayoutMap(
@@ -163,6 +165,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val selectValue = stringRes(R.string.settings__localization__subtype_select_placeholder)
     val selectListValues = remember (selectValue) { listOf(selectValue) }
 
+    val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -170,6 +173,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
+    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
     val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
     val layoutExtensions by keyboardManager.resources.layouts.observeAsNonNullState()
     val popupMappings by keyboardManager.resources.popupMappings.observeAsNonNullState()
@@ -288,7 +292,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                                     modifier = Modifier.clickable {
                                         subtypeEditor.applySubtype(suggestedPreset.toSubtype())
                                     },
-                                    text = suggestedPreset.locale.displayName(),
+                                    text = when (displayLanguageNamesIn) {
+                                        DisplayLanguageNamesIn.SYSTEM_LOCALE -> suggestedPreset.locale.displayName()
+                                        DisplayLanguageNamesIn.NATIVE_LOCALE -> suggestedPreset.locale.displayName(suggestedPreset.locale)
+                                    },
                                     secondaryText = suggestedPreset.preferred.characters.componentId,
                                 )
                             }
@@ -314,7 +321,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_locale)) {
                 FlorisDropdownLikeButton(
-                    item = if (primaryLocale == SelectLocale) selectValue else primaryLocale.displayName(),
+                    item = if (primaryLocale == SelectLocale) selectValue else when (displayLanguageNamesIn) {
+                        DisplayLanguageNamesIn.SYSTEM_LOCALE -> primaryLocale.displayName()
+                        DisplayLanguageNamesIn.NATIVE_LOCALE -> primaryLocale.displayName(primaryLocale)
+                    },
                     isError = showSelectAsError && primaryLocale == SelectLocale,
                     onClick = {
                         navController.navigate(Routes.Settings.SelectLocale)
@@ -474,7 +484,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                                 subtypeEditor.applySubtype(subtypePreset.toSubtype())
                                 showSubtypePresetsDialog = false
                             },
-                            text = subtypePreset.locale.displayName(),
+                            text = when (displayLanguageNamesIn) {
+                                DisplayLanguageNamesIn.SYSTEM_LOCALE -> subtypePreset.locale.displayName()
+                                DisplayLanguageNamesIn.NATIVE_LOCALE -> subtypePreset.locale.displayName(subtypePreset.locale)
+                            },
                             secondaryText = subtypePreset.preferred.characters.componentId,
                         )
                     }

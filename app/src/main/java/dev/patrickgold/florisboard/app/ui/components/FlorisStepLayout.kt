@@ -244,7 +244,8 @@ private fun ColumnScope.Step(
         ) {
             Column(modifier = Modifier
                 .fillMaxSize()
-                .florisVerticalScroll(),
+                .florisVerticalScroll()
+                .padding(end = 8.dp),
             ) {
                 content()
             }

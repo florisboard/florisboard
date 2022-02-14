@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
 
@@ -121,31 +122,31 @@ abstract class AndroidSettingsHelper(
 object AndroidSettings {
     val Global = object : AndroidSettingsHelper(Settings.Global::class, "global") {
         override fun getString(context: Context, key: String): String? {
-            return Settings.Global.getString(context.contentResolver, key)
+            return tryOrNull { Settings.Global.getString(context.contentResolver, key) }
         }
 
         override fun getUriFor(key: String): Uri? {
-            return Settings.Global.getUriFor(key)
+            return tryOrNull { Settings.Global.getUriFor(key) }
         }
     }
 
     val Secure = object : AndroidSettingsHelper(Settings.Secure::class, "secure") {
         override fun getString(context: Context, key: String): String? {
-            return Settings.Secure.getString(context.contentResolver, key)
+            return tryOrNull { Settings.Secure.getString(context.contentResolver, key) }
         }
 
         override fun getUriFor(key: String): Uri? {
-            return Settings.Secure.getUriFor(key)
+            return tryOrNull { Settings.Secure.getUriFor(key) }
         }
     }
 
     val System = object : AndroidSettingsHelper(Settings.System::class, "system") {
         override fun getString(context: Context, key: String): String? {
-            return Settings.System.getString(context.contentResolver, key)
+            return tryOrNull { Settings.System.getString(context.contentResolver, key) }
         }
 
         override fun getUriFor(key: String): Uri? {
-            return Settings.System.getUriFor(key)
+            return tryOrNull { Settings.System.getUriFor(key) }
         }
     }
 }

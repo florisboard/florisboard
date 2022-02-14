@@ -134,7 +134,7 @@ fun HomeScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.Keyboard) },
         )
         Preference(
-            iconId = null,
+            iconId = R.drawable.ic_smartbar,
             title = stringRes(R.string.settings__smartbar__title),
             onClick = { navController.navigate(Routes.Settings.Smartbar) },
         )

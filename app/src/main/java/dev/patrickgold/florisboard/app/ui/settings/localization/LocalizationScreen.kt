@@ -33,9 +33,12 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 
@@ -64,6 +67,11 @@ fun LocalizationScreen() = FlorisScreen {
     }
 
     content {
+        ListPreference(
+            prefs.localization.displayLanguageNamesIn,
+            title = stringRes(R.string.settings__localization__display_language_names_in__label),
+            entries = DisplayLanguageNamesIn.listEntries(),
+        )
         PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
             val subtypes by subtypeManager.subtypes.observeAsNonNullState()
             if (subtypes.isNullOrEmpty()) {
@@ -74,6 +82,7 @@ fun LocalizationScreen() = FlorisScreen {
             } else {
                 val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
                 val layouts by keyboardManager.resources.layouts.observeAsNonNullState()
+                val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
                 for (subtype in subtypes) {
                     val cMeta = layouts[LayoutType.CHARACTERS]?.get(subtype.layoutMap.characters)
                     val sMeta = layouts[LayoutType.SYMBOLS]?.get(subtype.layoutMap.symbols)
@@ -85,7 +94,10 @@ fun LocalizationScreen() = FlorisScreen {
                         "currency_set_name" to (currMeta?.label ?: "null"),
                     )
                     Preference(
-                        title = subtype.primaryLocale.displayName(),
+                        title = when (displayLanguageNamesIn) {
+                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> subtype.primaryLocale.displayName()
+                            DisplayLanguageNamesIn.NATIVE_LOCALE -> subtype.primaryLocale.displayName(subtype.primaryLocale)
+                        },
                         summary = summary,
                         onClick = { navController.navigate(
                             Routes.Settings.SubtypeEdit(subtype.id)
