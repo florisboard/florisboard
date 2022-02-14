@@ -144,7 +144,9 @@
     <string name="snygg__property_name__height">Altura</string>
     <string name="snygg__property_name__background">Fundo</string>
     <string name="snygg__property_name__foreground">Primeiro plano</string>
-    <string name="snygg__property_name__border_color">Borda</string>
+    <string name="snygg__property_name__border_color">Cor da borda</string>
+    <string name="snygg__property_name__border_style">Estilo da borda</string>
+    <string name="snygg__property_name__border_width">Largura da borda</string>
     <string name="snygg__property_name__font_family">Família da fonte</string>
     <string name="snygg__property_name__font_size">Tamanho da fonte</string>
     <string name="snygg__property_name__font_style">Estilo da fonte</string>
@@ -277,22 +279,23 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Adicionar, visualizar e remover entradas para o dicionário interno do usuário</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dicionário Interno do Usuário</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Dicionário de Usuário do Sistema</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequência: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequência: %d | Atalho: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Este dicionário do usuário não contém palavras.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequência: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequência: {freq} | Atalho: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Para todas as línguas</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Abrir interface do gerenciador do sistema</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dicionário de usuário importado com sucesso!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dicionário de usuário exportado com sucesso!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Adicionar entrada de palavra</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Editar entrada de palavra</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Adicionar palavra</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Editar palavra</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Palavra</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, digite uma palavra!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Esta palavra contém caracteres inválidos.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequência (entre %d e %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, digite um valor de frequência!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Digite um número válido dentro dos limites especificados!</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, insira uma palavra</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, insira uma palavra correspondente a {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequência (entre {f_min} e {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, insira um valor de frequência</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, insira um número válido dentro dos limites especificados</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Atalho (opcional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Este atalho contém caracteres inválidos.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Por favor, insira um atalho correspondente a {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Código de idioma (opcional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Este código de idioma não está de acordo com a sintaxe esperada. O código deve ser apenas uma língua (como en), uma língua e um país (como en_US) ou uma língua, país e script (como en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Digitação por Gestos</string>

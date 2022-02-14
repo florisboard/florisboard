@@ -127,22 +127,12 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات از لغتنامه داخلی کاربر</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">لغتنامه داخلی کاربر</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">لغتنامه سیستم کاربر</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">شدت تکرار: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">شدت تکرار: %d | اختصار: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">برای همه زبان ها</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">بازکردن مدیریت سیستم رابط کاربری</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">لغتنامه کاربر با موفقیت وارد شد!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">لغتنامه کاربر با موفقیت استخراج شد!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">افزودن لغت</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">ویرایش لغت</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">کلمه</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">لطفا یک کلمه وارد کنید!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">این کلمه دارای کاراکتر های غیرمجاز می‌باشد.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">شدت تکرار (بین %d و %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">لطفا یک مقدار شدت تکرار وارد کنید!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">لطفا یک مقدار عددی معتبر بین دامنه مقادیر مشخص شده وارد کنید!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">اختصار(اختیاری)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">این اختصار شامل حروف غیرمجاز میباشد.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">کد زبان (اختیاری)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">این کد زبان داده شده از حالت پیشبینی شده پشتیبانی نمی کند. کد داده شده یا باید فقط زبان باشد (مثل fa) یا یک زبان و کشور باشد(مثل fa_IR) یا یک زبان و کشور به همراه اسکریپت باشد (fa_IR-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">اشارات &amp; نوشتن گلایدی</string>

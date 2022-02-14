@@ -101,8 +101,6 @@
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">מילון משתמשי מערכת</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">מילון המשתמש יובא בהצלחה!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">מילון משתמשים מיוצא בהצלחה!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">הוסף ערך מילים</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">ערוך הזנת מילים</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">מחוות &amp; הקלדה גולשת</string>
     <string name="pref__glide__title" comment="Preference group title">הקלדה גולשת</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">הקלד מילה באמצעות החלקה של האצבע בין האותיות</string>

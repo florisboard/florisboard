@@ -24,10 +24,10 @@
     <string name="emoji__category__flags" comment="Emoji category name">Знамена</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързите действия. При докосване превключва между предложения за въвеждане и бутони за бързи действия.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от режима за редактиране на текст.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от режима за промяна на текст.</string>
     <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режим за работа с една ръка.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваря настройките.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Влиза в режим за редактиране на текст.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Влиза в режим за промяна на текст.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Влиза в режим за въвеждане на медия.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Бутон за отменяне, който връща последното действие</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последното отменено действие</string>
@@ -44,7 +44,7 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подредби</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
-    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редактиране на подредба</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Променяне на подредба</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основен език</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Подредба на клавишите</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Символи, основен изглед</string>
@@ -85,6 +85,9 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Избор на дневна тема</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Избор на нощна тема</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
+    <string name="settings__theme_editor__fine_tune__title">Настройки на редактора</string>
+    <string name="settings__theme_editor__fine_tune__level">Режим</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Формат на цветовете</string>
     <string name="settings__theme_editor__add_rule">Добавяне на правило</string>
     <string name="settings__theme_editor__edit_rule">Променяне на правило</string>
     <string name="settings__theme_editor__rule_element">Целеви елемент</string>
@@ -93,7 +96,7 @@
     <string name="settings__theme_editor__rule_modes">Режим</string>
     <string name="settings__theme_editor__rule_selectors">Селектор</string>
     <string name="settings__theme_editor__add_code">Добавяне на код</string>
-    <string name="settings__theme_editor__edit_code">Редактиране на код</string>
+    <string name="settings__theme_editor__edit_code">Промяна на код</string>
     <string name="settings__theme_editor__no_codes_defined">Липсват кодове.</string>
     <string name="settings__theme_editor__code_help_text">Следните препратки ще са ви от полза при намиране на клавишни кодове:</string>
     <string name="settings__theme_editor__add_property">Добавяне на свойство</string>
@@ -107,8 +110,13 @@
     <string name="snygg__rule_selector__disabled">Изключен</string>
     <string name="snygg__property_name__width">Ширина</string>
     <string name="snygg__property_name__height">Височина</string>
+    <string name="snygg__property_name__border_color">Цвят на канта</string>
+    <string name="snygg__property_name__border_style">Стил на канта</string>
+    <string name="snygg__property_name__border_width">Дебелина на канта</string>
     <string name="snygg__property_name__shape">Форма</string>
-    <string name="snygg__property_value__defined_var">Обръщение към променлива</string>
+    <string name="snygg__property_value__explicit_inherit">Наследяване</string>
+    <string name="snygg__property_value__solid_color">Плътен цвят</string>
+    <string name="snygg__property_value__defined_var">От променлива</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
@@ -174,17 +182,17 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Първи ред</string>
     <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Разменят се бутоните за действия и допулнителен ред</string>
+    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Разменят се бутоните за действия и допълнителен ред</string>
     <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Допълнителен ред</string>
     <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Допълнителен ред</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Добавя се адаптивен втори ред за допълнителни клавиши</string>
+    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Падащ втори ред за клавиши с допълнителни действия</string>
     <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Разположение на допълнителния ред</string>
     <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Ред с действия</string>
     <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим на предложенията</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично поставяне на главни букви</string>
@@ -204,22 +212,23 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Преглед, добавяне и премахване на думи от потребителския речник към приложението</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Потребителски речник към приложението</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системен потребителски речник</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Честота: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Честота: %d | ключова дума: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Потребителският речник не съдържа никакви думи.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Честота: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Честота: {freq} | ключова дума: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">За всички езици</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Отваряне на системни настройки</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Потребителският речник е изнесен!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Потребителският речник е внесен!</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Добавяне на дума</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Променяне на дума</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Промяна на дума</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Дума</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Въведете дума.</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Думата съдържа недействителни знаци.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Честота (между %d и %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Въведете стойност за честота.</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Въведете стойност в посочения диапазон.</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Въведете дума</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Въведете дума удовлетворяваща регулярния израз {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Честота (между {f_min} и {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Въведете стойност за честота</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Въведете число в посочения диапазон</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Ключова дума (по избор)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Ключовата дума съдържа недействителни знаци.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Въведете ключова дума удовлетворяваща регулярния израз {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код на езика (по избор)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Кодът на езика не отговаря на синтаксиса. Трябва да бъде или само език (bg), или език и държава (bg_BG), или език, държава и азбука (bg_BG-cyrillic).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Жестове и писане чрез плъзгане</string>
@@ -414,6 +423,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системни настройки на Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Автори</string>
+    <string name="ext__meta__components">Придружаващи компоненти</string>
+    <string name="ext__meta__components_theme">Придружаващи теми</string>
+    <string name="ext__meta__components_none_found">Архивът на добавкатане съдържа придружаващи компоненти.</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Страница</string>
     <string name="ext__meta__id">Идентификатор</string>
@@ -422,13 +435,14 @@
     <string name="ext__meta__label">Етикет</string>
     <string name="ext__meta__license">Лиценз</string>
     <string name="ext__meta__maintainers">Отговорници по поддръжката</string>
+    <string name="ext__meta__maintainers_by">От: {maintainers}</string>
     <string name="ext__meta__title">Заглавие</string>
     <string name="ext__meta__version">Издание</string>
     <string name="ext__error__not_found_description">Няма добавка с идентификатор „{id}“.</string>
     <string name="ext__editor__title_create_keyboard">Създаване на добавка с клавиатура</string>
     <string name="ext__editor__title_create_spelling">Създаване на добавка за проверка на правопис</string>
     <string name="ext__editor__title_create_theme">Създаване на добавка с тема</string>
-    <string name="ext__editor__title_edit_any">Редактиране</string>
+    <string name="ext__editor__title_edit_any">Променяне</string>
     <string name="ext__editor__title_edit_keyboard">Промяна на добавка с клавиатура</string>
     <string name="ext__editor__title_edit_spelling">Промяна на добавка с проверка на правопис</string>
     <string name="ext__editor__title_edit_theme">Промяна на добавка с тема</string>
@@ -447,7 +461,10 @@
     <string name="action__delete">Премахване</string>
     <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>
     <string name="action__delete_confirm_message">Наистина ли искате да изтриете „{name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
-    <string name="action__edit">Редактиране</string>
+    <string name="action__discard">Отхвърляне</string>
+    <string name="action__discard_confirm_title">Незапазени промени</string>
+    <string name="action__discard_confirm_message">Наистина ли искате да отхвърлите незапазените промени? Веднъж изпълнено действието не може да бъде отменено.</string>
+    <string name="action__edit">Променяне</string>
     <string name="action__export">Изнасяне</string>
     <string name="action__import">Внасяне</string>
     <string name="action__no">Не</string>
@@ -469,6 +486,7 @@
     <!-- General strings -->
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">напр. {example}</string>
     <string name="general__no_browser_app_found_for_url">Не е намерено приложение, което да отвори адреса {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; изберете &#45;</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портрет</string>
     <string name="screen_orientation__landscape">Пейзаж</string>
@@ -482,14 +500,18 @@
     <string name="state__no_file_selected">Не е избран файл</string>
     <string name="state__no_files_selected">Не са избрани файлове</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Класическо (3 колони)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамична ширина</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамична ширина с плъзгач</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Шестнадесетичен</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Червено, зелено, синьо, прозрачност</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Акцентът е с приоритет</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е основния акцент или знака от подсказката ако няма акцент</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Посдсазката е с приоритет</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е знака от подсказката или основния акцент ако в подсказката няма знак</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Интелигентен приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Първоначално избраният знак при задържане на клавиш се определя между основния акцент или знака от подсказката на базата на текущия език и подредба</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Обикновен</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">Обикн.</string>
     <string name="enum__input_mode__shift_lock" comment="Enum value label">Закл. на Shift</string>
     <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps Lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не се показва</string>
@@ -503,6 +525,16 @@
     <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под първия ред</string>
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Добавя се втори ред между първия ред и клавиатурата</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Слой върху приложението</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Долу, начало</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Основен</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Само цветове, свойствата и правилата са преведени.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Разширен</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Всички свойства, свойствата и правилата са преведени.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Разработчик</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Всички свойства, свойствата и правилата са показани, както са във файла със стила.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Използване на системните езици</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Използване на клавиатурни подредби</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Без действие</string>

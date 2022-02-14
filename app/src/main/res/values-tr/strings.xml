@@ -179,22 +179,12 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Dahili kullanıcı sözlüğüne kelime ekle, çıkar veya görüntüle</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dahili Kullanıcı Sözlüğü</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Kullanıcı Sözlüğü</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Sıklık: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Sıklık: %d | Kısayol: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Tüm diller için</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Sistem yöneticisi arayüzünü aç</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Kullanıcı sözlüğü başarıyla içe aktarıldı!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Kullanıcı sözlüğü başarıyla dışa aktarıldı!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Yeni sözcük ekle</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Sözcüğü düzenle</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sözcük</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lütfen bir sözcük girin!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Bu sözcük geçersiz karakterler içeriyor.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Sıklık (%d ve %d arasında)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lütfen bir sıklık değeri girin!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lütfen sınırlar dahilinde geçerli bir sayı girin!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Kısayol (seçmeli)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Bu kısayol geçersiz karakterler içeriyor.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Dil kodu (seçmeli)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Bu dil kodu beklenen sözdizimine uymuyor. Kod ya sadece bir dil olmalı (tr gibi), ya hem dil hem de ülke kodu olmalı (tr_TR gibi), ya da hem dil hem ülke hem de betik olmalıdır (tr_TR-betik gibi).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Jestler &amp; Kaydırarak yazma</string>

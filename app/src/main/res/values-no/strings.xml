@@ -157,22 +157,12 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i den interne brukerordlisten</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Intern Brukerordliste</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System Brukerordliste</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvens: %d | Snarvei: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle språk</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Åpne systemadministrasjonsgrensesnitt</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Import av brukerordliste vellykket!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Eksport av brukerordliste vellykket!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Legg til ordoppføring</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Rediger ordoppføring</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Vennligst angi et ord!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Ordet inneholder ugyldige tegn.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvens (mellom %d og %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Vennligst angi en frekvensverdi!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Vennligst angi et gyldig nummer innenfor de spesifiserte grensene!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Snarvei (valgfritt)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Snarveien inneholder ugyldige tegn.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Språkkode (valgfritt)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Denne språkkoden samsvarer ikke med den forventede syntaksen. Koden må enten være bare et språk (som no), et språk og et land (som nb_NO) eller et språk, land og skript (som nb_NO-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Bevegelser &amp; Glideskriving</string>

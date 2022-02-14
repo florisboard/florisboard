@@ -86,6 +86,9 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Atlasīt dienas izskatu</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Atlasīt nakts izskatu</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
+    <string name="settings__theme_editor__fine_tune__title">Smalkas pielāgošanas redaktors</string>
+    <string name="settings__theme_editor__fine_tune__level">Labošanas līmenis</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Attēlot krāsas kā</string>
     <string name="settings__theme_editor__add_rule">Pievienot nosacījumu</string>
     <string name="settings__theme_editor__edit_rule">Labot nosacījumu</string>
     <string name="settings__theme_editor__no_rules_defined">Šī stila lapa nesatur nosacījumus. Lai to pielāgotu, jāpievieno kāds nosacījums.</string>
@@ -100,20 +103,28 @@
     <string name="settings__theme_editor__no_codes_defined">Kodi nav noteikti.</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
+    <string name="settings__theme_editor__code_help_text">Šīs saites palīdzēs atrast atbilstošo taustiņa kodu:</string>
     <string name="settings__theme_editor__add_property">Pievienot īpašību</string>
     <string name="settings__theme_editor__edit_property">Labot īpašību</string>
+    <string name="settings__theme_editor__property_already_exists">Īpašība ar šādu nosaukumu jau pastāv pašreizējā nosacījumā.</string>
     <string name="settings__theme_editor__property_name">Īpašības nosaukums</string>
     <string name="settings__theme_editor__property_value">Īpašības vērtība</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Pielietot visiem stūriem</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Labot krāsas virkni</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Ir nakts izskats</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Ir bezapmales</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stilu lapas ceļš</string>
     <string name="snygg__rule_element__defines">Mainīgie</string>
+    <string name="snygg__rule_element__defines_description">Šajā nosacījumā var izveidot mainīgos, lai stila lapā atkārtoti izmantotu kopējas krāsas vai izmērus.</string>
     <string name="snygg__rule_element__keyboard">Tastatūras logs</string>
     <string name="snygg__rule_element__key">Taustiņš</string>
     <string name="snygg__rule_element__key_hint">Taustiņa norāde</string>
+    <string name="snygg__rule_element__key_popup">Taustiņa uznirstošais lodziņš</string>
     <string name="snygg__rule_element__clipboard_header">Starpliktuves galvene</string>
     <string name="snygg__rule_element__clipboard_item">Starpliktuves vienums</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Starpliktuves vienuma uznirstošais lodziņš</string>
+    <string name="snygg__rule_element__glide_trail">Slīdēšanas pēdas</string>
+    <string name="snygg__rule_element__one_handed_panel">Vienrocīgs panelis</string>
     <string name="snygg__rule_element__smartbar_primary_row">Viedjoslas galvenā rinda</string>
     <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Viedjoslas galvenās darbību rindas pārslēgs</string>
     <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Viedjoslas galvenās otrējāš rindas pārslēgs</string>
@@ -126,19 +137,37 @@
     <string name="snygg__property_name__width">Platums</string>
     <string name="snygg__property_name__height">Augstums</string>
     <string name="snygg__property_name__foreground">Priekšplāns</string>
-    <string name="snygg__property_name__border_color">Apmale</string>
+    <string name="snygg__property_name__border_color">Apmales krāsa</string>
+    <string name="snygg__property_name__border_style">Apmales veids</string>
+    <string name="snygg__property_name__border_width">Apmales platums</string>
     <string name="snygg__property_name__font_family">Fontu saime</string>
     <string name="snygg__property_name__font_size">Burtu lielums</string>
+    <string name="snygg__property_name__font_style">Burtu veids</string>
+    <string name="snygg__property_name__font_variant">Burtu paveids</string>
     <string name="snygg__property_name__font_weight">Burtu biezums</string>
+    <string name="snygg__property_name__shadow_elevation">Ēnas pacēlums</string>
+    <string name="snygg__property_name__shape">Veidols</string>
     <string name="snygg__property_name__var_primary">Pamatkrāsa</string>
+    <string name="snygg__property_name__var_primary_variant">Pamatkrāsa (paveids)</string>
     <string name="snygg__property_name__var_secondary">Otrējā krāsa</string>
+    <string name="snygg__property_name__var_secondary_variant">Otrējā krāsa (paveids)</string>
+    <string name="snygg__property_name__var_surface">Kopēja virsma</string>
+    <string name="snygg__property_name__var_surface_variant">Kopēja virsma (paveids)</string>
     <string name="snygg__property_name__var_on_primary">Galvenā priekšplāns</string>
     <string name="snygg__property_name__var_on_secondary">Otrējā priekšplāns</string>
+    <string name="snygg__property_name__var_on_surface">Virsmas priekšplāns</string>
+    <string name="snygg__property_name__var_on_surface_variant">Virsmas priekšplāns (paveids)</string>
+    <string name="snygg__property_name__var_shape">Kopējs veidols</string>
+    <string name="snygg__property_name__var_shape_variant">Kopējs veidols (paveids)</string>
     <string name="snygg__property_value__explicit_inherit">Mantot</string>
     <string name="snygg__property_value__solid_color">Tīrtoņa krāsa</string>
+    <string name="snygg__property_value__image_ref">Attēla atsauce</string>
+    <string name="snygg__property_value__rectangle_shape">Taisnstūra veidols</string>
+    <string name="snygg__property_value__circle_shape">Apļa veidols</string>
     <string name="snygg__property_value__dp_size">Lielums (dp)</string>
     <string name="snygg__property_value__sp_size">Lielums (sp)</string>
     <string name="snygg__property_value__percentage_size">Lielums (%)</string>
+    <string name="snygg__property_value__defined_var">Mainīgā atsauce</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Skaņas un trīcēšana</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
@@ -168,7 +197,7 @@
     <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustības trīcēšana</string>
     <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības trīcēšana</string>
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">piemēram, taustiņi, pogas, sajūtu rakstzīmju cilnes</string>
-    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">piemēram, izlecošā izvēlne</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">piemēram, uznirstošā izvēlne</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">piemēram, dzēšanas taustiņš</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nav īstenots</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">piemēram, rādītāja vadīšanas pavilkšana</string>
@@ -180,6 +209,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Rādīt rīkpogu</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Tiek rādīta pielāgojama rīkpoga blakus atstarpes taustiņam</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Rīktaustiņa darbība</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Attēlot valodu uz atstarpes taustiņa</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Attēlo pašreizējās valodas nosaukumu uz atstarpes taustiņa</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Fonta izmēra reizinātājs</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Vienrocīga ievade</string>
@@ -191,8 +222,8 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Taustiņa piespiešana</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Iekļaut rakstzīmju izlecošos logus uzsvara zīmēs</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Pievienot zīmju izlecošos logus noklusējuma izkārtojuma uzsvara zīmēm</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Iekļaut rakstzīmju uznirstošos lodziņus uzsvara zīmēs</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Pievienot zīmju uznirstošos lodziņus noklusējuma izkārtojuma uzsvara zīmēm</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Atstarpes taustiņš pārslēdz uz burtu izkārtojumu</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Atstarpes taustiņa nospiešana nomaina izkārtojumu no rakstzīmēm vai cipariem uz burtiem</string>
@@ -235,8 +266,9 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Pievienot, skatīt un noņemt ierakstus iekšējā lietotāja vārdnīcā</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Iekšējā lietotāja vārdnīca</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Sistēmas lietotāja vārdnīca</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Biežums: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Biežums: %d | Saīsne: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Šī lietotāja vārdnīca nesatur nevienu vārdu.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Biežums: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Biežums: {freq} | Saīsne: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Visām valodām</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Atvērt sistēmas pārvaldnieka lietotāja saskarni</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Lietotāja vārdnīca tika veiksmīgi ievietota.</string>
@@ -244,13 +276,13 @@
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Pievienot vārdu</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Labot vārdu</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Vārds</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu.</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Šis vārds satur nederīgas rakstzīmes.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Biežums (starp %d un %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt biežuma vērtību.</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt derīgu skaitli, kas ir norādītajās robežās.</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu, kas atbilst {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Biežums (starp {f_min} un {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt biežuma vērtību</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt derīgu skaitli, kas ir norādītajās robežās</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Saīsne (pēc izvēles)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Šī saīsne satur nederīgas rakstzīmes.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Lūgums ievadīt saīsni, kas atbilst {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Valodas kods (pēc izvēles)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Šis valodas kods neatbilst vēlamajam veidolam. Kodam ir vai nu jāborāda tikai valoda (piemēram, en), vai valoda un valsts (piemēram, en_US), vai arī valoda, valsts un raksts (piemēram, en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Kustību un slīdošā rakstīšana</string>
@@ -459,6 +491,7 @@
     <!-- Extension strings -->
     <string name="ext__meta__authors">Autori</string>
     <string name="ext__meta__components">Iekļautās sastāvdaļas</string>
+    <string name="ext__meta__components_theme">Iekļautie izskati</string>
     <string name="ext__meta__components_none_found">Šis paplašinājumu arhīvs nesatur iekļautās sastāvdaļas.</string>
     <string name="ext__meta__description">Apraksts</string>
     <string name="ext__meta__homepage">Mājaslapa</string>
@@ -482,6 +515,9 @@
     <string name="ext__editor__title_edit_theme">Labot izskata paplašinājumu</string>
     <string name="ext__editor__files__title">Pārvaldīt arhīva datnes</string>
     <string name="ext__editor__create_component__title">Izveidot sastāvdaļu</string>
+    <string name="ext__editor__create_component__title_theme">Izveidot izskatu</string>
+    <string name="ext__editor__create_component__from_empty">Tukšs</string>
+    <string name="ext__editor__create_component__from_existing">No esoša</string>
     <string name="ext__editor__edit_component__title">Labot sastāvdaļu</string>
     <string name="ext__editor__edit_component__title_theme">Labot izskata sastāvdaļu</string>
     <string name="ext__export__success">Papildinājums veiksmīgi izdots.</string>
@@ -533,6 +569,7 @@
     <string name="error__snackbar_message">Kaut kas ir noticis nepareizi</string>
     <string name="error__snackbar_message_template">Kaut kas nogāja greizi: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">piem., {example}</string>
     <string name="general__no_browser_app_found_for_url">Netika atrasta neviena pārlūka lietotne URL {url} atvēršanai</string>
     <string name="general__select_dropdown_value_placeholder">&#45; atlasīt &#45;</string>
     <!-- Screen orientation strings -->
@@ -551,6 +588,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Ierasts (3 kolonnas)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Mainīgs platums</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Mainīgs platums un ritināms</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Sešpadsmitisks</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Sarkans Zaļš Zils Caurredzamība</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Uzsvara zīmēm ir priekšroka</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir galvenā uzsvara zīme vai norādes rakstzīme, ja galvenā uzsvara zīme nav pieejama</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Norādei ir priekšroka</string>
@@ -576,6 +615,12 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Augšas beigas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Apakšas sākums</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Apakšas sākums</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Pamata</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Tiek parādītas tikai krāsu īpašības, īpašības un nosacījumi tiek tulkoti.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Papildus</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Tiek parādītas visas īpašības, īpašības un nosacījumi tiek tulkoti.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Izstrādātājs</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Tiek parādītas visas īpašības, īpašības un nosacījumi tiek attēloti tā, kā tie ir rakstīti stilu lapā.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Izmantot sistēmas valodas</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Izmantot tastatūras apakšveidus</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nav darbības</string>
@@ -598,6 +643,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Pārslēgšanās taustiņš</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Atatsaukt</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Atsaukt</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Rūpīgi atlasīt rakstzīmes</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Rūpīgi atlasīt vārdus</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Rādīt ievades veida atlasītāju</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Pārslēgties uz iepriekšējo tastatūru</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Pārslēgties uz iepriekšējo apakšveidu</string>

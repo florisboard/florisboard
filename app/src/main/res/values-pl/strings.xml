@@ -219,22 +219,12 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Dodawaj, przeglądaj i usuwaj wpisy z wewnętrznego słownika użytkownika</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Wewnętrzny Słownik Użytkownika</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Systemowy Słownik Użytkownika</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Częstotliwość: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Częstotliwość: %d | Skrót: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Dla wszystkich języków</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Otwórz interfejs menedżera systemu</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Słownik użytkownika został pomyślnie zaimportowany!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Słownik użytkownika został pomyślnie wyeksportowany!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Dodaj słowo</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edytuj słowo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Słowo</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Proszę wpisać słowo!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">To słowo zawiera nieprawidłowe znaki.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Częstotliwość (pomiędzy %d, a %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Proszę wpisać wartość częstotliwości!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Proszę wprowadzić prawidłową liczbę w określonych granicach!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Skrót (opcjonalny)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Ten skrót zawiera nieprawidłowe znaki.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kod języka (opcjonalny)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Ten kod języka nie jest zgodny z oczekiwaną składnią. Kod musi być tylko językiem (np. en), językiem i krajem (np. en_US) lub językiem, krajem i skryptem (np. en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesty &amp; Glide pisanie</string>

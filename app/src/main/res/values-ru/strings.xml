@@ -86,9 +86,11 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Выбрать светлую тему</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Выбрать установленные темы</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Показывать цвета как</string>
     <string name="settings__theme_editor__add_rule">Добавить правило</string>
     <string name="settings__theme_editor__edit_rule">Изменить правило</string>
     <string name="settings__theme_editor__no_rules_defined">В таблице стилей не определены правила. Добавьте правило, чтобы начать её настройку.</string>
+    <string name="settings__theme_editor__rule_already_exists">Это правило таблицы стилей уже определено.</string>
     <string name="settings__theme_editor__rule_codes">Коды</string>
     <string name="settings__theme_editor__rule_groups">Группы</string>
     <string name="settings__theme_editor__rule_modes">Режимы</string>
@@ -96,14 +98,59 @@
     <string name="settings__theme_editor__edit_code">Редактировать код</string>
     <string name="settings__theme_editor__no_codes_defined">Коды не заданы.</string>
     <string name="settings__theme_editor__code_already_exists">Этот код уже используется.</string>
+    <string name="settings__theme_editor__code_invalid">Это неправильный код ключа. Убедитесь, что он находится в диапазоне от {c_min} до {c_max} для символов или от {i_min} до {i_max} для специальных внутренних ключей.</string>
+    <string name="settings__theme_editor__code_help_text">Следующие ссылки помогут вам найти соответствующий код ключа:</string>
     <string name="settings__theme_editor__add_property">Добавить свойство</string>
     <string name="settings__theme_editor__edit_property">Изменить свойство</string>
+    <string name="settings__theme_editor__property_already_exists">Свойство с таким именем уже существует в текущем правиле.</string>
     <string name="settings__theme_editor__property_name">Название свойства</string>
     <string name="settings__theme_editor__property_value">Значения свойства</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Изменить цвет строки</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
-    <string name="settings__theme_editor__component_meta_is_borderless">Это без полей</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
     <string name="snygg__rule_element__defines">Переменные</string>
+    <string name="snygg__rule_element__defines_description">Определите переменные в этом правиле, чтобы использовать общие цвета или размеры в своей таблице стилей.</string>
+    <string name="snygg__rule_element__keyboard">Окно клавиатуры</string>
+    <string name="snygg__rule_element__key">Кнопка</string>
+    <string name="snygg__rule_element__key_hint">Подсказка кнопки</string>
+    <string name="snygg__rule_element__key_popup">Всплывающее окно кнопки</string>
+    <string name="snygg__rule_element__clipboard_header">Заголовок буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_item">Элемент буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Всплывающее окно элемента буфера обмена</string>
+    <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
+    <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Основной ряд умной панели</string>
+    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Переключатель ряда действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Переключатель дополнительного ряда умной панели</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Дополнительный ряд умной панели</string>
+    <string name="snygg__rule_element__smartbar_action_row">Ряд действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_action_button">Кнопка действия умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_row">Ряд кандидатов умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
+    <string name="snygg__rule_element__smartbar_key">Кнопка умной панели</string>
+    <string name="snygg__rule_element__system_nav_bar">Системная навигационная панель</string>
+    <string name="snygg__property_name__width">Ширина</string>
+    <string name="snygg__property_name__height">Высота</string>
+    <string name="snygg__property_name__border_color">Цвет контура</string>
+    <string name="snygg__property_name__border_style">Стиль контура</string>
+    <string name="snygg__property_name__border_width">Ширина контура</string>
+    <string name="snygg__property_name__font_family">Семейство шрифтов</string>
+    <string name="snygg__property_name__font_size">Размер шрифта</string>
+    <string name="snygg__property_name__font_style">Стиль шрифта</string>
+    <string name="snygg__property_name__font_variant">Вариант шрифта</string>
+    <string name="snygg__property_name__font_weight">Толщина шрифта</string>
+    <string name="snygg__property_name__shape">Фигура</string>
+    <string name="snygg__property_name__var_primary">Основной цвет</string>
+    <string name="snygg__property_name__var_primary_variant">Основной цвет (вариант)</string>
+    <string name="snygg__property_name__var_secondary">Дополнительный цвет</string>
+    <string name="snygg__property_name__var_secondary_variant">Дополнительный цвет (вариант)</string>
+    <string name="snygg__property_name__var_background">Основной фон</string>
+    <string name="snygg__property_value__explicit_inherit">Наследование</string>
+    <string name="snygg__property_value__solid_color">Сплошной цвет</string>
+    <string name="snygg__property_value__percentage_size">Размер (%)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
@@ -202,8 +249,9 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Внутренний словарь пользователя</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системный словарь пользователя</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Частота: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Частота: %d | Сокращение: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Этот пользовательский словарь не содержит слов.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Частота: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Частота: {freq} | Сокращение: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Для всех языков</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Открыть системный менеджер</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Словарь пользователя успешно импортирован!</string>
@@ -211,13 +259,13 @@
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Добавить слово</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Изменить слово</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Слово</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Введите слово!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Слово содержит недопустимые символы.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Частота (между %d и %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите значение частоты!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите корректное число в указанных пределах!</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Введите слово</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Введите соответствие слов {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Частота (между {f_min} и {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите значение частоты</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите корректное число в указанных пределах</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Сокращение (необязательно)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Сокращение содержит недопустимые символы.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Введите сочетание клавиш {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код языка (необязательно)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Указанный код языка не соответствует ожидаемому синтаксису. Код должен быть либо только языковым (например, ru), либо языковым с указанием страны (например, ru_RU), либо языковым с указанием страны и письменности (например, ru_RU-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Жесты и непрерывный ввод</string>
@@ -424,6 +472,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системные настройки Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Языки системы</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Авторы</string>
     <string name="ext__meta__components">Связанные компоненты</string>
     <string name="ext__meta__components_none_found">Этот архив расширений не содержит каких-либо связанных компонентов.</string>
     <string name="ext__meta__description">Описание</string>
@@ -438,6 +487,21 @@
     <string name="ext__meta__version">Версия</string>
     <string name="ext__error__not_found_title">Расширение не найдено</string>
     <string name="ext__error__not_found_description">Не найдено расширения с ID \"{id}\"</string>
+    <string name="ext__editor__title_create_any">Создать расширение</string>
+    <string name="ext__editor__title_create_keyboard">Создать расширение клавиатуры</string>
+    <string name="ext__editor__title_create_spelling">Создать расширение орфографии</string>
+    <string name="ext__editor__title_create_theme">Создать расширение темы</string>
+    <string name="ext__editor__title_edit_any">Редактировать расширение</string>
+    <string name="ext__editor__title_edit_keyboard">Редактировать расширение клавиатуры</string>
+    <string name="ext__editor__title_edit_spelling">Редактировать расширение орфографии</string>
+    <string name="ext__editor__title_edit_theme">Редактировать расширение темы</string>
+    <string name="ext__editor__metadata__title">Управление метаданными</string>
+    <string name="ext__editor__metadata__title_invalid">Неправильные метаданные</string>
+    <string name="ext__editor__metadata__message_invalid">Неправильные метаданные для этого расширения, проверьте редактор метаданных для получения подробной информации!</string>
+    <string name="ext__editor__create_component__title">Создать компонент</string>
+    <string name="ext__editor__create_component__title_theme">Создать тему</string>
+    <string name="ext__editor__edit_component__title">Редактировать компонент</string>
+    <string name="ext__editor__edit_component__title_theme">Редактировать компонент темы</string>
     <string name="ext__export__success">Расширение успешно экспортировано!</string>
     <string name="ext__export__failure">Ошибка экспорта расширения: {error_message}</string>
     <string name="ext__import__success">Расширение успешно импортировано!</string>
@@ -459,10 +523,14 @@
     <string name="action__apply">Применить</string>
     <string name="action__back_up">Резервирование</string>
     <string name="action__cancel">Отмена</string>
+    <string name="action__create">Создать</string>
     <string name="action__default">По умолчанию</string>
     <string name="action__delete">Удалить</string>
     <string name="action__delete_confirm_title">Подтвердить удаление</string>
     <string name="action__delete_confirm_message">Вы уверены, что хотите удалить \"{name}\"? Это действие не может быть отменено после выполнения.</string>
+    <string name="action__discard">Отменить</string>
+    <string name="action__discard_confirm_title">Несохранённые изменения</string>
+    <string name="action__discard_confirm_message">Вы уверены, что хотите отменить несохранённые изменения? Это действие нельзя отменить после выполнения.</string>
     <string name="action__edit">Изменить</string>
     <string name="action__export">Экспорт</string>
     <string name="action__import">Импорт</string>
@@ -483,7 +551,9 @@
     <string name="error__snackbar_message">Что-то пошло не так</string>
     <string name="error__snackbar_message_template">Что-то пошло не так: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">например, {example}</string>
     <string name="general__no_browser_app_found_for_url">Не найдено браузера для использования URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; выбор &#45;</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портретная</string>
     <string name="screen_orientation__landscape">Альбомная</string>
@@ -500,6 +570,7 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Классика (3 колонки)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамическая ширина</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамическая ширина и прокрутка</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Красный Зелёный Синий Прозрачность</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является основным акцентом или символом подсказки, если основной акцент недоступен</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Приоритет подсказке</string>
@@ -521,6 +592,11 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Дополнительный ряд размещается между основным рядом и текстовой клавиатурой</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Наложение над приложением</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Дополнительный ряд отображается в виде наложения над пользовательским интерфейсом приложения, не влияя на результирующую высоту интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к частичному переполнению поля ввода приложения.</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Дополнительно</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Отображаются все свойства, переводятся свойства и правила.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Разработчик</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Отображаются все свойства. Свойства и правила отображаются так, как прописано в самом файле таблицы стилей.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Использовать системные языки</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Использовать раскладки клавиатуры</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Не задано</string>

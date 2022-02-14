@@ -71,10 +71,8 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock vil forblive aktiveret ved skift af tekstfelter</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbelt-mellemrumspunktum</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tast to gange på mellemrum for at indætte et punktum efterfulgt af mellemrum</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: %d</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle sprog</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Indtast venligst et ord!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Genvej (valgfri)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Bevægelser &amp; Strygeskrivning</string>
     <string name="pref__glide__title" comment="Preference group title">Strygeskrivning</string>

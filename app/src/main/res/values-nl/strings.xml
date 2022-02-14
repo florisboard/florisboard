@@ -179,22 +179,12 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Voeg toe, bekijk of verwijder woorden uit het interne persoonlijke woordenboek</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Intern persoonlijk woordenboek</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Persoonlijk woordenboek van het systeem</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequentie: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequentie: %d | Afkorting: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Voor alle talen</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Open systeembeheer UI</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Persoonlijk woordenboek met succes geïmporteerd!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Persoonlijk woordenboek met succces geëxporteerd!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Woord invoeren</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Woord bewerken</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Woord</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Geef een woord in.</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Dit woord bevat ongeldige tekens.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequentie (tussen %d en %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Geef een frequentie in.</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Geef een geldig nummer binnen het gespecifieerde bereik in.</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Afkorting (optioneel)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Deze afkorting bevat ongeldige tekens.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Taalcode (optioneel)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Deze taalcode komt niet overeen met de verwachte syntax. De code moet ofwel enkel de taal (bv. \"en\"), een taal en een lan (bv. \"en_US\") of een taal, land en script (bv. \"en_US-script\") bevatten.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gebaren &amp; Vegen</string>

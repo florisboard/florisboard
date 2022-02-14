@@ -144,7 +144,9 @@
     <string name="snygg__property_name__height">الارتفاع</string>
     <string name="snygg__property_name__background">الخلفية</string>
     <string name="snygg__property_name__foreground">المقدمة</string>
-    <string name="snygg__property_name__border_color">الحدود</string>
+    <string name="snygg__property_name__border_color">لون الحدود</string>
+    <string name="snygg__property_name__border_style">نمط الحدود</string>
+    <string name="snygg__property_name__border_width">عرض الحدود</string>
     <string name="snygg__property_name__font_family">عائلة الخط</string>
     <string name="snygg__property_name__font_size">حجم الخط</string>
     <string name="snygg__property_name__font_style">نوع الخط</string>
@@ -277,22 +279,23 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس المستخدم الداخلي</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">القاموس الداخلي للمستخدم</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">قاموس مستخدم النظام</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">التكرار: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">التردد: %d | الإختصار: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">ملف القاموس هذا لا يحتوي على اي كلمات.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">التكرار: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">التردد: {freq} | الإختصار: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">لجميع اللغات</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">افتح واجهة نظام ادارة المستخدم</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">تم استيراد قاموس المستخدم بنجاح!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">تم تصدير قاموس المستخدم بنجاح!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">أضف كلمة إدخال</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">تعديل كلمة إدخال</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">إضافة كلمة</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">تعديل كلمة</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">كلمة</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">الرجاء إدخال كلمة!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">تحتوي هذه الكلمة على أحرف غير صالحة.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">التكرار (من %d الى %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء ادخال قيمة معدل التكرار!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء إدخال رقم صحيح ضمن الحدود المذكورة!</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">الرجاء إدخال كلمة</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">يرجى ادخال كلمة مطابقة {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">التكرار (من {f_min} الى {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء ادخال قيمة معدل التكرار</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء إدخال رقم صحيح ضمن الحدود المذكورة</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">الاختصار (اختياري)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">يحتوي هذه الاختصار على أحرف غير صالحة.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">يرجى ادخال اختصار مطابق {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">رمز اللغة(اختياري)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">رمز اللغة هذا لا يتوافق مع بناء الجملة المتوقع. يجب أن يكون الرمز إما لغة فقط (مثل en) أو لغة وبلد (مثل en_US) أو لغة وبلد ونص (مثل en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">الإيماءات و الكتابة بالتمرير</string>

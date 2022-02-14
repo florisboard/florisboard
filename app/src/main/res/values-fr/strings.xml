@@ -88,6 +88,28 @@
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gérer les thèmes installés</string>
     <string name="settings__theme_editor__fine_tune__title">Éditeur de réglage fin</string>
     <string name="settings__theme_editor__fine_tune__level">Modifier le niveau</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Afficher les couleurs comme</string>
+    <string name="settings__theme_editor__add_rule">Ajouter une règle</string>
+    <string name="settings__theme_editor__edit_rule">Modifier la règle</string>
+    <string name="settings__theme_editor__no_rules_defined">Cette feuille de style n\'a pas de règles définies. Ajoutez une règle pour commencer à personnaliser cette feuille de style.</string>
+    <string name="settings__theme_editor__rule_already_exists">Cette règle de feuille de style est déjà définie.</string>
+    <string name="settings__theme_editor__rule_element">Élément cible</string>
+    <string name="settings__theme_editor__rule_codes">Codes</string>
+    <string name="settings__theme_editor__rule_groups">Groupes</string>
+    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_selectors">Sélecteurs</string>
+    <string name="settings__theme_editor__add_code">Ajouter du code</string>
+    <string name="settings__theme_editor__edit_code">Modifier le code</string>
+    <string name="settings__theme_editor__no_codes_defined">Aucun code défini.</string>
+    <string name="settings__theme_editor__code_already_exists">Ce code clé est déjà défini.</string>
+    <string name="settings__theme_editor__code_invalid">Ce code clé n\'est pas valide. Assurez-vous que le code de clé est dans la plage de {c_min} à {c_max} pour les caractères ou de {i_min} à {i_max} pour les clés spéciales internes.</string>
+    <string name="settings__theme_editor__code_help_text">Les liens suivants vous aideront à trouver le code clé correspondant :</string>
+    <string name="settings__theme_editor__add_property">Ajouter une propriété</string>
+    <string name="settings__theme_editor__edit_property">Modifier la propriété</string>
+    <string name="settings__theme_editor__property_already_exists">Une propriété portant ce nom existe déjà dans la règle actuelle.</string>
+    <string name="snygg__property_name__border_color">Couleur de la bordure</string>
+    <string name="snygg__property_name__border_style">Style de bordure</string>
+    <string name="snygg__property_name__border_width">Largeur de la bordure</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retour audio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activer le retour audio</string>
@@ -184,22 +206,12 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire utilisateur interne</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dictionnaire utilisateur interne</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Dictionnaire utilisateur système</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Fréquence : %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Fréquence : %d | Raccourci : %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pour toutes les langues</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Ouvrir l\'interface de gestion du système</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dictionnaire utilisateur importé avec succès !</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dictionnaire utilisateur exporté avec succès !</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Ajouter un mot</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Modifier un mot</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Mot</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Veuillez saisir un mot !</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Ce mot contient des caractères non valides.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Fréquence (entre %d et %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Veuillez saisir une valeur de fréquence !</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Veuillez entrer un nombre valide dans les limites spécifiées !</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Raccourci (facultatif)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Ce raccourci contient des caractères non valides.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Code de langue (facultatif)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Ce code de langue n\'est pas conforme à la syntaxe attendue. Le code doit être une langue uniquement (comme fr), une langue et un pays (comme fr_FR) ou une langue, un pays et un script (comme fr_FR-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gestes &amp; Saisie en glissant</string>
@@ -525,6 +537,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Maj</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Recommencer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Annuler</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Sélectionner les caractères avec précision</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Sélectionner les mots avec précision</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Afficher le sélecteur de mode de saisie</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Passer au clavier précédent</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Passer à la disposition précédente</string>

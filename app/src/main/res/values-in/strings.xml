@@ -113,7 +113,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Terapkan untuk semua sudut</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Edit string warna</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Apakah tema malam</string>
-    <string name="settings__theme_editor__component_meta_is_borderless">Apakah ada tepian</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Apakah tidak bertepian</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Jalur lembar gaya</string>
     <string name="snygg__rule_element__defines">Variabel</string>
     <string name="snygg__rule_element__defines_description">Definisikan variable dalam aturan ini untuk menggunakan ulang warna atau ukuran umum di lembar gaya Anda.</string>
@@ -145,7 +145,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__property_name__height">Tinggi</string>
     <string name="snygg__property_name__background">Latar belakang</string>
     <string name="snygg__property_name__foreground">Latar depan</string>
-    <string name="snygg__property_name__border_color">Tepian</string>
+    <string name="snygg__property_name__border_color">Warna tepian</string>
+    <string name="snygg__property_name__border_style">Gaya tepian</string>
+    <string name="snygg__property_name__border_width">Lebar tepian</string>
     <string name="snygg__property_name__font_family">Keluarga font</string>
     <string name="snygg__property_name__font_size">Ukuran font</string>
     <string name="snygg__property_name__font_style">Gaya font</string>
@@ -278,22 +280,23 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Tambah, lihat, dan hapus entri untuk kamus pengguna internal</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Kamus Pengguna Internal</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Kamus Pengguna Sistem</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekuensi: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekuensi: %d | Pintasan: %s</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Kamus pengguna ini tidak berisi kata-kata apapun.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekuensi: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekuensi: {freq} | Pintasan: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Untuk semua bahasa</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Buka UI pengelola sistem</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Kamus pengguna berhasil diimpor!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Kamus pengguna berhasil diekspor!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Tambah entri kata</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit entri kata</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Tambahkan kata</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit kata</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Kata</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Harap masukkan sebuah kata!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Kata ini mengandung karakter yang tidak valid.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekuensi (diantara %d dan %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Harap masukkan nilai frekuensi!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Harap masukkan nomor yang valid dalam batas yang ditentukan!</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Harap masukkan sebuah kata</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Harap masukkan sebuah kata yang cocok dengan {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekuensi (antara {f_min} dan {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Harap masukkan nilai frekuensi</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Harap masukkan nomor yang valid dalam batas yang ditentukan</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Pintasan (opsional)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Pintasan ini berisi karakter yang tidak valid.</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Harap masukkan sebuah pintasan yang cocok dengan {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kode bahasa (opsional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Kode bahasa ini tidak sesuai dengan sintaks yang diharapkan. Kode harus berupa bahasa (seperti en), bahasa dan negara (seperti en_US) atau bahasa, negara, dan skrip (seperti en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gestur &amp; Ketik geser</string>

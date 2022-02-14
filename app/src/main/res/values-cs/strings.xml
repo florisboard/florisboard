@@ -147,21 +147,11 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Přidat, prohlédnout nebo upravit slova ve vlastním interním slovníku</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Vlastní interní slovník</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Vlastní systémový slovník</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvence: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvence: %d | Zkratka: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pro všechny jazyky</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Vlastní slovník úspěšně importován!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Vlastní slovník úspěšně exportován!</string>
-    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Přidat slovo</string>
-    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Upravit slovo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Slovo</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Zadejte prosím slovo!</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
-    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvence (mezi %d a %d)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím zadejte hodnotu frekvence!</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím zadejte platné číslo z daného rozsahu!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta a psaní tahem</string>
     <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>

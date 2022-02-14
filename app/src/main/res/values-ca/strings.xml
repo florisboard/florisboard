@@ -86,6 +86,8 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecciona el tema del dia</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecciona el tema de nit</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
+    <string name="settings__theme_editor__add_rule">Afegir norma</string>
+    <string name="settings__theme_editor__edit_rule">Editar norma</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; vibracions</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retroacció hàptica / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilita la retroacció hàptica</string>

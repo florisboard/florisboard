@@ -156,8 +156,6 @@
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Ferhengên Bikarhêner</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ferhenga bikarhêner a systemê çalak bike</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ferhenga navxweyî ya bikarhêner çalak bike</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekans: %d</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekans: %d | Kurterê: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Ji bo hemû zimanan</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Rêvebirê pergala vekirî UI</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Peyv</string>
