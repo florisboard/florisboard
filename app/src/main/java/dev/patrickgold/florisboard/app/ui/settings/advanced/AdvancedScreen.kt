@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.ui.settings.advanced
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -25,6 +26,8 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -118,8 +121,12 @@ fun AdvancedScreen() = FlorisScreen {
                             label = stringRes(R.string.settings__system_default),
                         )
                     } else {
+                        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
                         val locale = FlorisLocale.fromTag(languageTag)
-                        entry(locale.languageTag(), locale.displayName(locale))
+                        entry(locale.languageTag(), when (displayLanguageNamesIn) {
+                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                        })
                     }
                 }
             }

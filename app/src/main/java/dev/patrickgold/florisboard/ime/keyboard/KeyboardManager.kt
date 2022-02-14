@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
@@ -744,6 +745,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         override fun activeSubtype(): Subtype = subtype
 
         override fun context(): Context = appContext
+
+        override fun displayLanguageNamesIn(): DisplayLanguageNamesIn {
+            return prefs.localization.displayLanguageNamesIn.get()
+        }
 
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
