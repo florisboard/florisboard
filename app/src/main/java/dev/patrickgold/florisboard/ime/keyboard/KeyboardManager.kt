@@ -615,6 +615,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 // TODO activeState.imeUiMode = ImeUiMode.MEDIA
                 appContext.showShortToast("TODO: implement emoji view (beta10)")
             }
+            KeyCode.VOICE_INPUT -> FlorisImeService.switchToVoiceInputMethod()
             KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()

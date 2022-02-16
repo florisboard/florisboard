@@ -39,6 +39,7 @@ private val SmartbarActionSet = setOf<SmartbarAction>(
     SmartbarAction.Key(TextKeyData.IME_UI_MODE_MEDIA),
     SmartbarAction.Key(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
     SmartbarAction.Key(TextKeyData.IME_UI_MODE_CLIPBOARD),
+    SmartbarAction.Key(TextKeyData.VOICE_INPUT),
 )
 
 @Serializable

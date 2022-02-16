@@ -400,6 +400,13 @@ class TextKeyData(
             code = KeyCode.INTERNAL_BATCH_EDIT,
             label = "internal_batch_edit",
         )
+
+        /** Predefined key data for [KeyCode.VOICE_INPUT] */
+        val VOICE_INPUT = TextKeyData(
+            type = KeyType.UNSPECIFIED,
+            code = KeyCode.VOICE_INPUT,
+            label = "voice_input",
+        )
     }
 }
 
