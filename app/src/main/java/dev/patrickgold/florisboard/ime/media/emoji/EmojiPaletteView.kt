@@ -41,15 +41,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.keyboardManager
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
     var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
 
     Column {
@@ -77,7 +83,7 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
                 Box(
                     modifier = Modifier
                         .rippleClickable {
-                            //
+                            keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(base))
                         }
                         .height(FlorisImeSizing.smartbarHeight),
                 ) {

@@ -19,6 +19,12 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.os.Build
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.popup.PopupSet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import java.util.stream.IntStream
 import kotlin.streams.toList
 
@@ -39,7 +45,13 @@ enum class EmojiHairStyle(val id: Int) {
     BALD(0x1F9B3);
 }
 
-data class Emoji(val value: String, val name: String, val keywords: List<String>) {
+data class Emoji(val value: String, val name: String, val keywords: List<String>) : KeyData {
+    override val type = KeyType.CHARACTER
+    override val code = KeyCode.UNSPECIFIED
+    override val label = value
+    override val groupId = 0
+    override val popup: PopupSet<AbstractKeyData>? = null
+
     val skinTone: EmojiSkinTone
 
     val hairStyle: EmojiHairStyle
@@ -55,6 +67,14 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
         }
         skinTone = EmojiSkinTone.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
         hairStyle = EmojiHairStyle.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
+    }
+
+    override fun compute(evaluator: ComputingEvaluator): KeyData {
+        return this
+    }
+
+    override fun asString(isForDisplay: Boolean): String {
+        return value
     }
 
     override fun toString(): String {

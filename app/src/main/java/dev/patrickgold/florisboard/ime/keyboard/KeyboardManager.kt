@@ -634,6 +634,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS -> activeState.keyboardMode = KeyboardMode.SYMBOLS
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
+                if (activeState.imeUiMode == ImeUiMode.MEDIA) {
+                    activeEditorInstance?.commitText(ev.data.asString(isForDisplay = false))
+                    return@batchEdit
+                }
                 when (activeState.keyboardMode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
