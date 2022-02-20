@@ -37,8 +37,7 @@ import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiKey
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
@@ -116,7 +115,7 @@ class PopupUiController(
             bounds = boundsProvider(key),
             shouldIndicateExtendedPopups = when (key) {
                 is TextKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).isNotEmpty()
-                is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).isNotEmpty()
+                //is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).isNotEmpty()
                 else -> false
             },
         )
@@ -156,7 +155,7 @@ class PopupUiController(
         // Determine key counts for each row
         val n = when (key) {
             is TextKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).size
-            is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).size
+            //is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).size
             else -> 0
         }
         val row1count: Int
@@ -269,7 +268,7 @@ class PopupUiController(
             val adjustedIndex = popupIndices[uiIndex]
             val keyData = when (key) {
                 is TextKey -> key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
-                is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
+                //is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
                 else -> TextKeyData.UNSPECIFIED
             }
             elements[rowIndex].add(Element(
@@ -411,24 +410,25 @@ class PopupUiController(
     }
 
     /**
-     * Gets the [EmojiKeyData] of the currently active key. May be either the key of the popup
+     * Gets the [EmojiSet] of the currently active key. May be either the key of the popup
      * preview or one of the keys in extended popup, if shown. Returns null if [key] is noz a subclass of [EmojiKey].
      *
      * @param key Reference to the key currently controlling the popup.
-     * @return The [EmojiKeyData] object of the currently active key or null.
+     * @return The [EmojiSet] object of the currently active key or null.
      */
     fun getActiveEmojiKeyData(key: Key): KeyData? {
-        return if (key is EmojiKey) {
-            val extRenderInfo = extRenderInfo ?: return null
-            val element = getElementOrNull(extRenderInfo.elements, activeElementIndex)
-            if (element != null) {
-                key.computedPopups.getPopupKeys(KeyHintConfiguration.HINTS_DISABLED).getOrNull(element.adjustedIndex) ?: key.computedData
-            } else {
-                key.computedData
-            }
-        } else {
-            null
-        }
+        return null
+        //return if (key is EmojiKey) {
+        //    val extRenderInfo = extRenderInfo ?: return null
+        //    val element = getElementOrNull(extRenderInfo.elements, activeElementIndex)
+        //    if (element != null) {
+        //        key.computedPopups.getPopupKeys(KeyHintConfiguration.HINTS_DISABLED).getOrNull(element.adjustedIndex) ?: key.computedData
+        //    } else {
+        //        key.computedData
+        //    }
+        //} else {
+        //    null
+        //}
     }
 
     fun hide() {
