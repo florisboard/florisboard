@@ -24,12 +24,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -63,25 +70,42 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
     val keyboardManager by context.keyboardManager()
 
     var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
-    val keyboardStyle = FlorisImeTheme.style.get(element = FlorisImeUi.Keyboard)
     val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
     val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
+    val unselectedContentColor = tabStyle.foreground.solidColor(default = Color.White)
+    val selectedContentColor = tabStyleFocused.foreground.solidColor(default = Color.White)
 
     Column {
-        Row(
+        val selectedTabIndex = EmojiCategory.values().indexOf(activeCategory)
+        TabRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .shadow(elevation = 2.dp)
-                .snyggBackground(keyboardStyle),
+                .height(FlorisImeSizing.smartbarHeight),
+            selectedTabIndex = selectedTabIndex,
+            backgroundColor = Color.Transparent,
+            contentColor = selectedContentColor,
+            indicator = { tabPositions ->
+                Box(
+                    modifier = Modifier
+                        .tabIndicatorOffset(tabPositions[selectedTabIndex])
+                        .padding(horizontal = 8.dp)
+                        .height(TabRowDefaults.IndicatorHeight)
+                        .background(LocalContentColor.current, CircleShape),
+                )
+            },
         ) {
             for (category in EmojiCategory.values()) {
                 Tab(
                     onClick = { activeCategory = category },
                     modifier = Modifier.weight(1f),
                     selected = activeCategory == category,
-                    icon = { Icon(painter = painterResource(category.iconId()), contentDescription = null) },
-                    selectedContentColor = tabStyleFocused.foreground.solidColor(),
-                    unselectedContentColor = tabStyle.foreground.solidColor(),
+                    icon = { Icon(
+                        modifier = Modifier.size(ButtonDefaults.IconSize),
+                        painter = painterResource(category.iconId()),
+                        contentDescription = null,
+                    ) },
+                    unselectedContentColor = unselectedContentColor,
+                    selectedContentColor = selectedContentColor,
                 )
             }
         }
