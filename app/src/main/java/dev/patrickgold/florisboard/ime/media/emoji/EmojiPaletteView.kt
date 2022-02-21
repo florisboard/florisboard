@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
@@ -48,7 +49,12 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
+import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.solidColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -57,15 +63,25 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
     val keyboardManager by context.keyboardManager()
 
     var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
+    val keyboardStyle = FlorisImeTheme.style.get(element = FlorisImeUi.Keyboard)
+    val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
+    val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
 
     Column {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(elevation = 2.dp)
+                .snyggBackground(keyboardStyle),
+        ) {
             for (category in EmojiCategory.values()) {
                 Tab(
                     onClick = { activeCategory = category },
                     modifier = Modifier.weight(1f),
                     selected = activeCategory == category,
                     icon = { Icon(painter = painterResource(category.iconId()), contentDescription = null) },
+                    selectedContentColor = tabStyleFocused.foreground.solidColor(),
+                    unselectedContentColor = tabStyle.foreground.solidColor(),
                 )
             }
         }

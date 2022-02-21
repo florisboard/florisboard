@@ -45,7 +45,7 @@ fun SnyggSurface(
 ) {
     val elevationDp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp)
     val color = style.background.solidColor()
-    val contentColor = contentColorFor(color)
+    val contentColor = style.foreground.solidColor(default = contentColorFor(color))
     val absoluteElevation = LocalAbsoluteElevation.current + elevationDp
     CompositionLocalProvider(
         LocalContentColor provides contentColor,
