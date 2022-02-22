@@ -141,6 +141,14 @@ object FlorisImeUiSpec : SnyggSpec({
         shadow()
         border()
     }
+    element(FlorisImeUi.EmojiKeyPopup) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
     element(FlorisImeUi.EmojiTab) {
         foreground()
     }

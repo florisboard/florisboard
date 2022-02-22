@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.graphics.Paint
 import android.graphics.Typeface
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -29,6 +31,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
@@ -44,6 +48,7 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -53,25 +58,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.emoji2.text.EmojiCompat
+import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
+import dev.patrickgold.florisboard.app.ui.components.verticalTween
+import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggBorder
+import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.snygg.ui.spSize
 import kotlinx.coroutines.launch
+import kotlin.math.ceil
 
 private val EmojiBaseWidth = 42.dp
+private val EmojiPopupEnterTransition = EnterTransition.verticalTween(200)
+private val EmojiPopupExitTransition = ExitTransition.verticalTween(50)
 private val VariantsTriangleShape = GenericShape { size, _ ->
     moveTo(x = size.width, y = 0f)
     lineTo(x = size.width, y = size.height)
@@ -80,9 +97,8 @@ private val VariantsTriangleShape = GenericShape { size, _ ->
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
+fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val keyboardManager by context.keyboardManager()
 
     val systemFontPaint = remember(Typeface.DEFAULT) {
@@ -90,13 +106,29 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
             typeface = Typeface.DEFAULT
         }
     }
+    val emojiMappings = remember(systemFontPaint) {
+        fullEmojiMappings.mapValues { (_, emojiSetList) ->
+            emojiSetList.filter { emojiSet ->
+                val base = emojiSet.base()
+                EmojiCompat.get().getEmojiMatch(base.value, 0) == EmojiCompat.EMOJI_SUPPORTED ||
+                    systemFontPaint.hasGlyph(base.value)
+            }
+        }
+    }
 
     var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
-    var lazyListState = rememberLazyListState()
+    var showVariantsBox by remember { mutableStateOf(false) }
+    val lazyListState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+
     val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
     val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
     val unselectedContentColor = tabStyle.foreground.solidColor(default = Color.White)
     val selectedContentColor = tabStyleFocused.foreground.solidColor(default = Color.White)
+
+    LaunchedEffect(lazyListState.isScrollInProgress) {
+        showVariantsBox = false
+    }
 
     Column {
         val selectedTabIndex = EmojiCategory.values().indexOf(activeCategory)
@@ -122,6 +154,7 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
                     onClick = {
                         scope.launch { lazyListState.scrollToItem(0) }
                         activeCategory = category
+                        showVariantsBox = false
                     },
                     modifier = Modifier.weight(1f),
                     selected = activeCategory == category,
@@ -136,17 +169,17 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
             }
         }
 
-        Box(modifier = Modifier.fillMaxWidth()) {
+        var paletteBoxBounds by remember { mutableStateOf(Rect.Zero) }
+        Box(
+            modifier = Modifier
+                .onGloballyPositioned { paletteBoxBounds = it.boundsInWindow() }
+                .fillMaxWidth(),
+        ) {
             val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
             val triangleColor = emojiKeyStyle.foreground.solidColor(default = Color.White)
-            val emojiMapping = remember(activeCategory, systemFontPaint) {
-                emojiMappings[activeCategory]!!.filter { emojiSet ->
-                    val base = emojiSet.base()
-                    EmojiCompat.get().getEmojiMatch(base.value, 0) == EmojiCompat.EMOJI_SUPPORTED ||
-                        systemFontPaint.hasGlyph(base.value)
-                }
-            }
-            var showVariantsBox by remember { mutableStateOf(false) }
+            val emojiMapping = emojiMappings[activeCategory]!!
+            val emojiKeyHeight = FlorisImeSizing.smartbarHeight
+
             var variantsBoxEmojiSet by remember { mutableStateOf(EmojiSet(listOf(Emoji("", "", emptyList())))) }
             var variantsBoxPosition by remember { mutableStateOf(Offset.Zero) }
 
@@ -161,14 +194,15 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
                 items(emojiMapping) { emojiSet -> key(emojiSet) {
                     val base = emojiSet.base()
                     val variations = emojiSet.variations()
-                    var position = Offset.Zero
+                    var position by remember { mutableStateOf(Offset.Zero) }
                     BoxWithConstraints(
                         modifier = Modifier
-                            .onGloballyPositioned { position = it.positionInParent() }
+                            .onGloballyPositioned { position = it.positionInWindow() }
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onTap = {
                                         keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(base))
+                                        showVariantsBox = false
                                     },
                                     onLongPress = if (variations.isEmpty()) null else ({
                                         variantsBoxEmojiSet = emojiSet
@@ -177,7 +211,7 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
                                     }),
                                 )
                             }
-                            .height(FlorisImeSizing.smartbarHeight),
+                            .height(emojiKeyHeight),
                     ) {
                         Text(
                             modifier = Modifier.align(Alignment.Center),
@@ -196,8 +230,61 @@ fun EmojiPaletteView(emojiMappings: EmojiLayoutDataMap) {
                 } }
             }
 
-            androidx.compose.animation.AnimatedVisibility(visible = showVariantsBox) {
-                val variations = variantsBoxEmojiSet.variations()
+            val variations = variantsBoxEmojiSet.variations()
+            Box(
+                modifier = Modifier
+                    .width(EmojiBaseWidth * 6)
+                    .height(emojiKeyHeight * ceil(variations.size / 6f))
+                    .offset {
+                        val position = variantsBoxPosition - paletteBoxBounds.topLeft
+                        val minX = if (variations.size >= 6) 0f else {
+                            -(EmojiBaseWidth.toPx() * ((6 - variations.size) / 2f))
+                        }
+                        val maxX = (paletteBoxBounds.topRight.x - EmojiBaseWidth.toPx() * 6f).coerceAtLeast(0f) - minX
+                        Offset(
+                            x = (position.x - EmojiBaseWidth.toPx() * 2.5f).coerceIn(minX, maxX),
+                            y = position.y - ceil(variations.size / 6f) * emojiKeyHeight.toPx(),
+                        ).toIntOffset()
+                    },
+                contentAlignment = Alignment.BottomCenter,
+            ) {
+                val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
+                androidx.compose.animation.AnimatedVisibility(
+                    modifier = Modifier
+                        .widthIn(max = EmojiBaseWidth * 6)
+                        .snyggShadow(popupStyle)
+                        .snyggBorder(popupStyle)
+                        .snyggBackground(popupStyle),
+                    visible = showVariantsBox,
+                    enter = EmojiPopupEnterTransition,
+                    exit = EmojiPopupExitTransition,
+                ) {
+                    FlowRow {
+                        for (emoji in variations) {
+                            Box(
+                                modifier = Modifier
+                                    .pointerInput(Unit) {
+                                        detectTapGestures(
+                                            onTap = {
+                                                keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(emoji))
+                                                showVariantsBox = false
+                                            },
+                                        )
+                                    }
+                                    .width(EmojiBaseWidth)
+                                    .height(FlorisImeSizing.smartbarHeight)
+                                    .padding(all = 4.dp),
+                            ) {
+                                Text(
+                                    modifier = Modifier.align(Alignment.Center),
+                                    text = emoji.value,
+                                    color = popupStyle.foreground.solidColor(),
+                                    fontSize = popupStyle.fontSize.spSize(),
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }

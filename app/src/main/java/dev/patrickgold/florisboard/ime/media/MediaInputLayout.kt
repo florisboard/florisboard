@@ -72,7 +72,7 @@ fun MediaInputLayout(
             .wrapContentHeight(),
     ) {
         EmojiPaletteView(
-            emojiMappings = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt"),
+            fullEmojiMappings = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt"),
         )
         Row(
             modifier = Modifier
