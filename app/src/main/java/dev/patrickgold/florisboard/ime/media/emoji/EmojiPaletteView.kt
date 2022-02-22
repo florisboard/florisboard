@@ -99,9 +99,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.ceil
 
+private val EmojiCategoryValues = EmojiCategory.values()
 private val EmojiBaseWidth = 42.dp
+
 private val EmojiPopupEnterTransition = EnterTransition.verticalTween(200)
 private val EmojiPopupExitTransition = ExitTransition.verticalTween(50)
+
 private val VariantsTriangleShape = GenericShape { size, _ ->
     moveTo(x = size.width, y = 0f)
     lineTo(x = size.width, y = size.height)
@@ -125,10 +128,11 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
     }
     val emojiMappings = remember(metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->
-            emojiSetList.filter { emojiSet ->
-                val base = emojiSet.base()
-                EmojiCompat.get().getEmojiMatch(base.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
-                    systemFontPaint.hasGlyph(base.value)
+            emojiSetList.mapNotNull { emojiSet ->
+                emojiSet.emojis.filter { emoji ->
+                    EmojiCompat.get().getEmojiMatch(emoji.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
+                        systemFontPaint.hasGlyph(emoji.value)
+                }.let { if (it.isEmpty()) null else EmojiSet(it) }
             }
         }
     }
@@ -148,7 +152,7 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
     }
 
     Column {
-        val selectedTabIndex = EmojiCategory.values().indexOf(activeCategory)
+        val selectedTabIndex = EmojiCategoryValues.indexOf(activeCategory)
         TabRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -166,7 +170,7 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
                 )
             },
         ) {
-            for (category in EmojiCategory.values()) {
+            for (category in EmojiCategoryValues) {
                 Tab(
                     onClick = {
                         scope.launch { lazyListState.scrollToItem(0) }
