@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.util.TypedValue
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -46,7 +47,6 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,16 +60,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.emoji2.text.EmojiCompat
+import androidx.emoji2.widget.EmojiTextView
 import com.google.accompanist.flowlayout.FlowRow
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
 import dev.patrickgold.florisboard.app.ui.components.verticalTween
 import dev.patrickgold.florisboard.common.toIntOffset
@@ -106,11 +111,14 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
             typeface = Typeface.DEFAULT
         }
     }
-    val emojiMappings = remember(systemFontPaint) {
+    val metadataVersion = remember {
+        FlorisImeService.activeEditorInstance()?.emojiCompatMetadataVersion ?: 0
+    }
+    val emojiMappings = remember(metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->
             emojiSetList.filter { emojiSet ->
                 val base = emojiSet.base()
-                EmojiCompat.get().getEmojiMatch(base.value, 0) == EmojiCompat.EMOJI_SUPPORTED ||
+                EmojiCompat.get().getEmojiMatch(base.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
                     systemFontPaint.hasGlyph(base.value)
             }
         }
@@ -213,10 +221,9 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
                             }
                             .height(emojiKeyHeight),
                     ) {
-                        Text(
+                        EmojiText(
                             modifier = Modifier.align(Alignment.Center),
                             text = base.value,
-                            fontSize = 24.sp,
                         )
                         if (variations.isNotEmpty()) {
                             Box(
@@ -275,11 +282,10 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
                                     .height(FlorisImeSizing.smartbarHeight)
                                     .padding(all = 4.dp),
                             ) {
-                                Text(
+                                EmojiText(
                                     modifier = Modifier.align(Alignment.Center),
                                     text = emoji.value,
-                                    color = popupStyle.foreground.solidColor(),
-                                    fontSize = popupStyle.fontSize.spSize(),
+                                    fontSize = popupStyle.fontSize.spSize(default = 24.sp),
                                 )
                             }
                         }
@@ -288,4 +294,22 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
             }
         }
     }
+}
+
+@Composable
+fun EmojiText(
+    text: String,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 24.sp,
+) {
+    AndroidView(
+        modifier = modifier,
+        factory = { context ->
+            EmojiTextView(context).also {
+                it.text = text
+                it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                it.setTextColor(Color.Black.toArgb())
+            }
+        },
+    )
 }

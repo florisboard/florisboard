@@ -151,6 +151,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-beta01")
     implementation("androidx.emoji2:emoji2:1.1.0-rc01")
+    implementation("androidx.emoji2:emoji2-views:1.1.0-rc01")
     implementation("androidx.navigation:navigation-compose:2.4.1")
     implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
     implementation("com.google.accompanist:accompanist-insets:0.23.0")

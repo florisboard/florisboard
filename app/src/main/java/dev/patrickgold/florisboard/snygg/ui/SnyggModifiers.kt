@@ -92,16 +92,16 @@ fun SnyggValue.shape(): Shape {
     }
 }
 
-fun SnyggValue.dpSize(): Dp {
+fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     return when (this) {
         is SnyggDpSizeValue -> this.dp
-        else -> Dp.Unspecified
+        else -> default
     }
 }
 
-fun SnyggValue.spSize(): TextUnit {
+fun SnyggValue.spSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
     return when (this) {
         is SnyggSpSizeValue -> this.sp
-        else -> TextUnit.Unspecified
+        else -> default
     }
 }
