@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
@@ -212,6 +213,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         activeEditorInstance.wordHistoryChangedListener = this
+        if (EmojiCompat.get().loadState == EmojiCompat.LOAD_STATE_DEFAULT) {
+            EmojiCompat.get().load()
+        }
     }
 
     override fun onCreateInputView(): View {
