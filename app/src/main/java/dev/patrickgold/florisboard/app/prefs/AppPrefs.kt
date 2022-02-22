@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -449,6 +450,15 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val subtypes = string(
             key = "localization__subtypes",
             default = "[]",
+        )
+    }
+
+    val media = Media()
+    inner class Media {
+        val emojiRecentlyUsed = custom(
+            key = "media__emoji_recently_used",
+            default = emptyList(),
+            serializer = EmojiRecentlyUsedHelper.Serializer,
         )
     }
 
