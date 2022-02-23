@@ -27,6 +27,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -113,7 +114,10 @@ private val VariantsTriangleShape = GenericShape { size, _ ->
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
+fun EmojiPaletteView(
+    fullEmojiMappings: EmojiLayoutDataMap,
+    modifier: Modifier = Modifier,
+) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
@@ -151,7 +155,7 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
         showVariantsBox = false
     }
 
-    Column {
+    Column(modifier = modifier) {
         val selectedTabIndex = EmojiCategoryValues.indexOf(activeCategory)
         TabRow(
             modifier = Modifier
@@ -194,7 +198,8 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
         Box(
             modifier = Modifier
                 .onGloballyPositioned { paletteBoxBounds = it.boundsInWindow() }
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .weight(1f),
         ) {
             val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
             val contentColor = emojiKeyStyle.foreground.solidColor(default = Color.White)
@@ -216,8 +221,7 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
             if (activeCategory == EmojiCategory.RECENTLY_USED && emojiMapping.isEmpty()) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
+                        .fillMaxSize()
                         .padding(all = 8.dp),
                 ) {
                     Text(
@@ -234,8 +238,7 @@ fun EmojiPaletteView(fullEmojiMappings: EmojiLayoutDataMap) {
             } else {
                 LazyVerticalGrid(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
+                        .fillMaxSize()
                         .florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f), isVertical = true),
                     cells = GridCells.Adaptive(minSize = EmojiBaseWidth),
                     state = lazyListState,
