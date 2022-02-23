@@ -22,6 +22,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
@@ -40,6 +41,16 @@ object FlorisImeTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalStyle.current
+
+    @Composable
+    fun fallbackSurfaceColor(): Color {
+        return if (config.isNightTheme) Color.Black else Color.White
+    }
+
+    @Composable
+    fun fallbackContentColor(): Color {
+        return if (config.isNightTheme) Color.White else Color.Black
+    }
 }
 
 @Composable

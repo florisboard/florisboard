@@ -23,12 +23,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalAbsoluteElevation
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
+import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 
 private val NoContentPadding = PaddingValues(all = 0.dp)
@@ -44,8 +44,7 @@ fun SnyggSurface(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val elevationDp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp)
-    val color = style.background.solidColor()
-    val contentColor = style.foreground.solidColor(default = contentColorFor(color))
+    val contentColor = style.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
     val absoluteElevation = LocalAbsoluteElevation.current + elevationDp
     CompositionLocalProvider(
         LocalContentColor provides contentColor,

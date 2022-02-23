@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
 fun Modifier.snyggBackground(
     style: SnyggPropertySet,
+    fallbackColor: Color = Color.Unspecified,
     shape: Shape = style.shape.shape(),
 ): Modifier {
     return when (val bg = style.background) {
@@ -45,7 +47,14 @@ fun Modifier.snyggBackground(
             color = bg.color,
             shape = shape,
         )
-        else -> this
+        else -> if (fallbackColor.isSpecified) {
+            this.background(
+                color = fallbackColor,
+                shape = shape,
+            )
+        } else {
+            this
+        }
     }
 }
 

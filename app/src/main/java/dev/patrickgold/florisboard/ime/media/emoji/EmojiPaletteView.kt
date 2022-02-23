@@ -148,8 +148,8 @@ fun EmojiPaletteView(
 
     val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
     val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
-    val unselectedContentColor = tabStyle.foreground.solidColor(default = Color.White)
-    val selectedContentColor = tabStyleFocused.foreground.solidColor(default = Color.White)
+    val unselectedContentColor = tabStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+    val selectedContentColor = tabStyleFocused.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
 
     LaunchedEffect(lazyListState.isScrollInProgress) {
         showVariantsBox = false
@@ -202,7 +202,7 @@ fun EmojiPaletteView(
                 .weight(1f),
         ) {
             val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
-            val contentColor = emojiKeyStyle.foreground.solidColor(default = Color.White)
+            val contentColor = emojiKeyStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
             var recentlyUsedVersion by remember { mutableStateOf(0) }
             val emojiMapping = if (activeCategory == EmojiCategory.RECENTLY_USED) {
                 // Purposely using remember here to prevent recomposition, as this would cause rapid
@@ -324,7 +324,7 @@ fun EmojiPaletteView(
                         .widthIn(max = EmojiBaseWidth * 6)
                         .snyggShadow(popupStyle)
                         .snyggBorder(popupStyle)
-                        .snyggBackground(popupStyle),
+                        .snyggBackground(popupStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor()),
                     visible = showVariantsBox,
                     enter = EmojiPopupEnterTransition,
                     exit = EmojiPopupExitTransition,

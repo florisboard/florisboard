@@ -90,16 +90,16 @@
     "font-size": "22sp",
     "shape": "var(--shape)"
   },
+  "emoji-key:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
   "emoji-key-popup": {
     "background": "#757575",
     "foreground": "var(--on-surface)",
     "font-size": "24sp",
     "shadow-elevation": "2dp",
     "shape": "var(--shape)"
-  },
-  "emoji-key:pressed": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-surface)"
   },
   "emoji-tab": {
     "foreground": "var(--on-background)"
