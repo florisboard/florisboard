@@ -35,6 +35,8 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -126,7 +128,8 @@ fun Modifier.florisScrollbar(
 
 fun Modifier.florisScrollbar(
     state: LazyListState,
-    scrollbarSize: Dp = DefaultScrollbarSize,
+    size: Dp = DefaultScrollbarSize,
+    color: Color = Color.Unspecified,
     isVertical: Boolean,
 ): Modifier = composed {
     var isInitial by remember { mutableStateOf(true) }
@@ -136,7 +139,7 @@ fun Modifier.florisScrollbar(
         targetValue = targetAlpha,
         animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
     )
-    val scrollbarColor = MaterialTheme.colors.onSurface.copy(alpha = 0.28f)
+    val scrollbarColor = color.takeOrElse { MaterialTheme.colors.onSurface.copy(alpha = 0.28f) }
 
     LaunchedEffect(Unit) {
         delay(1850)
@@ -155,16 +158,16 @@ fun Modifier.florisScrollbar(
 
             if (isVertical) {
                 val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
-                scrollbarWidth = scrollbarSize.toPx()
+                scrollbarWidth = size.toPx()
                 scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * elementHeight
-                scrollbarOffsetX = size.width - scrollbarWidth
+                scrollbarOffsetX = this.size.width - scrollbarWidth
                 scrollbarOffsetY = firstVisibleElementIndex * elementHeight
             } else {
                 val elementWidth = this.size.width / state.layoutInfo.totalItemsCount
                 scrollbarWidth = state.layoutInfo.visibleItemsInfo.size * elementWidth
-                scrollbarHeight = scrollbarSize.toPx()
+                scrollbarHeight = size.toPx()
                 scrollbarOffsetX = firstVisibleElementIndex * elementWidth
-                scrollbarOffsetY = size.height - scrollbarHeight
+                scrollbarOffsetY = this.size.height - scrollbarHeight
             }
 
             drawRect(

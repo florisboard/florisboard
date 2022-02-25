@@ -611,10 +611,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
             KeyCode.IME_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
             KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
-            KeyCode.IME_UI_MODE_MEDIA -> {
-                // TODO activeState.imeUiMode = ImeUiMode.MEDIA
-                appContext.showShortToast("TODO: implement emoji view (beta10)")
-            }
+            KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
             KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
@@ -637,6 +634,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS -> activeState.keyboardMode = KeyboardMode.SYMBOLS
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
+                if (activeState.imeUiMode == ImeUiMode.MEDIA) {
+                    activeEditorInstance?.commitText(ev.data.asString(isForDisplay = false))
+                    return@batchEdit
+                }
                 when (activeState.keyboardMode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
