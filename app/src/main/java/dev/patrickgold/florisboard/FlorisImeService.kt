@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
@@ -81,6 +82,7 @@ import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
+import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
@@ -234,6 +236,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         activeEditorInstance.wordHistoryChangedListener = this
+        if (EmojiCompat.get().loadState == EmojiCompat.LOAD_STATE_DEFAULT) {
+            EmojiCompat.get().load()
+        }
     }
 
     override fun onCreateInputView(): View {
@@ -515,7 +520,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 ) {
                     when (activeState.imeUiMode) {
                         ImeUiMode.TEXT -> TextInputLayout()
-                        ImeUiMode.MEDIA -> {}
+                        ImeUiMode.MEDIA -> MediaInputLayout()
                         ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
                     }
                 }

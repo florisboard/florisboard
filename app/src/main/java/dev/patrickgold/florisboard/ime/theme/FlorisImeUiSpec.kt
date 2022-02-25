@@ -133,6 +133,26 @@ object FlorisImeUiSpec : SnyggSpec({
         border()
     }
 
+    element(FlorisImeUi.EmojiKey) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.EmojiKeyPopup) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.EmojiTab) {
+        foreground()
+    }
+
     element(FlorisImeUi.GlideTrail) {
         foreground()
     }

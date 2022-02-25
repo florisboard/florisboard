@@ -27,7 +27,6 @@ import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
 import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
@@ -54,7 +53,6 @@ val DefaultJsonConfig = Json {
             subclass(TextKeyData::class, TextKeyData.serializer())
             subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
             subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
-            subclass(EmojiKeyData::class, EmojiKeyData.serializer())
             subclass(CaseSelector::class, CaseSelector.serializer())
             subclass(VariationSelector::class, VariationSelector.serializer())
             subclass(CharWidthSelector::class, CharWidthSelector.serializer())
@@ -65,7 +63,6 @@ val DefaultJsonConfig = Json {
             subclass(TextKeyData::class, TextKeyData.serializer())
             subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
             subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
-            subclass(EmojiKeyData::class, EmojiKeyData.serializer())
             default { TextKeyData.serializer() }
         }
         polymorphic(Composer::class) {

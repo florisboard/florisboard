@@ -26,6 +26,10 @@ object FlorisImeUi {
     const val ClipboardItem = "clipboard-item"
     const val ClipboardItemPopup = "clipboard-item-popup"
 
+    const val EmojiKey = "emoji-key"
+    const val EmojiKeyPopup = "emoji-key-popup"
+    const val EmojiTab = "emoji-tab"
+
     const val GlideTrail = "glide-trail"
 
     const val OneHandedPanel = "one-handed-panel"

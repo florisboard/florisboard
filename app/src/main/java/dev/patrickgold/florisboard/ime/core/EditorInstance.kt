@@ -31,6 +31,7 @@ import android.view.inputmethod.InputConnection
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
+import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
@@ -96,6 +97,10 @@ class EditorInstance(private val ims: InputMethodService) {
         }
     val packageName: String?
         get() = editorInfo?.packageName
+    val emojiCompatMetadataVersion: Int
+        get() = editorInfo?.extras?.getInt(EmojiCompat.EDITOR_INFO_METAVERSION_KEY, 0) ?: 0
+    val emojiCompatReplaceAll: Boolean
+        get() = editorInfo?.extras?.getString(EmojiCompat.EDITOR_INFO_REPLACE_ALL_KEY, "false")?.toBoolean() ?: false
 
     val selection: Region = Region(UNSET, UNSET)
 

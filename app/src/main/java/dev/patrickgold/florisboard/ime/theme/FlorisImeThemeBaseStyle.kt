@@ -105,6 +105,17 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shape = roundedCornerShape(12.dp)
     }
 
+    FlorisImeUi.EmojiKey {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = `var`("onBackground")
+        fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.EmojiKey(pressedSelector = true) {
+        background = `var`("surface")
+        foreground = `var`("onSurface")
+    }
+
     FlorisImeUi.GlideTrail {
         foreground = `var`("primary")
     }

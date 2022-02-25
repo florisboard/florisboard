@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,32 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-/**
- * Enum for emoji category.
- * List taken from https://unicode.org/Public/emoji/13.0/emoji-test.txt
- */
-enum class EmojiCategory {
-    SMILEYS_EMOTION,
-    PEOPLE_BODY,
-    ANIMALS_NATURE,
-    FOOD_DRINK,
-    TRAVEL_PLACES,
-    ACTIVITIES,
-    OBJECTS,
-    SYMBOLS,
-    FLAGS;
+import dev.patrickgold.florisboard.R
 
-    override fun toString(): String {
-        return super.toString().replace("_", " & ")
-    }
+enum class EmojiCategory(val id: String) {
+    RECENTLY_USED("recently_used"),
+    SMILEYS_EMOTION("smileys_emotion"),
+    PEOPLE_BODY("people_body"),
+    ANIMALS_NATURE("animals_nature"),
+    FOOD_DRINK("food_drink"),
+    TRAVEL_PLACES("travel_places"),
+    ACTIVITIES("activities"),
+    OBJECTS("objects"),
+    SYMBOLS("symbols"),
+    FLAGS("flags");
 
-    companion object {
-        fun fromString(string: String): EmojiCategory {
-            return valueOf(string.replace(" & ", "_").uppercase())
+    fun iconId(): Int {
+        return when (this) {
+            RECENTLY_USED -> R.drawable.ic_schedule
+            SMILEYS_EMOTION -> R.drawable.ic_emoji_emotions
+            PEOPLE_BODY -> R.drawable.ic_emoji_people
+            ANIMALS_NATURE -> R.drawable.ic_emoji_nature
+            FOOD_DRINK -> R.drawable.ic_emoji_food_beverage
+            TRAVEL_PLACES -> R.drawable.ic_emoji_transportation
+            ACTIVITIES -> R.drawable.ic_emoji_events
+            OBJECTS -> R.drawable.ic_emoji_objects
+            SYMBOLS -> R.drawable.ic_emoji_symbols
+            FLAGS -> R.drawable.ic_emoji_flags
         }
     }
 }

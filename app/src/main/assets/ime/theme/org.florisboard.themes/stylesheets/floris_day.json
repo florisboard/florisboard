@@ -84,6 +84,30 @@
     "shape": "var(--shape-variant)"
   },
 
+  "emoji-key": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "22sp",
+    "shape": "var(--shape)"
+  },
+  "emoji-key:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
+  "emoji-key-popup": {
+    "background": "#eeeeee",
+    "foreground": "var(--on-surface)",
+    "font-size": "22sp",
+    "shadow-elevation": "2dp",
+    "shape": "var(--shape)"
+  },
+  "emoji-tab": {
+    "foreground": "var(--on-background)"
+  },
+  "emoji-tab:focus": {
+    "foreground": "var(--primary)"
+  },
+
   "glide-trail": {
     "foreground": "var(--primary)"
   },
