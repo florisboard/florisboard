@@ -950,7 +950,7 @@ private class TextKeyboardLayoutController(
 }
 
 @Composable
-private fun AppPrefs.Keyboard.fontSizeMultiplier(): Float {
+fun AppPrefs.Keyboard.fontSizeMultiplier(): Float {
     val configuration = LocalConfiguration.current
     val oneHandedMode by oneHandedMode.observeAsState()
     val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }

@@ -82,11 +82,13 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
+import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.components.verticalTween
 import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.keyboard.fontSizeMultiplier
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -202,6 +204,8 @@ fun EmojiPaletteView(
                 .weight(1f),
         ) {
             val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
+            val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
+            val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize() safeTimes fontSizeMultiplier
             val contentColor = emojiKeyStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
             var recentlyUsedVersion by remember { mutableStateOf(0) }
             val emojiMapping = if (activeCategory == EmojiCategory.RECENTLY_USED) {
@@ -286,6 +290,7 @@ fun EmojiPaletteView(
                             EmojiText(
                                 modifier = Modifier.align(Alignment.Center),
                                 text = base.value,
+                                fontSize = emojiKeyFontSize,
                             )
                             if (variations.isNotEmpty()) {
                                 Box(
@@ -351,7 +356,7 @@ fun EmojiPaletteView(
                                 EmojiText(
                                     modifier = Modifier.align(Alignment.Center),
                                     text = emoji.value,
-                                    fontSize = popupStyle.fontSize.spSize(default = 24.sp),
+                                    fontSize = popupStyle.fontSize.spSize(default = 22.sp) safeTimes fontSizeMultiplier,
                                 )
                             }
                         }
@@ -366,7 +371,7 @@ fun EmojiPaletteView(
 fun EmojiText(
     text: String,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 24.sp,
+    fontSize: TextUnit = 22.sp,
 ) {
     AndroidView(
         modifier = modifier,

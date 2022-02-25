@@ -97,7 +97,7 @@
   "emoji-key-popup": {
     "background": "#757575",
     "foreground": "var(--on-surface)",
-    "font-size": "24sp",
+    "font-size": "22sp",
     "shadow-elevation": "2dp",
     "shape": "var(--shape)"
   },
