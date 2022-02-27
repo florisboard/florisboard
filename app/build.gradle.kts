@@ -90,7 +90,7 @@ android {
             versionNameSuffix = "-debug"
 
             isDebuggable = true
-            isJniDebuggable = true
+            isJniDebuggable = false
 
             ndk {
                 // For running FlorisBoard on the emulator

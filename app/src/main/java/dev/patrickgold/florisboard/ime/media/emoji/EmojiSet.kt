@@ -18,6 +18,10 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 @JvmInline
 value class EmojiSet(val emojis: List<Emoji>) {
+    companion object {
+        val Unspecified = EmojiSet(listOf(Emoji("", "", emptyList())))
+    }
+
     init {
         require(emojis.isNotEmpty()) { "Cannot create an EmojiSet with no emojis specified." }
     }
