@@ -6,8 +6,8 @@
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikon tiga titik. Jika terlihat, menandakan bahwa huruf-huruf tambahan bisa digunakan saat ditekan lama.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tutup mode satu-tangan.</string>
-    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan papan ketik ke kiri.</string>
-    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan papan ketik ke kanan.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan keyboard ke kiri.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan keyboard ke kanan.</string>
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
@@ -22,6 +22,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Obyek</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simbol</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bendera</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Tidak ada emoji terkini yang ditemukan. Ketika Anda mulai mengetik emoji mereka akan muncul secara otomatis di sini.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Tekan lama emoji terkini untuk menghapusnya dari tampilan ini!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} terhapus dari emoji terkini</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alihan tindakan cepat. Jika ditekan, akan beralih antara saran-saran kata dan tombol-tombol alihan tindakan cepat.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Keluar dari panel pengeditan teks.</string>
@@ -43,6 +46,7 @@
 Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard tidak dipilih sebagai metode input default. Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Bahasa &amp; Tata Letak</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Tampilkan nama-nama bahasa di</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipe</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtipe</string>
@@ -90,6 +94,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__fine_tune__title">Editor lanjutan</string>
     <string name="settings__theme_editor__fine_tune__level">Tingkat pengeditan</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Tampilkan warna-warna sebagai</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Tampilkan keyboard setelah dialog</string>
     <string name="settings__theme_editor__add_rule">Tambahkan aturan</string>
     <string name="settings__theme_editor__edit_rule">Ubah aturan</string>
     <string name="settings__theme_editor__no_rules_defined">Lembar gaya ini tidak memiliki aturan yang didefinisikan. Tambahkan sebuah aturan untuk mulai menyesuaikan lembar gaya ini.</string>
@@ -215,7 +220,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">mis. tombol hapus</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">tidak diimplementasikan</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">mis. geser kontrol kursor</string>
-    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Papan Ketik</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Keyboard</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Baris angka</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Tampilkan baris nomor di atas tata letak karakter</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Petunjuk baris nomor</string>
@@ -230,7 +235,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode satu-tangan</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Lebar keyboard mode satu tangan</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Masukan layar penuh lanskap</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tinggi papan ketik</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Ketinggian keyboard</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spasi tombol</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Offset bawah</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tekanan tombol</string>
@@ -244,7 +249,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
-    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas papan ketik</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas keyboard</string>
     <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Baris utama</string>
     <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Balikkan baris tombol alih</string>
     <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Membalikkan alih baris sekunder dan tindakan</string>
@@ -324,6 +329,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Ambang jarak geser</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Tingkat lanjut</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema pengaturan</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Default sistem (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Cerah</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Gelap</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Gelap</string>
@@ -397,7 +403,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__enable_ime__open_settings_btn">Buka Setelan Sistem</string>
     <string name="setup__select_ime__title">Pilih {app_name}</string>
     <string name="setup__select_ime__description">{app_name} sekarang sudah diaktifkan di sistem Anda. Untuk menggunakannya secara aktif, beralihlah ke {app_name} dengan memilihnya di dialog pemilih input!</string>
-    <string name="setup__select_ime__switch_keyboard_btn">Ganti Papan Ketik</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Ganti Keyboard</string>
     <string name="setup__finish_up__title">Selesaikan</string>
     <string name="setup__finish_up__description_p1">{app_name} sekarang sudah diaktifkan di sistem ini dan siap untuk disesuaikan oleh Anda.</string>
     <string name="setup__finish_up__description_p2">Jika Anda mengalami masalah, bug, crash, atau hanya ingin membuat saran, lihat repositori proyek di layar tentang!</string>
@@ -610,6 +616,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Lebar dinamis &amp; dapat digulir</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Heksadesimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Merah Hijau Biru Alpha</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Selalu tampilkan</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Selalu tampilkan keyboard setelah menutup dialog editor apapun</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Jangan pernah tampilkan</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Jangan pernah tampilkan keyboard setelah menutup dialog editor apapun</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Ingat status terakhir</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Hanya tampilkan keyboard setelag menutup dialog editor apapun jika sebelumnya terlihat</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Locale sistem</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Nama-nama bahasa pada seluruh aplikasi dan UI keyboard ditampilkan dalan locale yang diatur untuk seluruh perangkat</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Locale natif</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Nama-nama bahasa pada seluruh aplikasi dan UI keyboard ditampilkan dalan locale yang dirujuk sendiri</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksen diprioritaskan</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan aksen utama, atau simbol petunjuk jika tidak ada aksen utama yang tersedia</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Petunjuk diprioritaskan</string>
@@ -649,7 +665,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Hapus karakter secara tepat</string>
     <string name="enum__swipe_action__delete_word" comment="Enum value label">Hapus kata saat ini</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Hapus kata secara tepat</string>
-    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Sembunyikan papan ketik</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Sembunyikan keyboard</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Masukkan spasi</string>
     <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Pindahkan kursor ke atas</string>
     <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Pindahkan kursor ke bawah</string>
@@ -666,7 +682,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Pilih karakter secara tepat</string>
     <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Pilih kata secara tepat</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Tampilkan pemilih metode masukan</string>
-    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Beralih ke papan ketik sebelumnya</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Beralih ke keyboard sebelumnya</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Beralih ke subtipe sebelumnya</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Beralih ke subtipe selanjutnya</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Selalu pagi</string>
@@ -675,7 +691,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">Ikuti waktu</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Beralih ke emoji</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Beralih bahasa</string>
-    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Beralih aplikasi papan ketik</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Beralih aplikasi keyboard</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dinamis: Beralih ke emoji / Beralih bahasa</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->

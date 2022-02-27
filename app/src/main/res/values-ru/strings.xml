@@ -22,6 +22,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Объекты</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Символы</string>
     <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Недавно использованные смайлы не найдены. Как только вы начнете их использовать, они автоматически появятся здесь.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: нажмите и удерживайте недавно использованные смайлы, чтобы удалить их!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} удален из недавно использованных смайлов</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Быстрое переключение. При нажатии переключается между предложением слова и кнопками быстрого действия.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Закрыть панель редактирования текста.</string>
@@ -42,6 +45,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включена в системе и поэтому не будет доступна в качестве метода ввода. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Языки и макеты</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Отображать названия языков</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подтипы</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
@@ -86,14 +90,19 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Выбрать светлую тему</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Выбрать установленные темы</string>
+    <string name="settings__theme_editor__fine_tune__title">Настройки редактора тем</string>
+    <string name="settings__theme_editor__fine_tune__level">Уровень редактирования</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Показывать цвета как</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Отображать клавиатуру после диалогов</string>
     <string name="settings__theme_editor__add_rule">Добавить правило</string>
     <string name="settings__theme_editor__edit_rule">Изменить правило</string>
     <string name="settings__theme_editor__no_rules_defined">В таблице стилей не определены правила. Добавьте правило, чтобы начать её настройку.</string>
     <string name="settings__theme_editor__rule_already_exists">Это правило таблицы стилей уже определено.</string>
+    <string name="settings__theme_editor__rule_element">Целевой элемент</string>
     <string name="settings__theme_editor__rule_codes">Коды</string>
     <string name="settings__theme_editor__rule_groups">Группы</string>
     <string name="settings__theme_editor__rule_modes">Режимы</string>
+    <string name="settings__theme_editor__rule_selectors">Селекторы</string>
     <string name="settings__theme_editor__add_code">Добавить код</string>
     <string name="settings__theme_editor__edit_code">Редактировать код</string>
     <string name="settings__theme_editor__no_codes_defined">Коды не заданы.</string>
@@ -105,6 +114,7 @@
     <string name="settings__theme_editor__property_already_exists">Свойство с таким именем уже существует в текущем правиле.</string>
     <string name="settings__theme_editor__property_name">Название свойства</string>
     <string name="settings__theme_editor__property_value">Значения свойства</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Применить ко всем углам</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Изменить цвет строки</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
@@ -132,8 +142,13 @@
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_key">Кнопка умной панели</string>
     <string name="snygg__rule_element__system_nav_bar">Системная навигационная панель</string>
+    <string name="snygg__rule_selector__pressed">При нажатии</string>
+    <string name="snygg__rule_selector__focus">При фокусе</string>
+    <string name="snygg__rule_selector__disabled">Отключено</string>
     <string name="snygg__property_name__width">Ширина</string>
     <string name="snygg__property_name__height">Высота</string>
+    <string name="snygg__property_name__background">Фон</string>
+    <string name="snygg__property_name__foreground">Передний план</string>
     <string name="snygg__property_name__border_color">Цвет контура</string>
     <string name="snygg__property_name__border_style">Стиль контура</string>
     <string name="snygg__property_name__border_width">Ширина контура</string>
@@ -142,15 +157,35 @@
     <string name="snygg__property_name__font_style">Стиль шрифта</string>
     <string name="snygg__property_name__font_variant">Вариант шрифта</string>
     <string name="snygg__property_name__font_weight">Толщина шрифта</string>
+    <string name="snygg__property_name__shadow_elevation">Высота тени</string>
     <string name="snygg__property_name__shape">Фигура</string>
     <string name="snygg__property_name__var_primary">Основной цвет</string>
     <string name="snygg__property_name__var_primary_variant">Основной цвет (вариант)</string>
     <string name="snygg__property_name__var_secondary">Дополнительный цвет</string>
     <string name="snygg__property_name__var_secondary_variant">Дополнительный цвет (вариант)</string>
     <string name="snygg__property_name__var_background">Основной фон</string>
+    <string name="snygg__property_name__var_surface">Обычная поверхность</string>
+    <string name="snygg__property_name__var_surface_variant">Обычная поверхность (вариант)</string>
+    <string name="snygg__property_name__var_on_primary">Передний план основного</string>
+    <string name="snygg__property_name__var_on_secondary">Передний план дополнительного</string>
+    <string name="snygg__property_name__var_on_background">Передний план фона</string>
+    <string name="snygg__property_name__var_on_surface">Передний план поверхности</string>
+    <string name="snygg__property_name__var_on_surface_variant">Передний план поверхности (вариант)</string>
+    <string name="snygg__property_name__var_shape">Обычная форма</string>
+    <string name="snygg__property_name__var_shape_variant">Обычная форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследование</string>
     <string name="snygg__property_value__solid_color">Сплошной цвет</string>
+    <string name="snygg__property_value__image_ref">Источник изображения</string>
+    <string name="snygg__property_value__rectangle_shape">Прямоугольная форма</string>
+    <string name="snygg__property_value__circle_shape">Круглая форма</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Форма со срезанием углов (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Форма со срезанием углов (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Форма с закруглением углов (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Форма с закруглением углов (%)</string>
+    <string name="snygg__property_value__dp_size">Размер (dp)</string>
+    <string name="snygg__property_value__sp_size">Размер (sp)</string>
     <string name="snygg__property_value__percentage_size">Размер (%)</string>
+    <string name="snygg__property_value__defined_var">Ссылка на значение</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
@@ -293,6 +328,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Порог срабатывания жеста</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">По умолчанию (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
@@ -474,12 +510,14 @@
     <!-- Extension strings -->
     <string name="ext__meta__authors">Авторы</string>
     <string name="ext__meta__components">Связанные компоненты</string>
+    <string name="ext__meta__components_theme">Темы в расширении</string>
     <string name="ext__meta__components_none_found">Этот архив расширений не содержит каких-либо связанных компонентов.</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Главная страница</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Известные проблемы</string>
     <string name="ext__meta__keywords">Ключевые слова</string>
+    <string name="ext__meta__label">Метка</string>
     <string name="ext__meta__license">Лицензия</string>
     <string name="ext__meta__maintainers">Сопровождающие</string>
     <string name="ext__meta__maintainers_by">От: {maintainers}</string>
@@ -498,8 +536,13 @@
     <string name="ext__editor__metadata__title">Управление метаданными</string>
     <string name="ext__editor__metadata__title_invalid">Неправильные метаданные</string>
     <string name="ext__editor__metadata__message_invalid">Неправильные метаданные для этого расширения, проверьте редактор метаданных для получения подробной информации!</string>
+    <string name="ext__editor__dependencies__title">Управление зависимостями</string>
+    <string name="ext__editor__files__title">Управление файлами архивов</string>
     <string name="ext__editor__create_component__title">Создать компонент</string>
     <string name="ext__editor__create_component__title_theme">Создать тему</string>
+    <string name="ext__editor__create_component__from_empty">Пустой</string>
+    <string name="ext__editor__create_component__from_existing">Из существующей</string>
+    <string name="ext__editor__create_component__from_empty_warning">Создание и настройка пустого компонента может быть сложной задачей, если вы новичок в {app_name} или не знакомы со спецификой. В таком случае лучше скопируйте существующий компонент и измените его по своему вкусу.</string>
     <string name="ext__editor__edit_component__title">Редактировать компонент</string>
     <string name="ext__editor__edit_component__title_theme">Редактировать компонент темы</string>
     <string name="ext__export__success">Расширение успешно экспортировано!</string>
@@ -570,7 +613,18 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Классика (3 колонки)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамическая ширина</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамическая ширина и прокрутка</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Шестнадцатеричные коды</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Красный Зелёный Синий Прозрачность</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Отображать всегда</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Отображать клавиатуру всегда после закрытия любого диалогового окна редактора</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Не показывать</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Не отображать клавиатуру после закрытия любого диалогового окна редактора</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Запомнить последнее состояние</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Показывать клавиатуру только после закрытия любого диалогового окна редактора, если она была видна ранее</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Язык системы</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Названия языков в приложении и пользовательском интерфейсе клавиатуры отображаются на языке, установленном для устройства</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Другой язык</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Названия языков в приложении и пользовательском интерфейсе клавиатуры отображаются на выбранном языке</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является основным акцентом или символом подсказки, если основной акцент недоступен</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Приоритет подсказке</string>
@@ -592,6 +646,11 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Дополнительный ряд размещается между основным рядом и текстовой клавиатурой</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Наложение над приложением</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Дополнительный ряд отображается в виде наложения над пользовательским интерфейсом приложения, не влияя на результирующую высоту интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к частичному переполнению поля ввода приложения.</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Верх начало</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Низ начало</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Дополнительно</string>
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Отображаются все свойства, переводятся свойства и правила.</string>

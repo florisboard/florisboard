@@ -42,6 +42,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no está habilitado en el sistema y por lo tanto no estará disponible como método de entrada en el selector de entrada. Haga clic aquí para resolver este problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no está seleccionado como método de entrada por defecto. Haga clic aquí para resolver este problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas &amp; Distribuciones</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Muestra nombres de idiomas en</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipos</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Añadir subtipo</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar subtipo</string>
@@ -121,6 +122,11 @@
     <string name="snygg__rule_element__smartbar_primary_row">Fila principal de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Fila secundaria de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_action_row">Fila de acción de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_action_button">Botón de acción de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_row">Fila candidata de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Palabra candidata de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidato de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Espaciado candidato de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_key">Tecla de barra inteligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barra de navegación de sistema</string>
     <string name="snygg__rule_selector__pressed">Presionado</string>
@@ -158,6 +164,14 @@
     <string name="snygg__property_value__image_ref">Referencia de imagen</string>
     <string name="snygg__property_value__rectangle_shape">Forma rectangular</string>
     <string name="snygg__property_value__circle_shape">Forma circular</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Forma de esquina recortada (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Forma de esquina recortada (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Forma de esquina redondeada (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Forma de esquina redondeada (%)</string>
+    <string name="snygg__property_value__dp_size">Tamaño (dp)</string>
+    <string name="snygg__property_value__sp_size">Tamaño (sp)</string>
+    <string name="snygg__property_value__percentage_size">Tamaño (%)</string>
+    <string name="snygg__property_value__defined_var">Referencia de Var</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sonidos &amp; Vibración</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Respuesta de audio / Sonidos</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilitar respuesta de audio</string>
@@ -200,6 +214,7 @@
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Muestra una tecla de utilidad configurable junto a la barra espaciadora</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acción de tecla de utilidad</string>
     <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Mostrar idioma en barra espaciadora</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Mostrar el nombre del idioma activo actual en la barra espaciadora</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamaño de fuente</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo a una mano</string>
@@ -299,6 +314,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Distancia del deslizamiento</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzado</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ajustes del tema</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Predeterminado del sistema (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Oscuro</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Oscuro</string>
@@ -496,10 +512,15 @@
     <string name="ext__error__not_found_description">Ninguna extensión con el ID \"{id}\" pudo ser encontrada.</string>
     <string name="ext__editor__title_create_any">Crear extensión</string>
     <string name="ext__editor__title_create_keyboard">Crear extensión de teclado</string>
+    <string name="ext__editor__title_create_spelling">Crear extensión de corrección ortográfica</string>
     <string name="ext__editor__title_create_theme">Crear extensión de tema</string>
     <string name="ext__editor__title_edit_any">Editar extensión</string>
     <string name="ext__editor__title_edit_keyboard">Editar extensión de teclado</string>
+    <string name="ext__editor__title_edit_spelling">Editar extensión de corrección ortográfica</string>
     <string name="ext__editor__title_edit_theme">Editar extensión de tema</string>
+    <string name="ext__editor__metadata__title">Administrar metadatos</string>
+    <string name="ext__editor__metadata__title_invalid">Metadatos no válidos</string>
+    <string name="ext__editor__metadata__message_invalid">Los metadatos para esta extensión no son válidos, ¡por favor verifique el editor de metadatos para más detalles!</string>
     <string name="ext__editor__dependencies__title">Administrar dependencias</string>
     <string name="ext__editor__files__title">Administrar ficheros de archivos</string>
     <string name="ext__editor__create_component__title">Crear componente</string>
@@ -559,6 +580,7 @@
     <!-- General strings -->
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">ej. {example}</string>
     <string name="general__no_browser_app_found_for_url">No se ha encontrado ninguna aplicación de navegador para manejar la URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; seleccionar &#45;</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Retrato</string>
     <string name="screen_orientation__landscape">Paisaje</string>
@@ -577,6 +599,9 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Ancho dinámico &amp; desplazable</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rojo Verde Azul Alfa</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostrar siempre</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">No mostrar nunca</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Recordar último estado</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Acento es prioridad</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el acento principal, o el símbolo si no hay acento principal disponible</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Símbolo es prioridad</string>
@@ -600,6 +625,7 @@
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avanzado</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Desarrollador</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Usar idiomas del sistema</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Usar subtipos de teclado</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Sin acción</string>
@@ -622,6 +648,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Mayúsculas</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Rehacer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Deshacer</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Seleccionar caracteres con precisión</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Seleccionar palabras con precisión</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Mostrar selector de método de entrada</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Cambiar a teclado anterior</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Cambiar a subtipo anterior</string>

@@ -89,6 +89,7 @@
     <string name="settings__theme_editor__fine_tune__title">Editoreinstellungen</string>
     <string name="settings__theme_editor__fine_tune__level">Bearbeitungsmodus</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Zeige Farben als</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zeige Tastatur nach Dialogen</string>
     <string name="settings__theme_editor__add_rule">Regel hinzufügen</string>
     <string name="settings__theme_editor__edit_rule">Regel bearbeiten</string>
     <string name="settings__theme_editor__no_rules_defined">Für das Stylesheet sind keine Regeln definiert. Füge eine Regel hinzu, um dieses Stylesheet anzupassen.</string>
@@ -127,6 +128,9 @@
     <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
     <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primäre Aktionszeile Schalter</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar Sekundärleiste</string>
+    <string name="snygg__rule_element__smartbar_action_row">Smartbar Aktionsleiste</string>
+    <string name="snygg__rule_element__smartbar_action_button">Smartbar Aktionstaste</string>
     <string name="snygg__rule_element__smartbar_key">Smartbartaste</string>
     <string name="snygg__rule_element__system_nav_bar">System-Navigationsleiste</string>
     <string name="snygg__rule_selector__pressed">Gedrückt</string>
@@ -136,8 +140,14 @@
     <string name="snygg__property_name__height">Höhe</string>
     <string name="snygg__property_name__background">Hintergrund</string>
     <string name="snygg__property_name__foreground">Vordergrund</string>
+    <string name="snygg__property_name__border_color">Rahmenfarbe</string>
+    <string name="snygg__property_name__border_style">Rahmenstil</string>
+    <string name="snygg__property_name__border_width">Rahmenbreite</string>
     <string name="snygg__property_name__font_family">Schriftart</string>
     <string name="snygg__property_name__font_size">Schriftgröße</string>
+    <string name="snygg__property_name__font_style">Schriftstil</string>
+    <string name="snygg__property_name__font_variant">Schriftvariante</string>
+    <string name="snygg__property_name__font_weight">Schriftstärke</string>
     <string name="snygg__property_name__shadow_elevation">Höhe des Schattens</string>
     <string name="snygg__property_name__shape">Form</string>
     <string name="snygg__property_name__var_primary">Primärfarbe</string>
@@ -297,6 +307,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Gesten-Distanzschwelle</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Erweitert</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">App-Design</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Systemstandard (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hell</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dunkel</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dunkel</string>
@@ -485,6 +496,7 @@
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Ticket System</string>
     <string name="ext__meta__keywords">Stichwörter</string>
+    <string name="ext__meta__label">Bezeichnung</string>
     <string name="ext__meta__license">Lizenz</string>
     <string name="ext__meta__maintainers">Betreuer</string>
     <string name="ext__meta__maintainers_by">Von: {maintainers}</string>
@@ -507,7 +519,7 @@
     <string name="ext__editor__create_component__title">Komponente erstellen</string>
     <string name="ext__editor__create_component__title_theme">Design erstellen</string>
     <string name="ext__editor__create_component__from_empty">Leer</string>
-    <string name="ext__editor__create_component__from_existing">Aus bestehender</string>
+    <string name="ext__editor__create_component__from_existing">Aus bestehendem</string>
     <string name="ext__editor__edit_component__title">Komponente bearbeiten</string>
     <string name="ext__editor__edit_component__title_theme">Designkomponente bearbeiten</string>
     <string name="ext__export__success">Erweiterung erfolgreich exportiert!</string>
@@ -580,6 +592,12 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamische Breite &amp; scrollbar</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadezimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rot Grün Blau Alpha</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Immer anzeigen</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Immer die Tastatur nach Schließen eines Editordialogs anzeigen</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nie anzeigen</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Nie die Tastatur nach Schließen eines Editordialogs anzeigen</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Letzten Zustand merken</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Nur die Tastatur nach Schließen eines Editordialogs anzeigen, wenn sie vorher sichtbar war</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aktiviert (Akzente sind priorisiert)</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, ist immer der Hauptakzent oder das Hinweissymbol, wenn kein Hauptakzent verfügbar ist</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hinweis wird priorisiert</string>

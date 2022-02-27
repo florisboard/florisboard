@@ -22,6 +22,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Oggetti</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bandiere</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Non è stata trovata nessuna emoji usata di recente. Una volta che inizi a digitare le emoji appariranno automaticamente qui.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consiglio: premi a lungo le emoji usate di recente per rimuoverle di nuovo da questa vista!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} rimossa dalle emoji usate di recente</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Attiva/disattiva azione rapida. Se premuto, alterna i suggerimenti di parole ed i pulsanti di azione rapida.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Esci dal pannello di modifica del testo.</string>
@@ -42,6 +45,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard non è abilitato nel sistema e quindi non sarà disponibile come metodo di immissione. Clicca qui per risolvere il problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard non è la tastiera predefinita. Clicca qui per risolvere il problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingue &amp; Layout</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Visualizza i nomi delle lingue in</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Stili di input</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
@@ -89,6 +93,7 @@
     <string name="settings__theme_editor__fine_tune__title">Editor delle regolazioni</string>
     <string name="settings__theme_editor__fine_tune__level">Livello di modifica</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Visualizza colori come</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostra la tastiera dopo le finestre di dialogo</string>
     <string name="settings__theme_editor__add_rule">Aggiungi regola</string>
     <string name="settings__theme_editor__edit_rule">Modifica regola</string>
     <string name="settings__theme_editor__no_rules_defined">Questo file di stile non ha regole definite. Aggiungi una regola per iniziare a personalizzare questo file di stile.</string>
@@ -323,6 +328,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Soglia di distanza dello swipe</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzate</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Impostazioni tema</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Predefinito di sistema (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Chiaro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Scuro</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Scuro</string>
@@ -609,6 +615,16 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Larghezza dinamica &amp; scorrevole</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Esadecimale</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rosso Verde Blu Alpha</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostra sempre</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Mostra sempre la tastiera dopo aver chiuso qualsiasi finestra di dialogo dell\'editor</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Non mostrare mai</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Non mostrare mai la tastiera dopo aver chiuso qualsiasi finestra di dialogo dell\'editor</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Ricorda ultimo stato</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Mostra la tastiera solo dopo aver chiuso una qualsiasi finestra di dialogo dell\'editor se era precedentemente visibile</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Lingua di sistema</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">I nomi delle lingue nell\'app e nell\'interfaccia utente della tastiera vengono visualizzati nella lingua che è impostata per tutto il dispositivo</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Lingua originaria</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">I nomi delle lingue nell\'app e nell\'interfaccia utente della tastiera vengono visualizzati nella lingua a cui fanno riferimento</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Priorità agli accenti</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo la pressione prolungata è l\'accento principale, o il suggerimento se non c\'è un accento principale</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Priorità ai suggerimenti</string>

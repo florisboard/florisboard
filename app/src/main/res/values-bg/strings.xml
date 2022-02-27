@@ -42,6 +42,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Клавиатурата FlorisBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като подразбиран метод за въвеждане. Докоснете тук, за да направите промяна.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Показване на имената на езиците на</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подредби</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Променяне на подредба</string>
@@ -88,6 +89,7 @@
     <string name="settings__theme_editor__fine_tune__title">Настройки на редактора</string>
     <string name="settings__theme_editor__fine_tune__level">Режим</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Формат на цветовете</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Показване на клавиатура след диалог</string>
     <string name="settings__theme_editor__add_rule">Добавяне на правило</string>
     <string name="settings__theme_editor__edit_rule">Променяне на правило</string>
     <string name="settings__theme_editor__rule_element">Целеви елемент</string>
@@ -98,22 +100,44 @@
     <string name="settings__theme_editor__add_code">Добавяне на код</string>
     <string name="settings__theme_editor__edit_code">Промяна на код</string>
     <string name="settings__theme_editor__no_codes_defined">Липсват кодове.</string>
+    <string name="settings__theme_editor__code_already_exists">Кодът вече е дефиниран.</string>
     <string name="settings__theme_editor__code_help_text">Следните препратки ще са ви от полза при намиране на клавишни кодове:</string>
     <string name="settings__theme_editor__add_property">Добавяне на свойство</string>
     <string name="settings__theme_editor__edit_property">Променяне на свойство</string>
+    <string name="settings__theme_editor__property_already_exists">Свойство с това име вече съществува в текущото правило.</string>
     <string name="settings__theme_editor__property_name">Име на свойство</string>
     <string name="settings__theme_editor__property_value">Стойност на свойство</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Прилагане към всички ъгли</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Промяна на низа на цвета</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Нощна тема</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
+    <string name="snygg__rule_element__defines">Променливи</string>
     <string name="snygg__rule_element__keyboard">Прозорец на клавиатурата</string>
     <string name="snygg__rule_element__key">Клавиш</string>
+    <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_selector__pressed">Натиснат</string>
     <string name="snygg__rule_selector__focus">На фокус</string>
     <string name="snygg__rule_selector__disabled">Изключен</string>
     <string name="snygg__property_name__width">Ширина</string>
     <string name="snygg__property_name__height">Височина</string>
+    <string name="snygg__property_name__background">Фон</string>
+    <string name="snygg__property_name__foreground">Преден план</string>
     <string name="snygg__property_name__border_color">Цвят на канта</string>
     <string name="snygg__property_name__border_style">Стил на канта</string>
     <string name="snygg__property_name__border_width">Дебелина на канта</string>
+    <string name="snygg__property_name__font_family">Семейство на шрифта</string>
+    <string name="snygg__property_name__font_size">Размер на шрифта</string>
+    <string name="snygg__property_name__font_style">Стил на шрифта</string>
+    <string name="snygg__property_name__font_variant">Вариант на шрифта</string>
+    <string name="snygg__property_name__font_weight">Тежест на шрифта</string>
     <string name="snygg__property_name__shape">Форма</string>
+    <string name="snygg__property_name__var_primary">Основен цвят</string>
+    <string name="snygg__property_name__var_primary_variant">Основен цвят (вариант)</string>
+    <string name="snygg__property_name__var_secondary">Допълнителен цвят</string>
+    <string name="snygg__property_name__var_secondary_variant">Допълнителен цвят (вариант)</string>
+    <string name="snygg__property_name__var_shape">Обща форма</string>
+    <string name="snygg__property_name__var_shape_variant">Обща форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследяване</string>
     <string name="snygg__property_value__solid_color">Плътен цвят</string>
     <string name="snygg__property_value__defined_var">От променлива</string>
@@ -256,6 +280,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Минимално разстояние на плъзване</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Разширени</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Тема на настройките</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Според системата (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тъмна</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тъмна AMOLED</string>
@@ -371,6 +396,7 @@
     <string name="clipboard__header_title">Междинна памет</string>
     <string name="clipboard__disabled__enable_button">История</string>
     <string name="clipboard__empty__title">Междинната памет е празна</string>
+    <string name="clipboard__empty__message">Копираните текстове или изображения ще се покажат тук.</string>
     <string name="clipboard__locked__title">Междинната памет е недостъпна</string>
     <string name="clipboard__locked__message">За достъп до междинната памет отключете устройството.</string>
     <string name="clipboard__group_pinned">Закачени</string>
@@ -411,6 +437,7 @@
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Съдържание на междинната памет</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Слой с текущото съдържание на междинната памет</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Слой за проверка на правописа</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Слой със съдържанието от проверката на правопис, за отстраняване на дефекти</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Изтриване на данните от речника към приложението</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Премахват се всички думи от таблицата с речника</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Нулиране на „{flag_name}“</string>
@@ -446,11 +473,19 @@
     <string name="ext__editor__title_edit_keyboard">Промяна на добавка с клавиатура</string>
     <string name="ext__editor__title_edit_spelling">Промяна на добавка с проверка на правопис</string>
     <string name="ext__editor__title_edit_theme">Промяна на добавка с тема</string>
+    <string name="ext__editor__metadata__title">Управление на мета данни</string>
+    <string name="ext__editor__metadata__title_invalid">Недействителни мета данни</string>
     <string name="ext__editor__dependencies__title">Управление на зависимости</string>
+    <string name="ext__editor__files__title">Управление на архиви</string>
+    <string name="ext__editor__create_component__title">Създаване на компонент</string>
+    <string name="ext__editor__create_component__title_theme">Създаване на тема</string>
+    <string name="ext__editor__create_component__from_empty">Празен</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Внасяне на добавка с тема</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Файлът не може да бъде внесен. Причина:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Неподдържан или непознат вид на файла.</string>
     <!-- Action strings -->
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>
@@ -505,6 +540,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамична ширина с плъзгач</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Шестнадесетичен</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Червено, зелено, синьо, прозрачност</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Винаги се показва</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Клавиатурата се показва винаги след затваряне на диалог</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Никога не се показва</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Клавиатурата не се показва никога след затваряне на диалог</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Запомняне на последното състояние</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Клавиатурата се показва след затваряне на диалог ако преди това е видима</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Език на системата</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Присъщ за езика</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Акцентът е с приоритет</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е основния акцент или знака от подсказката ако няма акцент</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Посдсазката е с приоритет</string>

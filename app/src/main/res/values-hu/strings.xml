@@ -34,6 +34,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ha látható, megjeleníti, hogy a privát mód aktív. Ha rá van kattintva, információt jelenít meg a privát módról.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Beállítások</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Próbálja ki a beállításait</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Súgó</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Alapértelmezett</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Rendszer alapértelmezett</string>
@@ -92,12 +93,24 @@
     <string name="settings__theme_editor__property_already_exists">A jelenlegi szabályon belül egy tulajdonság már létezik ezzel a névvel.</string>
     <string name="settings__theme_editor__property_name">Tulajdonság neve</string>
     <string name="settings__theme_editor__property_value">Tulajdonság értéke</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Alkalmazás az összes sarokra</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Éjszakai téma</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Szegély nélküli</string>
     <string name="snygg__rule_element__defines">Változók</string>
     <string name="snygg__rule_element__key">Billentyű</string>
     <string name="snygg__rule_element__clipboard_header">Vágólap fejléc</string>
     <string name="snygg__rule_element__clipboard_item">Vágólap elem</string>
+    <string name="snygg__rule_element__glide_trail">Csúszási nyomvonal</string>
+    <string name="snygg__rule_element__one_handed_panel">Egykezes panel</string>
+    <string name="snygg__rule_selector__pressed">Lenyomott</string>
+    <string name="snygg__rule_selector__focus">Fókuszált</string>
+    <string name="snygg__rule_selector__disabled">Letiltott</string>
+    <string name="snygg__property_name__width">Szélesség</string>
+    <string name="snygg__property_name__height">Magasság</string>
+    <string name="snygg__property_name__background">Háttér</string>
+    <string name="snygg__property_name__foreground">Előtér</string>
+    <string name="snygg__property_name__border_color">Szegély szín</string>
+    <string name="snygg__property_name__border_style">Szegély stílus</string>
     <string name="snygg__property_name__font_family">Betűkészlet család</string>
     <string name="snygg__property_name__font_size">Betűméret</string>
     <string name="snygg__property_name__font_style">Betűstílus</string>
@@ -113,8 +126,15 @@
     <string name="snygg__property_value__solid_color">Egyszínű</string>
     <string name="snygg__property_value__image_ref">Képhivatkozás</string>
     <string name="snygg__property_value__circle_shape">Kör alakzat</string>
+    <string name="snygg__property_value__dp_size">Méret (dp)</string>
+    <string name="snygg__property_value__sp_size">Méret (dp)</string>
     <string name="snygg__property_value__percentage_size">Méret (%)</string>
     <string name="snygg__property_value__defined_var">Változóhivatkozás</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Hangok és rezgés</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainka figyelmen kívül hagyása</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Gombnyomáshangok</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Rezgés időtartama</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Billentyűzet</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Másodlagos számsor</string>
@@ -128,6 +148,7 @@
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Teljes képernyős fekvő elrendezés bemenet</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Billentyűzet magassága</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Gomb térköz</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alsó eltolás</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Nagyobb gomb megjelenítése gombnyomáskor</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
@@ -141,6 +162,7 @@
     <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Másodlagos sor</string>
     <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Másodlagos sor engedélyezése</string>
     <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Másodlagos sor elhelyezése</string>
+    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Akciósor</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>
@@ -190,6 +212,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Húzás távolság küszöb</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Haladó</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Beállítások témája</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Rendszer alapértelmezett (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sötét</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sötét</string>
@@ -226,8 +249,11 @@
     <string name="about__privacy_policy__summary" comment="Preference summary">A projekt adatvédelmi irányelvei</string>
     <string name="about__project_license__title" comment="Preference title">Projekt licenc</string>
     <string name="about__project_license__summary" comment="Preference summary">A FlorisBoard ez alatt van licencelve: {license_name}</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Harmadik felek licencei</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Az alkalmazásban szereplő harmadik felektől származó könyvtárak licencei</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Üdvözöljük!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Köszönjük, hogy a {app_name}ot használja. Ez a gyors beállítás végigvezeti a {app_name} eszközön való használatához szükséges lépéseken.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Adatvédelmi Irányelvek</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Tároló</string>
     <string name="setup__enable_ime__title">{app_name} engedélyezése</string>
@@ -237,6 +263,7 @@
     <string name="setup__finish_up__title">Befejezés</string>
     <string name="setup__finish_up__finish_btn">Személyre szabás megkezdése</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__back_up__title">Adatok biztonsági mentése</string>
     <string name="backup_and_restore__back_up__destination_file_sys">Helyi fájlrendszer</string>
     <string name="backup_and_restore__back_up__files">Válassza ki, hogy miből készíti a biztonsági mentést</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Beállítások</string>
