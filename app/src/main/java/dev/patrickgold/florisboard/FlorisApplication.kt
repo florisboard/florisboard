@@ -24,29 +24,28 @@ import android.content.IntentFilter
 import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.NativeStr
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.toNativeStr
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.Flog
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingService
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.ext.ExtensionManager
-import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
-import dev.patrickgold.florisboard.ime.nlp.NlpManager
-import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.res.cache.CacheManager
+import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPref
 import java.io.File
-import kotlin.Exception
 
 @Suppress("unused")
 class FlorisApplication : Application() {

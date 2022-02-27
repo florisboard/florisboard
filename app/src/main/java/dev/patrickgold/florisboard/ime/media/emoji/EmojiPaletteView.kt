@@ -85,6 +85,7 @@ import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.components.verticalTween
 import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -132,11 +133,12 @@ fun EmojiPaletteView(
     val metadataVersion = remember {
         FlorisImeService.activeEditorInstance()?.emojiCompatMetadataVersion ?: 0
     }
-    val emojiMappings = remember(metadataVersion, systemFontPaint) {
+    val emojiCompatInstance = tryOrNull { EmojiCompat.get().takeIf { it.loadState == EmojiCompat.LOAD_STATE_SUCCEEDED } }
+    val emojiMappings = remember(emojiCompatInstance, metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->
             emojiSetList.mapNotNull { emojiSet ->
                 emojiSet.emojis.filter { emoji ->
-                    EmojiCompat.get().getEmojiMatch(emoji.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
+                    emojiCompatInstance?.getEmojiMatch(emoji.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||
                         systemFontPaint.hasGlyph(emoji.value)
                 }.let { if (it.isEmpty()) null else EmojiSet(it) }
             }
