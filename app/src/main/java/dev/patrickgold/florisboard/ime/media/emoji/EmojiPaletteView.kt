@@ -59,8 +59,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -91,6 +93,7 @@ import dev.patrickgold.florisboard.snygg.ui.spSize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.values()
 private val EmojiBaseWidth = 42.dp
@@ -339,9 +342,17 @@ private fun EmojiVariationsPopup(
     onDismiss: () -> Unit,
 ) {
     val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
+    val emojiKeyHeight = FlorisImeSizing.smartbarHeight
 
     if (visible) {
-        Popup(onDismissRequest = onDismiss) {
+        Popup(
+            alignment = Alignment.TopCenter,
+            offset = with(LocalDensity.current) {
+                val y = -emojiKeyHeight * ceil(variations.size / 6f)
+                IntOffset(x = 0, y = y.toPx().toInt())
+            },
+            onDismissRequest = onDismiss,
+        ) {
             FlowRow(
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6)
@@ -356,7 +367,7 @@ private fun EmojiVariationsPopup(
                                 detectTapGestures { onEmojiTap(emoji) }
                             }
                             .width(EmojiBaseWidth)
-                            .height(FlorisImeSizing.smartbarHeight)
+                            .height(emojiKeyHeight)
                             .padding(all = 4.dp),
                     ) {
                         EmojiText(
