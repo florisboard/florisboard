@@ -97,6 +97,7 @@ import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.values()
 private val EmojiBaseWidth = 42.dp
+private val EmojiDefaultFontSize = 22.sp
 
 private val VariantsTriangleShape = GenericShape { size, _ ->
     moveTo(x = size.width, y = 0f)
@@ -140,7 +141,7 @@ fun EmojiPaletteView(
 
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
     val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
-    val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize() safeTimes fontSizeMultiplier
+    val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
     val contentColor = emojiKeyStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
 
     Column(modifier = modifier) {
@@ -373,7 +374,7 @@ private fun EmojiVariationsPopup(
                         EmojiText(
                             modifier = Modifier.align(Alignment.Center),
                             text = emoji.value,
-                            fontSize = popupStyle.fontSize.spSize(default = 22.sp) safeTimes fontSizeMultiplier,
+                            fontSize = popupStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier,
                         )
                     }
                 }
@@ -386,7 +387,7 @@ private fun EmojiVariationsPopup(
 fun EmojiText(
     text: String,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 22.sp,
+    fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
     AndroidView(
         modifier = modifier,
