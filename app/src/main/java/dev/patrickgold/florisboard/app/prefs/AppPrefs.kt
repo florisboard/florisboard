@@ -460,6 +460,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             default = emptyList(),
             serializer = EmojiRecentlyUsedHelper.Serializer,
         )
+        val emojiRecentlyUsedMaxSize = int(
+            key = "media__emoji_recently_used_max_size",
+            default = 90,
+        )
     }
 
     val smartbar = Smartbar()
