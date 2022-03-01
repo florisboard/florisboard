@@ -32,7 +32,7 @@ value class EmojiSet(val emojis: List<Emoji>) {
     ): Emoji {
         if (emojis.size == 1) return emojis[0] // Fast compute
         for (emoji in emojis) {
-            if (emoji.skinTone == withSkinTone && emoji.hairStyle == withHairStyle) {
+            if (emoji.skinTone == withSkinTone /*&& emoji.hairStyle == withHairStyle*/) {
                 return emoji
             }
         }
@@ -44,6 +44,6 @@ value class EmojiSet(val emojis: List<Emoji>) {
         withoutHairStyle: EmojiHairStyle = EmojiHairStyle.DEFAULT,
     ): List<Emoji> {
         if (emojis.size == 1) return emptyList() // Fast compute
-        return emojis.filterNot { it.skinTone == withoutSkinTone && it.hairStyle == withoutHairStyle }
+        return emojis.filterNot { it.skinTone == withoutSkinTone /*&& it.hairStyle == withoutHairStyle*/ }
     }
 }

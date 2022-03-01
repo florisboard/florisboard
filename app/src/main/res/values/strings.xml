@@ -16,6 +16,8 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <string name="prefs__media__emoji_recently_used_max_size">Emoji history max size</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
 
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>
@@ -685,6 +687,19 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Language names across the app and keyboard UI are displayed in the locale which is set for the whole device</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Native locale</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Language names across the app and keyboard UI are displayed in the locale referred by itself</string>
+
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Default skin tone</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Light skin tone</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Medium light skin tone</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Medium skin tone</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Medium dark skin tone</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Dark skin tone</string>
+
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Default hair</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Red hair</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Curly hair</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
 
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>

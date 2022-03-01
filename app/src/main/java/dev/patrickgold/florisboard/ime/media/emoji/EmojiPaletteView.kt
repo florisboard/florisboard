@@ -90,6 +90,7 @@ import dev.patrickgold.florisboard.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -139,6 +140,7 @@ fun EmojiPaletteView(
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
+    val preferredSkinTone by prefs.media.emojiPreferredSkinTone.observeAsState()
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
     val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
     val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
@@ -197,6 +199,7 @@ fun EmojiPaletteView(
                     items(emojiMapping) { emojiSet ->
                         EmojiKey(
                             emojiSet = emojiSet,
+                            preferredSkinTone = preferredSkinTone,
                             contentColor = contentColor,
                             fontSize = emojiKeyFontSize,
                             fontSizeMultiplier = fontSizeMultiplier,
@@ -275,16 +278,16 @@ private fun EmojiCategoriesTabRow(
 @Composable
 private fun EmojiKey(
     emojiSet: EmojiSet,
+    preferredSkinTone: EmojiSkinTone,
     contentColor: Color,
     fontSize: TextUnit,
     fontSizeMultiplier: Float,
     onEmojiInput: (Emoji) -> Unit,
     onLongPress: (Emoji) -> Unit,
 ) {
-    val base = emojiSet.base()
-    val variations = emojiSet.variations()
+    val base = emojiSet.base(withSkinTone = preferredSkinTone)
+    val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
-    var variantsBoxEmojiSet by remember { mutableStateOf(EmojiSet.Unspecified) }
 
     Box(
         modifier = Modifier
@@ -297,7 +300,6 @@ private fun EmojiKey(
                     onLongPress = {
                         onLongPress(base)
                         if (variations.isNotEmpty()) {
-                            variantsBoxEmojiSet = emojiSet
                             showVariantsBox = true
                         }
                     },
@@ -320,7 +322,7 @@ private fun EmojiKey(
         }
 
         EmojiVariationsPopup(
-            variations = variantsBoxEmojiSet.variations(),
+            variations = variations,
             visible = showVariantsBox,
             fontSizeMultiplier = fontSizeMultiplier,
             onEmojiTap = { emoji ->

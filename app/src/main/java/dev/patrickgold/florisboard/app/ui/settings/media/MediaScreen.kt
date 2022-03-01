@@ -22,9 +22,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.pluralsRes
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -34,6 +36,11 @@ fun MediaScreen() = FlorisScreen {
     iconSpaceReserved = false
 
     content {
+        ListPreference(
+            prefs.media.emojiPreferredSkinTone,
+            title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
+            entries = EmojiSkinTone.listEntries(),
+        )
         val maxSize by prefs.media.emojiRecentlyUsedMaxSize.observeAsState()
         DialogSliderPreference(
             prefs.media.emojiRecentlyUsedMaxSize,
