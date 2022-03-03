@@ -44,13 +44,15 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
+import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.util.debugSummarize
 
 class EditorInstance(private val ims: InputMethodService) {
@@ -67,6 +69,7 @@ class EditorInstance(private val ims: InputMethodService) {
     private val prefs by florisPreferenceModel()
     private val clipboardManager by ims.clipboardManager()
     private val keyboardManager by ims.keyboardManager()
+    private val subtypeManager by ims.subtypeManager()
 
     private val activeState get() = keyboardManager.activeState
     val cachedInput: CachedInput = CachedInput()
@@ -288,13 +291,12 @@ class EditorInstance(private val ims: InputMethodService) {
         }
     }
 
-    private val composer = Appender()
     /**
      * Internal helper, replacing a call to inputConnection.commitText with text composition in mind.
      */
     fun doCommitText(text: String): Pair<Boolean, String> {
         val ic = inputConnection ?: return Pair(false, "")
-        //val composer: Composer = FlorisBoard.getInstance().composer
+        val composer: Composer = keyboardManager.resources.composers.value?.get(subtypeManager.activeSubtype().composer) ?: Appender()
         return if (text.length != 1) {
             Pair(ic.commitText(text, 1), text)
         } else {

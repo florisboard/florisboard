@@ -32,6 +32,11 @@ import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.kotlin.throwOnFailure
+import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
+import dev.patrickgold.florisboard.ime.text.composing.KanaUnicode
+import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.res.io.FsFile
 import dev.patrickgold.florisboard.res.io.writeJson
 import kotlinx.coroutines.CoroutineScope
@@ -57,6 +62,13 @@ val ExtensionJsonConfig = Json {
             subclass(KeyboardExtension::class, KeyboardExtension.serializer())
             subclass(SpellingExtension::class, SpellingExtension.serializer())
             subclass(ThemeExtension::class, ThemeExtension.serializer())
+        }
+        polymorphic(Composer::class) {
+            subclass(Appender::class, Appender.serializer())
+            subclass(HangulUnicode::class, HangulUnicode.serializer())
+            subclass(KanaUnicode::class, KanaUnicode.serializer())
+            subclass(WithRules::class, WithRules.serializer())
+            default { Appender.serializer() }
         }
     }
 }

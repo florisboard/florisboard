@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
@@ -31,6 +32,7 @@ import kotlinx.serialization.Serializable
 data class KeyboardExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
+    val composers: List<Composer> = listOf(),
     val currencySets: List<CurrencySet> = listOf(),
     val layouts: Map<String, List<LayoutArrangementComponent>> = mapOf(),
     val popupMappings: List<PopupMappingComponent> = listOf(),

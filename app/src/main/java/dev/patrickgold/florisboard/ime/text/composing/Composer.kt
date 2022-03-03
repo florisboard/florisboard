@@ -1,6 +1,5 @@
 package dev.patrickgold.florisboard.ime.text.composing
 
-import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -8,7 +7,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
 interface Composer {
-    val name: String
+    val id: String
     val label: String
     val toRead: Int
 
@@ -18,10 +17,7 @@ interface Composer {
 @Serializable
 @SerialName("appender")
 class Appender : Composer {
-    companion object {
-        val name = extCoreComposer("appender")
-    }
-    override val name: String = Appender.name.toString()
+    override val id: String = "appender"
     override val label: String = "Appender"
     override val toRead: Int = 0
 
@@ -33,9 +29,9 @@ class Appender : Composer {
 @Serializable
 @SerialName("with-rules")
 class WithRules(
-    override val name: String,
+    override val id: String,
     override val label: String,
-    val rules: JsonObject
+    val rules: JsonObject,
 ) : Composer {
     override val toRead: Int = rules.keys.toList().sortedBy { it.length }.reversed()[0].length - 1
 
