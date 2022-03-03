@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.TypedValue
+import android.widget.TextView
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -90,6 +91,7 @@ import dev.patrickgold.florisboard.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -97,6 +99,7 @@ import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.values()
 private val EmojiBaseWidth = 42.dp
+private val EmojiDefaultFontSize = 22.sp
 
 private val VariantsTriangleShape = GenericShape { size, _ ->
     moveTo(x = size.width, y = 0f)
@@ -138,9 +141,10 @@ fun EmojiPaletteView(
     val lazyListState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
+    val preferredSkinTone by prefs.media.emojiPreferredSkinTone.observeAsState()
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
     val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
-    val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize() safeTimes fontSizeMultiplier
+    val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
     val contentColor = emojiKeyStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
 
     Column(modifier = modifier) {
@@ -196,6 +200,8 @@ fun EmojiPaletteView(
                     items(emojiMapping) { emojiSet ->
                         EmojiKey(
                             emojiSet = emojiSet,
+                            emojiCompatInstance = emojiCompatInstance,
+                            preferredSkinTone = preferredSkinTone,
                             contentColor = contentColor,
                             fontSize = emojiKeyFontSize,
                             fontSizeMultiplier = fontSizeMultiplier,
@@ -274,16 +280,17 @@ private fun EmojiCategoriesTabRow(
 @Composable
 private fun EmojiKey(
     emojiSet: EmojiSet,
+    emojiCompatInstance: EmojiCompat?,
+    preferredSkinTone: EmojiSkinTone,
     contentColor: Color,
     fontSize: TextUnit,
     fontSizeMultiplier: Float,
     onEmojiInput: (Emoji) -> Unit,
     onLongPress: (Emoji) -> Unit,
 ) {
-    val base = emojiSet.base()
-    val variations = emojiSet.variations()
+    val base = emojiSet.base(withSkinTone = preferredSkinTone)
+    val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
-    var variantsBoxEmojiSet by remember { mutableStateOf(EmojiSet.Unspecified) }
 
     Box(
         modifier = Modifier
@@ -296,7 +303,6 @@ private fun EmojiKey(
                     onLongPress = {
                         onLongPress(base)
                         if (variations.isNotEmpty()) {
-                            variantsBoxEmojiSet = emojiSet
                             showVariantsBox = true
                         }
                     },
@@ -306,6 +312,7 @@ private fun EmojiKey(
         EmojiText(
             modifier = Modifier.align(Alignment.Center),
             text = base.value,
+            emojiCompatInstance = emojiCompatInstance,
             fontSize = fontSize,
         )
         if (variations.isNotEmpty()) {
@@ -319,8 +326,9 @@ private fun EmojiKey(
         }
 
         EmojiVariationsPopup(
-            variations = variantsBoxEmojiSet.variations(),
+            variations = variations,
             visible = showVariantsBox,
+            emojiCompatInstance = emojiCompatInstance,
             fontSizeMultiplier = fontSizeMultiplier,
             onEmojiTap = { emoji ->
                 onEmojiInput(emoji)
@@ -337,6 +345,7 @@ private fun EmojiKey(
 private fun EmojiVariationsPopup(
     variations: List<Emoji>,
     visible: Boolean,
+    emojiCompatInstance: EmojiCompat?,
     fontSizeMultiplier: Float,
     onEmojiTap: (Emoji) -> Unit,
     onDismiss: () -> Unit,
@@ -373,7 +382,8 @@ private fun EmojiVariationsPopup(
                         EmojiText(
                             modifier = Modifier.align(Alignment.Center),
                             text = emoji.value,
-                            fontSize = popupStyle.fontSize.spSize(default = 22.sp) safeTimes fontSizeMultiplier,
+                            emojiCompatInstance = emojiCompatInstance,
+                            fontSize = popupStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier,
                         )
                     }
                 }
@@ -385,19 +395,35 @@ private fun EmojiVariationsPopup(
 @Composable
 fun EmojiText(
     text: String,
+    emojiCompatInstance: EmojiCompat?,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 22.sp,
+    fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
-    AndroidView(
-        modifier = modifier,
-        factory = { context ->
-            EmojiTextView(context).also {
-                it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                it.setTextColor(Color.Black.toArgb())
-            }
-        },
-        update = { view ->
-            view.text = text
-        },
-    )
+    if (emojiCompatInstance != null) {
+        AndroidView(
+            modifier = modifier,
+            factory = { context ->
+                EmojiTextView(context).also {
+                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                    it.setTextColor(Color.Black.toArgb())
+                }
+            },
+            update = { view ->
+                view.text = text
+            },
+        )
+    } else {
+        AndroidView(
+            modifier = modifier,
+            factory = { context ->
+                TextView(context).also {
+                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                    it.setTextColor(Color.Black.toArgb())
+                }
+            },
+            update = { view ->
+                view.text = text
+            },
+        )
+    }
 }

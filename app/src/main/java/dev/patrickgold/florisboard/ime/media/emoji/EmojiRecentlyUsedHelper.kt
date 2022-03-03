@@ -27,8 +27,14 @@ object EmojiRecentlyUsedHelper {
     private var emojiGuard = Mutex(locked = false)
 
     suspend fun addEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
+        val maxSize = prefs.media.emojiRecentlyUsedMaxSize.get()
         val list = prefs.media.emojiRecentlyUsed.get().toMutableList()
         list.add(0, emoji)
+        if (maxSize > 0) {
+            while (list.size > maxSize) {
+                list.removeLast()
+            }
+        }
         prefs.media.emojiRecentlyUsed.set(list.distinctBy { it.value })
     }
 

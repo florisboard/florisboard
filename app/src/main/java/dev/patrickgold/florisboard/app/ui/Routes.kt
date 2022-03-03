@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.localization.LocalizationScreen
 import dev.patrickgold.florisboard.app.ui.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.ui.settings.localization.SubtypeEditorScreen
+import dev.patrickgold.florisboard.app.ui.settings.media.MediaScreen
 import dev.patrickgold.florisboard.app.ui.settings.smartbar.SmartbarScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.ImportSpellingArchiveScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.ManageSpellingDictsScreen
@@ -102,6 +103,8 @@ object Routes {
         const val Gestures = "settings/gestures"
 
         const val Clipboard = "settings/clipboard"
+
+        const val Media = "settings/media"
 
         const val Advanced = "settings/advanced"
         const val Backup = "settings/advanced/backup"
@@ -195,6 +198,8 @@ object Routes {
             composable(Settings.Gestures) { GesturesScreen() }
 
             composable(Settings.Clipboard) { ClipboardScreen() }
+
+            composable(Settings.Media) { MediaScreen() }
 
             composable(Settings.Advanced) { AdvancedScreen() }
             composable(Settings.Backup) { BackupScreen() }

@@ -22,7 +22,9 @@ import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -459,6 +461,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "media__emoji_recently_used",
             default = emptyList(),
             serializer = EmojiRecentlyUsedHelper.Serializer,
+        )
+        val emojiRecentlyUsedMaxSize = int(
+            key = "media__emoji_recently_used_max_size",
+            default = 90,
+        )
+        val emojiPreferredSkinTone = enum(
+            key = "media__emoji_preferred_skin_tone",
+            default = EmojiSkinTone.DEFAULT,
+        )
+        val emojiPreferredHairStyle = enum(
+            key = "media__emoji_preferred_hair_style",
+            default = EmojiHairStyle.DEFAULT,
         )
     }
 
