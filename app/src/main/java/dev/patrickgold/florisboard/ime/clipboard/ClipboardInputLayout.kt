@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,6 +62,7 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButtonWithInnerPadding
 import dev.patrickgold.florisboard.app.ui.components.FlorisStaggeredVerticalGrid
+import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
@@ -92,6 +94,7 @@ private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
 private val ItemPadding = PaddingValues(vertical = 8.dp, horizontal = 12.dp)
 private val ItemWidth = 200.dp
+private val DialogWidth = 240.dp
 
 @Composable
 fun ClipboardInputLayout(
@@ -121,10 +124,13 @@ fun ClipboardInputLayout(
             0.dp
         } + (FlorisImeSizing.keyboardRowBaseHeight * 4)
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
+    var showClearAllHistory by remember { mutableStateOf(false) }
 
     val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardHeader)
     val itemStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardItem)
     val popupStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardItemPopup)
+
+    fun isPopupSurfaceActive() = popupItem != null || showClearAllHistory
 
     @Composable
     fun HeaderRow() {
@@ -162,20 +168,17 @@ fun ClipboardInputLayout(
                     R.drawable.ic_toggle_off
                 }),
                 iconColor = headerStyle.foreground.solidColor(),
-                enabled = !deviceLocked && popupItem == null,
+                enabled = !deviceLocked && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
-                onClick = {
-                    clipboardManager.clearHistory()
-                    context.showShortToast(R.string.clipboard__cleared_history)
-                },
+                onClick = { showClearAllHistory = true },
                 modifier = Modifier
                     .padding(HeaderIconPadding)
                     .fillMaxHeight()
                     .aspectRatio(1f),
                 icon = painterResource(R.drawable.ic_clear_all),
                 iconColor = headerStyle.foreground.solidColor(),
-                enabled = !deviceLocked && historyEnabled && popupItem == null,
+                enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = {
@@ -187,7 +190,7 @@ fun ClipboardInputLayout(
                     .aspectRatio(1f),
                 icon = painterResource(R.drawable.ic_edit),
                 iconColor = headerStyle.foreground.solidColor(),
-                enabled = !deviceLocked && historyEnabled && popupItem == null,
+                enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )
         }
     }
@@ -233,7 +236,7 @@ fun ClipboardInputLayout(
                 .fillMaxWidth()
                 .height(innerHeight),
         ) {
-            val historyAlpha by animateFloatAsState(targetValue = if (popupItem != null) 0.12f else 1f)
+            val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
             Column(
                 modifier = Modifier
                     .padding(ContentPadding)
@@ -330,6 +333,56 @@ fun ClipboardInputLayout(
                         ) {
                             clipboardManager.pasteItem(popupItem!!)
                             popupItem = null
+                        }
+                    }
+                }
+            }
+            if (showClearAllHistory) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(ContentPadding)
+                        .pointerInput(Unit) {
+                            detectTapGestures { showClearAllHistory = false }
+                        },
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .width(DialogWidth)
+                            .snyggShadow(popupStyle)
+                            .snyggBorder(popupStyle)
+                            .snyggBackground(popupStyle)
+                            .snyggClip(popupStyle)
+                            .pointerInput(Unit) {
+                                detectTapGestures { /* Do nothing */ }
+                            },
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(all = 16.dp),
+                            text = stringRes(R.string.clipboard__confirm_clear_history__message),
+                            color = popupStyle.foreground.solidColor(),
+                        )
+                        Row(modifier = Modifier.padding(horizontal = 8.dp)) {
+                            Spacer(modifier = Modifier.weight(1f))
+                            FlorisTextButton(
+                                onClick = {
+                                    showClearAllHistory = false
+                                },
+                                modifier = Modifier.padding(end = 8.dp),
+                                text = stringRes(R.string.action__no),
+                                colors = ButtonDefaults.textButtonColors(contentColor = popupStyle.foreground.solidColor()),
+                            )
+                            FlorisTextButton(
+                                onClick = {
+                                    clipboardManager.clearHistory()
+                                    context.showShortToast(R.string.clipboard__cleared_history)
+                                    showClearAllHistory = false
+                                },
+                                text = stringRes(R.string.action__yes),
+                                colors = ButtonDefaults.textButtonColors(contentColor = popupStyle.foreground.solidColor()),
+                            )
                         }
                     }
                 }
