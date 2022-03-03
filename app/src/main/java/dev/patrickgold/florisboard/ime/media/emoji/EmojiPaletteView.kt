@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.TypedValue
+import android.widget.TextView
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -199,6 +200,7 @@ fun EmojiPaletteView(
                     items(emojiMapping) { emojiSet ->
                         EmojiKey(
                             emojiSet = emojiSet,
+                            emojiCompatInstance = emojiCompatInstance,
                             preferredSkinTone = preferredSkinTone,
                             contentColor = contentColor,
                             fontSize = emojiKeyFontSize,
@@ -278,6 +280,7 @@ private fun EmojiCategoriesTabRow(
 @Composable
 private fun EmojiKey(
     emojiSet: EmojiSet,
+    emojiCompatInstance: EmojiCompat?,
     preferredSkinTone: EmojiSkinTone,
     contentColor: Color,
     fontSize: TextUnit,
@@ -309,6 +312,7 @@ private fun EmojiKey(
         EmojiText(
             modifier = Modifier.align(Alignment.Center),
             text = base.value,
+            emojiCompatInstance = emojiCompatInstance,
             fontSize = fontSize,
         )
         if (variations.isNotEmpty()) {
@@ -324,6 +328,7 @@ private fun EmojiKey(
         EmojiVariationsPopup(
             variations = variations,
             visible = showVariantsBox,
+            emojiCompatInstance = emojiCompatInstance,
             fontSizeMultiplier = fontSizeMultiplier,
             onEmojiTap = { emoji ->
                 onEmojiInput(emoji)
@@ -340,6 +345,7 @@ private fun EmojiKey(
 private fun EmojiVariationsPopup(
     variations: List<Emoji>,
     visible: Boolean,
+    emojiCompatInstance: EmojiCompat?,
     fontSizeMultiplier: Float,
     onEmojiTap: (Emoji) -> Unit,
     onDismiss: () -> Unit,
@@ -376,6 +382,7 @@ private fun EmojiVariationsPopup(
                         EmojiText(
                             modifier = Modifier.align(Alignment.Center),
                             text = emoji.value,
+                            emojiCompatInstance = emojiCompatInstance,
                             fontSize = popupStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier,
                         )
                     }
@@ -388,19 +395,35 @@ private fun EmojiVariationsPopup(
 @Composable
 fun EmojiText(
     text: String,
+    emojiCompatInstance: EmojiCompat?,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
-    AndroidView(
-        modifier = modifier,
-        factory = { context ->
-            EmojiTextView(context).also {
-                it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                it.setTextColor(Color.Black.toArgb())
-            }
-        },
-        update = { view ->
-            view.text = text
-        },
-    )
+    if (emojiCompatInstance != null) {
+        AndroidView(
+            modifier = modifier,
+            factory = { context ->
+                EmojiTextView(context).also {
+                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                    it.setTextColor(Color.Black.toArgb())
+                }
+            },
+            update = { view ->
+                view.text = text
+            },
+        )
+    } else {
+        AndroidView(
+            modifier = modifier,
+            factory = { context ->
+                TextView(context).also {
+                    it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
+                    it.setTextColor(Color.Black.toArgb())
+                }
+            },
+            update = { view ->
+                view.text = text
+            },
+        )
+    }
 }
