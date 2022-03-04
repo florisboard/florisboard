@@ -250,16 +250,13 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas keyboard</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Baris utama</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Balikkan baris tombol alih</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Membalikkan alih baris sekunder dan tindakan</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Baris sekunder</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Aktifkan baris sekunder</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Menambahkan sebuah baris sekunder yang dapat dibesarkan untuk memperbolehkan kontrol lainnya untuk ditampilkan</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Peletakan baris sekunder</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Baris tindakan</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan secara otomatis berdasarkan status saat ini</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Baris utama</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan baris tombol alih</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris sekunder dan tindakan</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Baris sekunder</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Aktifkan baris sekunder</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan secara otomatis berdasarkan status saat ini</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Saran &amp; Koreksi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>

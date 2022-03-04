@@ -482,8 +482,8 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__enabled",
             default = true,
         )
-        val primaryRowFlipToggles = boolean(
-            key = "smartbar__primary_row_flip_toggles",
+        val flipToggles = boolean(
+            key = "smartbar__flip_toggles",
             default = false,
         )
         val secondaryRowEnabled = boolean(

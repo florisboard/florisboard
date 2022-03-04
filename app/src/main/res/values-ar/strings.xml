@@ -249,16 +249,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">الصف الرئيسي</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">عكس زر الإجراء</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">عكس التبديل بين الصف الثانوي والإجراء</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">الصف الثانوي</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">تمكين الصف الثانوي</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">يضيف الصف الثاني القابل للتوسيع للسماح بمزيد من أزرار التحكم</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">مبدل الصف الثانوي</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">صف الإجراءات</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">توسيع وطي تلقائي</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">توسيع وطي صف الإجراءات المبني على الحالة الحالية</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">الصف الرئيسي</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">عكس زر الإجراء</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">عكس التبديل بين الصف الثانوي والإجراء</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">الصف الثانوي</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">تمكين الصف الثانوي</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">توسيع وطي تلقائي</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">توسيع وطي صف الإجراءات المبني على الحالة الحالية</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">الاقتراحات و التصحيح</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>

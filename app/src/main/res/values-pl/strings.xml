@@ -184,16 +184,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Główna linia</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Zamień miejscami przyciski</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Zamienia miejscami przyciski akcji</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Druga linia</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Włącz drugą linię</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Dodaj wysuwalną drugą linię, aby wyświetlić więcej elementów sterujących</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Umieszczenie drugiej linii</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Wiersz akcji</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Automatycznie rozwiń/zwiń</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Automatycznie rozwiń/zwiń wiersz akcji w oparciu o bieżący stan</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Główna linia</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Zamień miejscami przyciski</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Zamienia miejscami przyciski akcji</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Druga linia</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Włącz drugą linię</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatycznie rozwiń/zwiń</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatycznie rozwiń/zwiń wiersz akcji w oparciu o bieżący stan</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestie &amp; Korekty</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>

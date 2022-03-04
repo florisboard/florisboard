@@ -57,7 +57,7 @@ fun SmartbarActionRow() = with(LocalDensity.current) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val primaryRowFlipToggles by prefs.smartbar.primaryRowFlipToggles.observeAsState()
+    val primaryRowFlipToggles by prefs.smartbar.flipToggles.observeAsState()
     val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
     val smartbarActions by keyboardManager.smartbarActions.observeAsNonNullState()
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionRow)

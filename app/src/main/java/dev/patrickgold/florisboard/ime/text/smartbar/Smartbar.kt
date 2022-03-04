@@ -121,7 +121,7 @@ fun Smartbar() {
 @Composable
 private fun SmartbarPrimaryRow(modifier: Modifier = Modifier) = key(FlorisImeUi.SmartbarPrimaryRow) {
     val prefs by florisPreferenceModel()
-    val primaryRowFlipToggles by prefs.smartbar.primaryRowFlipToggles.observeAsState()
+    val primaryRowFlipToggles by prefs.smartbar.flipToggles.observeAsState()
     val secondaryRowEnabled by prefs.smartbar.secondaryRowEnabled.observeAsState()
     val secondaryRowExpanded by prefs.smartbar.secondaryRowExpanded.observeAsState()
     val actionRowExpanded by prefs.smartbar.actionRowExpanded.observeAsState()

@@ -235,16 +235,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Fila principal</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Botones de intercambio de filas</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Intercambia los botones de la fila secundaria y la fila de acción</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Fila secundaria</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Habilitar fila secundaria</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Añade una fila secundaria ampliable para mostrar más controles</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Ubicación de la fila secundaria</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Fila de acción</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción según el estado actual</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Fila principal</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botones de intercambio de filas</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Intercambia los botones de la fila secundaria y la fila de acción</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Fila secundaria</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Habilitar fila secundaria</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción según el estado actual</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugerencias &amp; Correciones</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>

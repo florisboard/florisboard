@@ -158,11 +158,9 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Elsődleges sor</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Másodlagos sor</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Másodlagos sor engedélyezése</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Másodlagos sor elhelyezése</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Akciósor</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Elsődleges sor</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Másodlagos sor</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Másodlagos sor engedélyezése</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>

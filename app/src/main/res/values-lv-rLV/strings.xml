@@ -249,16 +249,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Viedjosla</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Galvenā rinda</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Apvērst rindu pārslēgšanas pogas</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Apvērš otrējās un darbību rindas pārslēgus</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Otrējā rinda</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Iespējot otrējo rindu</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Pievieno izvēršamu otro rindu, lai attēlotu vairāk vadības iespēju</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Otrējās rindas novietojums</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Darbību rinda</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj darbību rindu atbilstoši pašreizējam stāvoklim</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Galvenā rinda</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Apvērst rindu pārslēgšanas pogas</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Apvērš otrējās un darbību rindas pārslēgus</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Otrējā rinda</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Iespējot otrējo rindu</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj darbību rindu atbilstoši pašreizējam stāvoklim</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Ieteikumi un labojumi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>

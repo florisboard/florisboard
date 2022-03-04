@@ -267,19 +267,15 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Flip toggle buttons</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Flips action row toggles</string>
 
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primary row</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Flip row toggle buttons</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Flips secondary and action row toggles</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primary actions</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
 
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secondary row</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Enable secondary row</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adds an expandable second row to allow for more controls to show</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Secondary row placement</string>
-
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Action row</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the action row based on current state</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secondary actions</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Show secondary action row</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>

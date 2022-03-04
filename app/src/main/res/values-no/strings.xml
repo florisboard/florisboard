@@ -133,10 +133,9 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktiver smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vill vises på toppen av tastaturet</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primærrad</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Sekundærrad</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Skru på sekundærrad</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Plassering av sekundærraden</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primærrad</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundærrad</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Skru på sekundærrad</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
     <string name="pref__correction__title" comment="Preference group title">Reguleringer</string>
