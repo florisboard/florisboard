@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarRowType
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
@@ -486,32 +487,40 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__flip_toggles",
             default = false,
         )
-        val secondaryRowEnabled = boolean(
-            key = "smartbar__secondary_row_enabled",
-            default = true,
-        )
-        val secondaryRowExpanded = boolean(
-            key = "smartbar__secondary_row_expanded",
+        val primaryActionsExpanded = boolean(
+            key = "smartbar__primary_actions_expanded",
             default = false,
         )
-        val secondaryRowPlacement = enum(
-            key = "smartbar__secondary_row_placement",
+        val primaryActionsRowType = enum(
+            key = "smartbar__primary_actions_row_type",
+            default = SmartbarRowType.QUICK_ACTIONS,
+        )
+        val primaryActionsAutoExpandCollapse = boolean(
+            key = "smartbar__primary_actions_auto_expand_collapse",
+            default = true,
+        )
+        val primaryActionsExpandWithAnimation = boolean(
+            key = "smartbar__primary_actions_expand_with_animation",
+            default = true,
+        )
+        val secondaryActionsEnabled = boolean(
+            key = "smartbar__secondary_actions_enabled",
+            default = true,
+        )
+        val secondaryActionsExpanded = boolean(
+            key = "smartbar__secondary_actions_expanded",
+            default = false,
+        )
+        val secondaryActionsPlacement = enum(
+            key = "smartbar__secondary_actions_placement",
             default = SecondaryRowPlacement.ABOVE_PRIMARY,
         )
-        val actionRowExpanded = boolean(
-            key = "smartbar__action_row_expanded",
-            default = false,
+        val secondaryActionsRowType = enum(
+            key = "smartbar__secondary_actions_row_type",
+            default = SmartbarRowType.CLIPBOARD_CURSOR_TOOLS,
         )
-        val actionRowExpandWithAnimation = boolean(
-            key = "smartbar__action_row_expand_with_animation",
-            default = true,
-        )
-        val actionRowAutoExpandCollapse = boolean(
-            key = "smartbar__action_row_auto_expand_collapse",
-            default = true,
-        )
-        val actions = string(
-            key = "smartbar__actions",
+        val quickActions = string(
+            key = "smartbar__quick_actions",
             default = "[]",
         )
     }

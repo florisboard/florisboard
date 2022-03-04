@@ -162,32 +162,17 @@ object FlorisImeUiSpec : SnyggSpec({
         foreground()
     }
 
-    element(FlorisImeUi.SmartbarPrimaryRow) {
+    element(FlorisImeUi.Smartbar) {
         background()
     }
-    element(FlorisImeUi.SmartbarPrimaryActionRowToggle) {
-        background()
-        foreground()
-        shape()
-        shadow()
-        border()
-    }
-    element(FlorisImeUi.SmartbarPrimarySecondaryRowToggle) {
+    element(FlorisImeUi.SmartbarPrimaryActionsToggle) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-
-    element(FlorisImeUi.SmartbarSecondaryRow) {
-        background()
-    }
-
-    element(FlorisImeUi.SmartbarActionRow) {
-        background()
-    }
-    element(FlorisImeUi.SmartbarActionButton) {
+    element(FlorisImeUi.SmartbarSecondaryActionsToggle) {
         background()
         foreground()
         shape()
@@ -195,9 +180,14 @@ object FlorisImeUiSpec : SnyggSpec({
         border()
     }
 
-    element(FlorisImeUi.SmartbarCandidateRow) {
+    element(FlorisImeUi.SmartbarQuickAction) {
         background()
+        foreground()
+        shape()
+        shadow()
+        border()
     }
+
     element(FlorisImeUi.SmartbarCandidateWord) {
         background()
         foreground()

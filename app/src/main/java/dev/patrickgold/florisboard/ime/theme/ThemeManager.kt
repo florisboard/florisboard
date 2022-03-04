@@ -199,7 +199,7 @@ class ThemeManager(context: Context) {
         context: Context,
         style: SnyggStylesheet = activeThemeInfo.value?.stylesheet ?: FlorisImeThemeBaseStyle,
     ): Bundle {
-        val chipStyle = style.getStatic(FlorisImeUi.SmartbarPrimaryActionRowToggle)
+        val chipStyle = style.getStatic(FlorisImeUi.SmartbarPrimaryActionsToggle)
         val bgColor = chipStyle.background.solidColor()
         val fgColor = chipStyle.foreground.solidColor()
         val bgDrawableId = R.drawable.autofill_inline_suggestion_chip_background

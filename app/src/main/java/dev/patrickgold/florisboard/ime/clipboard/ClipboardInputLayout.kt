@@ -112,9 +112,9 @@ fun ClipboardInputLayout(
     val history by clipboardManager.history.observeAsNonNullState()
 
     val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val secondaryRowEnabled by prefs.smartbar.secondaryRowEnabled.observeAsState()
-    val secondaryRowExpanded by prefs.smartbar.secondaryRowExpanded.observeAsState()
-    val secondaryRowPlacement by prefs.smartbar.secondaryRowPlacement.observeAsState()
+    val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
+    val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
+    val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
     val innerHeight =
         if (smartbarEnabled && secondaryRowEnabled && secondaryRowExpanded &&
             secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI

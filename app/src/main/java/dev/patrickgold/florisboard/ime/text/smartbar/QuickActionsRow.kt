@@ -52,41 +52,37 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 private val SmartbarActionPadding = 4.dp
 
 @Composable
-fun SmartbarActionRow() = with(LocalDensity.current) {
+fun QuickActionsRow(modifier: Modifier = Modifier) = with(LocalDensity.current) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val primaryRowFlipToggles by prefs.smartbar.flipToggles.observeAsState()
+    val flipToggles by prefs.smartbar.flipToggles.observeAsState()
     val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
     val smartbarActions by keyboardManager.smartbarActions.observeAsNonNullState()
-    val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionRow)
-    val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionButton)
-    val moreStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimarySecondaryRowToggle)
 
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .snyggBackground(rowStyle),
-    ) {
+    val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarQuickAction)
+    val moreStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarQuickAction)
+
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val width = constraints.maxWidth.toDp()
         val height = constraints.maxHeight.toDp()
         val numActionsToShow = (width / height).toInt()
         val visibleSmartbarActions = smartbarActions
-            .filterIsInstance(SmartbarAction.Key::class.java)
+            .filterIsInstance(QuickAction.Key::class.java)
             .subList(0, numActionsToShow.coerceAtMost(smartbarActions.size))
 
         @Composable
         fun MoreButton() {
             IconButton(
-                modifier = Modifier
-                    .padding(SmartbarActionPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
                 onClick = {
                     // TODO
                     context.showShortToast("TODO: implement actions overflow menu")
                 },
+                modifier = Modifier
+                    .padding(SmartbarActionPadding)
+                    .fillMaxHeight()
+                    .aspectRatio(1f),
             ) {
                 Box(
                     modifier = Modifier
@@ -112,7 +108,7 @@ fun SmartbarActionRow() = with(LocalDensity.current) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            if (primaryRowFlipToggles) {
+            if (flipToggles) {
                 MoreButton()
             }
             for (smartbarAction in visibleSmartbarActions) {
@@ -147,7 +143,7 @@ fun SmartbarActionRow() = with(LocalDensity.current) {
                     }
                 }
             }
-            if (!primaryRowFlipToggles) {
+            if (!flipToggles) {
                 MoreButton()
             }
         }

@@ -145,9 +145,9 @@ class NlpManager(context: Context) {
     }
 
     private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
-        if (prefs.smartbar.enabled.get() && prefs.smartbar.actionRowAutoExpandCollapse.get()) {
-            prefs.smartbar.actionRowExpandWithAnimation.set(false)
-            prefs.smartbar.actionRowExpanded.set(list1.isNullOrEmpty() && list2.isNullOrEmpty())
+        if (prefs.smartbar.enabled.get() && prefs.smartbar.primaryActionsAutoExpandCollapse.get()) {
+            prefs.smartbar.primaryActionsExpandWithAnimation.set(false)
+            prefs.smartbar.primaryActionsExpanded.set(list1.isNullOrEmpty() && list2.isNullOrEmpty())
         }
     }
 
