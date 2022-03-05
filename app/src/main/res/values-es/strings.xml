@@ -121,9 +121,7 @@
     <string name="snygg__rule_element__one_handed_panel">Panel a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Fila principal de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Fila secundaria de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_row">Fila de acción de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_button">Botón de acción de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Fila candidata de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Botón de acción de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palabra candidata de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidato de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaciado candidato de barra inteligente</string>

@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Alternância de linha de ação primária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Alternância de linha secundária primária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternância de linha de ação primária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternância de linha secundária primária da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_row">Linha de ação da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_button">Botão de ação da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Linha candidata da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Botão de ação da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>

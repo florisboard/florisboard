@@ -111,6 +111,57 @@ object FlorisImeUiSpec : SnyggSpec({
         border()
     }
 
+    element(FlorisImeUi.SmartbarPrimaryRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarSecondaryRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarPrimaryActionsToggle) {
+        background()
+        foreground()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.SmartbarSecondaryActionsToggle) {
+        background()
+        foreground()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.SmartbarQuickAction) {
+        background()
+        foreground()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.SmartbarKey) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.SmartbarCandidateWord) {
+        background()
+        foreground()
+        font()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarCandidateClip) {
+        background()
+        foreground()
+        font()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarCandidateSpacer) {
+        foreground()
+    }
+
     element(FlorisImeUi.ClipboardHeader) {
         background()
         foreground()
@@ -160,57 +211,6 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.OneHandedPanel) {
         background()
         foreground()
-    }
-
-    element(FlorisImeUi.Smartbar) {
-        background()
-    }
-    element(FlorisImeUi.SmartbarPrimaryActionsToggle) {
-        background()
-        foreground()
-        shape()
-        shadow()
-        border()
-    }
-    element(FlorisImeUi.SmartbarSecondaryActionsToggle) {
-        background()
-        foreground()
-        shape()
-        shadow()
-        border()
-    }
-
-    element(FlorisImeUi.SmartbarQuickAction) {
-        background()
-        foreground()
-        shape()
-        shadow()
-        border()
-    }
-
-    element(FlorisImeUi.SmartbarCandidateWord) {
-        background()
-        foreground()
-        font()
-        shape()
-    }
-    element(FlorisImeUi.SmartbarCandidateClip) {
-        background()
-        foreground()
-        font()
-        shape()
-    }
-    element(FlorisImeUi.SmartbarCandidateSpacer) {
-        foreground()
-    }
-
-    element(FlorisImeUi.SmartbarKey) {
-        background()
-        foreground()
-        font()
-        shape()
-        shadow()
-        border()
     }
 
     element(FlorisImeUi.SystemNavBar) {

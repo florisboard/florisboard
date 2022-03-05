@@ -127,10 +127,9 @@
     <string name="snygg__rule_element__glide_trail">Bewegungsspur</string>
     <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primäre Aktionszeile Schalter</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primäre Aktionszeile Schalter</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Smartbar Sekundärleiste</string>
-    <string name="snygg__rule_element__smartbar_action_row">Smartbar Aktionsleiste</string>
-    <string name="snygg__rule_element__smartbar_action_button">Smartbar Aktionstaste</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Smartbar Aktionstaste</string>
     <string name="snygg__rule_element__smartbar_key">Smartbartaste</string>
     <string name="snygg__rule_element__system_nav_bar">System-Navigationsleiste</string>
     <string name="snygg__rule_selector__pressed">Gedrückt</string>

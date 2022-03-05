@@ -132,12 +132,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_element__glide_trail">Jejak geser</string>
     <string name="snygg__rule_element__one_handed_panel">Panel satu-tangan</string>
     <string name="snygg__rule_element__smartbar_primary_row">Barisan utama smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Pengalih baris tindakan utama smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Pengalih baris tindakan sekunder smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Pengalih baris tindakan utama smartbar</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Pengalih baris tindakan sekunder smartbar</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Barisan sekunder smartbar</string>
-    <string name="snygg__rule_element__smartbar_action_row">Barisan tindakan smartbar</string>
-    <string name="snygg__rule_element__smartbar_action_button">Tombol tindakan smartbar</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Calon barisan smartbar</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Tombol tindakan smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Calon kata smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Calon klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Calon pembelah smartbar</string>

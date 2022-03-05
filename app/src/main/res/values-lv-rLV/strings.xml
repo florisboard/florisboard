@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Slīdēšanas pēdas</string>
     <string name="snygg__rule_element__one_handed_panel">Vienrocīgs panelis</string>
     <string name="snygg__rule_element__smartbar_primary_row">Viedjoslas galvenā rinda</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Viedjoslas galvenās darbību rindas pārslēgs</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Viedjoslas galvenās otrējāš rindas pārslēgs</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Viedjoslas galvenās darbību rindas pārslēgs</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Viedjoslas galvenās otrējāš rindas pārslēgs</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Viedjoslas otrējā rinda</string>
-    <string name="snygg__rule_element__smartbar_action_row">Viedjoslas darbību rinda</string>
-    <string name="snygg__rule_element__smartbar_action_button">Viedjoslas darbības poga</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Viedjoslas ieteikumu rinda</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Viedjoslas darbības poga</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Viedjoslas ieteikumu vārds</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>

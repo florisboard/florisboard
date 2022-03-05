@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Percorso di scorrimento</string>
     <string name="snygg__rule_element__one_handed_panel">Pannello a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Riga principale della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Attiva/disattiva riga di azione primaria della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Attiva/disattiva riga di azione secondaria della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Attiva/disattiva riga di azione primaria della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Attiva/disattiva riga di azione secondaria della Smartbar</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Riga secondaria della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_action_row">Riga di azione della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_action_button">Pulsante di azione della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Riga candidata della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Pulsante di azione della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>

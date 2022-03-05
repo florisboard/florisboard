@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
     <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
     <string name="snygg__rule_element__smartbar_primary_row">Основной ряд умной панели</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Переключатель ряда действий умной панели</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Переключатель дополнительного ряда умной панели</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Переключатель ряда действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Переключатель дополнительного ряда умной панели</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Дополнительный ряд умной панели</string>
-    <string name="snygg__rule_element__smartbar_action_row">Ряд действий умной панели</string>
-    <string name="snygg__rule_element__smartbar_action_button">Кнопка действия умной панели</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Ряд кандидатов умной панели</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Кнопка действия умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>

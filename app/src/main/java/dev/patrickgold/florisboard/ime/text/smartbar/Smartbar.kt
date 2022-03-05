@@ -23,6 +23,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,11 +39,12 @@ import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -119,7 +121,7 @@ fun Smartbar() {
 }
 
 @Composable
-private fun SmartbarMainRow(modifier: Modifier = Modifier) = key(FlorisImeUi.Smartbar) {
+private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
     val primaryActionsExpanded by prefs.smartbar.primaryActionsExpanded.observeAsState()
@@ -128,6 +130,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) = key(FlorisImeUi.Sma
 
     val shouldAnimate by prefs.smartbar.primaryActionsExpandWithAnimation.observeAsState()
 
+    val primaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryRow)
     val primaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryActionsToggle)
     val secondaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryActionsToggle)
 
@@ -250,7 +253,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) = key(FlorisImeUi.Sma
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.smartbarHeight),
+            .height(FlorisImeSizing.smartbarHeight)
+            .snyggBackground(primaryRowStyle),
     ) {
         if (flipToggles) {
             SecondaryActionsToggle()
@@ -290,15 +294,31 @@ private fun SmartbarActionRowContent(
 @Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
+    val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryRow)
     val secondaryActionsEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
     val secondaryActionsExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
     val secondaryActionsRowType by prefs.smartbar.secondaryActionsRowType.observeAsState()
+    val secondaryActionsPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
+    val background = secondaryRowStyle.background.solidColor().let { color ->
+        if (secondaryActionsPlacement == SecondaryRowPlacement.OVERLAY_APP_UI) {
+            if (color.isUnspecified || color.alpha == 0f) {
+                FlorisImeTheme.style.get(FlorisImeUi.Keyboard).background.solidColor(default = Color.Black)
+            } else {
+                color
+            }
+        } else {
+            color
+        }
+    }
 
     AnimatedVisibility(
         visible = secondaryActionsEnabled && secondaryActionsExpanded,
         enter = VerticalEnterTransition,
         exit = VerticalExitTransition,
     ) {
-        SmartbarActionRowContent(modifier = modifier, rowType = secondaryActionsRowType)
+        SmartbarActionRowContent(
+            modifier = modifier.background(background),
+            rowType = secondaryActionsRowType,
+        )
     }
 }

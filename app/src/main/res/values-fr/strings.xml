@@ -130,11 +130,9 @@
     <string name="snygg__rule_element__glide_trail">Indicateur de glissement</string>
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
     <string name="snygg__rule_element__smartbar_primary_row">Rangée principale de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Basculement de la ligne d\'action principale de la barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Basculement de la ligne d\'action principale de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Rangée secondaire de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_action_row">Ligne d\'action de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_action_button">Bouton d\'action de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Ligne candidate de la barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Bouton d\'action de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_key">Touche de barre intelligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barre de navigation du système</string>

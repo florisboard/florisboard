@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">مسار الإنزلاق</string>
     <string name="snygg__rule_element__one_handed_panel">لوحة مفاتيح بيد واحدة</string>
     <string name="snygg__rule_element__smartbar_primary_row">صف الشريط الذكي الأساسي</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">تبديل صف الإجراء الأساسي لـشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">تبديل الصف الثانوي الأساسي لشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">تبديل صف الإجراء الأساسي لـشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">تبديل الصف الثانوي الأساسي لشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_secondary_row">صف الشريط الذكي الثانوي</string>
-    <string name="snygg__rule_element__smartbar_action_row">صف إجراء الشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_action_button">زر عمل الشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">صف مرشح الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_quick_action">زر عمل الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_word">مرشح كلمة الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">مرشح مقطع الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">مرشح فاصل الشريط الذكي</string>
