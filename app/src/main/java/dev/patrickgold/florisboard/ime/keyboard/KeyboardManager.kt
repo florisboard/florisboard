@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -685,6 +686,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     inner class KeyboardManagerResources {
+        val composers = MutableLiveData<Map<ExtensionComponentName, Composer>>(emptyMap())
         val currencySets = MutableLiveData<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
         val layouts = MutableLiveData<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
         val popupMappings = MutableLiveData<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
@@ -699,6 +701,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
 
         private fun parseKeyboardExtensions(keyboardExtensions: List<KeyboardExtension>) = scope.launch {
+            val localComposers = mutableMapOf<ExtensionComponentName, Composer>()
             val localCurrencySets = mutableMapOf<ExtensionComponentName, CurrencySet>()
             val localLayouts = mutableMapOf<LayoutType, MutableMap<ExtensionComponentName, LayoutArrangementComponent>>()
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
@@ -707,6 +710,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 localLayouts[layoutType] = mutableMapOf()
             }
             for (keyboardExtension in keyboardExtensions) {
+                keyboardExtension.composers.forEach { composer ->
+                    localComposers[ExtensionComponentName(keyboardExtension.meta.id, composer.id)] = composer
+                }
                 keyboardExtension.currencySets.forEach { currencySet ->
                     localCurrencySets[ExtensionComponentName(keyboardExtension.meta.id, currencySet.id)] = currencySet
                 }
@@ -728,6 +734,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
             }
             subtypePresets.postValue(localSubtypePresets)
+            composers.postValue(localComposers)
             currencySets.postValue(localCurrencySets)
             layouts.postValue(localLayouts)
             popupMappings.postValue(localPopupMappings)

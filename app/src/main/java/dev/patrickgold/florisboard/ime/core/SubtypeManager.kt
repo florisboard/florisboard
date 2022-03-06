@@ -20,12 +20,10 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.serialization.decodeFromString
@@ -42,21 +40,13 @@ val SubtypeJsonConfig = Json {
  * Class which acts as a high level helper for the raw implementation of subtypes in the prefs.
  * Also interprets the default subtype list defined in ime/config.json and provides helper
  * arrays for the language spinner.
- * @param packageName The package name this SubtypeManager is for.
+ *
  * @property prefs Reference to the preferences, where the raw subtype settings are accessible.
- * @property imeConfig The [FlorisBoard.ImeConfig] of this input method editor.
  * @property subtypes The currently active subtypes.
  */
-class SubtypeManager(
-    context: Context,
-    packageName: String = context.packageName,
-) : CoroutineScope by MainScope() {
-
-    private val assetManager by context.assetManager()
-    private val keyboardManager by context.keyboardManager()
+class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
     private val prefs by florisPreferenceModel()
-
-    val imeConfig: FlorisBoard.ImeConfig
+    private val keyboardManager by context.keyboardManager()
 
     private val _subtypes = MutableLiveData<List<Subtype>>(emptyList())
     val subtypes: LiveData<List<Subtype>> get() = _subtypes
@@ -64,9 +54,6 @@ class SubtypeManager(
     val activeSubtype: LiveData<Subtype> get() = _activeSubtype
 
     init {
-        // TODO: remove this
-        imeConfig = loadImeConfig("ime/config.json", packageName)
-
         prefs.localization.subtypes.observeForever { listRaw ->
             flogDebug { listRaw }
             val list = if (listRaw.isNotBlank()) {
@@ -102,19 +89,6 @@ class SubtypeManager(
             prefs.localization.activeSubtypeId.set(subtype.id)
         }
         _activeSubtype.postValue(subtype)
-    }
-
-    /**
-     * Loads the [FlorisBoard.ImeConfig] from ime/config.json.
-     *
-     * @param path The path to to IME config file.
-     * @return The [FlorisBoard.ImeConfig] or a default config.
-     */
-    private fun loadImeConfig(path: String, packageName: String): FlorisBoard.ImeConfig {
-        return assetManager.loadJsonAsset<FlorisBoard.ImeConfig>(FlorisRef.assets(path)).getOrElse {
-            flogError(LogTopic.SUBTYPE_MANAGER) { "Failed to retrieve IME config: $it" }
-            FlorisBoard.ImeConfig(packageName)
-        }
     }
 
     /**
