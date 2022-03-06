@@ -174,7 +174,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         val primaryActionsRowType by prefs.smartbar.primaryActionsRowType.observeAsState()
         Box(
             modifier = Modifier
-                .padding(horizontal = 4.dp)
                 .weight(1f)
                 .height(FlorisImeSizing.smartbarHeight),
         ) {
