@@ -4,7 +4,7 @@
     { "code":  1608, "label": "و" },
     { "code":  1593, "label": "ع" },
     { "code":  1585, "label": "ر" },
-    { "code":  1587, "label": "ت" },
+    { "code":  1578, "label": "ت" },
     { "code":  1746, "label": "ے" },
     { "code":  1569, "label": "ء" },
     { "code":  1740, "label": "ی" },
@@ -27,7 +27,7 @@
     { "code":  1588, "label": "ش" },
     { "code":  1670, "label": "چ" },
     { "code":  1591, "label": "ط" },
-    { "code":  1576, "label": "پ" },
+    { "code":  1576, "label": "ب" },
     { "code":  1606, "label": "ن" },
     { "code":  1605, "label": "م" }
   ]
