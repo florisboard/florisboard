@@ -60,7 +60,7 @@
     { "code":  1605, "label": "م" },
     { "code":  1567, "label": "؟" },
     { "code":  1548, "label": "،" },
-    { "code":  46, "label": "." }
+    { "code":  58, "label": ":" }
 
   ]
 ]
