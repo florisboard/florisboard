@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">نقل لوحة المفاتيح إلى اليسار.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">نقل لوحة المفاتيح إلى اليمين.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">رموز تعبيرية</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">رموز تعبيرية</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">رموز المشاعر</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">كاوموجي</string>
+    <string name="prefs__media__emoji_recently_used_max_size">الحد الأقصى لحجم السجل للرموز التعبيرية</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">لون الرموز التعبيرية المفضل</string>
+    <string name="prefs__media__emoji_preferred_hair_style">نوع الشعر المفضل للرموز التعبيرية</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">وجوه تعبيرية و عواطف</string>
     <string name="emoji__category__people_body" comment="Emoji category name">أشخاص و أجسام</string>
@@ -131,14 +135,11 @@
     <string name="snygg__rule_element__glide_trail">مسار الإنزلاق</string>
     <string name="snygg__rule_element__one_handed_panel">لوحة مفاتيح بيد واحدة</string>
     <string name="snygg__rule_element__smartbar_primary_row">صف الشريط الذكي الأساسي</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">تبديل صف الإجراء الأساسي لـشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">تبديل الصف الثانوي الأساسي لشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_secondary_row">صف الشريط الذكي الثانوي</string>
-    <string name="snygg__rule_element__smartbar_quick_action">زر عمل الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_key">مفتاح الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_word">مرشح كلمة الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">مرشح مقطع الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">مرشح فاصل الشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_key">مفتاح الشريط الذكي</string>
     <string name="snygg__rule_element__system_nav_bar">شريط تنقل النظام</string>
     <string name="snygg__rule_selector__pressed">مضغوط</string>
     <string name="snygg__rule_selector__focus">تركيز</string>
@@ -247,13 +248,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">الصف الرئيسي</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">عكس زر الإجراء</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">عكس التبديل بين الصف الثانوي والإجراء</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">الصف الثانوي</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">تمكين الصف الثانوي</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">توسيع وطي تلقائي</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">توسيع وطي صف الإجراءات المبني على الحالة الحالية</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">الاقتراحات و التصحيح</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
@@ -465,6 +459,7 @@
     <string name="clipboard__cleared_primary_clip">تنظيف الحافظة الأساسية</string>
     <string name="clipboard__cleared_history">مسح التاريخ</string>
     <string name="clipboard__cleared_full_history">مسح التاريخ الكامل</string>
+    <string name="clipboard__confirm_clear_history__message">هل ترغب حقًا في مسح سجل الحافظة؟</string>
     <string name="settings__clipboard__title">الحافظة</string>
     <string name="pref__clipboard__use_internal_clipboard__label">استخدم الحافظة الداخلية</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">استخدم الحافظة الداخلية بدلا من حافظة النظام</string>
@@ -592,6 +587,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">مثلا. {example}</string>
     <string name="general__no_browser_app_found_for_url">لم يتم العثور على تطبيق متصفح للتعامل مع عنوان URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; اختيار &#45;</string>
+    <string name="general__unlimited">غير محدود</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">طولي</string>
     <string name="screen_orientation__landscape">افقي</string>
@@ -620,6 +616,17 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">يتم عرض أسماء اللغات عبر واجهة مستخدم التطبيق ولوحة المفاتيح باللغة المحلية التي تم تعيينها للجهاز بأكمله</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">اللغة الأصلية</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">يتم عرض أسماء اللغات عبر واجهة مستخدم التطبيق ولوحة المفاتيح باللغة المحلية المشار إليها بنفسها</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} اللون الافتراضي للبشرة</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} اللون الفاتح للبشرة</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} اللون الفاتح المتوسط للبشرة</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} اللون المتوسط للبشرة</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} اللون الداكن المتوسط للبشرة</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} اللون الداكن للبشرة</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} الشعر الافتراضي</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} شعر احمر</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} شعر مجعد</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} شعر ابيض</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} اصلع</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">الاولوية للون الثانوي</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">دائمًا ما يكون الحرف الأولي المحدد بعد الضغط لفترة طويلة هو العلامة الأساسية لرمز البحث في حالة عدم توفر تمييز أساسي</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">الاولوية للتلميحات</string>

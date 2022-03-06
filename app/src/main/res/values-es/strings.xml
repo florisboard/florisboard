@@ -121,11 +121,10 @@
     <string name="snygg__rule_element__one_handed_panel">Panel a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Fila principal de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Fila secundaria de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Botón de acción de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_key">Tecla de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palabra candidata de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidato de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaciado candidato de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_key">Tecla de barra inteligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barra de navegación de sistema</string>
     <string name="snygg__rule_selector__pressed">Presionado</string>
     <string name="snygg__rule_selector__focus">Focalizado</string>
@@ -233,13 +232,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Fila principal</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botones de intercambio de filas</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Intercambia los botones de la fila secundaria y la fila de acción</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Fila secundaria</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Habilitar fila secundaria</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción según el estado actual</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugerencias &amp; Correciones</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>

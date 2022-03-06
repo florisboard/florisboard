@@ -147,13 +147,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Έξυπνη Μπάρα</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Πρωτεύουσα σειρά</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Αντιστροφή των πλήκτρων εναλλαγής σειράς</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Αντιστρέφει τα πλήκτρα εναλλαγής της δευτερεύουσας και της σειράς ενεργειών</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Δευτερεύουσα σειρά</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ενεργοποίηση δευτερεύουσας σειράς</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Αυτόματη προέκταση/σύμπτυξη</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Προεκτείνει/συμπτύσσει αυτόματα τη σειρά ενεργειών βάσει της τρέχουσας κατάστασης</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Προτάσεις &amp; Διορθώσεις</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>

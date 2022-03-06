@@ -41,6 +41,8 @@
     <string name="settings__home__title" comment="Title of the Home screen">A {app_name} üdvözli</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, beviteli módszerként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Nyelvek és elrendezések</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Nyelvnevek megjelenítése ebben</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Altípusok</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
@@ -158,9 +160,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Elsődleges sor</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Másodlagos sor</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Másodlagos sor engedélyezése</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>

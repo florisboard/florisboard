@@ -130,11 +130,9 @@
     <string name="snygg__rule_element__glide_trail">Indicateur de glissement</string>
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
     <string name="snygg__rule_element__smartbar_primary_row">Rangée principale de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Basculement de la ligne d\'action principale de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Rangée secondaire de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Bouton d\'action de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_key">Touche de barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barre de navigation du système</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>
     <string name="snygg__rule_selector__focus">Focalisé</string>
@@ -241,13 +239,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barre intelligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Barre Intelligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ligne principale</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Retourner les boutons de basculement de rangée</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Bascule la ligne secondaire et la ligne d\'action</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ligne secondaire</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Activer ligne secondaire</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Développe/réduit automatiquement la ligne d\'action en fonction de l\'état actuel</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>

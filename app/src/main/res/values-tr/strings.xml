@@ -144,13 +144,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Akıllı çubuk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Akıllı Çubuğu Etkinleştir</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Birincil sıra</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Satır geçiş düğmelerini çevir</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">İkincil ve eylem satır geçiş düğmelerini çevirir</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">İkincil sıra</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">İkinci sırayı etkinleştir</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Öneriler &amp; Düzeltmeler</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>

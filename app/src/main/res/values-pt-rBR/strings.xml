@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Tamanho máximo do histórico de emojis</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Tom de pele do emoji preferido</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Estilo de cabelo do emoji preferido</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos e Emoções</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Pessoas e Corpo</string>
@@ -131,14 +135,14 @@
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternância de linha de ação primária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternância de linha secundária primária da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Botão de ação da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternar ações primárias da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternar ações secundárias da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Ação rápida da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barra de navegação do sistema</string>
     <string name="snygg__rule_selector__pressed">Pressionado</string>
     <string name="snygg__rule_selector__focus">Focado</string>
@@ -247,13 +251,14 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Linha primária</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância de linha invertida</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte os alternadores da linha secundária e de ação</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Linha secundária</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ativar linha secundária</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expandir/retrair</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/retrai automaticamente a linha de ação com base no estado atual</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte a linha de ação de alternância</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Layout de linha</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ações primárias</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/recolher automaticamente</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/recolhe automaticamente a linha de ação primária com base no estado atual</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ação secundária</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e Correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
@@ -465,6 +470,7 @@
     <string name="clipboard__cleared_primary_clip">Clipe primário excluído</string>
     <string name="clipboard__cleared_history">Histórico excluído</string>
     <string name="clipboard__cleared_full_history">Todo o histórico excluído</string>
+    <string name="clipboard__confirm_clear_history__message">Tem certeza de que deseja limpar o histórico da área de transferência?</string>
     <string name="settings__clipboard__title">Área de transferência</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use uma área de transferência interna em vez da área de transferência do sistema</string>
@@ -592,6 +598,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">p. ex. {example}</string>
     <string name="general__no_browser_app_found_for_url">Nenhum aplicativo de navegador encontrado para lidar com a URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; selecionar &#45;</string>
+    <string name="general__unlimited">Ilimitado</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Retrato</string>
     <string name="screen_orientation__landscape">Paisagem</string>
@@ -620,6 +627,17 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Os nomes dos idiomas na interface de usuário do aplicativo e do teclado são exibidos na localidade definida para todo o dispositivo</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Localidade nativa</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Os nomes dos idiomas na interface de usuário do aplicativo e do teclado são exibidos na localidade referida por si só</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Tom de pele padrão</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Pele clara</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Pele clara média</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Tom de pele médio</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Pele escura média</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Pele escura</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Cabelo padrão</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Cabelo vermelho</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cabelo encaracolado</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cabelo branco</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Careca</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">O acento é priorizado</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é sempre o acento principal ou a sugestão de símbolo se nenhum acento principal estiver disponível</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">A sugestão é priorizada</string>
@@ -645,6 +663,10 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Final da parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Final da parte inferior</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Início da parte inferior</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ações rápidas</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Ações rápidas organizáveis ​​em formato de linha com um menu flutuante</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Ferramentas do cursor da área de transferência</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Linha com a área de transferência e as ferramentas de movimento do cursor mais usadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Apenas propriedades de cor são mostradas, propriedades e regras são traduzidas.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>

@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Muovi tastiera a sinistra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Muovi tastiera a destra.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emoji</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Dimensione massima della cronologia delle emoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Carnagione emoji preferita</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Acconciatura emoji preferita</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Faccine &amp; Emoticons</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persone &amp; Corpo</string>
@@ -131,14 +135,14 @@
     <string name="snygg__rule_element__glide_trail">Percorso di scorrimento</string>
     <string name="snygg__rule_element__one_handed_panel">Pannello a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Riga principale della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Attiva/disattiva riga di azione primaria della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Attiva/disattiva riga di azione secondaria della Smartbar</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Riga secondaria della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Pulsante di azione della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Attiva/disattiva azioni primarie della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Attiva/disattiva azioni secondarie della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Azione rapida della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_key">Tasto della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_key">Tasto della Smartbar</string>
     <string name="snygg__rule_element__system_nav_bar">Barra di navigazione del sistema</string>
     <string name="snygg__rule_selector__pressed">Premuto</string>
     <string name="snygg__rule_selector__focus">Focalizzato</string>
@@ -245,15 +249,16 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Premendo la barra spaziatrice si ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
-    <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Abilita Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Riga principale</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverti pulsanti per alternare righe</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte la riga secondaria e d\'azione</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Riga secondaria</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Abilita riga secondaria</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Espande/collassa automaticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Espande/collassa automaticamente la riga dell\'azione in base allo stato corrente</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverti pulsanti di attivazione</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte i pulsanti di attivazione nella riga di azione</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Layout riga</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Azioni primarie</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Espandi/riduci automaticamente</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Espande/riduce automaticamente la riga dell\'azione primaria in base allo stato corrente</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Azioni secondarie</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostra riga di azione secondaria</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggerimenti &amp; Correzioni</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
@@ -465,6 +470,7 @@
     <string name="clipboard__cleared_primary_clip">Clip principale cancellata</string>
     <string name="clipboard__cleared_history">Cronologia cancellata</string>
     <string name="clipboard__cleared_full_history">Tutta la cronologia cancellata</string>
+    <string name="clipboard__confirm_clear_history__message">Sei sicuro di voler cancellare la cronologia degli appunti?</string>
     <string name="settings__clipboard__title">Appunti</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
@@ -592,6 +598,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">es. {example}</string>
     <string name="general__no_browser_app_found_for_url">Nessun browser trovato per la gestione dell\'URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; seleziona &#45;</string>
+    <string name="general__unlimited">Illimitato</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Verticale</string>
     <string name="screen_orientation__landscape">Orizzontale</string>
@@ -620,6 +627,17 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">I nomi delle lingue nell\'app e nell\'interfaccia utente della tastiera vengono visualizzati nella lingua che è impostata per tutto il dispositivo</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Lingua originaria</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">I nomi delle lingue nell\'app e nell\'interfaccia utente della tastiera vengono visualizzati nella lingua a cui fanno riferimento</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Carnagione predefinita</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Carnagione chiara</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Carnagione medio-chiara</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Carnagione media</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Carnagione medio-scura</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Carnagione scura</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Capelli predefiniti</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Capelli rossi</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Capelli ricci</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Capelli bianchi</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Calvo</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Priorità agli accenti</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo la pressione prolungata è l\'accento principale, o il suggerimento se non c\'è un accento principale</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Priorità ai suggerimenti</string>
@@ -645,6 +663,10 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Fine parte superiore</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fine parte inferiore</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Inizio parte inferiore</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Azioni rapide</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Azioni rapide organizzabili in formato riga con un menu di overflow</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Strumenti di cursore e appunti</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Riga con gli strumenti più usati degli appunti e di spostamento del cursore</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Di base</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Solo le proprietà del colore sono mostrate, le proprietà e le regole sono tradotte.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avanzate</string>

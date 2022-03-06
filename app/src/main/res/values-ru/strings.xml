@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Переместить клавиатуру влево.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Переместить клавиатуру вправо.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Эмодзи</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Эмодзи</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Смайлики</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомодзи</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Максимальный размер истории эмодзи</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Предпочтительный цвет кожи эмодзи</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Предпочтительная прическа эмодзи</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Смайлы и эмоции</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Люди и тело</string>
@@ -131,14 +135,14 @@
     <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
     <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
     <string name="snygg__rule_element__smartbar_primary_row">Основной ряд умной панели</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Переключатель ряда действий умной панели</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Переключатель дополнительного ряда умной панели</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Дополнительный ряд умной панели</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Кнопка действия умной панели</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Переключатель основных действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Переключатель дополнительных действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Быстрое действие умной панели</string>
+    <string name="snygg__rule_element__smartbar_key">Кнопка умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
-    <string name="snygg__rule_element__smartbar_key">Кнопка умной панели</string>
     <string name="snygg__rule_element__system_nav_bar">Системная навигационная панель</string>
     <string name="snygg__rule_selector__pressed">При нажатии</string>
     <string name="snygg__rule_selector__focus">При фокусе</string>
@@ -247,13 +251,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основной ряд</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Кнопки переключения рядов</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Переключение дополнительного ряда и ряда действий</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Дополнительный ряд</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Использовать дополнительный ряд</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое сворачивание/разворачивание ряда действий в зависимости от текущего состояния</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Предложения и исправления</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
@@ -465,6 +462,7 @@
     <string name="clipboard__cleared_primary_clip">Очищена основная запись</string>
     <string name="clipboard__cleared_history">Очищена история</string>
     <string name="clipboard__cleared_full_history">Очищена полная история</string>
+    <string name="clipboard__confirm_clear_history__message">Очистить историю буфера обмена?</string>
     <string name="settings__clipboard__title">Буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Использовать внутренний буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Использовать внутренний буфер обмена вместо системного</string>
@@ -592,6 +590,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">например, {example}</string>
     <string name="general__no_browser_app_found_for_url">Не найдено браузера для использования URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; выбор &#45;</string>
+    <string name="general__unlimited">Без ограничений</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портретная</string>
     <string name="screen_orientation__landscape">Альбомная</string>
@@ -620,6 +619,8 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Названия языков в приложении и пользовательском интерфейсе клавиатуры отображаются на языке, установленном для устройства</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Другой язык</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Названия языков в приложении и пользовательском интерфейсе клавиатуры отображаются на выбранном языке</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">Цвет кожи {emoji} по умолчанию</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">Светлый цвет кожи {emoji}</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является основным акцентом или символом подсказки, если основной акцент недоступен</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Приоритет подсказке</string>

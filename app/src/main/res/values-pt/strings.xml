@@ -174,13 +174,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Linha principal</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverter botões para alternar linhas</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverter botões para alternar entre linha secundária ou linha de ação</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Linha secundária</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ativar linha secundária</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Recolher/expandir automaticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Recolhe ou expande automaticamente a linha de ação tendo por base o estado atual</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>

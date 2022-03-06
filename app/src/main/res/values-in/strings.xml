@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan keyboard ke kiri.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan keyboard ke kanan.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emoji</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Ukuran maksimum riwayat emoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Warna kulit emoji yang diinginkan</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Gaya rambut emoji yang diinginkan</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Senyuman &amp; Perasaan</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Orang &amp; Badan</string>
@@ -132,14 +136,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_element__glide_trail">Jejak geser</string>
     <string name="snygg__rule_element__one_handed_panel">Panel satu-tangan</string>
     <string name="snygg__rule_element__smartbar_primary_row">Barisan utama smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Pengalih baris tindakan utama smartbar</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Pengalih baris tindakan sekunder smartbar</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Barisan sekunder smartbar</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Tombol tindakan smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alih tindakan utama smartbar</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alih tindakan sekunder smartbar</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Tindakan cepat smartbar</string>
+    <string name="snygg__rule_element__smartbar_key">Tombol smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Calon kata smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Calon klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Calon pembelah smartbar</string>
-    <string name="snygg__rule_element__smartbar_key">Tombol smartbar</string>
     <string name="snygg__rule_element__system_nav_bar">Bilah navigasi sistem</string>
     <string name="snygg__rule_selector__pressed">Ditekan</string>
     <string name="snygg__rule_selector__focus">Difokus</string>
@@ -248,13 +252,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas keyboard</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Baris utama</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan baris tombol alih</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris sekunder dan tindakan</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Baris sekunder</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Aktifkan baris sekunder</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan tombol alih</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris tindakan</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Tata letak baris</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Tindakan utama</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan secara otomatis berdasarkan status saat ini</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan status saat ini</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Tindakan sekunder</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Tampilkan baris tindakan sekunder</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Saran &amp; Koreksi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
@@ -466,6 +471,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clipboard__cleared_primary_clip">Klip utama dibersihkan</string>
     <string name="clipboard__cleared_history">Riwayat dibersihkan</string>
     <string name="clipboard__cleared_full_history">Seluruh riwayat dibersihkan</string>
+    <string name="clipboard__confirm_clear_history__message">Apakah Anda yakin ingin membersihkan riwayat papan klip Anda?</string>
     <string name="settings__clipboard__title">Papan klip</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Gunakan papan klip internal</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Gunakan papan klip internal daripada papan klip sistem</string>
@@ -593,6 +599,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">mis. {example}</string>
     <string name="general__no_browser_app_found_for_url">Tidak ada aplikasi peramban untuk menangani URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; pilih &#45;</string>
+    <string name="general__unlimited">Tak terbatas</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Potret</string>
     <string name="screen_orientation__landscape">Lanskap</string>
@@ -621,6 +628,17 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Nama-nama bahasa pada seluruh aplikasi dan UI keyboard ditampilkan dalan locale yang diatur untuk seluruh perangkat</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Locale natif</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Nama-nama bahasa pada seluruh aplikasi dan UI keyboard ditampilkan dalan locale yang dirujuk sendiri</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Warna kulit bawaan</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Warna kulit terang</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Warna kulit agak terang</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Warna kulit medium</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Warna kulit agak gelap</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Warna kulit gelap</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Rambut bawaan</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Rambut merah</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Rambut keriting</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Rambut putih</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Botak</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksen diprioritaskan</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan aksen utama, atau simbol petunjuk jika tidak ada aksen utama yang tersedia</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Petunjuk diprioritaskan</string>
@@ -646,6 +664,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Akhiran atas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Akhiran bawah</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Awalan bawah</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Tindakan cepat</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Tindakan cepat yang dapat diubah dalam format baris dengan menu luapan</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Alat papan klip kursor</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Barisan dengan alat-alat papan klip dan penggerakan kursor yang sering digunakan</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Dasar</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Hanya properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Tingkat lanjut</string>
