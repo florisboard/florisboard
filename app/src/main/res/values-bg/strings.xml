@@ -204,15 +204,12 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Първи ред</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Разменят се бутоните за действия и допълнителен ред</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Допълнителен ред</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Допълнителен ред</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Падащ втори ред за клавиши с допълнителни действия</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Разположение на допълнителния ред</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Ред с действия</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Първи ред</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните за действия и допълнителен ред</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Допълнителен ред</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Допълнителен ред</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>

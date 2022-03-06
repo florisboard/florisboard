@@ -128,32 +128,37 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.SmartbarPrimaryRow {
         background = rgbaColor(0, 0, 0, 0f)
     }
-    FlorisImeUi.SmartbarPrimaryActionRowToggle {
+    FlorisImeUi.SmartbarSecondaryRow {
+        background = rgbaColor(0, 0, 0, 0f)
+    }
+    FlorisImeUi.SmartbarPrimaryActionsToggle {
         background = `var`("surface")
         foreground = `var`("onSurface")
         shape = circleShape()
     }
-    FlorisImeUi.SmartbarPrimarySecondaryRowToggle {
+    FlorisImeUi.SmartbarSecondaryActionsToggle {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(144, 144, 144)
         shape = circleShape()
     }
-
-    FlorisImeUi.SmartbarSecondaryRow {
-        background = rgbaColor(33, 33, 33)
-    }
-
-    FlorisImeUi.SmartbarActionRow {
-        background = rgbaColor(0, 0, 0, 0f)
-    }
-    FlorisImeUi.SmartbarActionButton {
+    FlorisImeUi.SmartbarQuickAction {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
         shape = circleShape()
     }
-
-    FlorisImeUi.SmartbarCandidateRow {
+    FlorisImeUi.SmartbarKey {
         background = rgbaColor(0, 0, 0, 0f)
+        foreground = rgbaColor(220, 220, 220)
+        fontSize = size(18.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.SmartbarKey(pressedSelector = true) {
+        background = `var`("surface")
+        foreground = rgbaColor(220, 220, 220)
+    }
+    FlorisImeUi.SmartbarKey(disabledSelector = true) {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = `var`("surface")
     }
     FlorisImeUi.SmartbarCandidateWord {
         background = rgbaColor(0, 0, 0, 0f)
@@ -179,22 +184,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = rgbaColor(255, 255, 255, 0.25f)
     }
 
-    FlorisImeUi.SmartbarKey {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(220, 220, 220)
-        fontSize = size(18.sp)
-        shape = roundedCornerShape(20)
-    }
-    FlorisImeUi.SmartbarKey(pressedSelector = true) {
-        background = `var`("surface")
-        foreground = rgbaColor(220, 220, 220)
-    }
-    FlorisImeUi.SmartbarKey(disabledSelector = true) {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = `var`("surface")
-    }
-
     FlorisImeUi.SystemNavBar {
-        background = rgbaColor(33, 33, 33)
+        background = `var`("background")
     }
 }

@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
     <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
     <string name="snygg__rule_element__smartbar_primary_row">Основной ряд умной панели</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Переключатель ряда действий умной панели</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Переключатель дополнительного ряда умной панели</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Переключатель ряда действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Переключатель дополнительного ряда умной панели</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Дополнительный ряд умной панели</string>
-    <string name="snygg__rule_element__smartbar_action_row">Ряд действий умной панели</string>
-    <string name="snygg__rule_element__smartbar_action_button">Кнопка действия умной панели</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Ряд кандидатов умной панели</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Кнопка действия умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
@@ -249,16 +247,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Основной ряд</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Кнопки переключения рядов</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Переключение дополнительного ряда и ряда действий</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Дополнительный ряд</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Использовать дополнительный ряд</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Добавляется расширяемый дополнительный ряд, содержащий большое количество элементов управления</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Расположение дополнительного ряда</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Ряд действий</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Автоматическое сворачивание/разворачивание ряда действий в зависимости от текущего состояния</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основной ряд</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Кнопки переключения рядов</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Переключение дополнительного ряда и ряда действий</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Дополнительный ряд</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Использовать дополнительный ряд</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое сворачивание/разворачивание ряда действий в зависимости от текущего состояния</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Предложения и исправления</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>

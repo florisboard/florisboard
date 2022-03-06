@@ -147,16 +147,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Slimme Balk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primaire rij</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Spiegel knoppen op deze rij</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Spiegelt de knoppen op de actierij horizontaal</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secundaire rij</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Secundaire rij inschakelen</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Voegt een tweede rij toe om meer bedieningselementen te tonen</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Locatie secundaire rij</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Actierij</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Automatisch uit-/samenvouwen</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Vouwt automatisch de actierij samen- of uit op basis van de huidige toestand</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primaire rij</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Spiegel knoppen op deze rij</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Spiegelt de knoppen op de actierij horizontaal</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secundaire rij</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Secundaire rij inschakelen</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatisch uit-/samenvouwen</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Vouwt automatisch de actierij samen- of uit op basis van de huidige toestand</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggesties &amp; Verbeteringen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>

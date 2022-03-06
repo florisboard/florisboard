@@ -127,10 +127,9 @@
     <string name="snygg__rule_element__glide_trail">Bewegungsspur</string>
     <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primäre Aktionszeile Schalter</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primäre Aktionszeile Schalter</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Smartbar Sekundärleiste</string>
-    <string name="snygg__rule_element__smartbar_action_row">Smartbar Aktionsleiste</string>
-    <string name="snygg__rule_element__smartbar_action_button">Smartbar Aktionstaste</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Smartbar Aktionstaste</string>
     <string name="snygg__rule_element__smartbar_key">Smartbartaste</string>
     <string name="snygg__rule_element__system_nav_bar">System-Navigationsleiste</string>
     <string name="snygg__rule_selector__pressed">Gedrückt</string>
@@ -228,16 +227,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primärleiste</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Tausche Schalter für Zugriffsleisten</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Tauscht die Schalter für Sekundär- und Aktionsleiste</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Sekundärleiste</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Aktiviere Sekundärleiste</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Fügt eine zweite erweiterbare Leiste hinzu, um mehr Steuerelemente anzuzeigen</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Platzierung der Sekundärleiste</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Aktionsleiste</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Automatisch aus-/einklappen</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Klappt die Aktionsleiste abhängig vom aktuellen Status automatisch ein/aus</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primärleiste</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Tausche Schalter für Zugriffsleisten</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Tauscht die Schalter für Sekundär- und Aktionsleiste</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundärleiste</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Aktiviere Sekundärleiste</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatisch aus-/einklappen</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Klappt die Aktionsleiste abhängig vom aktuellen Status automatisch ein/aus</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Vorschläge &amp; Korrekturen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>

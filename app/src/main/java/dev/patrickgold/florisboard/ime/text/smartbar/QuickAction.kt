@@ -26,76 +26,76 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-private val SmartbarActionJsonConfig = Json {
+private val QuickActionJsonConfig = Json {
     classDiscriminator = "$"
     ignoreUnknownKeys = true
     isLenient = false
 }
 
-private val SmartbarActionSet = setOf<SmartbarAction>(
-    SmartbarAction.Key(TextKeyData.UNDO),
-    SmartbarAction.Key(TextKeyData.REDO),
-    SmartbarAction.Key(TextKeyData.SETTINGS),
-    SmartbarAction.Key(TextKeyData.IME_UI_MODE_MEDIA),
-    SmartbarAction.Key(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
-    SmartbarAction.Key(TextKeyData.IME_UI_MODE_CLIPBOARD),
+private val QuickActionSet = setOf<QuickAction>(
+    QuickAction.Key(TextKeyData.UNDO),
+    QuickAction.Key(TextKeyData.REDO),
+    QuickAction.Key(TextKeyData.SETTINGS),
+    QuickAction.Key(TextKeyData.IME_UI_MODE_MEDIA),
+    QuickAction.Key(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
+    QuickAction.Key(TextKeyData.IME_UI_MODE_CLIPBOARD),
 )
 
 @Serializable
-sealed class SmartbarAction {
+sealed class QuickAction {
     companion object {
-        fun from(str: String): SmartbarAction {
-            return SmartbarActionJsonConfig.decodeFromString(str)
+        fun from(str: String): QuickAction {
+            return QuickActionJsonConfig.decodeFromString(str)
         }
     }
 
     override fun toString(): String {
-        return SmartbarActionJsonConfig.encodeToString(this)
+        return QuickActionJsonConfig.encodeToString(this)
     }
 
     @SerialName("key")
-    data class Key(val data: KeyData) : SmartbarAction()
+    data class Key(val data: KeyData) : QuickAction()
 }
 
-class SmartbarActions : LiveData<List<SmartbarAction>>(SmartbarActionSet.toList()) {
+class SmartbarActions : LiveData<List<QuickAction>>(QuickActionSet.toList()) {
     private val prefs by florisPreferenceModel()
 
     init {
-        prefs.smartbar.actions.observeForever { strList ->
+        prefs.smartbar.quickActions.observeForever { strList ->
             parseStrList(strList)
         }
     }
 
-    override fun getValue(): List<SmartbarAction> {
+    override fun getValue(): List<QuickAction> {
         return super.getValue()!!
     }
 
-    override fun setValue(value: List<SmartbarAction>) {
+    override fun setValue(value: List<QuickAction>) {
         dispatchValue(value, persist = true)
     }
 
-    override fun postValue(value: List<SmartbarAction>) {
+    override fun postValue(value: List<QuickAction>) {
         dispatchValue(value, persist = true)
     }
 
     private fun parseStrList(strList: String) {
-        val list = SmartbarActionJsonConfig.decodeFromString<List<SmartbarAction>>(strList)
+        val list = QuickActionJsonConfig.decodeFromString<List<QuickAction>>(strList)
         val convList = if (list.isEmpty()) {
-            SmartbarActionSet.toList()
+            QuickActionSet.toList()
         } else {
-            list.intersect(SmartbarActionSet).union(SmartbarActionSet).toList()
+            list.intersect(QuickActionSet).union(QuickActionSet).toList()
         }
         dispatchValue(convList, persist = false)
     }
 
-    private fun dispatchValue(value: List<SmartbarAction>, persist: Boolean) {
+    private fun dispatchValue(value: List<QuickAction>, persist: Boolean) {
         try {
             super.setValue(value)
         } catch (e: Exception) {
             super.postValue(value)
         }
         if (persist) {
-            prefs.smartbar.actions.set(SmartbarActionJsonConfig.encodeToString(value))
+            prefs.smartbar.quickActions.set(QuickActionJsonConfig.encodeToString(value))
         }
     }
 }

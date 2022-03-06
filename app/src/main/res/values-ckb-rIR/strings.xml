@@ -202,16 +202,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">بەشی سەرەوە</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">ڕیزی بنەڕەتی</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">جێگۆڕینی دوگمەکان</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">پێچەوانە کردنەوەی شوێنی دوگمەی پیشاندانی ئامرازەکان</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">ڕیزی دووەم</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">زیادکردنی ڕیزێکی زیادە بۆ ڕیزی بنەڕەتی </string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">شوێنی ڕیزی دووەم</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">ڕێکخستنی دوگمە</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">ڕیزی بنەڕەتی</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">جێگۆڕینی دوگمەکان</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">پێچەوانە کردنەوەی شوێنی دوگمەی پیشاندانی ئامرازەکان</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">ڕیزی دووەم</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">پێشنیارکردن و ڕاستکردنەوە</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>

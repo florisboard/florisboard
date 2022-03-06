@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Alternância de linha de ação primária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Alternância de linha secundária primária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternância de linha de ação primária da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternância de linha secundária primária da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_row">Linha de ação da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_button">Botão de ação da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Linha candidata da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Botão de ação da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
@@ -249,16 +247,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Linha primária</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Botões de alternância de linha invertida</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Inverte os alternadores da linha secundária e de ação</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Linha secundária</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Ativar linha secundária</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adiciona uma segunda linha expansível para permitir que mais controles sejam exibidos</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Posicionamento da linha secundária</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Linha de ação</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expandir/retrair</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Expande/retrai automaticamente a linha de ação com base no estado atual</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Linha primária</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância de linha invertida</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte os alternadores da linha secundária e de ação</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Linha secundária</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ativar linha secundária</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expandir/retrair</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/retrai automaticamente a linha de ação com base no estado atual</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e Correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>

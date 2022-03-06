@@ -64,6 +64,60 @@
     "foreground": "var(--on-surface)"
   },
 
+  "smartbar-primary-actions-toggle": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "shadow-elevation": "2dp",
+    "shape": "circle()"
+  },
+  "smartbar-secondary-actions-toggle": {
+    "background": "transparent",
+    "foreground": "var(--on-surface-variant)",
+    "shape": "circle()"
+  },
+  "smartbar-quick-action": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "shape": "circle()"
+  },
+  "smartbar-key": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "18sp",
+    "shape": "var(--shape)"
+  },
+  "smartbar-key:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
+  "smartbar-key:disabled": {
+    "background": "transparent",
+    "foreground": "#12121248"
+  },
+  "smartbar-candidate-word": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "14sp",
+    "shape": "rectangle()"
+  },
+  "smartbar-candidate-word:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-background)"
+  },
+  "smartbar-candidate-clip": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "14sp",
+    "shape": "rounded-corner(8%, 8%, 8%, 8%)"
+  },
+  "smartbar-candidate-clip:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-background)"
+  },
+  "smartbar-candidate-spacer": {
+    "foreground": "var(--surface)"
+  },
+
   "clipboard-header": {
     "background": "transparent",
     "foreground": "var(--on-surface)",
@@ -115,76 +169,6 @@
   "one-handed-panel": {
     "background": "#e8f5e9",
     "foreground": "#424242"
-  },
-
-  "smartbar-primary-row": {
-    "background": "transparent"
-  },
-  "smartbar-primary-action-row-toggle": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-surface)",
-    "shadow-elevation": "2dp",
-    "shape": "circle()"
-  },
-  "smartbar-primary-secondary-row-toggle": {
-    "background": "transparent",
-    "foreground": "var(--on-surface-variant)",
-    "shape": "circle()"
-  },
-
-  "smartbar-secondary-row": {
-    "background": "var(--background)"
-  },
-
-  "smartbar-action-row": {
-    "background": "transparent"
-  },
-  "smartbar-action-button": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
-    "shape": "circle()"
-  },
-
-  "smartbar-candidate-row": {
-    "background": "transparent"
-  },
-  "smartbar-candidate-word": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
-    "font-size": "14sp",
-    "shape": "rectangle()"
-  },
-  "smartbar-candidate-word:pressed": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-background)"
-  },
-  "smartbar-candidate-clip": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
-    "font-size": "14sp",
-    "shape": "rounded-corner(8%, 8%, 8%, 8%)"
-  },
-  "smartbar-candidate-clip:pressed": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-background)"
-  },
-  "smartbar-candidate-spacer": {
-    "foreground": "var(--surface)"
-  },
-
-  "smartbar-key": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
-    "font-size": "18sp",
-    "shape": "var(--shape)"
-  },
-  "smartbar-key:pressed": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-surface)"
-  },
-  "smartbar-key:disabled": {
-    "background": "transparent",
-    "foreground": "#12121248"
   },
 
   "system-nav-bar": {

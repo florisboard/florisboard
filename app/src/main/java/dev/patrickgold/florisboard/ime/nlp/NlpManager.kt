@@ -24,6 +24,7 @@ import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.debug.flogError
@@ -145,9 +146,11 @@ class NlpManager(context: Context) {
     }
 
     private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
-        if (prefs.smartbar.enabled.get() && prefs.smartbar.actionRowAutoExpandCollapse.get()) {
-            prefs.smartbar.actionRowExpandWithAnimation.set(false)
-            prefs.smartbar.actionRowExpanded.set(list1.isNullOrEmpty() && list2.isNullOrEmpty())
+        if (prefs.smartbar.enabled.get() && prefs.smartbar.primaryActionsAutoExpandCollapse.get()) {
+            val isSelection = FlorisImeService.activeEditorInstance()?.selection?.isSelectionMode ?: true
+            val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
+            prefs.smartbar.primaryActionsExpandWithAnimation.set(false)
+            prefs.smartbar.primaryActionsExpanded.set(isExpanded)
         }
     }
 

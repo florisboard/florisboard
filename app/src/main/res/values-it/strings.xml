@@ -131,12 +131,10 @@
     <string name="snygg__rule_element__glide_trail">Percorso di scorrimento</string>
     <string name="snygg__rule_element__one_handed_panel">Pannello a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Riga principale della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Attiva/disattiva riga di azione primaria della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Attiva/disattiva riga di azione secondaria della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Attiva/disattiva riga di azione primaria della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Attiva/disattiva riga di azione secondaria della Smartbar</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Riga secondaria della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_action_row">Riga di azione della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_action_button">Pulsante di azione della Smartbar</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Riga candidata della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Pulsante di azione della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
@@ -249,16 +247,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Riga principale</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Inverti pulsanti per alternare righe</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Inverte la riga secondaria e d\'azione</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Riga secondaria</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Abilita riga secondaria</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Aggiunge una seconda riga espandibile per consentire la visualizzazione di più controlli</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Posizionamento della riga secondaria</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Riga d\'azione</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Espande/collassa automaticamente</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Espande/collassa automaticamente la riga dell\'azione in base allo stato corrente</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Riga principale</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverti pulsanti per alternare righe</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte la riga secondaria e d\'azione</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Riga secondaria</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Abilita riga secondaria</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Espande/collassa automaticamente</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Espande/collassa automaticamente la riga dell\'azione in base allo stato corrente</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggerimenti &amp; Correzioni</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>

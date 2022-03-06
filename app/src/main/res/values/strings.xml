@@ -146,16 +146,14 @@
     <string name="snygg__rule_element__glide_trail">Glide trail</string>
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primary action row toggle</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Smartbar primary secondary row toggle</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secondary row</string>
-    <string name="snygg__rule_element__smartbar_action_row">Smartbar action row</string>
-    <string name="snygg__rule_element__smartbar_action_button">Smartbar action button</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Smartbar candidate row</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primary actions toggle</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar secondary actions toggle</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Smartbar quick action</string>
+    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
     <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
@@ -267,19 +265,16 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Flip toggle buttons</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Flips action row toggles</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Row layout</string>
 
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primary row</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Flip row toggle buttons</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Flips secondary and action row toggles</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primary actions</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
 
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secondary row</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Enable secondary row</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adds an expandable second row to allow for more controls to show</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Secondary row placement</string>
-
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Action row</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the action row based on current state</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secondary actions</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Show secondary action row</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
@@ -732,6 +727,11 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
+
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Quick actions</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Arrangeable quick actions in a row format with an overflow menu</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Clipboard cursor tools</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Row with most commonly used clipboard and cursor movement tools</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Only color properties are shown, properties and rules are translated.</string>

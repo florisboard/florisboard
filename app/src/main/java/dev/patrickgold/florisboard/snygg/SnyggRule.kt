@@ -59,7 +59,7 @@ data class SnyggRule(
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
             """^(@?)[a-zA-Z0-9-]+(\[(code|group|mode)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
-        private val placeholders = mapOf(
+        private val Placeholders = mapOf(
             "c:delete" to KeyCode.DELETE,
             "c:enter" to KeyCode.ENTER,
             "c:shift" to KeyCode.SHIFT,
@@ -69,13 +69,29 @@ data class SnyggRule(
             "m:capslock" to InputMode.CAPS_LOCK.value,
         )
 
+        private val PreferredElementSorting = listOf(
+            FlorisImeUi.Keyboard,
+            FlorisImeUi.Key,
+            FlorisImeUi.KeyHint,
+            FlorisImeUi.KeyPopup,
+            FlorisImeUi.SmartbarPrimaryRow,
+            FlorisImeUi.SmartbarSecondaryRow,
+            FlorisImeUi.SmartbarPrimaryActionsToggle,
+            FlorisImeUi.SmartbarSecondaryActionsToggle,
+            FlorisImeUi.SmartbarQuickAction,
+            FlorisImeUi.SmartbarKey,
+            FlorisImeUi.SmartbarCandidateWord,
+            FlorisImeUi.SmartbarCandidateClip,
+            FlorisImeUi.SmartbarCandidateSpacer,
+        )
+
         val Saver = Saver<SnyggRule?, String>(
             save = { it?.toString() ?: "" },
             restore = { from(it) },
         )
 
         fun from(raw: String): SnyggRule? {
-            val str = raw.trim().curlyFormat { placeholders[it]?.toString() }
+            val str = raw.trim().curlyFormat { Placeholders[it]?.toString() }
             if (!RuleValidator.matches(str) || str.isBlank()) {
                 return null
             }
@@ -180,16 +196,10 @@ data class SnyggRule(
                     }
                     else -> diff
                 }
-                else -> when {
-                    this.element == FlorisImeUi.Keyboard -> -1
-                    other.element == FlorisImeUi.Keyboard -> 1
-                    this.element == FlorisImeUi.Key -> -1
-                    other.element == FlorisImeUi.Key -> 1
-                    this.element == FlorisImeUi.KeyHint -> -1
-                    other.element == FlorisImeUi.KeyHint -> 1
-                    this.element == FlorisImeUi.KeyPopup -> -1
-                    other.element == FlorisImeUi.KeyPopup -> 1
-                    else -> elem
+                else -> {
+                    val a = PreferredElementSorting.indexOf(this.element).let { if (it < 0) Int.MAX_VALUE else it }
+                    val b = PreferredElementSorting.indexOf(other.element).let { if (it < 0) Int.MAX_VALUE else it }
+                    a.compareTo(b).let { if (it == 0) elem else it }
                 }
             }
         }
