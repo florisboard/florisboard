@@ -96,6 +96,7 @@ fun AdvancedScreen() = FlorisScreen {
                     "in",
                     "it",
                     "iw",
+                    "ja",
                     "ko-KR",
                     "ku",
                     "lv-LV",
