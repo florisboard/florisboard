@@ -20,9 +20,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -41,23 +44,28 @@ fun ProjectLicenseScreen() = FlorisScreen {
     val assetManager by context.assetManager()
 
     content {
-        SelectionContainer(
-            modifier = Modifier
-                .fillMaxSize()
-                .florisVerticalScroll()
-                .florisHorizontalScroll(),
-        ) {
-            val licenseText = assetManager.loadTextAsset(
-                FlorisRef.assets("license/project_license.txt")
-            ).getOrElse {
-                stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
+        // Forcing LTR because the Apache 2.0 License shipped and displayed
+        // is hard to read if rendered in RTL. Also it is in English so forcing
+        // LTR here makes most sense.
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            SelectionContainer(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .florisVerticalScroll()
+                    .florisHorizontalScroll(),
+            ) {
+                val licenseText = assetManager.loadTextAsset(
+                    FlorisRef.assets("license/project_license.txt")
+                ).getOrElse {
+                    stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
+                }
+                Text(
+                    text = licenseText,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 10.sp,
+                    softWrap = false,
+                )
             }
-            Text(
-                text = licenseText,
-                fontFamily = FontFamily.Monospace,
-                fontSize = 10.sp,
-                softWrap = false,
-            )
         }
     }
 }
