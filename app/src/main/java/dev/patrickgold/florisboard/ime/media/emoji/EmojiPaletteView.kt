@@ -61,9 +61,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -101,8 +103,14 @@ private val EmojiCategoryValues = EmojiCategory.values()
 private val EmojiBaseWidth = 42.dp
 private val EmojiDefaultFontSize = 22.sp
 
-private val VariantsTriangleShape = GenericShape { size, _ ->
+private val VariantsTriangleShapeLtr = GenericShape { size, _ ->
     moveTo(x = size.width, y = 0f)
+    lineTo(x = size.width, y = size.height)
+    lineTo(x = 0f, y = size.height)
+}
+
+private val VariantsTriangleShapeRtl = GenericShape { size, _ ->
+    moveTo(x = 0f, y = 0f)
     lineTo(x = size.width, y = size.height)
     lineTo(x = 0f, y = size.height)
 }
@@ -316,12 +324,16 @@ private fun EmojiKey(
             fontSize = fontSize,
         )
         if (variations.isNotEmpty()) {
+            val shape = when (LocalLayoutDirection.current) {
+                LayoutDirection.Ltr -> VariantsTriangleShapeLtr
+                LayoutDirection.Rtl -> VariantsTriangleShapeRtl
+            }
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .offset(x = (-4).dp, y = (-4).dp)
                     .size(4.dp)
-                    .background(contentColor, VariantsTriangleShape),
+                    .background(contentColor, shape),
             )
         }
 

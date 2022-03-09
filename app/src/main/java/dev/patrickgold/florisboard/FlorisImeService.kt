@@ -53,7 +53,9 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
@@ -455,61 +457,67 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             element = FlorisImeUi.Keyboard,
             mode = activeState.inputMode.value,
         )
-        SnyggSurface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .align(Alignment.BottomStart)
-                .onGloballyPositioned { coords -> inputViewSize = coords.size }
-                // Do not remove below line or touch input may get stuck
-                .pointerInteropFilter { false },
-            style = keyboardStyle,
-        ) {
-            val configuration = LocalConfiguration.current
-            val bottomOffset by if (configuration.isOrientationPortrait()) {
-                prefs.keyboard.bottomOffsetPortrait
-            } else {
-                prefs.keyboard.bottomOffsetLandscape
-            }.observeAsTransformingState { it.dp }
-            Row(
+        val layoutDirection = LocalLayoutDirection.current
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            SnyggSurface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
-                    //.height(IntrinsicSize.Min)
-                    .padding(bottom = bottomOffset),
+                    .align(Alignment.BottomStart)
+                    .onGloballyPositioned { coords -> inputViewSize = coords.size }
+                    // Do not remove below line or touch input may get stuck
+                    .pointerInteropFilter { false },
+                style = keyboardStyle,
             ) {
-                val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
-                val keyboardWeight = when {
-                    oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
-                    else -> oneHandedModeScaleFactor / 100f
-                }
-                if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        panelSide = OneHandedMode.START,
-                        weight = 1f - keyboardWeight,
-                    )
-                }
-                Box(
+                val configuration = LocalConfiguration.current
+                val bottomOffset by if (configuration.isOrientationPortrait()) {
+                    prefs.keyboard.bottomOffsetPortrait
+                } else {
+                    prefs.keyboard.bottomOffsetLandscape
+                }.observeAsTransformingState { it.dp }
+                Row(
                     modifier = Modifier
-                        .weight(keyboardWeight)
-                        .wrapContentHeight(),
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
+                        //.height(IntrinsicSize.Min)
+                        .padding(bottom = bottomOffset),
                 ) {
-                    when (activeState.imeUiMode) {
-                        ImeUiMode.TEXT -> TextInputLayout()
-                        ImeUiMode.MEDIA -> MediaInputLayout()
-                        ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                    val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
+                    val keyboardWeight = when {
+                        oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
+                        else -> oneHandedModeScaleFactor / 100f
                     }
-                }
-                if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        panelSide = OneHandedMode.END,
-                        weight = 1f - keyboardWeight,
-                    )
+                    if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.START,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
+                    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
+                        Box(
+                            modifier = Modifier
+                                .weight(keyboardWeight)
+                                .wrapContentHeight(),
+                        ) {
+                            when (activeState.imeUiMode) {
+                                ImeUiMode.TEXT -> TextInputLayout()
+                                ImeUiMode.MEDIA -> MediaInputLayout()
+                                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                            }
+                        }
+                    }
+                    if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.END,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
                 }
             }
         }
+
     }
 
     @Composable
