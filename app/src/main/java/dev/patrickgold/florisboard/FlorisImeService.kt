@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
@@ -51,9 +53,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
@@ -66,6 +66,7 @@ import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.common.android.setLocale
 import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -198,8 +199,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     private val prefs by florisPreferenceModel()
     private val keyboardManager by keyboardManager()
-    private val themeManager by themeManager()
     private val nlpManager by nlpManager()
+    private val subtypeManager by subtypeManager()
+    private val themeManager by themeManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
@@ -207,11 +209,17 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     private var inputViewSize by mutableStateOf(IntSize.Zero)
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
+    private var resourcesContext by mutableStateOf(this as Context)
 
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         activeEditorInstance.wordHistoryChangedListener = this
+        subtypeManager.activeSubtype.observe(this) { subtype ->
+            val config = Configuration(resources.configuration)
+            config.setLocale(subtype.primaryLocale)
+            resourcesContext = createConfigurationContext(config)
+        }
     }
 
     override fun onCreateInputView(): View {
@@ -423,12 +431,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     @Composable
     private fun ImeUiWrapper() {
-        ProvideLocalizedResources(this) {
+        ProvideLocalizedResources(resourcesContext) {
             ProvideKeyboardRowBaseHeight {
-                CompositionLocalProvider(
-                    LocalInputFeedbackController provides inputFeedbackController,
-                    LocalLayoutDirection provides LayoutDirection.Ltr,
-                ) {
+                CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
                         // Outer box is necessary as an "outer window"
                         Box(modifier = Modifier.fillMaxSize()) {

@@ -31,8 +31,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -58,7 +60,10 @@ fun DevtoolsOverlay(
     val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
 
-    CompositionLocalProvider(LocalContentColor provides Color.White) {
+    CompositionLocalProvider(
+        LocalContentColor provides Color.White,
+        LocalLayoutDirection provides LayoutDirection.Ltr,
+    ) {
         Column(modifier = modifier) {
             if (showPrimaryClip) {
                 val primaryClip by clipboardManager.primaryClip.observeAsState()
