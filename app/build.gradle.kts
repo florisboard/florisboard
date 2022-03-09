@@ -31,7 +31,7 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 23
         targetSdk = 31
-        versionCode = 68
+        versionCode = 70
         versionName = "0.3.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -75,7 +75,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0"
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
 
     externalNativeBuild {
@@ -90,7 +90,7 @@ android {
             versionNameSuffix = "-debug"
 
             isDebuggable = true
-            isJniDebuggable = true
+            isJniDebuggable = false
 
             ndk {
                 // For running FlorisBoard on the emulator
@@ -106,7 +106,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-beta12"
+            versionNameSuffix = "-beta14"
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
@@ -144,14 +144,14 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.autofill:autofill:1.1.0")
     implementation("androidx.collection:collection-ktx:1.2.0")
-    implementation("androidx.compose.material:material:1.1.0")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.0")
-    implementation("androidx.compose.ui:ui:1.1.0")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0")
+    implementation("androidx.compose.material:material:1.1.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
+    implementation("androidx.compose.ui:ui:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-beta01")
-    implementation("androidx.emoji2:emoji2:1.1.0-rc01")
-    implementation("androidx.emoji2:emoji2-views:1.1.0-rc01")
+    implementation("androidx.emoji2:emoji2:1.1.0")
+    implementation("androidx.emoji2:emoji2-views:1.1.0")
     implementation("androidx.navigation:navigation-compose:2.4.1")
     implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
     implementation("com.google.accompanist:accompanist-insets:0.23.0")
@@ -161,8 +161,8 @@ dependencies {
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta08")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    implementation("androidx.room:room-runtime:2.4.1")
-    kapt("androidx.room:room-compiler:2.4.1")
+    implementation("androidx.room:room-runtime:2.4.2")
+    kapt("androidx.room:room-compiler:2.4.2")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
     testImplementation("io.kotest:kotest-assertions-core:5.1.0")

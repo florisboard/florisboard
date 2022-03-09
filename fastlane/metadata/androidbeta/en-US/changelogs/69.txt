@@ -1,0 +1,3 @@
+This release re-implements a basic emoji palette (including recently used emojis) and also fixes some crashes.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta13

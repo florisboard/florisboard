@@ -70,7 +70,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
-import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
@@ -119,7 +118,7 @@ private class SubtypeEditorState(init: Subtype?) {
     val id: MutableState<Long> = mutableStateOf(init?.id ?: -1)
     val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
-    val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: Appender.name)
+    val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
@@ -174,6 +173,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val subtypeManager by context.subtypeManager()
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+    val composers by keyboardManager.resources.composers.observeAsNonNullState()
     val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
     val layoutExtensions by keyboardManager.resources.layouts.observeAsNonNullState()
     val popupMappings by keyboardManager.resources.popupMappings.observeAsNonNullState()
@@ -185,7 +185,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     }
     var primaryLocale by subtypeEditor.primaryLocale
     //var secondaryLocales by subtypeEditor.secondaryLocales
-    //var composer by subtypeEditor.composer
+    var composer by subtypeEditor.composer
     var currencySet by subtypeEditor.currencySet
     var popupMapping by subtypeEditor.popupMapping
     var layoutMap by subtypeEditor.layoutMap
@@ -384,6 +384,24 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
                     selectListValues = selectListValues,
+                )
+            }
+            SubtypeProperty(stringRes(R.string.settings__localization__subtype_composer)) {
+                val composerIds = remember(composers) {
+                    SelectListKeys + composers.keys
+                }
+                val composerNames = remember(composers) {
+                    selectListValues + composers.values.map { it.label }
+                }
+                var expanded by remember { mutableStateOf(false) }
+                FlorisDropdownMenu(
+                    items = composerNames,
+                    expanded = expanded,
+                    selectedIndex = composerIds.indexOf(composer).coerceAtLeast(0),
+                    isError = showSelectAsError && composer == SelectComponentName,
+                    onSelectItem = { composer = composerIds[it] },
+                    onExpandRequest = { expanded = true },
+                    onDismissRequest = { expanded = false },
                 )
             }
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_currency_set)) {

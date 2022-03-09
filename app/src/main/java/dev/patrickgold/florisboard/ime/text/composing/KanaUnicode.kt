@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("kana-unicode")
 class KanaUnicode : Composer {
-    override val name: String = "kana-unicode"
+    override val id: String = "kana-unicode"
     override val label: String = "Kana Unicode"
     override val toRead: Int = 1
 

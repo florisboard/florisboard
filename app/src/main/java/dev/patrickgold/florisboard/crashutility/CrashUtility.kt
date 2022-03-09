@@ -281,7 +281,7 @@ abstract class CrashUtility private constructor() {
                     style = Notification.BigTextStyle().bigText(body)
                     setContentText(body)
                     setSmallIcon(android.R.drawable.stat_notify_error)
-                    setContentIntent(PendingIntent.getActivity(context, 0, crashDialogIntent, 0)).setAutoCancel(
+                    setContentIntent(PendingIntent.getActivity(context, 0, crashDialogIntent, PendingIntent.FLAG_IMMUTABLE)).setAutoCancel(
                         true
                     )
                     build()

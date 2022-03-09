@@ -52,67 +52,31 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 private val SmartbarActionPadding = 4.dp
 
 @Composable
-fun SmartbarActionRow() = with(LocalDensity.current) {
+fun QuickActionsRow(modifier: Modifier = Modifier) = with(LocalDensity.current) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val primaryRowFlipToggles by prefs.smartbar.primaryRowFlipToggles.observeAsState()
+    val flipToggles by prefs.smartbar.flipToggles.observeAsState()
     val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
     val smartbarActions by keyboardManager.smartbarActions.observeAsNonNullState()
-    val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionRow)
-    val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionButton)
-    val moreStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimarySecondaryRowToggle)
 
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .snyggBackground(rowStyle),
-    ) {
+    val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarQuickAction)
+
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val width = constraints.maxWidth.toDp()
         val height = constraints.maxHeight.toDp()
-        val numActionsToShow = (width / height).toInt()
+        val numActionsToShow = ((width / height).toInt() - 1).coerceAtLeast(0)
         val visibleSmartbarActions = smartbarActions
-            .filterIsInstance(SmartbarAction.Key::class.java)
+            .filterIsInstance(QuickAction.Key::class.java)
             .subList(0, numActionsToShow.coerceAtMost(smartbarActions.size))
-
-        @Composable
-        fun MoreButton() {
-            IconButton(
-                modifier = Modifier
-                    .padding(SmartbarActionPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
-                onClick = {
-                    // TODO
-                    context.showShortToast("TODO: implement actions overflow menu")
-                },
-            ) {
-                Box(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxHeight()
-                        .aspectRatio(1f)
-                        .snyggShadow(moreStyle)
-                        .snyggBackground(moreStyle),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        modifier = Modifier.padding(2.dp),
-                        painter = painterResource(R.drawable.ic_more_horiz),
-                        contentDescription = null,
-                        tint = moreStyle.foreground.solidColor(),
-                    )
-                }
-            }
-        }
 
         Row(
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            if (primaryRowFlipToggles) {
+            if (flipToggles) {
                 MoreButton()
             }
             for (smartbarAction in visibleSmartbarActions) {
@@ -147,9 +111,43 @@ fun SmartbarActionRow() = with(LocalDensity.current) {
                     }
                 }
             }
-            if (!primaryRowFlipToggles) {
+            if (!flipToggles) {
                 MoreButton()
             }
+        }
+    }
+}
+
+@Composable
+private fun MoreButton() {
+    val context = LocalContext.current
+    val moreStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarQuickAction)
+
+    IconButton(
+        onClick = {
+            // TODO
+            context.showShortToast("TODO: implement actions overflow menu")
+        },
+        modifier = Modifier
+            .padding(SmartbarActionPadding)
+            .fillMaxHeight()
+            .aspectRatio(1f),
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxHeight()
+                .aspectRatio(1f)
+                .snyggShadow(moreStyle)
+                .snyggBackground(moreStyle),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                modifier = Modifier.padding(2.dp),
+                painter = painterResource(R.drawable.ic_more_horiz),
+                contentDescription = null,
+                tint = moreStyle.foreground.solidColor(),
+            )
         }
     }
 }

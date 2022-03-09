@@ -11,9 +11,13 @@
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Move keyboard to the right.</string>
 
     <!-- Media strings -->
+    <string name="settings__media__title">Emojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Emoji history max size</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
 
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>
@@ -142,16 +146,14 @@
     <string name="snygg__rule_element__glide_trail">Glide trail</string>
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Smartbar primary action row toggle</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Smartbar primary secondary row toggle</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secondary row</string>
-    <string name="snygg__rule_element__smartbar_action_row">Smartbar action row</string>
-    <string name="snygg__rule_element__smartbar_action_button">Smartbar action button</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Smartbar candidate row</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primary actions toggle</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar secondary actions toggle</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Smartbar quick action</string>
+    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
     <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
@@ -263,19 +265,16 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Flip toggle buttons</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Flips action row toggles</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Row layout</string>
 
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Primary row</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Flip row toggle buttons</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Flips secondary and action row toggles</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primary actions</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
 
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Secondary row</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Enable secondary row</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adds an expandable second row to allow for more controls to show</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Secondary row placement</string>
-
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Action row</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the action row based on current state</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secondary actions</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Show secondary action row</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
@@ -512,6 +511,7 @@
     <string name="clipboard__cleared_primary_clip">Cleared primary clip</string>
     <string name="clipboard__cleared_history">Cleared history</string>
     <string name="clipboard__cleared_full_history">Cleared full history</string>
+    <string name="clipboard__confirm_clear_history__message">Are you sure you want to clear your clipboard history?</string>
     <string name="settings__clipboard__title">Clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>
@@ -647,6 +647,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">e.g. {example}</string>
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
+    <string name="general__unlimited">Unlimited</string>
 
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
@@ -683,6 +684,19 @@
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Native locale</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Language names across the app and keyboard UI are displayed in the locale referred by itself</string>
 
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Default skin tone</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Light skin tone</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Medium light skin tone</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Medium skin tone</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Medium dark skin tone</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Dark skin tone</string>
+
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Default hair</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Red hair</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Curly hair</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
+
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint is prioritized</string>
@@ -713,6 +727,11 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
+
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Quick actions</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Arrangeable quick actions in a row format with an overflow menu</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Clipboard cursor tools</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Row with most commonly used clipboard and cursor movement tools</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Only color properties are shown, properties and rules are translated.</string>

@@ -1,11 +1,19 @@
 {
-  "package": "dev.patrickgold.florisboard",
+  "$": "ime.extension.keyboard",
+  "meta": {
+    "id": "org.florisboard.composers",
+    "version": "0.1.0",
+    "title": "Default composers",
+    "description": "Default composers which are always available.",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "license": "apache-2.0"
+  },
   "composers": [
     { "$": "appender" },
     { "$": "hangul-unicode" },
     { "$": "kana-unicode" },
     { "$": "with-rules",
-      "name": "basic-telex",
+      "id": "basic-telex",
       "label": "Basic Telex",
       "rules": {
         "aw": "ă", "aa": "â", "dd": "đ", "ee": "ê", "oo": "ô", "ow": "ơ", "uw": "ư", "w": "ư",
@@ -50,8 +58,5 @@
         "ỳz": "y", "ỷz": "y", "ỹz": "y", "ýz": "y", "ỵz": "y"
       }
     }
-  ],
-  "currencySets": [],
-  "defaultSubtypes": [
   ]
 }

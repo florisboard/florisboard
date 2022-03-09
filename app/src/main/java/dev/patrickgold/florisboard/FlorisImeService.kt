@@ -57,7 +57,6 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
@@ -236,9 +235,6 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         activeEditorInstance.wordHistoryChangedListener = this
-        if (EmojiCompat.get().loadState == EmojiCompat.LOAD_STATE_DEFAULT) {
-            EmojiCompat.get().load()
-        }
     }
 
     override fun onCreateInputView(): View {
@@ -414,9 +410,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         val visibleTopY = inputWindowView.height - inputViewSize.height
         val needAdditionalOverlay =
             prefs.smartbar.enabled.get() &&
-                prefs.smartbar.secondaryRowEnabled.get() &&
-                prefs.smartbar.secondaryRowExpanded.get() &&
-                prefs.smartbar.secondaryRowPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI &&
+                prefs.smartbar.secondaryActionsEnabled.get() &&
+                prefs.smartbar.secondaryActionsExpanded.get() &&
+                prefs.smartbar.secondaryActionsPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI &&
                 keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
 
         outInsets.contentTopInsets = visibleTopY

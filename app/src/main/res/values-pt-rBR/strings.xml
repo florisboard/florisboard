@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Tamanho máximo do histórico de emojis</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Tom de pele do emoji preferido</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Estilo de cabelo do emoji preferido</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos e Emoções</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Pessoas e Corpo</string>
@@ -22,6 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bandeiras</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenhum emoji usado recentemente encontrado. Assim que você começar a digitar emojis, eles aparecerão automaticamente aqui.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica profissional: pressione e segure os emojis usados ​​recentemente para removê-los desta visualização novamente!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Removido dos emojis usados ​​recentemente</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alternar ação rápida. Se pressionado, alterna entre as sugestões de palavra e os botões de ação rápida.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Sair do painel de edição de texto.</string>
@@ -42,6 +49,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">O FlorisBoard não está ativado no sistema e, portanto, não estará disponível para ser selecionado no alternador de teclado. Clique aqui para resolver este problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">O FlorisBoard não foi selecionado como o teclado padrão. Clique aqui para resolver este problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e Layouts</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Exibir nomes de idiomas em</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipos</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar formato de digitação</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar formato de digitação</string>
@@ -89,6 +97,7 @@
     <string name="settings__theme_editor__fine_tune__title">Editor de ajuste fino</string>
     <string name="settings__theme_editor__fine_tune__level">Nível de edição</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Exibir cores como</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Exibir teclado após diálogos</string>
     <string name="settings__theme_editor__add_rule">Adicionar regra</string>
     <string name="settings__theme_editor__edit_rule">Editar regra</string>
     <string name="settings__theme_editor__no_rules_defined">Esta folha de estilo não tem regras definidas. Adicione uma regra para começar a personalizar esta folha de estilo.</string>
@@ -126,16 +135,14 @@
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_action_row_toggle">Alternância de linha de ação primária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_secondary_row_toggle">Alternância de linha secundária primária da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_row">Linha de ação da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_action_button">Botão de ação da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_candidate_row">Linha candidata da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternar ações primárias da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternar ações secundárias da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Ação rápida da barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barra de navegação do sistema</string>
     <string name="snygg__rule_selector__pressed">Pressionado</string>
     <string name="snygg__rule_selector__focus">Focado</string>
@@ -244,16 +251,14 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__smartbar__group_primary_row__label" comment="Preference group title">Linha primária</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__label" comment="Preference title">Botões de alternância de linha invertida</string>
-    <string name="pref__smartbar__primary_row_flip_toggles__summary" comment="Preference summary">Inverte os alternadores da linha secundária e de ação</string>
-    <string name="pref__smartbar__group_secondary_row__label" comment="Preference group title">Linha secundária</string>
-    <string name="pref__smartbar__secondary_row_enabled__label" comment="Preference title">Ativar linha secundária</string>
-    <string name="pref__smartbar__secondary_row_enabled__summary" comment="Preference summary">Adiciona uma segunda linha expansível para permitir que mais controles sejam exibidos</string>
-    <string name="pref__smartbar__secondary_row_placement__label" comment="Preference title">Posicionamento da linha secundária</string>
-    <string name="pref__smartbar__group_action_row__label" comment="Preference group title">Linha de ação</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__label" comment="Preference title">Auto-expandir/retrair</string>
-    <string name="pref__smartbar__action_row_auto_expand_collapse__summary" comment="Preference summary">Expande/retrai automaticamente a linha de ação com base no estado atual</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte a linha de ação de alternância</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Layout de linha</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ações primárias</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/recolher automaticamente</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/recolhe automaticamente a linha de ação primária com base no estado atual</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ação secundária</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e Correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
@@ -323,6 +328,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Limite de distância do deslizamento</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avançado</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Configurações de tema</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Padrão do sistema (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Escuro</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Escuro (AMOLED)</string>
@@ -464,6 +470,7 @@
     <string name="clipboard__cleared_primary_clip">Clipe primário excluído</string>
     <string name="clipboard__cleared_history">Histórico excluído</string>
     <string name="clipboard__cleared_full_history">Todo o histórico excluído</string>
+    <string name="clipboard__confirm_clear_history__message">Tem certeza de que deseja limpar o histórico da área de transferência?</string>
     <string name="settings__clipboard__title">Área de transferência</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use uma área de transferência interna em vez da área de transferência do sistema</string>
@@ -591,6 +598,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">p. ex. {example}</string>
     <string name="general__no_browser_app_found_for_url">Nenhum aplicativo de navegador encontrado para lidar com a URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; selecionar &#45;</string>
+    <string name="general__unlimited">Ilimitado</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Retrato</string>
     <string name="screen_orientation__landscape">Paisagem</string>
@@ -609,6 +617,27 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largura dinâmica e rolável</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Vermelho Verde Azul Alfa</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Sempre mostrar</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Sempre mostrar o teclado após fechar qualquer caixa de diálogo do editor</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nunca mostrar</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Nunca mostrar o teclado após fechar qualquer caixa de diálogo do editor</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Lembrar o último estado</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Mostrar o teclado apenas após fechar qualquer caixa de diálogo do editor se estiver visível anteriormente</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Localidade do sistema</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Os nomes dos idiomas na interface de usuário do aplicativo e do teclado são exibidos na localidade definida para todo o dispositivo</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Localidade nativa</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Os nomes dos idiomas na interface de usuário do aplicativo e do teclado são exibidos na localidade referida por si só</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Tom de pele padrão</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Pele clara</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Pele clara média</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Tom de pele médio</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Pele escura média</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Pele escura</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Cabelo padrão</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Cabelo vermelho</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cabelo encaracolado</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cabelo branco</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Careca</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">O acento é priorizado</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é sempre o acento principal ou a sugestão de símbolo se nenhum acento principal estiver disponível</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">A sugestão é priorizada</string>
@@ -634,6 +663,10 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Final da parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Final da parte inferior</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Início da parte inferior</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ações rápidas</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Ações rápidas organizáveis ​​em formato de linha com um menu flutuante</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Ferramentas do cursor da área de transferência</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Linha com a área de transferência e as ferramentas de movimento do cursor mais usadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Apenas propriedades de cor são mostradas, propriedades e regras são traduzidas.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>
