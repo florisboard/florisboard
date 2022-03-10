@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
 import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.LayoutDirectionSelector
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
@@ -50,6 +51,7 @@ val DefaultJsonConfig = Json {
             subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
             subclass(CaseSelector::class, CaseSelector.serializer())
             subclass(VariationSelector::class, VariationSelector.serializer())
+            subclass(LayoutDirectionSelector::class, LayoutDirectionSelector.serializer())
             subclass(CharWidthSelector::class, CharWidthSelector.serializer())
             subclass(KanaSelector::class, KanaSelector.serializer())
             default { TextKeyData.serializer() }

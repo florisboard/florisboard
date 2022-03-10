@@ -42,6 +42,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -458,6 +459,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             mode = activeState.inputMode.value,
         )
         val layoutDirection = LocalLayoutDirection.current
+        SideEffect {
+            keyboardManager.activeState.layoutDirection = layoutDirection
+        }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggSurface(
                 modifier = Modifier
