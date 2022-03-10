@@ -84,8 +84,8 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
     private var navigationIcon: FlorisScreenNavigationIcon = @Composable {
         val navController = LocalNavController.current
         FlorisIconButton(
-            modifier = Modifier.autoMirrorForRtl(),
             onClick = { navController.popBackStack() },
+            modifier = Modifier.autoMirrorForRtl(),
             icon = painterResource(R.drawable.ic_arrow_back),
         )
     }
