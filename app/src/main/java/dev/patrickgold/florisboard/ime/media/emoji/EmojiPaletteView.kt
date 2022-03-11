@@ -48,6 +48,7 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -198,42 +199,44 @@ fun EmojiPaletteView(
                     )
                 }
             } else key(emojiMapping) {
-                LazyVerticalGrid(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f), isVertical = true),
-                    cells = GridCells.Adaptive(minSize = EmojiBaseWidth),
-                    state = lazyListState,
-                ) {
-                    items(emojiMapping) { emojiSet ->
-                        EmojiKey(
-                            emojiSet = emojiSet,
-                            emojiCompatInstance = emojiCompatInstance,
-                            preferredSkinTone = preferredSkinTone,
-                            contentColor = contentColor,
-                            fontSize = emojiKeyFontSize,
-                            fontSizeMultiplier = fontSizeMultiplier,
-                            onEmojiInput = { emoji ->
-                                keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(emoji))
-                                scope.launch {
-                                    EmojiRecentlyUsedHelper.addEmoji(prefs, emoji)
-                                }
-                            },
-                            onLongPress = { emoji ->
-                                if (activeCategory == EmojiCategory.RECENTLY_USED) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    LazyVerticalGrid(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f), isVertical = true),
+                        cells = GridCells.Adaptive(minSize = EmojiBaseWidth),
+                        state = lazyListState,
+                    ) {
+                        items(emojiMapping) { emojiSet ->
+                            EmojiKey(
+                                emojiSet = emojiSet,
+                                emojiCompatInstance = emojiCompatInstance,
+                                preferredSkinTone = preferredSkinTone,
+                                contentColor = contentColor,
+                                fontSize = emojiKeyFontSize,
+                                fontSizeMultiplier = fontSizeMultiplier,
+                                onEmojiInput = { emoji ->
+                                    keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(emoji))
                                     scope.launch {
-                                        EmojiRecentlyUsedHelper.removeEmoji(prefs, emoji)
-                                        recentlyUsedVersion++
-                                        withContext(Dispatchers.Main) {
-                                            context.showShortToast(
-                                                R.string.emoji__recently_used__removal_success_message,
-                                                "emoji" to emoji.value,
-                                            )
+                                        EmojiRecentlyUsedHelper.addEmoji(prefs, emoji)
+                                    }
+                                },
+                                onLongPress = { emoji ->
+                                    if (activeCategory == EmojiCategory.RECENTLY_USED) {
+                                        scope.launch {
+                                            EmojiRecentlyUsedHelper.removeEmoji(prefs, emoji)
+                                            recentlyUsedVersion++
+                                            withContext(Dispatchers.Main) {
+                                                context.showShortToast(
+                                                    R.string.emoji__recently_used__removal_success_message,
+                                                    "emoji" to emoji.value,
+                                                )
+                                            }
                                         }
                                     }
-                                }
-                            },
-                        )
+                                },
+                            )
+                        }
                     }
                 }
             }
