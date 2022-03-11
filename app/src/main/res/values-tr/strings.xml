@@ -135,11 +135,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tuşa basıldığında</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Açılır tuş görünürlüğü</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Bir tuşa basıldığında açılır tuşu göster</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Vurgularda sembol açılır tuşlarını göster</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Sembol açılır pencerelerini varsayılan düzene ekle</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tuşa uzun basma gecikmesi</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Boşluk tuşuna basıldığında harf düzenine geçer</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Sembol veya sayı düzenindeyken boşluk tuşuna basmak otomatik olarak harf düzenine geri geçirir</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Akıllı çubuk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Akıllı Çubuğu Etkinleştir</string>
@@ -147,7 +143,6 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Öneriler &amp; Düzeltmeler</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Otomatik doldurma servisleri tarafından sağlanan önerileri göster (şifre yöneticileri, ...)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Öneri gösterim modu</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Pano önerileri zaman aşımı</string>
@@ -209,7 +204,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Uygulama simgesini başlatıcıda göster</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Yazma verilerinizle geçici olarak çalışması gereken tüm özellikleri kapatacaktır</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Yazım denetleyicisi</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Klavye yazım denetleyicisi ayarlarını kullan</string>

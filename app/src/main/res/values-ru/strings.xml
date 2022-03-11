@@ -242,19 +242,20 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Нажатие клавиши</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видимость всплывающей подсказки</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показывать всплывающую подсказку при нажатии кнопки</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Включать символы в всплывающую подсказку</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Включать символы в всплывающую подсказку раскладки по умолчанию</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Задержка при нажатии</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробел переключает обратно на буквы</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Нажатие клавиши пробела автоматически переключает обратно на ввод букв из символьной или цифровой раскладки</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Расположение строки</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основные действия</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое разворачивание/сворачивание основной строки действия в зависимости от текущего состояния</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Дополнительные действия</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Показывать строку дополнительных действий</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Предложения и исправления</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показывать встроенные предложения, предоставляемые службами автозаполнения (менеджеры паролей и т.п.)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим отображения предложений</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Время отображения предложения буфера обмена</string>
@@ -328,7 +329,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принудительный приватный режим</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключит все функции, которые должны временно работать с вашими входными данными.</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка правописания</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Использовать настройки проверки правописания</string>
@@ -646,6 +646,9 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Низ начало</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Быстрые действия</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменты курсора и буфера обмена</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Строка с наиболее часто используемыми инструментами буфера обмена и перемещения курсора</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Дополнительно</string>

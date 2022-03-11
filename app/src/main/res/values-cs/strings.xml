@@ -122,8 +122,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne znovu do písmenného rozložení</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Stisknutím mezerníku se automaticky vrátíte z nabídky čísel/symbolů ke klasické klávesnici</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
@@ -181,7 +179,6 @@
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Dočasně vypne všechny funkce, které pracují se vstupními daty</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Kontrola pravopisu</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>

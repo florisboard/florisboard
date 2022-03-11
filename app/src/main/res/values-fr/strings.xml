@@ -230,11 +230,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Appui sur la touche</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilité du popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Afficher un pop-up lors de l\'appui d\'une touche</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Inclure les popups de symboles dans les accents</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Ajouter les popups de symbole à la disposition par défaut</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délai d\'appui prolongé</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Appuyer sur la barre espace revient à la disposition des caractères</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En appuyant sur la barre espace, revenir automatiquement aux caractères lorsqu\'on est dans les symboles ou les chiffres</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barre intelligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Barre Intelligente</string>
@@ -242,7 +238,6 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Afficher les suggestions en ligne fournies par les services de remplissage automatique (gestionnaires de mots de passe, …)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode d\'affichage des suggestions</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggestions de contenu du presse-papiers</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Délai d\'expiration de la suggestion du Presse-papiers</string>
@@ -316,7 +311,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactivera toutes les fonctions qui doivent fonctionner temporairement avec vos données de saisie</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Correcteur d\'orthographe</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Utiliser la configuration du correcteur orthographique du clavier</string>

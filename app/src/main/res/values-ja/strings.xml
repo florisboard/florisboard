@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">一時停止</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">お待ちください</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">3つのドットのアイコン。 表示されている場合は長押しするとより多くの文字を使用できることを示します。</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">片手モードを閉じる</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">キーボードを左に移動します。</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">キーボードを右に移動</string>
+    <!-- Media strings -->
+    <string name="settings__media__title">絵文字</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">絵文字</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">絵文字</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">顔文字</string>
+    <string name="prefs__media__emoji_recently_used_max_size">絵文字履歴の最大サイズ</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">好みの絵文字の肌の色</string>
+    <string name="prefs__media__emoji_preferred_hair_style">好みの絵文字ヘアスタイル</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">スマイリー &amp; 感情</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">人間 &amp; 体</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">動物 &amp; 自然</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">フード &amp; ドリンク</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">旅行 &amp; 場所</string>
+    <string name="emoji__category__activities" comment="Emoji category name">アクティビティ</string>
+    <string name="emoji__category__objects" comment="Emoji category name">オブジェクト</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">シンボル</string>
+    <string name="emoji__category__flags" comment="Emoji category name">旗</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">最近使用した絵文字は見つかりませんでした。 絵文字を使用すると、絵文字が自動的にここに表示されます</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">ヒント：最近使用した絵文字を長押しして、このビューから再び削除します。</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">最近使用した絵文字から {emoji} を削除しました</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">クイックアクショントグル。 押すと、単語の候補とクイックアクションボタンが切り替わります</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">テキスト編集パネルを終了</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">片手モードの状態を切り替えます</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">設定を開く</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">テキスト編集パネルに切り替え</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">メディア入力ビューに切り替え</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">最後のアクションを元に戻すには、元に戻すボタン</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">最後の元に戻すを元に戻すためのやり直しボタン</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">表示されている場合は、プライベートモードがアクティブであることを示します。 クリックすると、プライベートモードに関する情報が表示されます。</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">設定</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">セットアップを試す</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">ヘルプ</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">デフォルト</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">システムのデフォルト</string>
+    <string name="settings__home__title" comment="Title of the Home screen">ようこそ！{app_name}</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardはシステムで有効になっていないため、入力ピッカーの入力メソッドとして使用できません。 この問題を解決するには、ここをタップしてください。</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardは、デフォルトの入力方法として選択されていません。 この問題を解決するには、ここをタップしてください。</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">言語 &amp; 入力</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">で言語名を表示する</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">サブタイプ</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">サブタイプを追加</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">サブタイプを編集</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要言語</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">ポップアップマッピング</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">キャラクターレイアウト</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">シンボルのプライマリレイアウト</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">シンボルの二次レイアウト</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">作曲家</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">通貨セット</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">数字レイアウト</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(高度な) 数値レイアウト</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">番号行のレイアウト</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">電話のプライマリレイアウト</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">電話のセカンダリレイアウト</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">言語を選択</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">言語を検索</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">\"{search_term}\"に一致する言語が見つかりませんでした。</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; 選択します &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">推奨されるサブタイププリセット</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">利用可能な推奨プリセットはありません。 下のボタンを使用して、すべてのサブタイププリセットを表示します。</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">サブタイププリセット</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">全て表示</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">サブタイプを構成していないようです。 フォールバックとして、サブタイプEnglish / QWERTYが使用されます！</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">このサブタイプはすでに存在します！</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">少なくとも1つのフィールドで値が選択されていません。 フィールドの値を選択してください。</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (インストールされていません)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">レイアウト</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">テーマ</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">テーマモード</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">日の出時間</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日の入時間</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">日のテーマ</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜間テーマ</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">選択されたテーマ</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">アプリに色を適応</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">ターゲットアプリがこれをサポートしている場合、テーマの色は現在のアプリの色に適合します。</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoardアプリアセット</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">内部ストレージ</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">外部プロバイダー</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">日のテーマを選択</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">夜間テーマを選択</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">インストールされたテーマを管理</string>
+    <string name="settings__theme_editor__fine_tune__title">微調整エディター</string>
+    <string name="settings__theme_editor__fine_tune__level">編集レベル</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">色を次のように表示</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">ダイアログの後にキーボードを表示</string>
+    <string name="settings__theme_editor__add_rule">ルールを追加</string>
+    <string name="settings__theme_editor__edit_rule">ルールを編集</string>
+    <string name="settings__theme_editor__no_rules_defined">このスタイルシートにはルールが定義されていません。 このスタイルシートのカスタマイズを開始するルールを追加します。</string>
+    <string name="settings__theme_editor__rule_already_exists">このスタイルシートルールはすでに定義されています。</string>
+    <string name="settings__theme_editor__rule_element">ターゲット要素</string>
+    <string name="settings__theme_editor__rule_codes">コード</string>
+    <string name="settings__theme_editor__rule_groups">グループ</string>
+    <string name="settings__theme_editor__rule_modes">モード</string>
+    <string name="settings__theme_editor__rule_selectors">セレクター</string>
+    <string name="settings__theme_editor__add_code">コードを追加</string>
+    <string name="settings__theme_editor__edit_code">コードを編集</string>
+    <string name="settings__theme_editor__no_codes_defined">コードが定義されていません。</string>
+    <string name="settings__theme_editor__code_already_exists">このキーコードはすでに定義されています。</string>
+    <string name="settings__theme_editor__code_invalid">このキーコードは無効です。 キーコードが、文字の場合は {c_min} から {c_max} の範囲内、内部特殊キーの場合は {i_min} から {i_max} の範囲内にあることを確認してください。</string>
+    <string name="settings__theme_editor__code_help_text">次のリンクは、対応するキーコードを見つけるのに役立ちます:</string>
+    <string name="settings__theme_editor__add_property">プロパティを追加</string>
+    <string name="settings__theme_editor__edit_property">プロパティを編集</string>
+    <string name="settings__theme_editor__property_already_exists">この名前のプロパティは、現在のルール内にすでに存在します。</string>
+    <string name="settings__theme_editor__property_name">プロパティの名前</string>
+    <string name="settings__theme_editor__property_value">プロパティ値</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">すべてのコーナーに申し込む</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">カラー文字列を編集</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">夜間のテーマ</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">ボーダレスです</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">スタイルシートパス</string>
+    <string name="snygg__rule_element__defines">変数</string>
+    <string name="snygg__rule_element__defines_description">このルール内で変数を定義して、スタイルシートで一般的な色またはサイズを再利用します。</string>
+    <string name="snygg__rule_element__keyboard">キーボードウィンドウ</string>
+    <string name="snygg__rule_element__key">キー</string>
+    <string name="snygg__rule_element__key_hint">重要なヒント</string>
+    <string name="snygg__rule_element__key_popup">キーポップアップ</string>
+    <string name="snygg__rule_element__clipboard_header">クリップボードヘッダー</string>
+    <string name="snygg__rule_element__clipboard_item">クリップボードアイテム</string>
+    <string name="snygg__rule_element__clipboard_item_popup">クリップボードアイテムのポップアップ</string>
+    <string name="snygg__rule_element__glide_trail">グライドトレイル</string>
+    <string name="snygg__rule_element__one_handed_panel">片手パネル</string>
+    <string name="snygg__rule_element__smartbar_primary_row">スマートバーのプライマリ行</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">スマートバーの2列目</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">スマートバーのプライマリアクションの切り替え</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">スマートバーの二次アクショントグル</string>
+    <string name="snygg__rule_element__smartbar_quick_action">スマートバークイックアクション</string>
+    <string name="snygg__rule_element__smartbar_key">スマートバーキー</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">スマートバー候補の単語</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">スマートバー候補クリップ</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">スマートバー候補スペーサー</string>
+    <string name="snygg__rule_element__system_nav_bar">システムナビゲーションバー</string>
+    <string name="snygg__rule_selector__pressed">押された</string>
+    <string name="snygg__rule_selector__focus">集中</string>
+    <string name="snygg__rule_selector__disabled">無効</string>
+    <string name="snygg__property_name__width">幅</string>
+    <string name="snygg__property_name__height">高さ</string>
+    <string name="snygg__property_name__background">バックグラウンド</string>
+    <string name="snygg__property_name__foreground">フォアグラウンド</string>
+    <string name="snygg__property_name__border_color">ボーダの色</string>
+    <string name="snygg__property_name__border_style">ボーダースタイル</string>
+    <string name="snygg__property_name__border_width">ボーダーの幅</string>
+    <string name="snygg__property_name__font_family">フォントファミリー</string>
+    <string name="snygg__property_name__font_size">フォントのサイズ</string>
+    <string name="snygg__property_name__font_style">フォントスタイル</string>
+    <string name="snygg__property_name__font_variant">フォントバリアント</string>
+    <string name="snygg__property_name__font_weight">フォントの太さ</string>
+    <string name="snygg__property_name__shadow_elevation">影の標高</string>
+    <string name="snygg__property_name__shape">形態</string>
+    <string name="snygg__property_name__var_primary">プライマリーカラー</string>
+    <string name="snygg__property_name__var_primary_variant">プライマリーカラー(バリアント)</string>
+    <string name="snygg__property_name__var_secondary">セカンダリーカラー</string>
+    <string name="snygg__property_name__var_secondary_variant">セカンダリーカラー(バリアント)</string>
+    <!-- Smartbar strings -->
+    <!-- Typing strings -->
+    <!-- Spelling UI strings -->
+    <!-- About UI strings -->
+    <!-- Setup UI strings -->
+    <!-- Back up & Restore -->
+    <!-- Crash Dialog strings -->
+    <!-- Clipboard strings -->
+    <!-- Devtools strings -->
+    <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
+    <!-- General strings -->
+    <!-- Screen orientation strings -->
+    <!-- State strings -->
+    <!-- Enum label and description strings -->
+    <!-- Unit strings (symbols) -->
+    <!-- Unit strings (written words) -->
+</resources>

@@ -154,8 +154,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Nagyobb gomb megjelenítése gombnyomáskor</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz automatikusan visszavált a karakterelrendezésre</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">A szóköz lenyomáskor automatikusan visszavált a karakterekre, amikor a szimbólumok vagy a számok jelennek meg</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
@@ -216,7 +214,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Beállítások nyelve</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Helyesírás-ellenőrző</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfiguráció</string>

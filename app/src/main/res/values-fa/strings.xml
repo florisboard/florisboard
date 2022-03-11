@@ -101,8 +101,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">نوار فاصله به چیدمان متنی بازمیگرداند</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">در حالت نمادین یا عددها، با فشار نوار فاصله به صورت خودکار به حالت نوشتار متنی برمیگردد</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">نوار هوشمند</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
@@ -167,7 +165,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">قرار دادن آیکون برنامه در لانچر</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هر ویژگی که که باید با ورودی شما کار کنند را موقتا غیرفعال می کند</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">چک کننده نگارش</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">پیکربندی</string>

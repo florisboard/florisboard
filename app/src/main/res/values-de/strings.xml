@@ -239,19 +239,15 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Sonderzeichen in Akzent-Popups einblenden</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Sonderzeichen in Akzent-Popups des Standard Tastaturlayouts einblenden</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zurück zur Buchstabenansicht</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Tausche Schalter für Zugriffsleisten</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Vorschläge &amp; Korrekturen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten (Passwortmanager, …)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Darstellungsart für Vorschläge</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Inhalt der Zwischenablage</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Timeout für Vorschläge aus der Zwischenablage</string>
@@ -325,7 +321,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zeige die App in der Übersicht</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privaten Modus erzwingen</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wird alle Funktionen deaktivieren, die vorübergehend mit deinen Eingabedaten arbeiten</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rechtschreibprüfung</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Verwende Tastatur-Rechtschreibprüfung-Konfiguration</string>

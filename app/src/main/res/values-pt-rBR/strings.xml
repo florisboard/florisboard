@@ -242,11 +242,11 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidade do popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar popup quando você pressionar uma tecla</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Incluir popups de símbolo em acentos</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Adicionar os popups de símbolo aos acentos do layout padrão</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Os acentos incluem popups de símbolos</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Adiciona popups de símbolos aos acentos do layout padrão</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso ao pressionar e segurar uma tecla</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço alterna para o layout de caracteres</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Apertar e segurar a barra de espaço muda automaticamente para os caracteres quando em símbolos ou números</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço muda para caracteres</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Volta automaticamente para caracteres quando em símbolos ou numéricos</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
@@ -262,7 +262,7 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e Correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostrar sugestões em linha fornecidas por serviços de preenchimento automático (gerenciadores de senha, …)</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostrar sugestões em linha fornecidas pelos serviços de preenchimento automático</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de exibição de sugestões</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugestões de conteúdo da área de transferência</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Tempo limite de sugestão da área de transferência</string>
@@ -336,7 +336,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone do aplicativo no launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre ativado no Android 10+ devido a restrições do sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forçar o modo privado</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Isso desativará quaisquer recursos que tenham que trabalhar temporariamente com seus dados de digitação</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa recursos que funcionam com seus dados de entrada</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Corretor ortográfico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuração do corretor ortográfico do teclado</string>

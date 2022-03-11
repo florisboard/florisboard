@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Klavyeyê ber bi çepê ve bibe.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Klavyeyê ber bi rastê ve bibe.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emûcî</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojîyan</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Hestnîşan</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Mezinahiya dîrokê emûcîyan</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Tona çermê emojî ya tercîhkirî</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Tercîha porê emojî</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Pêkenok &amp; Heskirin</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Xelk &amp; Beden</string>
@@ -90,6 +94,7 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Rûkarê ronahiyê hilbijêre</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Rûkarê tarî hilbijêre</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Rûkarên sazkirî bi rê ve bibe</string>
+    <string name="settings__theme_editor__fine_tune__title">Edîtorê awazê xweşik</string>
     <string name="settings__theme_editor__fine_tune__level">Asta sererastkirinê</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Rengan wekî</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Piştî diyalogan klavyeyê nîşande</string>
@@ -98,6 +103,11 @@
     <string name="settings__theme_editor__rule_codes">Kod</string>
     <string name="settings__theme_editor__rule_groups">Kom</string>
     <string name="settings__theme_editor__rule_modes">Moda</string>
+    <string name="settings__theme_editor__rule_selectors">Hilbijêr</string>
+    <string name="settings__theme_editor__add_code">Koda lê zêde bike</string>
+    <string name="settings__theme_editor__edit_code">Koda sererastkirinê</string>
+    <string name="settings__theme_editor__no_codes_defined">Tu kod nehatine pênasekirin.</string>
+    <string name="settings__theme_editor__code_already_exists">Ev koda mifteyan jixwe hatîye pênasekirin.</string>
     <string name="snygg__rule_element__key">Kilîd</string>
     <string name="snygg__rule_element__system_nav_bar">Darikê navîgasyonê yê pergalê</string>
     <string name="snygg__rule_selector__pressed">Çewisandî</string>
@@ -162,8 +172,6 @@
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">PopUp Dîtinî</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Dema pêl bişkojkê bikî popup nîşan bide</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Derengketina bişkojka bişkojka dirêj</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Darişka fezayê vediguhere rêza karakteran</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Dema ku di sembolan an jî hejmarê de be, bi xweber bara fezayê vediguhere karakteran</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
@@ -171,7 +179,6 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Pêşniyar û Sererastkirinan</string>
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پێشنیارکردنی زیرەک بۆ تەواوکردنی تێپەڕە ووشە (بەرێوەبەری تێپەڕە ووشەکان.. ھتد)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی لەبەرگیراوەکان</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
@@ -223,7 +230,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Ji ber sînordarkirina pergalê her dem di Android 10+ de çalak e</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tu taybetiyên ku divê bi daneyên xwe yên têvel bi demkî bixebite neçalak bike</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rastnivîs</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Verastkera rastnivîsê bi kar bîne</string>

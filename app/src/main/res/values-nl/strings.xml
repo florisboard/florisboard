@@ -138,11 +138,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsdruk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-up zichtbaarheid</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-up tonen als je op een toets drukt</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Symbool pop-ups meenemen in accent pop-up</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Symbool pop-ups toevoegen aan de accent pop-ups van de standaardindeling</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Vertraging voor lange toetsdruk</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spatiebalk wisselt terug naar tekenlayout</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">De spatiebalk indrukken wisselt automatisch terug naar tekenmodus wanneer in symbool- of nummermodus</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Slimme Balk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
@@ -150,7 +146,6 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggesties &amp; Verbeteringen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Suggesties van autofill-services op dezelfde regel weergeven (wachtwoordbeheerders, …)</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
     <string name="pref__correction__title" comment="Preference group title">Verbeteringen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-kapitalisatie</string>
@@ -206,7 +201,6 @@
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Donker</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forceer privémodus</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Schakelt alle functies uit die tijdelijk gebruik maken van uw invoerdata</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Spellingcontrole</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gebruik toetsenbord spellingscontrole configuratie</string>

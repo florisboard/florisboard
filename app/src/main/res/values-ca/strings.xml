@@ -117,8 +117,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a la disposició de caràcters</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En prémer la barra d\'espai, es torna automàticament als caràcters quan estan en símbols o numèrics</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra intel·ligent</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>

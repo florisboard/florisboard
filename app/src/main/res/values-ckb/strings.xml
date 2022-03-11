@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">بردنی تەختەکلیل بۆ لای چەپ</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">بردنی تەختەکلیل بۆ لای ڕاست</string>
     <!-- Media strings -->
+    <string name="settings__media__title">خەندەکان</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">خەندەکان</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">هێمای دەربڕینی هەستەکان</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">کامۆجی</string>
+    <string name="prefs__media__emoji_recently_used_max_size">ڕێژەی پیشاندانی خەندە لە مێژووی خەندەکان</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">ڕەنگی بنەڕەتی خەندەکان</string>
+    <string name="prefs__media__emoji_preferred_hair_style">ڕەنگی بنەڕەتی قژی خەندەکان</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">خەندەکان </string>
     <string name="emoji__category__people_body" comment="Emoji category name">خەڵک</string>
@@ -96,6 +100,9 @@
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">پیشاندانی تەختەکلیل دوای دەستکاریکردن</string>
     <string name="settings__theme_editor__add_rule">زیادکردن</string>
     <string name="settings__theme_editor__edit_rule">دەستکاریکردن</string>
+    <string name="settings__theme_editor__no_rules_defined">ئەم پەڕەیە هیچ یاسایەکی پێناسە نەکراوە، زیادکردنی یاسایەک بۆ دەستکردن بە سازکردنی ئەم پەڕەیە.</string>
+    <string name="settings__theme_editor__rule_already_exists">ئەم یاسای پەڕەی ستایڵ پێشتر پێناسە کراوە.</string>
+    <string name="settings__theme_editor__rule_element">بەشی مەبەست</string>
     <string name="settings__theme_editor__rule_codes">کۆد</string>
     <string name="settings__theme_editor__rule_groups">گرووپ</string>
     <string name="settings__theme_editor__rule_modes">شێواز</string>
@@ -104,8 +111,11 @@
     <string name="settings__theme_editor__edit_code">دەستکاریکردنی کۆد</string>
     <string name="settings__theme_editor__no_codes_defined">کۆد نەنوسراوە</string>
     <string name="settings__theme_editor__code_already_exists">ئەم دوگمەیە پێشتر زیادکراوە</string>
+    <string name="settings__theme_editor__code_invalid">ئەم کۆدە کلیلە دروست نیە، دڵنیابە لەوەی کە کۆدی کلیلەکە لەناو مەودای {c_min} بۆ {c_max} بۆ پیتەکان یان {i_min} بۆ {i_max} بۆ کلیلە تایبەتەکان.</string>
+    <string name="settings__theme_editor__code_help_text">ئەم لینکانەی خوارەوە یارمەتیت دەدەن بۆ دۆزینەوەی کۆدی کلیلی هاوتا:</string>
     <string name="settings__theme_editor__add_property">زیادکردنی بەش</string>
     <string name="settings__theme_editor__edit_property">دەستکاریکردنی بەش</string>
+    <string name="settings__theme_editor__property_already_exists">تایبەتمەندیەک بەم ناوە پێشتر لەناو ئەم یاسایەدا هەیە.</string>
     <string name="settings__theme_editor__property_name">ناوی بەش</string>
     <string name="settings__theme_editor__property_value">بەهای بەش</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">هەمان قەبارە بۆ هەموو گۆشەکان</string>
@@ -114,6 +124,8 @@
     <string name="settings__theme_editor__component_meta_is_borderless">بێ لێوار</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">شوێنی هەڵگرتن</string>
     <string name="snygg__rule_element__defines">گۆڕاو</string>
+    <string name="snygg__rule_element__defines_description">پێناسەکردنی گۆڕاوەکان لەناو ئەم یاسایە بۆ دووبارە بەکارهێنانی ڕەنگەکان یان قەبارە باوەکان لە پەڕەی ستایڵەکەت.</string>
+    <string name="snygg__rule_element__keyboard">پشتەوەی تەختەکلیل</string>
     <string name="snygg__rule_element__key">دوگمەی</string>
     <string name="snygg__rule_element__key_hint">پیتە لاوەکییەکان</string>
     <string name="snygg__rule_element__key_popup">بچووککراوەی پیت</string>
@@ -124,7 +136,14 @@
     <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
     <string name="snygg__rule_element__smartbar_primary_row">ڕەنگی سەرەکی بەشی سەرەوە</string>
     <string name="snygg__rule_element__smartbar_secondary_row">ڕەنگی دووەمی بەشی سەرەوە</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">فرمانی سەرەکی ئامراز</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">فرمانی دووەمی ئامراز</string>
+    <string name="snygg__rule_element__smartbar_quick_action">فرمانی ئامرەزاکان</string>
     <string name="snygg__rule_element__smartbar_key">دوگمەی ئامرازەکان</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">ڕەنگی نووسینەکانی بەشی ئامراز</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">ڕەنگی ئایکۆنەکانی ئامراز</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">ماوەی نێوان ئامرازەکان</string>
+    <string name="snygg__rule_element__system_nav_bar">ڕەنگی بەشی خوراەوە</string>
     <string name="snygg__rule_selector__pressed">دەسلێدان</string>
     <string name="snygg__rule_selector__focus">دەست ڕاگرتن</string>
     <string name="snygg__rule_selector__disabled">نا چالاک</string>
@@ -138,9 +157,24 @@
     <string name="snygg__property_name__font_family">شێوازی فۆنت</string>
     <string name="snygg__property_name__font_size">قەبارەی فۆنت</string>
     <string name="snygg__property_name__font_style">شێوەی فۆنت</string>
+    <string name="snygg__property_name__font_variant">جۆری فۆنت</string>
+    <string name="snygg__property_name__font_weight">شێوەی فۆنت</string>
+    <string name="snygg__property_name__shadow_elevation">شکانەوەی سێبەر</string>
     <string name="snygg__property_name__shape">شێوە</string>
     <string name="snygg__property_name__var_primary">ڕەنگی بنەڕەتی</string>
+    <string name="snygg__property_name__var_primary_variant">ڕەنگی سەرەکی (هەمەجۆر)</string>
     <string name="snygg__property_name__var_secondary">ڕەنگی دووەم</string>
+    <string name="snygg__property_name__var_secondary_variant">ڕەنگی دووەم (هەمەجۆر)</string>
+    <string name="snygg__property_name__var_background">ڕەنگی پشت شاشە</string>
+    <string name="snygg__property_name__var_surface">ڕەنگی دوگمەکان</string>
+    <string name="snygg__property_name__var_surface_variant">ڕەنگی دوگمەکان (هەمەجۆر)</string>
+    <string name="snygg__property_name__var_on_primary">ڕەنگی سەرەکی لاوەکی</string>
+    <string name="snygg__property_name__var_on_secondary">ڕەنگی دووەمی لاوەکی</string>
+    <string name="snygg__property_name__var_on_background">ڕەنگی لاوەکی پشت شاشە</string>
+    <string name="snygg__property_name__var_on_surface">ڕەنگی لاوەکی دوگمەکان</string>
+    <string name="snygg__property_name__var_on_surface_variant">ڕەنگی لاوەکی دوگمەکان (هەمەجۆر)</string>
+    <string name="snygg__property_name__var_shape">شێوەی دوگمەکان</string>
+    <string name="snygg__property_name__var_shape_variant">شێوەی دوگمەکان (هەمەجۆر)</string>
     <string name="snygg__property_value__explicit_inherit">بنەڕەتی</string>
     <string name="snygg__property_value__solid_color">ڕەنگ</string>
     <string name="snygg__property_value__image_ref">وێنە</string>
@@ -208,19 +242,22 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">بچووککراوە پیت</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">پیشاندانی هێما زیادەکانی ناو لیستی ژمارەکان</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی هێماکانی خانەی دووەم</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">ماوەی دەست راگرتن بۆ پیتە لاوەکییەکان</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">دەستان لە دوگمەی بۆشایی ئەگەڕێتەوە بۆ پیتەکان</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">بە پەنجەنان لە دوگمەی بۆشایی ئەگەڕێتەوە بۆ پیتەکان بە خۆکاری کاتێ لە بەشی هێما و ژمارەکاندا بێت</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">بەشی سەرەوە</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">پیچەوانەکردنەوەی دوگمەکان</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">پێچەوانەکردنەوەی دوگمەکانی ئامرازەکان</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">ئامرازە سەرەکیەکان</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">خانەی یەکەم</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">خانەی دووەم</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">پێشنیارکردن و ڕاستکردنەوە</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پیشنیارکردنی زیرەک بۆ پڕکردنەوەی ژمارە و تێپەڕە ووشەکان (بەڕێوەبەری تێپەڕە ووشە …)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
@@ -242,6 +279,9 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">زیادکردن، بینین، یان سڕینەوەی ووشەکانی ناو فەرهەنگی ناوخۆیی</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">فەرهەنگی تایبەت</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">فەرهەنگی سیستەم</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">فەرهەنگی تایبەتی بەکارهێنەر هیچ ووشەیەکی تێدا نیە.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">ژمارە: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">ژمارە: {freq} | کورتکراوە: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">بۆ هەموو زمانەکان</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">ڕێکخستنی فەرهەنگی سیستەم</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">فەرهەنگی بەکارهێنەر بەسەرکەوتوویی هێنرا!</string>
@@ -250,10 +290,12 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">دەستکاریکردن</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">ووشە</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">تکایە ووشەیەک بنووسە</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">تکایە ووشەیەک بنوسە بۆ {regex}</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">ژمارە (لەنێوان {f_min} تا {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">تکایە بەهای ژمارە بنوسە</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">تکایە ژمارەیەکی دروستی دیاریکراو بنوسە</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">کورتکراوە (ئارەزوومەندانە)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">تکایە کورتکراوەیەک بنوسە بۆ {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">کۆدی زمان (ئارەزومەند)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">ئەم کۆدی زمانە نەناسراوە، کۆدی زمان پێویستە تەنها لە دوو پیت پێکبێت بۆ نمونە (en یان ku)، یان کۆدی زمان و ووڵات بۆ نمونە (en_US یان ku_IQ).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">ئاماژەکان و نووسین بەسەریەکەوە</string>
@@ -289,7 +331,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">پیشاندانی ئایکۆنی بەرنامەکە</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">هەمیشە پیشان ئەدرێ لە ئەندرۆیدی 10 بەرەوسەر</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">چالاککردنی دۆخی تایبەت</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هەر تایبەتمەندیەک لە کاردەکات کە دەبێت بە شێوەیەکی کاتی کار بکات لەگەڵ داتای تێکردنەکەت</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">هەڵەی ڕێنووس</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">بەکارهێنانی ڕێکخستنی بەرنامەکە</string>
@@ -424,6 +465,7 @@
     <string name="clipboard__cleared_primary_clip">سڕینەوەی گشتی</string>
     <string name="clipboard__cleared_history">سڕینەوەی مێژوو</string>
     <string name="clipboard__cleared_full_history">سڕینەوەی هەموو شتێک</string>
+    <string name="clipboard__confirm_clear_history__message">ئایا دڵنیایت لە سڕینەوەی لەبەرگیراوەکان؟</string>
     <string name="settings__clipboard__title">لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__label">بەشی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">بەکارهێنانی بەشی لەبەرگیراوەکان بۆ هەڵگرتنی شتەکان</string>
@@ -489,11 +531,16 @@
     <string name="ext__editor__title_edit_theme">دەستکاریکردنی ڕووکار</string>
     <string name="ext__editor__metadata__title">ڕێکخستنی سەرچاوەکان</string>
     <string name="ext__editor__metadata__title_invalid">داتای سەرچاوە نادروستە</string>
+    <string name="ext__editor__metadata__message_invalid">داتای زانیاری بۆ ئەم درێژکراوەیە دروست نیە، تکایە بژارکەری داتای زانیاری بپشکنە بۆ وردەکاریەکان!</string>
+    <string name="ext__editor__dependencies__title">ڕێکخستنی سەرچاوەکان</string>
+    <string name="ext__editor__files__title">ڕێکخستنی فایلەکانی ئەرشیف</string>
+    <string name="ext__editor__create_component__title">دروستکردنی ناوەڕۆک</string>
     <string name="ext__editor__create_component__title_theme">دروستکردنی ڕووکار</string>
     <string name="ext__editor__create_component__from_empty">دروستکردن لە سەرەتاوە</string>
     <string name="ext__editor__create_component__from_existing">دروستکردن لە ڕووکارەکانەوە</string>
     <string name="ext__editor__create_component__from_empty_warning">دروستکردنی ڕووکارێکی بەتاڵ لەسەرەتاوە بۆ {app_name} لەوانەیە گران بێت و شارەزایی پێویستە ئەگەر بەکارهێنەرێکی نوێی بەرنامەکەیت یان شارەزایی کۆد و سەرچاوەکانی دیزاین نەبیت!</string>
     <string name="ext__editor__edit_component__title">دەستکاریکردنی پێکهاتەکان</string>
+    <string name="ext__editor__edit_component__title_theme">دەستکاریکردنی ڕووکارەکان</string>
     <string name="ext__export__success">زیادکراو بەسەرکەوتوویی هەڵگیرا!</string>
     <string name="ext__export__failure">هەڵگرتنی زیادکراو سەرکەوتو نەبوو: {error_message}</string>
     <string name="ext__import__success">زیادکراو بەسەرکەوتوویی هێنرا!</string>
@@ -546,6 +593,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">نمونە. {example}</string>
     <string name="general__no_browser_app_found_for_url">هیچ بەرنامەیەکی وێبگەڕ نەدۆزرایەوە بۆ کردنەوەی {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; دیاریبکە &#45;</string>
+    <string name="general__unlimited">بێ سنوور</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">دۆخی ئاسایی</string>
     <string name="screen_orientation__landscape">دۆخی خستنە سەرلا</string>
@@ -562,13 +610,29 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">ئاسایی (٣ ڕیز)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">جوڵاو</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">جوڵاو و ڕاکێشان</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">ژمارەیی</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">سوور سەوز شین</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">هەمیشە پیشاندان</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">پیشاندانی تەختەکلیل دوای داخستنی بەشی دەستکاریکردنی ڕووکار</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">پیشان نەدان</string>
     <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">پیشاندانی نەدانی تەختەکلیل دوای داخستنی بەشی دەستکاریکردنی ڕووکار</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">بیرخستنەوەی کۆتا دۆخ</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">تەنها تەختەکلیلەکە نیشان بدە دوای داخستنی دیالۆگی هەر سەرنووسەرێک ئەگەر پێشتر بینرابێت</string>
     <string name="enum__display_language_names_in__system_locale" comment="Enum value label">زمانی سیستەم</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">ناوی زمانەکان لە ناو بەرنامە و ڕووکاری تەختەکلیل پیشان دەدرێن بەپێی زمانی سەرەکی سیستەم</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">ناوی بنەڕەتی زمان</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">ناوی زمانەکان لە ناو بەرنامە و ڕووکاری تەختەکلیل پیشان دەدرێن بەپێی ناوی ڕاستەقینەی زمانەکە</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} بنەڕەتی</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} سپی</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} بۆر</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} بۆر</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} گەنمی</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} ڕەش</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} بنەڕەتی</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} سوور</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} لوول</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} سپی</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} کەچەڵ</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">پیتەکان لەپێشدا</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">پیشاندانی یەکەم پیتی خانەی دووەم لەکاتی دەست راگرتن</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">هێماکان لەپێشدا</string>
@@ -590,9 +654,20 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">لەسەروی بەرنامەکە</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان لەبەشی سەرەوەی بەرنامەکە، بەبێ گۆڕینی قیاسی تەختەکلیل</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">سەرەتای سەرەوە</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">سەرەتای خوارەوە</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">ئامرازەکانی ڕێکخستن</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">پیشاندانی ئامرازەکانی رێکخستن بەشێوەی سەرەکی</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">ئامرازەکانی دەستکاریکردن</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">پیشاندانی ئامرازەکانی دەستکاریکردن بەشێوەی سەرەکی</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">بنچینەیی</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">تەنیا زانیاری ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">ڕێکخستنی زیاتر</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">هەموو زانیارییەکانی ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">گەشەپێدەر</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">هەموو زانیارییەکانی ڕەنگەکان پیشان ئەدرێن، زانیاری ڕووکار هەمان ناوی فایل پیشان ئەدات.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">بەکارهێنانی زمانی سیستەم</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">بەکارهێنانی ناوی تەختەکلیل</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">هیچ فرمانێک</string>

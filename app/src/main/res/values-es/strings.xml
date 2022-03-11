@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover el teclado a la izquierda.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover el teclado a la derecha.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticonos</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Tamaño máximo de historial de emojis</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Tono de piel de emoji preferido</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Estilo de cabello de emoji preferido</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emociones</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personas &amp; Cuerpo</string>
@@ -22,6 +26,7 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderas</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No se han encontrado emojis que se hayan usado recientemente. Una vez empieces a usar emojis, aparecerán automáticamente aquí.</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Cambio de acción rápida. Si se pulsa, cambia entre las sugerencias de palabras y los botones de acción rápida.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Salir del panel de edición de texto.</string>
@@ -223,11 +228,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Presionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar emergente al pulsar una tecla</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Incluir emergentes de símbolos en acentos</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Añadir emergentes de símbolos al diseño predeterminado de acentos</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retardo de la pulsación larga</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra de espacio cambia a la disposición de los caracteres</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Al pulsar la barra de espacio, se vuelve automáticamente a los caracteres cuando se trata de símbolos o números</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
@@ -235,7 +236,6 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugerencias &amp; Correciones</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Muestra sugerencias inline ofrecidas por servicios de autocompletado (gestores de contraseñas, …)</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de visualización de sugerencias</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugerencias del contenido del portapapeles</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Tiempo de espera de sugerencias del portapapeles</string>
@@ -309,7 +309,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar icono de la aplicación en el launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Habilitado siempre en Android 10+ debido a restricciones del sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar modo privado</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desactivará cualquier característica que tenga que trabajar temporalmente con sus datos de entrada</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Corrector ortográfico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuración del corrector ortográfico del teclado</string>
@@ -589,6 +588,8 @@
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostrar siempre</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">No mostrar nunca</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Recordar último estado</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Tono de piel predeterminado</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Calvo</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Acento es prioridad</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el acento principal, o el símbolo si no hay acento principal disponible</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Símbolo es prioridad</string>

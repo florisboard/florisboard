@@ -138,11 +138,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Συμπερίληψη αναδυόμενων πλήκτρων συμβόλων στους τονισμούς</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Προσθήκη των αναδυόμενων πλήκτρων συμβόλων στην προεπιλεγμένη διάταξη</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Καθυστέρηση παρατεταμένου πατήματος πλήκτρου</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Το πλήκτρο διαστήματος επιστρέφει στη διάταξη χαρακτήρων</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Πατώντας κενό επαναφέρεστε αυτόματα στους χαρακτήρες όταν βρίσκεστε στα σύμβολα ή στους αριθμούς</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Έξυπνη Μπάρα</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
@@ -211,7 +207,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Εμφάνιση του εικονιδίου της εφαρμογής στον εκκινητή</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Πάντα ενεργοποιημένο σε Android 10+ λόγω περιορισμών του συστήματος</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Εξαναγκασμός ιδιωτικής λειτουργίας</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Θα απενεργοποιήσει χαρακτηριστικά που χρησιμοποιούν προσωρινά τα δεδομένα που εισάγετε</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Ορθογραφικός έλεγχος</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Χρήση της ρύθμισης ορθογραφικού ελέγχου πληκτρολογίου</string>

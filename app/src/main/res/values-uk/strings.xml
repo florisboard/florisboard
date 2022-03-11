@@ -80,8 +80,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробіл перемикає назад в буквенну розкладку</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискання пробіл автоматичну перемикає на буквенну розкладку коли знаходиться в символьній або цифровій</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Розумна панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
@@ -125,7 +123,6 @@
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темна</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показувати значок програми на робочому столі</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Примусово приватний режим</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Відключає всі функції, які повинні тимчасово працювати з вашими даними вводу</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Про додаток</string>
