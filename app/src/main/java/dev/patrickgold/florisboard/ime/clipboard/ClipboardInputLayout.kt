@@ -28,8 +28,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,8 +52,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -63,6 +63,7 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButtonWithInnerPadding
 import dev.patrickgold.florisboard.app.ui.components.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.autoMirrorForRtl
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
@@ -89,7 +90,6 @@ import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
-private val HeaderIconPadding = PaddingValues(horizontal = 4.dp)
 private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
 private val ItemPadding = PaddingValues(vertical = 8.dp, horizontal = 12.dp)
@@ -143,10 +143,7 @@ fun ClipboardInputLayout(
         ) {
             FlorisIconButtonWithInnerPadding(
                 onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
+                modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_arrow_back),
                 iconColor = headerStyle.foreground.solidColor(),
             )
@@ -158,10 +155,7 @@ fun ClipboardInputLayout(
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
+                modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(if (historyEnabled) {
                     R.drawable.ic_toggle_on
                 } else {
@@ -172,10 +166,7 @@ fun ClipboardInputLayout(
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { showClearAllHistory = true },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
+                modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_clear_all),
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
@@ -184,10 +175,6 @@ fun ClipboardInputLayout(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
                 icon = painterResource(R.drawable.ic_edit),
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
@@ -223,6 +210,7 @@ fun ClipboardInputLayout(
         ) {
             Text(
                 text = item.stringRepresentation(),
+                style = TextStyle(textDirection = TextDirection.ContentOrLtr),
                 color = style.foreground.solidColor(),
                 fontSize = style.fontSize.spSize(),
             )

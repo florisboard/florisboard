@@ -19,6 +19,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.view.inputmethod.EditorInfo
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -56,6 +57,7 @@ import kotlin.properties.Delegates
  *          |  1       |          |          | Is Kana Kata enabled
  *          | 1        |          |          | Is Kana small
  *      111 |          |          |          | Ime Ui Mode
+ *     1    |          |          |          | Layout Direction (0=LTR, 1=RTL)
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
@@ -111,6 +113,8 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         const val F_IS_KANA_KATA: ULong =                   0x00400000u
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
+        const val F_IS_RTL_LAYOUT_DIRECTION: ULong =        0x08000000u
+
         const val STATE_ALL_ZERO: ULong =                   0uL
 
         const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
@@ -121,7 +125,7 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         fun new(value: ULong = STATE_ALL_ZERO) = KeyboardState(value)
     }
 
-    private var rawValue by Delegates.observable(initValue) { _, _, _ -> dispatchState() }
+    private var rawValue by Delegates.observable(initValue) { _, old, new -> if (old != new) dispatchState() }
     private val batchEditCount = AtomicInteger(BATCH_ZERO)
 
     val imeOptions: ImeOptions = ImeOptions(this)
@@ -273,6 +277,10 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     var imeUiMode: ImeUiMode
         get() = ImeUiMode.fromInt(getRegion(M_IME_UI_MODE, O_IME_UI_MODE))
         set(v) { setRegion(M_IME_UI_MODE, O_IME_UI_MODE, v.toInt()) }
+
+    var layoutDirection: LayoutDirection
+        get() = if (getFlag(F_IS_RTL_LAYOUT_DIRECTION)) LayoutDirection.Rtl else LayoutDirection.Ltr
+        set(v) { setFlag(F_IS_RTL_LAYOUT_DIRECTION, v == LayoutDirection.Rtl) }
 
     @Deprecated("Use inputMode and/or isLowercase/isUppercase")
     var shiftLock: Boolean

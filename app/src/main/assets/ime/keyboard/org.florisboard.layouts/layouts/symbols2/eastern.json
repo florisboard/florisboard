@@ -56,12 +56,22 @@
         { "code": 8776, "label": "≈" }
       ]
     } },
-    { "code":  123, "label": "{", "popup": {
-      "main": { "code":   40, "label": "(" }
-    } },
-    { "code":  125, "label": "}", "popup": {
-      "main": { "code":   41, "label": ")" }
-    } },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":  123, "label": "{", "popup": {
+        "main": { "code":   40, "label": "(" }
+      } },
+      "rtl": { "code":  125, "label": "{", "popup": {
+        "main": { "code":   41, "label": "(" }
+      } }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":  125, "label": "}", "popup": {
+        "main": { "code":   41, "label": ")" }
+      } },
+      "rtl": { "code":  123, "label": "}", "popup": {
+        "main": { "code":   40, "label": ")" }
+      } }
+    },
     { "code":   92, "label": "\\" }
   ],
   [
@@ -70,7 +80,13 @@
     { "code":  174, "label": "®" },
     { "code": 8482, "label": "™" },
     { "code": 10003, "label": "✓" },
-    { "code":   91, "label": "[" },
-    { "code":   93, "label": "]" }
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   91, "label": "[" },
+      "rtl": { "code":   93, "label": "[" }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   93, "label": "]" },
+      "rtl": { "code":   91, "label": "]" }
+    }
   ]
 ]

@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,8 +40,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.consumeDownChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -94,26 +97,28 @@ fun MediaInputLayout(
             modifier = Modifier.weight(1f),
             fullEmojiMappings = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt"),
         )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
-        ) {
-            KeyboardLikeButton(
-                inputEventDispatcher = keyboardManager.inputEventDispatcher,
-                keyData = TextKeyData.IME_UI_MODE_TEXT,
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
             ) {
-                Text(
-                    text = "ABC",
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            KeyboardLikeButton(
-                inputEventDispatcher = keyboardManager.inputEventDispatcher,
-                keyData = TextKeyData.DELETE,
-            ) {
-                Icon(painter = painterResource(R.drawable.ic_backspace), contentDescription = null)
+                KeyboardLikeButton(
+                    inputEventDispatcher = keyboardManager.inputEventDispatcher,
+                    keyData = TextKeyData.IME_UI_MODE_TEXT,
+                ) {
+                    Text(
+                        text = "ABC",
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                KeyboardLikeButton(
+                    inputEventDispatcher = keyboardManager.inputEventDispatcher,
+                    keyData = TextKeyData.DELETE,
+                ) {
+                    Icon(painter = painterResource(R.drawable.ic_backspace), contentDescription = null)
+                }
             }
         }
     }

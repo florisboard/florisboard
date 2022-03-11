@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
@@ -40,6 +42,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -66,6 +69,7 @@ import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.common.android.setLocale
 import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -198,8 +202,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     private val prefs by florisPreferenceModel()
     private val keyboardManager by keyboardManager()
-    private val themeManager by themeManager()
     private val nlpManager by nlpManager()
+    private val subtypeManager by subtypeManager()
+    private val themeManager by themeManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
@@ -207,11 +212,17 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     private var inputViewSize by mutableStateOf(IntSize.Zero)
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
+    private var resourcesContext by mutableStateOf(this as Context)
 
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         activeEditorInstance.wordHistoryChangedListener = this
+        subtypeManager.activeSubtype.observe(this) { subtype ->
+            val config = Configuration(resources.configuration)
+            config.setLocale(subtype.primaryLocale)
+            resourcesContext = createConfigurationContext(config)
+        }
     }
 
     override fun onCreateInputView(): View {
@@ -423,12 +434,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     @Composable
     private fun ImeUiWrapper() {
-        ProvideLocalizedResources(this) {
+        ProvideLocalizedResources(resourcesContext) {
             ProvideKeyboardRowBaseHeight {
-                CompositionLocalProvider(
-                    LocalInputFeedbackController provides inputFeedbackController,
-                    LocalLayoutDirection provides LayoutDirection.Ltr,
-                ) {
+                CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
                         // Outer box is necessary as an "outer window"
                         Box(modifier = Modifier.fillMaxSize()) {
@@ -450,61 +458,70 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             element = FlorisImeUi.Keyboard,
             mode = activeState.inputMode.value,
         )
-        SnyggSurface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .align(Alignment.BottomStart)
-                .onGloballyPositioned { coords -> inputViewSize = coords.size }
-                // Do not remove below line or touch input may get stuck
-                .pointerInteropFilter { false },
-            style = keyboardStyle,
-        ) {
-            val configuration = LocalConfiguration.current
-            val bottomOffset by if (configuration.isOrientationPortrait()) {
-                prefs.keyboard.bottomOffsetPortrait
-            } else {
-                prefs.keyboard.bottomOffsetLandscape
-            }.observeAsTransformingState { it.dp }
-            Row(
+        val layoutDirection = LocalLayoutDirection.current
+        SideEffect {
+            keyboardManager.activeState.layoutDirection = layoutDirection
+        }
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            SnyggSurface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
-                    //.height(IntrinsicSize.Min)
-                    .padding(bottom = bottomOffset),
+                    .align(Alignment.BottomStart)
+                    .onGloballyPositioned { coords -> inputViewSize = coords.size }
+                    // Do not remove below line or touch input may get stuck
+                    .pointerInteropFilter { false },
+                style = keyboardStyle,
             ) {
-                val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
-                val keyboardWeight = when {
-                    oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
-                    else -> oneHandedModeScaleFactor / 100f
-                }
-                if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        panelSide = OneHandedMode.START,
-                        weight = 1f - keyboardWeight,
-                    )
-                }
-                Box(
+                val configuration = LocalConfiguration.current
+                val bottomOffset by if (configuration.isOrientationPortrait()) {
+                    prefs.keyboard.bottomOffsetPortrait
+                } else {
+                    prefs.keyboard.bottomOffsetLandscape
+                }.observeAsTransformingState { it.dp }
+                Row(
                     modifier = Modifier
-                        .weight(keyboardWeight)
-                        .wrapContentHeight(),
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
+                        //.height(IntrinsicSize.Min)
+                        .padding(bottom = bottomOffset),
                 ) {
-                    when (activeState.imeUiMode) {
-                        ImeUiMode.TEXT -> TextInputLayout()
-                        ImeUiMode.MEDIA -> MediaInputLayout()
-                        ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                    val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
+                    val keyboardWeight = when {
+                        oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
+                        else -> oneHandedModeScaleFactor / 100f
                     }
-                }
-                if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        panelSide = OneHandedMode.END,
-                        weight = 1f - keyboardWeight,
-                    )
+                    if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.START,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
+                    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
+                        Box(
+                            modifier = Modifier
+                                .weight(keyboardWeight)
+                                .wrapContentHeight(),
+                        ) {
+                            when (activeState.imeUiMode) {
+                                ImeUiMode.TEXT -> TextInputLayout()
+                                ImeUiMode.MEDIA -> MediaInputLayout()
+                                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                            }
+                        }
+                    }
+                    if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.END,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
                 }
             }
         }
+
     }
 
     @Composable

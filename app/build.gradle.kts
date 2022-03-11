@@ -70,6 +70,15 @@ android {
         }
     }
 
+    bundle {
+        language {
+            // We disable language split because FlorisBoard does not use
+            // runtime Google Play Service APIs and thus cannot dynamically
+            // request to download the language resources for a specific locale.
+            enableSplit = false
+        }
+    }
+
     buildFeatures {
         compose = true
     }

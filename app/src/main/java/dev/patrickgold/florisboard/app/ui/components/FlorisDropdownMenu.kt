@@ -150,8 +150,8 @@ fun FlorisDropdownLikeButton(
                 color = color,
             )
             Icon(
-                modifier = Modifier.rotate(-90.0f),
-                painter = painterResource(R.drawable.ic_keyboard_arrow_down),
+                modifier = Modifier.autoMirrorForRtl(),
+                painter = painterResource(R.drawable.ic_keyboard_arrow_right),
                 tint = color.copy(alpha = ContentAlpha.medium),
                 contentDescription = "Dropdown indicator",
             )

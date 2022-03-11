@@ -2,12 +2,24 @@
   [
     { "code": 8230, "label": "…" },
     { "code":   95, "label": "_" },
-    { "code":   91, "label": "[" },
-    { "code":   93, "label": "]" },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   91, "label": "[" },
+      "rtl": { "code":   93, "label": "[" }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   93, "label": "]" },
+      "rtl": { "code":   91, "label": "]" }
+    },
     { "code":   94, "label": "^" },
     { "code":   33, "label": "!" },
-    { "code":   60, "label": "<" },
-    { "code":   62, "label": ">" },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   60, "label": "<" },
+      "rtl": { "code":   62, "label": "<" }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   62, "label": ">" },
+      "rtl": { "code":   60, "label": ">" }
+    },
     { "code":   61, "label": "=" },
     { "code":   38, "label": "&" },
     { "code":  383, "label": "ſ" }
@@ -15,12 +27,24 @@
   [
     { "code":   92, "label": "\\" },
     { "code":   47, "label": "/" },
-    { "code":  123, "label": "{" },
-    { "code":  125, "label": "}" },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":  123, "label": "{" },
+      "rtl": { "code":  125, "label": "{" }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":  125, "label": "}" },
+      "rtl": { "code":  123, "label": "}" }
+    },
     { "code":   42, "label": "*" },
     { "code":   63, "label": "?" },
-    { "code":   40, "label": "(" },
-    { "code":   41, "label": ")" },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   40, "label": "(" },
+      "rtl": { "code":   41, "label": "(" }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   41, "label": ")" },
+      "rtl": { "code":   40, "label": ")" }
+    },
     { "code":   45, "label": "-" },
     { "code":   58, "label": ":" },
     { "code":   64, "label": "@" }

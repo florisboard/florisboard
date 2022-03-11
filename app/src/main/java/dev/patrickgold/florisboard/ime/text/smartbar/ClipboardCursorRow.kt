@@ -18,9 +18,12 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.keyboardManager
@@ -32,9 +35,11 @@ fun SmartbarClipboardCursorRow(modifier: Modifier = Modifier) {
 
     val renderInfo by keyboardManager.smartbarRenderInfo.observeAsNonNullState()
 
-    TextKeyboardLayout(
-        modifier = modifier.fillMaxSize(),
-        renderInfo = renderInfo,
-        isSmartbarKeyboard = true,
-    )
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        TextKeyboardLayout(
+            modifier = modifier.fillMaxSize(),
+            renderInfo = renderInfo,
+            isSmartbarKeyboard = true,
+        )
+    }
 }
