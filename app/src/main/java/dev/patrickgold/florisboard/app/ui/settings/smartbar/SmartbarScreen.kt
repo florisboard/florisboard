@@ -71,7 +71,7 @@ fun SmartbarScreen() = FlorisScreen {
                 prefs.smartbar.secondaryActionsRowType,
                 title = stringRes(R.string.pref__smartbar__any_row_type__label),
                 entries = SmartbarRowType.listEntries(),
-                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                enabledIf = { prefs.smartbar.enabled isEqualTo true && prefs.smartbar.secondaryActionsEnabled isEqualTo true },
             )
         }
     }
