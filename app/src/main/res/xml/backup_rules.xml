@@ -10,6 +10,6 @@
         requireFlags="clientSideEncryption"/>
     <include
         domain="database"
-        path="floris_user_dictionary.db"
+        path="floris_user_dictionary"
         requireFlags="clientSideEncryption"/>
 </full-backup-content>
