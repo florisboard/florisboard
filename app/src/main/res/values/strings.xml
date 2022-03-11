@@ -255,11 +255,11 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Include symbol popups in accents</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Add the symbol popups to the default layout\'s accents</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Accents include symbol popups</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Adds symbol popups to the default layout\'s accents</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
@@ -280,7 +280,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, …)</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
     <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[NOT YET INCLUDED] Display suggestions while you type</string>
     <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently only English (US). May fail to load if insufficient heap size is available.</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
@@ -364,7 +364,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Force private mode</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Will disable any features which have to temporarily work with your input data</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disables features which work with your input data</string>
 
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Spell checker</string>
