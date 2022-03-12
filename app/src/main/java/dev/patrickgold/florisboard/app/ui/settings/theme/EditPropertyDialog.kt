@@ -69,6 +69,7 @@ import dev.patrickgold.florisboard.common.ValidationResult
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
 import dev.patrickgold.florisboard.common.kotlin.toStringWithoutDotZero
 import dev.patrickgold.florisboard.common.rememberValidationResult
+import dev.patrickgold.florisboard.common.stripUnicodeCtrlChars
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec
@@ -400,12 +401,11 @@ private fun PropertyValueEditor(
                         state = colorPickerState,
                     )
                 }
-
             }
             if (showEditColorStrDialog) {
                 var showValidationErrors by rememberSaveable { mutableStateOf(false) }
                 var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
-                var colorStr by rememberSaveable { mutableStateOf(colorPickerStr) }
+                var colorStr by rememberSaveable { mutableStateOf(colorPickerStr.stripUnicodeCtrlChars()) }
                 val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggSolidColorValue, colorStr)
                 JetPrefAlertDialog(
                     title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),

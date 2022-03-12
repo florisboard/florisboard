@@ -33,4 +33,10 @@ object UnicodeCtrlChar {
 
     /** Closes a previously opened isolated text block */
     const val PopDirectionalIsolate = "\u2069"
+
+    val Matcher = """[$LeftToRightIsolate$RightToLeftIsolate$FirstStrongIsolate$PopDirectionalIsolate]""".toRegex()
+}
+
+fun String.stripUnicodeCtrlChars(): String {
+    return this.replace(UnicodeCtrlChar.Matcher, "")
 }
