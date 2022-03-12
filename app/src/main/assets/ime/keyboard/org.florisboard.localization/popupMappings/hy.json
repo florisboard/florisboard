@@ -1,5 +1,8 @@
 {
   "all": {
+    "ե": {
+      "main": { "$": "auto_text_key", "code": 1415, "label": "և" }
+    },
     "~right": {
       "main": { "code":   44, "label": "," },
       "relevant": [
@@ -18,7 +21,8 @@
         { "code":   41, "label": ")" },
         { "code":   35, "label": "#" },
         { "code": 1372, "label": "՜" },
-        { "code": 1374, "label": "՞" }
+        { "code": 1374, "label": "՞" },
+        { "code": 1415, "label": "և" }
       ]
     }
   },
