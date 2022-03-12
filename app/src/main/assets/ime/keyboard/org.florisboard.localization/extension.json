@@ -477,6 +477,16 @@
       }
     },
     {
+      "languageTag": "hy",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:armenian_dram",
+      "popupMapping": "org.florisboard.localization:hy",
+      "preferred": {
+        "characters": "org.florisboard.layouts:eastern_armenian",
+        "symbols": "org.florisboard.layouts:armenian"
+      }
+    },
+    {
       "languageTag": "ru",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",

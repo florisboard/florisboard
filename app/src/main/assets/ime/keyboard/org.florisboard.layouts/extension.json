@@ -25,6 +25,13 @@
         "modifier": "org.florisboard.layouts:armenian"
       },
       {
+        "id": "eastern_armenian",
+        "label": "Armenian",
+        "authors": [ "PJTSearch" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian"
+      },
+      {
         "id": "azerty",
         "label": "AZERTY",
         "authors": [ "patrickgold" ],
