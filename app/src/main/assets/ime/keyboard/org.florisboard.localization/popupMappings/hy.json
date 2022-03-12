@@ -17,7 +17,7 @@
         { "code":   40, "label": "(" },
         { "code":   41, "label": ")" },
         { "code":   35, "label": "#" },
-        { "code":  372, "label": "՜" },
+        { "code": 1372, "label": "՜" },
         { "code": 1374, "label": "՞" }
       ]
     }
