@@ -1,0 +1,37 @@
+{
+  "all": {
+    "~right": {
+      "main": { "code":   44, "label": "," },
+      "relevant": [
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":  171, "label": "«" },
+        { "code":  187, "label": "»" },
+        { "code":   45, "label": "-" },
+        { "code": 1373, "label": "՝" },
+        { "code": 1371, "label": "՛" },
+        { "code":   64, "label": "@" },
+        { "code":   46, "label": "." },
+        { "code":   47, "label": "/" },
+        { "code":   40, "label": "(" },
+        { "code":   41, "label": ")" },
+        { "code":   35, "label": "#" },
+        { "code":  372, "label": "՜" },
+        { "code": 1374, "label": "՞" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".gov" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".gr" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" }
+      ]
+    }
+  }
+}

@@ -91,6 +91,10 @@
       "authors": [ "zoli111, gabik65" ]
     },
     {
+      "id": "hy",
+      "authors": [ "PJTSearch" ]
+    },
+    {
       "id": "is",
       "authors": [ "patrickgold" ]
     },
@@ -460,6 +464,16 @@
       "popupMapping": "org.florisboard.localization:hr",
       "preferred": {
         "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "hyw",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:armenian_dram",
+      "popupMapping": "org.florisboard.localization:hy",
+      "preferred": {
+        "characters": "org.florisboard.layouts:western_armenian",
+        "symbols": "org.florisboard.layouts:armenian"
       }
     },
     {
