@@ -951,7 +951,10 @@ class EditorInstance(private val ims: InputMethodService) {
             !isValid -> ""
             else -> when (val ic = inputConnection) {
                 null -> ""
-                else -> ic.getSelectedText(0).toString()
+                else -> when (val selectedText = ic.getSelectedText(0)) {
+                    null -> ""
+                    else -> selectedText.toString()
+                }
             }
         }
 
