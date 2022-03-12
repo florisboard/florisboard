@@ -57,12 +57,14 @@ fully respecting your privacy. Currently in early-beta state.
 Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summary) versioning scheme and enter the public beta on Google Play.
 
 ## Highlighted features
-- Spell checking service
-- Word suggestions (currently English only and may not work on all devices)
-- Glide typing (currently English only)
-- Advanced theming support and customization
 - Integrated clipboard manager / history
-- Emoji keyboard (although lacking some features)
+- Advanced theming support and customization
+- Integrated extension support (still evolving)
+- Emoji keyboard
+- Spell checking service
+- Glide typing (currently English only)
+
+Word suggestions are not included in the current releases and are a major goal for the v0.4.0 milestone.
 
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
@@ -78,18 +80,18 @@ Please refer to this [page](https://github.com/florisboard/florisboard/wiki/List
 to get more information on this topic.
 
 ## Used libraries, components and icons
-* [Google Flexbox Layout for Android](https://github.com/google/flexbox-layout)
-  by [google](https://github.com/google)
+* [AndroidX libraries](https://github.com/androidx/androidx) by
+  [Android Jetpack](https://github.com/androidx)
+* [Accompanist Compose UI libraries](https://github.com/google/accompanist/) by
+  [Google](https://github.com/google)
 * [Google Material icons](https://github.com/google/material-design-icons) by
-  [google](https://github.com/google)
+  [Google](https://github.com/google)
+* [JetPref preference library](https://github.com/patrickgold/jetpref) by
+  [patrickgold](https://github.com/patrickgold)
+* [KotlinX coroutines library](https://github.com/Kotlin/kotlinx.coroutines) by
+  [Kotlin](https://github.com/Kotlin)
 * [KotlinX serialization library](https://github.com/Kotlin/kotlinx.serialization) by
   [Kotlin](https://github.com/Kotlin)
-* [ColorPicker preference](https://github.com/jaredrummler/ColorPicker) by
-  [Jared Rummler](https://github.com/jaredrummler)
-* [Timber](https://github.com/JakeWharton/timber) by
-  [JakeWharton](https://github.com/JakeWharton)
-* [expandable-fab](https://github.com/nambicompany/expandable-fab) by
-  [Nambi](https://github.com/nambicompany)
 * [ICU4C](https://github.com/unicode-org/icu) by
   [The Unicode Consortium](https://github.com/unicode-org)
 * [Nuspell](https://github.com/nuspell/nuspell) by
@@ -97,7 +99,7 @@ to get more information on this topic.
 
 ## License
 ```
-Copyright 2020 Patrick Goldinger
+Copyright 2020-2022 Patrick Goldinger
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
