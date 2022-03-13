@@ -63,7 +63,7 @@
       ]
     },
     "s": {
-      "main": { "$": "auto_text_key", "code":  219, "label": "ș" },
+      "main": { "$": "auto_text_key", "code":  351, "label": "ş" },
       "relevant": [
         { "$": "auto_text_key", "code":  347, "label": "ś" },
         { "$": "auto_text_key", "code":  349, "label": "ŝ" },
