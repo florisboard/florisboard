@@ -112,7 +112,7 @@ data class SnyggStringValueSpec(
     override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
         checkNotNull(id)
         val valStr = str.trim()
-        check(valStr matches regex)
+        check(valStr matches regex) { "String \"$valStr\" does not match regex $regex" }
         dstMap.add(id to valStr)
         return dstMap
     }
@@ -120,7 +120,7 @@ data class SnyggStringValueSpec(
     override fun pack(srcMap: SnyggIdToValueMap): String {
         checkNotNull(id)
         val value = srcMap.getOrThrow<String>(id)
-        check(value matches regex)
+        check(value matches regex) { "String \"$value\" does not match regex $regex" }
         return value
     }
 }
