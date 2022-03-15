@@ -83,7 +83,7 @@ fun HomeScreen() = FlorisScreen {
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Beta-access to new Settings UI",
+                        text = "Not on the new Settings UI",
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold,
                     )
@@ -101,18 +101,12 @@ fun HomeScreen() = FlorisScreen {
                 }
                 if (!isCollapsed) {
                     Text("You are currently testing out the new Settings of FlorisBoard.\n")
-                    Text("If you want to give feedback on the development of the new prefs and keyboard logic, please do so in below linked feedback thread:\n")
-                    Button(onClick = {
-                        context.launchUrl("https://github.com/florisboard/florisboard/discussions/1235")
-                    }) {
-                        Text("Open Feedback Thread")
-                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Current version: ${BuildConfig.VERSION_NAME}\n")
-                    Text("List of unavailable features, will get implemented/fixed in the upcoming beta or stable releases:\n")
+                    Text("List of unavailable features, will get implemented/fixed in the upcoming stable releases:\n")
                     Text(" - Glide typing bug fixes -> glide works somewhat but long words tend to not get recognized")
                     Text(" - Word suggestions (will just show word + a number to test out if the UI works) (new suggestions in 0.4.0)\n")
-                    Text("Please do not file issues that above features do not work (especially word suggestions, it is more than known by now and the major goal for 0.4.0 after the preference rework and its hotfix phase has been completed). Thank you!\n")
+                    Text("Please do not file issues that above features do not work (especially word suggestions, it is more than known by now and the major goal for 0.4.0). Thank you!\n")
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
