@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
@@ -635,7 +636,12 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardCut(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        clipboardManager.addNewPlaintext(selection.icText)
+        val text = selection.icText
+        if (text != null) {
+            clipboardManager.addNewPlaintext(text)
+        } else {
+            ims.showShortToast("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
+        }
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
@@ -648,7 +654,12 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        clipboardManager.addNewPlaintext(selection.icText)
+        val text = selection.icText
+        if (text != null) {
+            clipboardManager.addNewPlaintext(text)
+        } else {
+            ims.showShortToast("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
+        }
         return selection.updateAndNotify(selection.end, selection.end)
     }
 
@@ -947,15 +958,9 @@ class EditorInstance(private val ims: InputMethodService) {
                 return if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
             }
 
-        val icText: String get() = when {
-            !isValid -> ""
-            else -> when (val ic = inputConnection) {
-                null -> ""
-                else -> when (val selectedText = ic.getSelectedText(0)) {
-                    null -> ""
-                    else -> selectedText.toString()
-                }
-            }
+        val icText: String? get() = when {
+            !isValid -> null
+            else -> inputConnection?.getSelectedText(0)?.toString()
         }
 
         /**
