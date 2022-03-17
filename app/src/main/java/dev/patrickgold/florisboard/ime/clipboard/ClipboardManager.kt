@@ -104,13 +104,6 @@ class ClipboardManager(
                 enforceExpiryDate(history())
             }
         }
-        //ioScope.launch {
-        //    try {
-        //        FlorisContentProvider.getInstance().init()
-        //    } catch (e: Exception) {
-        //        flogError { e.toString() }
-        //    }
-        //}
     }
 
     fun initializeForContext(context: Context) {
@@ -272,6 +265,10 @@ class ClipboardManager(
     fun deleteClip(item: ClipboardItem) {
         ioScope.launch {
             clipHistoryDao?.delete(item)
+            val uri = item.uri
+            if (uri != null) {
+                appContext.contentResolver.delete(uri, null, null)
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import java.io.File
 
 /**
  * Allows apps to access images on the clipboard.
@@ -35,37 +34,30 @@ import java.io.File
  * This is sometimes called by the UI thread, so all functions are non blocking.
  * Database accesses are performed async.
  */
-class FlorisContentProvider : ContentProvider() {
+class ClipboardImagesProvider : ContentProvider() {
     private var fileUriDao: FileUriDao? = null
-    private val mimeTypes: HashMap<Long, Array<String>> = hashMapOf()
+    private val cachedMimeTypes: HashMap<Long, Array<String>> = hashMapOf()
     private val ioScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     companion object {
-        const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.clip"
-        val CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY")
-        val CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips")
+        const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.clipboard"
+        val IMAGE_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/images")
 
-        private var instance: FlorisContentProvider? = null
+        private const val IMAGE_CLIP_ITEM = 0
+        private const val IMAGE_CLIPS_TABLE = 1
 
-        fun getInstance(): FlorisContentProvider {
-            return instance!!
-        }
-
-        private const val CLIPS_TABLE = 1
-        private const val CLIP_ITEM = 0
-
-        val matcher: UriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-            addURI(AUTHORITY, "clips/#", CLIP_ITEM)
-            addURI(AUTHORITY, "clips", CLIPS_TABLE)
+        val matcher = UriMatcher(UriMatcher.NO_MATCH).apply {
+            addURI(AUTHORITY, "clips/images/#", IMAGE_CLIP_ITEM)
+            addURI(AUTHORITY, "clips/images", IMAGE_CLIPS_TABLE)
         }
     }
 
-    override fun onCreate(): Boolean {
-        instance = this
-        return true
+    object Columns {
+        const val ImageUri = "image_uri"
+        const val MimeTypes = "mime_types"
     }
 
-    fun init(){
+    fun init() {
         fileUriDao = Room.databaseBuilder(
             context!!,
             FileUriDatabase::class.java,
@@ -73,8 +65,15 @@ class FlorisContentProvider : ContentProvider() {
         ).build().fileUriDao()
 
         for (fileUri in fileUriDao?.getAll() ?: emptyList()) {
-            mimeTypes[fileUri.fileName] = fileUri.mimeTypes
+            cachedMimeTypes[fileUri.fileName] = fileUri.mimeTypes
         }
+    }
+
+    override fun onCreate(): Boolean {
+        ioScope.launch {
+            init()
+        }
+        return true
     }
 
     override fun query(
@@ -84,64 +83,72 @@ class FlorisContentProvider : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        // just return nothing, nothing should call this function at all.
+        // Just return nothing, nothing should call this function at all.
         return null
     }
 
-    override fun getType(uri: Uri): String {
+    override fun getType(uri: Uri): String? {
         return when (matcher.match(uri)) {
-            CLIP_ITEM -> mimeTypes.getOrElse(ContentUris.parseId(uri), { throw IllegalArgumentException("Don't have this item!") })[0]
-            CLIPS_TABLE -> "vnd.android.cursor.dir/$AUTHORITY.clip"
-            else -> throw IllegalArgumentException("Don't know what this is $uri")
+            IMAGE_CLIP_ITEM -> cachedMimeTypes.getOrDefault(ContentUris.parseId(uri), null)?.getOrNull(0)
+            IMAGE_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.image_clip_table"
+            else -> null
+        }
+    }
+
+    override fun getStreamTypes(uri: Uri, mimeTypeFilter: String): Array<String>? {
+        return when (matcher.match(uri)) {
+            IMAGE_CLIP_ITEM -> cachedMimeTypes.getOrDefault(ContentUris.parseId(uri), null)
+            else -> null
         }
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor {
         val id = ContentUris.parseId(uri)
-        val path = File(FileStorage.getAddress(context!!, id))
+        val file = ClipboardFileStorage.getFileForId(context!!, id)
 
         // Nothing has permission to write anyway.
-        return ParcelFileDescriptor.open(path, ParcelFileDescriptor.MODE_READ_ONLY)
+        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri {
-        when (matcher.match(uri)){
-            CLIPS_TABLE -> {
-                val id = FileStorage.cloneURI(context!!, Uri.parse(values?.getAsString("uri"))).getOrElse {
-                    flogError(LogTopic.CLIPBOARD) { it.toString() }
-                    return uri.buildUpon().appendPath("0").build()
-                }
-                val mimes =  values?.getAsString("mimetypes")?.split(",")?.toTypedArray()
-                mimes?.let {
-                    mimeTypes[id] = mimes
+        when (matcher.match(uri)) {
+            IMAGE_CLIPS_TABLE -> {
+                return try {
+                    values as ContentValues
+                    val imageUri = Uri.parse(values.getAsString(Columns.ImageUri))
+                    val id = ClipboardFileStorage.cloneUri(context!!, imageUri)
+                    val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
+                    cachedMimeTypes[id] = mimeTypes
                     ioScope.launch {
-                        flogDebug { "Inserted file uri $id" }
-                        fileUriDao?.insert(FileUri(id, mimes))
+                        fileUriDao?.insert(FileUri(id, mimeTypes))
                     }
+                    ContentUris.withAppendedId(IMAGE_CLIPS_URI, id)
+                } catch (e: Exception) {
+                    flogError { e.message.toString() }
+                    uri.buildUpon().appendPath("0").build()
                 }
-                return ContentUris.withAppendedId(CLIPS_URI, id)
             }
-            else -> throw IllegalArgumentException("Don't know what this is $uri")
+            else -> error("Unable to identify type of $uri")
         }
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
         when (matcher.match(uri)){
-            CLIP_ITEM -> {
+            IMAGE_CLIP_ITEM -> {
                 val id = ContentUris.parseId(uri)
-                FileStorage.deleteById(context!!, id)
-                mimeTypes.remove(id)
+                ClipboardFileStorage.deleteById(context!!, id)
+                cachedMimeTypes.remove(id)
                 context?.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 ioScope.launch {
                     fileUriDao?.delete(id)
                 }
                 return 1
             }
-            else -> throw IllegalArgumentException("Don't know what this is $uri")
+            else -> error("Unable to identify type of $uri")
         }
     }
 
     override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
-        throw IllegalArgumentException("This ContentProvider does not support update.")
+        error("This ContentProvider does not support update.")
     }
 }

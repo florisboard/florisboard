@@ -401,7 +401,7 @@ class EditorInstance(private val ims: InputMethodService) {
                 val inputContentInfo = InputContentInfoCompat(
                     item.uri!!,
                     ClipDescription("clipboard image", mimeTypes),
-                    null
+                    null,
                 )
                 val ic = inputConnection ?: return false
                 ic.finishComposingText()
@@ -410,9 +410,9 @@ class EditorInstance(private val ims: InputMethodService) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 } else {
                     ims.grantUriPermission(
-                        editorInfo!!.packageName ?: "",
+                        editorInfo!!.packageName,
                         item.uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION,
                     )
                 }
                 InputConnectionCompat.commitContent(ic, editorInfo!!, inputContentInfo, flags, null)

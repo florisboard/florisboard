@@ -16,9 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.clipboard
 
+import android.content.ContentUris
+import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -49,6 +52,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -74,13 +78,16 @@ import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
+import dev.patrickgold.florisboard.snygg.ui.NoContentPadding
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.snygg.ui.snyggBorder
@@ -195,7 +202,7 @@ fun ClipboardInputLayout(
                 .padding(ItemMargin),
             style = style,
             clip = true,
-            contentPadding = ItemPadding,
+            contentPadding = if (item.type == ItemType.IMAGE) NoContentPadding else ItemPadding,
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -208,12 +215,24 @@ fun ClipboardInputLayout(
                 },
             ),
         ) {
-            Text(
-                text = item.stringRepresentation(),
-                style = TextStyle(textDirection = TextDirection.ContentOrLtr),
-                color = style.foreground.solidColor(),
-                fontSize = style.fontSize.spSize(),
-            )
+            if (item.type == ItemType.IMAGE) {
+                val id = ContentUris.parseId(item.uri!!)
+                val file = ClipboardFileStorage.getFileForId(context, id)
+                val bitmap = remember(id) {
+                    BitmapFactory.decodeFile(file.absolutePath).asImageBitmap()
+                }
+                Image(
+                    bitmap = bitmap,
+                    contentDescription = null,
+                )
+            } else {
+                Text(
+                    text = item.stringRepresentation(),
+                    style = TextStyle(textDirection = TextDirection.ContentOrLtr),
+                    color = style.foreground.solidColor(),
+                    fontSize = style.fontSize.spSize(),
+                )
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
+private const val CLIPBOARD_FILE_URI_TABLE = "clipboard_file_uris"
 
 enum class ItemType(val value: Int) {
     TEXT(1),
@@ -78,34 +79,31 @@ data class ClipboardItem(
          * Returns a new ClipboardItem based on a ClipData.
          *
          * @param data The ClipData to clone.
-         * @param cloneUri Whether to store the image using [FlorisContentProvider].
+         * @param cloneUri Whether to store the image using [ClipboardImagesProvider].
          */
         fun fromClipData(context: Context, data: ClipData, cloneUri: Boolean) : ClipboardItem {
+            val dataItem = data.getItemAt(0)
             val type = when {
-                data.getItemAt(0)?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
+                dataItem?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
                 else -> ItemType.TEXT
             }
 
             val uri = if (type == ItemType.IMAGE) {
-                if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority || !cloneUri){
-                    data.getItemAt(0).uri
-                }else {
-                    val values = ContentValues().apply{
-                        put("uri", data.getItemAt(0).uri.toString())
-                        put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
+                if (dataItem.uri.authority == ClipboardImagesProvider.AUTHORITY || !cloneUri){
+                    dataItem.uri
+                } else {
+                    val values = ContentValues(2).apply {
+                        put(ClipboardImagesProvider.Columns.ImageUri, dataItem.uri.toString())
+                        put(ClipboardImagesProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
                     }
-                    context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
+                    context.contentResolver.insert(ClipboardImagesProvider.IMAGE_CLIPS_URI, values)
                 }
             } else { null }
 
-            val text = context.let { data.getItemAt(0).coerceToText(it).toString() }
+            val text = dataItem.coerceToText(context).toString()
             val mimeTypes = when (type) {
-                ItemType.IMAGE -> {
-                    (0 until data.description.mimeTypeCount).map {
-                        data.description.getMimeType(it)
-                    }.toTypedArray()
-                }
-                ItemType.TEXT -> { TEXT_PLAIN }
+                ItemType.IMAGE -> Array(data.description.mimeTypeCount) { data.description.getMimeType(it) }
+                ItemType.TEXT -> TEXT_PLAIN
             }
 
             return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes)
@@ -119,8 +117,6 @@ data class ClipboardItem(
             ItemType.IMAGE -> uri == other.getItemAt(0).uri
         }
     }
-
-    infix fun isNotEqualTo(other: ClipData?): Boolean = !(this isEqualTo other)
 
     /**
      * Creates a new ClipData which has the same contents as this.
@@ -266,7 +262,7 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
     }
 }
 
-@Entity(tableName = "file_uris")
+@Entity(tableName = CLIPBOARD_FILE_URI_TABLE)
 data class FileUri(
     @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val fileName: Long,
     val mimeTypes: Array<String>
@@ -292,19 +288,19 @@ data class FileUri(
 
 @Dao
 interface FileUriDao {
-    @Query("SELECT * FROM file_uris WHERE ${BaseColumns._ID} == (:uid)")
+    @Query("SELECT * FROM $CLIPBOARD_FILE_URI_TABLE WHERE ${BaseColumns._ID} == (:uid)")
     fun getById(uid: Long) : FileUri
 
-    @Query("DELETE FROM file_uris WHERE ${BaseColumns._ID} == (:id)")
+    @Query("DELETE FROM $CLIPBOARD_FILE_URI_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
 
     @Insert
     fun insert(vararg fileUris: FileUri)
 
-    @Query("SELECT COUNT(*) FROM file_uris WHERE ${BaseColumns._ID} == (:id)")
+    @Query("SELECT COUNT(*) FROM $CLIPBOARD_FILE_URI_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun numberWithId(id: Long): Int
 
-    @Query("SELECT * FROM file_uris")
+    @Query("SELECT * FROM $CLIPBOARD_FILE_URI_TABLE")
     fun getAll(): List<FileUri>
 }
 
