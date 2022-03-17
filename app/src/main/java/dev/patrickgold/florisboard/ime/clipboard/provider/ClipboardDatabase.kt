@@ -19,13 +19,16 @@ package dev.patrickgold.florisboard.ime.clipboard.provider
 import android.content.ClipData
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
+import android.provider.OpenableColumns
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
-private const val CLIPBOARD_FILE_URI_TABLE = "clipboard_file_uris"
+private const val CLIPBOARD_FILES_TABLE = "clipboard_files"
 
 enum class ItemType(val value: Int) {
     TEXT(1),
@@ -61,6 +64,7 @@ data class ClipboardItem(
          * So that every item doesn't have to allocate its own array.
          */
         private val TEXT_PLAIN = arrayOf("text/plain")
+        private val MEDIA_PROJECTION = arrayOf(OpenableColumns.DISPLAY_NAME)
 
         const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
 
@@ -92,7 +96,15 @@ data class ClipboardItem(
                 if (dataItem.uri.authority == ClipboardImagesProvider.AUTHORITY || !cloneUri){
                     dataItem.uri
                 } else {
+                    var displayName = "unknown"
+                    context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION, null, null, null).use { cursor ->
+                        tryOrNull {
+                            cursor?.moveToFirst()
+                            cursor?.getString(0)?.let { displayName = it }
+                        }
+                    }
                     val values = ContentValues(2).apply {
+                        put(OpenableColumns.DISPLAY_NAME, displayName)
                         put(ClipboardImagesProvider.Columns.ImageUri, dataItem.uri.toString())
                         put(ClipboardImagesProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
                     }
@@ -262,50 +274,67 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
     }
 }
 
-@Entity(tableName = CLIPBOARD_FILE_URI_TABLE)
-data class FileUri(
-    @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val fileName: Long,
-    val mimeTypes: Array<String>
+@Entity(tableName = CLIPBOARD_FILES_TABLE)
+data class ClipboardFileInfo(
+    @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
+    @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
+    @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
+    val mimeTypes: Array<String>,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as FileUri
+        other as ClipboardFileInfo
 
-        if (fileName != other.fileName) return false
+        if (id != other.id) return false
+        if (displayName != other.displayName) return false
+        if (size != other.size) return false
         if (!mimeTypes.contentEquals(other.mimeTypes)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = 31 + fileName.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + displayName.hashCode()
+        result = 31 * result + size.hashCode()
         result = 31 * result + mimeTypes.contentHashCode()
         return result
     }
 }
 
 @Dao
-interface FileUriDao {
-    @Query("SELECT * FROM $CLIPBOARD_FILE_URI_TABLE WHERE ${BaseColumns._ID} == (:uid)")
-    fun getById(uid: Long) : FileUri
+interface ClipboardFilesDao {
+    @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
+    fun getById(uid: Long) : ClipboardFileInfo
 
-    @Query("DELETE FROM $CLIPBOARD_FILE_URI_TABLE WHERE ${BaseColumns._ID} == (:id)")
+    @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
+    fun getCursorById(uid: Long) : Cursor
+
+    @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
 
     @Insert
-    fun insert(vararg fileUris: FileUri)
+    fun insert(vararg clipboardFileInfos: ClipboardFileInfo)
 
-    @Query("SELECT COUNT(*) FROM $CLIPBOARD_FILE_URI_TABLE WHERE ${BaseColumns._ID} == (:id)")
-    fun numberWithId(id: Long): Int
-
-    @Query("SELECT * FROM $CLIPBOARD_FILE_URI_TABLE")
-    fun getAll(): List<FileUri>
+    @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE")
+    fun getAll(): List<ClipboardFileInfo>
 }
 
-@Database(entities = [FileUri::class], version = 1)
+@Database(entities = [ClipboardFileInfo::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class FileUriDatabase : RoomDatabase() {
-    abstract fun fileUriDao() : FileUriDao
+abstract class ClipboardFilesDatabase : RoomDatabase() {
+    abstract fun clipboardFilesDao() : ClipboardFilesDao
+
+    companion object {
+        fun new(context: Context): ClipboardFilesDatabase {
+            return Room
+                .databaseBuilder(
+                    context, ClipboardFilesDatabase::class.java, CLIPBOARD_FILES_TABLE,
+                )
+                .fallbackToDestructiveMigration()
+                .build()
+        }
+    }
 }

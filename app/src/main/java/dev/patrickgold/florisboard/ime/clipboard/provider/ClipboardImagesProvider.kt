@@ -20,8 +20,9 @@ import android.content.*
 import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
-import androidx.room.Room
+import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.debug.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,8 +36,8 @@ import kotlinx.coroutines.launch
  * Database accesses are performed async.
  */
 class ClipboardImagesProvider : ContentProvider() {
-    private var fileUriDao: FileUriDao? = null
-    private val cachedMimeTypes: HashMap<Long, Array<String>> = hashMapOf()
+    private var clipboardFilesDao: ClipboardFilesDao? = null
+    private val cachedFileInfos: HashMap<Long, ClipboardFileInfo> = hashMapOf()
     private val ioScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     companion object {
@@ -58,14 +59,10 @@ class ClipboardImagesProvider : ContentProvider() {
     }
 
     fun init() {
-        fileUriDao = Room.databaseBuilder(
-            context!!,
-            FileUriDatabase::class.java,
-            "fileuridb",
-        ).build().fileUriDao()
+        clipboardFilesDao = ClipboardFilesDatabase.new(context!!).clipboardFilesDao()
 
-        for (fileUri in fileUriDao?.getAll() ?: emptyList()) {
-            cachedMimeTypes[fileUri.fileName] = fileUri.mimeTypes
+        for (clipboardFileInfo in clipboardFilesDao?.getAll() ?: emptyList()) {
+            cachedFileInfos[clipboardFileInfo.id] = clipboardFileInfo
         }
     }
 
@@ -83,13 +80,13 @@ class ClipboardImagesProvider : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        // Just return nothing, nothing should call this function at all.
-        return null
+        val id = tryOrNull { ContentUris.parseId(uri) } ?: return null
+        return clipboardFilesDao?.getCursorById(id)
     }
 
     override fun getType(uri: Uri): String? {
         return when (matcher.match(uri)) {
-            IMAGE_CLIP_ITEM -> cachedMimeTypes.getOrDefault(ContentUris.parseId(uri), null)?.getOrNull(0)
+            IMAGE_CLIP_ITEM -> cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.getOrNull(0)
             IMAGE_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.image_clip_table"
             else -> null
         }
@@ -97,7 +94,7 @@ class ClipboardImagesProvider : ContentProvider() {
 
     override fun getStreamTypes(uri: Uri, mimeTypeFilter: String): Array<String>? {
         return when (matcher.match(uri)) {
-            IMAGE_CLIP_ITEM -> cachedMimeTypes.getOrDefault(ContentUris.parseId(uri), null)
+            IMAGE_CLIP_ITEM -> cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes
             else -> null
         }
     }
@@ -117,10 +114,13 @@ class ClipboardImagesProvider : ContentProvider() {
                     values as ContentValues
                     val imageUri = Uri.parse(values.getAsString(Columns.ImageUri))
                     val id = ClipboardFileStorage.cloneUri(context!!, imageUri)
+                    val size = ClipboardFileStorage.getFileForId(context!!, id).length()
                     val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
-                    cachedMimeTypes[id] = mimeTypes
+                    val displayName = values.getAsString(OpenableColumns.DISPLAY_NAME)
+                    val fileInfo = ClipboardFileInfo(id, displayName, size, mimeTypes)
+                    cachedFileInfos[id] = fileInfo
                     ioScope.launch {
-                        fileUriDao?.insert(FileUri(id, mimeTypes))
+                        clipboardFilesDao?.insert(fileInfo)
                     }
                     ContentUris.withAppendedId(IMAGE_CLIPS_URI, id)
                 } catch (e: Exception) {
@@ -137,10 +137,10 @@ class ClipboardImagesProvider : ContentProvider() {
             IMAGE_CLIP_ITEM -> {
                 val id = ContentUris.parseId(uri)
                 ClipboardFileStorage.deleteById(context!!, id)
-                cachedMimeTypes.remove(id)
+                cachedFileInfos.remove(id)
                 context?.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 ioScope.launch {
-                    fileUriDao?.delete(id)
+                    clipboardFilesDao?.delete(id)
                 }
                 return 1
             }
