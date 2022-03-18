@@ -36,6 +36,13 @@ import kotlin.contracts.contract
  */
 inline fun ContentResolver.query(uri: Uri) = this.query(uri, null, null, null, null)
 
+/**
+ * Shorthand function for querying a Uri and projection without any other arguments.
+ *
+ * @see android.content.ContentResolver.query
+ */
+inline fun ContentResolver.query(uri: Uri, projection: Array<String>) = this.query(uri, projection, null, null, null)
+
 inline fun ContentResolver.read(uri: Uri, maxSize: Long = Long.MAX_VALUE, block: (InputStream) -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)

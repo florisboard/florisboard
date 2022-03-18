@@ -23,8 +23,10 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.OpenableColumns
+import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import dev.patrickgold.florisboard.common.android.query
 import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
@@ -93,17 +95,19 @@ data class ClipboardItem(
             }
 
             val uri = if (type == ItemType.IMAGE) {
-                if (dataItem.uri.authority == ClipboardImagesProvider.AUTHORITY || !cloneUri){
+                if (dataItem.uri.authority == ClipboardImagesProvider.AUTHORITY || !cloneUri) {
                     dataItem.uri
                 } else {
                     var displayName = "Image"
                     tryOrNull {
-                        context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION, null, null, null).use { cursor ->
-                            cursor?.moveToFirst()
-                            cursor?.getString(0)?.let { displayName = it }
+                        context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION)?.use { cursor ->
+                            val displayNameColumn = cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
+                            if (cursor.moveToNext()) {
+                                cursor.getStringOrNull(displayNameColumn)?.let { displayName = it }
+                            }
                         }
                     }
-                    val values = ContentValues(2).apply {
+                    val values = ContentValues(3).apply {
                         put(OpenableColumns.DISPLAY_NAME, displayName)
                         put(ClipboardImagesProvider.Columns.ImageUri, dataItem.uri.toString())
                         put(ClipboardImagesProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
