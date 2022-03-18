@@ -242,7 +242,11 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">بچووککراوە پیت</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">پیشاندانی پیتە لاوەکییەکانی خانەی دووەمی بەشی هێماکان</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی هێماکانی خانەی دووەم</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">ماوەی دەست راگرتن بۆ پیتە لاوەکییەکان</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">گەڕانەوە بۆ تەختەکلیل</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">بەدەستدان لە دوگمەی بۆشایی لەبەشی هێما یان ژمارەکان راستەوخۆ ئەگرێتەوە بۆ بەشی تەختەکلیل</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">بەشی سەرەوە</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
@@ -258,6 +262,7 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">پێشنیارکردن و ڕاستکردنەوە</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پیشاندانی پێشنیاری تەواوکەری خۆکاری </string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
@@ -331,6 +336,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">پیشاندانی ئایکۆنی بەرنامەکە</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">هەمیشە پیشان ئەدرێ لە ئەندرۆیدی 10 بەرەوسەر</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">چالاککردنی دۆخی تایبەت</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">ناچالاککردنی ئەو تایبەتمەندیانەی پەیوەستن بە پارێزگارییەوە</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">هەڵەی ڕێنووس</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">بەکارهێنانی ڕێکخستنی بەرنامەکە</string>

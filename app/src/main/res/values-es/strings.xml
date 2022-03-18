@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderas</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No se han encontrado emojis que se hayan usado recientemente. Una vez empieces a usar emojis, aparecerán automáticamente aquí.</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Se ha removido {emoji} de los emojis recientes</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Cambio de acción rápida. Si se pulsa, cambia entre las sugerencias de palabras y los botones de acción rápida.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Salir del panel de edición de texto.</string>
@@ -95,6 +96,7 @@
     <string name="settings__theme_editor__fine_tune__title">Editor de ajuste fino</string>
     <string name="settings__theme_editor__fine_tune__level">Nivel de edición</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Mostrar colores como</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostrar teclado después de diálogos</string>
     <string name="settings__theme_editor__add_rule">Añadir regla</string>
     <string name="settings__theme_editor__edit_rule">Editar regla</string>
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
@@ -126,6 +128,7 @@
     <string name="snygg__rule_element__one_handed_panel">Panel a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Fila principal de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Fila secundaria de barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Barra inteligente de acciones rápidas</string>
     <string name="snygg__rule_element__smartbar_key">Tecla de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palabra candidata de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidato de barra inteligente</string>
@@ -162,6 +165,7 @@
     <string name="snygg__property_name__var_on_surface_variant">Primer plano de superficie (variante)</string>
     <string name="snygg__property_name__var_shape">Forma común</string>
     <string name="snygg__property_name__var_shape_variant">Forma común (variante)</string>
+    <string name="snygg__property_value__explicit_inherit">Heredar</string>
     <string name="snygg__property_value__solid_color">Color sólido</string>
     <string name="snygg__property_value__image_ref">Referencia de imagen</string>
     <string name="snygg__property_value__rectangle_shape">Forma rectangular</string>
@@ -228,14 +232,25 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Presionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar emergente al pulsar una tecla</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Acentos incluyen emergentes de símbolos</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Añadir emergentes de símbolos al diseño predeterminado de acentos</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retardo de la pulsación larga</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaciadora cambia a caracteres</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automáticamente regresa a los caracteres al estar en teclado numérico o de símbolos</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Diseño de filas</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Acciones principales</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción principal según el estado actual</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Acciones secundarias</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar fila de acciones secundarias</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugerencias &amp; Correciones</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Muestra sugerencias inline ofrecidas por servicios de autocompletado</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de visualización de sugerencias</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugerencias del contenido del portapapeles</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Tiempo de espera de sugerencias del portapapeles</string>
@@ -309,6 +324,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar icono de la aplicación en el launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Habilitado siempre en Android 10+ debido a restricciones del sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar modo privado</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Deshabilita funciones que trabajan con sus datos de entrada</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Corrector ortográfico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuración del corrector ortográfico del teclado</string>
@@ -442,6 +458,7 @@
     <string name="clipboard__cleared_primary_clip">Clip principal borrado</string>
     <string name="clipboard__cleared_history">Historial borrado</string>
     <string name="clipboard__cleared_full_history">Historial completo borrado</string>
+    <string name="clipboard__confirm_clear_history__message">¿Está seguro de querer borrar su historial de portapapeles?</string>
     <string name="settings__clipboard__title">Portapapeles</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar portapapeles interno</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usar portapapeles interno en vez del portapapeles del sistema</string>
@@ -482,6 +499,7 @@
     <!-- Extension strings -->
     <string name="ext__meta__authors">Autores</string>
     <string name="ext__meta__components">Componentes agrupados</string>
+    <string name="ext__meta__components_theme">Temas agrupados</string>
     <string name="ext__meta__components_none_found">Esta extensión de fichero no contiene ningún componente agrupado.</string>
     <string name="ext__meta__description">Descripción</string>
     <string name="ext__meta__homepage">Página de inicio</string>
@@ -567,6 +585,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">ej. {example}</string>
     <string name="general__no_browser_app_found_for_url">No se ha encontrado ninguna aplicación de navegador para manejar la URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; seleccionar &#45;</string>
+    <string name="general__unlimited">Sin límite</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Retrato</string>
     <string name="screen_orientation__landscape">Paisaje</string>
@@ -586,9 +605,23 @@
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rojo Verde Azul Alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostrar siempre</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Mostrar siempre el teclado al cerrar un editor de diálogo</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">No mostrar nunca</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">No mostrar el teclado al cerrar un editor de diálogo</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Recordar último estado</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Mostrar el teclado al cerrar un editor de diálogo si había sido mostrado anteriormente</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Región de sistema</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Región nativa</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Tono de piel predeterminado</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Piel clara</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Piel clara intermedia</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Piel intermedia</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Piel oscura intermedia</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Piel oscura</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Cabello predeterminado</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Cabello rojizo</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cabello rizado</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cabello blanco</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Calvo</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Acento es prioridad</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el acento principal, o el símbolo si no hay acento principal disponible</string>
@@ -611,6 +644,9 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Ubica la fila secundaria entre la fila principal y el texto del teclado</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superponer la interfaz de usuario de la aplicación</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Acciones rápidas</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Herramientas del cursor de portapapeles</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Fila con las herramientas de cursor y portapapeles comúnmente utilizadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avanzado</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Desarrollador</string>

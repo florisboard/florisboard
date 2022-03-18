@@ -165,6 +165,19 @@
     <string name="snygg__property_name__var_primary_variant">プライマリーカラー(バリアント)</string>
     <string name="snygg__property_name__var_secondary">セカンダリーカラー</string>
     <string name="snygg__property_name__var_secondary_variant">セカンダリーカラー(バリアント)</string>
+    <string name="snygg__property_name__var_background">共通の背景</string>
+    <string name="snygg__property_name__var_surface">共通の表面</string>
+    <string name="snygg__property_name__var_surface_variant">共通の表面(バリアント)</string>
+    <string name="snygg__property_name__var_on_primary">プライマリの前景</string>
+    <string name="snygg__property_name__var_on_secondary">セカンダリの前景</string>
+    <string name="snygg__property_name__var_on_background">背景の前景</string>
+    <string name="snygg__property_name__var_on_surface">表面の前景</string>
+    <string name="snygg__property_name__var_on_surface_variant">表面の前景(バリアント)</string>
+    <string name="snygg__property_name__var_shape">一般的な形状</string>
+    <string name="snygg__property_name__var_shape_variant">一般的な形状(バリアント)</string>
+    <string name="snygg__property_value__explicit_inherit">継承</string>
+    <string name="snygg__property_value__solid_color">ソリッドカラー</string>
+    <string name="snygg__property_value__image_ref">画像リファレンス</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- Spelling UI strings -->
