@@ -133,7 +133,7 @@ class ClipboardImagesProvider : ContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        when (matcher.match(uri)){
+        when (matcher.match(uri)) {
             IMAGE_CLIP_ITEM -> {
                 val id = ContentUris.parseId(uri)
                 ClipboardFileStorage.deleteById(context!!, id)

@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.common.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.common.android.systemService
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -265,9 +266,11 @@ class ClipboardManager(
     fun deleteClip(item: ClipboardItem) {
         ioScope.launch {
             clipHistoryDao?.delete(item)
-            val uri = item.uri
-            if (uri != null) {
-                appContext.contentResolver.delete(uri, null, null)
+            tryOrNull {
+                val uri = item.uri
+                if (uri != null) {
+                    appContext.contentResolver.delete(uri, null, null)
+                }
             }
         }
     }
