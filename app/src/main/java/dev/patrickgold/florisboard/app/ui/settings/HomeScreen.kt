@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -32,11 +31,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -45,7 +44,6 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.android.launchUrl
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 
@@ -83,7 +81,7 @@ fun HomeScreen() = FlorisScreen {
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Not on the new Settings UI",
+                        text = "Note on the new Settings UI",
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold,
                     )
@@ -100,13 +98,11 @@ fun HomeScreen() = FlorisScreen {
                     }
                 }
                 if (!isCollapsed) {
-                    Text("You are currently testing out the new Settings of FlorisBoard.\n")
+                    Text("Welcome to the new Settings of FlorisBoard!\n")
+                    Text("It has been quite a long time since 0.3.13, but since then a lot has changed. FlorisBoard has undergone a major overhaul and now uses a completely new UI library, backend logic and also the Settings have been completely revamped. A big thanks goes to all my beta testers who continuously provided feedback and tested things out, this made the development much more interactive and better!\n")
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Current version: ${BuildConfig.VERSION_NAME}\n")
-                    Text("List of unavailable features, will get implemented/fixed in the upcoming stable releases:\n")
-                    Text(" - Glide typing bug fixes -> glide works somewhat but long words tend to not get recognized")
-                    Text(" - Word suggestions (will just show word + a number to test out if the UI works) (new suggestions in 0.4.0)\n")
-                    Text("Please do not file issues that above features do not work (especially word suggestions, it is more than known by now and the major goal for 0.4.0). Thank you!\n")
+                    Text("Note that this release does not contain support for word suggestions (will show the current word plus numbers as a placeholder).", color = Color.Red)
+                    Text("Please DO NOT file an issue for this. It is already more than known and a major goal for implementation in 0.4.0. Thank you!\n")
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
