@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.clipboard
 
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -27,6 +28,7 @@ import dev.patrickgold.florisboard.common.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.common.android.systemService
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +37,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.Closeable
 
@@ -93,6 +97,8 @@ class ClipboardManager(
     private val _history = MutableLiveData(ClipboardHistory.Empty)
     val history: LiveData<ClipboardHistory> get() = _history
 
+    private val primaryClipLastFromCallbackGuard = Mutex(locked = false)
+    private var primaryClipLastFromCallback: ClipData? = null
     private val _primaryClip = MutableLiveData<ClipboardItem?>(null)
     val primaryClip: LiveData<ClipboardItem?> get() = _primaryClip
 
@@ -104,13 +110,6 @@ class ClipboardManager(
                 enforceExpiryDate(history())
             }
         }
-        //ioScope.launch {
-        //    try {
-        //        FlorisContentProvider.getInstance().init()
-        //    } catch (e: Exception) {
-        //        flogError { e.toString() }
-        //    }
-        //}
     }
 
     fun initializeForContext(context: Context) {
@@ -160,23 +159,38 @@ class ClipboardManager(
     override fun onPrimaryClipChanged() {
         if (!prefs.clipboard.useInternalClipboard.get() || prefs.clipboard.syncToFloris.get()) {
             val systemPrimaryClip = systemClipboardManager.primaryClip
-            val internalPrimaryClip = primaryClip.value
+            ioScope.launch {
+                val isDuplicate: Boolean
+                primaryClipLastFromCallbackGuard.withLock {
+                    val a = primaryClipLastFromCallback?.getItemAt(0)
+                    val b = systemPrimaryClip?.getItemAt(0)
+                    isDuplicate = when {
+                        a === b || a == null && b == null -> true
+                        a == null || b == null -> false
+                        else -> a.text == b.text && a.uri == b.uri
+                    }
+                    primaryClipLastFromCallback = systemPrimaryClip
+                }
+                if (isDuplicate) return@launch
 
-            if (systemPrimaryClip == null) {
-                _primaryClip.postValue(null)
-                return
-            }
+                val internalPrimaryClip = primaryClip.value
 
-            if (systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
-                _primaryClip.postValue(null)
-                return
-            }
+                if (systemPrimaryClip == null) {
+                    _primaryClip.postValue(null)
+                    return@launch
+                }
 
-            val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
-            if (!isEqual) {
-                val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
-                _primaryClip.postValue(item)
-                insertOrMoveBeginning(item)
+                if (systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
+                    _primaryClip.postValue(null)
+                    return@launch
+                }
+
+                val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
+                if (!isEqual) {
+                    val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
+                    _primaryClip.postValue(item)
+                    insertOrMoveBeginning(item)
+                }
             }
         }
     }
@@ -272,6 +286,12 @@ class ClipboardManager(
     fun deleteClip(item: ClipboardItem) {
         ioScope.launch {
             clipHistoryDao?.delete(item)
+            tryOrNull {
+                val uri = item.uri
+                if (uri != null) {
+                    appContext.contentResolver.delete(uri, null, null)
+                }
+            }
         }
     }
 
