@@ -96,9 +96,9 @@ data class ClipboardItem(
                 if (dataItem.uri.authority == ClipboardImagesProvider.AUTHORITY || !cloneUri){
                     dataItem.uri
                 } else {
-                    var displayName = "unknown"
-                    context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION, null, null, null).use { cursor ->
-                        tryOrNull {
+                    var displayName = "Image"
+                    tryOrNull {
+                        context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION, null, null, null).use { cursor ->
                             cursor?.moveToFirst()
                             cursor?.getString(0)?.let { displayName = it }
                         }
