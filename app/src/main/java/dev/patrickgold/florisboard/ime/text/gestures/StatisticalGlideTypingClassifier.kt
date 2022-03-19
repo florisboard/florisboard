@@ -276,7 +276,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     ) {
 
         /** A tree that provides fast access to words based on their first and last letter.  */
-        private val wordTree = HashMap<Pair<Int, Int>, ArrayList<String>>()
+        private val wordTree = Collections.synchronizedMap(HashMap<Pair<Int, Int>, ArrayList<String>>())
 
         /**
          * Finds the words whose start and end letter are closest to the start and end points of the
@@ -300,7 +300,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             for (startKey in startKeys) {
                 for (endKey in endKeys) {
                     val keyPair = Pair(startKey, endKey)
-                    val wordsForKeys = wordTree[keyPair]
+                    val wordsForKeys = synchronized(wordTree) { wordTree[keyPair] }
                     if (wordsForKeys != null) {
                         remainingWords.addAll(wordsForKeys)
                     }
@@ -400,10 +400,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
 
         init {
-            for (word in words) {
-                val keyPair = getFirstKeyLastKey(word, keysByCharacter)
-                keyPair?.let {
-                    wordTree.getOrPut(keyPair, { arrayListOf() }).add(word)
+            synchronized(wordTree) {
+                for (word in words) {
+                    val keyPair = getFirstKeyLastKey(word, keysByCharacter)
+                    keyPair?.let {
+                        wordTree.getOrPut(keyPair) { arrayListOf() }.add(word)
+                    }
                 }
             }
         }
