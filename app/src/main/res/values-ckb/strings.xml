@@ -48,7 +48,7 @@
     <string name="settings__home__title" comment="Title of the Home screen">بەخێربێی بۆ {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">تەختەکلیلی FlorisBoard هێشتا چالاک نەکراوە لە ڕێکخستنەکانی سیستەمدا، پێویستە چالاکی بکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">تەختەکلیلی FlorisBoard چالاککراوە لە ڕێکخستنەکانی سیستەمدا بەڵام هەڵنەبژێردراوە بۆ بەکارهێنان وەک تەختەکلیلی سەرەکی، پێویستە دیاریبکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا بۆ هەڵبژاردن.</string>
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">زمان و تەختەکلیل</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">زمان و شێوازەکان</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">پیشاندانی ناوی زمان بەشێوەی</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">شێوازەکان</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">زیادکردنی زمان</string>
@@ -60,21 +60,21 @@
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">شێوازی دووەمی هێماکان</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">کۆدیک</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">دراوی بنەڕەتی</string>
-    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">شێوازی ژمارەکان</string>
-    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">شێوازی ژمارەکان (خانەی دووەم)</string>
-    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">شێوازی ژمارەکانی بەشی سەرەوە</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">لیستی ژمارەکان</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">لیستی ژمارەکان (خانەی دووەم)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">لیستی ژمارەکانی بەشی سەرەوە</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">شێوازی بنەڕەتی ژمارەکان (تەلەفۆن)</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">شێوازی دووەمی ژمارەکان (تەلەفۆن)</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">زمان دیاریبکە</string>
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">گەڕان بۆ زمان</string>
-    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">هیچ زمانێک نەدۆزرایەوە هاوشێوەی \"{search_term}\".</string>
-    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; دیاریبکە &#8210;</string>
-    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">هیچ زمانێک نەدۆزرایەوە بەناوی \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; دیارینەکراوە &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} \ {symbols_name} \ {currency_set_name}</string>
     <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">زمان و شێوازی پێشنیارکراو</string>
-    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">هیچ زمان و شێوازێک نییە بۆ پێشنیارکردن، لەڕێی ئەو دوگمەی خوارەوە زمانێک هەڵبژێرە.</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">هیچ زمان و شێوازێک نییە بۆ پێشنیارکردن، پەنجەبنێ بە دوگمەی زیادکردنی زمان دواتر زمانێک لە لیستەکەدا هەڵبژێرە بۆ زیادکردن.</string>
     <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">زمانەکان</string>
-    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">بینینی هەمووی</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">وا دیارە کە هیچ زمانێکی زیادە دانەنراوە بۆ نووسین، لەبەر ئەوەزمانی  زمانی ئینگلیزی(قوەرتی) بەبنەڕەتی بەکاردێت بۆ نووسین!</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">زیادکردنی زمان</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">هیچ زمان و شێوازێک زیاد نەکراوە بۆ نووسین، لەبەر ئەوە زمانی ئینگلیزی و شێوازی قوەرتی بەشێوەی بنەڕەتی بەکاردێت بۆ تەختەکلیلەکە!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">ئەم زمانە پێشتر زیادکراوە لە لیستەکەدا هەیە!</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">یەکێ لە خانەکان دیاری نەکراوە بۆ هەڵبژاردن، تکایە سەرجەمیان دیاریبکە.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (دانەبەزێنراوە)</string>
@@ -87,7 +87,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">تاریک</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">ڕووکاری هەڵبژێردراو</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">گۆڕینی ڕەنگی ڕووکار بەپێی بەرنامەکان</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">ڕەنگی ڕووکار بەخۆکاری دەگۆڕێت لەگەڵ ڕەنگی بەرنامەکان ئەگەر بەرنامەکە پستگیری هەمەڕەنگ بێت.</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">ڕەنگی ڕووکار بەخۆکاری دەگۆڕێت لەگەڵ ڕەنگی بەرنامەکان ئەگەر بەرنامەکە پشتگیری هەمەڕەنگ بێت.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">ڕەنگی بنەڕەتی بەرنامەکە</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">بیرگەی ناخۆیی</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">بیرگەی دەرەکی</string>
@@ -95,7 +95,7 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">ڕووکارەکانی دۆخی تاریک</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">ڕێکخستنی رووکارەکان</string>
     <string name="settings__theme_editor__fine_tune__title">گۆڕینی ڕەنگ</string>
-    <string name="settings__theme_editor__fine_tune__level">شێوازی دەستکاریکردن</string>
+    <string name="settings__theme_editor__fine_tune__level">ئاستی دەستکاریکردن</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">پیشاندانی ڕەنگەکان بەشێوەی</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">پیشاندانی تەختەکلیل دوای دەستکاریکردن</string>
     <string name="settings__theme_editor__add_rule">زیادکردن</string>
@@ -126,9 +126,9 @@
     <string name="snygg__rule_element__defines">گۆڕاو</string>
     <string name="snygg__rule_element__defines_description">پێناسەکردنی گۆڕاوەکان لەناو ئەم یاسایە بۆ دووبارە بەکارهێنانی ڕەنگەکان یان قەبارە باوەکان لە پەڕەی ستایڵەکەت.</string>
     <string name="snygg__rule_element__keyboard">پشتەوەی تەختەکلیل</string>
-    <string name="snygg__rule_element__key">دوگمەی</string>
+    <string name="snygg__rule_element__key">دوگمە</string>
     <string name="snygg__rule_element__key_hint">پیتە لاوەکییەکان</string>
-    <string name="snygg__rule_element__key_popup">بچووککراوەی پیت</string>
+    <string name="snygg__rule_element__key_popup">بچووکراوەی پیت</string>
     <string name="snygg__rule_element__clipboard_header">سەرەوەی لەبەرگیراوەکان</string>
     <string name="snygg__rule_element__clipboard_item">لەبەرگیراوەکان</string>
     <string name="snygg__rule_element__clipboard_item_popup">فرمانەکانی لەبەرگیراوەکان</string>
