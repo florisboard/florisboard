@@ -38,6 +38,7 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
@@ -867,7 +868,7 @@ class EditorInstance(private val ims: InputMethodService) {
         lastReportedComposingBounds = Bounds(-1, -1)
     }
 
-    internal fun normalizeBounds(start: Int, end: Int): Bounds {
+    private fun normalizeBounds(start: Int, end: Int): Bounds {
         return if (start > end) {
             Bounds(end, start)
         } else {
@@ -962,10 +963,12 @@ class EditorInstance(private val ims: InputMethodService) {
          */
         val text: String
             get() {
-                val eiText = cachedInput.rawText
-                val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
-                val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
-                return if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+                return tryOrNull {
+                    val eiText = cachedInput.rawText
+                    val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
+                    val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
+                    if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+                } ?: ""
             }
 
         val icText: String? get() = when {
@@ -1021,21 +1024,23 @@ class EditorInstance(private val ims: InputMethodService) {
             private set
 
         fun updateText(exText: ExtractedText?) {
-            if (exText == null) {
-                reset()
-                return
-            }
-            val sel = exText.getSelectionBounds()
-            if (selection.bounds != sel) {
-                flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
-                selection.bounds = sel
-            }
-            if (exText.isPartialChange()) {
-                val (partialStart, partialEnd) = exText.getPartialChangeBounds()
-                rawText.replace(partialStart, partialEnd, exText.getTextStr())
-            } else {
-                rawText.replace(0, rawText.length, exText.getTextStr())
-                offset = exText.startOffset.coerceAtLeast(0)
+            tryOrNull {
+                if (exText == null) {
+                    reset()
+                    return
+                }
+                val sel = exText.getSelectionBounds()
+                if (selection.bounds != sel) {
+                    flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
+                    selection.bounds = sel
+                }
+                if (exText.isPartialChange()) {
+                    val (partialStart, partialEnd) = exText.getPartialChangeBounds()
+                    rawText.replace(partialStart, partialEnd, exText.getTextStr())
+                } else {
+                    rawText.replace(0, rawText.length, exText.getTextStr())
+                    offset = exText.startOffset.coerceAtLeast(0)
+                }
             }
         }
 
