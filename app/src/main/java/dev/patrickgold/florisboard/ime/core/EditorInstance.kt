@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.ClipDescription
+import android.content.ContentUris
 import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
@@ -41,6 +42,7 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
@@ -398,8 +400,12 @@ class EditorInstance(private val ims: InputMethodService) {
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.IMAGE -> {
+                item.uri ?: return false
+                val id = ContentUris.parseId(item.uri)
+                val file = ClipboardFileStorage.getFileForId(ims, id)
+                if (!file.exists()) return false
                 val inputContentInfo = InputContentInfoCompat(
-                    item.uri!!,
+                    item.uri,
                     ClipDescription("clipboard image", mimeTypes),
                     null,
                 )
@@ -672,7 +678,11 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return commitClipboardItem(clipboardManager.primaryClip.value)
+        return commitClipboardItem(clipboardManager.primaryClip.value).also { result ->
+            if (!result) {
+                ims.showShortToast("Failed to paste item.")
+            }
+        }
     }
 
     /**
