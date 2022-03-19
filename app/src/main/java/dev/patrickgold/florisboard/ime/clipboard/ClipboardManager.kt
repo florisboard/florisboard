@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.common.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.common.android.setOrClearPrimaryClip
+import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.ime.clipboard.provider.*
@@ -309,7 +310,11 @@ class ClipboardManager(
 
     fun pasteItem(item: ClipboardItem) {
         val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return
-        activeEditorInstance.commitClipboardItem(item)
+        activeEditorInstance.commitClipboardItem(item).also { result ->
+            if (!result) {
+                appContext.showShortToast("Failed to paste item.")
+            }
+        }
     }
 
     /**

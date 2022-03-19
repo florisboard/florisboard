@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.ClipDescription
+import android.content.ContentUris
 import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
@@ -37,10 +38,12 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
@@ -398,8 +401,12 @@ class EditorInstance(private val ims: InputMethodService) {
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.IMAGE -> {
+                item.uri ?: return false
+                val id = ContentUris.parseId(item.uri)
+                val file = ClipboardFileStorage.getFileForId(ims, id)
+                if (!file.exists()) return false
                 val inputContentInfo = InputContentInfoCompat(
-                    item.uri!!,
+                    item.uri,
                     ClipDescription("clipboard image", mimeTypes),
                     null,
                 )
@@ -672,7 +679,11 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return commitClipboardItem(clipboardManager.primaryClip.value)
+        return commitClipboardItem(clipboardManager.primaryClip.value).also { result ->
+            if (!result) {
+                ims.showShortToast("Failed to paste item.")
+            }
+        }
     }
 
     /**
@@ -857,7 +868,7 @@ class EditorInstance(private val ims: InputMethodService) {
         lastReportedComposingBounds = Bounds(-1, -1)
     }
 
-    internal fun normalizeBounds(start: Int, end: Int): Bounds {
+    private fun normalizeBounds(start: Int, end: Int): Bounds {
         return if (start > end) {
             Bounds(end, start)
         } else {
@@ -952,10 +963,12 @@ class EditorInstance(private val ims: InputMethodService) {
          */
         val text: String
             get() {
-                val eiText = cachedInput.rawText
-                val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
-                val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
-                return if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+                return tryOrNull {
+                    val eiText = cachedInput.rawText
+                    val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
+                    val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
+                    if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+                } ?: ""
             }
 
         val icText: String? get() = when {
@@ -1011,21 +1024,23 @@ class EditorInstance(private val ims: InputMethodService) {
             private set
 
         fun updateText(exText: ExtractedText?) {
-            if (exText == null) {
-                reset()
-                return
-            }
-            val sel = exText.getSelectionBounds()
-            if (selection.bounds != sel) {
-                flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
-                selection.bounds = sel
-            }
-            if (exText.isPartialChange()) {
-                val (partialStart, partialEnd) = exText.getPartialChangeBounds()
-                rawText.replace(partialStart, partialEnd, exText.getTextStr())
-            } else {
-                rawText.replace(0, rawText.length, exText.getTextStr())
-                offset = exText.startOffset.coerceAtLeast(0)
+            tryOrNull {
+                if (exText == null) {
+                    reset()
+                    return
+                }
+                val sel = exText.getSelectionBounds()
+                if (selection.bounds != sel) {
+                    flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
+                    selection.bounds = sel
+                }
+                if (exText.isPartialChange()) {
+                    val (partialStart, partialEnd) = exText.getPartialChangeBounds()
+                    rawText.replace(partialStart, partialEnd, exText.getTextStr())
+                } else {
+                    rawText.replace(0, rawText.length, exText.getTextStr())
+                    offset = exText.startOffset.coerceAtLeast(0)
+                }
             }
         }
 

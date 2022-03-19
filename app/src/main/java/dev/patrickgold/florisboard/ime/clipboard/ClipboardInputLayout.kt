@@ -88,7 +88,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
-import dev.patrickgold.florisboard.snygg.ui.NoContentPadding
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.snygg.ui.snyggBorder
@@ -203,7 +202,6 @@ fun ClipboardInputLayout(
                 .padding(ItemMargin),
             style = style,
             clip = true,
-            contentPadding = if (item.type == ItemType.IMAGE) NoContentPadding else ItemPadding,
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -220,17 +218,36 @@ fun ClipboardInputLayout(
                 val id = ContentUris.parseId(item.uri!!)
                 val file = ClipboardFileStorage.getFileForId(context, id)
                 val bitmap = remember(id) {
-                    BitmapFactory.decodeFile(file.absolutePath).asImageBitmap()
+                    runCatching {
+                        check(file.exists()) { "Unable to resolve image at ${file.absolutePath}" }
+                        val rawBitmap = BitmapFactory.decodeFile(file.absolutePath)
+                        checkNotNull(rawBitmap) { "Unable to decode image at ${file.absolutePath}" }
+                        rawBitmap.asImageBitmap()
+                    }
                 }
-                Image(
-                    modifier = Modifier.fillMaxWidth(),
-                    bitmap = bitmap,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                )
+                if (bitmap.isSuccess) {
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        bitmap = bitmap.getOrThrow(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(ItemPadding),
+                        text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
+                        style = TextStyle(textDirection = TextDirection.Ltr),
+                        color = Color.Red,
+                        fontSize = style.fontSize.spSize(),
+                    )
+                }
             } else {
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(ItemPadding),
                     text = item.stringRepresentation(),
                     style = TextStyle(textDirection = TextDirection.ContentOrLtr),
                     color = style.foreground.solidColor(),
