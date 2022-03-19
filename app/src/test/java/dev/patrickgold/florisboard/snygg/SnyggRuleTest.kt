@@ -226,6 +226,11 @@ class SnyggRuleTest : FunSpec({
                 SnyggRule(element = "system-nav-bar", modes = listOf(1, 2)),
                 false,
             ),
+            row(
+                SnyggRule(element = "key", groups = listOf(10)),
+                SnyggRule(element = "key", groups = listOf(10, 113, 114)),
+                false,
+            ),
 
             row(
                 SnyggRule(element = "test", codes = listOf(10)),
