@@ -153,7 +153,7 @@ data class ClipboardItem(
      */
     fun close(context: Context) {
         if (type == ItemType.IMAGE) {
-            context.contentResolver.delete(this.uri!!, null, null)
+            tryOrNull { context.contentResolver.delete(this.uri!!, null, null) }
         }
     }
 
