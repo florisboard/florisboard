@@ -74,12 +74,14 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
 import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -247,6 +249,25 @@ fun TextKeyboardLayout(
                     top = key.visibleBounds.bottom - keyPopupHeight
                     right = left + keyPopupWidth
                     bottom = top + keyPopupHeight
+                }
+            },
+            isSuitableForBasicPopup = { key ->
+                if (key is TextKey) {
+                    val c = key.computedData.code
+                    val t = key.computedData.type
+                    val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
+                            keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
+                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
+                } else {
+                    true
+                }
+            },
+            isSuitableForExtendedPopup = { key ->
+                if (key is TextKey) {
+                    val c = key.computedData.code
+                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(c)
+                } else {
+                    true
                 }
             },
         )
