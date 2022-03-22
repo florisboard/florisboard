@@ -45,12 +45,13 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 
 @Composable
 fun rememberPopupUiController(
+    key1: Any?,
     boundsProvider: (key: Key) -> FlorisRect,
     isSuitableForBasicPopup: (key: Key) -> Boolean,
     isSuitableForExtendedPopup: (key: Key) -> Boolean,
 ): PopupUiController {
     val context = LocalContext.current
-    return remember(boundsProvider, isSuitableForBasicPopup, isSuitableForExtendedPopup) {
+    return remember(key1) {
         PopupUiController(context, boundsProvider, isSuitableForBasicPopup, isSuitableForExtendedPopup)
     }
 }

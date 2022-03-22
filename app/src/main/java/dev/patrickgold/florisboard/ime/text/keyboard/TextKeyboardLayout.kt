@@ -220,6 +220,7 @@ fun TextKeyboardLayout(
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
         val popupUiController = rememberPopupUiController(
+            key1 = keyboard,
             boundsProvider = { key ->
                 val keyPopupWidth: Float
                 val keyPopupHeight: Float
