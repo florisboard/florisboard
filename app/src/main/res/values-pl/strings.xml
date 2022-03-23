@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Przesuń klawiaturę w lewo.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Przesuń klawiaturę w prawo.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emoji</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Maksymalny rozmiar historii emoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Preferowany odcień skóry w emoji</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferowany styl włosów w emoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Buźki i emocje</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Osoby i części ciała</string>
@@ -22,6 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Przedmioty</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagi</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nie znaleziono ostatnio używanych emoji. Gdy zaczniesz wstawiać emoji, pojawią się one automatycznie tutaj.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Przytrzymaj ostatnio użyte emoji, aby usunąć je z tego widoku!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Usunięto {emoji} z ostatnio używanych emoji</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Przełącznik szybkich skrótów. Po naciśnięciu przełącza między podpowiedziami słów a przyciskami szybkich skrótów.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Wyjście z panelu edycji tekstu.</string>
@@ -42,6 +49,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie jest włączony w systemie i dlatego nie będzie dostępny jako metoda wprowadzania danych w oknie wyboru. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Język i układ</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Wyświetla nazwy języków w</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj układ</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edytuj układ</string>
@@ -86,6 +94,10 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Wybierz motyw dzienny</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Wybierz motyw nocny</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
+    <string name="settings__theme_editor__fine_tune__title">Dostosuj edytor</string>
+    <string name="settings__theme_editor__fine_tune__level">Edytuj poziom</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Wyświetl kolory jako</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Pokaż klawiaturę po dialogach</string>
     <string name="settings__theme_editor__add_rule">Dodaj regułę</string>
     <string name="settings__theme_editor__edit_rule">Edytuj regułę</string>
     <string name="settings__theme_editor__no_rules_defined">Ten arkusz stylów nie ma żadnych zdefiniowanych reguł. Dodaj regułę, aby rozpocząć dostosowywanie tego arkusza stylów.</string>
@@ -99,23 +111,67 @@
     <string name="settings__theme_editor__edit_code">Edytuj kod</string>
     <string name="settings__theme_editor__no_codes_defined">Brak zdefiniowanych kodów.</string>
     <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
+    <string name="settings__theme_editor__code_invalid">Ten kod jest nieprawidłowy. Upewnij się, że kod mieści się w zakresie od {c_min} do {c_max} dla znaków lub od {i_min} do {i_max} dla wewnętrznych kluczy specjalnych.</string>
+    <string name="settings__theme_editor__code_help_text">Poniższe linki pomogą Ci znaleźć odpowiedni kod:</string>
     <string name="settings__theme_editor__add_property">Dodaj właściwość</string>
     <string name="settings__theme_editor__edit_property">Edytuj właściwość</string>
     <string name="settings__theme_editor__property_already_exists">Właściwość o tej nazwie już istnieje w obecnej regule.</string>
     <string name="settings__theme_editor__property_name">Nazwa właściwości</string>
     <string name="settings__theme_editor__property_value">Wartość właściwości</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Zastosuj do wszystkich kątów</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Edytuj nazwy kolorów</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Jest nocnym motywem</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Jest bezramkowy</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Ścieżka arkusza stylów</string>
     <string name="snygg__rule_element__defines">Zmienne</string>
     <string name="snygg__rule_element__defines_description">Zdefiniuj zmienne w tej regule, aby ponownie użyć pospolitych kolorów lub rozmiarów w twoim arkuszu stylów.</string>
     <string name="snygg__rule_element__keyboard">Okno klawiatury</string>
     <string name="snygg__rule_element__key">Klawisz</string>
+    <string name="snygg__rule_element__key_hint">Klucz podpowiedzi</string>
+    <string name="snygg__rule_element__key_popup">Klucz popupu</string>
+    <string name="snygg__rule_element__clipboard_header">Nagłówek schowka</string>
+    <string name="snygg__rule_element__clipboard_item">Element schowka</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Popup elementu schowka</string>
+    <string name="snygg__rule_element__glide_trail">Ślad ślizgu</string>
+    <string name="snygg__rule_element__one_handed_panel">Panel jednoręczny</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Wiersz inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Wiersz inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Przełącznik podstawowych działań na inteligentnym pasku</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Przełącznik dodatkowych działań na inteligentnym pasku</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Szybkie działanie w inteligentnym pasku</string>
+    <string name="snygg__rule_element__smartbar_key">Klawisz inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Sugestia słowa inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Sugestia schowka inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Sugestia odstępu inteligentnego paska</string>
+    <string name="snygg__rule_element__system_nav_bar">Pasek nawigacji systemu</string>
     <string name="snygg__rule_selector__pressed">Naciśnięty</string>
+    <string name="snygg__rule_selector__disabled">Wyłączony</string>
     <string name="snygg__property_name__width">Szerokość</string>
     <string name="snygg__property_name__height">Wysokość</string>
     <string name="snygg__property_name__background">Tło</string>
+    <string name="snygg__property_name__foreground">Pierwszy plan</string>
+    <string name="snygg__property_name__border_color">Kolor obramowania</string>
+    <string name="snygg__property_name__border_style">Styl ramki</string>
+    <string name="snygg__property_name__border_width">Szerokość obramowania</string>
+    <string name="snygg__property_name__font_family">Rodzina czcionek</string>
+    <string name="snygg__property_name__font_size">Rozmiar czcionki</string>
+    <string name="snygg__property_name__font_style">Styl czcionki</string>
+    <string name="snygg__property_name__font_variant">Wariant czcionki</string>
+    <string name="snygg__property_name__font_weight">Grubość czcionki</string>
+    <string name="snygg__property_name__shape">Kształt</string>
+    <string name="snygg__property_name__var_primary">Kolor podstawowy</string>
+    <string name="snygg__property_name__var_primary_variant">Kolor podstawowy (wariant)</string>
+    <string name="snygg__property_name__var_secondary">Kolor dodatkowy</string>
+    <string name="snygg__property_name__var_secondary_variant">Kolor dodatkowy (wariant)</string>
+    <string name="snygg__property_name__var_background">Wspólne tło</string>
+    <string name="snygg__property_name__var_surface">Wspólna powierzchnia</string>
+    <string name="snygg__property_name__var_surface_variant">Wspólna powierzchnia (wariant)</string>
+    <string name="snygg__property_name__var_shape">Wspólny kształt</string>
+    <string name="snygg__property_name__var_shape_variant">Wspólny kształt (wariant)</string>
     <string name="snygg__property_value__explicit_inherit">Odziedzicz</string>
     <string name="snygg__property_value__solid_color">Jednolity kolor</string>
     <string name="snygg__property_value__rectangle_shape">Kształt prostokąta</string>
+    <string name="snygg__property_value__circle_shape">Kształt koła</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Kształt ze ściętymi kątami (dp)</string>
     <string name="snygg__property_value__cut_corner_shape_percent">Kształt ze ściętymi kątami (%)</string>
     <string name="snygg__property_value__rounded_corner_shape_dp">Kształt z zaokrąglonymi kątami (dp)</string>
@@ -164,6 +220,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Pokaż klucz użytkowy</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Pokazuje konfigurowalny klawisz użytkowy obok spacji</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Działanie klucza użytkowego</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Pokaż język na klawiszu spacji</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Wyświetla nazwę bieżącego aktywnego języka na klawiszu spacji</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tryb jednoręczny</string>
@@ -175,14 +233,27 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Widoczność Pop-Up</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pokaż Pop-Up po naciśnięciu klawiszów</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Akcenty obejmują popup z symbolami</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Dodaje symbol popupu do akcentów domyślnego układu</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Opóznienie długiego przytrzymania</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spacja przełącza na znaki</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatycznie przełącza się z powrotem na znaki w symbolach lub cyfrach</string>
     <!-- Smartbar strings -->
-    <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBar</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Inteligentny pasek</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Odwróć przyciski przełączania</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Odwraca wiersze akcji</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Układ wierszy</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Podstawowe akcje</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatycznie rozwiń/zwiń</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatycznie rozwiń/zwiń podstawowy wiersz akcji w oparciu o bieżący stan</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Dodatkowe akcje</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Pokaż dodatkowy pasek akcji</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestie &amp; Korekty</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Pokaż w wierszu wbudowane sugestie dostarczane przez usługi autouzupełniania</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Tryb wyświetlania sugestii</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Limit czasu sugestii schowka</string>
@@ -204,12 +275,23 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Dodawaj, przeglądaj i usuwaj wpisy z wewnętrznego słownika użytkownika</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Wewnętrzny Słownik Użytkownika</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Systemowy Słownik Użytkownika</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Ten słownik użytkownika nie zawiera żadnych słów.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Częstotliwość: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Częstotliwość: {freq} | Skrót: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Dla wszystkich języków</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Otwórz interfejs menedżera systemu</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Słownik użytkownika został pomyślnie zaimportowany!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Słownik użytkownika został pomyślnie wyeksportowany!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Dodaj słowo</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edytuj słowo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Słowo</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Proszę wpisać słowo</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Proszę wpisać słowo pasujące do {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Częstotliwość (pomiędzy {f_min}, a {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Proszę wpisać wartość częstotliwości</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Proszę wprowadzić prawidłową liczbę w określonych granicach</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Skrót (opcjonalny)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Proszę wpisać skrót pasujący do {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kod języka (opcjonalny)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Ten kod języka nie jest zgodny z oczekiwaną składnią. Kod musi być tylko językiem (np. en), językiem i krajem (np. en_US) lub językiem, krajem i skryptem (np. en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesty &amp; Glide pisanie</string>
@@ -237,6 +319,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Próg długości gestu</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Zaawansowane</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motyw ustawień</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Domyślne ustawienie systemowe (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Jasny</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Ciemny</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Ciemny</string>
@@ -244,6 +327,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Pokazuj aplikację w launcherze</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Zawsze włączone na Androidzie 10+ ze względu na ograniczenia systemu</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Wymuś tryb prywatny</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wyłącza funkcje, które działają z twoim danymi, które wpisujesz</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Sprawdzanie pisowni</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Użyj konfiguracji sprawdzania pisowni klawiatury</string>
@@ -377,6 +461,7 @@
     <string name="clipboard__cleared_primary_clip">Wyczyść główny schowek</string>
     <string name="clipboard__cleared_history">Historia została usunięta</string>
     <string name="clipboard__cleared_full_history">Cała historia została usunięta</string>
+    <string name="clipboard__confirm_clear_history__message">Czy jesteś pewien, że chcesz wyczyścić historię schowka?</string>
     <string name="settings__clipboard__title">Schowek</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>
@@ -417,6 +502,7 @@
     <!-- Extension strings -->
     <string name="ext__meta__authors">Autorzy</string>
     <string name="ext__meta__components">Dołączone komponenty</string>
+    <string name="ext__meta__components_theme">Dołączone motywy</string>
     <string name="ext__meta__components_none_found">To archiwum rozszerzeń nie zawiera żadnych dołączonych komponentów.</string>
     <string name="ext__meta__description">Opis</string>
     <string name="ext__meta__homepage">Strona główna</string>
@@ -445,6 +531,9 @@
     <string name="ext__editor__dependencies__title">Zarządzaj zależnościami</string>
     <string name="ext__editor__files__title">Zarządzaj plikami archiwalnymi</string>
     <string name="ext__editor__create_component__title">Utwórz komponent</string>
+    <string name="ext__editor__create_component__title_theme">Utwórz motyw</string>
+    <string name="ext__editor__create_component__from_empty">Pusty</string>
+    <string name="ext__editor__create_component__from_existing">Z istniejącego</string>
     <string name="ext__editor__create_component__from_empty_warning">Tworzenie i konfigurowanie pustego komponentu może być trudne, jeżeli jesteś nowy do {app_name}, lub jeżeli jesteś niezaznajomiony ze specyfikacjami. Rozważ skopiowanie istniejącego komponentu i zmodyfikowanie go do twoich upodobań, jeżeli tak jest.</string>
     <string name="ext__editor__edit_component__title">Edytuj komponent</string>
     <string name="ext__editor__edit_component__title_theme">Edytuj komponent stylu</string>
@@ -497,8 +586,10 @@
     <string name="error__snackbar_message">Coś poszło nie tak</string>
     <string name="error__snackbar_message_template">Coś poszło nie tak: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">np. {example}</string>
     <string name="general__no_browser_app_found_for_url">Nie znaleziono aplikacji do obsługi URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; wybierz &#45;</string>
+    <string name="general__unlimited">Nielimitowany</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portret</string>
     <string name="screen_orientation__landscape">Orientacja pozioma</string>
@@ -515,6 +606,29 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasyczny (3 kolumny)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamiczna szerokość</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Szerokość dynamiczna i przewijalna</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Szesnastkowy</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Czerwony Zielony Niebieski Alfa</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Zawsze pokazuj</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Zawsze pokazuj klawiaturę po zamknięciu dowolnego okna edytora</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nigdy nie pokazuj</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Nigdy nie pokazuj klawiatury po zamknięciu dowolnego okna edytora</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Zapamiętaj ostatni stan</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Pokaż klawiaturę tylko po zamknięciu dowolnego okna edytora, jeśli była wcześniej widoczna</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Język systemu</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Nazwy języków w aplikacji i interfejsie klawiatury są wyświetlane w języku, który jest ustawiony dla całego urządzenia</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Język natywny</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Nazwy języków w aplikacji i interfejsie klawiatury są wyświetlane w języku, do którego się odwołuje</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Domyślny odcień skóry</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Jasny odcień skóry</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Średnio jasny odcień skóry</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Średni odcień skóry</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Średnio ciemny odcień skóry</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Ciemny odcień skóry</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Domyślne włosy</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Czerwone włosy</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Kręcone włosy</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Białe włosy</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Łysy</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Akcent ma priorytet</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest zawsze głównym akcentem lub symbolem podpowiedzi, jeśli nie ma akcentu</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Podpowiedź ma priorytet</string>
@@ -536,6 +650,15 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Umieszcza drugą linię między linią główną a klawiaturą</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Nakładka interfejsu aplikacji</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Umieszcza drugą linię jako nakładkę nad klawiaturą bez zmieniani rozmiaru interfejsu klawiatury. Pamiętaj, że to miejsce może spowodować częściowe zakrycie pola do wpisywania tekstu w innej aplikacji</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Szybkie akcje</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Narzędzia kursora schowka</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Wiersz z najczęściej używanymi narzędziami do schowka i przesuwania kursora</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Podstawowy</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Tylko właściwości kolorów są wyświetlane, właściwości i reguły są tłumaczone.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Zaawansowane</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Wszystkie właściwości, właściwości i reguły są tłumaczone.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Deweloper</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Wyświetlane są wszystkie właściwości, właściwości i reguły są wyświetlane tak, jak napisano w samym pliku arkusza stylów.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Użyj języków systemowych</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Użyj podtypów klawiatury</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Brak działań</string>
@@ -558,6 +681,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Powtórz</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Cofnij</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Precyzyjnie wybierz znaki</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Precyzyjnie wybierz słowa</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Pokaż wybór metody wprowadzania</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Przełącz na poprzednią klawiaturę</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Przełącz na poprzedni podtyp</string>

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.takeOrElse
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.snygg.SnyggPropertySet
 
-private val NoContentPadding = PaddingValues(all = 0.dp)
+val NoContentPadding = PaddingValues(all = 0.dp)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

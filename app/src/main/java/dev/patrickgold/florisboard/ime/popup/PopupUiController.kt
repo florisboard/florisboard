@@ -44,12 +44,19 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 
 @Composable
-fun rememberPopupUiController(boundsProvider: (key: Key) -> FlorisRect): PopupUiController {
+fun rememberPopupUiController(
+    key1: Any?,
+    boundsProvider: (key: Key) -> FlorisRect,
+    isSuitableForBasicPopup: (key: Key) -> Boolean,
+    isSuitableForExtendedPopup: (key: Key) -> Boolean,
+): PopupUiController {
     val context = LocalContext.current
-    return remember { PopupUiController(context, boundsProvider) }
+    return remember(key1) {
+        PopupUiController(context, boundsProvider, isSuitableForBasicPopup, isSuitableForExtendedPopup)
+    }
 }
 
-private val ExceptionsForKeyCodes = listOf(
+val ExceptionsForKeyCodes = listOf(
     KeyCode.ENTER,
     KeyCode.LANGUAGE_SWITCH,
     KeyCode.IME_UI_MODE_TEXT,
@@ -63,6 +70,8 @@ private val ExceptionsForKeyCodes = listOf(
 class PopupUiController(
     val context: Context,
     val boundsProvider: (key: Key) -> FlorisRect,
+    val isSuitableForBasicPopup: (key: Key) -> Boolean,
+    val isSuitableForExtendedPopup: (key: Key) -> Boolean,
 ) {
     private var baseRenderInfo by mutableStateOf<BaseRenderInfo?>(null)
     private var extRenderInfo by mutableStateOf<ExtRenderInfo?>(null)
@@ -81,24 +90,6 @@ class PopupUiController(
 
     fun isSuitableForPopups(key: Key): Boolean {
         return isSuitableForBasicPopup(key) || isSuitableForExtendedPopup(key)
-    }
-
-    private fun isSuitableForBasicPopup(key: Key): Boolean {
-        return if (key is TextKey) {
-            val c = key.computedData.code
-            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE
-        } else {
-            true
-        }
-    }
-
-    private fun isSuitableForExtendedPopup(key: Key): Boolean {
-        return if (key is TextKey) {
-            val c = key.computedData.code
-            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(c)
-        } else {
-            true
-        }
     }
 
     /**

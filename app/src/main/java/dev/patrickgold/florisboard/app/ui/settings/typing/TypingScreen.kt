@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.FlorisInfoCard
+import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
@@ -47,18 +47,18 @@ fun TypingScreen() = FlorisScreen {
                 visibleIf = { AndroidVersion.ATLEAST_API30_R },
             )
             // This card is temporary and is therefore not using a string resource
-            FlorisInfoCard(
+            FlorisErrorCard(
                 modifier = Modifier.padding(8.dp),
                 text = if (AndroidVersion.ATLEAST_API30_R) {
-                    "Suggestions (except autofill) are not available in this beta release"
+                    "Suggestions (except autofill) are not available in this release"
                 } else {
-                    "Suggestions are not available in this beta release"
+                    "Suggestions are not available in this release"
                 },
             )
             SwitchPreference(
                 prefs.suggestion.enabled,
                 title = stringRes(R.string.pref__suggestion__enabled__label),
-                summary = stringRes(R.string.pref__suggestion__enabled__summary),
+                //summary = stringRes(R.string.pref__suggestion__enabled__summary),
             )
             ListPreference(
                 prefs.suggestion.displayMode,

@@ -242,7 +242,11 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Taustiņa piespiešana</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Uzsvara zīmes ietver zīmju uznirstošos lodziņus</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Pievieno zīmju uznirstošos lodziņus noklusējuma izkārtojuma uzsvara zīmēm</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Atstarpes taustiņš pārslēdz uz burtiem</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pārslēdzas no zīmēm vai cipariem atpakaļ uz burtiem</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Viedjosla</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
@@ -258,6 +262,7 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Ieteikumi un labojumi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Attēlot iekļautus ieteikumus, kurus nodrošina pašaizpildīšanas pakalpojumi</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Ieteikumu attēlošanas veids</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Starpliktuves ieteikumu noildze</string>
@@ -331,6 +336,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Atspējo iespēkas, kas darbojas ar ievades datiem</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Pareizrakstības pārbaudītājs</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Izmantot tastatūras pareizrakstības pārbaudītāja uzstādījumus</string>

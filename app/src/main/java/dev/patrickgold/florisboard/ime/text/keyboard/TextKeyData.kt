@@ -49,7 +49,9 @@ class TextKeyData(
 ) : KeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.slotData(this)
+            evaluator.slotData(this)?.let { data ->
+                TextKeyData(data.type, data.code, data.label, groupId, popup)
+            }
         } else {
             this
         }
@@ -419,7 +421,9 @@ class AutoTextKeyData(
 
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.slotData(this)
+            evaluator.slotData(this)?.let { data ->
+                TextKeyData(data.type, data.code, data.label, groupId, popup)
+            }
         } else {
             if (evaluator.activeState().isUppercase) { upper } else { lower }
         }

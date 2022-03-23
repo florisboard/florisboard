@@ -1,0 +1,6 @@
+This version is a major release containing a complete overhaul of the preferences and the keyboard UI.
+
+There's an brand-new stylesheet editor, new emoji keyboard with a recents tab, an improved clipboard history and Smartbar
+implementation, support for automatic and manual backups and much much more. Be sure to check out the detailed changelog!
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14

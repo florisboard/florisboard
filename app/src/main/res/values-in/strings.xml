@@ -243,7 +243,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tekanan tombol</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitas popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Tampilkan popup ketika Anda menekan tombol</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Aksen termasuk popup simbol</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Menambahkan popup simbol ke tata letak aksen default</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tundaan tekan lama tombol</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Bilah spasi beralih ke karakter</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Beralih kembali ke karakter saat dalam simbol atau numerik secara otomatis</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
@@ -259,6 +263,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Saran &amp; Koreksi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Tampilkan saran dalam baris yang disediakan oleh layanan pengisian otomatis</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode penampilan saran</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Saran konten papan klip</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Waktu habis saran papan klip</string>
@@ -332,6 +337,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Tampilkan ikon aplikasi pada peluncur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Selalu diaktifkan di Android 10+ karena pembatasan sistem</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Menonaktifkan fitur-fitur yang bekerja dengan data input Anda</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Pemeriksa ejaan</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gunakan konfigurasi pemeriksa ejaan keyboard</string>

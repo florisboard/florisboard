@@ -96,11 +96,11 @@
     <string name="settings__theme_editor__fine_tune__title">Настройки на редактора</string>
     <string name="settings__theme_editor__fine_tune__level">Режим</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Формат на цветовете</string>
-    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Показване на клавиатура след диалог</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Видима клавиатура след диалог</string>
     <string name="settings__theme_editor__add_rule">Добавяне на правило</string>
     <string name="settings__theme_editor__edit_rule">Променяне на правило</string>
     <string name="settings__theme_editor__no_rules_defined">Стиловият лист няма правила. За да промените стиловете добавете правила.</string>
-    <string name="settings__theme_editor__rule_already_exists">Стиловият лист вече е дефиниран.</string>
+    <string name="settings__theme_editor__rule_already_exists">Вече има такова правило.</string>
     <string name="settings__theme_editor__rule_element">Целеви елемент</string>
     <string name="settings__theme_editor__rule_codes">Кодове</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
@@ -110,6 +110,7 @@
     <string name="settings__theme_editor__edit_code">Промяна на код</string>
     <string name="settings__theme_editor__no_codes_defined">Липсват кодове.</string>
     <string name="settings__theme_editor__code_already_exists">Кодът вече е дефиниран.</string>
+    <string name="settings__theme_editor__code_invalid">Кодът не е валиден. Уверете се че стойността му е между {c_min} и {c_max} за букви и между {i_min} и {i_max} за вградените спициални клавиши.</string>
     <string name="settings__theme_editor__code_help_text">Следните препратки ще са ви от полза при намиране на клавишни кодове:</string>
     <string name="settings__theme_editor__add_property">Добавяне на свойство</string>
     <string name="settings__theme_editor__edit_property">Променяне на свойство</string>
@@ -122,8 +123,14 @@
     <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
     <string name="snygg__rule_element__defines">Променливи</string>
+    <string name="snygg__rule_element__defines_description">Създайте променливи в това правило, за да използвате общи цветове или размери в стиловия лист.</string>
     <string name="snygg__rule_element__keyboard">Прозорец на клавиатурата</string>
     <string name="snygg__rule_element__key">Клавиш</string>
+    <string name="snygg__rule_element__key_hint">Горен индекс на клавиш</string>
+    <string name="snygg__rule_element__key_popup">Подсказка на клавиш</string>
+    <string name="snygg__rule_element__clipboard_header">Заглавка на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item">Елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Подсказка на елемент от междинната памет</string>
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
     <string name="snygg__rule_selector__pressed">Натиснат</string>
@@ -141,15 +148,29 @@
     <string name="snygg__property_name__font_style">Стил на шрифта</string>
     <string name="snygg__property_name__font_variant">Вариант на шрифта</string>
     <string name="snygg__property_name__font_weight">Тежест на шрифта</string>
+    <string name="snygg__property_name__shadow_elevation">Големина на сянката</string>
     <string name="snygg__property_name__shape">Форма</string>
     <string name="snygg__property_name__var_primary">Основен цвят</string>
     <string name="snygg__property_name__var_primary_variant">Основен цвят (вариант)</string>
     <string name="snygg__property_name__var_secondary">Допълнителен цвят</string>
     <string name="snygg__property_name__var_secondary_variant">Допълнителен цвят (вариант)</string>
+    <string name="snygg__property_name__var_background">Общ фон</string>
+    <string name="snygg__property_name__var_surface">Обща повърхност</string>
+    <string name="snygg__property_name__var_surface_variant">Обща повърхност (вариант)</string>
     <string name="snygg__property_name__var_shape">Обща форма</string>
     <string name="snygg__property_name__var_shape_variant">Обща форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследяване</string>
     <string name="snygg__property_value__solid_color">Плътен цвят</string>
+    <string name="snygg__property_value__image_ref">От изображение</string>
+    <string name="snygg__property_value__rectangle_shape">Правоъгълна форма</string>
+    <string name="snygg__property_value__circle_shape">Кръгла форма</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Форма с рязани ъгли (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Форма с рязани ъгли (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Форма със заоблени ъгли (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Форма със заоблени ъгли (%)</string>
+    <string name="snygg__property_value__dp_size">Размер (dp)</string>
+    <string name="snygg__property_value__sp_size">Размер (sp)</string>
+    <string name="snygg__property_value__percentage_size">Размер (%)</string>
     <string name="snygg__property_value__defined_var">От променлива</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
@@ -205,16 +226,28 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Докосване на клавишите</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видима изскачаща подсказка</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показва се изскачаща подсказка при докосване на клавиш</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Акцентите в посдказките</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Добавят се подсказки със символи към подразбираната подредба</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при задържане на клавиш</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Клавишът интервал превключва към букви</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Автоматично превключва към букви ако се въвеждат символи или цифри</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните, превключващи редовете</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основни действия</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматично се разтваря/събира основния ред, на базата на състоянието</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Допълнителни действия</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ред с допълнителни действия</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Времеви прозорец за предложения от междинната памет</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично поставяне на главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се въвеждат с главна буква въз основа на текущия контекст</string>
@@ -285,6 +318,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Икона на приложението в стартовия панел</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключва обработката на въвежданите от вас данни</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка на правописа</string>
     <string name="pref__spelling__active_spellchecker__label">Проверка на правописа при въвеждане</string>
@@ -452,7 +486,7 @@
     <string name="ext__meta__authors">Автори</string>
     <string name="ext__meta__components">Придружаващи компоненти</string>
     <string name="ext__meta__components_theme">Придружаващи теми</string>
-    <string name="ext__meta__components_none_found">Архивът на добавкатане съдържа придружаващи компоненти.</string>
+    <string name="ext__meta__components_none_found">Архивът на добавката не съдържа придружаващи компоненти.</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Страница</string>
     <string name="ext__meta__id">Идентификатор</string>
@@ -480,8 +514,9 @@
     <string name="ext__editor__files__title">Управление на архиви</string>
     <string name="ext__editor__create_component__title">Създаване на компонент</string>
     <string name="ext__editor__create_component__title_theme">Създаване на тема</string>
-    <string name="ext__editor__create_component__from_empty">Празен</string>
-    <string name="ext__editor__create_component__from_existing">От съществуващо</string>
+    <string name="ext__editor__create_component__from_empty">Празна</string>
+    <string name="ext__editor__create_component__from_existing">От съществуваща</string>
+    <string name="ext__editor__edit_component__title_theme">Редактиране на компонент-тема</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
@@ -586,6 +621,8 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Долу, начало</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Бързи действия</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменти за междинна памет и каретка</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Основен</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Само цветове, свойствата и правилата са преведени.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Разширен</string>

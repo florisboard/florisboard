@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -29,7 +30,6 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
-import java.util.*
 
 val SnyggStylesheetJsonConfig = Json
 
@@ -67,19 +67,27 @@ class SnyggStylesheet(
             isFocus: Boolean = false,
             isDisabled: Boolean = false,
         ): SnyggPropertySet {
-            val possibleRules = rules.keys.filter { it.element == element }.sortedDescending()
-            possibleRules.forEach { rule ->
-                val match = (code == Unspecified || rule.codes.isEmpty() || rule.codes.contains(code))
+            val possibleRules = rules.keys.filter { rule ->
+                rule.element == element
+                    && (code == Unspecified || rule.codes.isEmpty() || rule.codes.contains(code))
                     && (group == Unspecified || rule.groups.isEmpty() || rule.groups.contains(group))
                     && (mode == Unspecified || rule.modes.isEmpty() || rule.modes.contains(mode))
                     && (isPressed == rule.pressedSelector || !rule.pressedSelector)
                     && (isFocus == rule.focusSelector || !rule.focusSelector)
                     && (isDisabled == rule.disabledSelector || !rule.disabledSelector)
-                if (match) {
-                    return rules[rule]!!
+            }.sorted()
+            return when {
+                possibleRules.isEmpty() -> FallbackPropertySet
+                possibleRules.size == 1 -> rules[possibleRules.first()]!!
+                else -> {
+                    val mergedPropertySets = mutableMapOf<String, SnyggValue>()
+                    for (rule in possibleRules) {
+                        val propertySet = rules[rule]!!
+                        mergedPropertySets.putAll(propertySet.properties)
+                    }
+                    SnyggPropertySet(mergedPropertySets)
                 }
             }
-            return rules[possibleRules.lastOrNull()] ?: FallbackPropertySet
         }
     }
 
@@ -140,16 +148,6 @@ class SnyggStylesheet(
                 if (propertyValue is SnyggDefinedVarValue) {
                     editor.properties[propertyName] =
                         definedVariables?.properties?.get(propertyValue.key) ?: SnyggImplicitInheritValue
-                }
-            }
-            val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
-            val possiblePropertySets = getPropertySets(newRules, rule)
-            propertySetSpec.supportedProperties.forEach { supportedProperty ->
-                if (!editor.properties.containsKey(supportedProperty.name)) {
-                    val value = possiblePropertySets.firstNotNullOfOrNull {
-                        it.properties[supportedProperty.name]
-                    } ?: SnyggImplicitInheritValue
-                    editor.properties[supportedProperty.name] = value
                 }
             }
             newRules[rule] = editor.build()
