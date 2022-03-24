@@ -90,7 +90,7 @@
   },
   "uri": {
     "~right": {
-      "main": { "code": -255, "label": ".ir"},
+      "main": { "code": -255, "label": ".sa"},
       "relevant": [
         { "code": -255, "label": ".gov" },
         { "code": -255, "label": ".edu" },
