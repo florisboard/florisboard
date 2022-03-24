@@ -18,6 +18,20 @@
         "modifier": "org.florisboard.layouts:arabic"
       },
       {
+        "id": "western_armenian",
+        "label": "Armenian (Western)",
+        "authors": [ "PJTSearch" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian"
+      },
+      {
+        "id": "eastern_armenian",
+        "label": "Armenian (Eastern)",
+        "authors": [ "PJTSearch" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian"
+      },
+      {
         "id": "azerty",
         "label": "AZERTY",
         "authors": [ "patrickgold" ],
@@ -347,6 +361,12 @@
         "direction": "ltr"
       },
       {
+        "id": "armenian",
+        "label": "Armenian",
+        "authors": [ "PJTSearch" ],
+        "direction": "ltr"
+      },
+      {
         "id": "arabic",
         "label": "Arabic",
         "authors": [ "HeiWiper" ],
@@ -541,6 +561,13 @@
     ],
     "symbols": [
       {
+        "id": "armenian",
+        "label": "Armenian",
+        "authors": [ "PJTSearch" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian"
+      },
+      {
         "id": "cjk",
         "label": "CJK",
         "authors": [ "waelwindows" ],
@@ -590,6 +617,12 @@
         "id": "default",
         "label": "Default",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "armenian",
+        "label": "Armenian",
+        "authors": [ "PJTSearch" ],
         "direction": "ltr"
       },
       {
