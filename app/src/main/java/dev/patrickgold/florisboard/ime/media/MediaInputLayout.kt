@@ -68,16 +68,16 @@ fun MediaInputLayout(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardUiHeight()),
-    ) {
-        EmojiPaletteView(
-            modifier = Modifier.weight(1f),
-            fullEmojiMappings = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt"),
-        )
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(FlorisImeSizing.keyboardUiHeight()),
+        ) {
+            EmojiPaletteView(
+                modifier = Modifier.weight(1f),
+                fullEmojiMappings = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt"),
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
