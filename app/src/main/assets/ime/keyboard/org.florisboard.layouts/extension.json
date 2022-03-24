@@ -19,7 +19,7 @@
       },
       {
         "id": "western_armenian",
-        "label": "Armenian",
+        "label": "Armenian (Western)",
         "authors": [ "PJTSearch" ],
         "direction": "ltr",
         "modifier": "org.florisboard.layouts:armenian"
