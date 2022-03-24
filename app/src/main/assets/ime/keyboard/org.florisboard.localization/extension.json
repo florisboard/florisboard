@@ -467,7 +467,7 @@
       }
     },
     {
-      "languageTag": "hyw",
+      "languageTag": "hy",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:armenian_dram",
       "popupMapping": "org.florisboard.localization:hy",
