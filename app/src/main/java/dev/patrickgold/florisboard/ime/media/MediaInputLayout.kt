@@ -46,7 +46,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -54,12 +53,10 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
 import dev.patrickgold.florisboard.ime.media.emoji.parseRawEmojiSpecsFile
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
-import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -68,30 +65,13 @@ import kotlinx.coroutines.launch
 fun MediaInputLayout(
     modifier: Modifier = Modifier,
 ) {
-    val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
-
-    val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-    val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-    val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
-    val height =
-        if (smartbarEnabled) {
-            if (secondaryRowEnabled && secondaryRowExpanded &&
-                secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI) {
-                FlorisImeSizing.smartbarHeight * 2
-            } else {
-                FlorisImeSizing.smartbarHeight
-            }
-        } else {
-            0.dp
-        } + (FlorisImeSizing.keyboardRowBaseHeight * 4)
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .height(height),
+            .height(FlorisImeSizing.keyboardUiHeight()),
     ) {
         EmojiPaletteView(
             modifier = Modifier.weight(1f),

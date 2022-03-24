@@ -31,9 +31,10 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.ViewUtils
-import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
+import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
@@ -49,6 +50,28 @@ object FlorisImeSizing {
         @Composable
         @ReadOnlyComposable
         get() = LocalSmartbarHeight.current
+
+    @Composable
+    fun keyboardUiHeight(): Dp {
+        val prefs by florisPreferenceModel()
+        val numberRowEnabled by prefs.keyboard.numberRow.observeAsState()
+        val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
+        val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
+        val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
+        val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
+        val height =
+            if (smartbarEnabled) {
+                if (secondaryRowEnabled && secondaryRowExpanded &&
+                    secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI) {
+                    smartbarHeight * 2
+                } else {
+                    smartbarHeight
+                }
+            } else {
+                0.dp
+            } + (keyboardRowBaseHeight * (if (numberRowEnabled) 5 else 4))
+        return height
+    }
 
     object Static {
         var keyboardRowBaseHeightPx: Int = 0
