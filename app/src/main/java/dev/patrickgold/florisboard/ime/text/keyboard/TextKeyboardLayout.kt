@@ -269,7 +269,8 @@ fun TextKeyboardLayout(
                     val c = key.computedData.code
                     val t = key.computedData.type
                     val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
-                            keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
+                        keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
+                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
                     c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
                 } else {
                     true
