@@ -115,12 +115,21 @@ fun TextKeyboardLayout(
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
 
+    val keyboard = renderInfo.keyboard
+    val numberRowEnabled by prefs.keyboard.numberRow.observeAsTransformingState { numberRowEnabled ->
+        when (keyboard.mode) {
+            KeyboardMode.CHARACTERS,
+            KeyboardMode.NUMERIC_ADVANCED,
+            KeyboardMode.SYMBOLS,
+            KeyboardMode.SYMBOLS2 -> numberRowEnabled
+            else -> false
+        }
+    }
     val glideEnabled by prefs.glide.enabled.observeAsState()
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
         .foreground.solidColor(default = Color.Green)
 
-    val keyboard = renderInfo.keyboard
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
         if (glideEnabled && !isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
@@ -146,7 +155,8 @@ fun TextKeyboardLayout(
                 if (isSmartbarKeyboard) {
                     FlorisImeSizing.smartbarHeight
                 } else {
-                    FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
+                    FlorisImeSizing.keyboardRowBaseHeight *
+                        keyboard.rowCount.coerceAtLeast(if (numberRowEnabled) 5 else 4)
                 }
             )
             .onGloballyPositioned { coords ->
@@ -212,7 +222,8 @@ fun TextKeyboardLayout(
                 height = FlorisImeSizing.smartbarHeight.toPx()
             } else {
                 width = keyboardWidth / 10f
-                height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+                height = FlorisImeSizing.keyboardRowBaseHeight.toPx() *
+                    (if (numberRowEnabled && keyboard.mode != KeyboardMode.CHARACTERS) 1.12f else 1f)
             }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
