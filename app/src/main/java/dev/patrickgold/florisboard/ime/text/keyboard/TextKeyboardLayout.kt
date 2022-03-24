@@ -38,6 +38,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -332,6 +333,7 @@ private fun TextKeyButton(
         style = keyStyle,
         clip = true,
     ) {
+        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
@@ -343,7 +345,7 @@ private fun TextKeyButton(
             Text(
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(Alignment.Center),
+                    .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = label,
                 color = keyStyle.foreground.solidColor(),
                 fontSize = fontSize,
@@ -367,7 +369,7 @@ private fun TextKeyButton(
                 modifier = Modifier
                     .padding(end = (key.visibleBounds.width / 12f).toDp())
                     .wrapContentSize()
-                    .align(Alignment.TopEnd)
+                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
                     .snyggBackground(keyHintStyle),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),
