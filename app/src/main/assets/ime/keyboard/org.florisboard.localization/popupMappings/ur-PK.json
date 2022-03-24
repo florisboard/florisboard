@@ -2,7 +2,7 @@
   "all": {
     "ق": {
       "relevant": [
-        { "code": 1618, "label": "ْ◌" },
+        { "code": 1618, "label": "ْ" },
         { "code": 49, "label": "1" }
       ]
     },
@@ -14,15 +14,15 @@
     },
     "ع": {
       "relevant": [
-        { "code": 1553, "label": "ؑ◌" },
+        { "code": 1553, "label": "ؑ" },
         { "code": 51, "label": "3" }
       ]
     },
     "ر": {
       "relevant": [
         { "code": 1681, "label": "ڑ" },
-        { "code": 1554, "label": "ؒ◌" },
-        { "code": 1555, "label": "ؓ◌" },
+        { "code": 1554, "label": "ؒ" },
+        { "code": 1555, "label": "ؓ" },
         { "code": 52, "label": "4" }
       ]
     },
@@ -41,8 +41,8 @@
     },
     "ء": {
       "relevant": [
-        { "code": 1621, "label": "ٕ◌" },
-        { "code": 1620, "label": "ٔ◌" },
+        { "code": 1621, "label": "ٕ" },
+        { "code": 1620, "label": "ٔ" },
         { "code": 55, "label": "7" }
       ]
     },
@@ -89,7 +89,7 @@
         { "code": 1589, "label": "ص" },
         { "code": 1537, "label": "؁" },
         { "code": 1539, "label": "؃" },
-        { "code": 1750, "label": "ؐ◌ۖ" }
+        { "code": 1750, "label": "ؐۖ" }
       ]
     },
     "د": {
@@ -163,21 +163,21 @@
       ]
     },
     "~right": {
-      "main": { "code": 1611, "label": "ً◌" },
+      "main": { "code": 1611, "label": "ً" },
       "relevant": [
-        { "code": 1622, "label": "ٖ◌" },
-        { "code": 1648, "label": "ٰ◌" },
-        { "code": 1619, "label": "ٓ◌" },
-        { "code": 1615, "label": "ُ◌" },
-        { "code": 1616, "label": "ِ◌" },
-        { "code": 1614, "label": "َ◌" },
+        { "code": 1622, "label": "ٖ" },
+        { "code": 1648, "label": "ٰ" },
+        { "code": 1619, "label": "ٓ" },
+        { "code": 1615, "label": "ُ" },
+        { "code": 1616, "label": "ِ" },
+        { "code": 1614, "label": "َ" },
         { "code": 1600, "label": "ـ" },
-        { "code": 1621, "label": "ٕ◌" },
-        { "code": 1620, "label": "ٔ◌" },
-        { "code": 1617, "label": "ّ◌" },
-        { "code": 1612, "label": "ٌ◌" },
-        { "code": 1613, "label": "ٍ◌" },
-        { "code": 1618, "label": "ْ◌" }
+        { "code": 1621, "label": "ٕ" },
+        { "code": 1620, "label": "ٔ" },
+        { "code": 1617, "label": "ّ" },
+        { "code": 1612, "label": "ٌ" },
+        { "code": 1613, "label": "ٍ" },
+        { "code": 1618, "label": "ْ" }
       ]
     }
   },
