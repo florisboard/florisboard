@@ -432,7 +432,7 @@
       }
     },
     {
-      "languageTag": "fa-FA-per2",
+      "languageTag": "fa-FA",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:rial",
       "popupMapping": "org.florisboard.localization:fa2",

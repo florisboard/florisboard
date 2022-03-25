@@ -426,6 +426,12 @@
         "label": "Persian",
         "authors": [ "PHELAT" ],
         "direction": "rtl"
+      },
+      {
+        "id": "persian2",
+        "label": "Persian2",
+        "authors": [ "M-Koushan" ],
+        "direction": "rtl"
       }
     ],
     "extension": [
