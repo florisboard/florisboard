@@ -32,6 +32,12 @@
         "modifier": "org.florisboard.layouts:armenian"
       },
       {
+        "id": "azerbaijani",
+        "label": "Azerbaijani",
+        "authors": [ "nijatismayilzada" ],
+        "direction": "ltr"
+      },
+      {
         "id": "azerty",
         "label": "AZERTY",
         "authors": [ "patrickgold" ],

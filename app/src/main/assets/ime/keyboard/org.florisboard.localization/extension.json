@@ -440,6 +440,15 @@
       }
     },
     {
+      "languageTag": "az",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:azerbaijani_manat",
+      "popupMapping": "org.florisboard.localization:tr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:azerbaijani"
+      }
+    },
+    {
       "languageTag": "hu",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
