@@ -215,7 +215,11 @@ class FlorisLocale private constructor(val base: Locale) {
      *
      * @see java.util.Locale.getDisplayLanguage
      */
-    fun displayLanguage(locale: FlorisLocale = default()): String = base.getDisplayLanguage(locale.base)
+    fun displayLanguage(locale: FlorisLocale = default()): String {
+        return base.getDisplayLanguage(locale.base).replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(locale.base) else it.toString()
+        }
+    }
 
     /**
      * Returns the name of this locale's country, localized to [locale].
