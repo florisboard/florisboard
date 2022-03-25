@@ -1,0 +1,4 @@
+This release fixes a lot of clipboard bugs and other issues. It is the final release (except something critical
+is reported) before 0.3.14 stable.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-rc02

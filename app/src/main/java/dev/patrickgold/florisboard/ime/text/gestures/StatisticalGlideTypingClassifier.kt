@@ -276,7 +276,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     ) {
 
         /** A tree that provides fast access to words based on their first and last letter.  */
-        private val wordTree = HashMap<Pair<Int, Int>, ArrayList<String>>()
+        private val wordTree = Collections.synchronizedMap(HashMap<Pair<Int, Int>, ArrayList<String>>())
 
         /**
          * Finds the words whose start and end letter are closest to the start and end points of the
@@ -300,7 +300,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             for (startKey in startKeys) {
                 for (endKey in endKeys) {
                     val keyPair = Pair(startKey, endKey)
-                    val wordsForKeys = wordTree[keyPair]
+                    val wordsForKeys = synchronized(wordTree) { wordTree[keyPair] }
                     if (wordsForKeys != null) {
                         remainingWords.addAll(wordsForKeys)
                     }
@@ -400,10 +400,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
 
         init {
-            for (word in words) {
-                val keyPair = getFirstKeyLastKey(word, keysByCharacter)
-                keyPair?.let {
-                    wordTree.getOrPut(keyPair, { arrayListOf() }).add(word)
+            synchronized(wordTree) {
+                for (word in words) {
+                    val keyPair = getFirstKeyLastKey(word, keysByCharacter)
+                    keyPair?.let {
+                        wordTree.getOrPut(keyPair) { arrayListOf() }.add(word)
+                    }
                 }
             }
         }
@@ -587,10 +589,10 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             return normalizedGesture
         }
 
-        fun getFirstX(): Float = xs[0]
-        fun getFirstY(): Float = ys[0]
-        fun getLastX(): Float = xs[size - 1]
-        fun getLastY(): Float = ys[size - 1]
+        fun getFirstX(): Float = xs.getOrElse(0) { 0f }
+        fun getFirstY(): Float = ys.getOrElse(0) { 0f }
+        fun getLastX(): Float = xs.getOrElse(size - 1) { 0f }
+        fun getLastY(): Float = ys.getOrElse(size - 1) { 0f }
 
         fun getLength(): Float {
             var length = 0f
@@ -609,8 +611,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             this.size = 0
         }
 
-        fun getX(i: Int): Float = xs[i]
-        fun getY(i: Int): Float = ys[i]
+        fun getX(i: Int): Float = xs.getOrElse(i) { 0f }
+        fun getY(i: Int): Float = ys.getOrElse(i) { 0f }
 
         fun clone(): Gesture {
             return Gesture(xs.clone(), ys.clone(), size)

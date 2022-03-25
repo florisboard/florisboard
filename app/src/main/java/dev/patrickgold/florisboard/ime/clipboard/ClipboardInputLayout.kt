@@ -16,9 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.clipboard
 
+import android.content.ContentUris
+import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -49,7 +52,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -74,9 +79,10 @@ import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -111,18 +117,7 @@ fun ClipboardInputLayout(
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
-    val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-    val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-    val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
-    val innerHeight =
-        if (smartbarEnabled && secondaryRowEnabled && secondaryRowExpanded &&
-            secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI
-        ) {
-            FlorisImeSizing.smartbarHeight
-        } else {
-            0.dp
-        } + (FlorisImeSizing.keyboardRowBaseHeight * 4)
+    val innerHeight = FlorisImeSizing.keyboardUiHeight() - FlorisImeSizing.smartbarHeight
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
@@ -195,7 +190,6 @@ fun ClipboardInputLayout(
                 .padding(ItemMargin),
             style = style,
             clip = true,
-            contentPadding = ItemPadding,
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -208,12 +202,46 @@ fun ClipboardInputLayout(
                 },
             ),
         ) {
-            Text(
-                text = item.stringRepresentation(),
-                style = TextStyle(textDirection = TextDirection.ContentOrLtr),
-                color = style.foreground.solidColor(),
-                fontSize = style.fontSize.spSize(),
-            )
+            if (item.type == ItemType.IMAGE) {
+                val id = ContentUris.parseId(item.uri!!)
+                val file = ClipboardFileStorage.getFileForId(context, id)
+                val bitmap = remember(id) {
+                    runCatching {
+                        check(file.exists()) { "Unable to resolve image at ${file.absolutePath}" }
+                        val rawBitmap = BitmapFactory.decodeFile(file.absolutePath)
+                        checkNotNull(rawBitmap) { "Unable to decode image at ${file.absolutePath}" }
+                        rawBitmap.asImageBitmap()
+                    }
+                }
+                if (bitmap.isSuccess) {
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        bitmap = bitmap.getOrThrow(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(ItemPadding),
+                        text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
+                        style = TextStyle(textDirection = TextDirection.Ltr),
+                        color = Color.Red,
+                        fontSize = style.fontSize.spSize(),
+                    )
+                }
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(ItemPadding),
+                    text = item.stringRepresentation(),
+                    style = TextStyle(textDirection = TextDirection.ContentOrLtr),
+                    color = style.foreground.solidColor(),
+                    fontSize = style.fontSize.spSize(),
+                )
+            }
         }
     }
 

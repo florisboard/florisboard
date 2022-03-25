@@ -128,9 +128,10 @@
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>
 
+        <!-- Clipboard Image File Provider -->
         <provider
-            android:name="dev.patrickgold.florisboard.ime.clipboard.provider.FlorisContentProvider"
-            android:authorities="${applicationId}.provider.clip"
+            android:name="dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardImagesProvider"
+            android:authorities="${applicationId}.provider.clipboard"
             android:grantUriPermissions="true"
             android:exported="false">
         </provider>

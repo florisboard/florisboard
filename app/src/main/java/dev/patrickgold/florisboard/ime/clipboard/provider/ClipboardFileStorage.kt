@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,43 +18,32 @@ package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.Context
 import android.net.Uri
+import dev.patrickgold.florisboard.common.android.readToFile
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
-import java.io.File
+import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.res.io.subFile
 
 /**
- * Backend helper object which is used by [FlorisContentProvider] to serve content.
+ * Backend helper object which is used by [ClipboardImagesProvider] to serve content.
  */
-object FileStorage {
-    private const val BUF_SIZE = 1024 * 8
-    private var offset = 0
+object ClipboardFileStorage {
+    private val Context.clipboardFilesDir: FsFile
+        get() = FsFile(this.noBackupFilesDir, "clipboard_files").also { it.mkdirs() }
 
     /**
      * Clones a content URI to internal storage.
      *
      * @param uri The URI
+     *
      * @return The file's name which is a unique long
      */
     @Synchronized
-    fun cloneURI(context: Context, uri: Uri) = runCatching<Long> {
-        // nanoTime + the number of items created so that it's unique.
-        val name = (System.nanoTime() + offset)
-
-        // Just a normal copy from input stream to output stream.
-        val source = context.contentResolver.openInputStream(uri)!!
-        val sink = File(context.filesDir, name.toString()).outputStream()
-        var nread = 0L
-        val buf = ByteArray(BUF_SIZE)
-        var n: Int
-        while (source.read(buf).also { n = it } > 0) {
-            sink.write(buf, 0, n)
-            nread += n.toLong()
-        }
-
-        source.close()
-        sink.close()
-
-        return@runCatching name
+    fun cloneUri(context: Context, uri: Uri): Long {
+        val id = System.nanoTime()
+        val file = context.clipboardFilesDir.subFile(id.toString())
+        context.contentResolver.readToFile(uri, file)
+        return id
     }
 
     /**
@@ -62,14 +51,11 @@ object FileStorage {
      */
     fun deleteById(context: Context, id: Long) {
         flogDebug(LogTopic.CLIPBOARD) { "Cleaning up $id" }
-        val file = File(context.filesDir, id.toString())
+        val file = context.clipboardFilesDir.subFile(id.toString())
         file.delete()
     }
 
-    /**
-     * Get the file address of an id.
-     */
-    fun getAddress(context: Context, id: Long): String {
-        return context.filesDir.toString() + "/$id"
+    fun getFileForId(context: Context, id: Long): FsFile {
+        return context.clipboardFilesDir.subFile(id.toString())
     }
 }

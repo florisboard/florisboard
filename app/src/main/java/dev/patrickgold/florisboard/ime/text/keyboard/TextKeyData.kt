@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.common.Unicode
 import dev.patrickgold.florisboard.common.kotlin.lowercase
 import dev.patrickgold.florisboard.common.kotlin.uppercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
@@ -25,7 +26,9 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * Data class which describes a single key and its attributes.
@@ -49,7 +52,9 @@ class TextKeyData(
 ) : KeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.slotData(this)
+            evaluator.slotData(this)?.let { data ->
+                TextKeyData(data.type, data.code, data.label, groupId, popup)
+            }
         } else {
             this
         }
@@ -58,9 +63,7 @@ class TextKeyData(
     override fun asString(isForDisplay: Boolean): String {
         return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
-                // Combining Diacritical Marks
-                // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
-                if (code in 0x0300..0x036F && !label.startsWith("◌")) {
+                if (Unicode.isCombiningChar(code) && !label.startsWith("◌")) {
                     append("◌")
                 }
                 append(label)
@@ -419,7 +422,9 @@ class AutoTextKeyData(
 
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.slotData(this)
+            evaluator.slotData(this)?.let { data ->
+                TextKeyData(data.type, data.code, data.label, groupId, popup)
+            }
         } else {
             if (evaluator.activeState().isUppercase) { upper } else { lower }
         }
@@ -428,9 +433,7 @@ class AutoTextKeyData(
     override fun asString(isForDisplay: Boolean): String {
         return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
-                // Combining Diacritical Marks
-                // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
-                if (code in 0x0300..0x036F && !label.startsWith("◌")) {
+                if (Unicode.isCombiningChar(code) && !label.startsWith("◌")) {
                     append("◌")
                 }
                 append(label)

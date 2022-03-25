@@ -2,14 +2,11 @@
 <full-backup-content>
     <include
         domain="root"
-        path="jetpref_datastore"
-        requireFlags="clientSideEncryption"/>
+        path="jetpref_datastore"/>
     <include
         domain="file"
-        path="ime"
-        requireFlags="clientSideEncryption"/>
+        path="ime"/>
     <include
         domain="database"
-        path="floris_user_dictionary"
-        requireFlags="clientSideEncryption"/>
+        path="floris_user_dictionary"/>
 </full-backup-content>

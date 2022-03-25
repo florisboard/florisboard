@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Déplacez le clavier vers la gauche.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Déplacez le clavier vers la droite.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Émojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Émojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Émoticônes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Taille maximum de l\'historique d\'émojis</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Couleur de peau des émojis par défaut</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Coiffure des émojis par défaut</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Émotions</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personnes &amp; Corps</string>
@@ -131,6 +135,7 @@
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
     <string name="snygg__rule_element__smartbar_primary_row">Rangée principale de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Rangée secondaire de la barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Action rapides de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_key">Touche de barre intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barre de navigation du système</string>
@@ -149,6 +154,7 @@
     <string name="snygg__property_name__font_style">Style de police</string>
     <string name="snygg__property_name__font_variant">Variante de police</string>
     <string name="snygg__property_name__font_weight">Taille de police</string>
+    <string name="snygg__property_name__shadow_elevation">Élévation de l\'ombre</string>
     <string name="snygg__property_name__shape">Forme</string>
     <string name="snygg__property_name__var_primary">Couleur primaire</string>
     <string name="snygg__property_name__var_primary_variant">Couleur primaire (variante)</string>
@@ -231,13 +237,20 @@
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilité du popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Afficher un pop-up lors de l\'appui d\'une touche</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délai d\'appui prolongé</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Espace pour revenir aux caractères</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Retour automatique aux caractères depuis les symboles et les nombres</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barre intelligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Barre Intelligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Actions principales</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Actions secondaires</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Afficher la ligne d\'actions secondaires</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Afficher les suggestions fournies par les services d\'auto-complétion</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode d\'affichage des suggestions</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggestions de contenu du presse-papiers</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Délai d\'expiration de la suggestion du Presse-papiers</string>
@@ -311,6 +324,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactiver les fonctionalitées qui utilise vos données d\'entrée</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Correcteur d\'orthographe</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Utiliser la configuration du correcteur orthographique du clavier</string>
@@ -444,6 +458,7 @@
     <string name="clipboard__cleared_primary_clip">Attache principale effacée</string>
     <string name="clipboard__cleared_history">Historique effacé</string>
     <string name="clipboard__cleared_full_history">Historique complet effacé</string>
+    <string name="clipboard__confirm_clear_history__message">Êtes-vous sûr de vouloir effacer votre historique de presse-papier ?</string>
     <string name="settings__clipboard__title">Presse-papier</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Utiliser le presse-papier interne</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Utiliser un presse-papier interne plutôt que celui du système</string>
@@ -571,6 +586,7 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">ex. {example}</string>
     <string name="general__no_browser_app_found_for_url">Aucune application de navigateur trouvée pour gérer l\'URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; sélectionner &#45;</string>
+    <string name="general__unlimited">Illimité</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
     <string name="screen_orientation__landscape">Paysage</string>
@@ -599,6 +615,17 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Les noms de langue dans l\'application et l\'interface utilisateur du clavier sont affichés dans les paramètres régionaux définis pour l\'ensemble de l\'appareil</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Langage natif</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Les noms de langue dans l\'application et l\'interface utilisateur du clavier sont affichés dans les paramètres régionaux référencés par eux-mêmes</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Couleur de peau par défaut</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Couleur de peau claire</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Couleur de peau métisse-claire</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Couleur de peau métisse</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Couleur de peau métisse-foncée</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Couleur de peau foncée</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Coiffure par défaut</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Cheveux rouges</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cheveux frisés</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cheveux blanc</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Chauve</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Activé priorité à l\'accent</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Activé priorité à l\'accent</string>
@@ -620,6 +647,8 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Placer la ligne secondaire entre la ligne principale et le clavier de texte</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superposer l\'interface utilisateur de l\'application</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Place la ligne secondaire en superposition au-dessus de l\'interface utilisateur de l\'application, sans affecter la hauteur résultante de l\'interface utilisateur du clavier. Notez que ce placement peut entraîner un dépassement partiel du champ de saisie de l\'application</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Actions rapides</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Standard</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Seules les propriétés de couleur sont affichées, les propriétés et les règles sont traduites.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avancé</string>
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Toutes les propriétés de couleur sont affichées, les propriétés et les règles sont traduites.</string>
