@@ -31,8 +31,8 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 23
         targetSdk = 31
-        versionCode = 75
-        versionName = "0.3.14"
+        versionCode = 76
+        versionName = "0.3.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -115,7 +115,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = ""
+            versionNameSuffix = "-beta01"
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
