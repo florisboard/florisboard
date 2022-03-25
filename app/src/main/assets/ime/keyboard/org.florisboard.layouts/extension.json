@@ -93,6 +93,12 @@
         "direction": "ltr"
       },
       {
+        "id": "colemak_dh",
+        "label": "ColemakDH",
+        "authors": [ "blucin" ],
+        "direction": "ltr"
+      },
+      {
         "id": "danish",
         "label": "Danish (QWERTY)",
         "authors": [ "patrickgold" ],
