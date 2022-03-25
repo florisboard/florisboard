@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderas</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No se han encontrado emojis que se hayan usado recientemente. Una vez empieces a usar emojis, aparecerán automáticamente aquí.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consejo: ¡Pulse sostenidamente los emojis usados recientemente para poder removerlos de esta vista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Se ha removido {emoji} de los emojis recientes</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Cambio de acción rápida. Si se pulsa, cambia entre las sugerencias de palabras y los botones de acción rápida.</string>

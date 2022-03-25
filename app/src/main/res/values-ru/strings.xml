@@ -13,7 +13,7 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Эмодзи</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Смайлики</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомодзи</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Максимальный размер истории эмодзи</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Размер списка недавних эмодзи</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Предпочтительный цвет кожи эмодзи</string>
     <string name="prefs__media__emoji_preferred_hair_style">Предпочтительная прическа эмодзи</string>
     <!-- Emoji strings -->
@@ -26,9 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Объекты</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Символы</string>
     <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Недавно использованные смайлы не найдены. Как только вы начнете их использовать, они автоматически появятся здесь.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: нажмите и удерживайте недавно использованные смайлы, чтобы удалить их!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} удален из недавно использованных смайлов</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Список недавних эмодзи пуст. Как только вы начнете их использовать, они автоматически появятся здесь.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: удержите палец на недавнем эмодзи, чтобы скрыть его!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} скрыт из недавних эмодзи</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Быстрое переключение. При нажатии переключается между предложением слова и кнопками быстрого действия.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Закрыть панель редактирования текста.</string>
@@ -38,28 +38,28 @@
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Переключиться на режим смайлов.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Кнопка \"Отменить\" для отмены последнего действия</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Кнопка \"Повтор\" для отмены последнего \"Отменить\"</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Если используется, показывает, что активен приватный режим. При нажатии отображается информация о приватном режиме.</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Если видна, значит активен режим Инкогнито. При нажатии доступна информация об этом режиме.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
-    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Попробуйте свои настройки</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Протестируйте свои настройки</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Помощь</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По умолчанию</string>
-    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Значение по умолчанию</string>
-    <string name="settings__home__title" comment="Title of the Home screen">Добро пожаловать в {app_name}</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">По умолчанию</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Приветствуем в {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включена в системе и поэтому не будет доступна в качестве метода ввода. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">Языки и макеты</string>
-    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Отображать названия языков</string>
-    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подтипы</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Языки и раскладки</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Подписи к языкам</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подвиды</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основной язык</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Отображение всплывающих окон</string>
-    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Символьные раскладки</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Схема расположения кнопок</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основная символьная раскладка</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная символьная раскладка</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Редактор</string>
-    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Настройка валют</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Валюта по умолчанию</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Цифровая раскладка</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Цифровая (расширенная) раскладка</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Настройка цифрового ряда</string>
@@ -68,19 +68,19 @@
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Выберите язык</string>
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Поиск языка</string>
     <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Не удалось найти соответствие языка \"{search_term}\".</string>
-    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; выбор &#8210;</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; не выбрано &#8210;</string>
     <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
-    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Предлагаемые предустановки подтипов</string>
-    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Предложенные предустановки отсутствуют. Используйте кнопку ниже для просмотра всех предустановок подтипов.</string>
-    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Предустановки подтипов</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Предлагаемые шаблоны</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Нет предложений. Используйте кнопку ниже для просмотра всех шаблонов.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Шаблоны</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Показать все</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Похоже, вы не настроили никаких раскладок. В качестве основного варианта будет использована English/QWERTY!</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Вы не настроили раскладки, поэтому в качестве временного варианта будет отображаться English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Эта раскладка уже существует!</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">По крайней мере, для одного поля не выбрано значение. Пожалуйста, выберите значение для этого поля (полей).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не установлен)</string>
-    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Макеты</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Раскладки</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Темы</string>
-    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим темы</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Тема оформления</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Время восхода</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Время заката</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневная тема</string>
@@ -93,7 +93,7 @@
     <string name="pref__theme__source_external" comment="Label for the theme source field">Внешний источник</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Выбрать светлую тему</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Выбрать установленные темы</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Установленные темы</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки редактора тем</string>
     <string name="settings__theme_editor__fine_tune__level">Уровень редактирования</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Показывать цвета как</string>
@@ -106,7 +106,7 @@
     <string name="settings__theme_editor__rule_codes">Коды</string>
     <string name="settings__theme_editor__rule_groups">Группы</string>
     <string name="settings__theme_editor__rule_modes">Режимы</string>
-    <string name="settings__theme_editor__rule_selectors">Селекторы</string>
+    <string name="settings__theme_editor__rule_selectors">Переключатели</string>
     <string name="settings__theme_editor__add_code">Добавить код</string>
     <string name="settings__theme_editor__edit_code">Редактировать код</string>
     <string name="settings__theme_editor__no_codes_defined">Коды не заданы.</string>
@@ -143,7 +143,7 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
-    <string name="snygg__rule_element__system_nav_bar">Системная навигационная панель</string>
+    <string name="snygg__rule_element__system_nav_bar">Панели навигации системы</string>
     <string name="snygg__rule_selector__pressed">При нажатии</string>
     <string name="snygg__rule_selector__focus">При фокусе</string>
     <string name="snygg__rule_selector__disabled">Отключено</string>
@@ -158,9 +158,9 @@
     <string name="snygg__property_name__font_size">Размер шрифта</string>
     <string name="snygg__property_name__font_style">Стиль шрифта</string>
     <string name="snygg__property_name__font_variant">Вариант шрифта</string>
-    <string name="snygg__property_name__font_weight">Толщина шрифта</string>
+    <string name="snygg__property_name__font_weight">Начертание шрифта</string>
     <string name="snygg__property_name__shadow_elevation">Высота тени</string>
-    <string name="snygg__property_name__shape">Фигура</string>
+    <string name="snygg__property_name__shape">Форма</string>
     <string name="snygg__property_name__var_primary">Основной цвет</string>
     <string name="snygg__property_name__var_primary_variant">Основной цвет (вариант)</string>
     <string name="snygg__property_name__var_secondary">Дополнительный цвет</string>
@@ -216,7 +216,7 @@
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация автоповтора ввода кнопки</string>
     <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Вибрация жестов смахивания</string>
     <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Вибрация жестов перетаскивания</string>
-    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">например, кнопки, управляющие клавиши или вкладки с эмоциями</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">например кнопки, служебные клавиши или вкладки с эмодзи</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">например, всплывающее меню</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">например, кнопка «удалить»</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">не реализовано</string>
@@ -235,14 +235,18 @@
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина в режиме одной руки</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Альбомный полноэкранный ввод</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">На весь экран в альбомном режиме</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Высота клавиатуры</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Расстояние между кнопками</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Отступ снизу</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Нажатие клавиши</string>
-    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видимость всплывающей подсказки</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Превью символов</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показывать всплывающую подсказку при нажатии кнопки</string>
-    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Задержка при нажатии</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Акценты включают всплывающие окна с символами</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Добавление всплывающих окон символов к акцентам макета по умолчанию</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Длительность долгого нажатия</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробел переключает на буквы</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Будучи в символьной или цифровой раскладке, автоматически переходить обратно на ввод букв</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
@@ -254,8 +258,9 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Дополнительные действия</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Показывать строку дополнительных действий</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Предложения и исправления</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и автоисправления</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Подсказки</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показывать встроенные предложения, предоставляемые службами автозаполнения</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим отображения предложений</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Время отображения предложения буфера обмена</string>
@@ -328,9 +333,10 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принудительный приватный режим</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Всегда в режиме Инкогнито</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключает функции, завязанные на введенных словах</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка правописания</string>
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка орфографии</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Использовать настройки проверки правописания</string>
     <string name="pref__spelling__active_spellchecker__label">Проверка орфографии в текстовых полях</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Отключено для всей системы. В случае написания слов неправильно в текстовых полях не появятся красные подчёркивания. Нажмите, чтобы изменить.</string>
@@ -338,12 +344,12 @@
     <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Параметр \"Языки\" на экране настройки проверки орфографии установлен на \"Использовать системные языки\". Из-за ошибки это может привести к тому, что {app_name} не будет выполнять проверку орфографии в текстовых полях. Попробуйте изменить значение параметра на \"{use_floris_config}\".</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Параметры</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Язык</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Использовать имена контактов</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[не реализовано] Использовать имена контактов</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Использовать записи из словаря пользователя</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Проверка правописания будеть использовать записи из пользовательских словарей, если они существуют</string>
     <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Управление словарями</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">установлен</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} установлен</string>
     <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Не найдено установленных словарей правописания. Нажмите кнопку \"+\" внизу, чтобы добавить словарь!</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Расширение / Архив</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файл словаря + affix</string>
@@ -366,9 +372,9 @@
     <string name="about__title" comment="Title of About activity">О приложении</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок приложения FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Лицензии открытого ПО</string>
-    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика конфиденциальности</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Конфиденциальность</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Исходный код</string>
-    <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого исходного кода</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого ПО</string>
     <string name="about__version__title" comment="Preference title">Версия</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номер версии скопирован в буфер обмена</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Произошла ошибка: {error_message}</string>
@@ -376,7 +382,7 @@
     <string name="about__changelog__summary" comment="Preference summary">Что нового</string>
     <string name="about__repository__title" comment="Preference title">Репозиторий (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Исходный код, обсуждения, проблемы и информация</string>
-    <string name="about__privacy_policy__title" comment="Preference title">Политика конфиденциальности</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Конфиденциальность</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Политика конфиденциальности этого проекта</string>
     <string name="about__project_license__title" comment="Preference title">Лицензия проекта</string>
     <string name="about__project_license__summary" comment="Preference summary">FlorisBoard выпускается под лицензией {license_name}</string>
@@ -386,19 +392,19 @@
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензии сторонних библиотек, используемых в данном приложении</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добро пожаловать!</string>
-    <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за выбор {app_name}! Это небольшое руководство проведёт вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Политика конфиденциальности</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Репозиторий</string>
-    <string name="setup__enable_ime__title">Включить {app_name}</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за установку {app_name}! Это краткое руководство проведёт вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Конфиденциальность</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Исходный код</string>
+    <string name="setup__enable_ime__title">Включите {app_name}</string>
     <string name="setup__enable_ime__description">Android требует, чтобы каждая пользовательская клавиатура была включена отдельно, прежде чем вы сможете её использовать. Откройте системные <i>Настройки языка и ввода</i> и там включите \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Открыть системные настройки</string>
-    <string name="setup__select_ime__title">Выбрать {app_name}</string>
-    <string name="setup__select_ime__description">Теперь приложение {app_name} включено. Чтобы им пользоваться, переключитесь на {app_name}, выбрав в диалоговом окне указания способа ввода.</string>
+    <string name="setup__select_ime__title">Выберите {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} активирована. Чтобы ею пользоваться, переключитесь на {app_name} в окне способа ввода!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Переключить клавиатуру</string>
     <string name="setup__finish_up__title">Готово</string>
-    <string name="setup__finish_up__description_p1">Приложение \"{app_name}\" теперь включено в системе и готово к настройке вами.</string>
-    <string name="setup__finish_up__description_p2">Если вы столкнулись с какими-либо проблемами, ошибками, сбоями или просто хотите внести предложение, загляните в репозиторий проекта из раздела \'О программе\'!</string>
-    <string name="setup__finish_up__finish_btn">Начните настройку!</string>
+    <string name="setup__finish_up__description_p1">Клавиатура {app_name} активирована и готова к дальнейшей настройке.</string>
+    <string name="setup__finish_up__description_p2">Если столкнетесь с какими-либо трудностями, ошибками, сбоями или просто захотите предложить идею, загляните в репозиторий проекта в разделе «О программе»!</string>
+    <string name="setup__finish_up__finish_btn">Перейти к настройке</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Резервное копирование и восстановление</string>
     <string name="backup_and_restore__back_up__title">Резервирование данных</string>
@@ -437,7 +443,7 @@
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Закрыть</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчёты об ошибках FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard перестал работать…</string>
-    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Нажмите, чтобы увидеть детали об ошибке</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Нажмите для подробностей</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, FlorisBoard постоянно перестаёт работать…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- Clipboard strings -->
@@ -466,8 +472,8 @@
     <string name="settings__clipboard__title">Буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Использовать внутренний буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Использовать внутренний буфер обмена вместо системного</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__label">Синхронизировать из системного буфера обмена</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Обновление системного буфера так же обновит буфер обмена Floris</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Единый буфер обмена</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Изменения в буфере обмена системы отражаются в буфере Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронизировать с системным буфером обмена</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обмена Floris так же обновляет системный буфер обмена</string>
     <string name="pref__clipboard__group_clipboard_history__label">История буфера обмена</string>
@@ -502,9 +508,9 @@
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Языки системы</string>
     <!-- Extension strings -->
     <string name="ext__meta__authors">Авторы</string>
-    <string name="ext__meta__components">Связанные компоненты</string>
-    <string name="ext__meta__components_theme">Темы в расширении</string>
-    <string name="ext__meta__components_none_found">Этот архив расширений не содержит каких-либо связанных компонентов.</string>
+    <string name="ext__meta__components">Встроенные компоненты</string>
+    <string name="ext__meta__components_theme">Встроенные темы</string>
+    <string name="ext__meta__components_none_found">В этом архиве расширения нет встроенных компонентов.</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Главная страница</string>
     <string name="ext__meta__id">ID</string>
@@ -549,7 +555,7 @@
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Файл не может быть импортирован. Причина:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Неподдерживаемый или неизвестный тип файла.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Невозможно заменить или обновить пакеты расширений по умолчанию. Если вы хотите использовать более новую версию основного пакета расширений, необходимо обновить само приложение.</string>
-    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Файл выглядит как архив расширения, но анализ данных архива завершился неудачно. Либо архив поврежден, либо этот файл не является расширением.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Файл похож на архив расширения, но анализ данных не прошел. Архив поврежден или вовсе не от расширения.</string>
     <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Ожидался архив расширения серийного типа \"{expected_serial_type}\", оказался \"{actual_serial_type}\".</string>
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Ожидался медиафайл (изображение, аудио, шрифт и т.д.), но обнаружен архив с расширением.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Ожидался архив с расширением, но найден медиафайл (изображение, аудио, шрифт и т.д.).</string>
@@ -560,7 +566,7 @@
     <string name="action__back_up">Резервирование</string>
     <string name="action__cancel">Отмена</string>
     <string name="action__create">Создать</string>
-    <string name="action__default">По умолчанию</string>
+    <string name="action__default">Сбросить</string>
     <string name="action__delete">Удалить</string>
     <string name="action__delete_confirm_title">Подтвердить удаление</string>
     <string name="action__delete_confirm_message">Вы уверены, что хотите удалить \"{name}\"? Это действие не может быть отменено после выполнения.</string>
@@ -589,7 +595,7 @@
     <!-- General strings -->
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">например, {example}</string>
     <string name="general__no_browser_app_found_for_url">Не найдено браузера для использования URL {url}</string>
-    <string name="general__select_dropdown_value_placeholder">&#45; выбор &#45;</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; не выбрано &#45;</string>
     <string name="general__unlimited">Без ограничений</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портретная</string>
@@ -615,10 +621,10 @@
     <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Не отображать клавиатуру после закрытия любого диалогового окна редактора</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Запомнить последнее состояние</string>
     <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Показывать клавиатуру только после закрытия любого диалогового окна редактора, если она была видна ранее</string>
-    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Язык системы</string>
-    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Названия языков в приложении и пользовательском интерфейсе клавиатуры отображаются на языке, установленном для устройства</string>
-    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Другой язык</string>
-    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Названия языков в приложении и пользовательском интерфейсе клавиатуры отображаются на выбранном языке</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Переведенные</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры указаны на языке, используемом в системе по умолчанию</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">В исходном виде</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры указаны приводятся на родных языках</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">Цвет кожи {emoji} по умолчанию</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">Светлый цвет кожи {emoji}</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
@@ -632,10 +638,10 @@
     <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
-    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамическое отображение</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Автоматически</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Отключено</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Режим левши</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Режим правши</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Для левши</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Для правши</string>
     <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Над основным рядом</string>
     <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Дополнительный ряд размещается между пользовательским интерфейсом приложения и основным рядом</string>
     <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под основным рядом</string>
@@ -651,7 +657,7 @@
     <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Строка с наиболее часто используемыми инструментами буфера обмена и перемещения курсора</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
-    <string name="enum__snygg_level__advanced" comment="Enum value label">Дополнительно</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Ещё</string>
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Отображаются все свойства, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Разработчик</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Отображаются все свойства. Свойства и правила отображаются так, как прописано в самом файле таблицы стилей.</string>
@@ -679,14 +685,14 @@
     <string name="enum__swipe_action__undo" comment="Enum value label">Отменить</string>
     <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Точное выделение символов</string>
     <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Точное выделение слов</string>
-    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Показать выбор способа ввода</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Показать окно способа ввода</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Переключиться на предыдущую клавиатуру</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Переключиться на предыдущую раскладку</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Переключиться на следующую раскладку</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Всегда светлая</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Всегда тёмная</string>
-    <string name="enum__theme_mode__follow_system" comment="Enum value label">Следовать системе</string>
-    <string name="enum__theme_mode__follow_time" comment="Enum value label">Следовать времени</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Как в системе</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">По расписанию</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Переключиться на эмодзи</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Переключить язык</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Переключить приложение клавиатуры</string>
