@@ -250,6 +250,13 @@
         "modifier": "org.florisboard.layouts:persian"
       },
       {
+        "id": "persian2",
+        "label": "Persian2",
+        "authors": [ "M-Koushan" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:persian2"
+      },
+      {
         "id": "qwerty",
         "label": "QWERTY",
         "authors": [ "patrickgold" ],
@@ -418,6 +425,12 @@
         "id": "persian",
         "label": "Persian",
         "authors": [ "PHELAT" ],
+        "direction": "rtl"
+      },
+      {
+        "id": "persian2",
+        "label": "Persian2",
+        "authors": [ "M-Koushan" ],
         "direction": "rtl"
       }
     ],

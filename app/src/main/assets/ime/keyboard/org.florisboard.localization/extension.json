@@ -71,6 +71,10 @@
       "authors": [ "PHELAT" ]
     },
     {
+      "id": "fa2",
+      "authors": [ "M-Koushan" ]
+    },
+    {
       "id": "fi",
       "authors": [ "patrickgold" ]
     },
@@ -422,6 +426,18 @@
       "popupMapping": "org.florisboard.localization:fa",
       "preferred": {
         "characters": "org.florisboard.layouts:persian",
+        "symbols": "org.florisboard.layouts:persian",
+        "symbols2": "org.florisboard.layouts:persian",
+        "numericRow": "org.florisboard.layouts:persian"
+      }
+    },
+    {
+      "languageTag": "fa-FA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:fa2",
+      "preferred": {
+        "characters": "org.florisboard.layouts:persian2",
         "symbols": "org.florisboard.layouts:persian",
         "symbols2": "org.florisboard.layouts:persian",
         "numericRow": "org.florisboard.layouts:persian"
