@@ -5,7 +5,7 @@
         { "code": 1590, "label": "ض" }
       ]
     },
-    "‌": {
+    "half_space": {
        "relevant": [
         { "code": 1622, "label": "ٖ" },
         { "code": 1648, "label": "ٰ" },
@@ -76,12 +76,11 @@
       ]
     },
     "~right": {
-      "main": { "code": 1611, "label": "ً" },
+      "main": { "code": 1567, "label": "؟"},
       "relevant": [
         { "code": 1563, "label": "؛" },
         { "code": 58, "label": ":"},
-        { "code": 33, "label": "!" },
-        { "code": 1567, "label": "؟"}
+        { "code": 33, "label": "!" }
       ]
     }
   },
