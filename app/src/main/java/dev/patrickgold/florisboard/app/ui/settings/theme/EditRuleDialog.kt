@@ -16,12 +16,19 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
+import android.icu.lang.UCharacter
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -31,11 +38,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
@@ -45,10 +55,19 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.Keyboard
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
@@ -248,6 +267,11 @@ internal fun EditRuleDialog(
     val initCodeValue = editCodeDialogValue
     if (initCodeValue != null) {
         var inputCodeString by rememberSaveable(initCodeValue) { mutableStateOf(initCodeValue.toString()) }
+        val textKeyData = remember(inputCodeString) {
+            inputCodeString.toIntOrNull()?.let { code ->
+                TextKeyData.getCodeInfoAsTextKeyData(code)
+            }
+        }
         var showKeyCodesHelp by rememberSaveable(initCodeValue) { mutableStateOf(false) }
         var showError by rememberSaveable(initCodeValue) { mutableStateOf(false) }
         var errorId by rememberSaveable(initCodeValue) { mutableStateOf(NATIVE_NULLPTR) }
@@ -321,6 +345,10 @@ internal fun EditRuleDialog(
                         )
                     }
                 }
+                TextKeyDataPreviewBox(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    textKeyData = textKeyData,
+                )
                 FlorisOutlinedTextField(
                     value = inputCodeString,
                     onValueChange = { v ->
@@ -343,6 +371,74 @@ internal fun EditRuleDialog(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun TextKeyDataPreviewBox(
+    textKeyData: TextKeyData?,
+    modifier: Modifier = Modifier,
+) {
+    val data = textKeyData ?: TextKeyData.UNSPECIFIED
+
+    val context = LocalContext.current
+    val evaluator = remember(context) {
+        object : ComputingEvaluator by DefaultComputingEvaluator {
+            val keyboard = object : Keyboard() {
+                override val mode = KeyboardMode.NUMERIC_ADVANCED
+                override fun getKeyForPos(pointerX: Float, pointerY: Float) = error("not implemented")
+                override fun keys() = error("not implemented")
+                override fun layout(keyboardWidth: Float, keyboardHeight: Float, desiredKey: Key) =
+                    error("not implemented")
+            }
+            override fun context() = context
+            override fun keyboard() = keyboard
+        }
+    }
+
+    val label = remember(data) { evaluator.computeLabel(data) }
+    val iconId = remember(data) { evaluator.computeIconResId(data) }
+    val displayName = remember(data) {
+        if (data.code > 0 && AndroidVersion.ATLEAST_API24_N) {
+            UCharacter.getName(data.code) ?: UCharacter.getExtendedName(data.code)
+        } else {
+            data.label
+        }
+    }
+
+    Row(modifier = modifier) {
+        Box(
+            modifier = Modifier
+                .padding(end = 16.dp)
+                .background(
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+                    shape = MaterialTheme.shapes.medium,
+                )
+                .height(36.dp)
+                .widthIn(min = 36.dp)
+                .align(Alignment.CenterVertically),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (label != null) {
+                Text(
+                    text = label,
+                    fontSize = 16.sp,
+                    maxLines = 1,
+                    softWrap = false,
+                )
+            }
+            if (iconId != null) {
+                Icon(
+                    modifier = Modifier.requiredSize(24.dp),
+                    painter = painterResource(iconId),
+                    contentDescription = null,
+                )
+            }
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = displayName)
+            Text(text = data.type.toString())
         }
     }
 }
