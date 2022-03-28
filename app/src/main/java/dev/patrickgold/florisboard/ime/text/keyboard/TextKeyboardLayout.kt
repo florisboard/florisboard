@@ -329,7 +329,7 @@ private fun TextKeyButton(
             .requiredSize(key.visibleBounds.size.toDpSize())
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
         style = keyStyle,
-        clip = true,
+        clip = false,
     ) {
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
@@ -365,10 +365,10 @@ private fun TextKeyButton(
             val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
             Text(
                 modifier = Modifier
-                    .padding(end = (key.visibleBounds.width / 12f).toDp())
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-                    .snyggBackground(keyHintStyle),
+                    .snyggBackground(keyHintStyle)
+                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),
                 fontFamily = FontFamily.Monospace,
