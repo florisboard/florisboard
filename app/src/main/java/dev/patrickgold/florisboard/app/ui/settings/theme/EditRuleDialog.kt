@@ -17,21 +17,34 @@
 package dev.patrickgold.florisboard.app.ui.settings.theme
 
 import android.icu.lang.UCharacter
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +53,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -55,8 +70,13 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
+import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.android.stringRes
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
+import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
@@ -69,10 +89,15 @@ import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggRule
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
+private val TransparentTextSelectionColors = TextSelectionColors(
+    handleColor = Color.Transparent,
+    backgroundColor = Color.Transparent,
+)
 internal val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
 
 @Composable
@@ -266,110 +291,224 @@ internal fun EditRuleDialog(
 
     val initCodeValue = editCodeDialogValue
     if (initCodeValue != null) {
-        var inputCodeString by rememberSaveable(initCodeValue) { mutableStateOf(initCodeValue.toString()) }
-        val textKeyData = remember(inputCodeString) {
-            inputCodeString.toIntOrNull()?.let { code ->
-                TextKeyData.getCodeInfoAsTextKeyData(code)
+        EditCodeValueDialog(
+            codeValue = initCodeValue,
+            checkExisting = { codes.contains(it) },
+            onAdd = { codes.add(it) },
+            onDelete = { codes.remove(it) },
+            onDismiss = { editCodeDialogValue = null },
+        )
+    }
+}
+
+@Composable
+private fun EditCodeValueDialog(
+    codeValue: Int,
+    checkExisting: (Int) -> Boolean,
+    onAdd: (Int) -> Unit,
+    onDelete: (Int) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
+    var inputCodeString by rememberSaveable(codeValue) { mutableStateOf(codeValue.toString()) }
+    val textKeyData = remember(inputCodeString) {
+        inputCodeString.toIntOrNull()?.let { code ->
+            TextKeyData.getCodeInfoAsTextKeyData(code)
+        }
+    }
+    var showKeyCodesHelp by rememberSaveable(codeValue) { mutableStateOf(false) }
+    var showError by rememberSaveable(codeValue) { mutableStateOf(false) }
+    var errorId by rememberSaveable(codeValue) { mutableStateOf(NATIVE_NULLPTR) }
+
+    val focusRequester = remember { FocusRequester() }
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+
+    var isRecordingKey by remember { mutableStateOf(false) }
+    var lastRecordingToast by remember { mutableStateOf<Toast?>(null) }
+    val recordingKeyColor = if (isRecordingKey) {
+        rememberInfiniteTransition().animateColor(
+            initialValue = LocalContentColor.current,
+            targetValue = MaterialTheme.colors.error,
+            animationSpec = infiniteRepeatable(
+                tween(750),
+                repeatMode = RepeatMode.Reverse,
+            ),
+        ).value
+    } else {
+        LocalContentColor.current
+    }
+
+    fun requestStartRecording() {
+        if (isRecordingKey) {
+            isRecordingKey = false
+            return
+        }
+        if (!isFlorisBoardEnabled || !isFlorisBoardSelected) {
+            lastRecordingToast?.cancel()
+            lastRecordingToast = context.showShortToast(
+                R.string.settings__theme_editor__code_recording_requires_default_ime_floris,
+                "app_name" to context.stringRes(R.string.floris_app_name),
+            )
+            InputMethodUtils.showImePicker(context)
+            return
+        }
+        showError = false
+        isRecordingKey = true
+    }
+
+    if (isRecordingKey) {
+        DisposableEffect(Unit) {
+            val receiver = object : InputKeyEventReceiver {
+                override fun onInputKeyDown(ev: InputKeyEvent) = Unit
+                override fun onInputKeyUp(ev: InputKeyEvent) {
+                    inputCodeString = ev.data.code.toString()
+                    isRecordingKey = false
+                }
+                override fun onInputKeyRepeat(ev: InputKeyEvent) = Unit
+                override fun onInputKeyCancel(ev: InputKeyEvent) = Unit
+            }
+            val defaultReceiver = keyboardManager.inputEventDispatcher.keyEventReceiver
+            keyboardManager.inputEventDispatcher.keyEventReceiver = receiver
+            lastRecordingToast?.cancel()
+            lastRecordingToast = context.showShortToast(R.string.settings__theme_editor__code_recording_started)
+            focusRequester.requestFocus()
+            onDispose {
+                keyboardManager.inputEventDispatcher.keyEventReceiver = defaultReceiver
+                lastRecordingToast?.cancel()
+                lastRecordingToast = context.showShortToast(R.string.settings__theme_editor__code_recording_stopped)
             }
         }
-        var showKeyCodesHelp by rememberSaveable(initCodeValue) { mutableStateOf(false) }
-        var showError by rememberSaveable(initCodeValue) { mutableStateOf(false) }
-        var errorId by rememberSaveable(initCodeValue) { mutableStateOf(NATIVE_NULLPTR) }
-        JetPrefAlertDialog(
-            title = stringRes(if (initCodeValue == NATIVE_NULLPTR) {
-                R.string.settings__theme_editor__add_code
-            } else {
-                R.string.settings__theme_editor__edit_code
-            }),
-            confirmLabel = stringRes(if (initCodeValue == NATIVE_NULLPTR) {
-                R.string.action__add
-            } else {
-                R.string.action__apply
-            }),
-            onConfirm = {
-                val code = inputCodeString.trim().toIntOrNull(radix = 10)
-                when {
-                    code == null || (code !in KeyCode.Spec.CHARACTERS && code !in KeyCode.Spec.INTERNAL) -> {
-                        errorId = R.string.settings__theme_editor__code_invalid
-                        showError = true
-                    }
-                    code == initCodeValue -> {
-                        editCodeDialogValue = null
-                    }
-                    codes.contains(code) -> {
-                        errorId = R.string.settings__theme_editor__code_already_exists
-                        showError = true
-                    }
-                    else -> {
-                        if (initCodeValue != NATIVE_NULLPTR) {
-                            codes.remove(initCodeValue)
-                        }
-                        codes.add(code)
-                        editCodeDialogValue = null
-                    }
+    }
+
+    JetPrefAlertDialog(
+        title = stringRes(if (codeValue == NATIVE_NULLPTR) {
+            R.string.settings__theme_editor__add_code
+        } else {
+            R.string.settings__theme_editor__edit_code
+        }),
+        confirmLabel = stringRes(if (codeValue == NATIVE_NULLPTR) {
+            R.string.action__add
+        } else {
+            R.string.action__apply
+        }),
+        onConfirm = {
+            val code = inputCodeString.trim().toIntOrNull(radix = 10)
+            when {
+                code == null || (code !in KeyCode.Spec.CHARACTERS && code !in KeyCode.Spec.INTERNAL) -> {
+                    errorId = R.string.settings__theme_editor__code_invalid
+                    showError = true
                 }
-            },
-            dismissLabel = stringRes(R.string.action__cancel),
-            onDismiss = {
-                editCodeDialogValue = null
-            },
-            neutralLabel = if (initCodeValue != NATIVE_NULLPTR) {
-                stringRes(R.string.action__delete)
-            } else {
-                null
-            },
-            neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.error),
-            onNeutral = {
-                codes.remove(initCodeValue)
-                editCodeDialogValue = null
-            },
-            trailingIconTitle = {
-                FlorisIconButton(
-                    onClick = { showKeyCodesHelp = !showKeyCodesHelp },
-                    modifier = Modifier.offset(x = 12.dp),
-                    icon = painterResource(R.drawable.ic_help_outline),
-                )
-            },
-        ) {
-            Column {
-                AnimatedVisibility(visible = showKeyCodesHelp) {
-                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
-                        Text(text = stringRes(R.string.settings__theme_editor__code_help_text))
-                        FlorisHyperlinkText(
-                            text = "Characters (unicode-table.com)",
-                            url = stringRes(R.string.florisboard__character_key_codes_url),
-                        )
-                        FlorisHyperlinkText(
-                            text = "Internal (github.com)",
-                            url = stringRes(R.string.florisboard__internal_key_codes_url),
-                        )
-                    }
+                code == codeValue -> {
+                    onDismiss()
                 }
-                TextKeyDataPreviewBox(
-                    modifier = Modifier.padding(bottom = 8.dp),
-                    textKeyData = textKeyData,
-                )
-                FlorisOutlinedTextField(
-                    value = inputCodeString,
-                    onValueChange = { v ->
-                        inputCodeString = v
-                        showError = false
-                    },
-                    isError = showError,
-                    singleLine = true,
-                )
-                AnimatedVisibility(visible = showError) {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = stringRes(errorId).curlyFormat(
-                            "c_min" to KeyCode.Spec.CHARACTERS_MIN,
-                            "c_max" to KeyCode.Spec.CHARACTERS_MAX,
-                            "i_min" to KeyCode.Spec.INTERNAL_MIN,
-                            "i_max" to KeyCode.Spec.INTERNAL_MAX,
-                        ),
-                        color = MaterialTheme.colors.error,
+                checkExisting(code) -> {
+                    errorId = R.string.settings__theme_editor__code_already_exists
+                    showError = true
+                }
+                else -> {
+                    if (codeValue != NATIVE_NULLPTR) {
+                        onDelete(codeValue)
+                    }
+                    onAdd(code)
+                    onDismiss()
+                }
+            }
+        },
+        dismissLabel = stringRes(R.string.action__cancel),
+        onDismiss = onDismiss,
+        neutralLabel = if (codeValue != NATIVE_NULLPTR) {
+            stringRes(R.string.action__delete)
+        } else {
+            null
+        },
+        neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.error),
+        onNeutral = {
+            onDelete(codeValue)
+            onDismiss()
+        },
+        trailingIconTitle = {
+            FlorisIconButton(
+                onClick = { showKeyCodesHelp = !showKeyCodesHelp },
+                modifier = Modifier.offset(x = 12.dp),
+                icon = painterResource(R.drawable.ic_help_outline),
+            )
+        },
+    ) {
+        Column {
+            AnimatedVisibility(visible = showKeyCodesHelp) {
+                Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                    Text(text = stringRes(R.string.settings__theme_editor__code_recording_help_text))
+                    Text(text = stringRes(R.string.settings__theme_editor__code_help_text))
+                    FlorisHyperlinkText(
+                        text = "Characters (unicode-table.com)",
+                        url = stringRes(R.string.florisboard__character_key_codes_url),
+                    )
+                    FlorisHyperlinkText(
+                        text = "Internal (github.com)",
+                        url = stringRes(R.string.florisboard__internal_key_codes_url),
                     )
                 }
+            }
+            TextKeyDataPreviewBox(
+                modifier = Modifier.padding(bottom = 8.dp),
+                textKeyData = textKeyData,
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val textSelectionColors = if (isRecordingKey) {
+                    TransparentTextSelectionColors
+                } else {
+                    LocalTextSelectionColors.current
+                }
+                CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
+                    FlorisOutlinedTextField(
+                        modifier = Modifier
+                            .focusRequester(focusRequester)
+                            .weight(1f),
+                        value = inputCodeString,
+                        onValueChange = { v ->
+                            inputCodeString = v
+                            showError = false
+                        },
+                        placeholder = if (isRecordingKey) {
+                            stringRes(R.string.settings__theme_editor__code_recording_placeholder)
+                        } else {
+                            null
+                        },
+                        isError = showError,
+                        singleLine = true,
+                        colors = if (isRecordingKey) {
+                            TextFieldDefaults.outlinedTextFieldColors(
+                                textColor = Color.Transparent,
+                                cursorColor = Color.Transparent,
+                            )
+                        } else {
+                            TextFieldDefaults.outlinedTextFieldColors()
+                        },
+                    )
+                }
+                FlorisIconButton(
+                    onClick = { requestStartRecording() },
+                    icon = painterResource(R.drawable.ic_pageview),
+                    iconColor = recordingKeyColor,
+                )
+            }
+            AnimatedVisibility(visible = showError) {
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = stringRes(errorId).curlyFormat(
+                        "c_min" to KeyCode.Spec.CHARACTERS_MIN,
+                        "c_max" to KeyCode.Spec.CHARACTERS_MAX,
+                        "i_min" to KeyCode.Spec.INTERNAL_MIN,
+                        "i_max" to KeyCode.Spec.INTERNAL_MAX,
+                    ),
+                    color = MaterialTheme.colors.error,
+                )
             }
         }
     }

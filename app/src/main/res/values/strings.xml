@@ -122,7 +122,12 @@
     <string name="settings__theme_editor__no_codes_defined">No codes defined.</string>
     <string name="settings__theme_editor__code_already_exists">This key code is already defined.</string>
     <string name="settings__theme_editor__code_invalid">This key code is not valid. Ensure that the key code is within the range of {c_min} to {c_max} for characters or {i_min} to {i_max} for internal special keys.</string>
-    <string name="settings__theme_editor__code_help_text">The following links will help you to find the corresponding key code:</string>
+    <string name="settings__theme_editor__code_help_text">Alternatively the following links will help you to find the corresponding key code:</string>
+    <string name="settings__theme_editor__code_recording_help_text">To find the code of a key, use the button besides the code input field. Once activated, it will record the next key press and will insert the code into the input field.</string>
+    <string name="settings__theme_editor__code_recording_started">Key code recording started</string>
+    <string name="settings__theme_editor__code_recording_stopped">Key code recording stopped</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} needs to be the default keyboard to record a key code</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Recording…</string>
     <string name="settings__theme_editor__add_property">Add property</string>
     <string name="settings__theme_editor__edit_property">Edit property</string>
     <string name="settings__theme_editor__property_already_exists">A property with this name already exists within the current rule.</string>
