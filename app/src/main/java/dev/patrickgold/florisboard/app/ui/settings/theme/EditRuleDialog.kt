@@ -238,13 +238,15 @@ internal fun EditRuleDialog(
                     )
                 },
             ) {
-                if (codes.isEmpty()) {
-                    Text(
-                        modifier = Modifier.padding(vertical = 4.dp),
-                        text = stringRes(R.string.settings__theme_editor__no_codes_defined),
-                        fontStyle = FontStyle.Italic,
-                    )
-                }
+                Text(
+                    modifier = Modifier.padding(vertical = 4.dp),
+                    text = stringRes(if (codes.isEmpty()) {
+                        R.string.settings__theme_editor__no_codes_defined
+                    } else {
+                        R.string.settings__theme_editor__codes_defined
+                    }),
+                    fontStyle = FontStyle.Italic,
+                )
                 FlowRow {
                     for (code in codes) {
                         FlorisChip(
@@ -312,7 +314,10 @@ private fun EditCodeValueDialog(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    var inputCodeString by rememberSaveable(codeValue) { mutableStateOf(codeValue.toString()) }
+    var inputCodeString by rememberSaveable(codeValue) {
+        val str = if (codeValue == 0) "" else codeValue.toString()
+        mutableStateOf(str)
+    }
     val textKeyData = remember(inputCodeString) {
         inputCodeString.toIntOrNull()?.let { code ->
             TextKeyData.getCodeInfoAsTextKeyData(code)
@@ -475,10 +480,16 @@ private fun EditCodeValueDialog(
                             inputCodeString = v
                             showError = false
                         },
-                        placeholder = if (isRecordingKey) {
-                            stringRes(R.string.settings__theme_editor__code_recording_placeholder)
-                        } else {
-                            null
+                        placeholder = when {
+                            isRecordingKey -> {
+                                stringRes(R.string.settings__theme_editor__code_recording_placeholder)
+                            }
+                            inputCodeString.isEmpty() -> {
+                                stringRes(R.string.settings__theme_editor__code_placeholder)
+                            }
+                            else -> {
+                                null
+                            }
                         },
                         isError = showError,
                         singleLine = true,

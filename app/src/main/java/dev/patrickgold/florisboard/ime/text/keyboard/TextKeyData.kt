@@ -96,6 +96,7 @@ class TextKeyData(
             }
         }
 
+        // TODO: find better solution than to hand define array of below keys...
         private val InternalKeys by lazy {
             listOf(
                 UNSPECIFIED,
@@ -146,6 +147,7 @@ class TextKeyData(
                 IME_SUBTYPE_PICKER,
                 IME_PREV_SUBTYPE,
                 IME_NEXT_SUBTYPE,
+                LANGUAGE_SWITCH,
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
@@ -449,6 +451,12 @@ class TextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.IME_NEXT_SUBTYPE,
             label = "ime_next_subtype",
+        )
+        /** Predefined key data for [KeyCode.LANGUAGE_SWITCH] */
+        val LANGUAGE_SWITCH = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.LANGUAGE_SWITCH,
+            label = "language_switch",
         )
 
         /** Predefined key data for [KeyCode.IME_SHOW_UI] */
