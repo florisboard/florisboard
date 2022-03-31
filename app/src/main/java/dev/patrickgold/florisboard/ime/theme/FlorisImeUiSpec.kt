@@ -101,6 +101,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         font()
+        shape()
     }
     element(FlorisImeUi.KeyPopup) {
         background()
