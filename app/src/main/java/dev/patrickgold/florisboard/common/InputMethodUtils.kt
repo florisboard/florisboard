@@ -33,7 +33,7 @@ private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisIm
 object InputMethodUtils {
     @Composable
     fun observeIsFlorisboardEnabled(
-        context: Context = LocalContext.current,
+        context: Context = LocalContext.current.applicationContext,
         foregroundOnly: Boolean = false,
     ) = AndroidSettings.Secure.observeAsState(
         key = Settings.Secure.ENABLED_INPUT_METHODS,
@@ -43,7 +43,7 @@ object InputMethodUtils {
 
     @Composable
     fun observeIsFlorisboardSelected(
-        context: Context = LocalContext.current,
+        context: Context = LocalContext.current.applicationContext,
         foregroundOnly: Boolean = false,
     ) = AndroidSettings.Secure.observeAsState(
         key = Settings.Secure.DEFAULT_INPUT_METHOD,
