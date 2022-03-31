@@ -102,16 +102,23 @@
     <string name="settings__theme_editor__no_rules_defined">Стиловият лист няма правила. За да промените стиловете добавете правила.</string>
     <string name="settings__theme_editor__rule_already_exists">Вече има такова правило.</string>
     <string name="settings__theme_editor__rule_element">Целеви елемент</string>
-    <string name="settings__theme_editor__rule_codes">Кодове</string>
+    <string name="settings__theme_editor__rule_codes">Целеви кодове</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
     <string name="settings__theme_editor__rule_modes">Режим</string>
     <string name="settings__theme_editor__rule_selectors">Селектор</string>
     <string name="settings__theme_editor__add_code">Добавяне на код</string>
     <string name="settings__theme_editor__edit_code">Промяна на код</string>
-    <string name="settings__theme_editor__no_codes_defined">Липсват кодове.</string>
+    <string name="settings__theme_editor__no_codes_defined">Правилото се прилага към всички целеви елементи.</string>
+    <string name="settings__theme_editor__codes_defined">Правилото се прилага само към целевите елементи със следните кодове:</string>
     <string name="settings__theme_editor__code_already_exists">Кодът вече е дефиниран.</string>
     <string name="settings__theme_editor__code_invalid">Кодът не е валиден. Уверете се че стойността му е между {c_min} и {c_max} за букви и между {i_min} и {i_max} за вградените спициални клавиши.</string>
-    <string name="settings__theme_editor__code_help_text">Следните препратки ще са ви от полза при намиране на клавишни кодове:</string>
+    <string name="settings__theme_editor__code_help_text">Следните препратки ще са ви от полза при намиране на кода на клавиш:</string>
+    <string name="settings__theme_editor__code_placeholder">Код на клавиш</string>
+    <string name="settings__theme_editor__code_recording_help_text">За да намерите кода на даден клавиш използвайте бутона до полето. Веднъж натиснат в полето ще се запише кода на следващия натиснат клавиш.</string>
+    <string name="settings__theme_editor__code_recording_started">Записът на кода на клавиш е започнат</string>
+    <string name="settings__theme_editor__code_recording_stopped">Записът на кода на клавиш е спрян</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">За да запише кода на клавиша, {app_name} трябва да е подразбираната клавиатура</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Записване…</string>
     <string name="settings__theme_editor__add_property">Добавяне на свойство</string>
     <string name="settings__theme_editor__edit_property">Променяне на свойство</string>
     <string name="settings__theme_editor__property_already_exists">Свойство с това име вече съществува в текущото правило.</string>
@@ -134,6 +141,11 @@
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
     <string name="snygg__rule_element__smartbar_primary_row">Основен ред на интелигентната лента</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Допълнителен ред на интелигентната лента</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Бутон за превкл. на основата интелигентна лента</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Бутон за превкл. на допълнителната интелигентна лента</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Бързи действия на интелигентната лента</string>
+    <string name="snygg__rule_element__smartbar_key">Бутон за интелигентната лента</string>
     <string name="snygg__rule_selector__pressed">Натиснат</string>
     <string name="snygg__rule_selector__focus">На фокус</string>
     <string name="snygg__rule_selector__disabled">Изключен</string>
@@ -238,6 +250,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните, превключващи редовете</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Съдържание на реда</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основни действия</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматично се разтваря/събира основния ред, на базата на състоянието</string>
@@ -630,8 +643,8 @@
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Долу, начало</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Бързи действия</string>
     <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Бързите действия, подредени в един ред с допълнително меню</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменти за междинна памет и каретка</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Най-използваните действия за междинна памет и придвижване на каретката</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменти за междинната памет и каретката</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Най-използваните действия с междинната памет и придвижване на каретката</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Основен</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Само цветове, свойствата и правилата са преведени.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Разширен</string>

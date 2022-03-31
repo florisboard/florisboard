@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">Cette feuille de style n\'a pas de règles définies. Ajoutez une règle pour commencer à personnaliser cette feuille de style.</string>
     <string name="settings__theme_editor__rule_already_exists">Cette règle de feuille de style est déjà définie.</string>
     <string name="settings__theme_editor__rule_element">Élément cible</string>
-    <string name="settings__theme_editor__rule_codes">Codes</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
     <string name="settings__theme_editor__rule_modes">Modes</string>
     <string name="settings__theme_editor__rule_selectors">Sélecteurs</string>
-    <string name="settings__theme_editor__add_code">Ajouter du code</string>
-    <string name="settings__theme_editor__edit_code">Modifier le code</string>
-    <string name="settings__theme_editor__no_codes_defined">Aucun code défini.</string>
     <string name="settings__theme_editor__code_already_exists">Ce code clé est déjà défini.</string>
     <string name="settings__theme_editor__code_invalid">Ce code clé n\'est pas valide. Assurez-vous que le code de clé est dans la plage de {c_min} à {c_max} pour les caractères ou de {i_min} à {i_max} pour les clés spéciales internes.</string>
-    <string name="settings__theme_editor__code_help_text">Les liens suivants vous aideront à trouver le code clé correspondant :</string>
     <string name="settings__theme_editor__add_property">Ajouter une propriété</string>
     <string name="settings__theme_editor__edit_property">Modifier la propriété</string>
     <string name="settings__theme_editor__property_already_exists">Une propriété portant ce nom existe déjà dans la règle actuelle.</string>

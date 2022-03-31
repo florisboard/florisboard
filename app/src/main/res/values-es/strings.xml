@@ -101,13 +101,9 @@
     <string name="settings__theme_editor__add_rule">Añadir regla</string>
     <string name="settings__theme_editor__edit_rule">Editar regla</string>
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
-    <string name="settings__theme_editor__rule_codes">Códigos</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
     <string name="settings__theme_editor__rule_modes">Modos</string>
     <string name="settings__theme_editor__rule_selectors">Selectores</string>
-    <string name="settings__theme_editor__add_code">Añadir código</string>
-    <string name="settings__theme_editor__edit_code">Editar código</string>
-    <string name="settings__theme_editor__no_codes_defined">No hay códigos definidos.</string>
     <string name="settings__theme_editor__add_property">Añadir propiedad</string>
     <string name="settings__theme_editor__edit_property">Editar propiedad</string>
     <string name="settings__theme_editor__property_already_exists">Ya existe una propiedad con este nombre dentro de la regla actual.</string>

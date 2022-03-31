@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">このスタイルシートにはルールが定義されていません。 このスタイルシートのカスタマイズを開始するルールを追加します。</string>
     <string name="settings__theme_editor__rule_already_exists">このスタイルシートルールはすでに定義されています。</string>
     <string name="settings__theme_editor__rule_element">ターゲット要素</string>
-    <string name="settings__theme_editor__rule_codes">コード</string>
     <string name="settings__theme_editor__rule_groups">グループ</string>
     <string name="settings__theme_editor__rule_modes">モード</string>
     <string name="settings__theme_editor__rule_selectors">セレクター</string>
-    <string name="settings__theme_editor__add_code">コードを追加</string>
-    <string name="settings__theme_editor__edit_code">コードを編集</string>
-    <string name="settings__theme_editor__no_codes_defined">コードが定義されていません。</string>
     <string name="settings__theme_editor__code_already_exists">このキーコードはすでに定義されています。</string>
     <string name="settings__theme_editor__code_invalid">このキーコードは無効です。 キーコードが、文字の場合は {c_min} から {c_max} の範囲内、内部特殊キーの場合は {i_min} から {i_max} の範囲内にあることを確認してください。</string>
-    <string name="settings__theme_editor__code_help_text">次のリンクは、対応するキーコードを見つけるのに役立ちます:</string>
     <string name="settings__theme_editor__add_property">プロパティを追加</string>
     <string name="settings__theme_editor__edit_property">プロパティを編集</string>
     <string name="settings__theme_editor__property_already_exists">この名前のプロパティは、現在のルール内にすでに存在します。</string>
@@ -180,16 +175,114 @@
     <string name="snygg__property_value__image_ref">画像リファレンス</string>
     <string name="snygg__property_value__rectangle_shape">長方形</string>
     <string name="snygg__property_value__circle_shape">円形</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">カットコーナー形状(dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">カットコーナー形状(%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">丸みを帯びた角の形(dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">丸みを帯びた角の形状(%)</string>
     <string name="snygg__property_value__dp_size">サイズ (dp)</string>
     <string name="snygg__property_value__sp_size">サイズ (sp)</string>
+    <string name="snygg__property_value__percentage_size">サイズ (%)</string>
+    <string name="snygg__property_value__defined_var">変数リファレンス</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">音とバイブレーション</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ハウリング</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">ハウリングを有効にする</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">システム設定に応じて、入力イベントのサウンドを再生します</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">システムオーディオ設定を無効</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">システムでオーディオが無効になっている場合でも、以下の設定を使用してください。 システムの着信音がミュートされている場合は機能しません</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">入力イベントの音量</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">キーを押したときのサウンド</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">キーを長く押した時のサウンド</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">キーリピートアクションサウンド</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">ジェスチャーをスワイプした時のサウンド</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャーを移動した時のスワイプサウンド</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触覚フィードバック/バイブレーション</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">触覚フィードバックを有効</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">システム設定に応じて、入力イベントを振動させる</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">システムの触覚設定を無視</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">システムでハプティックが無効になっている場合でも、以下の設定を使用してください</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">バイブレーションを直接トリガー</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Androidの触覚フィードバック機能セットを使用する代わりに、バイブレーションを直接トリガーします</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">バイブレーション持続時間</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">バイブレーションの強さ</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">この機能にはハードウェア振幅制御のサポートが必要ですが、これはこのデバイスにはありません</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">この機能には、Android8.0以降でのみ利用可能な振幅制御のサポートが必要です。</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">キーバイブレーション</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">キーを長く押した時の振動</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">キーリピートアクションバイブレーション</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">ジェスチャーをスワイプした時の振動</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャーを移動した時のスワイプ振動</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">例えば キー、ボタン、絵文字タブ</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">例えば ポップアップメニュー</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">例えばキーを削除</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">実装されていません</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">例えば カーソルコントロールスワイプ</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">キーボード</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">行数</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">文字レイアウトの上に数字の行を表示する</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">ヒント付きの数字の行</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">ヒント記号</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">ユーティリティキーを表示</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">スペースバーの横に設定可能なユーティリティキーを表示します</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">ユーティリティキーアクション</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">スペースバーに言語を表示する</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">スペースバーに現在アクティブな言語名を表示します</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズの倍率</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">片手モード</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">片手モード時のキーボードの幅</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーンの入力</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">キーボードの高さ</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">キーの間隔</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">ボトムオフセット</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キーを押す時の設定</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">ポップアップの可視性</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">キーを押すとポップアップが表示されます</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">アクセントにシンボルポップアップを含む</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">デフォルトのレイアウトのアクセントにシンボルポップアップを追加します</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">長くキーを押した時の待ち時間</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">スペースバーを文字に切り替える</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">記号または数字の場合、自動的に文字に戻ります</string>
     <!-- Smartbar strings -->
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">スマートバー</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">スマートバーを有効</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">キーボードの上に表示されます</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">トグルボタンを切り替える</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">アクション行の切り替えを反転します</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">行レイアウト</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">プライマリーアクション</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">自動的に拡張/折りたたみ</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">現在の状態に基づいてプライマリーアクション行を自動的に展開/折りたたみます</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">セカンダリーアクション</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">二次アクション行を表示</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">提案&amp; 訂正</string>
+    <string name="pref__suggestion__title" comment="Preference group title">提案</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">オートフィルサービスによって提供されるインライン提案を表示する</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">提案表示モード</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">クリップボードコンテンツの提案</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">クリップボードの提案のタイムアウト</string>
+    <string name="pref__correction__title" comment="Preference group title">訂正</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">自動大文字変換</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">現在の入力コンテキストに基づいて単語を大文字にする</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">CapsLock状態を維持</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">別のテキストフィールドに移動しても、CapsLockはオンのままになります</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">ダブルスペースでピリオドを入力</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">スペースバーを2回タップすると、ピリオドの後にスペースが挿入されます</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">ユーザー辞書</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">システムユーザー辞書を有効化</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">システムユーザー辞書に保存されている単語を提案します</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">システムユーザー辞書を管理</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">システムユーザー辞書のエントリを追加、表示、および削除をします</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">内部ユーザー辞書を有効化</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">内部ユーザー辞書に保存されている単語を提案します</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">内部ユーザー辞書を管理</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">内部ユーザー辞書のエントリを追加、表示、および削除をします</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">内部ユーザー辞書</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">システムユーザー辞書</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">このユーザー辞書には単語が含まれていません。</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">頻度:{freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">頻度:{freq} | ショートカット:{shortcut}</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">すべての言語</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Setup UI strings -->
