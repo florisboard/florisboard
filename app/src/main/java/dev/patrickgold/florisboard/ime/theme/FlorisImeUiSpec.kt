@@ -205,6 +205,23 @@ object FlorisImeUiSpec : SnyggSpec({
         foreground()
     }
 
+    element(FlorisImeUi.ExtractedLandscapeInputLayout) {
+        background()
+    }
+    element(FlorisImeUi.ExtractedLandscapeInputField) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.ExtractedLandscapeInputAction) {
+        background()
+        foreground()
+        shape()
+    }
+
     element(FlorisImeUi.GlideTrail) {
         foreground()
     }

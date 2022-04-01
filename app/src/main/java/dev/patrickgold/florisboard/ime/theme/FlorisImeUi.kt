@@ -30,6 +30,10 @@ object FlorisImeUi {
     const val EmojiKeyPopup = "emoji-key-popup"
     const val EmojiTab = "emoji-tab"
 
+    const val ExtractedLandscapeInputLayout = "extracted-landscape-input-layout"
+    const val ExtractedLandscapeInputField = "extracted-landscape-input-field"
+    const val ExtractedLandscapeInputAction = "extracted-landscape-input-action"
+
     const val GlideTrail = "glide-trail"
 
     const val OneHandedPanel = "one-handed-panel"
