@@ -107,10 +107,6 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
 /**
  * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
- *
- * This is a new implementation for the keyboard service class and is replacing the old core class bit by bit.
- * The main objective for the new class is to hold as few state as possible and delegate tasks to context-bound
- * manager classes.
  */
 class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHistoryChangedListener {
     companion object {
