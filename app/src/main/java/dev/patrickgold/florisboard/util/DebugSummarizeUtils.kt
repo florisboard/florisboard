@@ -16,25 +16,76 @@
 
 package dev.patrickgold.florisboard.util
 
+import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.inputmethod.EditorInfoCompat
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import kotlin.reflect.KClass
 
+private const val SECTION_SEPARATOR = "---"
+
 fun EditorInfo.debugSummarize(): String {
-    return StringBuilder().let {
-        it.appendLine(this::class.qualifiedName)
-        it.append("imeOptions: ").appendLine(this.imeOptions.debugSummarize(EditorInfo::class))
-        it.append("initialCapsMode: ").appendLine(this.initialCapsMode.debugSummarize(TextUtils::class))
-        it.append("initialSelStart: ").appendLine(this.initialSelStart)
-        it.append("initialSelEnd: ").appendLine(this.initialSelEnd)
-        it.append("inputType: ").appendLine(this.inputType.debugSummarize(InputType::class))
-        it.append("packageName: ").appendLine(this.packageName)
-        it.toString()
+    val info = this
+    return buildString {
+        appendLine(info::class.qualifiedName)
+        append("packageName: ").appendLine(info.packageName)
+        appendLine(SECTION_SEPARATOR)
+        append("inputType: ").appendLine(info.inputType.debugSummarize(InputType::class))
+        append("imeOptions: ").appendLine(info.imeOptions.debugSummarize(EditorInfo::class))
+        append("privateImeOptions: ").appendLine(info.privateImeOptions ?: "(null)")
+        appendLine(SECTION_SEPARATOR)
+        append("actionId: ").appendLine(info.actionId.dsEditorInfoActionId())
+        append("actionLabel: ").appendLine(info.actionLabel ?: "(null)")
+        append("contentMimeTypes: ").appendLine(EditorInfoCompat.getContentMimeTypes(info).contentToString())
+        append("extras: ").appendLine(info.extras?.debugSummarize() ?: "(null)")
+        append("hintLocales: ").also {
+            if (AndroidVersion.ATLEAST_API24_N) {
+                appendLine(info.hintLocales?.toLanguageTags() ?: "(null)")
+            } else {
+                appendLine("(null)")
+            }
+        }
+        append("hintText: ").appendLine(info.hintText ?: "(null)")
+        appendLine(SECTION_SEPARATOR)
+        append("initialCapsMode: ").appendLine(info.initialCapsMode.debugSummarize(TextUtils::class))
+        append("initialSelStart: ").appendLine(info.initialSelStart)
+        append("initialSelEnd: ").appendLine(info.initialSelEnd)
     }
 }
 
-fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
+private fun Bundle.debugSummarize(): String {
+    val bundle = this
+    return buildString {
+        append("[")
+        for ((i, key) in bundle.keySet().withIndex()) {
+            if (i > 0) {
+                append(",")
+            }
+            append(key)
+            append("=")
+            append(bundle.get(key))
+        }
+        append("]")
+    }
+}
+
+private fun Int.dsEditorInfoActionId(): String {
+    return when (this) {
+        EditorInfo.IME_ACTION_DONE -> "IME_ACTION_DONE"
+        EditorInfo.IME_ACTION_GO -> "IME_ACTION_GO"
+        EditorInfo.IME_ACTION_NEXT -> "IME_ACTION_NEXT"
+        EditorInfo.IME_ACTION_NONE -> "IME_ACTION_NONE"
+        EditorInfo.IME_ACTION_PREVIOUS -> "IME_ACTION_PREVIOUS"
+        EditorInfo.IME_ACTION_SEARCH -> "IME_ACTION_SEARCH"
+        EditorInfo.IME_ACTION_SEND -> "IME_ACTION_SEND"
+        EditorInfo.IME_ACTION_UNSPECIFIED -> "IME_ACTION_UNSPECIFIED"
+        else -> String.format("0x%08x", this)
+    }
+}
+
+private fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
     val summary = StringBuilder()
     when (type) {
         EditorInfo::class -> {
@@ -43,17 +94,7 @@ fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
                     summary.append("IME_NULL")
                 }
                 else -> {
-                    val tAction = when (this and EditorInfo.IME_MASK_ACTION) {
-                        EditorInfo.IME_ACTION_DONE -> "IME_ACTION_DONE"
-                        EditorInfo.IME_ACTION_GO -> "IME_ACTION_GO"
-                        EditorInfo.IME_ACTION_NEXT -> "IME_ACTION_NEXT"
-                        EditorInfo.IME_ACTION_NONE -> "IME_ACTION_NONE"
-                        EditorInfo.IME_ACTION_PREVIOUS -> "IME_ACTION_PREVIOUS"
-                        EditorInfo.IME_ACTION_SEARCH -> "IME_ACTION_SEARCH"
-                        EditorInfo.IME_ACTION_SEND -> "IME_ACTION_SEND"
-                        EditorInfo.IME_ACTION_UNSPECIFIED -> "IME_ACTION_UNSPECIFIED"
-                        else -> String.format("0x%08x", this and EditorInfo.IME_MASK_ACTION)
-                    }
+                    val tAction = (this and EditorInfo.IME_MASK_ACTION).dsEditorInfoActionId()
                     val tFlags = StringBuilder()
                     if (this and EditorInfo.IME_FLAG_FORCE_ASCII > 0) {
                         tFlags.append("IME_FLAG_FORCE_ASCII|")

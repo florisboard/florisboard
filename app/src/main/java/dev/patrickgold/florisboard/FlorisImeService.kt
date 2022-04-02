@@ -669,7 +669,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                                     activeEditorInstance.performEnterAction(activeState.imeOptions.enterAction)
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                text = "ACTION",
+                                text = activeEditorInstance.editorInfo?.actionLabel?.toString() ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = actionStyle.background.solidColor(),
