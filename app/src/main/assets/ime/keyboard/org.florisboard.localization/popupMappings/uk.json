@@ -54,10 +54,7 @@
       "relevant": [
         { "code": -255, "label": ".ua" },
         { "code": -255, "label": ".org" },
-        { "code": -255, "label": ".net" },
-        { "code": -255, "label": ".com.ua" },
-        { "code": -255, "label": ".org.ua" },
-        { "code": -255, "label": ".gov.ua" }
+        { "code": -255, "label": ".net" }
       ]
     }
   }
