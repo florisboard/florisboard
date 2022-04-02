@@ -661,6 +661,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
                 it.background = null
                 it.gravity = Gravity.TOP
+                it.isVerticalScrollBarEnabled = true
             }
         }
 
@@ -672,7 +673,10 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                     val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
                     val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
                     val activeState by keyboardManager.observeActiveState()
-                    SnyggSurface(style = layoutStyle) {
+                    Box(
+                        modifier = Modifier
+                            .snyggBackground(layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
+                    ) {
                         Row(
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
@@ -716,8 +720,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                                     ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = actionStyle.background.solidColor(),
-                                    contentColor = actionStyle.foreground.solidColor(),
+                                    backgroundColor = actionStyle.background.solidColor(FlorisImeTheme.fallbackContentColor()),
+                                    contentColor = actionStyle.foreground.solidColor(FlorisImeTheme.fallbackSurfaceColor()),
                                 ),
                             )
                         }

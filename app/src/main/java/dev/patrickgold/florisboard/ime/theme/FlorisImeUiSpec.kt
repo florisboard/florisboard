@@ -213,7 +213,6 @@ object FlorisImeUiSpec : SnyggSpec({
         foreground()
         font()
         shape()
-        shadow()
         border()
     }
     element(FlorisImeUi.ExtractedLandscapeInputAction) {
