@@ -26,12 +26,15 @@ import android.util.Size
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -73,6 +76,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisButton
 import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
 import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.common.android.AndroidInternalR
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.common.android.isOrientationPortrait
@@ -241,7 +245,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     }
 
     override fun onCreateInputView(): View {
-        super.onCreateInputView()
+        super.installViewTreeOwners()
         val composeView = ComposeInputView()
         inputWindowView = composeView
         return composeView
@@ -253,10 +257,20 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     }
 
     override fun onCreateExtractTextView(): View {
+        super.installViewTreeOwners()
         // Consider adding a fallback to the default extract edit layout if user reports come
         // that this causes a crash, especially if the device manufacturer of the user device
         // is a known one to break AOSP standards...
-        return ComposeExtractedLandscapeInputView()
+        val defaultExtractView = super.onCreateExtractTextView()
+        val composeExtractView = ComposeExtractedLandscapeInputView()
+        if (defaultExtractView == null || defaultExtractView !is ViewGroup) {
+            return composeExtractView
+        }
+        defaultExtractView.apply {
+            removeAllViews()
+            addView(composeExtractView)
+        }
+        return defaultExtractView
     }
 
     override fun onDestroy() {
@@ -478,6 +492,23 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
     }
 
+    override fun getTextForImeAction(imeOptions: Int): String? {
+        return try {
+            when (imeOptions and EditorInfo.IME_MASK_ACTION) {
+                EditorInfo.IME_ACTION_NONE -> null
+                EditorInfo.IME_ACTION_GO -> resourcesContext.getString(AndroidInternalR.string.ime_action_go)
+                EditorInfo.IME_ACTION_SEARCH -> resourcesContext.getString(AndroidInternalR.string.ime_action_search)
+                EditorInfo.IME_ACTION_SEND -> resourcesContext.getString(AndroidInternalR.string.ime_action_send)
+                EditorInfo.IME_ACTION_NEXT -> resourcesContext.getString(AndroidInternalR.string.ime_action_next)
+                EditorInfo.IME_ACTION_DONE -> resourcesContext.getString(AndroidInternalR.string.ime_action_done)
+                EditorInfo.IME_ACTION_PREVIOUS -> resourcesContext.getString(AndroidInternalR.string.ime_action_previous)
+                else -> resourcesContext.getString(AndroidInternalR.string.ime_action_default)
+            }
+        } catch (_: Throwable) {
+            super.getTextForImeAction(imeOptions)?.toString()
+        }
+    }
+
     @Composable
     private fun ImeUiWrapper() {
         ProvideLocalizedResources(resourcesContext) {
@@ -635,11 +666,12 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
         @Composable
         override fun Content() {
-            ProvideLocalizedResources(resourcesContext) {
+            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
                     val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
                     val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
+                    val activeState by keyboardManager.observeActiveState()
                     SnyggSurface(style = layoutStyle) {
                         Row(
                             modifier = Modifier.fillMaxSize(),
@@ -656,6 +688,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                                     .snyggBackground(fieldStyle),
                                 factory = { extractEditText },
                                 update = { view ->
+                                    view.background = null
+                                    view.backgroundTintList = null
+                                    view.foregroundTintList = null
                                     view.setTextColor(fieldColor.toArgb())
                                     view.setHintTextColor(fieldColor.copy(fieldColor.alpha * 0.6f).toArgb())
                                     view.setTextSize(
@@ -666,10 +701,19 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                             )
                             FlorisButton(
                                 onClick = {
-                                    activeEditorInstance.performEnterAction(activeState.imeOptions.enterAction)
+                                    val ei = activeEditorInstance.editorInfo
+                                    if (ei != null) {
+                                        if (ei.actionId != 0) {
+                                            activeEditorInstance.inputConnection?.performEditorAction(ei.actionId)
+                                        } else {
+                                            activeEditorInstance.performEnterAction(activeState.imeOptions.enterAction)
+                                        }
+                                    }
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                text = activeEditorInstance.editorInfo?.actionLabel?.toString() ?: "ACTION",
+                                text = activeEditorInstance.editorInfo?.actionLabel?.toString()
+                                    ?: getTextForImeAction(activeState.imeOptions.enterAction.toInt())
+                                    ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = actionStyle.background.solidColor(),
@@ -684,6 +728,21 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
         override fun getAccessibilityClassName(): CharSequence {
             return javaClass.name
+        }
+
+        override fun onAttachedToWindow() {
+            super.onAttachedToWindow()
+            try {
+                (parent as LinearLayout).let { extractEditLayout ->
+                    extractEditLayout.layoutParams = FrameLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                    ).also { it.setMargins(0, 0, 0, 0) }
+                    extractEditLayout.setPadding(0, 0, 0, 0)
+                }
+            } catch (e: Throwable) {
+                flogError { e.message.toString() }
+            }
         }
     }
 }
