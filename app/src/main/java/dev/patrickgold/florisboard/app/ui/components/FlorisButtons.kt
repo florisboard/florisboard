@@ -29,6 +29,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -37,6 +38,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.dp
@@ -48,12 +50,14 @@ fun FlorisButton(
     icon: Painter? = null,
     text: String,
     enabled: Boolean = true,
+    shape: Shape = MaterialTheme.shapes.small,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
 ) {
     Button(
         modifier = modifier,
         enabled = enabled,
+        shape = shape,
         colors = colors,
         contentPadding = contentPadding,
         onClick = onClick,
@@ -78,12 +82,14 @@ fun FlorisOutlinedButton(
     icon: Painter? = null,
     text: String,
     enabled: Boolean = true,
+    shape: Shape = MaterialTheme.shapes.small,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
 ) {
     OutlinedButton(
         modifier = modifier,
         enabled = enabled,
+        shape = shape,
         colors = colors,
         contentPadding = contentPadding,
         onClick = onClick,
@@ -108,12 +114,14 @@ fun FlorisTextButton(
     icon: Painter? = null,
     text: String,
     enabled: Boolean = true,
+    shape: Shape = MaterialTheme.shapes.small,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
 ) {
     TextButton(
         modifier = modifier,
         enabled = enabled,
+        shape = shape,
         colors = colors,
         contentPadding = contentPadding,
         onClick = onClick,

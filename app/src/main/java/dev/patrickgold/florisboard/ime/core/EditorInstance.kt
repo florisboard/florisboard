@@ -29,6 +29,9 @@ import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputBinding
 import android.view.inputmethod.InputConnection
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
@@ -92,8 +95,7 @@ class EditorInstance(private val ims: InputMethodService) {
         get() = if (isInputBindingActive) ims.currentInputBinding else null
     val inputConnection: InputConnection?
         get() = if (isInputBindingActive) ims.currentInputConnection else null
-    val editorInfo: EditorInfo?
-        get() = if (isInputBindingActive && ims.currentInputStarted) ims.currentInputEditorInfo else null
+    var editorInfo: EditorInfo? by mutableStateOf(null)
 
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
@@ -172,6 +174,7 @@ class EditorInstance(private val ims: InputMethodService) {
 
     fun startInput(info: EditorInfo) {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        editorInfo = info
         if (AndroidVersion.ATLEAST_API25_N_MR1) {
             contentMimeTypes = info.contentMimeTypes
         }
@@ -191,6 +194,7 @@ class EditorInstance(private val ims: InputMethodService) {
 
     fun startInputView(info: EditorInfo) {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        editorInfo = info
         val keyboardMode = when (activeState.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
                 activeState.keyVariation = KeyVariation.NORMAL
@@ -248,10 +252,12 @@ class EditorInstance(private val ims: InputMethodService) {
 
     fun finishInputView() {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        editorInfo = null
     }
 
     fun finishInput() {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        editorInfo = null
         val ic = inputConnection ?: return
         ic.requestCursorUpdates(CURSOR_UPDATE_DISABLED)
     }
