@@ -62,7 +62,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.ui.theme.outline
 
-private val StepHeaderPaddingVertical = 16.dp
+private val StepHeaderPaddingVertical = 8.dp
 private val StepHeaderNumberBoxSize = 40.dp
 private val StepHeaderNumberBoxPaddingEnd = 16.dp
 private val StepHeaderTextBoxHeight = 32.dp

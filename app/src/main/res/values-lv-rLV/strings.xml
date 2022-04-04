@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">Šī stila lapa nesatur nosacījumus. Lai to pielāgotu, jāpievieno kāds nosacījums.</string>
     <string name="settings__theme_editor__rule_already_exists">Šis stila lapas nosacījums jau ir noteikts.</string>
     <string name="settings__theme_editor__rule_element">Mērķa elements</string>
-    <string name="settings__theme_editor__rule_codes">Kodi</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
     <string name="settings__theme_editor__rule_modes">Veidi</string>
     <string name="settings__theme_editor__rule_selectors">Atlasītāji</string>
-    <string name="settings__theme_editor__add_code">Pievienot kodu</string>
-    <string name="settings__theme_editor__edit_code">Labot kodu</string>
-    <string name="settings__theme_editor__no_codes_defined">Kodi nav noteikti.</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
-    <string name="settings__theme_editor__code_help_text">Šīs saites palīdzēs atrast atbilstošo taustiņa kodu:</string>
     <string name="settings__theme_editor__add_property">Pievienot īpašību</string>
     <string name="settings__theme_editor__edit_property">Labot īpašību</string>
     <string name="settings__theme_editor__property_already_exists">Īpašība ar šādu nosaukumu jau pastāv pašreizējā nosacījumā.</string>

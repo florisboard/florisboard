@@ -61,6 +61,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -182,6 +183,7 @@ fun ClipboardInputLayout(
     fun ClipItemView(
         item: ClipboardItem,
         style: SnyggPropertySet,
+        contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
         SnyggSurface(
@@ -235,11 +237,14 @@ fun ClipboardInputLayout(
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this }
                         .padding(ItemPadding),
                     text = item.stringRepresentation(),
                     style = TextStyle(textDirection = TextDirection.ContentOrLtr),
                     color = style.foreground.solidColor(),
                     fontSize = style.fontSize.spSize(),
+                    maxLines = if (contentScrollInsteadOfClip) Int.MAX_VALUE else 5,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
@@ -267,7 +272,7 @@ fun ClipboardInputLayout(
                     )
                     FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
                         for (item in history.pinned) {
-                            ClipItemView(item, itemStyle)
+                            ClipItemView(item, itemStyle, contentScrollInsteadOfClip = false)
                         }
                     }
                 }
@@ -278,7 +283,7 @@ fun ClipboardInputLayout(
                     )
                     FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
                         for (item in history.recent) {
-                            ClipItemView(item, itemStyle)
+                            ClipItemView(item, itemStyle, contentScrollInsteadOfClip = false)
                         }
                     }
                 }
@@ -289,7 +294,7 @@ fun ClipboardInputLayout(
                     )
                     FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
                         for (item in history.other) {
-                            ClipItemView(item, itemStyle)
+                            ClipItemView(item, itemStyle, contentScrollInsteadOfClip = false)
                         }
                     }
                 }
@@ -309,6 +314,7 @@ fun ClipboardInputLayout(
                         modifier = Modifier.widthIn(max = ItemWidth),
                         item = popupItem!!,
                         style = itemStyle,
+                        contentScrollInsteadOfClip = true,
                     )
                     Column(
                         modifier = Modifier

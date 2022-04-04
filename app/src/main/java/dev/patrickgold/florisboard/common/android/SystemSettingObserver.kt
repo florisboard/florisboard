@@ -29,6 +29,10 @@ class SystemSettingsObserver(
     private val listener: OnSystemSettingsChangedListener,
 ) : ContentObserver(Handler(context.mainLooper)) {
 
+    override fun deliverSelfNotifications(): Boolean {
+        return true
+    }
+
     override fun onChange(selfChange: Boolean) {
         listener.onChanged()
     }

@@ -77,8 +77,84 @@ class TextKeyData(
         return "${TextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
     }
 
-    @Suppress("UNUSED")
+    @Suppress("MemberVisibilityCanBePrivate")
     companion object {
+        fun getCodeInfoAsTextKeyData(code: Int): TextKeyData? {
+            return if (code <= 0) {
+                InternalKeys.find { it.code == code }
+            } else {
+                TextKeyData(
+                    type = KeyType.CHARACTER,
+                    code = code,
+                    label = buildString {
+                        try {
+                            appendCodePoint(code)
+                        } catch (_: Throwable) {
+                        }
+                    },
+                )
+            }
+        }
+
+        // TODO: find better solution than to hand define array of below keys...
+        private val InternalKeys by lazy {
+            listOf(
+                UNSPECIFIED,
+                SPACE,
+                CTRL,
+                CTRL_LOCK,
+                ALT,
+                ALT_LOCK,
+                FN,
+                FN_LOCK,
+                DELETE,
+                DELETE_WORD,
+                FORWARD_DELETE,
+                FORWARD_DELETE_WORD,
+                SHIFT,
+                SHIFT_LOCK,
+                CAPS_LOCK,
+                ARROW_LEFT,
+                ARROW_RIGHT,
+                ARROW_UP,
+                ARROW_DOWN,
+                MOVE_START_OF_PAGE,
+                MOVE_END_OF_PAGE,
+                MOVE_START_OF_LINE,
+                MOVE_END_OF_LINE,
+                CLIPBOARD_COPY,
+                CLIPBOARD_CUT,
+                CLIPBOARD_PASTE,
+                CLIPBOARD_SELECT,
+                CLIPBOARD_SELECT_ALL,
+                CLIPBOARD_CLEAR_HISTORY,
+                CLIPBOARD_CLEAR_FULL_HISTORY,
+                CLIPBOARD_CLEAR_PRIMARY_CLIP,
+                COMPACT_LAYOUT_TO_LEFT,
+                COMPACT_LAYOUT_TO_RIGHT,
+                UNDO,
+                REDO,
+                VIEW_CHARACTERS,
+                VIEW_SYMBOLS,
+                VIEW_SYMBOLS2,
+                VIEW_NUMERIC_ADVANCED,
+                IME_UI_MODE_TEXT,
+                IME_UI_MODE_MEDIA,
+                IME_UI_MODE_CLIPBOARD,
+                SYSTEM_INPUT_METHOD_PICKER,
+                SYSTEM_PREV_INPUT_METHOD,
+                SYSTEM_NEXT_INPUT_METHOD,
+                IME_SUBTYPE_PICKER,
+                IME_PREV_SUBTYPE,
+                IME_NEXT_SUBTYPE,
+                LANGUAGE_SWITCH,
+                IME_SHOW_UI,
+                IME_HIDE_UI,
+                SETTINGS,
+                INTERNAL_BATCH_EDIT,
+            )
+        }
+
         /** Predefined key data for [KeyCode.UNSPECIFIED] */
         val UNSPECIFIED = TextKeyData(
             type = KeyType.UNSPECIFIED,
@@ -375,6 +451,12 @@ class TextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.IME_NEXT_SUBTYPE,
             label = "ime_next_subtype",
+        )
+        /** Predefined key data for [KeyCode.LANGUAGE_SWITCH] */
+        val LANGUAGE_SWITCH = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.LANGUAGE_SWITCH,
+            label = "language_switch",
         )
 
         /** Predefined key data for [KeyCode.IME_SHOW_UI] */

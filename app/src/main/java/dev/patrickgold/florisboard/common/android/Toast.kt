@@ -26,8 +26,8 @@ import dev.patrickgold.florisboard.common.kotlin.CurlyArg
  *
  * @param text The text to show in the toast popup.
  */
-fun Context.showShortToast(text: String) {
-    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+fun Context.showShortToast(text: String): Toast {
+    return Toast.makeText(this, text, Toast.LENGTH_SHORT).also { it.show() }
 }
 
 /**
@@ -35,9 +35,9 @@ fun Context.showShortToast(text: String) {
  *
  * @param id The string resource id of the text to display. Must not be 0.
  */
-fun Context.showShortToast(@StringRes id: Int) {
+fun Context.showShortToast(@StringRes id: Int): Toast {
     val text = this.stringRes(id)
-    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    return Toast.makeText(this, text, Toast.LENGTH_SHORT).also { it.show() }
 }
 
 /**
@@ -47,9 +47,9 @@ fun Context.showShortToast(@StringRes id: Int) {
  * @param id The string resource id of the text to display. Must not be 0.
  * @param args The curly arguments which will be filled into the string template identified by [id].
  */
-fun Context.showShortToast(@StringRes id: Int, vararg args: CurlyArg) {
+fun Context.showShortToast(@StringRes id: Int, vararg args: CurlyArg): Toast {
     val text = this.stringRes(id, *args)
-    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    return Toast.makeText(this, text, Toast.LENGTH_SHORT).also { it.show() }
 }
 
 /**
@@ -57,8 +57,8 @@ fun Context.showShortToast(@StringRes id: Int, vararg args: CurlyArg) {
  *
  * @param text The text to show in the toast popup.
  */
-fun Context.showLongToast(text: String) {
-    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+fun Context.showLongToast(text: String): Toast {
+    return Toast.makeText(this, text, Toast.LENGTH_LONG).also { it.show() }
 }
 
 /**
@@ -66,9 +66,9 @@ fun Context.showLongToast(text: String) {
  *
  * @param id The string resource id of the text to display. Must not be 0.
  */
-fun Context.showLongToast(@StringRes id: Int) {
+fun Context.showLongToast(@StringRes id: Int): Toast {
     val text = this.stringRes(id)
-    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    return Toast.makeText(this, text, Toast.LENGTH_LONG).also { it.show() }
 }
 
 /**
@@ -78,7 +78,7 @@ fun Context.showLongToast(@StringRes id: Int) {
  * @param id The string resource id of the text to display. Must not be 0.
  * @param args The curly arguments which will be filled into the string template identified by [id].
  */
-fun Context.showLongToast(@StringRes id: Int, vararg args: CurlyArg) {
+fun Context.showLongToast(@StringRes id: Int, vararg args: CurlyArg): Toast {
     val text = this.stringRes(id, *args)
-    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    return Toast.makeText(this, text, Toast.LENGTH_LONG).also { it.show() }
 }

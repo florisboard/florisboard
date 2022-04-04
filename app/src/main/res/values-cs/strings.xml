@@ -100,13 +100,9 @@
     <string name="settings__theme_editor__add_rule">Přidat pravidlo</string>
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
     <string name="settings__theme_editor__rule_element">Cílový prvek</string>
-    <string name="settings__theme_editor__rule_codes">Kódy</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
     <string name="settings__theme_editor__rule_modes">Režimy</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
-    <string name="settings__theme_editor__add_code">Přidat kód</string>
-    <string name="settings__theme_editor__edit_code">Upravit kód</string>
-    <string name="settings__theme_editor__no_codes_defined">Nejsou definovány žádné kódy.</string>
     <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
     <string name="settings__theme_editor__add_property">Přidat vlastnost</string>
     <string name="settings__theme_editor__edit_property">Upravit vlastnost</string>

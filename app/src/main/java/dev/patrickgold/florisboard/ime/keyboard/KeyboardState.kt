@@ -98,8 +98,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         const val M_IME_UI_MODE: ULong =                    0x07u
         const val O_IME_UI_MODE: Int =                      24
 
-        const val F_CAPS: ULong =                           0x00000100u
-        const val F_CAPS_LOCK: ULong =                      0x00000200u
         const val F_IS_SELECTION_MODE: ULong =              0x00000400u
         const val F_IS_MANUAL_SELECTION_MODE: ULong =       0x00000800u
         const val F_IS_MANUAL_SELECTION_MODE_START: ULong = 0x00001000u
@@ -281,16 +279,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     var layoutDirection: LayoutDirection
         get() = if (getFlag(F_IS_RTL_LAYOUT_DIRECTION)) LayoutDirection.Rtl else LayoutDirection.Ltr
         set(v) { setFlag(F_IS_RTL_LAYOUT_DIRECTION, v == LayoutDirection.Rtl) }
-
-    @Deprecated("Use inputMode and/or isLowercase/isUppercase")
-    var shiftLock: Boolean
-        get() = getFlag(F_CAPS)
-        set(v) { setFlag(F_CAPS, v) }
-
-    @Deprecated("Use inputMode and/or isLowercase/isUppercase")
-    var capsLock: Boolean
-        get() = getFlag(F_CAPS_LOCK)
-        set(v) { setFlag(F_CAPS_LOCK, v) }
 
     val isLowercase: Boolean
         get() = inputMode == InputMode.NORMAL
