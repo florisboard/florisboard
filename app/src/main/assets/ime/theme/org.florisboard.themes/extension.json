@@ -18,11 +18,43 @@
       "isMaterialYouAware": false
     },
     {
+      "id": "floris_day_borderless",
+      "label": "Floris Day (Borderless)",
+      "authors": [ "patrickgold" ],
+      "isNight": false,
+      "isBorderless": true,
+      "isMaterialYouAware": false
+    },
+    {
       "id": "floris_night",
       "label": "Floris Night",
       "authors": [ "patrickgold" ],
       "isNight": true,
       "isBorderless": false,
+      "isMaterialYouAware": false
+    },
+    {
+      "id": "floris_night_borderless",
+      "label": "Floris Night (Borderless)",
+      "authors": [ "patrickgold" ],
+      "isNight": true,
+      "isBorderless": true,
+      "isMaterialYouAware": false
+    },
+    {
+      "id": "floris_pure_night",
+      "label": "Floris Pure Night",
+      "authors": [ "serebit" ],
+      "isNight": true,
+      "isBorderless": false,
+      "isMaterialYouAware": false
+    },
+    {
+      "id": "floris_pure_night_borderless",
+      "label": "Floris Pure Night (Borderless)",
+      "authors": [ "serebit" ],
+      "isNight": true,
+      "isBorderless": true,
       "isMaterialYouAware": false
     }
   ]
