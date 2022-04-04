@@ -30,12 +30,12 @@
       ]
     },
     "ا": {
+      "main": { "code": 1570, "label": "آ"},
       "relevant": [
         { "code": 1649, "label": "ٱ" },
         { "code": 1569, "label": "ء" },
         { "code": 1571, "label": "أ" },
-        { "code": 1573, "label": "إ" },
-        { "code": 1570, "label": "آ" }
+        { "code": 1573, "label": "إ" }
       ]
     },
     "ه": {
