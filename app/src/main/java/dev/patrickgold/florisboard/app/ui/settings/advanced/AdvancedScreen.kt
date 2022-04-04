@@ -115,6 +115,7 @@ fun AdvancedScreen() = FlorisScreen {
                     "tr",
                     "uk",
                     "zgh",
+                    "zh-CN",
                 ).map { languageTag ->
                     if (languageTag == "auto") {
                         entry(
