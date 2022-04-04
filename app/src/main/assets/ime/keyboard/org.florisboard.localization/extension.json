@@ -180,7 +180,11 @@
     },
     {
       "id": "uk",
-      "authors": [ "williamtheaker", "33kk" ]
+      "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ]
+    },
+    {
+      "id": "uk-cyr-ext",
+      "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ]
     },
     {
       "id": "ur-PK",

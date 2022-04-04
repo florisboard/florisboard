@@ -1,5 +1,15 @@
 {
   "all": {
+    "е": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1105, "label": "ё" }
+      ]
+    },
+    "у": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1118, "label": "ў" }
+      ]
+    },
     "г": {
       "relevant": [
         { "$": "auto_text_key", "code":  1169, "label": "ґ" }
@@ -7,18 +17,21 @@
     },
     "і": {
       "relevant": [
-        { "$": "auto_text_key", "code":  1111, "label": "ї" }
+        { "$": "auto_text_key", "code":  1111, "label": "ї" },
+        { "$": "auto_text_key", "code":  1099, "label": "ы" }
       ]
     },
     "є": {
       "relevant": [
-        { "$": "auto_text_key", "code":  8212, "label": "—" }
+        { "$": "auto_text_key", "code":  8212, "label": "—" },
+        { "$": "auto_text_key", "code":  1101, "label": "э" }
       ]
     },
     "ь": {
       "relevant": [
         { "$": "auto_text_key", "code":  700, "label": "ʼ" },
-        { "$": "auto_text_key", "code":  39, "label": "'" }
+        { "$": "auto_text_key", "code":  39, "label": "'" },
+        { "$": "auto_text_key", "code":  1098, "label": "ъ" }
       ]
     },
     "~right": {
