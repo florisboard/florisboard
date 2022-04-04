@@ -63,13 +63,11 @@ open class LifecycleInputMethodService : InputMethodService(),
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
     }
 
-    @CallSuper
-    override fun onCreateInputView(): View? {
+    fun installViewTreeOwners() {
         val decorView = window!!.window!!.decorView
         ViewTreeLifecycleOwner.set(decorView, this)
         ViewTreeViewModelStoreOwner.set(decorView, this)
         ViewTreeSavedStateRegistryOwner.set(decorView, this)
-        return null
     }
 
     @CallSuper

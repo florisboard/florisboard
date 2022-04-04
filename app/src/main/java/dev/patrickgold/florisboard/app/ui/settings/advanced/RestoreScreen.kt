@@ -52,7 +52,6 @@ import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.common.android.readToFile
 import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager
 import dev.patrickgold.florisboard.res.ext.ExtensionManager
@@ -65,6 +64,7 @@ import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.FileNotFoundException
 import java.text.DateFormat
 import java.util.*
 
@@ -84,6 +84,7 @@ fun RestoreScreen() = FlorisScreen {
     title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
+    val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
@@ -108,7 +109,11 @@ fun RestoreScreen() = FlorisScreen {
                 workspace.zipFile = workspace.inputDir.subFile(Restore.BACKUP_ARCHIVE_FILE_NAME)
                 context.contentResolver.readToFile(uri, workspace.zipFile)
                 ZipUtils.unzip(workspace.zipFile, workspace.outputDir)
-                workspace.metadata = workspace.outputDir.subFile(Backup.METADATA_JSON_NAME).readJson()
+                workspace.metadata = try {
+                    workspace.outputDir.subFile(Backup.METADATA_JSON_NAME).readJson()
+                } catch (e: FileNotFoundException) {
+                    error("Invalid archive: either backup_metadata.json is missing or file is not a ZIP archive.")
+                }
                 workspace.restoreWarningId = when {
                     workspace.metadata.versionCode != BuildConfig.VERSION_CODE -> {
                         R.string.backup_and_restore__restore__metadata_warn_different_version
@@ -132,7 +137,6 @@ fun RestoreScreen() = FlorisScreen {
     )
 
     suspend fun performRestore() {
-        val prefs by florisPreferenceModel()
         val workspace = restoreWorkspace!!
         val shouldReset = restoreMode == Restore.Mode.ERASE_AND_OVERWRITE
         if (restoreFilesSelector.jetprefDatastore) {
@@ -228,9 +232,7 @@ fun RestoreScreen() = FlorisScreen {
         FlorisOutlinedButton(
             onClick = {
                 runCatching {
-                    restoreDataFromFileSystemLauncher.launch(
-                        FileRegistry.BackupArchive.mediaType
-                    )
+                    restoreDataFromFileSystemLauncher.launch("*/*")
                 }.onFailure { error ->
                     context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
                 }

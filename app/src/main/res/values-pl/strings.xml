@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">Ten arkusz stylów nie ma żadnych zdefiniowanych reguł. Dodaj regułę, aby rozpocząć dostosowywanie tego arkusza stylów.</string>
     <string name="settings__theme_editor__rule_already_exists">Ta reguła arkusza stylów jest już zdefiniowana.</string>
     <string name="settings__theme_editor__rule_element">Element docelowy</string>
-    <string name="settings__theme_editor__rule_codes">Kody</string>
     <string name="settings__theme_editor__rule_groups">Grupy</string>
     <string name="settings__theme_editor__rule_modes">Tryby</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
-    <string name="settings__theme_editor__add_code">Dodaj kod</string>
-    <string name="settings__theme_editor__edit_code">Edytuj kod</string>
-    <string name="settings__theme_editor__no_codes_defined">Brak zdefiniowanych kodów.</string>
     <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
     <string name="settings__theme_editor__code_invalid">Ten kod jest nieprawidłowy. Upewnij się, że kod mieści się w zakresie od {c_min} do {c_max} dla znaków lub od {i_min} do {i_max} dla wewnętrznych kluczy specjalnych.</string>
-    <string name="settings__theme_editor__code_help_text">Poniższe linki pomogą Ci znaleźć odpowiedni kod:</string>
     <string name="settings__theme_editor__add_property">Dodaj właściwość</string>
     <string name="settings__theme_editor__edit_property">Edytuj właściwość</string>
     <string name="settings__theme_editor__property_already_exists">Właściwość o tej nazwie już istnieje w obecnej regule.</string>

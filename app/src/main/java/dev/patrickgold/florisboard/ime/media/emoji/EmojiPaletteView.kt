@@ -85,7 +85,6 @@ import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.keyboard.fontSizeMultiplier
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -324,6 +323,7 @@ private fun EmojiKey(
             modifier = Modifier.align(Alignment.Center),
             text = base.value,
             emojiCompatInstance = emojiCompatInstance,
+            color = contentColor,
             fontSize = fontSize,
         )
         if (variations.isNotEmpty()) {
@@ -398,6 +398,7 @@ private fun EmojiVariationsPopup(
                             modifier = Modifier.align(Alignment.Center),
                             text = emoji.value,
                             emojiCompatInstance = emojiCompatInstance,
+                            color = popupStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
                             fontSize = popupStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier,
                         )
                     }
@@ -412,6 +413,7 @@ fun EmojiText(
     text: String,
     emojiCompatInstance: EmojiCompat?,
     modifier: Modifier = Modifier,
+    color: Color = Color.Black,
     fontSize: TextUnit = EmojiDefaultFontSize,
 ) {
     if (emojiCompatInstance != null) {
@@ -420,7 +422,7 @@ fun EmojiText(
             factory = { context ->
                 EmojiTextView(context).also {
                     it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                    it.setTextColor(Color.Black.toArgb())
+                    it.setTextColor(color.toArgb())
                 }
             },
             update = { view ->
@@ -433,7 +435,7 @@ fun EmojiText(
             factory = { context ->
                 TextView(context).also {
                     it.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.value)
-                    it.setTextColor(Color.Black.toArgb())
+                    it.setTextColor(color.toArgb())
                 }
             },
             update = { view ->

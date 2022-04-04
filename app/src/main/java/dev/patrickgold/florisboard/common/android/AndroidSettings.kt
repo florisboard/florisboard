@@ -85,7 +85,7 @@ abstract class AndroidSettingsHelper(
         transform: (String?) -> R,
     ): State<R> {
         val lifecycleOwner = LocalLifecycleOwner.current
-        val context = LocalContext.current
+        val context = LocalContext.current.applicationContext
         val state = remember(key) { mutableStateOf(transform(getString(context, key))) }
         DisposableEffect(lifecycleOwner.lifecycle) {
             val observer = SystemSettingsObserver(context) {

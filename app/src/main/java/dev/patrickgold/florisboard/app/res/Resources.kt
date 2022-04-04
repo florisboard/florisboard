@@ -41,9 +41,10 @@ private val LocalAppNameString = staticCompositionLocalOf {
 @Composable
 fun ProvideLocalizedResources(
     resourcesContext: Context,
+    forceLayoutDirection: LayoutDirection? = null,
     content: @Composable () -> Unit,
 ) {
-    val layoutDirection = when (resourcesContext.resources.configuration.layoutDirection) {
+    val layoutDirection = forceLayoutDirection ?: when (resourcesContext.resources.configuration.layoutDirection) {
         View.LAYOUT_DIRECTION_LTR -> LayoutDirection.Ltr
         View.LAYOUT_DIRECTION_RTL -> LayoutDirection.Rtl
         else -> error("Given configuration specifies invalid layout direction!")

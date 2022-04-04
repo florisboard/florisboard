@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">Questo file di stile non ha regole definite. Aggiungi una regola per iniziare a personalizzare questo file di stile.</string>
     <string name="settings__theme_editor__rule_already_exists">Questa regola del file di stile è già definita.</string>
     <string name="settings__theme_editor__rule_element">Elemento di destinazione</string>
-    <string name="settings__theme_editor__rule_codes">Codici</string>
     <string name="settings__theme_editor__rule_groups">Gruppi</string>
     <string name="settings__theme_editor__rule_modes">Modalità</string>
     <string name="settings__theme_editor__rule_selectors">Selettori</string>
-    <string name="settings__theme_editor__add_code">Aggiungi codice</string>
-    <string name="settings__theme_editor__edit_code">Modifica codice</string>
-    <string name="settings__theme_editor__no_codes_defined">Nessun codice definito.</string>
     <string name="settings__theme_editor__code_already_exists">Questo codice di tasto è già definito.</string>
     <string name="settings__theme_editor__code_invalid">Questo codice di tasto non è valido. Assicurarsi che il codice di tasto sia compreso nell\'intervallo da {c_min} a {c_max} per i caratteri o da {i_min} a {i_max} per tasti speciali interni.</string>
-    <string name="settings__theme_editor__code_help_text">I seguenti link ti aiuteranno a trovare il codice di tasto corrispondente:</string>
     <string name="settings__theme_editor__add_property">Aggiungi proprietà</string>
     <string name="settings__theme_editor__edit_property">Modifica proprietà</string>
     <string name="settings__theme_editor__property_already_exists">Una proprietà con questo nome esiste già all\'interno della regola corrente.</string>

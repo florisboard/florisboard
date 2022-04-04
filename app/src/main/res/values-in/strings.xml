@@ -104,16 +104,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__no_rules_defined">Lembar gaya ini tidak memiliki aturan yang didefinisikan. Tambahkan sebuah aturan untuk mulai menyesuaikan lembar gaya ini.</string>
     <string name="settings__theme_editor__rule_already_exists">Aturan lembar gaya ini telah didefinisikan.</string>
     <string name="settings__theme_editor__rule_element">Elemen target</string>
-    <string name="settings__theme_editor__rule_codes">Kode</string>
     <string name="settings__theme_editor__rule_groups">Grup</string>
     <string name="settings__theme_editor__rule_modes">Mode</string>
     <string name="settings__theme_editor__rule_selectors">Pemilih</string>
-    <string name="settings__theme_editor__add_code">Tambahkan kode</string>
-    <string name="settings__theme_editor__edit_code">Edit kode</string>
-    <string name="settings__theme_editor__no_codes_defined">Tidak ada kode yang didefinisikan.</string>
     <string name="settings__theme_editor__code_already_exists">Kode tombol ini telah didefinisikan.</string>
     <string name="settings__theme_editor__code_invalid">Kode tombol ini tidak valid. Pastikan bahwa kode kunci dalam jangkauan dari {c_min} sampai {c_max} untuk karakter atau {i_min} sampai {i_max} untuk tombol internal spesial.</string>
-    <string name="settings__theme_editor__code_help_text">Tautan berikut ini akan membantu Anda menemukan kode tombol yang sesuai:</string>
     <string name="settings__theme_editor__add_property">Tambahkan properti</string>
     <string name="settings__theme_editor__edit_property">Edit properti</string>
     <string name="settings__theme_editor__property_already_exists">Sebuah properti dengan nama ini sudah ada dalam aturan saat ini.</string>

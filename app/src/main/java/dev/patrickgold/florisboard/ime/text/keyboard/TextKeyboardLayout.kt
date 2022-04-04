@@ -57,14 +57,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.common.Pointer
 import dev.patrickgold.florisboard.common.PointerMap
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
-import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -74,7 +72,6 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
 import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
@@ -332,7 +329,7 @@ private fun TextKeyButton(
             .requiredSize(key.visibleBounds.size.toDpSize())
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
         style = keyStyle,
-        clip = true,
+        clip = false,
     ) {
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
@@ -368,10 +365,10 @@ private fun TextKeyButton(
             val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
             Text(
                 modifier = Modifier
-                    .padding(end = (key.visibleBounds.width / 12f).toDp())
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-                    .snyggBackground(keyHintStyle),
+                    .snyggBackground(keyHintStyle)
+                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),
                 fontFamily = FontFamily.Monospace,
@@ -983,22 +980,4 @@ private class TextKeyboardLayoutController(
             return "${TouchPointer::class.simpleName} { id=$id, index=$index, initialKey=$initialKey, activeKey=$activeKey }"
         }
     }
-}
-
-@Composable
-fun AppPrefs.Keyboard.fontSizeMultiplier(): Float {
-    val configuration = LocalConfiguration.current
-    val oneHandedMode by oneHandedMode.observeAsState()
-    val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
-    val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
-        fontSizeMultiplierPortrait
-    } else {
-        fontSizeMultiplierLandscape
-    }.observeAsTransformingState { it / 100.0f }
-    val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedMode != OneHandedMode.OFF && configuration.isOrientationPortrait()) {
-        oneHandedModeFactor
-    } else {
-        1.0f
-    }
-    return fontSizeMultiplier
 }

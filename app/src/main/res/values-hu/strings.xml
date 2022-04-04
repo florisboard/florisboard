@@ -93,13 +93,9 @@
     <string name="settings__theme_editor__add_rule">Szabály hozzáadása</string>
     <string name="settings__theme_editor__edit_rule">Szabály szerkesztése</string>
     <string name="settings__theme_editor__rule_element">Cél elem</string>
-    <string name="settings__theme_editor__rule_codes">Kódok</string>
     <string name="settings__theme_editor__rule_groups">Csoportok</string>
     <string name="settings__theme_editor__rule_modes">Módok</string>
     <string name="settings__theme_editor__rule_selectors">Választók</string>
-    <string name="settings__theme_editor__add_code">Kód hozzáadása</string>
-    <string name="settings__theme_editor__edit_code">Kód szerkesztése</string>
-    <string name="settings__theme_editor__no_codes_defined">Nincs kód definiálva.</string>
     <string name="settings__theme_editor__add_property">Tulajdonság hozzáadása</string>
     <string name="settings__theme_editor__edit_property">Tulajdonság szerkesztése</string>
     <string name="settings__theme_editor__property_already_exists">A jelenlegi szabályon belül egy tulajdonság már létezik ezzel a névvel.</string>
@@ -149,11 +145,19 @@
     <string name="snygg__property_value__defined_var">Változóhivatkozás</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Hangok és rezgés</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Hangvisszajelzés engedélyezése</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainka figyelmen kívül hagyása</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainak figyelmen kívül hagyása</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Az alábbi beállítások használata, akkor is ha a hang le van tiltva a rendszerben. Nem működik, ha a rendszer csengőhang le van némítva</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Gombnyomáshangok</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptikus visszajelzés / vibráció</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptikus visszajelzés engedélyezése</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainak figyelmen kívül hagyása</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Az alábbi beállítások használata, akkor is ha a haptika le van tiltva a rendszerben</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Rezgés időtartama</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Gombnyomás rezgése</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Hosszú gombnyomás rezgése</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">pl. törlés gomb</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nincs implementálva</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Billentyűzet</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Számsor megjelenítése a karakterelrendezés felett</string>
@@ -162,6 +166,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Kellékgomb megjelenítése</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Egy beállítható kellékgomb megjelenítése a szóköz mellett</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Kellékgomb művelet</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Nyelv megjelenítése a szóköz gombon</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Betűméret-szorzó</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Egykezes mód</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Billentyűzet szélessége egykezes módban</string>
@@ -184,6 +190,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience screen">Javaslatok és javítások</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Vágólap javaslatok időtúllépése</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
@@ -193,10 +200,11 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Felhasználói szótárak</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Rendszer felhasználói szótárának engedélyezése</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">A rendszer felhasználói szótárban tárolt szavak ajánlása</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Rendszer felhasználói szótárának kezelése</string>
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Elemek hozzáadása, megtekintése és eltávolítása a rendszer felhasználói szótárból</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">A belső felhasználói szótárban tárolt szavak ajánlása</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Elemek hozzáadása, megtekintése és eltávolítása a belső felhasználói szótárból</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Belső felhasználói szótár</string>
@@ -497,6 +505,7 @@
     <string name="enum__snygg_level__advanced" comment="Enum value label">Haladó</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Fejlesztő</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Rendszernyelvek használata</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Billentyűzet altípusok használata</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nincs művelet</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Váltás az előző billentyűzetmódra</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Váltás a következő billentyűzetmódra</string>

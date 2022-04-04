@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">ئەم پەڕەیە هیچ یاسایەکی پێناسە نەکراوە، زیادکردنی یاسایەک بۆ دەستکردن بە سازکردنی ئەم پەڕەیە.</string>
     <string name="settings__theme_editor__rule_already_exists">ئەم یاسای پەڕەی ستایڵ پێشتر پێناسە کراوە.</string>
     <string name="settings__theme_editor__rule_element">بەشی مەبەست</string>
-    <string name="settings__theme_editor__rule_codes">کۆد</string>
     <string name="settings__theme_editor__rule_groups">گرووپ</string>
     <string name="settings__theme_editor__rule_modes">شێواز</string>
     <string name="settings__theme_editor__rule_selectors">هەڵبژاردن</string>
-    <string name="settings__theme_editor__add_code">زیادکردنی کۆد</string>
-    <string name="settings__theme_editor__edit_code">دەستکاریکردنی کۆد</string>
-    <string name="settings__theme_editor__no_codes_defined">کۆد نەنوسراوە</string>
     <string name="settings__theme_editor__code_already_exists">ئەم دوگمەیە پێشتر زیادکراوە</string>
     <string name="settings__theme_editor__code_invalid">ئەم کۆدە کلیلە دروست نیە، دڵنیابە لەوەی کە کۆدی کلیلەکە لەناو مەودای {c_min} بۆ {c_max} بۆ پیتەکان یان {i_min} بۆ {i_max} بۆ کلیلە تایبەتەکان.</string>
-    <string name="settings__theme_editor__code_help_text">ئەم لینکانەی خوارەوە یارمەتیت دەدەن بۆ دۆزینەوەی کۆدی کلیلی هاوتا:</string>
     <string name="settings__theme_editor__add_property">زیادکردنی بەش</string>
     <string name="settings__theme_editor__edit_property">دەستکاریکردنی بەش</string>
     <string name="settings__theme_editor__property_already_exists">تایبەتمەندیەک بەم ناوە پێشتر لەناو ئەم یاسایەدا هەیە.</string>
@@ -713,7 +708,7 @@
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">
-        <item quantity="one">{v} هاتژمێر</item>
+        <item quantity="one">{v} کاتژمێر</item>
         <item quantity="other">{v} کاتژمێر</item>
     </plurals>
     <plurals name="unit__minutes__written">

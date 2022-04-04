@@ -88,13 +88,9 @@
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
     <string name="settings__theme_editor__add_rule">Afegir norma</string>
     <string name="settings__theme_editor__edit_rule">Editar norma</string>
-    <string name="settings__theme_editor__rule_codes">Codis</string>
     <string name="settings__theme_editor__rule_groups">Grups</string>
     <string name="settings__theme_editor__rule_modes">Modes</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
-    <string name="settings__theme_editor__add_code">Afegir codi</string>
-    <string name="settings__theme_editor__edit_code">Editar el codi</string>
-    <string name="settings__theme_editor__no_codes_defined">Cap codi definit.</string>
     <string name="settings__theme_editor__add_property">Afegir propietat</string>
     <string name="settings__theme_editor__edit_property">Editar propietat</string>
     <string name="settings__theme_editor__property_name">Nom de la propietat</string>

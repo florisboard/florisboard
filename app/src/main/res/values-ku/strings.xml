@@ -100,13 +100,9 @@
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Piştî diyalogan klavyeyê nîşande</string>
     <string name="settings__theme_editor__add_rule">Rêbazekê tevlî bike</string>
     <string name="settings__theme_editor__edit_rule">Rêbazê serrast bike</string>
-    <string name="settings__theme_editor__rule_codes">Kod</string>
     <string name="settings__theme_editor__rule_groups">Kom</string>
     <string name="settings__theme_editor__rule_modes">Moda</string>
     <string name="settings__theme_editor__rule_selectors">Hilbijêr</string>
-    <string name="settings__theme_editor__add_code">Koda lê zêde bike</string>
-    <string name="settings__theme_editor__edit_code">Koda sererastkirinê</string>
-    <string name="settings__theme_editor__no_codes_defined">Tu kod nehatine pênasekirin.</string>
     <string name="settings__theme_editor__code_already_exists">Ev koda mifteyan jixwe hatîye pênasekirin.</string>
     <string name="snygg__rule_element__key">Kilîd</string>
     <string name="snygg__rule_element__system_nav_bar">Darikê navîgasyonê yê pergalê</string>
@@ -331,6 +327,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">هەڵگرتنی شتە لەبەرگیراوەکان بۆ هێشتنەوە</string>
     <string name="pref__clipboard__clean_up_old__label">Berhemên kevin paqij bikin</string>
     <string name="pref__clipboard__clean_up_after__label">Piştî kelûpelên kevin paqij bikin</string>
+    <string name="pref__clipboard__max_history_size__label">Mezinahiya dîroka Maxê</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Dîroka efektên klîbê yên sereke paqij bike</string>
     <!-- Devtools strings -->
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">پیشاندانی لەبەرگیراوە بنەڕەتیەکان</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">پیشاندانی لەبەرگیراوەی بنەڕەتی سیستەم</string>
@@ -412,6 +410,9 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">لەسەروی تەختەکلیل</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">پیشادانی ڕیزی دووەم لەسەروی تەختەکلیلەکە، بەبێ گەورەکردنی قەبارەی تەختەکلیل، لەوانەیە ھەندێ بەش بەباشی دەرنەکەون</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Bingehîn</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Pêşketî</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Pêşdebir</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Zimanên systemê bi kar bîne</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Cureyên jêr ên klavyeyê bi kar bîne</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Bê çalakî</string>
@@ -429,7 +430,10 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Nîşanek bibe destpêka rûpelê</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Nîşanek ber bi dawiya rûpelê ve bibe</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Redo</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Vegerîne</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Karakteran bi rastî jê bibe</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Peyvan bi rastî jê bibire</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Hilbijêrê metoda têkerê nîşan bide</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Li klavyeya berê biguhere</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Biguhere jêrtîpa berê</string>
