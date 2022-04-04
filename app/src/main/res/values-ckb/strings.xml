@@ -128,7 +128,7 @@
     <string name="snygg__rule_element__keyboard">پشتەوەی تەختەکلیل</string>
     <string name="snygg__rule_element__key">دوگمە</string>
     <string name="snygg__rule_element__key_hint">پیتە لاوەکییەکان</string>
-    <string name="snygg__rule_element__key_popup">بچووکراوەی پیت</string>
+    <string name="snygg__rule_element__key_popup">بچووککراوەی پیت</string>
     <string name="snygg__rule_element__clipboard_header">سەرەوەی لەبەرگیراوەکان</string>
     <string name="snygg__rule_element__clipboard_item">لەبەرگیراوەکان</string>
     <string name="snygg__rule_element__clipboard_item_popup">فرمانەکانی لەبەرگیراوەکان</string>

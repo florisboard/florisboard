@@ -214,6 +214,10 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     private var isWindowShown: Boolean = false
     private var resourcesContext by mutableStateOf(this as Context)
 
+    init {
+        setTheme(R.style.FlorisImeTheme)
+    }
+
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)

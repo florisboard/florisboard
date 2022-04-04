@@ -49,7 +49,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Клавиатурата FlorisBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като подразбиран метод за въвеждане. Докоснете тук, за да направите промяна.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
-    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Показване на имената на езиците на</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Изписване имената на езиците на</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подредби</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Променяне на подредба</string>
@@ -133,6 +133,7 @@
     <string name="snygg__rule_element__clipboard_item_popup">Подсказка на елемент от междинната памет</string>
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Основен ред на интелигентната лента</string>
     <string name="snygg__rule_selector__pressed">Натиснат</string>
     <string name="snygg__rule_selector__focus">На фокус</string>
     <string name="snygg__rule_selector__disabled">Изключен</string>
@@ -226,7 +227,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Докосване на клавишите</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видима изскачаща подсказка</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показва се изскачаща подсказка при докосване на клавиш</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Акцентите в посдказките</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Акцентите в подсказките</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Добавят се подсказки със символи към подразбираната подредба</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при задържане на клавиш</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Клавишът интервал превключва към букви</string>
@@ -247,10 +248,10 @@
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Времеви прозорец за предложения от междинната памет</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Време за предложения от междинната памет</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично поставяне на главни букви</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се въвеждат с главна буква въз основа на текущия контекст</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично въвеждане на главни букви</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Използват се главни букви въз основа на контекста на въвеждане</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на клавиш Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
@@ -510,13 +511,19 @@
     <string name="ext__editor__title_edit_theme">Промяна на добавка с тема</string>
     <string name="ext__editor__metadata__title">Управление на мета данни</string>
     <string name="ext__editor__metadata__title_invalid">Недействителни мета данни</string>
+    <string name="ext__editor__metadata__message_invalid">Описателните данни на резширението са недействителни. Проверете редактора за описателни данни за подробности!</string>
     <string name="ext__editor__dependencies__title">Управление на зависимости</string>
     <string name="ext__editor__files__title">Управление на архиви</string>
     <string name="ext__editor__create_component__title">Създаване на компонент</string>
     <string name="ext__editor__create_component__title_theme">Създаване на тема</string>
     <string name="ext__editor__create_component__from_empty">Празна</string>
     <string name="ext__editor__create_component__from_existing">От съществуваща</string>
+    <string name="ext__editor__edit_component__title">Редактиране на компонент</string>
     <string name="ext__editor__edit_component__title_theme">Редактиране на компонент-тема</string>
+    <string name="ext__export__success">Темата е изнесена успешно!</string>
+    <string name="ext__export__failure">Грешка при изнасяне на разширение: {error_message}</string>
+    <string name="ext__import__success">Темата е внесена успешно!</string>
+    <string name="ext__import__failure">Грешка при внасяне на разширение: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
@@ -584,8 +591,8 @@
     <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Клавиатурата не се показва никога след затваряне на диалог</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Запомняне на последното състояние</string>
     <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Клавиатурата се показва след затваряне на диалог ако преди това е видима</string>
-    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Език на системата</string>
-    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Присъщ за езика</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Езика на системата</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Присъщия за езика</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Подразбиран цвят на кожата</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Светъл цвят на кожа</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Средно светъл цвят на кожата</string>
@@ -622,7 +629,9 @@
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Долу, начало</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Бързи действия</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Бързите действия, подредени в един ред с допълнително меню</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменти за междинна памет и каретка</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Най-използваните действия за междинна памет и придвижване на каретката</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Основен</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Само цветове, свойствата и правилата са преведени.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Разширен</string>

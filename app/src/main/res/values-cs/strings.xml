@@ -13,6 +13,9 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Maximální velikost historie emotikonů</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Preferovaná barva pokožky emotikonů</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferovaný styl vlasů emotikonů</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky &amp; Emoce</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Lidé &amp; Tělo</string>
@@ -23,6 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Předměty</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboly</string>
     <string name="emoji__category__flags" comment="Emoji category name">Vlajky</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenalezeny žádné nedávno použité emotikony. Jakmile je začnete psát, objeví se automaticky zde.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tip: Stiskněte a držte prst na naposledy použitých emotikonech pro jejich odebrání z daného seznamu!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Emotikon {emoji} byl odebrán z nedávno použitých</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Přepínač rychlé akce. Pokud ho podržíte, přepne mezi návrhy na slova a tlačítky rychlé akce.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Opustit editor textu.</string>
@@ -43,13 +49,16 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBord není povolena v systému a proto nemůže být použita jako metoda zadávání. Klikněte sem pro vyřešení tohoto problému.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard není vybrán jako výchozí vstupní metoda. Kliknutím sem tento problém vyřešíte.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zobrazovat názvy jazyků v</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Přidat podtyp</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Upravit podtyp</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Hlavní jazyk</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapování vyskakovacích nabídek</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rozložení znaků</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primární rozložení symbolů</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární rozložení symbolů</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Skládání</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">List měn</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Číselné rozložení</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Číselné rozložení (pokročilé)</string>
@@ -66,6 +75,7 @@
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Zobrazit všechny</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá se, že jste nenakonfigurovali žádné podtypy. Jako fallback bude použit podtyp angličtina/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Minimálně jedno pole nemá vybranou hodnotu. Vyberte ji prosím.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nenainstalováno)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rozložení</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Motiv</string>
@@ -83,6 +93,10 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Vyberte denní motiv</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vyberte noční motiv</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
+    <string name="settings__theme_editor__fine_tune__title">Jemné doladění editoru</string>
+    <string name="settings__theme_editor__fine_tune__level">Úprava úrovně</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Zobrazit barvy jako</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zobrazit klávesnici po dialozích</string>
     <string name="settings__theme_editor__add_rule">Přidat pravidlo</string>
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
     <string name="settings__theme_editor__rule_element">Cílový prvek</string>
@@ -100,6 +114,7 @@
     <string name="settings__theme_editor__property_name">Název vlastnosti</string>
     <string name="settings__theme_editor__property_value">Hodnota vlastnosti</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Použít pro všechny rohy</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Upravit řetězec barvy</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
     <string name="snygg__rule_element__defines">Proměnné</string>
@@ -107,25 +122,80 @@
     <string name="snygg__rule_element__key">Klávesa</string>
     <string name="snygg__rule_element__key_hint">Nápovědy klávesy</string>
     <string name="snygg__rule_element__key_popup">Vyskakovací okno klávesy</string>
+    <string name="snygg__rule_element__clipboard_header">Záhlaví schránky</string>
+    <string name="snygg__rule_element__clipboard_item">Položka schránky</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Vyskakovací nabídka položky schránky</string>
+    <string name="snygg__rule_element__glide_trail">Stopa tahu</string>
+    <string name="snygg__rule_element__one_handed_panel">Režim jedné ruky</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Primární řádek chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Sekundární řádek chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Primární přepínač akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Sekundární přepínač akcí rychlé lišty</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Rychlá akce chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_key">Klíč chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutý klip v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
+    <string name="snygg__rule_element__system_nav_bar">Systémová navigační lišta</string>
+    <string name="snygg__rule_selector__pressed">Stisknuto</string>
+    <string name="snygg__rule_selector__focus">Zaměřeno</string>
+    <string name="snygg__rule_selector__disabled">Zakázáno</string>
+    <string name="snygg__property_name__width">Šířka</string>
+    <string name="snygg__property_name__height">Výška</string>
+    <string name="snygg__property_name__background">Pozadí</string>
+    <string name="snygg__property_name__foreground">Popředí</string>
+    <string name="snygg__property_name__border_color">Barva okraje</string>
+    <string name="snygg__property_name__border_style">Styl okraje</string>
+    <string name="snygg__property_name__border_width">Šířka okraje</string>
+    <string name="snygg__property_name__font_family">Rodina písem</string>
+    <string name="snygg__property_name__font_size">Velikost písma</string>
+    <string name="snygg__property_name__font_style">Styl písma</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Hmatová odezva / vibrace</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Povolit hmatovou odezvu</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorovat hmatová nastavení systému</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Použít předvolby níže, i při vypnutých vybracích v systému</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Přímé spuštění vibrací</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Spustit vibrace přímo namísto použití sady pro hmatovou odezvu systému Android</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trvání vibrací</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Síla vibrací</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrace při stisku klávesy</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrace při dlouhém stisku klávesy</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibrace při opakované akci klávesy</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibrace při gestech</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibrace při posouvání prstem při gestech</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">např. klávesy, tlačítka, záložky emotikonů</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">např. vyskakovací nabídky</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">např. klávesa odstranění</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">není implementováno</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">např. posunutí při ovládání kurzoru</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klávesnice</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Řádek čísel</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Zobrazit číselný řádek nad znakovým rozložením</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Řádek čísel s návrhy</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Navrhované symboly</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazit pomocné tlačítko</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí nastavitelné pomocné tlačítko vedle mezerníku</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Funkce pomocného tlačítka</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Zobrazit jazyk na mezerníku</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Zobrazí název aktuálně používaného jazyka na mezerníku</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim jedné ruky</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Šířka klávesnice v režimu jedné ruky</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vstupní okno v celoobrazovkovém režimu na šířku</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Výška klávesnice</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Mezery mezi klávesami</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Spodní odsazení</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Přehodit přepínací tlačítka</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Návrhy obsahu schránky</string>

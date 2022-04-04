@@ -40,13 +40,13 @@ fun TextInputLayout(
 
     val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-    ) {
-        Smartbar()
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+        ) {
+            Smartbar()
             TextKeyboardLayout(
                 renderInfo = renderInfo,
             )

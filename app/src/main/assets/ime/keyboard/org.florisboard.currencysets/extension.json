@@ -10,6 +10,18 @@
   },
   "currencySets": [
     {
+      "id": "armenian_dram",
+      "label": "Armenian dram (֏)",
+      "slots": [
+        { "code": 1423, "label": "֏" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
       "id": "azerbaijani_manat",
       "label": "Azerbaijani manat (₼)",
       "slots": [

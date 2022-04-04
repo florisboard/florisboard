@@ -178,6 +178,16 @@
     <string name="snygg__property_value__explicit_inherit">継承</string>
     <string name="snygg__property_value__solid_color">ソリッドカラー</string>
     <string name="snygg__property_value__image_ref">画像リファレンス</string>
+    <string name="snygg__property_value__rectangle_shape">長方形</string>
+    <string name="snygg__property_value__circle_shape">円形</string>
+    <string name="snygg__property_value__dp_size">サイズ (dp)</string>
+    <string name="snygg__property_value__sp_size">サイズ (sp)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">音とバイブレーション</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ハウリング</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">ハウリングを有効にする</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">バイブレーション持続時間</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">バイブレーションの強さ</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">キーバイブレーション</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- Spelling UI strings -->

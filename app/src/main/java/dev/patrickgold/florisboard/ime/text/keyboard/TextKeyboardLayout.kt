@@ -38,6 +38,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -115,12 +116,21 @@ fun TextKeyboardLayout(
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
 
+    val keyboard = renderInfo.keyboard
+    val numberRowEnabled by prefs.keyboard.numberRow.observeAsTransformingState { numberRowEnabled ->
+        when (keyboard.mode) {
+            KeyboardMode.CHARACTERS,
+            KeyboardMode.NUMERIC_ADVANCED,
+            KeyboardMode.SYMBOLS,
+            KeyboardMode.SYMBOLS2 -> numberRowEnabled
+            else -> false
+        }
+    }
     val glideEnabled by prefs.glide.enabled.observeAsState()
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
         .foreground.solidColor(default = Color.Green)
 
-    val keyboard = renderInfo.keyboard
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
         if (glideEnabled && !isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
@@ -146,7 +156,8 @@ fun TextKeyboardLayout(
                 if (isSmartbarKeyboard) {
                     FlorisImeSizing.smartbarHeight
                 } else {
-                    FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
+                    FlorisImeSizing.keyboardRowBaseHeight *
+                        keyboard.rowCount.coerceAtLeast(if (numberRowEnabled) 5 else 4)
                 }
             )
             .onGloballyPositioned { coords ->
@@ -212,7 +223,8 @@ fun TextKeyboardLayout(
                 height = FlorisImeSizing.smartbarHeight.toPx()
             } else {
                 width = keyboardWidth / 10f
-                height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+                height = FlorisImeSizing.keyboardRowBaseHeight.toPx() *
+                    (if (numberRowEnabled && keyboard.mode != KeyboardMode.CHARACTERS) 1.12f else 1f)
             }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
@@ -257,7 +269,8 @@ fun TextKeyboardLayout(
                     val c = key.computedData.code
                     val t = key.computedData.type
                     val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
-                            keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
+                        keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
+                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
                     c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
                 } else {
                     true
@@ -321,6 +334,7 @@ private fun TextKeyButton(
         style = keyStyle,
         clip = true,
     ) {
+        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
@@ -332,7 +346,7 @@ private fun TextKeyButton(
             Text(
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(Alignment.Center),
+                    .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = label,
                 color = keyStyle.foreground.solidColor(),
                 fontSize = fontSize,
@@ -356,7 +370,7 @@ private fun TextKeyButton(
                 modifier = Modifier
                     .padding(end = (key.visibleBounds.width / 12f).toDp())
                     .wrapContentSize()
-                    .align(Alignment.TopEnd)
+                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
                     .snyggBackground(keyHintStyle),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),

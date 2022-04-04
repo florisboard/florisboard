@@ -95,6 +95,10 @@
       "authors": [ "zoli111, gabik65" ]
     },
     {
+      "id": "hy",
+      "authors": [ "PJTSearch" ]
+    },
+    {
       "id": "is",
       "authors": [ "patrickgold" ]
     },
@@ -428,7 +432,11 @@
       }
     },
     {
+<<<<<<< HEAD
       "languageTag": "fa-FA-per2",
+=======
+      "languageTag": "fa-FA",
+>>>>>>> f51d5083b8e8d7e46859fc0d9ad6213ab4f24881
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:rial",
       "popupMapping": "org.florisboard.localization:fa2",
@@ -449,6 +457,15 @@
         "symbols": "org.florisboard.layouts:eastern",
         "symbols2": "org.florisboard.layouts:eastern",
         "numericRow": "org.florisboard.layouts:eastern_arabic"
+      }
+    },
+    {
+      "languageTag": "az",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:azerbaijani_manat",
+      "popupMapping": "org.florisboard.localization:tr",
+      "preferred": {
+        "characters": "org.florisboard.layouts:azerbaijani"
       }
     },
     {
@@ -476,6 +493,26 @@
       "popupMapping": "org.florisboard.localization:hr",
       "preferred": {
         "characters": "org.florisboard.layouts:qwertz"
+      }
+    },
+    {
+      "languageTag": "hy",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:armenian_dram",
+      "popupMapping": "org.florisboard.localization:hy",
+      "preferred": {
+        "characters": "org.florisboard.layouts:western_armenian",
+        "symbols": "org.florisboard.layouts:armenian"
+      }
+    },
+    {
+      "languageTag": "hy",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:armenian_dram",
+      "popupMapping": "org.florisboard.localization:hy",
+      "preferred": {
+        "characters": "org.florisboard.layouts:eastern_armenian",
+        "symbols": "org.florisboard.layouts:armenian"
       }
     },
     {

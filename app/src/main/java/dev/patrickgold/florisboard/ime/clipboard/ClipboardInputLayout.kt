@@ -83,7 +83,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -118,18 +117,7 @@ fun ClipboardInputLayout(
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
-    val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-    val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-    val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
-    val innerHeight =
-        if (smartbarEnabled && secondaryRowEnabled && secondaryRowExpanded &&
-            secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI
-        ) {
-            FlorisImeSizing.smartbarHeight
-        } else {
-            0.dp
-        } + (FlorisImeSizing.keyboardRowBaseHeight * 4)
+    val innerHeight = FlorisImeSizing.keyboardUiHeight() - FlorisImeSizing.smartbarHeight
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
