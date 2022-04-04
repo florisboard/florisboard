@@ -821,7 +821,8 @@ private class TextKeyboardLayoutController(
         return when (event.type) {
             SwipeGesture.Type.TOUCH_MOVE -> when (event.direction) {
                 SwipeGesture.Direction.LEFT -> {
-                    if (prefs.gestures.spaceBarSwipeLeft.get() == SwipeAction.MOVE_CURSOR_LEFT) {
+                    val action = prefs.gestures.spaceBarSwipeLeft.get()
+                    if (action == SwipeAction.MOVE_CURSOR_LEFT) {
                         abs(event.relUnitCountX).let {
                             val count = if (!pointer.hasTriggeredGestureMove) {
                                 it - 1
@@ -837,11 +838,14 @@ private class TextKeyboardLayoutController(
                                 )
                             }
                         }
+                        true
+                    } else {
+                        action != SwipeAction.NO_ACTION
                     }
-                    true
                 }
                 SwipeGesture.Direction.RIGHT -> {
-                    if (prefs.gestures.spaceBarSwipeRight.get() == SwipeAction.MOVE_CURSOR_RIGHT) {
+                    val action = prefs.gestures.spaceBarSwipeRight.get()
+                    if (action == SwipeAction.MOVE_CURSOR_RIGHT) {
                         abs(event.relUnitCountX).let {
                             val count = if (!pointer.hasTriggeredGestureMove) {
                                 it - 1
@@ -857,29 +861,43 @@ private class TextKeyboardLayoutController(
                                 )
                             }
                         }
+                        true
+                    } else {
+                        action != SwipeAction.NO_ACTION
                     }
-                    true
                 }
                 else -> true // To prevent the popup display of nearby keys
             }
             SwipeGesture.Type.TOUCH_UP -> when (event.direction) {
                 SwipeGesture.Direction.LEFT -> {
                     prefs.gestures.spaceBarSwipeLeft.get().let {
-                        if (it != SwipeAction.MOVE_CURSOR_LEFT) {
-                            keyboardManager.executeSwipeAction(it)
-                            true
-                        } else {
-                            false
+                        when {
+                            it == SwipeAction.NO_ACTION -> {
+                                false
+                            }
+                            it != SwipeAction.MOVE_CURSOR_LEFT -> {
+                                keyboardManager.executeSwipeAction(it)
+                                true
+                            }
+                            else -> {
+                                false
+                            }
                         }
                     }
                 }
                 SwipeGesture.Direction.RIGHT -> {
                     prefs.gestures.spaceBarSwipeRight.get().let {
-                        if (it != SwipeAction.MOVE_CURSOR_RIGHT) {
-                            keyboardManager.executeSwipeAction(it)
-                            true
-                        } else {
-                            false
+                        when {
+                            it == SwipeAction.NO_ACTION -> {
+                                false
+                            }
+                            it != SwipeAction.MOVE_CURSOR_RIGHT -> {
+                                keyboardManager.executeSwipeAction(it)
+                                true
+                            }
+                            else -> {
+                                false
+                            }
                         }
                     }
                 }
