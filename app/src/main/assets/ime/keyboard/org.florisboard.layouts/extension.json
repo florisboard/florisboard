@@ -139,8 +139,7 @@
         "id": "german2",
         "label": "German (GBoard)",
         "authors": [ "M-Koushan" ],
-        "direction": "rtl",
-        "modifier": "org.florisboard.layouts:german2"
+        "direction": "rtl"
       },
       {
         "id": "greek",
