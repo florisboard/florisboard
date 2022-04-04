@@ -23,12 +23,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.util.*
 
 @Composable
@@ -39,17 +42,22 @@ fun AndroidLocalesScreen() = FlorisScreen {
     val availableLocales = remember { Locale.getAvailableLocales().sortedBy { it.toLanguageTag() } }
 
     content {
+        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
             LazyColumn {
-                items(availableLocales) {
+                items(availableLocales) { locale ->
                     Row {
                         Text(
-                            text = it.toLanguageTag().padEnd(12),
+                            text = locale.toLanguageTag().padEnd(12),
                             fontFamily = FontFamily.Monospace,
                         )
                         Text(
                             modifier = Modifier.weight(1.0f),
-                            text = it.getDisplayName(it),
+                            text = when (displayLanguageNamesIn) {
+                                DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName
+                                DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.getDisplayName(locale)
+                            },
                             fontFamily = FontFamily.Monospace,
                         )
                     }
