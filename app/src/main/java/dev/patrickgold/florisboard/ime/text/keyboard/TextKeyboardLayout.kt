@@ -20,8 +20,10 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -324,13 +326,28 @@ private fun TextKeyButton(
         KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
         else -> 1.0f
     }
-    SnyggSurface(
+    val size = key.visibleBounds.size.toDpSize()
+    Box(
         modifier = Modifier
-            .requiredSize(key.visibleBounds.size.toDpSize())
+            .requiredSize(size)
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
-        style = keyStyle,
-        clip = false,
     ) {
+        // TODO: maybe make this customizable through a size property for keyStyle
+        val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
+        SnyggSurface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .run {
+                    if (isReducedHeight && FlorisImeTheme.config.isBorderless) {
+                        this.padding(vertical = size.height * 0.15f)
+                    } else {
+                        this
+                    }
+                }
+                .fillMaxHeight(),
+            style = keyStyle,
+            clip = false,
+        ) { }
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             if (key.computedData.code == KeyCode.SPACE) {
