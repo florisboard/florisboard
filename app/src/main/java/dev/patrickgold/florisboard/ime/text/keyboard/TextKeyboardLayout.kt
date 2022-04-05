@@ -426,7 +426,7 @@ private class TextKeyboardLayoutController(
 
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
-    var isGliding: Boolean = false
+    var isGliding by mutableStateOf(false)
 
     val glideTypingDetector = GlideTypingGesture.Detector(context)
     val glideDataForDrawing = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
