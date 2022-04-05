@@ -103,11 +103,23 @@
     <string name="settings__theme_editor__no_rules_defined">Cette feuille de style n\'a pas de règles définies. Ajoutez une règle pour commencer à personnaliser cette feuille de style.</string>
     <string name="settings__theme_editor__rule_already_exists">Cette règle de feuille de style est déjà définie.</string>
     <string name="settings__theme_editor__rule_element">Élément cible</string>
+    <string name="settings__theme_editor__rule_codes">Codes clés de la cible</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
     <string name="settings__theme_editor__rule_modes">Modes</string>
     <string name="settings__theme_editor__rule_selectors">Sélecteurs</string>
+    <string name="settings__theme_editor__add_code">Ajouter un code clé</string>
+    <string name="settings__theme_editor__edit_code">Modifier le code de la clé</string>
+    <string name="settings__theme_editor__no_codes_defined">Appliquer la règle à tous les éléments cibles.</string>
+    <string name="settings__theme_editor__codes_defined">Appliquer la règle uniquement aux éléments cibles avec les codes clés suivants :</string>
     <string name="settings__theme_editor__code_already_exists">Ce code clé est déjà défini.</string>
     <string name="settings__theme_editor__code_invalid">Ce code clé n\'est pas valide. Assurez-vous que le code de clé est dans la plage de {c_min} à {c_max} pour les caractères ou de {i_min} à {i_max} pour les clés spéciales internes.</string>
+    <string name="settings__theme_editor__code_help_text">Sinon, les liens suivants vous aideront à trouver le code clé correspondant :</string>
+    <string name="settings__theme_editor__code_placeholder">Code</string>
+    <string name="settings__theme_editor__code_recording_help_text">Pour trouver le code d\'une touche, utilisez le bouton situé à côté du champ de saisie du code. Une fois activé, il enregistrera la prochaine pression sur la touche et insérera le code dans le champ de saisie.</string>
+    <string name="settings__theme_editor__code_recording_started">L\'enregistrement du code clé a commencé</string>
+    <string name="settings__theme_editor__code_recording_stopped">L\'enregistrement du code clé s\'est arrêté</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} doit être le clavier par défaut pour enregistrer un code de touche</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Enregistrement…</string>
     <string name="settings__theme_editor__add_property">Ajouter une propriété</string>
     <string name="settings__theme_editor__edit_property">Modifier la propriété</string>
     <string name="settings__theme_editor__property_already_exists">Une propriété portant ce nom existe déjà dans la règle actuelle.</string>
@@ -122,6 +134,7 @@
     <string name="snygg__rule_element__defines_description">Définissez des variables dans cette règle pour réutiliser des couleurs ou des tailles courantes dans votre feuille de style.</string>
     <string name="snygg__rule_element__keyboard">Fenêtre du clavier</string>
     <string name="snygg__rule_element__key">Touche</string>
+    <string name="snygg__rule_element__key_hint">Indice clé</string>
     <string name="snygg__rule_element__key_popup">Pop-up de touche</string>
     <string name="snygg__rule_element__clipboard_header">En-tête du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item">Élément du Presse-papiers</string>
@@ -130,6 +143,8 @@
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
     <string name="snygg__rule_element__smartbar_primary_row">Rangée principale de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Rangée secondaire de la barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Activation des actions primaires de la barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Activation des actions secondaires de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_quick_action">Action rapides de la barre intelligente</string>
     <string name="snygg__rule_element__smartbar_key">Touche de barre intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
@@ -177,6 +192,7 @@
     <string name="snygg__property_value__dp_size">Taille (dp)</string>
     <string name="snygg__property_value__sp_size">Taille (sp)</string>
     <string name="snygg__property_value__percentage_size">Taille (%)</string>
+    <string name="snygg__property_value__defined_var">Référence du Var</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retour audio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activer le retour audio</string>
@@ -231,6 +247,8 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Appui sur la touche</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilité du popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Afficher un pop-up lors de l\'appui d\'une touche</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Les accents comprennent des popups de symboles</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Ajoute des popups de symboles aux accents de la mise en page par défaut</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délai d\'appui prolongé</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Espace pour revenir aux caractères</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Retour automatique aux caractères depuis les symboles et les nombres</string>
@@ -238,8 +256,11 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barre intelligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Barre Intelligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Boutons à bascule</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Disposition des rangs</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Actions principales</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Extension/réduction automatique de la ligne d\'action primaire en fonction de l\'état actuel</string>
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Actions secondaires</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Afficher la ligne d\'actions secondaires</string>
     <!-- Typing strings -->
@@ -642,7 +663,14 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Placer la ligne secondaire entre la ligne principale et le clavier de texte</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superposer l\'interface utilisateur de l\'application</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Place la ligne secondaire en superposition au-dessus de l\'interface utilisateur de l\'application, sans affecter la hauteur résultante de l\'interface utilisateur du clavier. Notez que ce placement peut entraîner un dépassement partiel du champ de saisie de l\'application</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Top départ</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Top fin</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Extrémité inférieure</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Extrémité supérieure</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Actions rapides</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Actions rapides pouvant être organisées sous forme de rangées avec un menu de débordement</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Outils du curseur du presse-papiers</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Rame avec les outils les plus couramment utilisés pour le presse-papiers et le déplacement du curseur</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Standard</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Seules les propriétés de couleur sont affichées, les propriétés et les règles sont traduites.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avancé</string>

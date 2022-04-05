@@ -106,6 +106,8 @@
     <string name="settings__theme_editor__rule_modes">Modos</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
     <string name="settings__theme_editor__code_already_exists">Este código já está definido.</string>
+    <string name="settings__theme_editor__code_placeholder">Código</string>
+    <string name="settings__theme_editor__code_recording_placeholder">A gravar…</string>
     <string name="settings__theme_editor__add_property">Adicionar propriedade</string>
     <string name="settings__theme_editor__edit_property">Editar propriedade</string>
     <string name="settings__theme_editor__property_already_exists">Já existe uma propriedade com este nome dentro da regra atual.</string>
@@ -118,6 +120,12 @@
     <string name="settings__theme_editor__component_meta_stylesheet_path">Caminho da folha de estilo</string>
     <string name="snygg__rule_element__defines">Variáveis</string>
     <string name="snygg__rule_element__keyboard">Janela do teclado</string>
+    <string name="snygg__rule_element__key">Tecla</string>
+    <string name="snygg__rule_element__key_hint">Dica de tecla</string>
+    <string name="snygg__rule_element__key_popup">Popup de tecla</string>
+    <string name="snygg__rule_element__clipboard_item">Item da área de transferência</string>
+    <string name="snygg__rule_element__glide_trail">Rasto de gestos</string>
+    <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__system_nav_bar">Barra de navegação do sistema</string>
     <string name="snygg__rule_selector__pressed">Premido</string>
     <string name="snygg__rule_selector__focus">Focado</string>

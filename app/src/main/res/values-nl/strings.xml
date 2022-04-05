@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Toetsenbord naar links verplaatsen.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Toetsenbord naar rechts verplaatsen.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emoji\'s</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Emoji historiek maximale lengte</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Gewenste emoji huidskleur</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Gewenste emoji haarstijl</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emoties</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Mens &amp; Lichaam</string>
@@ -22,6 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Voorwerpen</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbolen</string>
     <string name="emoji__category__flags" comment="Emoji category name">Vlaggen</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Geen recent gebruikte emoji\'s gevonden. Zodra je emoji\'s begint te typen, verschijnen ze automatisch hier.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Druk lang op recent gebruikte emoji\'s om ze weer uit deze weergave te verwijderen!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Snelle actie aan / uit. Schakelt tussen woordsuggesties en de snelle actieknoppen bij het indrukken.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Tekstbewerkingspaneel afsluiten.</string>
@@ -42,6 +49,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is niet ingeschakeld in het systeem en zal dus niet beschikbaar zijn als een invoermethode in de invoermethode-kiezer. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is niet geselecteerd als de standaard invoermethode. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Talen &amp; Indelingen</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Taalnamen weergeven in</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Indeling toevoegen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
@@ -86,6 +94,21 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecteer dagthema</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecteer nachtthema</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Geïnstalleerde thema\'s beheren</string>
+    <string name="settings__theme_editor__fine_tune__title">Afstemmings editor</string>
+    <string name="settings__theme_editor__fine_tune__level">Afstemmings niveau</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Kleuren weergeven als</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Toetsenbord weergeven na dialogen</string>
+    <string name="settings__theme_editor__add_rule">Regel toevoegen</string>
+    <string name="settings__theme_editor__edit_rule">Regel bewerken</string>
+    <string name="settings__theme_editor__no_rules_defined">Deze stylesheet heeft geen regels gedefinieerd. Voeg een regel toe om deze stylesheet aan te passen.</string>
+    <string name="settings__theme_editor__rule_already_exists">Deze stylesheet regel is al gedefinieerd.</string>
+    <string name="settings__theme_editor__rule_element">Doelwit element</string>
+    <string name="settings__theme_editor__rule_codes">Doelwit sleutelcode</string>
+    <string name="settings__theme_editor__rule_groups">Groepen</string>
+    <string name="settings__theme_editor__rule_modes">Modussen</string>
+    <string name="settings__theme_editor__rule_selectors">Selectors</string>
+    <string name="settings__theme_editor__add_code">Sleutelcode toevoegen</string>
+    <string name="settings__theme_editor__edit_code">Sleutelcode bewerken</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid &amp; vibraties</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>
