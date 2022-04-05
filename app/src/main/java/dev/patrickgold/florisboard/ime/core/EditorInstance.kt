@@ -406,14 +406,17 @@ class EditorInstance(private val ims: InputMethodService) {
         if (item == null) return false
         val mimeTypes = item.mimeTypes
         return when (item.type) {
-            ItemType.IMAGE -> {
+            ItemType.TEXT -> {
+                commitText(item.text.toString())
+            }
+            ItemType.IMAGE, ItemType.VIDEO -> {
                 item.uri ?: return false
                 val id = ContentUris.parseId(item.uri)
                 val file = ClipboardFileStorage.getFileForId(ims, id)
                 if (!file.exists()) return false
                 val inputContentInfo = InputContentInfoCompat(
                     item.uri,
-                    ClipDescription("clipboard image", mimeTypes),
+                    ClipDescription("clipboard media file", mimeTypes),
                     null,
                 )
                 val ic = inputConnection ?: return false
@@ -429,9 +432,6 @@ class EditorInstance(private val ims: InputMethodService) {
                     )
                 }
                 InputConnectionCompat.commitContent(ic, editorInfo!!, inputContentInfo, flags, null)
-            }
-            ItemType.TEXT -> {
-                commitText(item.text.toString())
             }
         }
     }

@@ -18,10 +18,15 @@ package dev.patrickgold.florisboard.ime.clipboard
 
 import android.content.ContentUris
 import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
+import android.media.ThumbnailUtils
+import android.provider.MediaStore
+import android.util.Size
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -38,6 +43,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -76,6 +82,7 @@ import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.theme.Green500
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidKeyguardManager
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.common.observeAsNonNullState
@@ -96,6 +103,7 @@ import dev.patrickgold.florisboard.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+
 
 private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
@@ -221,6 +229,53 @@ fun ClipboardInputLayout(
                         bitmap = bitmap.getOrThrow(),
                         contentDescription = null,
                         contentScale = ContentScale.FillWidth,
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(ItemPadding),
+                        text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
+                        style = TextStyle(textDirection = TextDirection.Ltr),
+                        color = Color.Red,
+                        fontSize = style.fontSize.spSize(),
+                    )
+                }
+            } else if (item.type == ItemType.VIDEO) {
+                val id = ContentUris.parseId(item.uri!!)
+                val file = ClipboardFileStorage.getFileForId(context, id)
+                val bitmap = remember(id) {
+                    runCatching {
+                        check(file.exists()) { "Unable to resolve video at ${file.absolutePath}" }
+                        val rawBitmap = if (AndroidVersion.ATLEAST_API29_Q) {
+                            val dataRetriever = MediaMetadataRetriever()
+                            dataRetriever.setDataSource(file.absolutePath)
+                            val width = dataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
+                            val height = dataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
+                            ThumbnailUtils.createVideoThumbnail(file, Size(width!!.toInt(), height!!.toInt()), null)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            ThumbnailUtils.createVideoThumbnail(file.absolutePath, MediaStore.Video.Thumbnails.MINI_KIND)
+                        }
+                        checkNotNull(rawBitmap) { "Unable to decode video at ${file.absolutePath}" }
+                        rawBitmap.asImageBitmap()
+                    }
+                }
+                if (bitmap.isSuccess) {
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        bitmap = bitmap.getOrThrow(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(start = 4.dp, bottom = 4.dp)
+                            .background(Color.White, CircleShape),
+                        painter = painterResource(R.drawable.ic_videocam),
+                        contentDescription = null,
+                        tint = Color.Black,
                     )
                 } else {
                     Text(

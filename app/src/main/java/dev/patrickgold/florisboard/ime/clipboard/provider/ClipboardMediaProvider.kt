@@ -30,12 +30,12 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 /**
- * Allows apps to access images on the clipboard.
+ * Allows apps to access images and videos on the clipboard.
  *
  * This is sometimes called by the UI thread, so all functions are non blocking.
  * Database accesses are performed async.
  */
-class ClipboardImagesProvider : ContentProvider() {
+class ClipboardMediaProvider : ContentProvider() {
     private var clipboardFilesDao: ClipboardFilesDao? = null
     private val cachedFileInfos: HashMap<Long, ClipboardFileInfo> = hashMapOf()
     private val ioScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -43,18 +43,23 @@ class ClipboardImagesProvider : ContentProvider() {
     companion object {
         const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.clipboard"
         val IMAGE_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/images")
+        val VIDEO_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/videos")
 
         private const val IMAGE_CLIP_ITEM = 0
         private const val IMAGE_CLIPS_TABLE = 1
+        private const val VIDEO_CLIP_ITEM = 2
+        private const val VIDEO_CLIPS_TABLE = 3
 
-        val matcher = UriMatcher(UriMatcher.NO_MATCH).apply {
+        private val Matcher = UriMatcher(UriMatcher.NO_MATCH).apply {
             addURI(AUTHORITY, "clips/images/#", IMAGE_CLIP_ITEM)
             addURI(AUTHORITY, "clips/images", IMAGE_CLIPS_TABLE)
+            addURI(AUTHORITY, "clips/videos/#", VIDEO_CLIP_ITEM)
+            addURI(AUTHORITY, "clips/videos", VIDEO_CLIPS_TABLE)
         }
     }
 
     object Columns {
-        const val ImageUri = "image_uri"
+        const val MediaUri = "media_uri"
         const val MimeTypes = "mime_types"
     }
 
@@ -85,16 +90,21 @@ class ClipboardImagesProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String? {
-        return when (matcher.match(uri)) {
-            IMAGE_CLIP_ITEM -> cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.getOrNull(0)
+        return when (Matcher.match(uri)) {
+            IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
+                cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.getOrNull(0)
+            }
             IMAGE_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.image_clip_table"
+            VIDEO_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.video_clip_table"
             else -> null
         }
     }
 
     override fun getStreamTypes(uri: Uri, mimeTypeFilter: String): Array<String>? {
-        return when (matcher.match(uri)) {
-            IMAGE_CLIP_ITEM -> cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes
+        return when (Matcher.match(uri)) {
+            IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
+                cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes
+            }
             else -> null
         }
     }
@@ -108,12 +118,12 @@ class ClipboardImagesProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri {
-        when (matcher.match(uri)) {
-            IMAGE_CLIPS_TABLE -> {
+        when (val m = Matcher.match(uri)) {
+            IMAGE_CLIPS_TABLE, VIDEO_CLIPS_TABLE -> {
                 return try {
                     values as ContentValues
-                    val imageUri = Uri.parse(values.getAsString(Columns.ImageUri))
-                    val id = ClipboardFileStorage.cloneUri(context!!, imageUri)
+                    val mediaUri = Uri.parse(values.getAsString(Columns.MediaUri))
+                    val id = ClipboardFileStorage.cloneUri(context!!, mediaUri)
                     val size = ClipboardFileStorage.getFileForId(context!!, id).length()
                     val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
                     val displayName = values.getAsString(OpenableColumns.DISPLAY_NAME)
@@ -122,7 +132,11 @@ class ClipboardImagesProvider : ContentProvider() {
                     ioScope.launch {
                         clipboardFilesDao?.insert(fileInfo)
                     }
-                    ContentUris.withAppendedId(IMAGE_CLIPS_URI, id)
+                    if (m == IMAGE_CLIPS_TABLE) {
+                        ContentUris.withAppendedId(IMAGE_CLIPS_URI, id)
+                    } else {
+                        ContentUris.withAppendedId(VIDEO_CLIPS_URI, id)
+                    }
                 } catch (e: Exception) {
                     flogError { e.message.toString() }
                     uri.buildUpon().appendPath("0").build()
@@ -133,8 +147,8 @@ class ClipboardImagesProvider : ContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        when (matcher.match(uri)) {
-            IMAGE_CLIP_ITEM -> {
+        when (Matcher.match(uri)) {
+            IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
                 val id = ContentUris.parseId(uri)
                 ClipboardFileStorage.deleteById(context!!, id)
                 cachedFileInfos.remove(id)

@@ -25,7 +25,7 @@ import dev.patrickgold.florisboard.res.io.FsFile
 import dev.patrickgold.florisboard.res.io.subFile
 
 /**
- * Backend helper object which is used by [ClipboardImagesProvider] to serve content.
+ * Backend helper object which is used by [ClipboardMediaProvider] to serve content.
  */
 object ClipboardFileStorage {
     private val Context.clipboardFilesDir: FsFile

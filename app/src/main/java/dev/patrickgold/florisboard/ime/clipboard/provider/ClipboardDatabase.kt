@@ -34,7 +34,8 @@ private const val CLIPBOARD_FILES_TABLE = "clipboard_files"
 
 enum class ItemType(val value: Int) {
     TEXT(1),
-    IMAGE(2);
+    IMAGE(2),
+    VIDEO(3);
 
     companion object {
         fun fromInt(value : Int) : ItemType {
@@ -85,20 +86,25 @@ data class ClipboardItem(
          * Returns a new ClipboardItem based on a ClipData.
          *
          * @param data The ClipData to clone.
-         * @param cloneUri Whether to store the image using [ClipboardImagesProvider].
+         * @param cloneUri Whether to store the image using [ClipboardMediaProvider].
          */
         fun fromClipData(context: Context, data: ClipData, cloneUri: Boolean) : ClipboardItem {
             val dataItem = data.getItemAt(0)
             val type = when {
                 dataItem?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
+                dataItem?.uri != null && data.description.hasMimeType("video/*") -> ItemType.VIDEO
                 else -> ItemType.TEXT
             }
 
-            val uri = if (type == ItemType.IMAGE) {
-                if (dataItem.uri.authority == ClipboardImagesProvider.AUTHORITY || !cloneUri) {
+            val uri = if (type == ItemType.IMAGE || type == ItemType.VIDEO) {
+                if (dataItem.uri.authority == ClipboardMediaProvider.AUTHORITY || !cloneUri) {
                     dataItem.uri
                 } else {
-                    var displayName = "Image"
+                    var displayName = when (type) {
+                        ItemType.IMAGE -> "Image"
+                        ItemType.VIDEO -> "Video"
+                        else -> "Unknown"
+                    }
                     tryOrNull {
                         context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION)?.use { cursor ->
                             val displayNameColumn = cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
@@ -109,17 +115,23 @@ data class ClipboardItem(
                     }
                     val values = ContentValues(3).apply {
                         put(OpenableColumns.DISPLAY_NAME, displayName)
-                        put(ClipboardImagesProvider.Columns.ImageUri, dataItem.uri.toString())
-                        put(ClipboardImagesProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
+                        put(ClipboardMediaProvider.Columns.MediaUri, dataItem.uri.toString())
+                        put(ClipboardMediaProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
                     }
-                    context.contentResolver.insert(ClipboardImagesProvider.IMAGE_CLIPS_URI, values)
+                    context.contentResolver.insert(when (type) {
+                        ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
+                        ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
+                        else -> error("Impossible.")
+                    }, values)
                 }
             } else { null }
 
-            val text = dataItem.coerceToText(context).toString()
+            val text = dataItem.text?.toString()
             val mimeTypes = when (type) {
-                ItemType.IMAGE -> Array(data.description.mimeTypeCount) { data.description.getMimeType(it) }
                 ItemType.TEXT -> TEXT_PLAIN
+                ItemType.IMAGE, ItemType.VIDEO -> {
+                    Array(data.description.mimeTypeCount) { data.description.getMimeType(it) }
+                }
             }
 
             return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes)
@@ -130,7 +142,7 @@ data class ClipboardItem(
         if (other == null) return false
         return when (type) {
             ItemType.TEXT -> text == other.getItemAt(0).text
-            ItemType.IMAGE -> uri == other.getItemAt(0).uri
+            ItemType.IMAGE, ItemType.VIDEO -> uri == other.getItemAt(0).uri
         }
     }
 
@@ -139,11 +151,11 @@ data class ClipboardItem(
      */
     fun toClipData(context: Context): ClipData {
         return when (type) {
-            ItemType.IMAGE -> {
-                ClipData.newUri(context.contentResolver, FLORIS_CLIP_LABEL, uri)
-            }
             ItemType.TEXT -> {
                 ClipData.newPlainText(FLORIS_CLIP_LABEL, text)
+            }
+            ItemType.IMAGE, ItemType.VIDEO -> {
+                ClipData.newUri(context.contentResolver, FLORIS_CLIP_LABEL, uri)
             }
         }
     }
