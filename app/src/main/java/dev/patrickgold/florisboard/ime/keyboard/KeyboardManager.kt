@@ -129,6 +129,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         prefs.keyboard.utilityKeyEnabled.observeForever {
             updateRenderInfo()
         }
+        prefs.glide.enabled.observeForever { enabled ->
+            if (enabled) {
+                glideTypingManager.setWordData(subtypeManager.activeSubtype())
+            }
+        }
         activeState.observeForever {
             updateRenderInfo()
         }
