@@ -38,13 +38,11 @@ import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.ButtonDefaults
@@ -62,7 +60,6 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -610,23 +607,13 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 }
             }
         }
-
     }
 
     @Composable
-    private fun BoxScope.DevtoolsUi() = with(LocalDensity.current) {
+    private fun DevtoolsUi() {
         val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
         if (devtoolsEnabled) {
-            val maxHeight = inputWindowView?.measuredHeight?.let { windowHeight ->
-                windowHeight - inputViewSize.height - FlorisImeSizing.Static.smartbarHeightPx
-            } ?: inputViewSize.height
-            DevtoolsOverlay(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .heightIn(max = maxHeight.toDp())
-                    .align(Alignment.TopStart),
-            )
+            DevtoolsOverlay(modifier = Modifier.fillMaxSize())
         }
     }
 
