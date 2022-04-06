@@ -39,6 +39,7 @@ import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -227,6 +228,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     private var inputViewSize by mutableStateOf(IntSize.Zero)
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
+    private var isFullscreenUiMode by mutableStateOf(false)
+    private var isExtractUiShown by mutableStateOf(false)
     private var resourcesContext by mutableStateOf(this as Context)
 
     init {
@@ -262,13 +265,14 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         // that this causes a crash, especially if the device manufacturer of the user device
         // is a known one to break AOSP standards...
         val defaultExtractView = super.onCreateExtractTextView()
-        val composeExtractView = ComposeExtractedLandscapeInputView()
         if (defaultExtractView == null || defaultExtractView !is ViewGroup) {
-            return composeExtractView
+            return ComposeExtractedLandscapeInputView(null)
         }
+        val extractEditText = defaultExtractView.findViewById<ExtractEditText>(android.R.id.inputExtractEditText)
+        (extractEditText?.parent as? ViewGroup)?.removeView(extractEditText)
         defaultExtractView.apply {
             removeAllViews()
-            addView(composeExtractView)
+            addView(ComposeExtractedLandscapeInputView(extractEditText))
         }
         return defaultExtractView
     }
@@ -378,23 +382,16 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
-        return resources?.configuration?.let { config ->
-            if (config.isOrientationPortrait()) {
-                false
-            } else {
-                when (prefs.keyboard.landscapeInputUiMode.get()) {
-                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> {
-                        !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
-                    }
-                    LandscapeInputUiMode.NEVER_SHOW -> false
-                    LandscapeInputUiMode.ALWAYS_SHOW -> true
-                }
-            }
-        } ?: false
+        return when (prefs.keyboard.landscapeInputUiMode.get()) {
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onEvaluateFullscreenMode()
+            LandscapeInputUiMode.NEVER_SHOW -> false
+            LandscapeInputUiMode.ALWAYS_SHOW -> true
+        }
     }
 
     override fun updateFullscreenMode() {
         super.updateFullscreenMode()
+        isFullscreenUiMode = isFullscreenMode
         updateSoftInputWindowLayoutParameters()
     }
 
@@ -404,11 +401,20 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     }
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode.get()) {
-            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
-            LandscapeInputUiMode.NEVER_SHOW -> false
-            LandscapeInputUiMode.ALWAYS_SHOW -> true
+        if (ei != null) {
+            activeState.update(ei)
+            activeEditorInstance.editorInfo = ei
         }
+        when (prefs.keyboard.landscapeInputUiMode.get()) {
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(ei)
+            LandscapeInputUiMode.NEVER_SHOW -> isExtractViewShown = false
+            LandscapeInputUiMode.ALWAYS_SHOW -> isExtractViewShown = true
+        }
+    }
+
+    override fun setExtractViewShown(shown: Boolean) {
+        super.setExtractViewShown(shown)
+        isExtractUiShown = shown
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -480,7 +486,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         val w = window?.window ?: return
         WindowCompat.setDecorFitsSystemWindows(w, true)
         ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val layoutHeight = if (isFullscreenMode) {
+        val layoutHeight = if (isFullscreenUiMode) {
             WindowManager.LayoutParams.WRAP_CONTENT
         } else {
             WindowManager.LayoutParams.MATCH_PARENT
@@ -515,19 +521,16 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             ProvideKeyboardRowBaseHeight {
                 CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
-                        // Outer box is necessary as an "outer window"
-                        Box(
-                            modifier = Modifier.run {
-                                if (isExtractViewShown) {
-                                    this
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            if (!(isFullscreenUiMode && isExtractUiShown)) {
+                                Box(
+                                    modifier = Modifier
                                         .fillMaxWidth()
-                                        .wrapContentHeight()
-                                } else {
-                                    this.fillMaxSize()
+                                        .weight(1f),
+                                ) {
+                                    DevtoolsUi()
                                 }
-                            },
-                        ) {
-                            DevtoolsUi()
+                            }
                             ImeUi()
                         }
                         SystemUiIme()
@@ -539,7 +542,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
-    private fun BoxScope.ImeUi() {
+    private fun ImeUi() {
         val activeState by keyboardManager.observeActiveState()
         val keyboardStyle = FlorisImeTheme.style.get(
             element = FlorisImeUi.Keyboard,
@@ -554,7 +557,6 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .align(Alignment.BottomStart)
                     .onGloballyPositioned { coords -> inputViewSize = coords.size }
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
@@ -649,14 +651,14 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         }
     }
 
-    private inner class ComposeExtractedLandscapeInputView : AbstractComposeView(this) {
+    private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : AbstractComposeView(this) {
         val extractEditText: ExtractEditText
 
         init {
             isHapticFeedbackEnabled = true
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
-            extractEditText = ExtractEditText(context).also {
+            extractEditText = (eet ?: ExtractEditText(context)).also {
                 it.id = android.R.id.inputExtractEditText
                 it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
                 it.background = null
