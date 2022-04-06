@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">暂停</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">等待</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">三点图标。如果可见，表明长按后可使用更多字符。</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">关闭单手模式。</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">将键盘移动到左边。</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">将键盘移动到右边。</string>
+    <!-- Media strings -->
+    <string name="settings__media__title">表情符号</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">表情符号</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">绘文字</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">颜文字</string>
+    <string name="prefs__media__emoji_recently_used_max_size">表情符号最大历史记录数</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">首选表情符号肤色</string>
+    <string name="prefs__media__emoji_preferred_hair_style">首选表情符号发型</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">表情 &amp; 颜文字</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">人物 &amp; 身体</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">动物 &amp; 自然</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">食品 &amp; 饮料</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">旅游 &amp; 地点</string>
+    <string name="emoji__category__activities" comment="Emoji category name">活动</string>
+    <string name="emoji__category__objects" comment="Emoji category name">物体</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">符号</string>
+    <string name="emoji__category__flags" comment="Emoji category name">旗帜</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">没有最近使用的表情符号。开始使用表情符号后，它们会自动在这里出现。</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">提示：长按最近使用的表情符号可以将它从这里移除。</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">已将 {emoji} 从最近使用的表情符号中移除</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">快捷操作切换。按下后，将在字词建议和快捷操作之间切换。</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">退出文字编辑面板。</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">切换单手模式状态。</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">打开设置。</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">切换到文字编辑面板。</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">切换到媒体输入界面。</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">撤销键，取消上一操作</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">恢复键，复原上一撤销</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">如果可见，表明隐私模式已开启。点击后，显示隐私模式的相关信息 。</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">设置</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">试用您的配置</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">帮助</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">默认</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">系统默认</string>
+    <string name="settings__home__title" comment="Title of the Home screen">欢迎使用{app_name}</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard没有在系统中被启用，因此在输入法选择界面中不会出现。点击这里解决这一问题。</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard没有被设置为默认输入法。点击这里解决这一问题。</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">语言 &amp; 键盘布局</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">语言名称的显示语言</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">键盘子类型</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">添加键盘子类型</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">编辑键盘子类型</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要语言</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">弹出键映射表</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">字符布局</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">符号主要布局</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">符号次要布局</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">输入框</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">货币集</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">数字键盘布局</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">数字键盘（高级）布局</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">数字行布局</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">电话键盘主要布局</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">电话键盘次要布局</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">选择语言</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">搜索语言</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">无法找到匹配“{search_term}”的语言</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; 选择 &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">建议的键盘子类型预设</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">没有可用的建议预设。用下面的按钮来浏览所有键盘子类型预设。</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">键盘子类型预设</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">全部显示</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">看起来您没有配置任何键盘子类型。将会使用英语 / QWERTY键盘子类型作为后备方案！</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">这一键盘子类型已经存在。</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">至少有一个字段没有选择一个值。请为这些字段选择一个值。</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} （未安装）</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">键盘布局</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">主题</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">主题模式</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">日出时间</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日落时间</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">日间主题</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜间主题</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">选定的主题</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">使颜色适应应用</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">如果目标应用支持，主题颜色会适应当前应用中的颜色。</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard应用资源</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">内部存储空间</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">外部提供者</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">选择日间主题</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">选择夜间主题</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">管理已安装的主题</string>
+    <string name="settings__theme_editor__fine_tune__title">微调编辑器</string>
+    <string name="settings__theme_editor__fine_tune__level">编辑等级</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">将颜色显示为</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">对话框后显示键盘</string>
+    <string name="settings__theme_editor__add_rule">添加规则</string>
+    <string name="settings__theme_editor__edit_rule">编辑规则</string>
+    <string name="settings__theme_editor__no_rules_defined">此样式表没有定义任何规则。 添加规则以开始自定义此样式表。</string>
+    <string name="settings__theme_editor__rule_already_exists">此样式表规则已定义。</string>
+    <string name="settings__theme_editor__rule_element">目标元件</string>
+    <string name="settings__theme_editor__rule_codes">目标键码</string>
+    <string name="settings__theme_editor__rule_groups">规则组</string>
+    <string name="settings__theme_editor__rule_modes">模式</string>
+    <string name="settings__theme_editor__rule_selectors">选择器</string>
+    <string name="settings__theme_editor__add_code">添加键码</string>
+    <string name="settings__theme_editor__edit_code">编辑键码</string>
+    <string name="settings__theme_editor__no_codes_defined">将规则应用于所有目标元件。</string>
+    <string name="settings__theme_editor__codes_defined">仅将规则应用于具有以下键码的目标元件：</string>
+    <string name="settings__theme_editor__code_already_exists">此键码已定义。</string>
+    <string name="settings__theme_editor__code_invalid">此键码无效。请确保键码在 {c_min} 到 {c_max} 范围内，如果是内部特殊键，在 {i_min} 到 {i_max} 范围内。</string>
+    <string name="settings__theme_editor__code_help_text">或者，以下链接将帮助您找到相应的键码：</string>
+    <string name="settings__theme_editor__code_placeholder">键码</string>
+    <string name="settings__theme_editor__code_recording_help_text">要查找一个键的键码，请使用代码输入字段旁边的按钮。一旦激活，它将记录下一次按键并将键码插入输入框。</string>
+    <string name="settings__theme_editor__code_recording_started">键码记录已开始</string>
+    <string name="settings__theme_editor__code_recording_stopped">键码记录已停止</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} 需要设置为默认键盘才能记录键码</string>
+    <string name="settings__theme_editor__code_recording_placeholder">正在记录…</string>
+    <string name="settings__theme_editor__add_property">添加属性</string>
+    <string name="settings__theme_editor__edit_property">编辑属性</string>
+    <string name="settings__theme_editor__property_already_exists">当前规则中已存在同名的属性。</string>
+    <string name="settings__theme_editor__property_name">属性名称</string>
+    <string name="settings__theme_editor__property_value">属性值</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">应用于所有角落</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">编辑颜色字符串</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">是夜间主题</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">无边框</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">样式表路径</string>
+    <string name="snygg__rule_element__defines">变量</string>
+    <string name="snygg__rule_element__defines_description">在此规则中定义变量以在样式表中重复使用常用颜色或尺寸。</string>
+    <string name="snygg__rule_element__keyboard">键盘窗口</string>
+    <string name="snygg__rule_element__key">键</string>
+    <string name="snygg__rule_element__key_hint">键提示</string>
+    <string name="snygg__rule_element__key_popup">键弹出</string>
+    <string name="snygg__rule_element__clipboard_header">剪贴板顶栏</string>
+    <string name="snygg__rule_element__clipboard_item">剪贴板条目</string>
+    <string name="snygg__rule_element__clipboard_item_popup">剪贴板条目弹出</string>
+    <string name="snygg__rule_element__glide_trail">滑动轨迹</string>
+    <string name="snygg__rule_element__one_handed_panel">单手面板</string>
+    <string name="snygg__rule_element__smartbar_primary_row">智能栏主要行</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">智能栏次要行</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">智能栏主要操作开关按钮</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">智能栏次要操作开关按钮</string>
+    <string name="snygg__rule_element__smartbar_quick_action">智能栏快捷操作</string>
+    <string name="snygg__rule_element__smartbar_key">智能栏按键</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">智能栏候选词</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>
+    <string name="snygg__rule_element__system_nav_bar">系统导航栏</string>
+    <string name="snygg__rule_selector__pressed">已按下</string>
+    <string name="snygg__rule_selector__focus">已聚焦</string>
+    <string name="snygg__rule_selector__disabled">已停用</string>
+    <string name="snygg__property_name__width">宽度</string>
+    <string name="snygg__property_name__height">高度</string>
+    <string name="snygg__property_name__background">背景</string>
+    <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__border_color">边框颜色</string>
+    <string name="snygg__property_name__border_style">边框样式</string>
+    <string name="snygg__property_name__border_width">边框宽度</string>
+    <string name="snygg__property_name__font_family">字体系列</string>
+    <string name="snygg__property_name__font_size">字体大小</string>
+    <string name="snygg__property_name__font_style">字体样式</string>
+    <string name="snygg__property_name__font_variant">字体变体</string>
+    <string name="snygg__property_name__font_weight">字体粗细</string>
+    <string name="snygg__property_name__shadow_elevation">阴影深度</string>
+    <string name="snygg__property_name__shape">形状</string>
+    <string name="snygg__property_name__var_primary">主要颜色</string>
+    <string name="snygg__property_name__var_primary_variant">主要颜色（变体）</string>
+    <string name="snygg__property_name__var_secondary">次要颜色</string>
+    <string name="snygg__property_name__var_secondary_variant">次要颜色（变体）</string>
+    <string name="snygg__property_name__var_background">通用背景</string>
+    <string name="snygg__property_name__var_surface">通用表面</string>
+    <string name="snygg__property_name__var_surface_variant">通用表面（变体）</string>
+    <string name="snygg__property_name__var_on_primary">主要前景</string>
+    <string name="snygg__property_name__var_on_secondary">次要前景</string>
+    <string name="snygg__property_name__var_on_background">背景的前景</string>
+    <string name="snygg__property_name__var_on_surface">表面的前景</string>
+    <string name="snygg__property_name__var_on_surface_variant">表面的前景（变体）</string>
+    <string name="snygg__property_name__var_shape">通用形状</string>
+    <string name="snygg__property_name__var_shape_variant">通用形状（变体）</string>
+    <string name="snygg__property_value__explicit_inherit">继承</string>
+    <string name="snygg__property_value__solid_color">纯色</string>
+    <string name="snygg__property_value__image_ref">参考图片</string>
+    <string name="snygg__property_value__rectangle_shape">矩形形状</string>
+    <string name="snygg__property_value__circle_shape">圆形形状</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">切角形状 (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">切角形状 (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">圆角矩形形状 (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">圆角矩形形状 (%)</string>
+    <string name="snygg__property_value__dp_size">尺寸 (dp)</string>
+    <string name="snygg__property_value__sp_size">尺寸 (sp)</string>
+    <string name="snygg__property_value__percentage_size">尺寸 (%)</string>
+    <string name="snygg__property_value__defined_var">参考变量</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">声音 &amp; 振动</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">声音反馈 / 声音</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">启用声音反馈</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">输入事件时播放声音，视系统设置而定</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">忽略系统声音设置</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">使用以下偏好设置，即使系统中禁用了音频。 系统铃声静音时不起作用</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">输入事件音量</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">按键声音</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">长按键声音</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">键盘重复操作声音</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">手势滑动声音</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">手势移动滑动声音</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触感反馈 / 振动</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">使用触感反馈</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">输入事件时振动，视系统设置而定</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">忽略系统触感设置</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">使用以下偏好设置，即使系统中禁用了触感</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">直接触发振动</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">直接触发振动，而不是使用安卓的触感反馈功能设置</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">振动持续时间</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">振动强度</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">此功能需要硬件振幅控制支持，您的设备上缺少此功能</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">此功能需要振幅控制支持，仅适用于安卓8.0或更高版本</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">按键振动</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">长按键振动</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">键盘重复操作振动</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">手势滑动振动</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">手势移动滑动振动</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">例如：键、按钮、表情符号选项卡</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">例如：弹出菜单</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">例如：删除键</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">功能尚未完成</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">例如：光标控制滑动</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">键盘</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">数字行</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">在字母布局上方显示数字行</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">提示数字行</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">提示符号</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">显示功能键</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">在空格键旁边显示一个可配置的功能键</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">功能键操作</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">空格键上显示语言</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">在空格键上显示当前活动的语言名称</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">单手模式</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">单手模式键盘宽度</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向全屏输入</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">键盘高度</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">键间距</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">底部偏移</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">按键</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">弹出键可见</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">按键时显示弹出提示</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">字母键弹出中加入符号弹出</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">将符号的长按弹出列表添加到默认布局字母长按的重音符号弹出列表</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">长按延迟</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">空格键切换到字符</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">在符号或数字界面时自动切换回字符界面</string>
+    <!-- Smartbar strings -->
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">智能栏</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">启用智能栏</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">将显示在键盘顶部</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">翻转开关按钮位置</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">翻转操作栏开关按钮位置</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">行布局</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">主要操作</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠主要操作行</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">次要操作</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">显示次要操作行</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">建议 &amp; 更正</string>
+    <string name="pref__suggestion__title" comment="Preference group title">建议</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">显示由自动填充服务提供的内嵌式建议</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">建议显示模式</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">剪贴板内容建议</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">剪贴板建议超时时间</string>
+    <string name="pref__correction__title" comment="Preference group title">更正</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">自动大写</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">根据当前输入上下文将单词首字母大写</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">记住大写锁定状态</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">移动到另一个文本框时，大写锁定将保持原状态</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">双空格句号</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">在空格键上点击两次会插入一个句号加一个空格</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">用户词典</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">启用系统用户词典</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">建议中使用存储在系统用户词典中的词条</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">管理系统用户词典</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">添加、查看和删除系统用户词典的条目</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">启用内部用户词典</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">建议中使用存储在内部用户词典中的词条</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">管理内部用户词典</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">添加、查看和删除内部用户词典的条目</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">内部用户词典</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">系统用户词典</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">此用户词典不包含任何词条。</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">频率：{freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">频率：{freq} | 快捷键：{shortcut}</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">适用于所有语言</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">打开系统管理器界面</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">用户词典导入成功！</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">用户词典导出成功！</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">添加词条</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">编辑词条</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">词条</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">请输入一个词条</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">请输入一个匹配正则表达式 {regex} 的词条</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">频率（在 {f_min} 和 {f_max} 之间）</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">请输入频率值</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">请输入指定范围内的有效数字</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">快捷键（可选）</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">请输入一个匹配正则表达式 {regex} 的快捷键</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">语言代码（可选）</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">此语言代码不符合预期的语法。 代码必须是一种语言（如 en）、一种语言和国家（如 en_US）或一种语言、国家和文字（如 en_US-script）。</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">手势 &amp; 滑动输入</string>
+    <string name="pref__glide__title" comment="Preference group title">滑动输入</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">启用滑动输入</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">用手指在字母间滑动来输入词语</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">显示滑动轨迹</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">会在输入每个词后消失</string>
+    <string name="pref__glide_trail_fade_duration">滑动轨迹淡出时间</string>
+    <string name="pref__glide_preview_refresh_delay">预览更新延迟</string>
+    <string name="pref__glide__show_preview">滑动输入时显示预览</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">通用手势</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">空格键手势</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">其他手势 / 手势阈值</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">向上滑动</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">向下滑动</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">向左滑动</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">向右滑动</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">空格键向上滑动</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">空格键向左滑动</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">空格键向右滑动</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">空格键长按</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">删除键向左滑动</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">滑动触发速度阈值</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">滑动触发距离阈值</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">高级</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">设置主题</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">系统默认（AMOLED）</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">浅色</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">深色</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED 纯黑</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">设置语言</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">在启动器中显示应用图标</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">由于系统限制，在安卓 10+ 上始终启用</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">强制隐私模式</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">禁用能够使用您的输入数据的功能</string>
+    <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">拼写检查工具</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">使用键盘的拼写检查工具配置</string>
+    <string name="pref__spelling__active_spellchecker__label">内嵌式文本框拼写检查</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。 对于不正确的单词，文本框中不会出现红线。 点击进行更改。</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。 点击进行更改。</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">系统拼写检查界面中的“语言”选项设置为“使用系统语言”。 由于存在漏洞，这可能会导致 {app_name} 不执行内嵌式拼写检查。 请考虑将其更改为“{use_floris_config}”。</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">配置</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">语言</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[未完成] 使用联系人姓名</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">拼写检查工具将从您的联系人列表中查找姓名</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">使用用户词典条目</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">如果启用了这些条目，拼写检查工具将从用户词典中查找条目</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">管理词典</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">已安装 {n} 个</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">当前没有安装拼写检查词典。 使用下面的“+”按钮添加第一个！</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">扩展 / 档案</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">词缀 + 词典文件</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">导入新的词典</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">选择来源</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">选择您下载第三方扩展的来源。这有助于正确解析非 FlorisBoard 扩展格式并将其转换为 FlorisBoard 格式。</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">导入档案</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">现在通过在文件选择对话框中选择文件来导入档案。</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">选择语言</string>
+    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">语言代码（例如：\"en_US\"）</string>
+    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">导入词缀 / 词典文件</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">选择词缀 (.aff) 文件</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">选择要导入的词典 (.dic) 文件</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">验证导入</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">验证以下元数据是否正确。如果出现错误，您可以切换回上一步并重新选择源 / 重新导入档案。</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">我在哪里可以获得词典？</string>
+    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard 使用 Nuspell 作为拼写检查引擎，这意味着有大量可用的字典，因为许多其他软件也使用 Hunspell。下面的列表显示了几个手动筛选的导入管理器支持的源。 请下载档案文件或词典文件，然后在导入管理器中选择正确的源（这对于正确读取档案格式很重要）。</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">如果此列表不包含您的语言或方言的词典，您也可以手动搜索 Hunspell 词典并为此导入“aff”和“dic”文件。</string>
+    <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">关于</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 的应用图标</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">开源协议</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">隐私政策</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">源代码</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">开源协议</string>
+    <string name="about__version__title" comment="Preference title">版本</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">版本号已复制到剪贴板</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">出错了：{error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">更新日志</string>
+    <string name="about__changelog__summary" comment="Preference summary">新版本变化</string>
+    <string name="about__repository__title" comment="Preference title">源码库（GitHub）</string>
+    <string name="about__repository__summary" comment="Preference summary">源代码、讨论、问题和信息</string>
+    <string name="about__privacy_policy__title" comment="Preference title">隐私政策</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">本项目的隐私政策</string>
+    <string name="about__project_license__title" comment="Preference title">项目开源协议</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard 在 {license_name} 下进行授权</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">错误：无法加载许可证文本。\n-&gt; 原因：{error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">资源管理器引用为空</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">第三方许可</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">此应用中包含的第三方库的许可证</string>
+    <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">欢迎！</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">感谢您使用 {app_name}！这个快速设定将引导您完成在您的设备上使用 {app_name} 所需的步骤。</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">隐私政策</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">源码库</string>
+    <string name="setup__enable_ime__title">启用 {app_name}</string>
+    <string name="setup__enable_ime__description">安卓要求每个自定义键盘必须由您分别启用才能被使用。 打开系统<i>语言和输入法</i>设置，在那里启用“{app_name}”。</string>
+    <string name="setup__enable_ime__open_settings_btn">打开系统设置</string>
+    <string name="setup__select_ime__title">选择 {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} 现在已在您的系统中启用。要使用它，请在输入法选择对话框中选择{app_name} 来切换到它！</string>
+    <string name="setup__select_ime__switch_keyboard_btn">切换键盘</string>
+    <string name="setup__finish_up__title">完成</string>
+    <string name="setup__finish_up__description_p1">{app_name} 现在已在系统中启用，可供您自定义。</string>
+    <string name="setup__finish_up__description_p2">如果您遇到任何问题、错误、崩溃或只是想提出建议，请从“关于”界面中查看项目源码库！</string>
+    <string name="setup__finish_up__finish_btn">开始自定义</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">备份 &amp; 还原</string>
+    <string name="backup_and_restore__back_up__title">备份数据</string>
+    <string name="backup_and_restore__back_up__summary">生成偏好设置和自定义的备份档案</string>
+    <string name="backup_and_restore__back_up__destination">选择备份目的地</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">本地文件系统</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">通过共享菜单保存到第三方应用</string>
+    <string name="backup_and_restore__back_up__files">选择要备份的内容</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">选项</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">键盘扩展</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">拼写扩展 / 词典</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">主题扩展</string>
+    <string name="backup_and_restore__back_up__success">成功导出备份档案！</string>
+    <string name="backup_and_restore__back_up__failure">导出备份档案失败：{error_message}</string>
+    <string name="backup_and_restore__restore__title">恢复数据</string>
+    <string name="backup_and_restore__restore__summary">从备份档案恢复偏好设置和自定义</string>
+    <string name="backup_and_restore__restore__files">选择要还原的内容</string>
+    <string name="backup_and_restore__restore__metadata">选定的备份档案</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">这个备份档案是在其他版本中生成的，本应用一般支持这一操作。但请注意，这样可能会出现一些小问题，或者可能由于功能差异某些偏好设置无法正确导入。</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">这个备份档案是在第三方应用中生成的，本应用一般不支持这一操作。可能会发生数据丢失，进行还原需要您自担风险！</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">这个备份档案包含无效的元数据。可能它已损坏，或者修改不当。无法从这个档案还原，请选择其他档案。</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">这个备份档案不包含任何可以还原的文件，请选择其他档案。</string>
+    <string name="backup_and_restore__restore__mode">还原模式</string>
+    <string name="backup_and_restore__restore__mode_merge">与当前数据合并</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">擦除并覆盖当前数据</string>
+    <string name="backup_and_restore__restore__success">成功还原备份！</string>
+    <string name="backup_and_restore__restore__failure">还原数据失败：{error_message}</string>
+    <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard 错误报告</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">很抱歉给您带来不便，但 FlorisBoard 因意外错误而崩溃。</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">如果您希望报告此错误，请先查看 GitHub 上的问题跟踪器（如果尚未报告您的崩溃）。\n如果没有，请复制生成的崩溃日志并打开一个新问题。使用“%s”模板，填写描述、重现崩溃的步骤，最后粘贴生成的崩溃日志。这有助于让 FlorisBoard 对每个用户都更好、更稳定。谢谢！</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">复制到系统剪贴板</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">已复制到系统剪贴板</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">无法复制到系统剪贴板：找不到剪贴板管理器实例</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">打开问题跟踪器（github.com）</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">关闭</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard 错误报告</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard 已停止工作…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">点击查看错误详情</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard 似乎反复停止工作…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">回退到上一个键盘以停止无限崩溃循环。点击查看错误详情</string>
+    <!-- Clipboard strings -->
+    <string name="clipboard__header_title">剪贴板</string>
+    <string name="clipboard__disabled__title">剪贴板历史记录当前已禁用</string>
+    <string name="clipboard__disabled__message">{app_name} 的剪贴板历史记录允许您快速存储、访问您复制的文本和图像，并能够置顶条目、设置自动清理、限制最大条目数。</string>
+    <string name="clipboard__disabled__enable_button">启用剪贴板历史记录</string>
+    <string name="clipboard__empty__title">剪贴板无内容</string>
+    <string name="clipboard__empty__message">复制文本或图像后，它们将显示在此处。</string>
+    <string name="clipboard__locked__title">剪贴板已锁</string>
+    <string name="clipboard__locked__message">要访问您的剪贴板历史记录，请先解锁您的设备。</string>
+    <string name="clipboard__group_pinned">置顶</string>
+    <string name="clipboard__group_recent">最新</string>
+    <string name="clipboard__group_other">其他</string>
+    <string name="clip__clear_history">清除历史记录</string>
+    <string name="clip__unpin_item">取消置顶本条</string>
+    <string name="clip__pin_item">置顶本条</string>
+    <string name="clip__delete_item">删除</string>
+    <string name="clip__paste_item">粘贴</string>
+    <string name="clip__back_to_text_input">返回文本输入</string>
+    <string name="clip__cant_paste">此应用不允许粘贴此内容。</string>
+    <string name="clipboard__cleared_primary_clip">已清除主要剪贴板条目</string>
+    <string name="clipboard__cleared_history">已清除历史记录</string>
+    <string name="clipboard__cleared_full_history">已清除全部历史记录</string>
+    <string name="clipboard__confirm_clear_history__message">确定清除剪贴板历史记录？</string>
+    <string name="settings__clipboard__title">剪贴板</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">使用内部剪贴板</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">使用内部剪贴板，而不是系统剪贴板</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">从系统剪贴板同步</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">当系统剪贴板更新时，同时更新 Floris 剪贴板</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">同步到系统剪贴板</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">当 Floris 剪贴板更新时，同时更新系统剪贴板</string>
+    <string name="pref__clipboard__group_clipboard_history__label">剪贴板历史记录</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">启用剪贴板历史记录</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">保留剪贴板条目以便快速访问</string>
+    <string name="pref__clipboard__clean_up_old__label">清理旧条目</string>
+    <string name="pref__clipboard__clean_up_after__label">一段时间后清理旧条目</string>
+    <string name="pref__clipboard__limit_history_size__label">限制最大历史条目数</string>
+    <string name="pref__clipboard__max_history_size__label">限制最大历史条目数</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">清除主要剪贴板条目时影响历史</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">清除主要剪贴板条目时还会删除最新的历史记录条目</string>
+    <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">开发者工具</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">启用开发者工具</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">专为调试和故障排除而设计的工具</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">显示堆内存统计信息</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">右上角叠加显示堆内存使用情况和最大大小</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">显示主要剪贴板条目</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">叠加显示剪贴板当前的主要剪贴板条目</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">显示拼写叠加层</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">叠加显示当前拼写结果，调试用</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">清空内部用户词典数据库</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">从词典数据库表中清除所有词语</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">重置“{flag_name}”标志</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">调试操作，重新显示初次设定界面</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">测试崩溃报告界面</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">调试操作，故意制造崩溃</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">安卓系统工具</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">全局安卓设置</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">安卓安全设置</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">安卓系统设置</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">系统语言环境</string>
+    <!-- Extension strings -->
+    <string name="ext__meta__authors">作者</string>
+    <string name="ext__meta__components">捆绑组件</string>
+    <string name="ext__meta__components_theme">捆绑主题</string>
+    <string name="ext__meta__components_none_found">此扩展档案不包含任何捆绑的组件。</string>
+    <string name="ext__meta__description">描述</string>
+    <string name="ext__meta__homepage">主页</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">问题跟踪器</string>
+    <string name="ext__meta__keywords">关键词</string>
+    <string name="ext__meta__label">标签</string>
+    <string name="ext__meta__license">许可证</string>
+    <string name="ext__meta__maintainers">维护人员</string>
+    <string name="ext__meta__maintainers_by">By: {maintainers}</string>
+    <string name="ext__meta__title">标题</string>
+    <string name="ext__meta__version">版本</string>
+    <string name="ext__error__not_found_title">未找到扩展</string>
+    <string name="ext__error__not_found_description">找不到 ID 为“{id}”的扩展。</string>
+    <string name="ext__editor__title_create_any">添加新扩展</string>
+    <string name="ext__editor__title_create_keyboard">添加键盘扩展</string>
+    <string name="ext__editor__title_create_spelling">添加拼写扩展</string>
+    <string name="ext__editor__title_create_theme">添加主题扩展</string>
+    <string name="ext__editor__title_edit_any">编辑扩展</string>
+    <string name="ext__editor__title_edit_keyboard">编辑键盘扩展</string>
+    <string name="ext__editor__title_edit_spelling">编辑拼写扩展</string>
+    <string name="ext__editor__title_edit_theme">编辑主题扩展</string>
+    <string name="ext__editor__metadata__title">管理元数据</string>
+    <string name="ext__editor__metadata__title_invalid">无效的元数据</string>
+    <string name="ext__editor__metadata__message_invalid">此扩展的元数据无效，详情请查看元数据编辑器！</string>
+    <string name="ext__editor__dependencies__title">管理依赖项</string>
+    <string name="ext__editor__files__title">管理档案文件</string>
+    <string name="ext__editor__create_component__title">添加组件</string>
+    <string name="ext__editor__create_component__title_theme">添加主题</string>
+    <string name="ext__editor__create_component__from_empty">空白</string>
+    <string name="ext__editor__create_component__from_existing">从现有</string>
+    <string name="ext__editor__create_component__from_empty_warning">如果您不熟悉 {app_name} 或不熟悉具体细节，从空白开始创建和配置组件可能会很困难。如果是这种情况，请考虑复制现有组件并根据自己的喜好修改。</string>
+    <string name="ext__editor__edit_component__title">编辑组件</string>
+    <string name="ext__editor__edit_component__title_theme">编辑主题组件</string>
+    <string name="ext__export__success">成功导出扩展！</string>
+    <string name="ext__export__failure">导出扩展失败：{error_message}</string>
+    <string name="ext__import__success">成功导入扩展！</string>
+    <string name="ext__import__failure">导入扩展失败：{error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">导入扩展</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">导入键盘扩展</string>
+    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">导入拼写扩展 / 词典</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">导入主题扩展</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">无法导入文件。原因：</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">不支持或无法识别的文件类型。</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">无法替换或更新随应用核心资源提供的默认扩展包。 如果您打算使用更新版本的核心扩展包，请考虑更新应用本身。</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">文件表面上是扩展档案，但档案数据解析失败。档案已损坏或此文件并不是扩展。</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">需要一个序列类型为“{expected_serial_type}”的扩展档案，但为“{actual_serial_type}”。</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">需要一个媒体文件（图像、音频、字体等），但找到了一个扩展档案。</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">需要扩展档案，但找到了媒体文件（图像、音频、字体等）。</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">导入过程中出现意外错误。提供了以下详细信息：</string>
+    <!-- Action strings -->
+    <string name="action__add">添加</string>
+    <string name="action__apply">应用</string>
+    <string name="action__back_up">备份</string>
+    <string name="action__cancel">取消</string>
+    <string name="action__create">添加</string>
+    <string name="action__default">默认</string>
+    <string name="action__delete">删除</string>
+    <string name="action__delete_confirm_title">确认删除</string>
+    <string name="action__delete_confirm_message">您确定要删除“{name}”吗？此操作一旦执行，无法撤消。</string>
+    <string name="action__discard">放弃</string>
+    <string name="action__discard_confirm_title">未保存的更改</string>
+    <string name="action__discard_confirm_message">您确定要放弃未保存的更改吗？此操作一旦执行，无法撤消。</string>
+    <string name="action__edit">编辑</string>
+    <string name="action__export">导出</string>
+    <string name="action__import">导入</string>
+    <string name="action__no">否</string>
+    <string name="action__ok">确定</string>
+    <string name="action__restore">还原</string>
+    <string name="action__save">保存</string>
+    <string name="action__select">选择</string>
+    <string name="action__select_dir">选择文件夹</string>
+    <string name="action__select_dirs">选择文件夹（多选）</string>
+    <string name="action__select_file">选择文件</string>
+    <string name="action__select_files">选择文件（多选）</string>
+    <string name="action__yes">是</string>
+    <!-- Error strings (generic) -->
+    <string name="error__title">出错</string>
+    <string name="error__details">详情</string>
+    <string name="error__invalid">无效</string>
+    <string name="error__snackbar_message">出错了：</string>
+    <string name="error__snackbar_message_template">出错了：{error_message}</string>
+    <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">例如：{example}</string>
+    <string name="general__no_browser_app_found_for_url">未找到用于处理 URL {url} 的浏览器应用</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; 选择 &#45;</string>
+    <string name="general__unlimited">无限</string>
+    <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">纵向</string>
+    <string name="screen_orientation__landscape">横向</string>
+    <string name="screen_orientation__vertical">上下</string>
+    <string name="screen_orientation__horizontal">水平</string>
+    <!-- State strings -->
+    <string name="state__disabled">已禁用</string>
+    <string name="state__enabled">已启用</string>
+    <string name="state__no_dir_selected">未选择文件夹</string>
+    <string name="state__no_dirs_selected">未选择文件夹</string>
+    <string name="state__no_file_selected">未选择文件</string>
+    <string name="state__no_files_selected">未选择文件</string>
+    <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">经典（3列）</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">动态宽度</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">动态宽度 &amp; 可滚动</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">十六进制</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">红绿蓝Alpha (RGBA)</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">始终显示</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">关闭任何编辑器对话框后始终显示键盘</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">从不显示</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">关闭任何编辑器对话框后从不显示键盘</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">记住上个状态</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">只有当之前可见时，才在关闭任何编辑器对话框后显示键盘</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">系统语言环境</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">应用和键盘界面中的语言名称，用整个设备设置的语言来显示</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">自身语言环境</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">应用和键盘界面中的语言名称，用其自身所指的语言来显示</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} 默认肤色</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} 浅肤色</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} 中等偏浅肤色</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} 中等肤色</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} 中等偏深肤色</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} 深肤色</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} 默认发型</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} 红发</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} 卷发</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} 白发</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} 光头</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">重音优先</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">长按后自动选择的字符始终是主重音，如果没有主重音可用，则为提示符号</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">提示优先</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">长按后自动选择的字符始终是提示符号，如果没有提示符号可用，则为主重音</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">智能优先算法</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">长按后自动选择的字符根据当前语言和布局，动态决定是主重音还是提示符号</string>
+    <string name="enum__input_mode__normal" comment="Enum value label">正常</string>
+    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift 锁定</string>
+    <string name="enum__input_mode__caps_lock" comment="Enum value label">大写锁定</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">从不显示</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">始终显示</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">动态显示</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">关闭</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">左手模式</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">右手模式</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">主要行上方</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">将次要行放置在应用界面和主要行之间</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">主要行下方</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">将次要行放置在主要行和键盘文本之间</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">将次要行作为应用界面上的叠加层显示，而不影响键盘 UI 高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">顶部起始</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">顶部末尾</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">底部末尾</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">底部起始</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">快捷操作</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">一行快捷操作按钮，可重新排列，带有溢出菜单</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">剪贴板光标工具</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">一行最常用的剪贴板和光标移动工具</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">基本</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">仅显示颜色属性，属性和规则显示翻译。</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">高级</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">显示所有属性，属性和规则显示翻译。</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">开发者</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">显示所有属性，属性和规则显示为样式表文件所写。</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">使用系统语言</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">使用键盘子类型</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">无操作</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">循环切换到上一个键盘模式</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">循环切换到下一个键盘模式</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">精确删除字符</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">删除当前单词</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">精确删除单词</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">隐藏键盘</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">插入空格</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">上移光标</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">下移光标</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">左移光标</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">右移光标</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">移动光标到行首</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">移动光标到行尾</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">移动光标到页首</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">移动光标到页尾</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">打开剪贴板管理器 / 历史</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Shift 键</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">恢复</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">撤销</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">精确选择字符</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">精确选择单词</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">显示输入法选择界面</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">切换到上一个键盘</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">切换到上一个键盘子类型</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">切换到下一个键盘子类型</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">始终日间模式</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">始终夜间模式</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">跟随系统设置</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">跟随时间</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">切换到表情符号</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">切换语言</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">切换键盘应用</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">动态：切换到表情符号 / 切换语言</string>
+    <!-- Unit strings (symbols) -->
+    <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="other">{v} 小时</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="other">{v} 分</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="other">{v} 秒</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="other">{v} 项</item>
+    </plurals>
+</resources>

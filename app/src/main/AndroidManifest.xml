@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2020 Patrick Goldinger
+<!-- Copyright (C) 2020-2022 Patrick Goldinger
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -128,9 +128,10 @@
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>
 
+        <!-- Clipboard Media File Provider -->
         <provider
-            android:name="dev.patrickgold.florisboard.ime.clipboard.provider.FlorisContentProvider"
-            android:authorities="${applicationId}.provider.clip"
+            android:name="dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardMediaProvider"
+            android:authorities="${applicationId}.provider.clipboard"
             android:grantUriPermissions="true"
             android:exported="false">
         </provider>

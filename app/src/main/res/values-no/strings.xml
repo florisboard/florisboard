@@ -124,11 +124,7 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetrykk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup-synlighet</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vis popup når du trykker en tast</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Inkluder symbol-popup-vinduer i aksenter</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Legg til symbol-popup-vinduene til standardoppsettets aksenter</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Forsinkelse for langt tastetrykk</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mellomromstasten skifter tilbake til tegnoppsett</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Å trykke mellomromstasten bytter automatisk tilbake til tegn når du er i symboler eller numeriske tegn</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktiver smartbar</string>
@@ -193,7 +189,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Vis app-ikon i programmeny</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Alltid privat modus</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Vil deaktivere alle funksjoner som må midlertidig håndtere input-dataene dine</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Stavekontroll</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Bruk tastatur-stavekontroll konfigurasjon</string>

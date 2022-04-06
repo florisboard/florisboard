@@ -226,7 +226,21 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
         foregroundDrawableId = evaluator.computeIconResId(computedData)
 
         val data = computedData
-        if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
+        if (data.type == KeyType.NUMERIC && evaluator.keyboard().mode == KeyboardMode.PHONE) {
+            hintedLabel = when (data.code) {
+                48 /* 0 */ -> "+"
+                49 /* 1 */ -> ""
+                50 /* 2 */ -> "ABC"
+                51 /* 3 */ -> "DEF"
+                52 /* 4 */ -> "GHI"
+                53 /* 5 */ -> "JKL"
+                54 /* 6 */ -> "MNO"
+                55 /* 7 */ -> "PQRS"
+                56 /* 8 */ -> "TUV"
+                57 /* 9 */ -> "WXYZ"
+                else -> null
+            }
+        } else if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             val prefs by florisPreferenceModel()

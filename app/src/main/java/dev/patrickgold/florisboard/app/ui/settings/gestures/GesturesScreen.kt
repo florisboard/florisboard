@@ -69,6 +69,7 @@ fun GesturesScreen() = FlorisScreen {
             SwitchPreference(
                 prefs.glide.showPreview,
                 title = stringRes(R.string.pref__glide__show_preview),
+                summary = "Word suggestions must be enabled for this to take effect!",
                 enabledIf = { prefs.glide.enabled isEqualTo true },
             )
             DialogSliderPreference(

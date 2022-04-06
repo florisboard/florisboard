@@ -3,13 +3,13 @@
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Jeda</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Tunggu</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikon tiga titik. Jika terlihat, menandakan bahwa huruf-huruf tambahan bisa digunakan saat ditekan lama.</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Tombol tiga titik. Jika terlihat, menandakan bahwa lebih banyak huruf dapat digunakan jika ditekan lama.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tutup mode satu-tangan.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan keyboard ke kiri.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan keyboard ke kanan.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoji</string>
+    <string name="settings__media__title">Emoticon</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
@@ -104,16 +104,23 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__no_rules_defined">Lembar gaya ini tidak memiliki aturan yang didefinisikan. Tambahkan sebuah aturan untuk mulai menyesuaikan lembar gaya ini.</string>
     <string name="settings__theme_editor__rule_already_exists">Aturan lembar gaya ini telah didefinisikan.</string>
     <string name="settings__theme_editor__rule_element">Elemen target</string>
-    <string name="settings__theme_editor__rule_codes">Kode</string>
+    <string name="settings__theme_editor__rule_codes">Kode target tombol</string>
     <string name="settings__theme_editor__rule_groups">Grup</string>
     <string name="settings__theme_editor__rule_modes">Mode</string>
     <string name="settings__theme_editor__rule_selectors">Pemilih</string>
-    <string name="settings__theme_editor__add_code">Tambahkan kode</string>
-    <string name="settings__theme_editor__edit_code">Edit kode</string>
-    <string name="settings__theme_editor__no_codes_defined">Tidak ada kode yang didefinisikan.</string>
+    <string name="settings__theme_editor__add_code">Tambahkan kode tombol</string>
+    <string name="settings__theme_editor__edit_code">Edit kode tombol</string>
+    <string name="settings__theme_editor__no_codes_defined">Tetapkan aturan ke semua elemen target.</string>
+    <string name="settings__theme_editor__codes_defined">Tetapkan aturan saja ke element target dengan kode tombol berikut:</string>
     <string name="settings__theme_editor__code_already_exists">Kode tombol ini telah didefinisikan.</string>
     <string name="settings__theme_editor__code_invalid">Kode tombol ini tidak valid. Pastikan bahwa kode kunci dalam jangkauan dari {c_min} sampai {c_max} untuk karakter atau {i_min} sampai {i_max} untuk tombol internal spesial.</string>
-    <string name="settings__theme_editor__code_help_text">Tautan berikut ini akan membantu Anda menemukan kode tombol yang sesuai:</string>
+    <string name="settings__theme_editor__code_help_text">Secara alternatif tautan berikut ini akan membantu Anda menemukan kode tombol yang sesuai:</string>
+    <string name="settings__theme_editor__code_placeholder">Kode</string>
+    <string name="settings__theme_editor__code_recording_help_text">Untuk menemukan kode dari sebuah tombol, gunakan tombol di samping kolom input kode. Ketika diaktifkan, itu akan merekam tekanan tombol berikut dan akan mengisi kodenya ke kolom input.</string>
+    <string name="settings__theme_editor__code_recording_started">Rekaman kode tombol dimulai</string>
+    <string name="settings__theme_editor__code_recording_stopped">Rekaman kode tombol dihentikan</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} harus ditetapkan sebagai keyboard default untuk merekam kode tombol</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Merekam…</string>
     <string name="settings__theme_editor__add_property">Tambahkan properti</string>
     <string name="settings__theme_editor__edit_property">Edit properti</string>
     <string name="settings__theme_editor__property_already_exists">Sebuah properti dengan nama ini sudah ada dalam aturan saat ini.</string>
@@ -243,11 +250,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tekanan tombol</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitas popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Tampilkan popup ketika Anda menekan tombol</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Tambahkan popup simbol di aksen</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Tambahkan popup simbol ke tata letak default</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Aksen termasuk popup simbol</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Menambahkan popup simbol ke tata letak aksen default</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tundaan tekan lama tombol</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Bilah spasi beralih kembali ke tata letak karakter</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Menekan bilah spasi secara otomatis beralih kembali ke karakter saat dalam simbol atau numerik</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Bilah spasi beralih ke karakter</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Beralih kembali ke karakter saat dalam simbol atau numerik secara otomatis</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
@@ -263,7 +270,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Saran &amp; Koreksi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Tampilkan saran dalam baris yang disediakan oleh layanan pengisian otomatis (manajer kata sandi, …)</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Tampilkan saran dalam baris yang disediakan oleh layanan pengisian otomatis</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode penampilan saran</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Saran konten papan klip</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Waktu habis saran papan klip</string>
@@ -337,7 +344,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Tampilkan ikon aplikasi pada peluncur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Selalu diaktifkan di Android 10+ karena pembatasan sistem</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Akan menonaktifkan fitur apapun yang harus berfungsi sementara dengan data input Anda</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Menonaktifkan fitur-fitur yang bekerja dengan data input Anda</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Pemeriksa ejaan</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gunakan konfigurasi pemeriksa ejaan keyboard</string>

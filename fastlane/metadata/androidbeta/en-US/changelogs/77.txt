@@ -1,0 +1,3 @@
+This release improves key code adding in stylesheet rules, fixes some theme engine issues and also fixes some other bugs.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.15-beta02

@@ -30,9 +30,9 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consiglio: premi a lungo le emoji usate di recente per rimuoverle di nuovo da questa vista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} rimossa dalle emoji usate di recente</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Attiva/disattiva azione rapida. Se premuto, alterna i suggerimenti di parole ed i pulsanti di azione rapida.</string>
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Attiva / disattiva azione rapida. Se premuto, alterna i suggerimenti di parole ed i pulsanti di azione rapida.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Esci dal pannello di modifica del testo.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Attiva/disattiva modalità ad una mano.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Attiva / disattiva la modalità a una mano.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Apri Impostazioni.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Vai a pannello di modifica del testo.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Passa alla visualizzazione dei media.</string>
@@ -103,16 +103,11 @@
     <string name="settings__theme_editor__no_rules_defined">Questo file di stile non ha regole definite. Aggiungi una regola per iniziare a personalizzare questo file di stile.</string>
     <string name="settings__theme_editor__rule_already_exists">Questa regola del file di stile è già definita.</string>
     <string name="settings__theme_editor__rule_element">Elemento di destinazione</string>
-    <string name="settings__theme_editor__rule_codes">Codici</string>
     <string name="settings__theme_editor__rule_groups">Gruppi</string>
     <string name="settings__theme_editor__rule_modes">Modalità</string>
     <string name="settings__theme_editor__rule_selectors">Selettori</string>
-    <string name="settings__theme_editor__add_code">Aggiungi codice</string>
-    <string name="settings__theme_editor__edit_code">Modifica codice</string>
-    <string name="settings__theme_editor__no_codes_defined">Nessun codice definito.</string>
     <string name="settings__theme_editor__code_already_exists">Questo codice di tasto è già definito.</string>
     <string name="settings__theme_editor__code_invalid">Questo codice di tasto non è valido. Assicurarsi che il codice di tasto sia compreso nell\'intervallo da {c_min} a {c_max} per i caratteri o da {i_min} a {i_max} per tasti speciali interni.</string>
-    <string name="settings__theme_editor__code_help_text">I seguenti link ti aiuteranno a trovare il codice di tasto corrispondente:</string>
     <string name="settings__theme_editor__add_property">Aggiungi proprietà</string>
     <string name="settings__theme_editor__edit_property">Modifica proprietà</string>
     <string name="settings__theme_editor__property_already_exists">Una proprietà con questo nome esiste già all\'interno della regola corrente.</string>
@@ -242,11 +237,11 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Includi simboli alla pressione popups</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Aggiungi i simboli popups alla configurazione default degli accenti</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Gli accenti includono simboli popup</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Aggiunge i simboli popup alla configurazione predefinita degli accenti</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra spaziatrice riporta alla digitazione a caratteri</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Premendo la barra spaziatrice si ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra spaziatrice riporta ai caratteri</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilita Smartbar</string>
@@ -262,7 +257,7 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Suggerimenti &amp; Correzioni</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra suggerimenti in linea forniti dall\'autocompilazione(gestore password, …)</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra suggerimenti in linea forniti dall\'autocompilazione</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modalità visualizzazione dei suggerimenti</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggerimenti per il contenuto degli appunti</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Timeout suggerimento appunti</string>
@@ -336,7 +331,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostra icona nel launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre abilitato su Android 10+ a causa delle restrizioni del sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forza la modalità privata</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disabiliterà tutte le funzionalità che temporanemaente funzionano con i tuoi dati</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disabilita le funzioni che funzionano con i tuoi dati di input</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Controllo ortografico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usa la configurazione del controllo ortografico della tastiera</string>

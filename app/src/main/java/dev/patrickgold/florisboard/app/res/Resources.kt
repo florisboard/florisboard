@@ -17,12 +17,15 @@
 package dev.patrickgold.florisboard.app.res
 
 import android.content.Context
+import android.view.View
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.kotlin.CurlyArg
 import dev.patrickgold.florisboard.common.kotlin.curlyFormat
@@ -38,10 +41,17 @@ private val LocalAppNameString = staticCompositionLocalOf {
 @Composable
 fun ProvideLocalizedResources(
     resourcesContext: Context,
+    forceLayoutDirection: LayoutDirection? = null,
     content: @Composable () -> Unit,
 ) {
+    val layoutDirection = forceLayoutDirection ?: when (resourcesContext.resources.configuration.layoutDirection) {
+        View.LAYOUT_DIRECTION_LTR -> LayoutDirection.Ltr
+        View.LAYOUT_DIRECTION_RTL -> LayoutDirection.Rtl
+        else -> error("Given configuration specifies invalid layout direction!")
+    }
     CompositionLocalProvider(
         LocalResourcesContext provides resourcesContext,
+        LocalLayoutDirection provides layoutDirection,
         LocalAppNameString provides stringResource(R.string.floris_app_name),
     ) {
         content()

@@ -101,6 +101,7 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
         foreground()
         font()
+        shape()
     }
     element(FlorisImeUi.KeyPopup) {
         background()
@@ -202,6 +203,22 @@ object FlorisImeUiSpec : SnyggSpec({
     }
     element(FlorisImeUi.EmojiTab) {
         foreground()
+    }
+
+    element(FlorisImeUi.ExtractedLandscapeInputLayout) {
+        background()
+    }
+    element(FlorisImeUi.ExtractedLandscapeInputField) {
+        background()
+        foreground()
+        font()
+        shape()
+        border()
+    }
+    element(FlorisImeUi.ExtractedLandscapeInputAction) {
+        background()
+        foreground()
+        shape()
     }
 
     element(FlorisImeUi.GlideTrail) {

@@ -125,6 +125,12 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         KeyCode.ARROW_RIGHT -> {
             R.drawable.ic_keyboard_arrow_right
         }
+        KeyCode.ARROW_UP -> {
+            R.drawable.ic_keyboard_arrow_up
+        }
+        KeyCode.ARROW_DOWN -> {
+            R.drawable.ic_keyboard_arrow_down
+        }
         KeyCode.CLIPBOARD_COPY -> {
             R.drawable.ic_content_copy
         }

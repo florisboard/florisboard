@@ -31,20 +31,38 @@
     { "code":   43, "label": "+", "popup": {
       "main": { "code":  177, "label": "±" }
     } },
-    { "code":   40, "label": "(", "popup": {
-      "main": { "code":   60, "label": "<" },
-      "relevant": [
-        { "code":   91, "label": "[" },
-        { "code":  123, "label": "{" }
-      ]
-    } },
-    { "code":   41, "label": ")", "popup": {
-      "main": { "code":   62, "label": ">" },
-      "relevant": [
-        { "code":   93, "label": "]" },
-        { "code":  125, "label": "}" }
-      ]
-    } },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   40, "label": "(", "popup": {
+        "main": { "code":   60, "label": "<" },
+        "relevant": [
+          { "code":   91, "label": "[" },
+          { "code":  123, "label": "{" }
+        ]
+      } },
+      "rtl": { "code":   41, "label": "(", "popup": {
+        "main": { "code":   62, "label": "<" },
+        "relevant": [
+          { "code":   93, "label": "[" },
+          { "code":  125, "label": "{" }
+        ]
+      } }
+    },
+    { "$": "layout_direction_selector",
+      "ltr": { "code":   41, "label": ")", "popup": {
+        "main": { "code":   62, "label": ">" },
+        "relevant": [
+          { "code":   93, "label": "]" },
+          { "code":  125, "label": "}" }
+        ]
+      } },
+      "rtl": { "code":   40, "label": ")", "popup": {
+        "main": { "code":   60, "label": ">" },
+        "relevant": [
+          { "code":   91, "label": "]" },
+          { "code":  123, "label": "}" }
+        ]
+      } }
+    },
     { "code":   47, "label": "/" }
   ],
   [

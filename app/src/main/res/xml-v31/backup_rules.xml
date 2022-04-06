@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data-extraction-rules>
-    <cloud-backup disableIfNoEncryptionCapabilities="true">
+    <cloud-backup>
         <include
             domain="root"
             path="jetpref_datastore"/>
@@ -9,7 +9,7 @@
             path="ime"/>
         <include
             domain="database"
-            path="floris_user_dictionary.db"/>
+            path="floris_user_dictionary"/>
     </cloud-backup>
     <device-transfer>
         <include
@@ -20,6 +20,6 @@
             path="ime"/>
         <include
             domain="database"
-            path="floris_user_dictionary.db"/>
+            path="floris_user_dictionary"/>
     </device-transfer>
 </data-extraction-rules>

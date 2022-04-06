@@ -16,9 +16,17 @@
 
 package dev.patrickgold.florisboard.ime.clipboard
 
+import android.content.ContentUris
+import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
+import android.media.ThumbnailUtils
+import android.provider.MediaStore
+import android.util.Size
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -28,8 +36,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,6 +43,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -51,11 +58,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -63,19 +75,22 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButtonWithInnerPadding
 import dev.patrickgold.florisboard.app.ui.components.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
+import dev.patrickgold.florisboard.app.ui.components.autoMirrorForRtl
 import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.theme.Green500
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.android.AndroidKeyguardManager
+import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.showShortToast
 import dev.patrickgold.florisboard.common.android.systemService
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -89,7 +104,7 @@ import dev.patrickgold.florisboard.snygg.ui.solidColor
 import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
-private val HeaderIconPadding = PaddingValues(horizontal = 4.dp)
+
 private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
 private val ItemPadding = PaddingValues(vertical = 8.dp, horizontal = 12.dp)
@@ -111,18 +126,7 @@ fun ClipboardInputLayout(
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
-    val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-    val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-    val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
-    val innerHeight =
-        if (smartbarEnabled && secondaryRowEnabled && secondaryRowExpanded &&
-            secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI
-        ) {
-            FlorisImeSizing.smartbarHeight
-        } else {
-            0.dp
-        } + (FlorisImeSizing.keyboardRowBaseHeight * 4)
+    val innerHeight = FlorisImeSizing.keyboardUiHeight() - FlorisImeSizing.smartbarHeight
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
@@ -143,10 +147,7 @@ fun ClipboardInputLayout(
         ) {
             FlorisIconButtonWithInnerPadding(
                 onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
+                modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_arrow_back),
                 iconColor = headerStyle.foreground.solidColor(),
             )
@@ -158,10 +159,7 @@ fun ClipboardInputLayout(
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
+                modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(if (historyEnabled) {
                     R.drawable.ic_toggle_on
                 } else {
@@ -172,10 +170,7 @@ fun ClipboardInputLayout(
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { showClearAllHistory = true },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
+                modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_clear_all),
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
@@ -184,10 +179,6 @@ fun ClipboardInputLayout(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
-                modifier = Modifier
-                    .padding(HeaderIconPadding)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
                 icon = painterResource(R.drawable.ic_edit),
                 iconColor = headerStyle.foreground.solidColor(),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
@@ -200,6 +191,7 @@ fun ClipboardInputLayout(
     fun ClipItemView(
         item: ClipboardItem,
         style: SnyggPropertySet,
+        contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
         SnyggSurface(
@@ -208,7 +200,6 @@ fun ClipboardInputLayout(
                 .padding(ItemMargin),
             style = style,
             clip = true,
-            contentPadding = ItemPadding,
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -221,11 +212,96 @@ fun ClipboardInputLayout(
                 },
             ),
         ) {
-            Text(
-                text = item.stringRepresentation(),
-                color = style.foreground.solidColor(),
-                fontSize = style.fontSize.spSize(),
-            )
+            if (item.type == ItemType.IMAGE) {
+                val id = ContentUris.parseId(item.uri!!)
+                val file = ClipboardFileStorage.getFileForId(context, id)
+                val bitmap = remember(id) {
+                    runCatching {
+                        check(file.exists()) { "Unable to resolve image at ${file.absolutePath}" }
+                        val rawBitmap = BitmapFactory.decodeFile(file.absolutePath)
+                        checkNotNull(rawBitmap) { "Unable to decode image at ${file.absolutePath}" }
+                        rawBitmap.asImageBitmap()
+                    }
+                }
+                if (bitmap.isSuccess) {
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        bitmap = bitmap.getOrThrow(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(ItemPadding),
+                        text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
+                        style = TextStyle(textDirection = TextDirection.Ltr),
+                        color = Color.Red,
+                        fontSize = style.fontSize.spSize(),
+                    )
+                }
+            } else if (item.type == ItemType.VIDEO) {
+                val id = ContentUris.parseId(item.uri!!)
+                val file = ClipboardFileStorage.getFileForId(context, id)
+                val bitmap = remember(id) {
+                    runCatching {
+                        check(file.exists()) { "Unable to resolve video at ${file.absolutePath}" }
+                        val rawBitmap = if (AndroidVersion.ATLEAST_API29_Q) {
+                            val dataRetriever = MediaMetadataRetriever()
+                            dataRetriever.setDataSource(file.absolutePath)
+                            val width = dataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
+                            val height = dataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
+                            ThumbnailUtils.createVideoThumbnail(file, Size(width!!.toInt(), height!!.toInt()), null)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            ThumbnailUtils.createVideoThumbnail(file.absolutePath, MediaStore.Video.Thumbnails.MINI_KIND)
+                        }
+                        checkNotNull(rawBitmap) { "Unable to decode video at ${file.absolutePath}" }
+                        rawBitmap.asImageBitmap()
+                    }
+                }
+                if (bitmap.isSuccess) {
+                    Image(
+                        modifier = Modifier.fillMaxWidth(),
+                        bitmap = bitmap.getOrThrow(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(start = 4.dp, bottom = 4.dp)
+                            .background(Color.White, CircleShape),
+                        painter = painterResource(R.drawable.ic_videocam),
+                        contentDescription = null,
+                        tint = Color.Black,
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(ItemPadding),
+                        text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
+                        style = TextStyle(textDirection = TextDirection.Ltr),
+                        color = Color.Red,
+                        fontSize = style.fontSize.spSize(),
+                    )
+                }
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this }
+                        .padding(ItemPadding),
+                    text = item.stringRepresentation(),
+                    style = TextStyle(textDirection = TextDirection.ContentOrLtr),
+                    color = style.foreground.solidColor(),
+                    fontSize = style.fontSize.spSize(),
+                    maxLines = if (contentScrollInsteadOfClip) Int.MAX_VALUE else 5,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
     }
 
@@ -251,7 +327,7 @@ fun ClipboardInputLayout(
                     )
                     FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
                         for (item in history.pinned) {
-                            ClipItemView(item, itemStyle)
+                            ClipItemView(item, itemStyle, contentScrollInsteadOfClip = false)
                         }
                     }
                 }
@@ -262,7 +338,7 @@ fun ClipboardInputLayout(
                     )
                     FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
                         for (item in history.recent) {
-                            ClipItemView(item, itemStyle)
+                            ClipItemView(item, itemStyle, contentScrollInsteadOfClip = false)
                         }
                     }
                 }
@@ -273,7 +349,7 @@ fun ClipboardInputLayout(
                     )
                     FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
                         for (item in history.other) {
-                            ClipItemView(item, itemStyle)
+                            ClipItemView(item, itemStyle, contentScrollInsteadOfClip = false)
                         }
                     }
                 }
@@ -293,6 +369,7 @@ fun ClipboardInputLayout(
                         modifier = Modifier.widthIn(max = ItemWidth),
                         item = popupItem!!,
                         style = itemStyle,
+                        contentScrollInsteadOfClip = true,
                     )
                     Column(
                         modifier = Modifier

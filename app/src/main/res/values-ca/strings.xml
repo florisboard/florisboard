@@ -88,13 +88,9 @@
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
     <string name="settings__theme_editor__add_rule">Afegir norma</string>
     <string name="settings__theme_editor__edit_rule">Editar norma</string>
-    <string name="settings__theme_editor__rule_codes">Codis</string>
     <string name="settings__theme_editor__rule_groups">Grups</string>
     <string name="settings__theme_editor__rule_modes">Modes</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
-    <string name="settings__theme_editor__add_code">Afegir codi</string>
-    <string name="settings__theme_editor__edit_code">Editar el codi</string>
-    <string name="settings__theme_editor__no_codes_defined">Cap codi definit.</string>
     <string name="settings__theme_editor__add_property">Afegir propietat</string>
     <string name="settings__theme_editor__edit_property">Editar propietat</string>
     <string name="settings__theme_editor__property_name">Nom de la propietat</string>
@@ -117,8 +113,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a la disposició de caràcters</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En prémer la barra d\'espai, es torna automàticament als caràcters quan estan en símbols o numèrics</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra intel·ligent</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>

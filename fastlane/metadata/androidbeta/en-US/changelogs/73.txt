@@ -1,0 +1,4 @@
+This release fixes some crashes in the clipboard, glide typing and input logic. It is the final release (except
+something critical is reported) before 0.3.14 stable.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-rc03

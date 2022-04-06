@@ -129,6 +129,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         prefs.keyboard.utilityKeyEnabled.observeForever {
             updateRenderInfo()
         }
+        prefs.glide.enabled.observeForever { enabled ->
+            if (enabled) {
+                glideTypingManager.setWordData(subtypeManager.activeSubtype())
+            }
+        }
         activeState.observeForever {
             updateRenderInfo()
         }
@@ -282,7 +287,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     /**
      * Changes a word to the current case.
-     * eg if [KeyboardState.capsLock] is true, abc -> ABC
+     * eg if [KeyboardState.isUppercase] is true, abc -> ABC
      *    if [caps]     is true, abc -> Abc
      *    otherwise            , abc -> abc
      */

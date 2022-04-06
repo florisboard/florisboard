@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
+import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -174,6 +175,39 @@ data class VariationSelector(
             KeyVariation.PASSWORD -> password ?: default
             KeyVariation.URI -> uri ?: default
         }?.compute(evaluator)
+    }
+
+    override fun asString(isForDisplay: Boolean): String {
+        return ""
+    }
+}
+
+/**
+ * Allows to select an [AbstractKeyData] based on the current layout direction. Note that this type of selector only
+ * really makes sense in a text context, though technically speaking it can be used anywhere, so this implementation
+ * allows for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is
+ * `layout_direction_selector`.
+ *
+ * Example usage in a layout JSON file:
+ * ```
+ * { "$": "case_selector",
+ *   "ltr": { "code":   59, "label": ";" },
+ *   "rtl": { "code":   58, "label": ":" }
+ * }
+ * ```
+ *
+ * @property ltr The key data to use if the current layout direction is LTR.
+ * @property rtl The key data to use if the current layout direction is RTL.
+ */
+@Serializable
+@SerialName("layout_direction_selector")
+class LayoutDirectionSelector(
+    val ltr: AbstractKeyData,
+    val rtl: AbstractKeyData,
+) : AbstractKeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData? {
+        val isRtl = evaluator.activeState().layoutDirection == LayoutDirection.Rtl
+        return (if (isRtl) { rtl } else { ltr }).compute(evaluator)
     }
 
     override fun asString(isForDisplay: Boolean): String {

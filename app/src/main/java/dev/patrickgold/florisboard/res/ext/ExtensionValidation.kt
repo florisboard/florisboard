@@ -194,7 +194,7 @@ object ExtensionValidation {
             when {
                 str.isBlank() -> resultInvalid(error = "Please enter a percent size")
                 intValue == null -> resultInvalid(error = "Please enter a valid number")
-                intValue < 0 -> resultInvalid(error = "Please enter a positive number (>=0)")
+                intValue < 0 || intValue > 100 -> resultInvalid(error = "Please enter a positive number between 0 and 100")
                 intValue > 50 -> resultValid(hint = "Any value above 50% will behave as if you set 50%, consider lowering your percent size")
                 else -> resultValid()
             }

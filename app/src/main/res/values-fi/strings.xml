@@ -76,8 +76,6 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Palaa kirjainasetteluun välilyönnillä</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Välilyönnin painaminen symboli- tai numeroasettelussa vaihtaa näppäimistön automaattisesti kirjainasetteluun</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Älypalkki</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ota älypalkki käyttöön</string>

@@ -24,8 +24,8 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shadow-elevation": "2dp",
-    "shape": "var(--shape)"
+    "shape": "var(--shape)",
+    "shadow-elevation": "2dp"
   },
   "key:pressed": {
     "background": "var(--surface-variant)",
@@ -56,8 +56,8 @@
     "background": "#eeeeee",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shadow-elevation": "2dp",
-    "shape": "var(--shape)"
+    "shape": "var(--shape)",
+    "shadow-elevation": "2dp"
   },
   "key-popup:focus": {
     "background": "#bdbdbd",
@@ -67,8 +67,8 @@
   "smartbar-primary-actions-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
-    "shadow-elevation": "2dp",
-    "shape": "circle()"
+    "shape": "circle()",
+    "shadow-elevation": "2dp"
   },
   "smartbar-secondary-actions-toggle": {
     "background": "transparent",
@@ -127,15 +127,15 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shadow-elevation": "2dp",
-    "shape": "var(--shape-variant)"
+    "shape": "var(--shape-variant)",
+    "shadow-elevation": "2dp"
   },
   "clipboard-item-popup": {
     "background": "var(--surface-variant)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shadow-elevation": "2dp",
-    "shape": "var(--shape-variant)"
+    "shape": "var(--shape-variant)",
+    "shadow-elevation": "2dp"
   },
 
   "emoji-key": {
@@ -152,14 +152,31 @@
     "background": "#eeeeee",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "shadow-elevation": "2dp",
-    "shape": "var(--shape)"
+    "shape": "var(--shape)",
+    "shadow-elevation": "2dp"
   },
   "emoji-tab": {
     "foreground": "var(--on-background)"
   },
   "emoji-tab:focus": {
     "foreground": "var(--primary)"
+  },
+
+  "extracted-landscape-input-layout": {
+    "background": "var(--background)"
+  },
+  "extracted-landscape-input-field": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "16sp",
+    "shape": "rounded-corner(12dp, 12dp, 12dp, 12dp)",
+    "border-color": "var(--secondary)",
+    "border-width": "2dp"
+  },
+  "extracted-landscape-input-action": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-surface)",
+    "shape": "rounded-corner(4dp, 4dp, 4dp, 4dp)"
   },
 
   "glide-trail": {

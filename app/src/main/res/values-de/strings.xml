@@ -103,16 +103,18 @@
     <string name="settings__theme_editor__no_rules_defined">Für das Stylesheet sind keine Regeln definiert. Füge eine Regel hinzu, um dieses Stylesheet anzupassen.</string>
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
     <string name="settings__theme_editor__rule_element">Zielelement</string>
-    <string name="settings__theme_editor__rule_codes">Codes</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
     <string name="settings__theme_editor__rule_modes">Modi</string>
     <string name="settings__theme_editor__rule_selectors">Selektoren</string>
-    <string name="settings__theme_editor__add_code">Code hinzufügen</string>
-    <string name="settings__theme_editor__edit_code">Code bearbeiten</string>
-    <string name="settings__theme_editor__no_codes_defined">Keine Codes definiert.</string>
+    <string name="settings__theme_editor__no_codes_defined">Regel auf alle Zielelemente anwenden.</string>
+    <string name="settings__theme_editor__codes_defined">Regel nur auf Zielelemente mit folgenden Codes anwenden:</string>
     <string name="settings__theme_editor__code_already_exists">Dieser Tastencode ist bereits definiert.</string>
     <string name="settings__theme_editor__code_invalid">Dieser Tastencode ist nicht gültig. Stelle sicher, dass der Tastencode innerhalb der Spanne von {c_min} bis {c_max} für Zeichen oder von {i_min} bis {i_max} für interne Spezialschlüssel liegt.</string>
-    <string name="settings__theme_editor__code_help_text">Die folgenden Links helfen dir, den entsprechenden Tastencode zu finden:</string>
+    <string name="settings__theme_editor__code_help_text">Alternativ werden die folgenden Links helfen die korrespondierenden Codes zu finden:</string>
+    <string name="settings__theme_editor__code_placeholder">Code</string>
+    <string name="settings__theme_editor__code_recording_help_text">Um den Code einer Taste zu ermitteln, verwenden Sie die Schaltfläche neben dem Code-Eingabefeld. Sobald sie aktiviert ist, zeichnet sie den nächsten Tastendruck auf und fügt den Code in das Eingabefeld ein.</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} muss die standard Tastatur-App sein, um eine Taste aufzunehmen</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Aufnahme läuft…</string>
     <string name="settings__theme_editor__add_property">Eigenschaft hinzufügen</string>
     <string name="settings__theme_editor__edit_property">Eigenschaft bearbeiten</string>
     <string name="settings__theme_editor__property_already_exists">Eine Eigenschaft mit diesem Namen existiert bereits in der aktuellen Regel.</string>
@@ -136,6 +138,8 @@
     <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Smartbar Sekundärleiste</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primäre Aktionszeile Schalter</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Smartbar Schnellzugriff</string>
     <string name="snygg__rule_element__smartbar_key">Smartbartaste</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar Wortkandidat</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar Kandidatenclip</string>
@@ -239,19 +243,23 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Sonderzeichen in Akzent-Popups einblenden</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Sonderzeichen in Akzent-Popups des Standard Tastaturlayouts einblenden</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zurück zur Buchstabenansicht</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zu Buchstaben zurück</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Tausche Schalter für Zugriffsleisten</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Reihenlayout</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primäre Aktion</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatisch aus-/einklappen</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundäre Aktionen</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zweite Navigationsleiste anzeigen</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Vorschläge &amp; Korrekturen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten (Passwortmanager, …)</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Darstellungsart für Vorschläge</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Inhalt der Zwischenablage</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Timeout für Vorschläge aus der Zwischenablage</string>
@@ -325,7 +333,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zeige die App in der Übersicht</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privaten Modus erzwingen</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wird alle Funktionen deaktivieren, die vorübergehend mit deinen Eingabedaten arbeiten</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rechtschreibprüfung</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Verwende Tastatur-Rechtschreibprüfung-Konfiguration</string>
@@ -652,6 +659,7 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Ende oben</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Ende unten</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Anfang unten</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Schnellzugriffe</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Einfach</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Nur Farbeigenschaften werden angezeigt. Eigenschaften und Regeln werden übersetzt.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Erweitert</string>

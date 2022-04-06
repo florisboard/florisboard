@@ -16,12 +16,17 @@
 
 package dev.patrickgold.florisboard
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.inputmethodservice.ExtractEditText
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedText
@@ -29,24 +34,30 @@ import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
@@ -56,17 +67,22 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
+import dev.patrickgold.florisboard.app.ui.components.FlorisButton
 import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
 import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.common.android.AndroidInternalR
 import dev.patrickgold.florisboard.common.android.AndroidVersion
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
 import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.common.android.setLocale
 import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -80,6 +96,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -89,6 +106,12 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
+import dev.patrickgold.florisboard.snygg.ui.shape
+import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.snyggBorder
+import dev.patrickgold.florisboard.snygg.ui.snyggShadow
+import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -104,10 +127,6 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
 /**
  * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
- *
- * This is a new implementation for the keyboard service class and is replacing the old core class bit by bit.
- * The main objective for the new class is to hold as few state as possible and delegate tasks to context-bound
- * manager classes.
  */
 class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHistoryChangedListener {
     companion object {
@@ -221,8 +240,9 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     private val prefs by florisPreferenceModel()
     private val keyboardManager by keyboardManager()
-    private val themeManager by themeManager()
     private val nlpManager by nlpManager()
+    private val subtypeManager by subtypeManager()
+    private val themeManager by themeManager()
 
     private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
@@ -230,15 +250,25 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     private var inputViewSize by mutableStateOf(IntSize.Zero)
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
+    private var resourcesContext by mutableStateOf(this as Context)
+
+    init {
+        setTheme(R.style.FlorisImeTheme)
+    }
 
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         activeEditorInstance.wordHistoryChangedListener = this
+        subtypeManager.activeSubtype.observe(this) { subtype ->
+            val config = Configuration(resources.configuration)
+            config.setLocale(subtype.primaryLocale)
+            resourcesContext = createConfigurationContext(config)
+        }
     }
 
     override fun onCreateInputView(): View {
-        super.onCreateInputView()
+        super.installViewTreeOwners()
         val composeView = ComposeInputView()
         inputWindowView = composeView
         return composeView
@@ -247,6 +277,23 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onCreateCandidatesView(): View? {
         // Disable the default candidates view
         return null
+    }
+
+    override fun onCreateExtractTextView(): View {
+        super.installViewTreeOwners()
+        // Consider adding a fallback to the default extract edit layout if user reports come
+        // that this causes a crash, especially if the device manufacturer of the user device
+        // is a known one to break AOSP standards...
+        val defaultExtractView = super.onCreateExtractTextView()
+        val composeExtractView = ComposeExtractedLandscapeInputView()
+        if (defaultExtractView == null || defaultExtractView !is ViewGroup) {
+            return composeExtractView
+        }
+        defaultExtractView.apply {
+            removeAllViews()
+            addView(composeExtractView)
+        }
+        return defaultExtractView
     }
 
     override fun onDestroy() {
@@ -353,6 +400,22 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         isWindowShown = false
     }
 
+    override fun onEvaluateFullscreenMode(): Boolean {
+        return resources?.configuration?.let { config ->
+            if (config.isOrientationPortrait()) {
+                false
+            } else {
+                when (prefs.keyboard.landscapeInputUiMode.get()) {
+                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> {
+                        !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
+                    }
+                    LandscapeInputUiMode.NEVER_SHOW -> false
+                    LandscapeInputUiMode.ALWAYS_SHOW -> true
+                }
+            }
+        } ?: false
+    }
+
     override fun updateFullscreenMode() {
         super.updateFullscreenMode()
         updateSoftInputWindowLayoutParameters()
@@ -361,6 +424,14 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onUpdateExtractedText(token: Int, text: ExtractedText?) {
         super.onUpdateExtractedText(token, text)
         activeEditorInstance.updateText(token, text)
+    }
+
+    override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
+        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode.get()) {
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
+            LandscapeInputUiMode.NEVER_SHOW -> false
+            LandscapeInputUiMode.ALWAYS_SHOW -> true
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -444,17 +515,41 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
     }
 
+    override fun getTextForImeAction(imeOptions: Int): String? {
+        return try {
+            when (imeOptions and EditorInfo.IME_MASK_ACTION) {
+                EditorInfo.IME_ACTION_NONE -> null
+                EditorInfo.IME_ACTION_GO -> resourcesContext.getString(AndroidInternalR.string.ime_action_go)
+                EditorInfo.IME_ACTION_SEARCH -> resourcesContext.getString(AndroidInternalR.string.ime_action_search)
+                EditorInfo.IME_ACTION_SEND -> resourcesContext.getString(AndroidInternalR.string.ime_action_send)
+                EditorInfo.IME_ACTION_NEXT -> resourcesContext.getString(AndroidInternalR.string.ime_action_next)
+                EditorInfo.IME_ACTION_DONE -> resourcesContext.getString(AndroidInternalR.string.ime_action_done)
+                EditorInfo.IME_ACTION_PREVIOUS -> resourcesContext.getString(AndroidInternalR.string.ime_action_previous)
+                else -> resourcesContext.getString(AndroidInternalR.string.ime_action_default)
+            }
+        } catch (_: Throwable) {
+            super.getTextForImeAction(imeOptions)?.toString()
+        }
+    }
+
     @Composable
     private fun ImeUiWrapper() {
-        ProvideLocalizedResources(this) {
+        ProvideLocalizedResources(resourcesContext) {
             ProvideKeyboardRowBaseHeight {
-                CompositionLocalProvider(
-                    LocalInputFeedbackController provides inputFeedbackController,
-                    LocalLayoutDirection provides LayoutDirection.Ltr,
-                ) {
+                CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
                         // Outer box is necessary as an "outer window"
-                        Box(modifier = Modifier.fillMaxSize()) {
+                        Box(
+                            modifier = Modifier.run {
+                                if (isExtractViewShown) {
+                                    this
+                                        .fillMaxWidth()
+                                        .wrapContentHeight()
+                                } else {
+                                    this.fillMaxSize()
+                                }
+                            },
+                        ) {
                             DevtoolsUi()
                             ImeUi()
                         }
@@ -473,61 +568,70 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
             element = FlorisImeUi.Keyboard,
             mode = activeState.inputMode.value,
         )
-        SnyggSurface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .align(Alignment.BottomStart)
-                .onGloballyPositioned { coords -> inputViewSize = coords.size }
-                // Do not remove below line or touch input may get stuck
-                .pointerInteropFilter { false },
-            style = keyboardStyle,
-        ) {
-            val configuration = LocalConfiguration.current
-            val bottomOffset by if (configuration.isOrientationPortrait()) {
-                prefs.keyboard.bottomOffsetPortrait
-            } else {
-                prefs.keyboard.bottomOffsetLandscape
-            }.observeAsTransformingState { it.dp }
-            Row(
+        val layoutDirection = LocalLayoutDirection.current
+        SideEffect {
+            keyboardManager.activeState.layoutDirection = layoutDirection
+        }
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            SnyggSurface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
-                    //.height(IntrinsicSize.Min)
-                    .padding(bottom = bottomOffset),
+                    .align(Alignment.BottomStart)
+                    .onGloballyPositioned { coords -> inputViewSize = coords.size }
+                    // Do not remove below line or touch input may get stuck
+                    .pointerInteropFilter { false },
+                style = keyboardStyle,
             ) {
-                val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
-                val keyboardWeight = when {
-                    oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
-                    else -> oneHandedModeScaleFactor / 100f
-                }
-                if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        panelSide = OneHandedMode.START,
-                        weight = 1f - keyboardWeight,
-                    )
-                }
-                Box(
+                val configuration = LocalConfiguration.current
+                val bottomOffset by if (configuration.isOrientationPortrait()) {
+                    prefs.keyboard.bottomOffsetPortrait
+                } else {
+                    prefs.keyboard.bottomOffsetLandscape
+                }.observeAsTransformingState { it.dp }
+                Row(
                     modifier = Modifier
-                        .weight(keyboardWeight)
-                        .wrapContentHeight(),
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
+                        //.height(IntrinsicSize.Min)
+                        .padding(bottom = bottomOffset),
                 ) {
-                    when (activeState.imeUiMode) {
-                        ImeUiMode.TEXT -> TextInputLayout()
-                        ImeUiMode.MEDIA -> MediaInputLayout()
-                        ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                    val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
+                    val keyboardWeight = when {
+                        oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
+                        else -> oneHandedModeScaleFactor / 100f
                     }
-                }
-                if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        panelSide = OneHandedMode.END,
-                        weight = 1f - keyboardWeight,
-                    )
+                    if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.START,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
+                    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
+                        Box(
+                            modifier = Modifier
+                                .weight(keyboardWeight)
+                                .wrapContentHeight(),
+                        ) {
+                            when (activeState.imeUiMode) {
+                                ImeUiMode.TEXT -> TextInputLayout()
+                                ImeUiMode.MEDIA -> MediaInputLayout()
+                                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                            }
+                        }
+                    }
+                    if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.END,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
                 }
             }
         }
+
     }
 
     @Composable
@@ -565,6 +669,107 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             updateSoftInputWindowLayoutParameters()
+        }
+    }
+
+    private inner class ComposeExtractedLandscapeInputView : AbstractComposeView(this) {
+        val extractEditText: ExtractEditText
+
+        init {
+            isHapticFeedbackEnabled = true
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+
+            extractEditText = ExtractEditText(context).also {
+                it.id = android.R.id.inputExtractEditText
+                it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+                it.background = null
+                it.gravity = Gravity.TOP
+                it.isVerticalScrollBarEnabled = true
+            }
+        }
+
+        @Composable
+        override fun Content() {
+            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+                FlorisImeTheme {
+                    val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
+                    val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
+                    val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
+                    val activeState by keyboardManager.observeActiveState()
+                    Box(
+                        modifier = Modifier
+                            .snyggBackground(layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            val fieldColor = fieldStyle.foreground.solidColor(FlorisImeTheme.fallbackContentColor())
+                            AndroidView(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxHeight()
+                                    .weight(1f)
+                                    .snyggShadow(fieldStyle)
+                                    .snyggBorder(fieldStyle)
+                                    .snyggBackground(fieldStyle),
+                                factory = { extractEditText },
+                                update = { view ->
+                                    view.background = null
+                                    view.backgroundTintList = null
+                                    view.foregroundTintList = null
+                                    view.setTextColor(fieldColor.toArgb())
+                                    view.setHintTextColor(fieldColor.copy(fieldColor.alpha * 0.6f).toArgb())
+                                    view.setTextSize(
+                                        TypedValue.COMPLEX_UNIT_SP,
+                                        fieldStyle.fontSize.spSize(default = 16.sp).value,
+                                    )
+                                },
+                            )
+                            FlorisButton(
+                                onClick = {
+                                    val ei = activeEditorInstance.editorInfo
+                                    if (ei != null) {
+                                        if (ei.actionId != 0) {
+                                            activeEditorInstance.inputConnection?.performEditorAction(ei.actionId)
+                                        } else {
+                                            activeEditorInstance.performEnterAction(activeState.imeOptions.enterAction)
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.padding(horizontal = 8.dp),
+                                text = activeEditorInstance.editorInfo?.actionLabel?.toString()
+                                    ?: getTextForImeAction(activeState.imeOptions.enterAction.toInt())
+                                    ?: "ACTION",
+                                shape = actionStyle.shape.shape(),
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = actionStyle.background.solidColor(FlorisImeTheme.fallbackContentColor()),
+                                    contentColor = actionStyle.foreground.solidColor(FlorisImeTheme.fallbackSurfaceColor()),
+                                ),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        override fun getAccessibilityClassName(): CharSequence {
+            return javaClass.name
+        }
+
+        override fun onAttachedToWindow() {
+            super.onAttachedToWindow()
+            try {
+                (parent as LinearLayout).let { extractEditLayout ->
+                    extractEditLayout.layoutParams = FrameLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                    ).also { it.setMargins(0, 0, 0, 0) }
+                    extractEditLayout.setPadding(0, 0, 0, 0)
+                }
+            } catch (e: Throwable) {
+                flogError { e.message.toString() }
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.common.UnicodeCtrlChar
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
@@ -145,13 +146,16 @@ internal fun translatePropertyValue(
             val color = propertyValue.color
             when (displayColorsAs) {
                 DisplayColorsAs.HEX8 -> buildString {
+                    append(UnicodeCtrlChar.LeftToRightIsolate)
                     append("#")
                     append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
                     append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
+                    append(UnicodeCtrlChar.PopDirectionalIsolate)
                 }
                 DisplayColorsAs.RGBA -> buildString {
+                    append(UnicodeCtrlChar.LeftToRightIsolate)
                     append("rgba(")
                     append((color.red * RgbaColor.RedMax).roundToInt())
                     append(",")
@@ -161,6 +165,7 @@ internal fun translatePropertyValue(
                     append(",")
                     append(color.alpha)
                     append(")")
+                    append(UnicodeCtrlChar.PopDirectionalIsolate)
                 }
             }
         }
@@ -170,7 +175,11 @@ internal fun translatePropertyValue(
                 is SnyggDefinedVarValue -> translatePropertyName(propertyValue.key, level)
                 else -> null
             }
-        } ?: propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() }
+        } ?: buildString {
+            append(UnicodeCtrlChar.LeftToRightIsolate)
+            append(propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() })
+            append(UnicodeCtrlChar.PopDirectionalIsolate)
+        }
     }
 }
 

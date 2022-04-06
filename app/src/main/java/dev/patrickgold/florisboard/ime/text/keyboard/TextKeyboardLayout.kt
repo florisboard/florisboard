@@ -20,8 +20,10 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,6 +40,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -56,14 +59,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.common.Pointer
 import dev.patrickgold.florisboard.common.PointerMap
 import dev.patrickgold.florisboard.common.android.isOrientationLandscape
-import dev.patrickgold.florisboard.common.android.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.toIntOffset
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -73,13 +74,14 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
 import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -113,12 +115,21 @@ fun TextKeyboardLayout(
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
 
+    val keyboard = renderInfo.keyboard
+    val numberRowEnabled by prefs.keyboard.numberRow.observeAsTransformingState { numberRowEnabled ->
+        when (keyboard.mode) {
+            KeyboardMode.CHARACTERS,
+            KeyboardMode.NUMERIC_ADVANCED,
+            KeyboardMode.SYMBOLS,
+            KeyboardMode.SYMBOLS2 -> numberRowEnabled
+            else -> false
+        }
+    }
     val glideEnabled by prefs.glide.enabled.observeAsState()
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
         .foreground.solidColor(default = Color.Green)
 
-    val keyboard = renderInfo.keyboard
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
         if (glideEnabled && !isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
@@ -144,7 +155,8 @@ fun TextKeyboardLayout(
                 if (isSmartbarKeyboard) {
                     FlorisImeSizing.smartbarHeight
                 } else {
-                    FlorisImeSizing.keyboardRowBaseHeight * keyboard.rowCount
+                    FlorisImeSizing.keyboardRowBaseHeight *
+                        keyboard.rowCount.coerceAtLeast(if (numberRowEnabled) 5 else 4)
                 }
             )
             .onGloballyPositioned { coords ->
@@ -210,7 +222,8 @@ fun TextKeyboardLayout(
                 height = FlorisImeSizing.smartbarHeight.toPx()
             } else {
                 width = keyboardWidth / 10f
-                height = FlorisImeSizing.keyboardRowBaseHeight.toPx()
+                height = FlorisImeSizing.keyboardRowBaseHeight.toPx() *
+                    (if (numberRowEnabled && keyboard.mode != KeyboardMode.CHARACTERS) 1.12f else 1f)
             }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
@@ -218,6 +231,7 @@ fun TextKeyboardLayout(
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
         val popupUiController = rememberPopupUiController(
+            key1 = keyboard,
             boundsProvider = { key ->
                 val keyPopupWidth: Float
                 val keyPopupHeight: Float
@@ -247,6 +261,26 @@ fun TextKeyboardLayout(
                     top = key.visibleBounds.bottom - keyPopupHeight
                     right = left + keyPopupWidth
                     bottom = top + keyPopupHeight
+                }
+            },
+            isSuitableForBasicPopup = { key ->
+                if (key is TextKey) {
+                    val c = key.computedData.code
+                    val t = key.computedData.type
+                    val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
+                        keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
+                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
+                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
+                } else {
+                    true
+                }
+            },
+            isSuitableForExtendedPopup = { key ->
+                if (key is TextKey) {
+                    val c = key.computedData.code
+                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(c)
+                } else {
+                    true
                 }
             },
         )
@@ -292,13 +326,29 @@ private fun TextKeyButton(
         KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
         else -> 1.0f
     }
-    SnyggSurface(
+    val size = key.visibleBounds.size.toDpSize()
+    Box(
         modifier = Modifier
-            .requiredSize(key.visibleBounds.size.toDpSize())
+            .requiredSize(size)
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
-        style = keyStyle,
-        clip = true,
     ) {
+        // TODO: maybe make this customizable through a size property for keyStyle
+        val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
+        SnyggSurface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .run {
+                    if (isReducedHeight && FlorisImeTheme.config.isBorderless) {
+                        this.padding(vertical = size.height * 0.15f)
+                    } else {
+                        this
+                    }
+                }
+                .fillMaxHeight(),
+            style = keyStyle,
+            clip = false,
+        ) { }
+        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
@@ -310,7 +360,7 @@ private fun TextKeyButton(
             Text(
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(Alignment.Center),
+                    .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = label,
                 color = keyStyle.foreground.solidColor(),
                 fontSize = fontSize,
@@ -332,10 +382,10 @@ private fun TextKeyButton(
             val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
             Text(
                 modifier = Modifier
-                    .padding(end = (key.visibleBounds.width / 12f).toDp())
                     .wrapContentSize()
-                    .align(Alignment.TopEnd)
-                    .snyggBackground(keyHintStyle),
+                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
+                    .snyggBackground(keyHintStyle)
+                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
                 text = hintedLabel,
                 color = keyHintStyle.foreground.solidColor(),
                 fontFamily = FontFamily.Monospace,
@@ -376,7 +426,7 @@ private class TextKeyboardLayoutController(
 
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
-    var isGliding: Boolean = false
+    var isGliding by mutableStateOf(false)
 
     val glideTypingDetector = GlideTypingGesture.Detector(context)
     val glideDataForDrawing = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
@@ -788,7 +838,8 @@ private class TextKeyboardLayoutController(
         return when (event.type) {
             SwipeGesture.Type.TOUCH_MOVE -> when (event.direction) {
                 SwipeGesture.Direction.LEFT -> {
-                    if (prefs.gestures.spaceBarSwipeLeft.get() == SwipeAction.MOVE_CURSOR_LEFT) {
+                    val action = prefs.gestures.spaceBarSwipeLeft.get()
+                    if (action == SwipeAction.MOVE_CURSOR_LEFT) {
                         abs(event.relUnitCountX).let {
                             val count = if (!pointer.hasTriggeredGestureMove) {
                                 it - 1
@@ -804,11 +855,14 @@ private class TextKeyboardLayoutController(
                                 )
                             }
                         }
+                        true
+                    } else {
+                        action != SwipeAction.NO_ACTION
                     }
-                    true
                 }
                 SwipeGesture.Direction.RIGHT -> {
-                    if (prefs.gestures.spaceBarSwipeRight.get() == SwipeAction.MOVE_CURSOR_RIGHT) {
+                    val action = prefs.gestures.spaceBarSwipeRight.get()
+                    if (action == SwipeAction.MOVE_CURSOR_RIGHT) {
                         abs(event.relUnitCountX).let {
                             val count = if (!pointer.hasTriggeredGestureMove) {
                                 it - 1
@@ -824,29 +878,43 @@ private class TextKeyboardLayoutController(
                                 )
                             }
                         }
+                        true
+                    } else {
+                        action != SwipeAction.NO_ACTION
                     }
-                    true
                 }
                 else -> true // To prevent the popup display of nearby keys
             }
             SwipeGesture.Type.TOUCH_UP -> when (event.direction) {
                 SwipeGesture.Direction.LEFT -> {
                     prefs.gestures.spaceBarSwipeLeft.get().let {
-                        if (it != SwipeAction.MOVE_CURSOR_LEFT) {
-                            keyboardManager.executeSwipeAction(it)
-                            true
-                        } else {
-                            false
+                        when {
+                            it == SwipeAction.NO_ACTION -> {
+                                false
+                            }
+                            it != SwipeAction.MOVE_CURSOR_LEFT -> {
+                                keyboardManager.executeSwipeAction(it)
+                                true
+                            }
+                            else -> {
+                                false
+                            }
                         }
                     }
                 }
                 SwipeGesture.Direction.RIGHT -> {
                     prefs.gestures.spaceBarSwipeRight.get().let {
-                        if (it != SwipeAction.MOVE_CURSOR_RIGHT) {
-                            keyboardManager.executeSwipeAction(it)
-                            true
-                        } else {
-                            false
+                        when {
+                            it == SwipeAction.NO_ACTION -> {
+                                false
+                            }
+                            it != SwipeAction.MOVE_CURSOR_RIGHT -> {
+                                keyboardManager.executeSwipeAction(it)
+                                true
+                            }
+                            else -> {
+                                false
+                            }
                         }
                     }
                 }
@@ -947,22 +1015,4 @@ private class TextKeyboardLayoutController(
             return "${TouchPointer::class.simpleName} { id=$id, index=$index, initialKey=$initialKey, activeKey=$activeKey }"
         }
     }
-}
-
-@Composable
-fun AppPrefs.Keyboard.fontSizeMultiplier(): Float {
-    val configuration = LocalConfiguration.current
-    val oneHandedMode by oneHandedMode.observeAsState()
-    val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
-    val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
-        fontSizeMultiplierPortrait
-    } else {
-        fontSizeMultiplierLandscape
-    }.observeAsTransformingState { it / 100.0f }
-    val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedMode != OneHandedMode.OFF && configuration.isOrientationPortrait()) {
-        oneHandedModeFactor
-    } else {
-        1.0f
-    }
-    return fontSizeMultiplier
 }

@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.ClipDescription
+import android.content.ContentUris
 import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
@@ -28,6 +29,9 @@ import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputBinding
 import android.view.inputmethod.InputConnection
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
@@ -36,10 +40,13 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.android.showShortToast
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
@@ -88,8 +95,7 @@ class EditorInstance(private val ims: InputMethodService) {
         get() = if (isInputBindingActive) ims.currentInputBinding else null
     val inputConnection: InputConnection?
         get() = if (isInputBindingActive) ims.currentInputConnection else null
-    val editorInfo: EditorInfo?
-        get() = if (isInputBindingActive && ims.currentInputStarted) ims.currentInputEditorInfo else null
+    var editorInfo: EditorInfo? by mutableStateOf(null)
 
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
@@ -168,6 +174,7 @@ class EditorInstance(private val ims: InputMethodService) {
 
     fun startInput(info: EditorInfo) {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        editorInfo = info
         if (AndroidVersion.ATLEAST_API25_N_MR1) {
             contentMimeTypes = info.contentMimeTypes
         }
@@ -187,6 +194,7 @@ class EditorInstance(private val ims: InputMethodService) {
 
     fun startInputView(info: EditorInfo) {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
+        editorInfo = info
         val keyboardMode = when (activeState.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
                 activeState.keyVariation = KeyVariation.NORMAL
@@ -244,10 +252,12 @@ class EditorInstance(private val ims: InputMethodService) {
 
     fun finishInputView() {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        editorInfo = null
     }
 
     fun finishInput() {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        editorInfo = null
         val ic = inputConnection ?: return
         ic.requestCursorUpdates(CURSOR_UPDATE_DISABLED)
     }
@@ -396,11 +406,18 @@ class EditorInstance(private val ims: InputMethodService) {
         if (item == null) return false
         val mimeTypes = item.mimeTypes
         return when (item.type) {
-            ItemType.IMAGE -> {
+            ItemType.TEXT -> {
+                commitText(item.text.toString())
+            }
+            ItemType.IMAGE, ItemType.VIDEO -> {
+                item.uri ?: return false
+                val id = ContentUris.parseId(item.uri)
+                val file = ClipboardFileStorage.getFileForId(ims, id)
+                if (!file.exists()) return false
                 val inputContentInfo = InputContentInfoCompat(
-                    item.uri!!,
-                    ClipDescription("clipboard image", mimeTypes),
-                    null
+                    item.uri,
+                    ClipDescription("clipboard media file", mimeTypes),
+                    null,
                 )
                 val ic = inputConnection ?: return false
                 ic.finishComposingText()
@@ -409,15 +426,12 @@ class EditorInstance(private val ims: InputMethodService) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 } else {
                     ims.grantUriPermission(
-                        editorInfo!!.packageName ?: "",
+                        editorInfo!!.packageName,
                         item.uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION,
                     )
                 }
                 InputConnectionCompat.commitContent(ic, editorInfo!!, inputContentInfo, flags, null)
-            }
-            ItemType.TEXT -> {
-                commitText(item.text.toString())
             }
         }
     }
@@ -635,7 +649,12 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardCut(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        clipboardManager.addNewPlaintext(selection.icText)
+        val text = selection.icText
+        if (text != null) {
+            clipboardManager.addNewPlaintext(text)
+        } else {
+            ims.showShortToast("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
+        }
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
@@ -648,7 +667,12 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        clipboardManager.addNewPlaintext(selection.icText)
+        val text = selection.icText
+        if (text != null) {
+            clipboardManager.addNewPlaintext(text)
+        } else {
+            ims.showShortToast("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
+        }
         return selection.updateAndNotify(selection.end, selection.end)
     }
 
@@ -661,7 +685,11 @@ class EditorInstance(private val ims: InputMethodService) {
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return commitClipboardItem(clipboardManager.primaryClip.value)
+        return commitClipboardItem(clipboardManager.primaryClip.value).also { result ->
+            if (!result) {
+                ims.showShortToast("Failed to paste item.")
+            }
+        }
     }
 
     /**
@@ -846,7 +874,7 @@ class EditorInstance(private val ims: InputMethodService) {
         lastReportedComposingBounds = Bounds(-1, -1)
     }
 
-    internal fun normalizeBounds(start: Int, end: Int): Bounds {
+    private fun normalizeBounds(start: Int, end: Int): Bounds {
         return if (start > end) {
             Bounds(end, start)
         } else {
@@ -941,18 +969,17 @@ class EditorInstance(private val ims: InputMethodService) {
          */
         val text: String
             get() {
-                val eiText = cachedInput.rawText
-                val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
-                val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
-                return if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+                return tryOrNull {
+                    val eiText = cachedInput.rawText
+                    val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
+                    val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
+                    if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+                } ?: ""
             }
 
-        val icText: String get() = when {
-            !isValid -> ""
-            else -> when (val ic = inputConnection) {
-                null -> ""
-                else -> ic.getSelectedText(0).toString()
-            }
+        val icText: String? get() = when {
+            !isValid -> null
+            else -> inputConnection?.getSelectedText(0)?.toString()
         }
 
         /**
@@ -1003,21 +1030,23 @@ class EditorInstance(private val ims: InputMethodService) {
             private set
 
         fun updateText(exText: ExtractedText?) {
-            if (exText == null) {
-                reset()
-                return
-            }
-            val sel = exText.getSelectionBounds()
-            if (selection.bounds != sel) {
-                flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
-                selection.bounds = sel
-            }
-            if (exText.isPartialChange()) {
-                val (partialStart, partialEnd) = exText.getPartialChangeBounds()
-                rawText.replace(partialStart, partialEnd, exText.getTextStr())
-            } else {
-                rawText.replace(0, rawText.length, exText.getTextStr())
-                offset = exText.startOffset.coerceAtLeast(0)
+            tryOrNull {
+                if (exText == null) {
+                    reset()
+                    return
+                }
+                val sel = exText.getSelectionBounds()
+                if (selection.bounds != sel) {
+                    flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
+                    selection.bounds = sel
+                }
+                if (exText.isPartialChange()) {
+                    val (partialStart, partialEnd) = exText.getPartialChangeBounds()
+                    rawText.replace(partialStart, partialEnd, exText.getTextStr())
+                } else {
+                    rawText.replace(0, rawText.length, exText.getTextStr())
+                    offset = exText.startOffset.coerceAtLeast(0)
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,23 @@ package dev.patrickgold.florisboard.ime.clipboard.provider
 import android.content.ClipData
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
+import android.provider.OpenableColumns
+import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import dev.patrickgold.florisboard.common.android.query
+import dev.patrickgold.florisboard.common.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
+private const val CLIPBOARD_FILES_TABLE = "clipboard_files"
 
 enum class ItemType(val value: Int) {
     TEXT(1),
-    IMAGE(2);
+    IMAGE(2),
+    VIDEO(3);
 
     companion object {
         fun fromInt(value : Int) : ItemType {
@@ -60,6 +67,7 @@ data class ClipboardItem(
          * So that every item doesn't have to allocate its own array.
          */
         private val TEXT_PLAIN = arrayOf("text/plain")
+        private val MEDIA_PROJECTION = arrayOf(OpenableColumns.DISPLAY_NAME)
 
         const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
 
@@ -78,34 +86,52 @@ data class ClipboardItem(
          * Returns a new ClipboardItem based on a ClipData.
          *
          * @param data The ClipData to clone.
-         * @param cloneUri Whether to store the image using [FlorisContentProvider].
+         * @param cloneUri Whether to store the image using [ClipboardMediaProvider].
          */
         fun fromClipData(context: Context, data: ClipData, cloneUri: Boolean) : ClipboardItem {
+            val dataItem = data.getItemAt(0)
             val type = when {
-                data.getItemAt(0)?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
+                dataItem?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
+                dataItem?.uri != null && data.description.hasMimeType("video/*") -> ItemType.VIDEO
                 else -> ItemType.TEXT
             }
 
-            val uri = if (type == ItemType.IMAGE) {
-                if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority || !cloneUri){
-                    data.getItemAt(0).uri
-                }else {
-                    val values = ContentValues().apply{
-                        put("uri", data.getItemAt(0).uri.toString())
-                        put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
+            val uri = if (type == ItemType.IMAGE || type == ItemType.VIDEO) {
+                if (dataItem.uri.authority == ClipboardMediaProvider.AUTHORITY || !cloneUri) {
+                    dataItem.uri
+                } else {
+                    var displayName = when (type) {
+                        ItemType.IMAGE -> "Image"
+                        ItemType.VIDEO -> "Video"
+                        else -> "Unknown"
                     }
-                    context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
+                    tryOrNull {
+                        context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION)?.use { cursor ->
+                            val displayNameColumn = cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
+                            if (cursor.moveToNext()) {
+                                cursor.getStringOrNull(displayNameColumn)?.let { displayName = it }
+                            }
+                        }
+                    }
+                    val values = ContentValues(3).apply {
+                        put(OpenableColumns.DISPLAY_NAME, displayName)
+                        put(ClipboardMediaProvider.Columns.MediaUri, dataItem.uri.toString())
+                        put(ClipboardMediaProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
+                    }
+                    context.contentResolver.insert(when (type) {
+                        ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
+                        ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
+                        else -> error("Impossible.")
+                    }, values)
                 }
             } else { null }
 
-            val text = context.let { data.getItemAt(0).coerceToText(it).toString() }
+            val text = dataItem.text?.toString()
             val mimeTypes = when (type) {
-                ItemType.IMAGE -> {
-                    (0 until data.description.mimeTypeCount).map {
-                        data.description.getMimeType(it)
-                    }.toTypedArray()
+                ItemType.TEXT -> TEXT_PLAIN
+                ItemType.IMAGE, ItemType.VIDEO -> {
+                    Array(data.description.mimeTypeCount) { data.description.getMimeType(it) }
                 }
-                ItemType.TEXT -> { TEXT_PLAIN }
             }
 
             return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes)
@@ -116,22 +142,20 @@ data class ClipboardItem(
         if (other == null) return false
         return when (type) {
             ItemType.TEXT -> text == other.getItemAt(0).text
-            ItemType.IMAGE -> uri == other.getItemAt(0).uri
+            ItemType.IMAGE, ItemType.VIDEO -> uri == other.getItemAt(0).uri
         }
     }
-
-    infix fun isNotEqualTo(other: ClipData?): Boolean = !(this isEqualTo other)
 
     /**
      * Creates a new ClipData which has the same contents as this.
      */
     fun toClipData(context: Context): ClipData {
         return when (type) {
-            ItemType.IMAGE -> {
-                ClipData.newUri(context.contentResolver, FLORIS_CLIP_LABEL, uri)
-            }
             ItemType.TEXT -> {
                 ClipData.newPlainText(FLORIS_CLIP_LABEL, text)
+            }
+            ItemType.IMAGE, ItemType.VIDEO -> {
+                ClipData.newUri(context.contentResolver, FLORIS_CLIP_LABEL, uri)
             }
         }
     }
@@ -141,7 +165,7 @@ data class ClipboardItem(
      */
     fun close(context: Context) {
         if (type == ItemType.IMAGE) {
-            context.contentResolver.delete(this.uri!!, null, null)
+            tryOrNull { context.contentResolver.delete(this.uri!!, null, null) }
         }
     }
 
@@ -266,50 +290,67 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
     }
 }
 
-@Entity(tableName = "file_uris")
-data class FileUri(
-    @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val fileName: Long,
-    val mimeTypes: Array<String>
+@Entity(tableName = CLIPBOARD_FILES_TABLE)
+data class ClipboardFileInfo(
+    @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
+    @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
+    @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
+    val mimeTypes: Array<String>,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as FileUri
+        other as ClipboardFileInfo
 
-        if (fileName != other.fileName) return false
+        if (id != other.id) return false
+        if (displayName != other.displayName) return false
+        if (size != other.size) return false
         if (!mimeTypes.contentEquals(other.mimeTypes)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = 31 + fileName.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + displayName.hashCode()
+        result = 31 * result + size.hashCode()
         result = 31 * result + mimeTypes.contentHashCode()
         return result
     }
 }
 
 @Dao
-interface FileUriDao {
-    @Query("SELECT * FROM file_uris WHERE ${BaseColumns._ID} == (:uid)")
-    fun getById(uid: Long) : FileUri
+interface ClipboardFilesDao {
+    @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
+    fun getById(uid: Long) : ClipboardFileInfo
 
-    @Query("DELETE FROM file_uris WHERE ${BaseColumns._ID} == (:id)")
+    @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
+    fun getCursorById(uid: Long) : Cursor
+
+    @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
 
     @Insert
-    fun insert(vararg fileUris: FileUri)
+    fun insert(vararg clipboardFileInfos: ClipboardFileInfo)
 
-    @Query("SELECT COUNT(*) FROM file_uris WHERE ${BaseColumns._ID} == (:id)")
-    fun numberWithId(id: Long): Int
-
-    @Query("SELECT * FROM file_uris")
-    fun getAll(): List<FileUri>
+    @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE")
+    fun getAll(): List<ClipboardFileInfo>
 }
 
-@Database(entities = [FileUri::class], version = 1)
+@Database(entities = [ClipboardFileInfo::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class FileUriDatabase : RoomDatabase() {
-    abstract fun fileUriDao() : FileUriDao
+abstract class ClipboardFilesDatabase : RoomDatabase() {
+    abstract fun clipboardFilesDao() : ClipboardFilesDao
+
+    companion object {
+        fun new(context: Context): ClipboardFilesDatabase {
+            return Room
+                .databaseBuilder(
+                    context, ClipboardFilesDatabase::class.java, CLIPBOARD_FILES_TABLE,
+                )
+                .fallbackToDestructiveMigration()
+                .build()
+        }
+    }
 }

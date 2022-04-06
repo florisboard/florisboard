@@ -52,6 +52,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisUnsavedChangesDialog
+import dev.patrickgold.florisboard.app.ui.components.autoMirrorForRtl
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.app.ui.settings.theme.DialogProperty
@@ -299,6 +300,7 @@ private fun EditScreen(
     navigationIcon {
         FlorisIconButton(
             onClick = { handleBackPress() },
+            modifier = Modifier.autoMirrorForRtl(),
             icon = painterResource(R.drawable.ic_arrow_back),
         )
     }

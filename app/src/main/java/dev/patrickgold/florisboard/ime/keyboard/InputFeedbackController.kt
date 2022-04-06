@@ -21,6 +21,7 @@ import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.Composable
@@ -33,6 +34,7 @@ import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.common.android.systemServiceOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -50,19 +52,19 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
 
         @Composable
         fun hasAmplitudeControl(): Boolean {
-            val vibrator = LocalContext.current.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            val vibrator = LocalContext.current.systemVibratorOrNull()
             return when {
-                AndroidVersion.ATLEAST_API26_O -> vibrator?.hasAmplitudeControl() ?: false
+                AndroidVersion.ATLEAST_API26_O -> vibrator != null && vibrator.hasAmplitudeControl()
                 else -> false
             }
         }
 
         @Composable
         fun generateVibrationStrengthErrorSummary(): String? {
-            val vibrator = LocalContext.current.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            val vibrator = LocalContext.current.systemVibratorOrNull()
             return when {
                 AndroidVersion.ATLEAST_API26_O -> when {
-                    !(vibrator?.hasAmplitudeControl() ?: false) -> {
+                    vibrator == null || !vibrator.hasAmplitudeControl() -> {
                         stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
                     }
                     else -> null
@@ -72,12 +74,20 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
                 }
             }
         }
+
+        private fun Context.systemVibratorOrNull(): Vibrator? {
+            return if (AndroidVersion.ATLEAST_API31_S) {
+                this.systemServiceOrNull(VibratorManager::class)?.defaultVibrator
+            } else {
+                this.systemServiceOrNull(Vibrator::class)
+            }
+        }
     }
 
     private val prefs by florisPreferenceModel()
 
-    private val audioManager = ims.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
-    private val vibrator = ims.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+    private val audioManager = ims.systemServiceOrNull(AudioManager::class)
+    private val vibrator = ims.systemVibratorOrNull()
     private val contentResolver = ims.contentResolver
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 

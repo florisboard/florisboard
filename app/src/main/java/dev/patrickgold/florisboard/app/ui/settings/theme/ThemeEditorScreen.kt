@@ -29,6 +29,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
@@ -56,6 +57,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
@@ -470,6 +472,7 @@ private fun ComponentMetaEditorDialog(
                 FlorisOutlinedTextField(
                     value = id,
                     onValueChange = { id = it },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
                     singleLine = true,
                     showValidationError = showValidationErrors,
                     validationResult = idValidation,
@@ -510,6 +513,7 @@ private fun ComponentMetaEditorDialog(
                 FlorisOutlinedTextField(
                     value = stylesheetPath,
                     onValueChange = { stylesheetPath = it },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
                     singleLine = true,
                     placeholder = if (stylesheetPath.isEmpty()) {
                         ThemeExtensionComponent.defaultStylesheetPath(id.trim())

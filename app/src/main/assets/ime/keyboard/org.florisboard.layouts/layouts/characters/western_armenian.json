@@ -1,0 +1,49 @@
+[
+  [
+
+    { "$": "auto_text_key", "code": 1393, "label": "ձ" },
+    { "$": "auto_text_key", "code": 1397, "label": "յ" },
+    { "$": "auto_text_key", "code": 1413, "label": "օ" },
+    { "$": "auto_text_key", "code": 1404, "label": "ռ" },
+    { "$": "auto_text_key", "code": 1386, "label": "ժ" },
+    { "$": "auto_text_key", "code": 1401, "label": "չ" },
+    { "$": "auto_text_key", "code": 1403, "label": "ջ" },
+    { "$": "auto_text_key", "code": 1411, "label": "փ" },
+    { "$": "auto_text_key", "code": 1394, "label": "ղ" },
+    { "$": "auto_text_key", "code": 1390, "label": "ծ" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 1389, "label": "խ" },
+    { "$": "auto_text_key", "code": 1406, "label": "վ" },
+    { "$": "auto_text_key", "code": 1383, "label": "է" },
+    { "$": "auto_text_key", "code": 1408, "label": "ր" },
+    { "$": "auto_text_key", "code": 1380, "label": "դ" },
+    { "$": "auto_text_key", "code": 1381, "label": "ե" },
+    { "$": "auto_text_key", "code": 1384, "label": "ը" },
+    { "$": "auto_text_key", "code": 1387, "label": "ի" },
+    { "$": "auto_text_key", "code": 1400, "label": "ո" },
+    { "$": "auto_text_key", "code": 1378, "label": "բ" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 1377, "label": "ա" },
+    { "$": "auto_text_key", "code": 1405, "label": "ս" },
+    { "$": "auto_text_key", "code": 1407, "label": "տ" },
+    { "$": "auto_text_key", "code": 1414, "label": "ֆ" },
+    { "$": "auto_text_key", "code": 1391, "label": "կ" },
+    { "$": "auto_text_key", "code": 1392, "label": "հ" },
+    { "$": "auto_text_key", "code": 1395, "label": "ճ" },
+    { "$": "auto_text_key", "code": 1412, "label": "ք" },
+    { "$": "auto_text_key", "code": 1388, "label": "լ" },
+    { "$": "auto_text_key", "code": 1385, "label": "թ" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 1382, "label": "զ" },
+    { "$": "auto_text_key", "code": 1409, "label": "ց" },
+    { "$": "auto_text_key", "code": 1379, "label": "գ" },
+    { "$": "auto_text_key", "code": 1410, "label": "ւ" },
+    { "$": "auto_text_key", "code": 1402, "label": "պ" },
+    { "$": "auto_text_key", "code": 1398, "label": "ն" },
+    { "$": "auto_text_key", "code": 1396, "label": "մ" },
+    { "$": "auto_text_key", "code": 1399, "label": "շ" }
+  ]
+]

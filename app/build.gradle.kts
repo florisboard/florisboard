@@ -31,8 +31,8 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 23
         targetSdk = 31
-        versionCode = 70
-        versionName = "0.3.14"
+        versionCode = 78
+        versionName = "0.3.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -67,6 +67,15 @@ android {
                     srcDirs("src/main/icu4c/prebuilt/jniLibs")
                 }
             }
+        }
+    }
+
+    bundle {
+        language {
+            // We disable language split because FlorisBoard does not use
+            // runtime Google Play Service APIs and thus cannot dynamically
+            // request to download the language resources for a specific locale.
+            enableSplit = false
         }
     }
 
@@ -106,7 +115,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-beta14"
+            versionNameSuffix = "-rc01"
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
