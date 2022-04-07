@@ -59,6 +59,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
@@ -638,7 +639,8 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         }
     }
 
-    private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : AbstractComposeView(this) {
+    private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {
+        val composeView: ComposeView
         val extractEditText: ExtractEditText
 
         init {
@@ -652,10 +654,14 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                 it.gravity = Gravity.TOP
                 it.isVerticalScrollBarEnabled = true
             }
+            addView(extractEditText)
+
+            composeView = ComposeView(context).also { it.setContent { Content() } }
+            addView(composeView)
         }
 
         @Composable
-        override fun Content() {
+        fun Content() {
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
@@ -724,10 +730,11 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         }
 
         override fun onAttachedToWindow() {
+            removeView(extractEditText)
             super.onAttachedToWindow()
             try {
                 (parent as LinearLayout).let { extractEditLayout ->
-                    extractEditLayout.layoutParams = FrameLayout.LayoutParams(
+                    extractEditLayout.layoutParams = LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT,
                     ).also { it.setMargins(0, 0, 0, 0) }
