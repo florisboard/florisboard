@@ -63,7 +63,7 @@ class TextKeyData(
     override fun asString(isForDisplay: Boolean): String {
         return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
-                if (Unicode.isCombiningChar(code) && !label.startsWith("◌")) {
+                if (Unicode.isNonSpacingMark(code) && !label.startsWith("◌")) {
                     append("◌")
                 }
                 append(label)
@@ -515,7 +515,7 @@ class AutoTextKeyData(
     override fun asString(isForDisplay: Boolean): String {
         return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
-                if (Unicode.isCombiningChar(code) && !label.startsWith("◌")) {
+                if (Unicode.isNonSpacingMark(code) && !label.startsWith("◌")) {
                     append("◌")
                 }
                 append(label)
