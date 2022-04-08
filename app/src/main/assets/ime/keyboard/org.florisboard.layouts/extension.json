@@ -136,6 +136,12 @@
         "direction": "ltr"
       },
       {
+        "id": "german2",
+        "label": "German (GBoard)",
+        "authors": [ "M-Koushan" ],
+        "direction": "rtl"
+      },
+      {
         "id": "greek",
         "label": "Ελληνικά",
         "authors": [ "tsiflimagas" ],
