@@ -810,7 +810,7 @@ private class TextKeyboardLayoutController(
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
-                        if (selection.isValid) {
+                        if (selection.isValid && event.absUnitCountX <= 0) {
                             selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
                         }
                     }
