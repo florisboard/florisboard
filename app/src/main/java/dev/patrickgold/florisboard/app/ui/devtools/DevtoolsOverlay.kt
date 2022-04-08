@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.ui.devtools
 import android.view.textservice.SuggestionsInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalContentColor
@@ -50,12 +51,8 @@ private val CardBackground = Color.Black.copy(0.6f)
 private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
 
 @Composable
-fun DevtoolsOverlay(
-    modifier: Modifier = Modifier,
-) {
+fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
-    val context = LocalContext.current
-    val clipboardManager by context.clipboardManager()
 
     val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
@@ -66,16 +63,27 @@ fun DevtoolsOverlay(
     ) {
         Column(modifier = modifier) {
             if (showPrimaryClip) {
-                val primaryClip by clipboardManager.primaryClip.observeAsState()
-                Text(
-                    text = primaryClip.toString(),
-                    color = Color.White,
-                )
+                DevtoolsClipboardOverlay()
             }
             if (showSpellingOverlay) {
                 DevtoolsSpellingOverlay()
             }
         }
+    }
+}
+
+@Composable
+private fun DevtoolsClipboardOverlay() {
+    val context = LocalContext.current
+    val clipboardManager by context.clipboardManager()
+
+    DevtoolsOverlayBox(title = "Clipboard overlay") {
+        val primaryClip by clipboardManager.primaryClip.observeAsState()
+        Text(
+            modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
+            text = primaryClip.toString(),
+            color = Color.White,
+        )
     }
 }
 
@@ -87,18 +95,8 @@ private fun DevtoolsSpellingOverlay() {
     val debugOverlayVersion by spellingManager.debugOverlayVersion.observeAsNonNullState()
     val suggestionsInfos = remember(debugOverlayVersion) { spellingManager.debugOverlaySuggestionsInfos.snapshot() }
 
-    Column(
-        modifier = Modifier
-            .padding(all = 8.dp)
-            .fillMaxWidth()
-            .background(CardBackground),
-    ) {
-        val sortedEntries = suggestionsInfos.entries.sortedByDescending { it.key }
-        Text(
-            modifier = Modifier.padding(all = 8.dp),
-            text = "Spelling overlay (${sortedEntries.size})",
-            fontSize = 14.sp,
-        )
+    val sortedEntries = suggestionsInfos.entries.sortedByDescending { it.key }
+    DevtoolsOverlayBox(title = "Spelling overlay (${sortedEntries.size})") {
         for ((timestamp, wordInfoPair) in sortedEntries) {
             val (word, info) = wordInfoPair
             val isTypo = (info.suggestionsAttributes and SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO) > 0
@@ -129,5 +127,25 @@ private fun DevtoolsSpellingOverlay() {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun DevtoolsOverlayBox(
+    title: String,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .padding(all = 8.dp)
+            .fillMaxWidth()
+            .background(CardBackground),
+    ) {
+        Text(
+            modifier = Modifier.padding(all = 8.dp),
+            text = title,
+            fontSize = 14.sp,
+        )
+        content()
     }
 }
