@@ -124,7 +124,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             return
         }
 
-        this.words = words.keys
+        this.words = words.keys.toSet()
         this.wordFrequencies = words
 
         this.wordDataSubtype = subtype

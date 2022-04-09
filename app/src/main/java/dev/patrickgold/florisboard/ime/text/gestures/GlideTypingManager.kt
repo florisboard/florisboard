@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
+import dev.patrickgold.florisboard.common.kotlin.guardedByLock
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
@@ -12,7 +13,7 @@ import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -22,7 +23,7 @@ import kotlin.math.min
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
  * with [GlideTypingClassifier].
  */
-class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
+class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
     }
@@ -33,9 +34,10 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
     private var lastTime = System.currentTimeMillis()
-    private val wordDataCache = hashMapOf<String, Int>()
+    private val wordDataCache = guardedByLock { hashMapOf<String, Int>() }
 
     override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
@@ -72,15 +74,16 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
      * Set the word data for the internal gesture classifier
      */
     fun setWordData(subtype: Subtype) {
-        launch(Dispatchers.Default) {
-            if (wordDataCache.isEmpty()) {
-                // FIXME: get this info from dictionary.
-                val data = assetManager.loadTextAsset(FlorisRef.assets("ime/dict/data.json"))
-                        .getOrThrow()
-                val json = JSONObject(data)
-                wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+        scope.launch(Dispatchers.Default) {
+            wordDataCache.withLock { wordDataCache ->
+                if (wordDataCache.isEmpty()) {
+                    // FIXME: get this info from dictionary.
+                    val data = assetManager.loadTextAsset(FlorisRef.assets("ime/dict/data.json")).getOrThrow()
+                    val json = JSONObject(data)
+                    wordDataCache.putAll(json.keys().asSequence().map { it to json.getInt(it) })
+                }
+                glideTypingClassifier.setWordData(wordDataCache, subtype)
             }
-            glideTypingClassifier.setWordData(wordDataCache, subtype)
         }
     }
 
@@ -98,7 +101,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
             return
         }
 
-        launch(Dispatchers.Default) {
+        scope.launch(Dispatchers.Default) {
             val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
