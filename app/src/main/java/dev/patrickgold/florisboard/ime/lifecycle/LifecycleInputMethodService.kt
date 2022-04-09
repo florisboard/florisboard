@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.lifecycle
 
 import android.inputmethodservice.InputMethodService
-import android.view.View
 import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -68,6 +67,18 @@ open class LifecycleInputMethodService : InputMethodService(),
         ViewTreeLifecycleOwner.set(decorView, this)
         ViewTreeViewModelStoreOwner.set(decorView, this)
         ViewTreeSavedStateRegistryOwner.set(decorView, this)
+    }
+
+    @CallSuper
+    override fun onWindowShown() {
+        super.onWindowShown()
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    }
+
+    @CallSuper
+    override fun onWindowHidden() {
+        super.onWindowHidden()
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     }
 
     @CallSuper
