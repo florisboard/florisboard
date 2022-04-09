@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.ui.components.DisposableLifecycleEffect
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.common.Pointer
@@ -139,14 +140,27 @@ fun TextKeyboardLayout(
     }
     val touchEventChannel = remember { Channel<MotionEvent>(64) }
 
+    fun resetAllKeys() {
+        val event = MotionEvent.obtain(0L, 0L, MotionEvent.ACTION_CANCEL, 0f, 0f, 0)
+        controller.onTouchEventInternal(event)
+        controller.popupUiController.hide()
+        event.recycle()
+    }
+
     DisposableEffect(Unit) {
         controller.glideTypingDetector.registerListener(controller)
         controller.glideTypingDetector.registerListener(glideTypingManager)
         onDispose {
             controller.glideTypingDetector.unregisterListener(controller)
             controller.glideTypingDetector.unregisterListener(glideTypingManager)
+            resetAllKeys()
         }
     }
+
+    DisposableLifecycleEffect(
+        onResume = { /* Do nothing */ },
+        onPause = { resetAllKeys() },
+    )
 
     BoxWithConstraints(
         modifier = modifier
