@@ -145,6 +145,11 @@ fun TextKeyboardLayout(
         onDispose {
             controller.glideTypingDetector.unregisterListener(controller)
             controller.glideTypingDetector.unregisterListener(glideTypingManager)
+
+            val event = MotionEvent.obtain(0L, 0L, MotionEvent.ACTION_CANCEL, 0f, 0f, 0)
+            controller.onTouchEventInternal(event)
+            controller.popupUiController.hide()
+            event.recycle()
         }
     }
 
