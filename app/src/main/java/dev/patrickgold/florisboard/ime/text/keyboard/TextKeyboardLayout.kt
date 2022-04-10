@@ -141,10 +141,14 @@ fun TextKeyboardLayout(
     val touchEventChannel = remember { Channel<MotionEvent>(64) }
 
     fun resetAllKeys() {
-        val event = MotionEvent.obtain(0L, 0L, MotionEvent.ACTION_CANCEL, 0f, 0f, 0)
-        controller.onTouchEventInternal(event)
-        controller.popupUiController.hide()
-        event.recycle()
+        try {
+            val event = MotionEvent.obtain(0L, 0L, MotionEvent.ACTION_CANCEL, 0f, 0f, 0)
+            controller.onTouchEventInternal(event)
+            controller.popupUiController.hide()
+            event.recycle()
+        } catch (e: Throwable) {
+            // Ignore
+        }
     }
 
     DisposableEffect(Unit) {
