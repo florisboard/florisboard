@@ -127,9 +127,9 @@ android {
         named("release").configure {
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_release")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_release_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_release_foreground")
+            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
             resValue("string", "floris_app_name", "@string/app_name")
         }
     }
