@@ -22,7 +22,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener

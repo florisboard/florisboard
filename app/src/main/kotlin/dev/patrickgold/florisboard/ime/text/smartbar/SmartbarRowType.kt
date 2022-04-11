@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**

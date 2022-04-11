@@ -1,7 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.ime.core.Subtype

@@ -59,9 +59,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.app.ui.components.DisposableLifecycleEffect
-import dev.patrickgold.florisboard.app.ui.components.safeTimes
+import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.lib.compose.DisposableLifecycleEffect
+import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.FlorisRect
 import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap

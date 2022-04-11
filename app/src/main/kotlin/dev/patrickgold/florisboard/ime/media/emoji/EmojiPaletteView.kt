@@ -77,10 +77,10 @@ import androidx.emoji2.widget.EmojiTextView
 import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
-import dev.patrickgold.florisboard.app.ui.components.safeTimes
+import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.compose.florisScrollbar
+import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent

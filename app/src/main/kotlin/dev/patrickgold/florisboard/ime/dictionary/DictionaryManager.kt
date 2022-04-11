@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
 import androidx.room.Room
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.ime.core.Subtype

@@ -23,8 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
-import dev.patrickgold.florisboard.app.ui.ext.EditorAction
-import dev.patrickgold.florisboard.app.ui.settings.advanced.Backup
+import dev.patrickgold.florisboard.app.ext.EditorAction
+import dev.patrickgold.florisboard.app.settings.advanced.Backup
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.lib.android.query
 import dev.patrickgold.florisboard.lib.android.readToFile

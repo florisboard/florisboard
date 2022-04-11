@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import androidx.lifecycle.LiveData
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.SerialName

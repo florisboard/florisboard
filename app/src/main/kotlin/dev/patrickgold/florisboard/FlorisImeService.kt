@@ -69,11 +69,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.FlorisAppActivity
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
-import dev.patrickgold.florisboard.app.ui.components.FlorisButton
-import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
-import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsOverlay
+import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
+import dev.patrickgold.florisboard.lib.compose.FlorisButton
+import dev.patrickgold.florisboard.lib.compose.SystemUiIme
+import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.lib.ViewUtils
 import dev.patrickgold.florisboard.lib.android.AndroidInternalR
 import dev.patrickgold.florisboard.lib.android.AndroidVersion

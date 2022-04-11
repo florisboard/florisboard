@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.lib.kotlin.DeferredResult

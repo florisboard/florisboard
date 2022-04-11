@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.Pointer

@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.lib
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.kotlin.CurlyArg
 import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import kotlin.contracts.contract

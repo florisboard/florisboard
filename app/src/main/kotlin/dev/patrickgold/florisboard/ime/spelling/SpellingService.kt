@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.spelling
 import android.content.Context
 import android.util.LruCache
 import android.view.textservice.SuggestionsInfo
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.spellingManager

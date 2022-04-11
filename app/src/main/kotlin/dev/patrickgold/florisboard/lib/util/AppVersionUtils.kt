@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.lib.util
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.prefs.AppPrefs
+import dev.patrickgold.florisboard.app.AppPrefs
 
 object AppVersionUtils {
     private fun getRawVersionName(context: Context): String {

@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import dev.patrickgold.florisboard.app.prefs.AppPrefs
+import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

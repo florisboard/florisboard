@@ -34,7 +34,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.ui.components.safeTimes
+import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
