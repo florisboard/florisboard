@@ -45,7 +45,14 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
+import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
@@ -53,16 +60,9 @@ import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.lib.android.showLongToast
-import dev.patrickgold.florisboard.lib.kotlin.resultOk
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.io.FileRegistry
-import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
     val id: String,

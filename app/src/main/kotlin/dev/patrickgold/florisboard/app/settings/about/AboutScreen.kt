@@ -33,13 +33,13 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.florisboard.lib.android.stringRes
+import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.Preference
 
 @Composable

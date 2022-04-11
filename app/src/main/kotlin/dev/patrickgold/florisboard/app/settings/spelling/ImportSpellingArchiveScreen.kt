@@ -42,15 +42,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingExtensionEditor
+import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisStep
 import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisStepState
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtensionEditor
-import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.spellingManager
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 

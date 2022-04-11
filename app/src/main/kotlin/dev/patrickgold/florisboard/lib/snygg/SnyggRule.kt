@@ -17,10 +17,10 @@
 package dev.patrickgold.florisboard.lib.snygg
 
 import androidx.compose.runtime.saveable.Saver
-import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind

@@ -16,13 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.spelling
 
+import dev.patrickgold.florisboard.ime.nlp.Word
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.NativeInstanceWrapper
 import dev.patrickgold.florisboard.lib.NativePtr
 import dev.patrickgold.florisboard.lib.NativeStr
 import dev.patrickgold.florisboard.lib.toJavaString
 import dev.patrickgold.florisboard.lib.toNativeStr
-import dev.patrickgold.florisboard.ime.nlp.Word
 
 @JvmInline
 value class SpellingDict private constructor(

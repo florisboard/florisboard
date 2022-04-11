@@ -24,13 +24,16 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.lib.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
-import dev.patrickgold.florisboard.ime.clipboard.provider.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

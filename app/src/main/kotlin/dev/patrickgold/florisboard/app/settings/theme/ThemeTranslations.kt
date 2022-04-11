@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.app.settings.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.snygg.Snygg
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.snygg.SnyggRule

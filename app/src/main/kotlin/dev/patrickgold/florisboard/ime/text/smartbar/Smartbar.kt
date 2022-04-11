@@ -49,12 +49,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
-import dev.patrickgold.florisboard.lib.compose.horizontalTween
-import dev.patrickgold.florisboard.lib.compose.verticalTween
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
+import dev.patrickgold.florisboard.lib.compose.horizontalTween
+import dev.patrickgold.florisboard.lib.compose.verticalTween
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow

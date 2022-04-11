@@ -16,9 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.dictionary
 
-import dev.patrickgold.florisboard.lib.io.Asset
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.nlp.Word
+import dev.patrickgold.florisboard.lib.io.Asset
 
 /**
  * Standardized dictionary interface for interacting with dictionaries.

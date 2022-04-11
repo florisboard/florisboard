@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.text.smartbar.Smartbar
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 
 @Composable
 fun TextInputLayout(

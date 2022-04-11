@@ -18,8 +18,8 @@ package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.stringRes
 
 @Composable
 fun ExtensionListScreen() = FlorisScreen {

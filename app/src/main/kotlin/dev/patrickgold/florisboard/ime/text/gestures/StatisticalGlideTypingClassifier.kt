@@ -10,8 +10,13 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import java.text.Normalizer
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.HashMap
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.exp
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 private fun TextKey.baseCode(): Int {
     return (data as? KeyData)?.code ?: KeyCode.UNSPECIFIED

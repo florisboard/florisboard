@@ -52,9 +52,9 @@ import dev.patrickgold.florisboard.app.settings.spelling.ImportSpellingArchiveSc
 import dev.patrickgold.florisboard.app.settings.spelling.ManageSpellingDictsScreen
 import dev.patrickgold.florisboard.app.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.settings.spelling.SpellingScreen
-import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
+import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
 import dev.patrickgold.florisboard.app.splash.SplashScreen

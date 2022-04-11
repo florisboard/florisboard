@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.lib.io
 
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.io.FsFile
 
 object FileRegistry {
     val BackupArchive = Entry(

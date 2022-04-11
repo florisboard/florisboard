@@ -17,13 +17,13 @@
 package dev.patrickgold.florisboard.lib.ext
 
 import androidx.core.text.trimmedLength
-import dev.patrickgold.florisboard.lib.ValidationRule
-import dev.patrickgold.florisboard.lib.validate
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.lib.ValidationRule
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggPercentShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.validate
 
 // TODO: (priority=medium)
 //  make all strings available for localize

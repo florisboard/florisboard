@@ -41,20 +41,18 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.SystemUiApp
-import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.hideAppIcon
 import dev.patrickgold.florisboard.lib.android.setLocale
 import dev.patrickgold.florisboard.lib.android.showAppIcon
+import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
+import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
+import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
+import dev.patrickgold.florisboard.lib.compose.SystemUiApp
+import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 

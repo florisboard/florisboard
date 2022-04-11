@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.lib.io
 import android.content.Context
 import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
 import dev.patrickgold.florisboard.lib.kotlin.resultOk
-import dev.patrickgold.florisboard.lib.io.FlorisRef
 import java.io.File
 
 object FsFileUtils {

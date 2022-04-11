@@ -38,17 +38,17 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.lib.android.AndroidSettings
+import dev.patrickgold.florisboard.lib.android.launchActivity
+import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisStep
 import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisStepState
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
-import dev.patrickgold.florisboard.lib.android.AndroidSettings
-import dev.patrickgold.florisboard.lib.android.launchActivity
-import dev.patrickgold.florisboard.lib.android.launchUrl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 

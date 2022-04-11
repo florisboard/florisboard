@@ -21,10 +21,10 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.view.inputmethod.EditorInfo
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.LiveData
-import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

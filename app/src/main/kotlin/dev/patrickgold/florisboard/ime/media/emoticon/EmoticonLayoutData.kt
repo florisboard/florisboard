@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.media.emoticon
 
-import dev.patrickgold.florisboard.lib.io.AssetManager
-import dev.patrickgold.florisboard.lib.io.FlorisRef
 import kotlinx.serialization.Serializable
 
 typealias EmoticonLayoutDataArrangement = List<List<EmoticonKeyData>>

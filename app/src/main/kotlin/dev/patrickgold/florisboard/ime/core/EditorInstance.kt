@@ -59,8 +59,8 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
-import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.lib.util.debugSummarize
+import dev.patrickgold.florisboard.subtypeManager
 
 class EditorInstance(private val ims: InputMethodService) {
     companion object {

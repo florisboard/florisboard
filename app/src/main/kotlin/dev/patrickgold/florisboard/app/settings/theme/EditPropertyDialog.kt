@@ -57,7 +57,7 @@ import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.compose.DpSizeSaver
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
@@ -65,12 +65,11 @@ import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.florisboard.lib.kotlin.toStringWithoutDotZero
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -88,6 +87,7 @@ import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggValueEncoder
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggVarValueEncoders
+import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterialUi
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker

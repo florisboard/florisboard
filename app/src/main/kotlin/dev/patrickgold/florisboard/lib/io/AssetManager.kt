@@ -18,9 +18,6 @@ package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.lib.kotlin.resultErr
-import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
-import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
@@ -31,6 +28,9 @@ import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.lib.kotlin.resultErr
+import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
+import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString

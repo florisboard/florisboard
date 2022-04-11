@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.util.ViewUtils
-import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
+import dev.patrickgold.florisboard.lib.observeAsTransformingState
+import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
