@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
-import dev.patrickgold.florisboard.common.android.launchUrl
+import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 

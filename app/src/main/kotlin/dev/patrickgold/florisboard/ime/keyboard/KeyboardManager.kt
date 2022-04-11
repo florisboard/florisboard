@@ -28,11 +28,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.android.showShortToast
-import dev.patrickgold.florisboard.common.observeAsNonNullState
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.lib.InputMethodUtils
+import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode

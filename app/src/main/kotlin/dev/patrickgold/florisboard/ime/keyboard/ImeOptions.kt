@@ -19,7 +19,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.view.inputmethod.EditorInfo
-import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
 
 /**
  * Class which holds the same information as an [EditorInfo.imeOptions] int but more accessible and

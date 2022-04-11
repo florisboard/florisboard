@@ -44,8 +44,8 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.lib.ViewUtils
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
@@ -60,7 +60,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.decodeFromString
 import kotlin.properties.Delegates
-
 
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the

@@ -38,14 +38,6 @@ import androidx.core.view.inputmethod.InputContentInfoCompat
 import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.common.android.showShortToast
-import dev.patrickgold.florisboard.common.kotlin.tryOrNull
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -59,8 +51,16 @@ import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.florisboard.util.debugSummarize
+import dev.patrickgold.florisboard.lib.util.debugSummarize
 
 class EditorInstance(private val ims: InputMethodService) {
     companion object {

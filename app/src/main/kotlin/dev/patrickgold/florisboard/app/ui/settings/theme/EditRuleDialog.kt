@@ -70,11 +70,11 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
-import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.common.android.showShortToast
-import dev.patrickgold.florisboard.common.android.stringRes
-import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.InputMethodUtils
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.android.stringRes
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator

@@ -20,11 +20,11 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.common.kotlin.DeferredResult
-import dev.patrickgold.florisboard.common.kotlin.runCatchingAsync
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.debug.flogWarning
+import dev.patrickgold.florisboard.lib.kotlin.DeferredResult
+import dev.patrickgold.florisboard.lib.kotlin.runCatchingAsync
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.popup.PopupMapping

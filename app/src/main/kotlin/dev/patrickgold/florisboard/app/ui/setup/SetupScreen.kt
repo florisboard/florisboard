@@ -45,10 +45,10 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisStep
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepLayout
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepState
-import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.android.AndroidSettings
-import dev.patrickgold.florisboard.common.android.launchActivity
-import dev.patrickgold.florisboard.common.android.launchUrl
+import dev.patrickgold.florisboard.lib.InputMethodUtils
+import dev.patrickgold.florisboard.lib.android.AndroidSettings
+import dev.patrickgold.florisboard.lib.android.launchActivity
+import dev.patrickgold.florisboard.lib.android.launchUrl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 

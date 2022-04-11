@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
-import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.lib.FlorisLocale
 
 @Suppress("RegExpRedundantEscape")
 object TextProcessor {

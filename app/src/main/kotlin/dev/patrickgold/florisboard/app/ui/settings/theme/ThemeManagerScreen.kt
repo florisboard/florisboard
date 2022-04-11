@@ -49,8 +49,8 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent

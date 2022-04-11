@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.res.ext
 
 import androidx.core.text.trimmedLength
-import dev.patrickgold.florisboard.common.ValidationRule
-import dev.patrickgold.florisboard.common.validate
+import dev.patrickgold.florisboard.lib.ValidationRule
+import dev.patrickgold.florisboard.lib.validate
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue

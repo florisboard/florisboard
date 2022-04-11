@@ -81,8 +81,8 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.florisScrollbar
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
-import dev.patrickgold.florisboard.common.android.showShortToast
-import dev.patrickgold.florisboard.common.kotlin.tryOrNull
+import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme

@@ -65,11 +65,11 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisIconButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisTextButton
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
-import dev.patrickgold.florisboard.common.ValidationResult
-import dev.patrickgold.florisboard.common.kotlin.curlyFormat
-import dev.patrickgold.florisboard.common.kotlin.toStringWithoutDotZero
-import dev.patrickgold.florisboard.common.rememberValidationResult
-import dev.patrickgold.florisboard.common.stripUnicodeCtrlChars
+import dev.patrickgold.florisboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.kotlin.toStringWithoutDotZero
+import dev.patrickgold.florisboard.lib.rememberValidationResult
+import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
 import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpec

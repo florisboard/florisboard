@@ -51,7 +51,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedButton
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.common.android.showLongToast
+import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl

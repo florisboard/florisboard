@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.core
 
-import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.LayoutTypeId
 import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer

@@ -16,12 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.spelling
 
-import dev.patrickgold.florisboard.common.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.common.NativeInstanceWrapper
-import dev.patrickgold.florisboard.common.NativePtr
-import dev.patrickgold.florisboard.common.NativeStr
-import dev.patrickgold.florisboard.common.toJavaString
-import dev.patrickgold.florisboard.common.toNativeStr
+import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.lib.NativeInstanceWrapper
+import dev.patrickgold.florisboard.lib.NativePtr
+import dev.patrickgold.florisboard.lib.NativeStr
+import dev.patrickgold.florisboard.lib.toJavaString
+import dev.patrickgold.florisboard.lib.toNativeStr
 import dev.patrickgold.florisboard.ime.nlp.Word
 
 @JvmInline

@@ -41,8 +41,8 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisSimpleCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
-import dev.patrickgold.florisboard.common.android.AndroidSettings
-import dev.patrickgold.florisboard.common.android.launchActivity
+import dev.patrickgold.florisboard.lib.android.AndroidSettings
+import dev.patrickgold.florisboard.lib.android.launchActivity
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreference

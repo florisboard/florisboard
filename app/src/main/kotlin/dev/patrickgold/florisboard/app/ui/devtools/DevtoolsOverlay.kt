@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.spellingManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.text.SimpleDateFormat

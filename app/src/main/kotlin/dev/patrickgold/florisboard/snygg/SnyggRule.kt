@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.snygg
 
 import androidx.compose.runtime.saveable.Saver
-import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi

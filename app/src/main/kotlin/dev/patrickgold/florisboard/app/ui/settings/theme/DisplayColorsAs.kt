@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.app.ui.settings.theme
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**

@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.ui.settings.theme.DisplayKbdAfterDialogs
-import dev.patrickgold.florisboard.common.android.isOrientationPortrait
-import dev.patrickgold.florisboard.common.observeAsTransformingState
+import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
+import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
@@ -43,7 +43,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.snygg.SnyggLevel
-import dev.patrickgold.florisboard.util.VersionName
+import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.observeAsState

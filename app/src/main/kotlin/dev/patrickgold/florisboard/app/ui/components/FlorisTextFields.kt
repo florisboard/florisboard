@@ -52,7 +52,7 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.ui.theme.outline
-import dev.patrickgold.florisboard.common.ValidationResult
+import dev.patrickgold.florisboard.lib.ValidationResult
 
 @Composable
 fun FlorisOutlinedTextField(

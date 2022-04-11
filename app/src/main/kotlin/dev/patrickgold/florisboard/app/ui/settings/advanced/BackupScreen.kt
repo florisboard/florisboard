@@ -40,8 +40,8 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.android.writeFromFile
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.android.writeFromFile
 import dev.patrickgold.florisboard.res.FileRegistry
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.cache.CacheManager

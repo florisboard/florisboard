@@ -74,8 +74,8 @@ import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.app.ui.components.rememberPreviewFieldController
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionComponentView
-import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.rememberValidationResult
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor

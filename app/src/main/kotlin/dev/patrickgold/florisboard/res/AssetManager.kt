@@ -18,9 +18,9 @@ package dev.patrickgold.florisboard.res
 
 import android.content.Context
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.common.kotlin.resultErr
-import dev.patrickgold.florisboard.common.kotlin.resultErrStr
-import dev.patrickgold.florisboard.common.kotlin.resultOk
+import dev.patrickgold.florisboard.lib.kotlin.resultErr
+import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
+import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector

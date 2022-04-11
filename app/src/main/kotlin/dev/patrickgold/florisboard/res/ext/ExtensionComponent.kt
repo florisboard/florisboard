@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.res.ext
 
 import androidx.compose.runtime.saveable.Saver
-import dev.patrickgold.florisboard.common.kotlin.tryOrNull
+import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable

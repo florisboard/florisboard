@@ -23,11 +23,11 @@ import android.view.textservice.SuggestionsInfo
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.android.read
-import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.debug.flogInfo
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.android.read
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer

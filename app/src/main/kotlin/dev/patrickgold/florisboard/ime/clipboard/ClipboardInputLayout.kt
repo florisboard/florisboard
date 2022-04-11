@@ -81,11 +81,11 @@ import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.components.safeTimes
 import dev.patrickgold.florisboard.app.ui.theme.Green500
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.common.android.AndroidKeyguardManager
-import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.common.android.showShortToast
-import dev.patrickgold.florisboard.common.android.systemService
-import dev.patrickgold.florisboard.common.observeAsNonNullState
+import dev.patrickgold.florisboard.lib.android.AndroidKeyguardManager
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.android.systemService
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem

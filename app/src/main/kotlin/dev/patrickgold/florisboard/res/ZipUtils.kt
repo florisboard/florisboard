@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.res
 import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.common.android.write
+import dev.patrickgold.florisboard.lib.android.write
 import dev.patrickgold.florisboard.res.io.FsDir
 import dev.patrickgold.florisboard.res.io.FsFile
 import dev.patrickgold.florisboard.res.io.FsFileUtils

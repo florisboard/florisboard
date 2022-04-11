@@ -16,10 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.Unicode
-import dev.patrickgold.florisboard.common.kotlin.lowercase
-import dev.patrickgold.florisboard.common.kotlin.uppercase
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.Unicode
+import dev.patrickgold.florisboard.lib.kotlin.lowercase
+import dev.patrickgold.florisboard.lib.kotlin.uppercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData

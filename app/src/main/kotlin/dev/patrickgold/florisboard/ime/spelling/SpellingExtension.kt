@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.spelling
 
 import android.content.Context
-import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor

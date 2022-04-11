@@ -16,8 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
-import dev.patrickgold.florisboard.common.NativeInstanceWrapper
-import dev.patrickgold.florisboard.common.NativePtr
+import dev.patrickgold.florisboard.lib.NativeInstanceWrapper
+import dev.patrickgold.florisboard.lib.NativePtr
 
 @JvmInline
 value class SuggestionList private constructor(

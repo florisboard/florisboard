@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.android.launchUrl
+import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 

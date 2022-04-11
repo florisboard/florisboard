@@ -50,12 +50,12 @@ import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUiApp
 import dev.patrickgold.florisboard.app.ui.components.rememberPreviewFieldController
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.android.AndroidVersion
-import dev.patrickgold.florisboard.common.android.hideAppIcon
-import dev.patrickgold.florisboard.common.android.setLocale
-import dev.patrickgold.florisboard.common.android.showAppIcon
-import dev.patrickgold.florisboard.util.AppVersionUtils
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.hideAppIcon
+import dev.patrickgold.florisboard.lib.android.setLocale
+import dev.patrickgold.florisboard.lib.android.showAppIcon
+import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {

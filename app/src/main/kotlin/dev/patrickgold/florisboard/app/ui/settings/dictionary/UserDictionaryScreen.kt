@@ -49,11 +49,11 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.rippleClickable
 import dev.patrickgold.florisboard.app.ui.settings.theme.DialogProperty
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.android.launchActivity
-import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.android.stringRes
-import dev.patrickgold.florisboard.common.rememberValidationResult
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.android.launchActivity
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.android.stringRes
+import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MAX
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MIN

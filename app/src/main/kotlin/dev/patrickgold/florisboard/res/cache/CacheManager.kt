@@ -26,8 +26,8 @@ import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.app.ui.ext.EditorAction
 import dev.patrickgold.florisboard.app.ui.settings.advanced.Backup
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.common.android.query
-import dev.patrickgold.florisboard.common.android.readToFile
+import dev.patrickgold.florisboard.lib.android.query
+import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.res.FileRegistry

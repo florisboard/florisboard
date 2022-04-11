@@ -22,8 +22,8 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.common.kotlin.tryOrNull
-import dev.patrickgold.florisboard.debug.*
+import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
+import dev.patrickgold.florisboard.lib.devtools.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

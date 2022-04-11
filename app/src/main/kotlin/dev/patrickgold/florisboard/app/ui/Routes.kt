@@ -58,7 +58,7 @@ import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeManagerScreenActio
 import dev.patrickgold.florisboard.app.ui.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 import dev.patrickgold.florisboard.app.ui.splash.SplashScreen
-import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 
 @Suppress("FunctionName")
 object Routes {

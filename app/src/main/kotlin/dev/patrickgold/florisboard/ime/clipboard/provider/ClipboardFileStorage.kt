@@ -18,9 +18,9 @@ package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.common.android.readToFile
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.lib.android.readToFile
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.res.io.FsFile
 import dev.patrickgold.florisboard.res.io.subFile
 

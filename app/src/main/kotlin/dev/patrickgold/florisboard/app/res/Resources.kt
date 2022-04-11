@@ -27,8 +27,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.common.kotlin.CurlyArg
-import dev.patrickgold.florisboard.common.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.kotlin.CurlyArg
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 
 private val LocalResourcesContext = staticCompositionLocalOf<Context> {
     error("resources context not initialized!!")

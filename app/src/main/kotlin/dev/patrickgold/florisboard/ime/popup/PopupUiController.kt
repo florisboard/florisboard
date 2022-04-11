@@ -29,8 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import dev.patrickgold.florisboard.common.FlorisRect
-import dev.patrickgold.florisboard.common.toIntOffset
+import dev.patrickgold.florisboard.lib.FlorisRect
+import dev.patrickgold.florisboard.lib.toIntOffset
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key

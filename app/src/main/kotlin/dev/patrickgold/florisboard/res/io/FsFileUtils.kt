@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.res.io
 
 import android.content.Context
-import dev.patrickgold.florisboard.common.kotlin.resultErrStr
-import dev.patrickgold.florisboard.common.kotlin.resultOk
+import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
+import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import dev.patrickgold.florisboard.res.FlorisRef
 import java.io.File
 

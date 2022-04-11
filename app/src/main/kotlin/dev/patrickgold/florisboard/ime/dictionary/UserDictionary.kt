@@ -34,11 +34,11 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.ValidationRule
-import dev.patrickgold.florisboard.common.android.readText
-import dev.patrickgold.florisboard.common.android.writeText
-import dev.patrickgold.florisboard.common.kotlin.tryOrNull
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.ValidationRule
+import dev.patrickgold.florisboard.lib.android.readText
+import dev.patrickgold.florisboard.lib.android.writeText
+import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 
 private const val WORDS_TABLE = "words"

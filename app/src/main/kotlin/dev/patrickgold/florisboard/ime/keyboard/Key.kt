@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import dev.patrickgold.florisboard.common.FlorisRect
+import dev.patrickgold.florisboard.lib.FlorisRect
 
 /**
  * Abstract class describing the smallest computed unit in a computed keyboard. Each key represents exactly one key

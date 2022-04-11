@@ -27,7 +27,7 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import java.util.*
 

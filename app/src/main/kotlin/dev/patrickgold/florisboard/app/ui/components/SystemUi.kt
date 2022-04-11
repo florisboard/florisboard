@@ -36,7 +36,7 @@ import com.google.accompanist.systemuicontroller.SystemUiController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.solidColor
-import dev.patrickgold.florisboard.common.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
 
 @Composable
 fun SystemUiApp() {

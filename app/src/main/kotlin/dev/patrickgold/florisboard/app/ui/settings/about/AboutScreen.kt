@@ -38,8 +38,8 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.common.android.launchUrl
-import dev.patrickgold.florisboard.common.android.stringRes
+import dev.patrickgold.florisboard.lib.android.launchUrl
+import dev.patrickgold.florisboard.lib.android.stringRes
 import dev.patrickgold.jetpref.datastore.ui.Preference
 
 @Composable

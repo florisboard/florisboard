@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
-import dev.patrickgold.florisboard.common.kotlin.toStringWithoutDotZero
+import dev.patrickgold.florisboard.lib.kotlin.toStringWithoutDotZero
 
 interface SnyggValueSpec {
     val id: String?

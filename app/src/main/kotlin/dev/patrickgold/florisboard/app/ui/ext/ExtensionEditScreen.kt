@@ -59,9 +59,9 @@ import dev.patrickgold.florisboard.app.ui.settings.theme.DialogProperty
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.app.ui.theme.outline
 import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.common.ValidationResult
-import dev.patrickgold.florisboard.common.android.showLongToast
-import dev.patrickgold.florisboard.common.rememberValidationResult
+import dev.patrickgold.florisboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
