@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg
+package dev.patrickgold.florisboard.lib.snygg
 
-import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
-import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValueEncoder
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggExplicitInheritValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggValueEncoder
 
 open class SnyggSpec(init: SnyggSpecBuilder.() -> Unit) {
     val elements: Map<String, SnyggPropertySetSpec>

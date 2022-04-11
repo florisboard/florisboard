@@ -90,8 +90,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.snygg.SnyggLevel
-import dev.patrickgold.florisboard.snygg.SnyggRule
+import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
+import dev.patrickgold.florisboard.lib.snygg.SnyggRule
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 private val TransparentTextSelectionColors = TextSelectionColors(

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg.value
+package dev.patrickgold.florisboard.lib.snygg.value
 
 import androidx.compose.ui.graphics.Color
 import kotlin.math.roundToInt

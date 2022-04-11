@@ -16,19 +16,19 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import dev.patrickgold.florisboard.snygg.Snygg
-import dev.patrickgold.florisboard.snygg.SnyggLevel
-import dev.patrickgold.florisboard.snygg.SnyggPropertySetSpecBuilder
-import dev.patrickgold.florisboard.snygg.SnyggSpec
-import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.Snygg
+import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
+import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpecBuilder
+import dev.patrickgold.florisboard.lib.snygg.SnyggSpec
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCircleShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRectangleShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
 
 fun SnyggPropertySetSpecBuilder.background() {
     property(

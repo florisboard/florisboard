@@ -20,10 +20,10 @@ import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.lib.ValidationRule
 import dev.patrickgold.florisboard.lib.validate
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.snygg.value.SnyggDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggPercentShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggPercentShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
 
 // TODO: (priority=medium)
 //  make all strings available for localize
@@ -164,7 +164,7 @@ object ExtensionValidation {
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = "Please enter a color string")
-                dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
                     resultInvalid(error = "Please enter a valid color string")
                 }
                 else -> resultValid()

@@ -55,9 +55,9 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.florisboard.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.snygg.ui.solidColor
-import dev.patrickgold.florisboard.snygg.ui.spSize
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable

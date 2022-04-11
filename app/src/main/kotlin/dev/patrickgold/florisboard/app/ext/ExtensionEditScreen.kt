@@ -86,7 +86,7 @@ import dev.patrickgold.florisboard.res.ext.ExtensionValidation
 import dev.patrickgold.florisboard.res.ext.validate
 import dev.patrickgold.florisboard.res.io.subFile
 import dev.patrickgold.florisboard.res.io.writeJson
-import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
+import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog

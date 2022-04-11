@@ -42,7 +42,7 @@ import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.snygg.SnyggLevel
+import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.observeAsState

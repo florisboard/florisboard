@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg
+package dev.patrickgold.florisboard.lib.snygg
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R

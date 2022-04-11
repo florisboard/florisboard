@@ -94,14 +94,14 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.snygg.SnyggPropertySet
-import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.snygg.ui.snyggClip
-import dev.patrickgold.florisboard.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.snygg.ui.solidColor
-import dev.patrickgold.florisboard.snygg.ui.spSize
+import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
+import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
+import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg.value
+package dev.patrickgold.florisboard.lib.snygg.value
 
 private const val RelPath = "relPath"
 private const val ImageFunction = "image"

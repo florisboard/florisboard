@@ -35,14 +35,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
-import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.checkeredBackground
 
 object SnyggValueIcon {

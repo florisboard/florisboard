@@ -55,10 +55,10 @@ import dev.patrickgold.florisboard.lib.compose.verticalTween
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
+import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 private const val AnimationDuration = 200

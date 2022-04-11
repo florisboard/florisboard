@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.snygg.value
+package dev.patrickgold.florisboard.lib.snygg.value
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp

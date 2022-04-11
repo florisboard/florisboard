@@ -48,10 +48,10 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.ViewUtils
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.snygg.SnyggStylesheetJsonConfig
-import dev.patrickgold.florisboard.snygg.ui.solidColor
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
+import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

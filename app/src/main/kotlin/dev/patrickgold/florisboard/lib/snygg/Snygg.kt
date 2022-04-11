@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg
+package dev.patrickgold.florisboard.lib.snygg
 
 /**
  * Main object for defining all known Snygg property names.

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg
+package dev.patrickgold.florisboard.lib.snygg
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
-import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
-import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValue
-import dev.patrickgold.florisboard.snygg.value.SnyggVarValueEncoders
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggVarValueEncoders
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.MapSerializer

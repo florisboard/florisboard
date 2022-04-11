@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg.ui
+package dev.patrickgold.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
-import dev.patrickgold.florisboard.snygg.SnyggPropertySet
-import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggValue
 
 fun Modifier.snyggBackground(
     style: SnyggPropertySet,

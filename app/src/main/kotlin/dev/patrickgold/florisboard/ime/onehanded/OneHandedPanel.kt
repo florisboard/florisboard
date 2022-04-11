@@ -31,8 +31,8 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
-import dev.patrickgold.florisboard.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 
 @Composable
 fun RowScope.OneHandedPanel(

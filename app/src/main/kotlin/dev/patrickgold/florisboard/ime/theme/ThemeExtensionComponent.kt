@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.snygg.SnyggStylesheetEditor
+import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

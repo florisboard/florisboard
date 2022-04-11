@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.snygg
+package dev.patrickgold.florisboard.lib.snygg
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import dev.patrickgold.florisboard.snygg.value.RgbaColor
-import dev.patrickgold.florisboard.snygg.value.SnyggCircleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerPercentShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggDefinedVarValue
-import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggImageRefValue
-import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
-import dev.patrickgold.florisboard.snygg.value.SnyggPercentageSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerPercentShapeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
-import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
-import dev.patrickgold.florisboard.snygg.value.SnyggValue
+import dev.patrickgold.florisboard.lib.snygg.value.RgbaColor
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCircleShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggImageRefValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggPercentageSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRectangleShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggValue
 
 class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
     val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue

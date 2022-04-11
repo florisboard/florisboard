@@ -43,10 +43,10 @@ import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
+import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
+import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 private val SmartbarActionPadding = 4.dp
