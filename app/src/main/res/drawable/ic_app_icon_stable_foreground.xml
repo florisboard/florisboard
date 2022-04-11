@@ -14,8 +14,8 @@
           android:centerX="54.142"
           android:centerY="48.769"
           android:type="radial">
-        <item android:offset="0" android:color="#FFFEBE01"/>
-        <item android:offset="1" android:color="#FFFE7901"/>
+        <item android:offset="0" android:color="#FF55E032"/>
+        <item android:offset="1" android:color="#FF227C53"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -29,8 +29,8 @@
           android:centerX="54.142"
           android:centerY="48.769"
           android:type="radial">
-        <item android:offset="0" android:color="#FFFEBE01"/>
-        <item android:offset="1" android:color="#FFFE7901"/>
+        <item android:offset="0" android:color="#FF55E032"/>
+        <item android:offset="1" android:color="#FF227C53"/>
       </gradient>
     </aapt:attr>
   </path>
@@ -59,8 +59,8 @@
           android:centerX="54.142"
           android:centerY="48.769"
           android:type="radial">
-        <item android:offset="0" android:color="#FFFEBE01"/>
-        <item android:offset="1" android:color="#FFFE7901"/>
+        <item android:offset="0" android:color="#FF55E032"/>
+        <item android:offset="1" android:color="#FF227C53"/>
       </gradient>
     </aapt:attr>
   </path>

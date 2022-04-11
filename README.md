@@ -97,6 +97,8 @@ to get more information on this topic.
 * [Nuspell](https://github.com/nuspell/nuspell) by
   [Nuspell](https://github.com/nuspell)
 
+Many thanks to [Nikolay Anzarov](https://www.behance.net/nikolayanzarov) ([@BloodRaven0](https://github.com/BloodRaven0)) for designing and providing the main app icons to this project!
+
 ## License
 ```
 Copyright 2020-2022 Patrick Goldinger
