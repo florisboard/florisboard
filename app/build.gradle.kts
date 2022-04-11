@@ -66,6 +66,9 @@ android {
                 jniLibs {
                     srcDirs("src/main/icu4c/prebuilt/jniLibs")
                 }
+                java {
+                    srcDirs("src/main/kotlin")
+                }
             }
         }
     }
