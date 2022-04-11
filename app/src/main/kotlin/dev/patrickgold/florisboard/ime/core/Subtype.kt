@@ -23,7 +23,7 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
 import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.*
 
 /**

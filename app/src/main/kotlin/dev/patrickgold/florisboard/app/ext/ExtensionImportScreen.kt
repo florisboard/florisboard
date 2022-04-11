@@ -61,8 +61,8 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.res.FileRegistry
-import dev.patrickgold.florisboard.res.cache.CacheManager
+import dev.patrickgold.florisboard.lib.io.FileRegistry
+import dev.patrickgold.florisboard.lib.cache.CacheManager
 
 enum class ExtensionImportScreenType(
     val id: String,

@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.res.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import kotlinx.serialization.Serializable
 
 /**

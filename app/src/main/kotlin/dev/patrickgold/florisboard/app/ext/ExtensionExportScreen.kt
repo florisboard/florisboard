@@ -25,8 +25,8 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
 
 @Composable
 fun ExtensionExportScreen(id: String) {

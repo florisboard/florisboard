@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res
+package dev.patrickgold.florisboard.lib.io
 
 /**
  * Interface for an Asset to use within FlorisBoard. An asset is everything from a dictionary to a

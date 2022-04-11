@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res
+package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import dev.patrickgold.florisboard.appContext

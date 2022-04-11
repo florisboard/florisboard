@@ -81,10 +81,10 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.res.cache.CacheManager
-import dev.patrickgold.florisboard.res.ext.ExtensionValidation
-import dev.patrickgold.florisboard.res.io.readJson
-import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
+import dev.patrickgold.florisboard.lib.io.readJson
+import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetEditor
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpec

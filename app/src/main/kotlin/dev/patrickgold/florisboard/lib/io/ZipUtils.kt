@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res
+package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.lib.android.write
-import dev.patrickgold.florisboard.res.io.FsDir
-import dev.patrickgold.florisboard.res.io.FsFile
-import dev.patrickgold.florisboard.res.io.FsFileUtils
+import dev.patrickgold.florisboard.lib.io.FsDir
+import dev.patrickgold.florisboard.lib.io.FsFile
+import dev.patrickgold.florisboard.lib.io.FsFileUtils
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile

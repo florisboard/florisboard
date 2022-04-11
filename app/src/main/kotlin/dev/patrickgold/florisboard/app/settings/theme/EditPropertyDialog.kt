@@ -70,7 +70,7 @@ import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.florisboard.lib.kotlin.toStringWithoutDotZero
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
-import dev.patrickgold.florisboard.res.ext.ExtensionValidation
+import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpec
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue

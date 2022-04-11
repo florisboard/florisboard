@@ -16,8 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import dev.patrickgold.florisboard.res.ext.ExtensionComponent
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.Serializable
 
 typealias LayoutArrangement = List<List<AbstractKeyData>>

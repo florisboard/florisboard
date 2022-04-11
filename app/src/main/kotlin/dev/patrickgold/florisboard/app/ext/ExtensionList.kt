@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 @Composable

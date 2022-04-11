@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.res.ext
+package dev.patrickgold.florisboard.lib.ext
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

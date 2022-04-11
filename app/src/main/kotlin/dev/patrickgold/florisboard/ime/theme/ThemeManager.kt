@@ -45,9 +45,9 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.lib.ViewUtils
-import dev.patrickgold.florisboard.res.ZipUtils
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.util.ViewUtils
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor

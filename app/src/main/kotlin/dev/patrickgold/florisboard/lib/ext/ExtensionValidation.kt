@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res.ext
+package dev.patrickgold.florisboard.lib.ext
 
 import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.lib.ValidationRule

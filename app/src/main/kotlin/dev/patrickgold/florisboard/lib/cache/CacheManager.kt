@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res.cache
+package dev.patrickgold.florisboard.lib.cache
 
 import android.content.Context
 import android.net.Uri
@@ -30,17 +30,17 @@ import dev.patrickgold.florisboard.lib.android.query
 import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
-import dev.patrickgold.florisboard.res.FileRegistry
-import dev.patrickgold.florisboard.res.ZipUtils
-import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
-import dev.patrickgold.florisboard.res.ext.ExtensionEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionJsonConfig
-import dev.patrickgold.florisboard.res.io.FsDir
-import dev.patrickgold.florisboard.res.io.FsFile
-import dev.patrickgold.florisboard.res.io.readJson
-import dev.patrickgold.florisboard.res.io.subDir
-import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.florisboard.lib.io.FileRegistry
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
+import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
+import dev.patrickgold.florisboard.lib.ext.ExtensionJsonConfig
+import dev.patrickgold.florisboard.lib.io.FsDir
+import dev.patrickgold.florisboard.lib.io.FsFile
+import dev.patrickgold.florisboard.lib.io.readJson
+import dev.patrickgold.florisboard.lib.io.subDir
+import dev.patrickgold.florisboard.lib.io.subFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers

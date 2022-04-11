@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res.ext
+package dev.patrickgold.florisboard.lib.ext
 
 import android.content.Context
 import dev.patrickgold.florisboard.lib.kotlin.resultErr
 import dev.patrickgold.florisboard.lib.kotlin.resultOk
-import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.res.ZipUtils
-import dev.patrickgold.florisboard.res.io.FsDir
-import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.lib.io.FlorisRef
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.io.FsDir
+import dev.patrickgold.florisboard.lib.io.FsFile
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

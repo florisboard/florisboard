@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res
+package dev.patrickgold.florisboard.lib.io
 
-import dev.patrickgold.florisboard.res.cache.CacheManager
-import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.io.FsFile
 
 object FileRegistry {
     val BackupArchive = Entry(

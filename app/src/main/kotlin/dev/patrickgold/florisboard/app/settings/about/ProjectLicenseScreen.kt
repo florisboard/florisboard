@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.lib.io.FlorisRef
 
 @Composable
 fun ProjectLicenseScreen() = FlorisScreen {

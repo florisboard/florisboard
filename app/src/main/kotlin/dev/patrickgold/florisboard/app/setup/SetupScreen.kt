@@ -45,7 +45,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisStep
 import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisStepState
-import dev.patrickgold.florisboard.lib.InputMethodUtils
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.android.AndroidSettings
 import dev.patrickgold.florisboard.lib.android.launchActivity
 import dev.patrickgold.florisboard.lib.android.launchUrl

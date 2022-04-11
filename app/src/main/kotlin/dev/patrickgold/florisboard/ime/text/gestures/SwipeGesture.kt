@@ -24,7 +24,7 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.ViewUtils
+import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlin.math.abs
 import kotlin.math.atan2
 

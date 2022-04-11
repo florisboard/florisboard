@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.android.launchUrl
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 @OptIn(ExperimentalMaterialApi::class)

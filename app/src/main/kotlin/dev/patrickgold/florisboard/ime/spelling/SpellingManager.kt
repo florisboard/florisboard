@@ -29,9 +29,9 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
-import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.res.ext.ExtensionMeta
+import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
+import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File

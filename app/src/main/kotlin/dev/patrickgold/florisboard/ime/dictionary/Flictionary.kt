@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
 import dev.patrickgold.florisboard.ime.nlp.*
-import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.lib.io.FlorisRef
 import java.io.InputStream
 
 /**

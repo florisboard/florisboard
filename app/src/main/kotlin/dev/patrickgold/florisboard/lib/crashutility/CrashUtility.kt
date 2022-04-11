@@ -29,10 +29,10 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.devtools.*
-import dev.patrickgold.florisboard.res.io.FsDir
-import dev.patrickgold.florisboard.res.io.FsFile
-import dev.patrickgold.florisboard.res.io.subDir
-import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.florisboard.lib.io.FsDir
+import dev.patrickgold.florisboard.lib.io.FsFile
+import dev.patrickgold.florisboard.lib.io.subDir
+import dev.patrickgold.florisboard.lib.io.subFile
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 

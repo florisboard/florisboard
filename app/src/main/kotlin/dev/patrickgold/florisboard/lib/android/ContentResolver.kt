@@ -21,7 +21,7 @@ package dev.patrickgold.florisboard.lib.android
 import android.content.ContentResolver
 import android.content.res.AssetFileDescriptor
 import android.net.Uri
-import dev.patrickgold.florisboard.res.io.FsFile
+import dev.patrickgold.florisboard.lib.io.FsFile
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStream

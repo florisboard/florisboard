@@ -21,8 +21,8 @@ import android.net.Uri
 import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.res.io.FsFile
-import dev.patrickgold.florisboard.res.io.subFile
+import dev.patrickgold.florisboard.lib.io.FsFile
+import dev.patrickgold.florisboard.lib.io.subFile
 
 /**
  * Backend helper object which is used by [ClipboardMediaProvider] to serve content.

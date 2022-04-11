@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.snygg.value
 
-import dev.patrickgold.florisboard.res.ext.ExtensionValidation
+import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 
 private const val VarKey = "varKey"
 

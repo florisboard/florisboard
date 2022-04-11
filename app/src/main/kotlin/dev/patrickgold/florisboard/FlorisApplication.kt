@@ -40,10 +40,10 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.toNativeStr
-import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.cache.CacheManager
-import dev.patrickgold.florisboard.res.ext.ExtensionManager
-import dev.patrickgold.florisboard.res.io.deleteContentsRecursively
+import dev.patrickgold.florisboard.lib.io.AssetManager
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.ext.ExtensionManager
+import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPref
 import java.io.File
 

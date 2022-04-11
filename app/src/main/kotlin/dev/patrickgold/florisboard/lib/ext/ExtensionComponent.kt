@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.res.ext
+package dev.patrickgold.florisboard.lib.ext
 
 import androidx.compose.runtime.saveable.Saver
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
