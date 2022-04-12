@@ -64,7 +64,7 @@ For the `code` field of each key, make sure to use the UTF-8 code. An useful too
 is [unicode-table.com](https://unicode-table.com/en/). From there, you search for your letter and then use the HTML
 code, but without the `&#;`
 For internal codes of functional or UI keys, see
-[`app/src/main/java/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt`](app/src/main/java/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt)
+[`app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt`](app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt)
 .
 
 The label is equally important and should always match up with the defined code. If `code` and `label` don't match up,

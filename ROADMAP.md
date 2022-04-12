@@ -14,7 +14,7 @@ Releases in this section still follow the old versioning scheme, meaning the pat
 naming convention is more confusing than useful, beginning with v0.4.0 development a new release/development cycle will
 be introduced.
 
-### 0.3.14 (almost completed, release candidate phase)
+### 0.3.14 (completed)
 
 - Re-write of the Preference core
     - Reduce redundancy in key/default value definitions
@@ -47,9 +47,12 @@ be introduced.
     - Allow to have multiple Smartbars
     - Better candidate view (in prep for 0.4.0)
 
-### 0.3.15 & 0.3.16
+### 0.3.15 & 0.3.16 (current development)
 
-- Hotfix releases for possible bugs in the preference rework, may be skipped.
+- Hotfix releases for possible bugs in the preference rework
+- Lots and lots of bug fixing in general
+- Preparation work for 0.4.0, fixing text state logic and use break iterator
+- Clean up of project structure for better future development (done)
 
 ## 0.4.0
 
@@ -61,9 +64,9 @@ be introduced.
 
 With this release the versioning scheme changes: the second number now indicates new features, changes in the third "
 patch" number now indicates bug fixes and minor feature additions for the stable track. The development cycle for each
-0.x release will have `-alphaXX`, `-betaXX` and `-rcXX` (release candidate) releases on the beta track for interested
-people to follow along the development. The first release to follow the new scheme will be `0.4.0-alpha01` on the beta
-track.
+0.x release will have `-alphaXX` (optional and only for large releases), `-betaXX` and `-rcXX` (release candidate)
+releases on the beta track for interested people to follow along the development. The first release to follow the new
+scheme will be `0.4.0-alpha01` on the beta track.
 
 ## 0.5.0
 
