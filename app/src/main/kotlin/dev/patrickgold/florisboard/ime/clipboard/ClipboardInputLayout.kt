@@ -104,7 +104,6 @@ import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
-
 private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
 private val ItemPadding = PaddingValues(vertical = 8.dp, horizontal = 12.dp)
@@ -173,7 +172,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_clear_all),
                 iconColor = headerStyle.foreground.solidColor(),
-                enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
+                enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = {
