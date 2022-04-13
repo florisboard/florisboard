@@ -1,0 +1,7 @@
+This version is a major release containing a lot of bug fixes and some additions/improvements, most importantly:
+- Landscape extracted input is supported again
+- Bigger collection of default themes
+- Fixes in keyboard logic and initialization
+- Lots of layout additions/changes by external contributors <3
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.15

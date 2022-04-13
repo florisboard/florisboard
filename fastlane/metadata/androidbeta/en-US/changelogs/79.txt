@@ -1,0 +1,3 @@
+This release fixes some bugs and crashes in the extracted landscape input view, in glide typing and in some other places.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.15-rc02

@@ -54,6 +54,7 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Променяне на подредба</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основен език</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Подсказки</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Подредба на клавишите</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Символи, основен изглед</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Символи, вторичен изглед</string>
@@ -641,6 +642,7 @@
     <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под първия ред</string>
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Добавя се втори ред между първия ред и клавиатурата</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Слой върху приложението</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Добавя се втори ред като плаващ слой над клавиатурата без да се увеличава височината ѝ. Имайте предвид, че по този начин полето за въвеждане може частично да бъде закрито</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>

@@ -31,7 +31,7 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 23
         targetSdk = 31
-        versionCode = 78
+        versionCode = 80
         versionName = "0.3.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -65,6 +65,9 @@ android {
                 }
                 jniLibs {
                     srcDirs("src/main/icu4c/prebuilt/jniLibs")
+                }
+                java {
+                    srcDirs("src/main/kotlin")
                 }
             }
         }
@@ -115,7 +118,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-rc01"
+            versionNameSuffix = ""
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
@@ -127,9 +130,9 @@ android {
         named("release").configure {
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_release")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_release_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_release_foreground")
+            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
             resValue("string", "floris_app_name", "@string/app_name")
         }
     }
@@ -158,26 +161,26 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.1.1")
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.core:core-splashscreen:1.0.0-beta01")
+    implementation("androidx.core:core-splashscreen:1.0.0-beta02")
     implementation("androidx.emoji2:emoji2:1.1.0")
     implementation("androidx.emoji2:emoji2-views:1.1.0")
-    implementation("androidx.navigation:navigation-compose:2.4.1")
+    implementation("androidx.navigation:navigation-compose:2.4.2")
     implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
     implementation("com.google.accompanist:accompanist-insets:0.23.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.0")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta08")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("androidx.room:room-runtime:2.4.2")
     kapt("androidx.room:room-compiler:2.4.2")
 
-    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
-    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
-    testImplementation("io.kotest:kotest-property:5.1.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
+    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
+    testImplementation("io.kotest:kotest-property:5.2.3")
     testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.5.0")
-    testImplementation("nl.jqno.equalsverifier:equalsverifier:3.8.3")
+    testImplementation("nl.jqno.equalsverifier:equalsverifier:3.10")
 
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")

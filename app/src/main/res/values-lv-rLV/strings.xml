@@ -108,6 +108,7 @@
     <string name="settings__theme_editor__rule_selectors">Atlasītāji</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Ieraksta…</string>
     <string name="settings__theme_editor__add_property">Pievienot īpašību</string>
     <string name="settings__theme_editor__edit_property">Labot īpašību</string>
     <string name="settings__theme_editor__property_already_exists">Īpašība ar šādu nosaukumu jau pastāv pašreizējā nosacījumā.</string>
