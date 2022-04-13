@@ -5,7 +5,7 @@
     <string name="florisboard__changelog_url" translatable="false">https://github.com/florisboard/florisboard/releases/v{version}</string>
     <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/System-spell-checker-service</string>
     <string name="florisboard__theme_editor_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/Using-the-new-Theme-Editor</string>
-    <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/florisboard/florisboard/blob/master/app/src/main/java/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
+    <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/florisboard/florisboard/blob/master/app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
     <string name="florisboard__character_key_codes_url" translatable="false">https://unicode-table.com/en</string>
 
     <string name="key__view_characters" translatable="false">ABC</string>
