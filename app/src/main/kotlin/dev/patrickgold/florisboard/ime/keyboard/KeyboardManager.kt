@@ -268,6 +268,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             SwipeAction.SWITCH_TO_PREV_SUBTYPE -> TextKeyData.IME_PREV_SUBTYPE
             SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> TextKeyData.IME_NEXT_SUBTYPE
             SwipeAction.SWITCH_TO_PREV_KEYBOARD -> TextKeyData.SYSTEM_PREV_INPUT_METHOD
+            SwipeAction.TOGGLE_SMARTBAR_VISIBILITY -> TextKeyData.TOGGLE_SMARTBAR_VISIBILITY
             else -> null
         }
         if (keyData != null) {
@@ -632,6 +633,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
+            KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
+                prefs.smartbar.enabled.let { it.set(!it.get()) }
+            }
             KeyCode.UNDO -> activeEditorInstance?.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC

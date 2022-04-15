@@ -778,6 +778,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Switch to next subtype</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Toggle Smartbar visibility</string>
 
     <string name="enum__theme_mode__always_day" comment="Enum value label">Always day</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Always night</string>
