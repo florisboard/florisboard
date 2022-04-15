@@ -247,7 +247,7 @@ fun TextKeyboardLayout(
             }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
-        keyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
+        keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, !isSmartbarKeyboard)
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
         val popupUiController = rememberPopupUiController(
@@ -916,7 +916,7 @@ private class TextKeyboardLayoutController(
                         action != SwipeAction.NO_ACTION
                     }
                 }
-                else -> true // To prevent the popup display of nearby keys
+                else -> false
             }
             SwipeGesture.Type.TOUCH_UP -> when (event.direction) {
                 SwipeGesture.Direction.LEFT -> {
