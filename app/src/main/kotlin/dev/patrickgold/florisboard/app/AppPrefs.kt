@@ -182,7 +182,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val spaceBarSwipeUp = enum(
             key = "gestures__space_bar_swipe_up",
-            default = SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT,
+            default = SwipeAction.NO_ACTION,
         )
         val spaceBarSwipeLeft = enum(
             key = "gestures__space_bar_swipe_left",
@@ -202,7 +202,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
-            default = 36,
+            default = 32,
         )
         val swipeVelocityThreshold = int(
             key = "gestures__swipe_velocity_threshold",
