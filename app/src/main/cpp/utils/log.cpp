@@ -71,6 +71,7 @@ int utils::start_stdout_stderr_logger(const char *app_name) {
     pipe(pfd);
     dup2(pfd[1], 1);
     dup2(pfd[1], 2);
+    close(pfd[1]);
 
     /* spawn the logging thread */
     if (pthread_create(&thr, nullptr, thread_func, nullptr) != 0) {
