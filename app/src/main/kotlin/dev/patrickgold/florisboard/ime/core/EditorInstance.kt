@@ -340,12 +340,18 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
+        val isPhantomSpace = isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " "
         return if (activeState.isRawInputEditor || selection.isSelectionMode || !activeState.isComposingEnabled) {
+            ic.beginBatchEdit()
+            if (isPhantomSpace) {
+                ic.finishComposingText()
+                ic.commitText(" ", 1)
+            }
             doCommitText(text).first
+            ic.endBatchEdit()
         } else {
             ic.beginBatchEdit()
             val isWordComponent = TextProcessor.isWord(text, FlorisLocale.ENGLISH)
-            val isPhantomSpace = isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " "
             when {
                 isPhantomSpace && isWordComponent -> {
                     ic.finishComposingText()
@@ -388,6 +394,9 @@ class EditorInstance(private val ims: InputMethodService) {
                 }
             }
             ic.commitText(text, 1)
+            isPhantomSpaceActive = true
+            wasPhantomSpaceActiveLastUpdate = false
+            markComposingRegion(null)
             ic.endBatchEdit()
             true
         }

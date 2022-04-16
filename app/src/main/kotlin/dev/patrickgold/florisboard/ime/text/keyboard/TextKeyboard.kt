@@ -47,6 +47,7 @@ class TextKeyboard(
         keyboardWidth: Float,
         keyboardHeight: Float,
         desiredKey: Key,
+        extendTouchBoundariesDownwards: Boolean,
     ) {
         if (arrangement.isEmpty()) return
 
@@ -106,6 +107,9 @@ class TextKeyboard(
                         } else if (k == row.size - 1) {
                             right = keyboardWidth
                         }
+                        if (extendTouchBoundariesDownwards && r + 1 == arrangement.size) {
+                            bottom += height
+                        }
                     }
                 }
             } else {
@@ -137,6 +141,9 @@ class TextKeyboard(
                             left = 0.0f
                         } else if (k == row.size - 1) {
                             right = keyboardWidth
+                        }
+                        if (extendTouchBoundariesDownwards && r + 1 == arrangement.size) {
+                            bottom += height
                         }
                     }
                 }
