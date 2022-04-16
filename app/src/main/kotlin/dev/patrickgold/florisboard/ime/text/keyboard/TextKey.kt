@@ -242,13 +242,16 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 57 /* 9 */ -> "WXYZ"
                 else -> null
             }
-        } else if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
-            && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
-        ) {
+        } else if (!data.isSpaceKey() || data.type == KeyType.NUMERIC) {
             val prefs by florisPreferenceModel()
-            computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let {
-                hintedLabel = it?.asString(isForDisplay = true)
-                computedHintData = it ?: TextKeyData.UNSPECIFIED
+            computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let { hintData ->
+                if (hintData?.isSpaceKey() == false) {
+                    hintedLabel = hintData.asString(isForDisplay = true)
+                    computedHintData = hintData
+                } else {
+                    hintedLabel = null
+                    computedHintData = TextKeyData.UNSPECIFIED
+                }
             }
         }
     }
