@@ -83,6 +83,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.android.emojiCompatMetadataVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
@@ -131,7 +132,7 @@ fun EmojiPaletteView(
         }
     }
     val metadataVersion = remember {
-        FlorisImeService.activeEditorInstance()?.emojiCompatMetadataVersion ?: 0
+        FlorisImeService.activeEditorInstance()?.editorInfo?.emojiCompatMetadataVersion ?: 0
     }
     val emojiCompatInstance = tryOrNull { EmojiCompat.get().takeIf { it.loadState == EmojiCompat.LOAD_STATE_SUCCEEDED } }
     val emojiMappings = remember(emojiCompatInstance, metadataVersion, systemFontPaint) {

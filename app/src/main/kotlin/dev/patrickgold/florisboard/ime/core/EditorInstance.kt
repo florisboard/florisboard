@@ -35,7 +35,6 @@ import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
-import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -83,7 +82,6 @@ class EditorInstance(private val ims: InputMethodService) {
     internal var extractedToken: Int = 0
     private var lastReportedComposingBounds: Bounds = Bounds(-1, -1)
     private var isInputBindingActive: Boolean = false
-    var contentMimeTypes: Array<out String?>? = null
 
     var shouldReevaluateComposingSuggestions: Boolean = false
     var isPhantomSpaceActive: Boolean = false
@@ -104,12 +102,6 @@ class EditorInstance(private val ims: InputMethodService) {
                 ic.getCursorCapsMode(activeState.inputAttributes.capsMode.toFlags())
             )
         }
-    val packageName: String?
-        get() = editorInfo?.packageName
-    val emojiCompatMetadataVersion: Int
-        get() = editorInfo?.extras?.getInt(EmojiCompat.EDITOR_INFO_METAVERSION_KEY, 0) ?: 0
-    val emojiCompatReplaceAll: Boolean
-        get() = editorInfo?.extras?.getString(EmojiCompat.EDITOR_INFO_REPLACE_ALL_KEY, "false")?.toBoolean() ?: false
 
     val selection: Region = Region(UNSET, UNSET)
 
@@ -175,9 +167,6 @@ class EditorInstance(private val ims: InputMethodService) {
     fun startInput(info: EditorInfo) {
         flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${info.debugSummarize()}" }
         editorInfo = info
-        if (AndroidVersion.ATLEAST_API25_N_MR1) {
-            contentMimeTypes = info.contentMimeTypes
-        }
         val ic = inputConnection ?: return
         ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
         val exText = ExtractedTextRequest().let { req ->
