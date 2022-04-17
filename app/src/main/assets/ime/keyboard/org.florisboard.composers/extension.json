@@ -103,9 +103,11 @@
         
         "ecs": "éc", "ecj": "ẹc",
         "ems": "ém", "emf": "èm", "emr": "ẻm", "emx": "ẽm", "emj": "ẹm", 
+        "ens": "én", "enf": "èn", "enr": "ẻn", "enx": "ẽn", "enj": "ẹn",
 
         "écs": "ecs", "ẹcj": "ecj",
         "éms": "ems", "èmf": "emf", "ẻmr": "emr", "ẽmx": "emx", "ẹmj": "emj", 
+        "éns": "ens", "ènf": "enf","ẻnr": "enr", "ẽnx": "enx", "ẹnj": "enj",
         
         "ăcs": "ắc", "ăcj": "ặc",
         "ácw": "ắc", "ạcw": "ặc",
@@ -135,7 +137,10 @@
         "ắts": "ăts", "ắtw": "átw", "ătsw": "atws", "átws": "atws",
         "ặtj": "ătj", "ặtw": "ạtw", "ătjw": "atjw", "ạtwj": "atwj",
 
+        "êcs": "ếc", "êcj": "ệc",
+        "éce": "ếc", "ẹce": "ệc",
         "êms": "ếm", "êmf": "ềm", "êmr": "ểm", "êmx": "ễm", "êmj": "ệm",
+        "éme": "ếm", "ème": "ềm", "ẻme": "ểm", "ẽme": "ễm", "ẹme": "ệm",
 
         "ếms": "êms", "ếme": "éme", "êmse": "emse", "émes": "emes",
         "ềmf": "êmf", "ềme": "ème", "êmfe": "emfe", "èmef": "emef",
