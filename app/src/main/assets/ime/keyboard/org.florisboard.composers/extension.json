@@ -102,8 +102,15 @@
         "ánhs": "anhs", "ànhf": "anhf", "ảnhr": "anhr", "ãnhx": "anhx", "ạnhj": "anhj",
 
         "acws": "ắc", "acwj": "ặc",
+        "amws": "ắm", "amwf": "ằm", "amwr": "ẳm", "amwx": "ẵm", "amwj": "ặm",
 
-        "ắcw": "acsw", "ắcs": "acws", "ặcw": "acjw", "ặcj": "acwj" 
+        "ắcw": "ácw", "ắcs": "ăcs", "ácws": "acws", "ăcs": "acsw", 
+        "ặcw": "ạcw", "ặcj": "ăcj", "ạcwj": "acwj", "ăcjw": "acjw",
+        "ắms": "ăms", "ắmw": "ámw", "ămsw": "amsw", "ámws": "amws", 
+        "ằmf": "ămf", "ằmw": "àmw", "ămfw": "amfw", "àmwf": "amwf",
+        "ẳmr": "ămr", "ẳmw": "ảmw", "ămrw": "amrw", "ảmwr": "amwr",
+        "ẵmx": "ămx", "ẵmw": "ãmw", "ămxw": "amxw", "ãmwx": "amwx", 
+        "ặmj": "ămj", "ặmw": "ạmw", "ămjw": "amjw", "ạmwj": "amwj",
       }
     }
   ]
