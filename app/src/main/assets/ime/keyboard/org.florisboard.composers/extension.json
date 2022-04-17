@@ -5,7 +5,7 @@
     "version": "0.1.0",
     "title": "Default composers",
     "description": "Default composers which are always available.",
-    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "thanhhocse96 <thanh.hoquang@pm.me>" ],
     "license": "apache-2.0"
   },
   "composers": [
@@ -64,6 +64,7 @@
         "omw": "ơm", "onw": "ơn", "opw": "ơp", "otw": "ơt",
         "uaw": "ưa", "uiw": "ưi", "umw": "ưm", "unw": "ưn", "utw": "ưt", "uuw": "ưu", "ungw": "ưng",
         "ieme": "iêm", "iene": "iên", "iepe": "iêp", "iete": "iêt", "ieue": "iêu", "ienge": "iêng", 
+        "uyene": "uyên", "uyete": "uyêt",
 
         "ăcw": "acw", "ămw": "amw", "ănw": "anw", "ăpw": "apw", "ătw": "atw", "ăngw": "angw",
         "âca": "aca", "âma": "ama", "âna": "ana", "âpa": "apa", "âta": "ata", "âua": "aua", "âya": "aya", "ânga": "anga",
@@ -72,6 +73,8 @@
         "ơmw": "omw", "ơnw": "onw", "ơpw": "opw", "ơtw": "otw",
         "ưaw": "uaw", "ưiw": "uiw", "ưmw": "umw", "ưnw": "unw", "ưtw": "utw", "ưuw": "uuw", "ưngw": "ungw",
         "iême": "ieme", "iêne": "iene", "iêpe": "iepe", "iête": "iete", "iêue": "ieue", "iênge": "ienge",
+        "uyêne": "uyene", "uyêt": "uyete",
+        "yeme": "yêm", "yene": "yên", "yete": "yêt", "yeue": "yêu", "yenge": "yêng",
         
         "acs": "ác", "acj": "ạc",
         "ais": "ái", "aif": "ài", "air": "ải", "aix": "ãi", "aij": "ại",
@@ -84,6 +87,7 @@
         "ays": "áy", "ayf": "ày", "ayr": "ảy", "ayx": "ãy", "ayj": "ạy",
         "angs": "áng", "angf": "àng", "angr": "ảng", "angx": "ãng", "angj": "ạng",
         "anhs": "ánh", "anhf": "ành", "anhr": "ảnh", "anhx": "ãnh", "anhj": "ạnh",
+        "yême": "yeme", "yêne": "yene", "yête": "yete", "yêue": "yeue", "yênge": "yenge",
 
         "ács": "acs", "ạcj": "acj",
         "áis": "ais", "àif": "aif", "ảir": "air", "ãix": "aix", "ạij": "aij",
