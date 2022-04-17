@@ -100,21 +100,28 @@
         "áys": "ays", "àyf": "ayf", "ảyr": "ayr", "ãyx": "ayx", "ạyj": "ayj",
         "ángs": "angs", "àngf": "angf", "ảngr": "angr", "ãngx": "angx", "ạngj": "angj",
         "ánhs": "anhs", "ànhf": "anhf", "ảnhr": "anhr", "ãnhx": "anhx", "ạnhj": "anhj",
+        
+        "ăcs": "ắc", "ăcj": "ặc",
+        "ăms": "ắm", "ămf": "ằm", "ămr": "ẳm", "ămx": "ẵm", "ămj": "ặm",
+        "ăns": "ắn", "ănf": "ằn", "ănr": "ẳn", "ănx": "ẵn", "ănj": "ặn",
 
-        "êms": "ếm", "êmf": "ềm", "êmr": "ểm", "êmx": "ễm", "êmj": "ệm",
-
-        "ếms": "êms", "ềmf": "êmf", "ểmr": "êmr", "ễmx": "êmx", "ệmj": "êmj",
-
-        "acws": "ắc", "acwj": "ặc",
-        "amws": "ắm", "amwf": "ằm", "amwr": "ẳm", "amwx": "ẵm", "amwj": "ặm",
-
-        "ắcw": "ácw", "ắcs": "ăcs", "ácws": "acws", "ăcs": "acsw", 
-        "ặcw": "ạcw", "ặcj": "ăcj", "ạcwj": "acwj", "ăcjw": "acjw",
+        "ắcw": "ácw", "ắcs": "ăcs", "ăcsw": "acsw", "ácws": "acws", 
+        "ặcw": "ạcw", "ặcj": "ăcj", "ăcjw": "acjw", "ạcwj": "acwj", 
         "ắms": "ăms", "ắmw": "ámw", "ămsw": "amsw", "ámws": "amws", 
         "ằmf": "ămf", "ằmw": "àmw", "ămfw": "amfw", "àmwf": "amwf",
         "ẳmr": "ămr", "ẳmw": "ảmw", "ămrw": "amrw", "ảmwr": "amwr",
         "ẵmx": "ămx", "ẵmw": "ãmw", "ămxw": "amxw", "ãmwx": "amwx", 
         "ặmj": "ămj", "ặmw": "ạmw", "ămjw": "amjw", "ạmwj": "amwj",
+
+
+        "êms": "ếm", "êmf": "ềm", "êmr": "ểm", "êmx": "ễm", "êmj": "ệm",
+
+        "ếms": "êms", "ếme": "éme", "êmse": "emse", "émes": "emes",
+        "ềmf": "êmf", "ềme": "ème", "êmfe": "emfe", "èmef": "emef",
+        "ểmr": "êmr", "ểme": "ẻme", "êmre": "emre", "ẻmer": "emer",
+        "ễmx": "êmx", "ễme": "ẽme", "êmxe": "emxe", "ẽmex": "emex",
+        "ệmj": "êmj", "ệme": "ẹme", "êmje": "emje", "ẹmej": "emej",
+
       }
     }
   ]
