@@ -16,7 +16,7 @@
       "id": "telex",
       "label": "Telex",
       "rules": {
-        "aw": "ă", "aa": "â", "dd": "đ", "ee": "ê", "oo": "ô", "ow": "ơ", "uw": "ư", "w": "ư",
+        "aw": "ă", "aa": "â", "dd": "đ", "ee": "ê", "oo": "ô", "ow": "ơ", "uw": "ư", "w": "ư", "iee": "iê",
         "uow": "ươ",
         "af": "à", "ar": "ả", "ax": "ã", "as": "á", "aj": "ạ",
         "ăf": "ằ", "ăr": "ẳ", "ăx": "ẵ", "ăs": "ắ", "ăj": "ặ",
@@ -30,7 +30,7 @@
         "uf": "ù", "ur": "ủ", "ux": "ũ", "us": "ú", "uj": "ụ",
         "ưf": "ừ", "ưr": "ử", "ưx": "ữ", "ưs": "ứ", "ưj": "ự",
         "yf": "ỳ", "yr": "ỷ", "yx": "ỹ", "ys": "ý", "yj": "ỵ",
-        "ăw": "aw", "âa": "aa", "đd": "dd", "êe": "ee", "ôo": "oo", "ơw": "ow", "ưw": "w",
+        "ăw": "aw", "âa": "aa", "đd": "dd", "êe": "ee", "ôo": "oo", "ơw": "ow", "ưw": "w", "iêe": "iee",
         "ươw": "uow",
         "àf": "af", "ảr": "ar", "ãx": "ax", "ás": "as", "ạj": "aj",
         "ằf": "ăf", "ẳr": "ăr", "ẵx": "ăx", "ắs": "ăs", "ặj": "ăj",
@@ -59,10 +59,20 @@
 
         "acw": "ăc", "amw": "ăm", "anw": "ăn", "apw": "ăp", "atw": "ăt", "angw": "ăng",
         "aca": "âc", "ama": "âm", "ana": "ân", "apa": "âp", "ata": "ât", "aua": "âu", "aya": "ây", "anga": "âng",
+        "eme": "êm", "ene": "ên", "epe": "êp", "ete": "êt",
+        "omo": "ôm", "ono": "ôn", "opo": "ôp", "oto": "ôt", "ongo": "ông",
+        "omw": "ơm", "onw": "ơn", "opw": "ơp", "otw": "ơt",
+        "uaw": "ưa", "uiw": "ưi", "umw": "ưm", "unw": "ưn", "utw": "ưt", "uuw": "ưu", "ungw": "ưng",
+        "ieme": "iêm", "iene": "iên", "iepe": "iêp", "iete": "iêt", "ieue": "iêu", "ienge": "iêng", 
 
         "ăcw": "acw", "ămw": "amw", "ănw": "anw", "ăpw": "apw", "ătw": "atw", "ăngw": "angw",
         "âca": "aca", "âma": "ama", "âna": "ana", "âpa": "apa", "âta": "ata", "âua": "aua", "âya": "aya", "ânga": "anga",
-
+        "ême": "eme", "êne": "ene", "êpe": "epe", "ête": "ete",
+        "ômo": "omo", "ôno": "ono", "ôpo": "opo", "ôto": "oto", "ôngo": "ongo",
+        "ơmw": "omw", "ơnw": "onw", "ơpw": "opw", "ơtw": "otw",
+        "ưaw": "uaw", "ưiw": "uiw", "ưmw": "umw", "ưnw": "unw", "ưtw": "utw", "ưuw": "uuw", "ưngw": "ungw",
+        "iême": "ieme", "iêne": "iene", "iêpe": "iepe", "iête": "iete", "iêue": "ieue", "iênge": "ienge",
+        
         "acs": "ác", "acj": "ạc",
         "ais": "ái", "aif": "ài", "air": "ải", "aix": "ãi", "aij": "ại",
         "ams": "ám", "amf": "àm", "amr": "ảm", "amx": "ãm", "amj": "ạm",
