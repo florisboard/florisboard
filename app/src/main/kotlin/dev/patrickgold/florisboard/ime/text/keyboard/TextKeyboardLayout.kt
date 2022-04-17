@@ -20,6 +20,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.absoluteOffset
@@ -56,6 +57,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
@@ -245,7 +247,7 @@ fun TextKeyboardLayout(
             }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
-        keyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
+        keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, !isSmartbarKeyboard)
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
         val popupUiController = rememberPopupUiController(
@@ -306,8 +308,12 @@ fun TextKeyboardLayout(
         popupUiController.fontSizeMultiplier = fontSizeMultiplier
         popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
+        val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
-            TextKeyButton(textKey, renderInfo, fontSizeMultiplier, isSmartbarKeyboard)
+            TextKeyButton(
+                textKey, renderInfo, fontSizeMultiplier, isSmartbarKeyboard,
+                debugShowTouchBoundaries,
+            )
         }
 
         popupUiController.RenderPopups()
@@ -328,6 +334,7 @@ private fun TextKeyButton(
     renderInfo: RenderInfo,
     fontSizeMultiplier: Float,
     isSmartbarKey: Boolean,
+    debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
     val keyStyle = FlorisImeTheme.style.get(
         element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
@@ -423,6 +430,14 @@ private fun TextKeyButton(
                 tint = keyStyle.foreground.solidColor(),
             )
         }
+    }
+    if (debugShowTouchBoundaries) {
+        Box(
+            modifier = Modifier
+                .requiredSize(key.touchBounds.size.toDpSize())
+                .absoluteOffset { key.touchBounds.topLeft.toIntOffset() }
+                .border(Dp.Hairline, Color.Red),
+        )
     }
 }
 
@@ -901,7 +916,7 @@ private class TextKeyboardLayoutController(
                         action != SwipeAction.NO_ACTION
                     }
                 }
-                else -> true // To prevent the popup display of nearby keys
+                else -> false
             }
             SwipeGesture.Type.TOUCH_UP -> when (event.direction) {
                 SwipeGesture.Direction.LEFT -> {

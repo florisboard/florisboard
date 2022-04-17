@@ -72,6 +72,7 @@ data class RenderInfo(
 )
 
 private val DefaultRenderInfo = RenderInfo()
+private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
@@ -267,6 +268,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             SwipeAction.SWITCH_TO_PREV_SUBTYPE -> TextKeyData.IME_PREV_SUBTYPE
             SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> TextKeyData.IME_NEXT_SUBTYPE
             SwipeAction.SWITCH_TO_PREV_KEYBOARD -> TextKeyData.SYSTEM_PREV_INPUT_METHOD
+            SwipeAction.TOGGLE_SMARTBAR_VISIBILITY -> TextKeyData.TOGGLE_SMARTBAR_VISIBILITY
             else -> null
         }
         if (keyData != null) {
@@ -480,7 +482,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
-    private fun handleSpace(ev: InputKeyEvent) = activeEditorInstance?.apply {
+    private fun handleSpace(ev: InputKeyEvent) {
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -488,21 +490,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyboardMode.SYMBOLS2 -> {
                     activeState.keyboardMode = KeyboardMode.CHARACTERS
                 }
-                else -> {
-                    // Do nothing
-                }
+                else -> { /* Do nothing */ }
             }
         }
+        val instance = activeEditorInstance ?: return
         if (prefs.correction.doubleSpacePeriod.get()) {
             if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
-                val text = getTextBeforeCursor(2)
-                if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
-                    deleteBackwards()
-                    commitText(".")
+                val text = instance.getTextBeforeCursor(2)
+                if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
+                    instance.deleteBackwards()
+                    instance.commitText(". ")
+                    return
                 }
             }
         }
-        commitText(KeyCode.SPACE.toChar().toString())
+        instance.commitText(KeyCode.SPACE.toChar().toString())
     }
 
     /**
@@ -631,6 +633,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
+            KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
+                prefs.smartbar.enabled.let { it.set(!it.get()) }
+            }
             KeyCode.UNDO -> activeEditorInstance?.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC

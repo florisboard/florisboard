@@ -50,6 +50,7 @@ enum class SwipeAction {
     SWITCH_TO_NEXT_SUBTYPE,
     SWITCH_TO_CLIPBOARD_CONTEXT,
     SWITCH_TO_PREV_KEYBOARD,
+    TOGGLE_SMARTBAR_VISIBILITY,
     UNDO;
 
     companion object {
@@ -142,6 +143,10 @@ enum class SwipeAction {
             entry(
                 key = SWITCH_TO_PREV_KEYBOARD,
                 label = stringRes(R.string.enum__swipe_action__switch_to_prev_keyboard),
+            )
+            entry(
+                key = TOGGLE_SMARTBAR_VISIBILITY,
+                label = stringRes(R.string.enum__swipe_action__toggle_smartbar_visibility),
             )
         }
 

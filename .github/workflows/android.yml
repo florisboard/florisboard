@@ -29,14 +29,6 @@ jobs:
           java-version: 11
       - name: Setup CMake and Ninja
         uses: lukka/get-cmake@v3.20.1
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
       - name: Build with Gradle
         # MUST call gradlew separately because of an OSS license plugin issue.
         # See https://github.com/google/play-services-plugins/issues/199

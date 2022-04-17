@@ -108,5 +108,6 @@ abstract class Keyboard {
         keyboardWidth: Float,
         keyboardHeight: Float,
         desiredKey: Key,
+        extendTouchBoundariesDownwards: Boolean,
     )
 }

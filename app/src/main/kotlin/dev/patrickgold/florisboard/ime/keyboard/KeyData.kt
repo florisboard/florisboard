@@ -99,6 +99,11 @@ interface KeyData : AbstractKeyData {
          */
         const val GROUP_KANA: Int = 97
     }
+
+    fun isSpaceKey(): Boolean {
+        return type == KeyType.CHARACTER && (code == KeyCode.SPACE || code == KeyCode.CJK_SPACE
+            || code == KeyCode.HALF_SPACE || code == KeyCode.KESHIDA)
+    }
 }
 
 /**
