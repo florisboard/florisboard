@@ -208,6 +208,10 @@
         "áma": "ấm", "àma": "ầm", "ảma": "ẩm", "ãma": "ẫm", "ạma": "ậm",
         "âns": "ấn", "ânf": "ần", "ânr": "ẩn", "ânx": "ẫn", "ânj": "ận",
         "ána": "ấn", "àna": "ần", "ảna": "ẩn", "ãna": "ẫn", "ạna": "ận",
+        "âps": "ấp", "âpj": "ập",
+        "ápa": "ấp", "ạpa": "ập",
+        "âts": "ất", "âtj": "ật",
+        "áta": "ất", "ạta": "ật",
 
         "ấcs": "âcs", "ấca": "áca", "âcsa": "acsa", "ácas": "acas",
         "ậcj": "âcj", "ậca": "ạca", "âcja": "acja", "ạcaj": "acaj",
@@ -221,6 +225,10 @@
         "ẩnr": "ânr", "ẩna": "ảna", "ânra": "anra", "ảnar": "anar",
         "ẫnx": "ânx", "ẫna": "ãna", "ânxa": "anxa", "ãnax": "anax",
         "ậnj": "ânj", "ậna": "ạna", "ânja": "anja", "ạnaj": "anaj",
+        "ấps": "âps", "ấpa": "ápa", "âpsa": "apsa", "ápas": "apas",
+        "ậpj": "âpj", "ậpa": "ạpa", "âpja": "apja", "ạpaj": "apaj",
+        "ấts": "âts", "ấta": "áta", "âtsa": "atas", "átas": "atas",
+        "ậtj": "âtj", "ậta": "ạta", "âtja": "atja", "ạtaj": "ataj",
 
         "êcs": "ếc", "êcj": "ệc",
         "éce": "ếc", "ẹce": "ệc",
