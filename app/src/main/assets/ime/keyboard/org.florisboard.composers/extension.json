@@ -202,6 +202,12 @@
         "ẵngx": "ăngx", "ẵngw": "ãngw", "ăngxw": "angxw", "ãngwx": "angwx",
         "ặngj": "ăngj", "ặngw": "ạngw", "ăngjw": "angjw", "ạngwj": "angwj",
 
+        "âcs": "ấc", "âcj": "ậc",
+        "áca": "ấc", "ạca": "ậc",
+
+        "ấcs": "âcs", "ấca": "áca", "âcsa": "acsa", "ácas": "acas",
+        "ậcj": "âcj", "ậca": "ạca", "âcja": "acja", "ạcaj": "acaj",
+
         "êcs": "ếc", "êcj": "ệc",
         "éce": "ếc", "ẹce": "ệc",
         "êms": "ếm", "êmf": "ềm", "êmr": "ểm", "êmx": "ễm", "êmj": "ệm",
