@@ -60,9 +60,14 @@
     } },
     { "code":  1688, "label": "ژ" },
     { "code":  1605, "label": "م" },
-    { "code":  1567, "label": "؟" },
-    { "code":  1548, "label": "،" },
-    { "code":  58, "label": ":" }
-
+    { "code":  1567, "label": "؟", "popup": {
+      "main": { "code": 63, "label": "?" }
+    } },
+    { "code":  1548, "label": "،", "popup": {
+      "main": { "code": 1643, "label": "٫" }
+    } },
+    { "code":  58, "label": ":", "popup": {
+      "main": { "code": 1563, "label": "؛" }
+      } }
   ]
 ]
