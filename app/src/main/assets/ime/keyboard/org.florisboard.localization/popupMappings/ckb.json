@@ -11,16 +11,18 @@
       ]
     },
     "ی": {
+      "main": { "code": 1610, "label": "ي" },
       "relevant": [
         { "code": 1746, "label": "ے" },
         { "code": 1741, "label": "ۍ" },
-        { "code": 1744, "label": "ې" },
-        { "code": 1610, "label": "ي" },
-        { "code": 1597, "label": "ؽ" }
+        { "code": 1744, "label": "ې" }
       ]
     },
 
-
+    "ێ": {
+      "main": { "code": 1597, "label": "ؽ" }
+    },
+    
     "ﺋ": {
       "relevant": [
         { "code": 65163, "label": "ﺋ" },
