@@ -118,19 +118,23 @@
     "~right": {
       "main": { "code": 1567, "label": "؟" },
       "relevant": [
-        { "code": 64, "label": "@" },
-        { "code": 35, "label": "#" },
+        { "code": 40, "label": "(" },
+        { "code": 41, "label": ")" },
+        { "code":  171, "label": "«" },
+        { "code":  187, "label": "»" },
+        { "code": 60, "label": "<" },
+        { "code": 62, "label": ">" },
+        { "code": 1642, "label": "٪" },
+        { "code":   35, "label": "#" },
         { "code": 42, "label": "*" },
-        { "code": 1563, "label": "؛" },
-        { "code": 59, "label": ";" },
-        { "code": 58, "label": ":" },
-        { "code": 44, "label": "," },
-        { "code": 1549, "label": "؍" },
         { "code": 45, "label": "-" },
         { "code": 95, "label": "_" },
-        { "code": 1600, "label": "▬" },
-        { "code": 33, "label": "!" },
-        { "code": 1548, "label": "،" }
+        { "code": 1563, "label": "؛" },
+        { "code": 58, "label": ":" },
+        { "code": 1549, "label": "؍" },
+        { "code": 1643, "label": "٫" },
+        { "code": 1548, "label": "،" },
+        { "code": 33, "label": "!" }
       ]
     }
   },
