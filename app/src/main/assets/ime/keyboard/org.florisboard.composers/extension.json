@@ -117,6 +117,22 @@
         "éngs": "engs", "èngf": "engf", "ẻngr": "engr", "ẽngx":"engx", "ẹngj": "engj",
         "énhs": "enhs", "ènhf": "enhf", "ẻnhr": "enhr", "ẽnh": "enhx", "ẹnh": "enhj",
 
+        "ias": "ía", "iaf": "ìa", "iar": "ỉa", "iax": "ĩa", "iaj": "ịa",
+        "ims": "ím", "imf": "ìm", "imr": "ỉm", "imx": "ĩm", "imj": "ịm",
+        "ins": "ín", "inf": "ìn", "inr": "ỉn", "inx": "ĩn", "inj": "ịn",
+        "ips": "íp", "ipj": "ịp",
+        "its": "ít", "itj": "ịt",
+        "ius": "íu", "iuf": "ìu", "iur": "ỉu", "iux": "ĩu", "iuj": "ịu",
+        "inhs": "ính", "inhf": "ình", "inhr": "ỉnh", "inhx": "ĩnh", "inhj": "ịnh",
+
+        "ías": "ias", "ìaf": "iaf", "ỉar": "iar", "ĩax": "iax", "ịaj": "iaj",
+        "íms": "ims", "ìmf": "imf", "ỉmr": "imr", "ĩmx": "imx", "ịmj": "imj",
+        "íns": "ins", "ìnf": "inf", "ỉnr": "inr", "ĩnx": "inx", "ịnj": "inj",
+        "íps": "ips", "ịpj": "ipj",
+        "íts": "its", "ịtj": "itj",
+        "íus": "ius", "ìuf": "iuf", "ỉur": "iur", "ĩux": "iux", "ịuj": "iuj",
+        "ínhs": "inhs", "ìnhf": "inhf", "ỉnhr": "inhr", "ĩnhx": "inhx", "ịnhj": "inhj",
+
         "ăcs": "ắc", "ăcj": "ặc",
         "ácw": "ắc", "ạcw": "ặc",
         "ăms": "ắm", "ămf": "ằm", "ămr": "ẳm", "ămx": "ẵm", "ămj": "ặm",
