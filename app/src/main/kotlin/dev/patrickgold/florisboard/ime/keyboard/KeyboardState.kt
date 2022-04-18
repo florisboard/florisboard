@@ -18,7 +18,6 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.view.inputmethod.EditorInfo
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -58,28 +57,6 @@ import kotlin.properties.Delegates
  *          | 1        |          |          | Is Kana small
  *      111 |          |          |          | Ime Ui Mode
  *     1    |          |          |          | Layout Direction (0=LTR, 1=RTL)
- *
- * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
- * ---------|----------|----------|----------|---------------------------------
- *          |          |          |     1111 | [ImeOptions.enterAction]
- *          |          |          |    1     | [ImeOptions.flagForceAscii]
- *          |          |          |   1      | [ImeOptions.flagNavigateNext]
- *          |          |          |  1       | [ImeOptions.flagNavigatePrevious]
- *          |          |          | 1        | [ImeOptions.flagNoAccessoryAction]
- *          |          |        1 |          | [ImeOptions.flagNoEnterAction]
- *          |          |       1  |          | [ImeOptions.flagNoExtractUi]
- *          |          |      1   |          | [ImeOptions.flagNoFullscreen]
- *          |          |     1    |          | [ImeOptions.flagNoPersonalizedLearning]
- *          |          |  111     |          | [InputAttributes.type]
- *          |     1111 | 1        |          | [InputAttributes.variation]
- *          |   11     |          |          | [InputAttributes.capsMode]
- *          |  1       |          |          | [InputAttributes.flagNumberDecimal]
- *          | 1        |          |          | [InputAttributes.flagNumberSigned]
- *        1 |          |          |          | [InputAttributes.flagTextAutoComplete]
- *       1  |          |          |          | [InputAttributes.flagTextAutoCorrect]
- *      1   |          |          |          | [InputAttributes.flagTextImeMultiLine]
- *     1    |          |          |          | [InputAttributes.flagTextMultiLine]
- *    1     |          |          |          | [InputAttributes.flagTextNoSuggestions]
  *
  * The resulting structure is only relevant during a runtime lifespan and
  * thus can easily be changed without worrying about destroying some saved state.
@@ -125,9 +102,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
 
     private var rawValue by Delegates.observable(initValue) { _, old, new -> if (old != new) dispatchState() }
     private val batchEditCount = AtomicInteger(BATCH_ZERO)
-
-    val imeOptions: ImeOptions = ImeOptions(this)
-    val inputAttributes: InputAttributes = InputAttributes(this)
 
     init {
         dispatchState()
@@ -214,17 +188,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         return new(rawValue)
     }
 
-    /**
-     * Updates this state based on the info passed from [editorInfo].
-     *
-     * @param editorInfo The [EditorInfo] used to initialize all flags and regions relevant
-     *  to the info this object provides.
-     */
-    fun update(editorInfo: EditorInfo) {
-        imeOptions.update(editorInfo)
-        inputAttributes.update(editorInfo)
-    }
-
     internal fun getFlag(f: ULong): Boolean {
         return (rawValue and f) != STATE_ALL_ZERO
     }
@@ -309,12 +272,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     var isPrivateMode: Boolean
         get() = getFlag(F_IS_PRIVATE_MODE)
         set(v) { setFlag(F_IS_PRIVATE_MODE, v) }
-
-    val isRawInputEditor: Boolean
-        get() = inputAttributes.type == InputAttributes.Type.NULL
-
-    val isRichInputEditor: Boolean
-        get() = inputAttributes.type != InputAttributes.Type.NULL
 
     var isQuickActionsVisible: Boolean
         get() = getFlag(F_IS_QUICK_ACTIONS_VISIBLE)
