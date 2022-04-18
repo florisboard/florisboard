@@ -204,9 +204,23 @@
 
         "âcs": "ấc", "âcj": "ậc",
         "áca": "ấc", "ạca": "ậc",
+        "âms": "ấm", "âmf": "ầm", "âmr": "ẩm", "âmx": "ẫm", "âmj": "ậm",
+        "áma": "ấm", "àma": "ầm", "ảma": "ẩm", "ãma": "ẫm", "ạma": "ậm",
+        "âns": "ấn", "ânf": "ần", "ânr": "ẩn", "ânx": "ẫn", "ânj": "ận",
+        "ána": "ấn", "àna": "ần", "ảna": "ẩn", "ãna": "ẫn", "ạna": "ận",
 
         "ấcs": "âcs", "ấca": "áca", "âcsa": "acsa", "ácas": "acas",
         "ậcj": "âcj", "ậca": "ạca", "âcja": "acja", "ạcaj": "acaj",
+        "ấms": "âms", "ấma": "áma", "âmsa": "amsa", "ámas": "amas", 
+        "ầmf": "âmf", "ầma": "àma", "âmfa": "amfa", "àmaf": "amaf",
+        "ẩmr": "âmr", "ẩma": "ảma", "âmra": "amra", "ảmar": "amar",
+        "ẫmx": "âmx", "ẫma": "ãma", "âmxa": "amxa", "ãmax": "amax", 
+        "ậmj": "âmj", "ậma": "ạma", "âmja": "amja", "ạmaj": "amaj",
+        "ấns": "âns", "ấna": "ána", "ânsa": "ansa", "ánas": "anas",
+        "ầnf": "ânf", "ầna": "àna", "ânfa": "anfa", "ànaf": "anaf", 
+        "ẩnr": "ânr", "ẩna": "ảna", "ânra": "anra", "ảnar": "anar",
+        "ẫnx": "ânx", "ẫna": "ãna", "ânxa": "anxa", "ãnax": "anax",
+        "ậnj": "ânj", "ậna": "ạna", "ânja": "anja", "ạnaj": "anaj",
 
         "êcs": "ếc", "êcj": "ệc",
         "éce": "ếc", "ẹce": "ệc",
