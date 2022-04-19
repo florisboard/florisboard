@@ -28,9 +28,9 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
-import dev.patrickgold.florisboard.lib.android.contentMimeTypesAnyApi
 import dev.patrickgold.florisboard.lib.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.systemService
@@ -92,6 +92,7 @@ class ClipboardManager(
 
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
+    private val keyboardManager by context.keyboardManager()
     private val systemClipboardManager = context.systemService(AndroidClipboardManager::class)
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -326,13 +327,12 @@ class ClipboardManager(
      */
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
         if (clipItem == null) return false
-        val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return false
 
-        return clipItem.mimeTypes.contains("text/plain") || activeEditorInstance.editorInfo?.contentMimeTypesAnyApi?.any { editorType ->
+        return clipItem.mimeTypes.contains("text/plain") || keyboardManager.activeEditorInfo.contentMimeTypes.any { editorType ->
             clipItem.mimeTypes.any { clipType ->
                 compareMimeTypes(clipType, editorType)
             }
-        } == true
+        }
     }
 
     /**

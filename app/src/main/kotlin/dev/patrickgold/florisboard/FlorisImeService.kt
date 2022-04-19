@@ -29,7 +29,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputMethodManager
@@ -73,7 +72,8 @@ import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
-import dev.patrickgold.florisboard.ime.core.EditorInstance
+import dev.patrickgold.florisboard.ime.editor.EditorInstance
+import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
@@ -126,7 +126,7 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
  * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
  */
-class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHistoryChangedListener {
+class FlorisImeService : LifecycleInputMethodService() {
     companion object {
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
@@ -237,7 +237,6 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
-        activeEditorInstance.wordHistoryChangedListener = this
         subtypeManager.activeSubtype.observe(this) { subtype ->
             val config = Configuration(resources.configuration)
             config.setLocale(subtype.primaryLocale)
@@ -278,29 +277,26 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
     override fun onDestroy() {
         super.onDestroy()
         FlorisImeServiceReference = WeakReference(null)
-        activeEditorInstance.wordHistoryChangedListener = null
         inputWindowView = null
     }
 
-    override fun onBindInput() {
-        super.onBindInput()
-        activeEditorInstance.bindInput()
-    }
-
-    override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
-        super.onStartInput(attribute, restarting)
-        if (attribute == null) return
-        activeEditorInstance.startInput(attribute)
+    override fun onStartInput(info: EditorInfo?, restarting: Boolean) {
+        super.onStartInput(info, restarting)
+        if (info == null) return
+        val editorInfo = FlorisEditorInfo.wrap(info)
+        keyboardManager.updateActiveEditorInfo(editorInfo)
+        activeEditorInstance.startInput(editorInfo)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         if (info == null) return
+        val editorInfo = FlorisEditorInfo.wrap(info)
+        keyboardManager.updateActiveEditorInfo(editorInfo)
         activeState.batchEdit {
-            activeState.update(info)
             activeState.imeUiMode = ImeUiMode.TEXT
-            activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
-            activeEditorInstance.startInputView(info)
+            activeState.isSelectionMode = (editorInfo.initialSelEnd - editorInfo.initialSelStart) != 0
+            activeEditorInstance.startInputView(editorInfo)
             keyboardManager.updateCapsState()
         }
     }
@@ -311,7 +307,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         newSelStart: Int,
         newSelEnd: Int,
         candidatesStart: Int,
-        candidatesEnd: Int
+        candidatesEnd: Int,
     ) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
         activeState.batchEdit {
@@ -327,34 +323,28 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
 
     override fun onFinishInputView(finishingInput: Boolean) {
         super.onFinishInputView(finishingInput)
-        // TODO: evaluate which parts to reset. Resetting everything is too much,
-        //  resetting nothing could be problematic too.
-        //activeState.reset()
+        keyboardManager.updateActiveEditorInfo(FlorisEditorInfo.Unspecified)
         activeEditorInstance.finishInputView()
     }
 
     override fun onFinishInput() {
         super.onFinishInput()
+        keyboardManager.updateActiveEditorInfo(FlorisEditorInfo.Unspecified)
         activeEditorInstance.finishInput()
         nlpManager.clearInlineSuggestions()
     }
 
-    override fun onUnbindInput() {
-        super.onUnbindInput()
-        activeEditorInstance.unbindInput()
-    }
-
-    override fun onWordHistoryChanged(
-        currentWord: EditorInstance.Region?,
-        wordsBeforeCurrent: List<EditorInstance.Region>,
-        wordsAfterCurrent: List<EditorInstance.Region>,
-    ) {
-        if (currentWord == null || !currentWord.isValid || !activeState.isComposingEnabled) {
-            nlpManager.clearSuggestions()
-            return
-        }
-        nlpManager.suggest(currentWord.text, listOf())
-    }
+    //override fun onWordHistoryChanged(
+    //    currentWord: EditorInstance.Region?,
+    //    wordsBeforeCurrent: List<EditorInstance.Region>,
+    //    wordsAfterCurrent: List<EditorInstance.Region>,
+    //) {
+    //    if (currentWord == null || !currentWord.isValid || !activeState.isComposingEnabled) {
+    //        nlpManager.clearSuggestions()
+    //        return
+    //    }
+    //    nlpManager.suggest(currentWord.text, listOf())
+    //}
 
     override fun onWindowShown() {
         super.onWindowShown()
@@ -393,18 +383,12 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
         updateSoftInputWindowLayoutParameters()
     }
 
-    override fun onUpdateExtractedText(token: Int, text: ExtractedText?) {
-        super.onUpdateExtractedText(token, text)
-        activeEditorInstance.updateText(token, text)
-    }
-
-    override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        if (ei != null) {
-            activeState.update(ei)
-            activeEditorInstance.editorInfo = ei
+    override fun onUpdateExtractingVisibility(info: EditorInfo?) {
+        if (info != null) {
+            keyboardManager.updateActiveEditorInfo(FlorisEditorInfo.wrap(info))
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
-            LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(ei)
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(info)
             LandscapeInputUiMode.NEVER_SHOW -> isExtractViewShown = false
             LandscapeInputUiMode.ALWAYS_SHOW -> isExtractViewShown = true
         }
@@ -667,7 +651,7 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                     val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
                     val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
                     val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
-                    val activeState by keyboardManager.observeActiveState()
+                    val activeEditorInfo by keyboardManager.observeActiveEditorInfo()
                     Box(
                         modifier = Modifier
                             .snyggBackground(layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
@@ -700,18 +684,15 @@ class FlorisImeService : LifecycleInputMethodService(), EditorInstance.WordHisto
                             )
                             FlorisButton(
                                 onClick = {
-                                    val ei = activeEditorInstance.editorInfo
-                                    if (ei != null) {
-                                        if (ei.actionId != 0) {
-                                            activeEditorInstance.inputConnection?.performEditorAction(ei.actionId)
-                                        } else {
-                                            activeEditorInstance.performEnterAction(activeState.imeOptions.enterAction)
-                                        }
+                                    if (activeEditorInfo.extractedActionId != 0) {
+                                        currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
+                                    } else {
+                                        activeEditorInstance.performEnterAction(activeEditorInfo.imeOptions.action)
                                     }
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                text = activeEditorInstance.editorInfo?.actionLabel?.toString()
-                                    ?: getTextForImeAction(activeState.imeOptions.enterAction.toInt())
+                                text = activeEditorInfo.extractedActionLabel
+                                    ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
                                     ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(

@@ -140,6 +140,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_primary_clip",
             default = false,
         )
+        val showInputStateOverlay = boolean(
+            key = "devtools__show_input_state_overlay",
+            default = false,
+        )
         val showSpellingOverlay = boolean(
             key = "devtools__show_spelling_overlay",
             default = false,

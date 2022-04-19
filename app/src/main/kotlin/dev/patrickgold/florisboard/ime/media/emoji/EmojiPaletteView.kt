@@ -75,7 +75,6 @@ import androidx.compose.ui.window.Popup
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.widget.EmojiTextView
 import com.google.accompanist.flowlayout.FlowRow
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -83,7 +82,6 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.emojiCompatMetadataVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
@@ -126,14 +124,13 @@ fun EmojiPaletteView(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
+    val activeEditorInfo by keyboardManager.observeActiveEditorInfo()
     val systemFontPaint = remember(Typeface.DEFAULT) {
         Paint().apply {
             typeface = Typeface.DEFAULT
         }
     }
-    val metadataVersion = remember {
-        FlorisImeService.activeEditorInstance()?.editorInfo?.emojiCompatMetadataVersion ?: 0
-    }
+    val metadataVersion = activeEditorInfo.emojiCompatMetadataVersion
     val emojiCompatInstance = tryOrNull { EmojiCompat.get().takeIf { it.loadState == EmojiCompat.LOAD_STATE_SUCCEEDED } }
     val emojiMappings = remember(emojiCompatInstance, metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->

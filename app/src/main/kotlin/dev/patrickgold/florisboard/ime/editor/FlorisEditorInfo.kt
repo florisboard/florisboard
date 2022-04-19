@@ -40,6 +40,9 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val initialSelEnd: Int
         get() = base.initialSelEnd
 
+    val initialSelection: EditorInstance.Region
+        get() = EditorInstance.Region(initialSelStart, initialSelEnd)
+
     val contentMimeTypes: Array<String>
         get() = EditorInfoCompat.getContentMimeTypes(base)
 

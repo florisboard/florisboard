@@ -545,6 +545,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlays the heap memory usage and max size in the top-right corner</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Show primary clip</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Overlays the current primary clip of the clipboard</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Show input state overlay</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Overlays the current input state for debugging</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Show spelling overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>

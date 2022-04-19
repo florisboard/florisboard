@@ -38,8 +38,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.spellingManager
@@ -55,6 +57,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
 
     val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
+    val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
 
     CompositionLocalProvider(
@@ -64,6 +67,9 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
         Column(modifier = modifier) {
             if (showPrimaryClip) {
                 DevtoolsClipboardOverlay()
+            }
+            if (showInputStateOverlay) {
+                DevtoolsInputStateOverlay()
             }
             if (showSpellingOverlay) {
                 DevtoolsSpellingOverlay()
@@ -86,6 +92,31 @@ private fun DevtoolsClipboardOverlay() {
         )
     }
 }
+
+@Composable
+private fun DevtoolsInputStateOverlay() {
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
+    val activeEditorInfo by keyboardManager.observeActiveEditorInfo()
+    val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return
+    val selection = activeEditorInstance.activeSelection
+    val editorContent by activeEditorInstance.inputCache.editorContent.observeAsNonNullState()
+
+    DevtoolsOverlayBox(title = "Input state overlay") {
+        DevtoolsSubGroup(title = "EditorInfo") {
+            DevtoolsText(text = "Type=${activeEditorInfo.inputAttributes.type} Variation=${activeEditorInfo.inputAttributes.variation} IsRich=${activeEditorInfo.isRichInputEditor}")
+            DevtoolsText(text = "Selection { start=${selection.start}, end=${selection.end} }")
+        }
+        DevtoolsSubGroup(title = "EditorContent") {
+            DevtoolsText(text = "Before: \"${editorContent.beforeSelected}\"")
+            DevtoolsText(text = "Selected: \"${editorContent.selected}\"")
+            DevtoolsText(text = "After: \"${editorContent.afterSelected}\"")
+            DevtoolsText(text = "ComposingWord: ${editorContent.composingRegion}")
+        }
+    }
+}
+
 
 @Composable
 private fun DevtoolsSpellingOverlay() {
@@ -148,4 +179,28 @@ private fun DevtoolsOverlayBox(
         )
         content()
     }
+}
+
+@Composable
+private fun DevtoolsSubGroup(
+    title: String,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Text(
+        modifier = Modifier.padding(start = 8.dp),
+        text = title,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+    )
+    Column(modifier = Modifier.padding(start = 12.dp, bottom = 8.dp), content = content)
+}
+
+@Composable
+private fun DevtoolsText(text: String) {
+    Text(
+        text = text,
+        fontFamily = FontFamily.Monospace,
+        fontSize = 12.sp,
+    )
 }

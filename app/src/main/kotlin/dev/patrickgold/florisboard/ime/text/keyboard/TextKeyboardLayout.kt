@@ -449,6 +449,7 @@ private class TextKeyboardLayoutController(
     private val keyboardManager by context.keyboardManager()
 
     private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
+    private val activeEditorInfo get() = keyboardManager.activeEditorInfo
     private val activeState get() = keyboardManager.activeState
     private val inputEventDispatcher get() = keyboardManager.inputEventDispatcher
     private val inputFeedbackController get() = FlorisImeService.inputFeedbackController()
@@ -568,7 +569,7 @@ private class TextKeyboardLayoutController(
                     ) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                             activeEditorInstance?.apply {
-                                if (selection.isSelectionMode) {
+                                if (activeSelection.isSelectionMode) {
                                     deleteBackwards()
                                 }
                             }
@@ -596,7 +597,7 @@ private class TextKeyboardLayoutController(
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
                                 activeEditorInstance?.apply {
-                                    if (selection.isSelectionMode) {
+                                    if (activeSelection.isSelectionMode) {
                                         deleteBackwards()
                                     }
                                 }
@@ -642,8 +643,8 @@ private class TextKeyboardLayoutController(
                 when (key.computedData.code) {
                     KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                         activeEditorInstance?.run {
-                            initSelectionStart = selection.start
-                            initSelectionEnd = selection.end
+                            initSelectionStart = activeSelection.start
+                            initSelectionEnd = activeSelection.end
                         }
                         delay((delayMillis * 2.5f).toLong())
                         when (prefs.gestures.spaceBarLongPress.get()) {
@@ -816,7 +817,7 @@ private class TextKeyboardLayoutController(
     }
 
     private fun handleDeleteSwipe(event: SwipeGesture.Event): Boolean {
-        if (activeState.isRawInputEditor) return false
+        if (activeEditorInfo.isRawInputEditor) return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
 
         return when (event.type) {
@@ -827,10 +828,10 @@ private class TextKeyboardLayoutController(
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
-                        if (selection.isValid) {
-                            selection.updateAndNotify(
-                                (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
-                                selection.end
+                        if (activeSelection.isValid) {
+                            updateSelectionAndNotify(
+                                (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
+                                activeSelection.end
                             )
                         }
                     }
@@ -843,7 +844,7 @@ private class TextKeyboardLayoutController(
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
-                        if (selection.isValid && event.absUnitCountX <= 0) {
+                        if (activeSelection.isValid && event.absUnitCountX <= 0) {
                             selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
                         }
                     }
