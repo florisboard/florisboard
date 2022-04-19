@@ -33,7 +33,6 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.lib.NativeStr
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
@@ -89,7 +88,7 @@ class FlorisApplication : Application() {
             )
             CrashUtility.install(this)
 
-            if (AndroidVersion.ATLEAST_API24_N && !UserManagerCompat.isUserUnlocked(this)) {
+            if (!UserManagerCompat.isUserUnlocked(this)) {
                 val context = createDeviceProtectedStorageContext()
                 initICU(context)
                 prefs.initializeBlocking(context)

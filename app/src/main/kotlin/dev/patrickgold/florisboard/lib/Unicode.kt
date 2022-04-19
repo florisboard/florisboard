@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.lib
 
 import android.icu.lang.UCharacter
 import android.icu.lang.UCharacterCategory
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 
 /**
  * Character codes and comments source:
@@ -47,27 +46,6 @@ fun String.stripUnicodeCtrlChars(): String {
 
 object Unicode {
     fun isNonSpacingMark(code: Int): Boolean {
-        return if (AndroidVersion.ATLEAST_API24_N) {
-            UCharacter.getType(code).toByte() == UCharacterCategory.NON_SPACING_MARK
-        } else {
-            // See: https://en.wikipedia.org/wiki/Combining_character
-            //      https://unicode-table.com/en/blocks/arabic/
-            return when (code) {
-                in 0x0300..0x036F, // Combining Diacritical Marks
-                in 0x1AB0..0x1AFF, // Combining Diacritical Marks Extended
-                in 0x1DC0..0x1DFF, // Combining Diacritical Marks Supplement
-                in 0x20D0..0x20FF, // Combining Diacritical Marks for Symbols
-                in 0xFE20..0xFE2F, // Combining Half Marks
-                0x0E31, // Thai
-                in 0x0E34..0x0E3A, // Thai
-                in 0x0E47..0x0E4E, // Thai
-                in 0x0610..0x0614, // Honorifics
-                in 0x064B..0x065F, // Tashkil, Combining maddah, hamza and other
-                0x0670, // Tashkil (single char)
-                in 0x06D6..0x06ED, // Quranic annotation signs
-                -> true
-                else -> false
-            }
-        }
+        return UCharacter.getType(code).toByte() == UCharacterCategory.NON_SPACING_MARK
     }
 }

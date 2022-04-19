@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import java.util.stream.IntStream
@@ -113,10 +112,7 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
         get() = value.codePoints()
 
     init {
-        val codePoints = when {
-            AndroidVersion.ATLEAST_API24_N -> value.codePoints().toList()
-            else -> emptyList()
-        }
+        val codePoints = value.codePoints().toList()
         skinTone = EmojiSkinTone.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
         hairStyle = EmojiHairStyle.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
     }

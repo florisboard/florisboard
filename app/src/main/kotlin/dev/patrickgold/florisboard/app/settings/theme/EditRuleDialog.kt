@@ -78,7 +78,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
@@ -550,7 +549,7 @@ private fun TextKeyDataPreviewBox(
     val label = remember(data) { evaluator.computeLabel(data) }
     val iconId = remember(data) { evaluator.computeIconResId(data) }
     val displayName = remember(data) {
-        if (data.code > 0 && AndroidVersion.ATLEAST_API24_N) {
+        if (data.code > 0) {
             UCharacter.getName(data.code) ?: UCharacter.getExtendedName(data.code)
         } else {
             data.label
