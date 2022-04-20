@@ -40,7 +40,7 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.nlp.BreakIterators
+import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
 import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -52,7 +52,6 @@ import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -66,7 +65,7 @@ class EditorInstance(private val ims: InputMethodService) {
     private val activeState get() = keyboardManager.activeState
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    var activeSelection by mutableStateOf(EditorRegion.Unspecified)
+    var activeSelection by mutableStateOf(EditorRange.Unspecified)
         private set
     val inputCache = InputCache()
     val phantomSpace = PhantomSpaceState()
@@ -87,18 +86,18 @@ class EditorInstance(private val ims: InputMethodService) {
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int,
     ) {
-        val oldSel = EditorRegion.normalized(oldSelStart, oldSelEnd)
-        val newSel = EditorRegion.normalized(newSelStart, newSelEnd)
-        val candidates = EditorRegion.normalized(candidatesStart, candidatesEnd)
+        val oldSel = EditorRange.normalized(oldSelStart, oldSelEnd)
+        val newSel = EditorRange.normalized(newSelStart, newSelEnd)
+        val candidates = EditorRange.normalized(candidatesStart, candidatesEnd)
 
-        if (oldSel == newSel && newSel == activeSelection && candidates == inputCache.editorContent().composingRegion) {
+        if (oldSel == newSel && newSel == activeSelection && candidates == inputCache.editorContent().composing) {
             // Nothing has changed, ignore call
             return
         }
         activeSelection = newSel
-        inputCache.update { editorContent ->
-            if (editorContent.composingRegion != candidates) {
-                markComposingRegion(editorContent.composingRegion)
+        inputCache.update(newSel) { editorContent ->
+            if (editorContent.composing != candidates) {
+                markComposingRegion(editorContent.composing)
             }
         }
     }
@@ -168,7 +167,7 @@ class EditorInstance(private val ims: InputMethodService) {
         if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.inputMode = InputMode.NORMAL
         }
-        inputCache.update { markComposingRegion(it.composingRegion) }
+        inputCache.update(editorInfo.initialSelection) { markComposingRegion(it.composing) }
     }
 
     fun finishInputView() {
@@ -194,13 +193,12 @@ class EditorInstance(private val ims: InputMethodService) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitText(text: String): Boolean {
+        if (text.isEmpty()) return false
         val ic = inputConnection ?: return false
         ic.beginBatchEdit()
-
         val isWordComponent = TextProcessor.isWord(text)
         val isPhantomSpaceActive = phantomSpace.isActive && activeSelection.isValid &&
             getTextBeforeCursor(1) != SPACE && isWordComponent
-
         when {
             activeEditorInfo.isRawInputEditor || activeSelection.isSelectionMode -> {
                 ic.finishComposingText()
@@ -225,34 +223,59 @@ class EditorInstance(private val ims: InputMethodService) {
                 }
             }
         }
-
         phantomSpace.setInactive()
+        inputCache.invalidate()
         ic.endBatchEdit()
         return true
     }
 
     /**
      * Completes the given [text] in the current composing region. Does nothing if the current
-     * composing region is of zero length or null.
+     * input editor is not rich or if the input connection is invalid.
      *
-     * @param text The text to complete in this editor's composing region.
+     * Current phantom space state is respected and a space char will be inserted accordingly.
+     * Phantom space will be activated if the text is committed.
+     *
+     * @param text The text to complete in this editor.
+     *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitCompletion(text: String): Boolean {
+        if (text.isEmpty() || activeEditorInfo.isRawInputEditor) return false
         val ic = inputConnection ?: return false
-        return if (activeEditorInfo.isRawInputEditor) {
-            false
-        } else {
-            ic.beginBatchEdit()
-            if (phantomSpace.isActive && activeSelection.start > 0 && getTextBeforeCursor(1) != " ") {
-                ic.commitText(" ", 1)
-            }
-            ic.setComposingText(text, 1)
-            phantomSpace.setActive(showComposingRegion = false)
-            markComposingRegion(null)
-            ic.endBatchEdit()
-            true
+        ic.beginBatchEdit()
+        if (phantomSpace.isActive && activeSelection.isValid && getTextBeforeCursor(1) != SPACE) {
+            ic.finishComposingText()
+            ic.commitText(SPACE, 1)
         }
+        ic.setComposingText(text, 1)
+        phantomSpace.setActive(showComposingRegion = false)
+        inputCache.invalidate()
+        ic.endBatchEdit()
+        return true
+    }
+
+    /**
+     * Commit a word generated by a gesture.
+     *
+     * Ignores the current phantom space state and will insert a space depending on the character
+     * before selection start. Phantom space will be activated if the text is committed.
+     */
+    fun commitGesture(text: String): Boolean {
+        if (text.isEmpty() || activeEditorInfo.isRawInputEditor) return false
+        val ic = inputConnection ?: return false
+        ic.beginBatchEdit()
+        ic.finishComposingText()
+        if (activeSelection.start > 0) {
+            val previous = getTextBeforeCursor(1)
+            if (TextProcessor.isWord(previous) || previous.isDigitsOnly()) {
+                ic.commitText(SPACE, 1)
+            }
+        }
+        ic.setComposingText(text, 1)
+        phantomSpace.setActive(showComposingRegion = true)
+        ic.endBatchEdit()
+        return true
     }
 
     /**
@@ -281,30 +304,6 @@ class EditorInstance(private val ims: InputMethodService) {
     //}
 
     /**
-     * Commit a word generated by a gesture.
-     */
-    fun commitGesture(text: String): Boolean {
-        val ic = inputConnection ?: return false
-        return if (activeEditorInfo.isRawInputEditor) {
-            false
-        } else {
-            ic.beginBatchEdit()
-            ic.finishComposingText()
-            if (activeSelection.start > 0) {
-                val previous = getTextBeforeCursor(1)
-                if (TextProcessor.isWord(previous) || previous.isDigitsOnly()) {
-                    ic.commitText(" ", 1)
-                }
-            }
-            ic.commitText(text, 1)
-            phantomSpace.setActive(showComposingRegion = false)
-            markComposingRegion(null)
-            ic.endBatchEdit()
-            true
-        }
-    }
-
-    /**
      * Commits the given [ClipboardItem]. If the clip data is text (incl. HTML), it delegates to [commitText].
      * If the item has a content URI (and the EditText supports it), the item is committed as rich data.
      * This allows for committing (e.g) images.
@@ -319,7 +318,6 @@ class EditorInstance(private val ims: InputMethodService) {
         return when (item.type) {
             ItemType.TEXT -> {
                 commitText(item.text.toString())
-                true
             }
             ItemType.IMAGE, ItemType.VIDEO -> {
                 item.uri ?: return false
@@ -382,7 +380,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun getTextBeforeCursor(n: Int): String {
         if (n < 1) return ""
-        return inputCache.editorContent().beforeSelected.takeLast(n)
+        return inputCache.editorContent().textBeforeSelection.takeLast(n)
     }
 
     /**
@@ -395,7 +393,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun getTextAfterCursor(n: Int): String {
         if (n < 1) return ""
-        return inputCache.editorContent().afterSelected.take(n)
+        return inputCache.editorContent().textAfterSelection.take(n)
     }
 
     fun selectionSetNWordsLeft(n: Int): Boolean {
@@ -442,18 +440,18 @@ class EditorInstance(private val ims: InputMethodService) {
     }
 
     /**
-     * Marks a given [region] as composing and notifies the input connection.
+     * Marks a given [range] as composing and notifies the input connection.
      *
-     * @param region The region which should be marked as composing.
+     * @param range The region which should be marked as composing.
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun markComposingRegion(region: EditorRegion?): Boolean {
+    fun markComposingRegion(range: EditorRange?): Boolean {
         val ic = inputConnection ?: return false
-        return if (region == null || !region.isValid || phantomSpace.isActive && !phantomSpace.showComposingRegion) {
+        return if (range == null || !range.isValid || phantomSpace.isActive && !phantomSpace.showComposingRegion) {
             ic.finishComposingText()
         } else {
-            ic.setComposingRegion(region.start, region.end)
+            ic.setComposingRegion(range.start, range.end)
         }
     }
 
@@ -678,14 +676,15 @@ class EditorInstance(private val ims: InputMethodService) {
     }
 
     fun reset() {
-        activeSelection = EditorRegion.Unspecified
+        activeSelection = EditorRange.Unspecified
         inputCache.reset()
         phantomSpace.setInactive()
     }
 
     companion object {
-        private const val CACHED_N_CHARS_BEFORE_CURSOR: Int = 128
-        private const val CACHED_N_CHARS_AFTER_CURSOR: Int = 64
+        private const val CACHED_N_CHARS_BEFORE_CURSOR: Int = 256
+        private const val CACHED_N_CHARS_MIN_SAFE_ZONE: Int = 256
+        private const val CACHED_N_CHARS_AFTER_CURSOR: Int = 128
 
         private const val CURSOR_UPDATE_DISABLED: Int = 0
 
@@ -693,79 +692,77 @@ class EditorInstance(private val ims: InputMethodService) {
     }
 
     inner class InputCache {
+        private val lastValidContentHash = AtomicInteger(0)
         private val _editorContent = MutableLiveData(EditorContent.Unspecified)
         val editorContent: LiveData<EditorContent> get() = _editorContent
 
+        val isContentValid: Boolean
+            get() = editorContent().hashCode() == lastValidContentHash.get()
+
         fun editorContent(): EditorContent = editorContent.value!!
 
-        fun update(action: (EditorContent) -> Unit) {
+        fun update(selection: EditorRange, action: (EditorContent) -> Unit) {
             val ic = inputConnection
-            val selection = activeSelection
             if (ic == null || selection.isNotValid || activeEditorInfo.isRawInputEditor) {
                 return reset()
             }
             scope.launch {
-                val beforeSelectedAsync = async {
-                    when {
-                        selection.start > 0 -> {
-                            (ic.getTextBeforeCursor(CACHED_N_CHARS_BEFORE_CURSOR, 0) ?: "").toString()
-                        }
-                        else -> ""
-                    }
+                // Get Text
+                val textBeforeSelection = ic.getTextBeforeCursor(CACHED_N_CHARS_BEFORE_CURSOR, 0) ?: ""
+                val textAfterSelection = ic.getTextAfterCursor(CACHED_N_CHARS_AFTER_CURSOR, 0) ?: ""
+                val selectedText = ic.getSelectedText(0) ?: ""
+
+                // Calculate offset and local selection
+                val offset = selection.start - textBeforeSelection.length
+                val localSelection = EditorRange(
+                    start = textBeforeSelection.length,
+                    end = textBeforeSelection.length + selectedText.length,
+                )
+
+                // Check consistency and exit if necessary
+                if (offset < 0 || selection.translatedBy(-offset) != localSelection) {
+                    return@launch reset()
                 }
-                val selectedAsync = async {
-                    when {
-                        selection.isSelectionMode -> {
-                            (ic.getSelectedText(0) ?: "").toString()
-                        }
-                        else -> ""
-                    }.toString()
-                }
-                val afterSelectedAsync = async {
-                    (ic.getTextAfterCursor(CACHED_N_CHARS_AFTER_CURSOR, 0) ?: "").toString()
-                }
-                val beforeSelected = beforeSelectedAsync.await()
-                val offset = selection.start - beforeSelected.length
-                val composingRegion = if (selection.isCursorMode && beforeSelected.isNotEmpty()) {
-                    BreakIterators.withWordInstance(subtypeManager.activeSubtype().primaryLocale) {
-                        it.setText(beforeSelected)
+
+                // Determine local composing word range, if any
+                val localComposing = if (localSelection.isCursorMode && textBeforeSelection.isNotEmpty()) {
+                    BreakIteratorCache.withWordInstance(subtypeManager.activeSubtype().primaryLocale) {
+                        it.setText(textBeforeSelection.toString())
                         val end = it.last()
                         val isWord = it.ruleStatus != BreakIterator.WORD_NONE
                         if (isWord) {
                             val start = it.previous()
-                            EditorRegion(offset + start, offset + end)
+                            EditorRange(start, end)
                         } else {
-                            EditorRegion.Unspecified
+                            EditorRange.Unspecified
                         }
                     }
                 } else {
-                    EditorRegion.Unspecified
+                    EditorRange.Unspecified
                 }
-                val selected = selectedAsync.await()
-                val afterSelected = afterSelectedAsync.await()
-                val content = EditorContent(offset, beforeSelected, selected, afterSelected, composingRegion)
+
+                // Build text and content
+                val text = buildString {
+                    append(textBeforeSelection)
+                    append(selectedText)
+                    append(textAfterSelection)
+                }
+                val content = EditorContent(text, offset, localSelection, localComposing)
+
+                // Execute callback and post new content to live data
                 action(content)
+                lastValidContentHash.set(content.hashCode())
                 _editorContent.postValue(content)
             }
         }
 
-        fun reset() {
-            _editorContent.postValue(EditorContent.Unspecified)
+        fun invalidate() {
+            lastValidContentHash.set(0)
         }
-    }
 
-    data class EditorContent(
-        val offset: Int,
-        val beforeSelected: String,
-        val selected: String,
-        val afterSelected: String,
-        val composingRegion: EditorRegion,
-    ) {
-        val composingText: String
-            get() = if (composingRegion.isValid) beforeSelected.takeLast(composingRegion.length) else ""
-
-        companion object {
-            val Unspecified = EditorContent(0, "", "", "", EditorRegion.Unspecified)
+        fun reset() {
+            invalidate()
+            _editorContent.postValue(EditorContent.Unspecified)
         }
     }
 

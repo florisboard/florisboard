@@ -109,10 +109,10 @@ private fun DevtoolsInputStateOverlay() {
             DevtoolsText(text = "Selection { start=${selection.start}, end=${selection.end} }")
         }
         DevtoolsSubGroup(title = "EditorContent") {
-            DevtoolsText(text = "Before: \"${editorContent.beforeSelected}\"")
-            DevtoolsText(text = "Selected: \"${editorContent.selected}\"")
-            DevtoolsText(text = "After: \"${editorContent.afterSelected}\"")
-            DevtoolsText(text = "ComposingWord: ${editorContent.composingRegion}")
+            DevtoolsText(text = "Before: \"${editorContent.textBeforeSelection}\"")
+            DevtoolsText(text = "Selected: \"${editorContent.selectedText}\"")
+            DevtoolsText(text = "After: \"${editorContent.textAfterSelection}\"")
+            DevtoolsText(text = "ComposingWord: ${editorContent.composing}")
         }
     }
 }

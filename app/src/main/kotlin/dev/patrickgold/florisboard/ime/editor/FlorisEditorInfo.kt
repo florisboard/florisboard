@@ -34,11 +34,11 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val packageName: String?
         get() = base.packageName
 
-    val initialSelection: EditorRegion
+    val initialSelection: EditorRange
         get() = if (base.initialSelStart >= 0 && base.initialSelEnd >= 0) {
-            EditorRegion.normalized(base.initialSelStart, base.initialSelEnd)
+            EditorRange.normalized(base.initialSelStart, base.initialSelEnd)
         } else {
-            EditorRegion.Unspecified
+            EditorRange.Unspecified
         }
 
     val contentMimeTypes: Array<String>

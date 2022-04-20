@@ -16,27 +16,28 @@
 
 package dev.patrickgold.florisboard.ime.editor
 
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
 /**
  * Data class which specifies the bounds for a range between [start] and [end].
  *
- * @property start The start marker of this region bounds.
- * @property end The end marker of this region bounds.
+ * @property start The start marker of this region bounds (inclusive).
+ * @property end The end marker of this region bounds (exclusive).
  */
-data class EditorRegion(val start: Int, val end: Int) {
-    /** True if the region's start and end markers are valid, false otherwise */
+data class EditorRange(val start: Int, val end: Int) {
+    /** True if the range's start and end markers are valid, false otherwise */
     val isValid: Boolean
         get() = start >= 0 && end >= 0 && length >= 0
 
-    /** True if the region's start and end markers are invalid, false otherwise */
+    /** True if the range's start and end markers are invalid, false otherwise */
     val isNotValid: Boolean
         get() = !isValid
 
-    /** The length of the region */
+    /** The length of the range */
     val length: Int
-        get() = end - start
+        get() = abs(end - start)
 
     val isCursorMode: Boolean
         get() = length == 0 && isValid
@@ -44,12 +45,17 @@ data class EditorRegion(val start: Int, val end: Int) {
     val isSelectionMode: Boolean
         get() = length != 0 && isValid
 
-    override fun toString(): String = "EditorRegion(start=$start,end=$end)"
+    fun translatedBy(offset: Int): EditorRange {
+        if (isNotValid) return Unspecified
+        return EditorRange(start + offset, end + offset)
+    }
+
+    override fun toString(): String = "EditorRange { start=$start, end=$end }"
 
     companion object {
         /** Unspecified range */
-        val Unspecified = EditorRegion(-1, -1)
+        val Unspecified = EditorRange(-1, -1)
 
-        fun normalized(start: Int, end: Int) = EditorRegion(start = min(start, end), end = max(start, end))
+        fun normalized(start: Int, end: Int) = EditorRange(start = min(start, end), end = max(start, end))
     }
 }
