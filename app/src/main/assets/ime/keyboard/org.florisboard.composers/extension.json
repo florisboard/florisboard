@@ -324,7 +324,38 @@
         "ồngf": "ôngf", "ồngo": "òngo", "ôngfo": "ongfo", "òngof": "ongof",
         "ổngr": "ôngr", "ổngo": "ỏngo", "ôngro": "ongro", "ỏngor": "ongor",
         "ỗngx": "ôngx", "ỗngo": "õngo", "ôngxo": "ongxo", "õngox": "ongox",
-        "ộngj": "ôngj", "ộngo": "ọngo", "ôngjo": "ongjo", "ọngoj": "ongoj"
+        "ộngj": "ôngj", "ộngo": "ọngo", "ôngjo": "ongjo", "ọngoj": "ongoj",
+
+        "ơis": "ới", "ơif": "ời", "ơir": "ởi", "ơix": "ỡi", "ơij": "ợi",
+        "óiw": "ới", "òiw": "ời", "ỏiw": "ởi", "õiw": "ỡi", "ọiw": "ợi",
+        "ơms": "ớm", "ơmf": "ờm", "ơmr": "ởm", "ơmx": "ỡm", "ơmj": "ợm",
+        "ómw": "ớm", "òmw": "ờm", "ỏmw": "ởm", "õmw": "ỡm", "ọmw": "ợm",
+        "ơns": "ớn", "ơnf": "ờn", "ơnr": "ởn", "ơnx": "ỡn", "ơnj": "ợn",
+        "ónw": "ớn", "ònw": "ờn", "ỏnw": "ởn", "õnw": "ỡn", "ọnw": "ợn",
+        "ơps": "ớp", "ơpj": "ợp",
+        "ópw": "ớp", "ọpw": "ợp",
+        "ơts": "ớt", "ơtj": "ợt",
+        "ótw": "ớt", "ọtw": "ợt",
+
+        "ớis": "ơis", "ớiw": "óiw", "ơisw": "oisw", "óiws": "oiws",
+        "ờif": "ơif", "ờiw": "òiw", "ơifw": "oifw", "òiwf": "oiwf",
+        "ởir": "ơir", "ởiw": "ỏiw", "ơirw": "oirw", "ỏiwr": "oiwr",
+        "ỡix": "ơix", "ỡiw": "õiw", "ơixw": "oixw", "õiwx": "oiwx",
+        "ợij": "ơij", "ợiw": "ọiw", "ơijw": "oijw", "ọiwj": "oiwj",
+        "ớms": "ơms", "ớmw": "ómw", "ơmsw": "omsw", "ómws": "omws",
+        "ờmf": "ơmf", "ờmw": "òmw", "ơmfw": "omfw", "òmwf": "omwf",
+        "ởmr": "ơmr", "ởmw": "ỏmw", "ơmrw": "omrw", "ỏmwr": "omwr",
+        "ỡmx": "ơmx", "ỡmw": "õmw", "ơmxw": "omxw", "õmwx": "omwx",
+        "ợmj": "ơmj", "ợmw": "ọmw", "ơmjw": "omjw", "ọmwj": "omwj",
+        "ớns": "ơns", "ớnw": "ónw", "ơnsw": "onsw", "ónws": "onws",
+        "ờnf": "ơnf", "ờnw": "ònw", "ơnfw": "onfw", "ònwf": "onwf",
+        "ởnr": "ơnr", "ởnw": "ỏnw", "ơnrw": "onrw", "ỏnwr": "onwr",
+        "ỡnx": "ơnx", "ỡnw": "õnw", "ơnxw": "onxw", "õnwx": "onwx",
+        "ợnj": "ơnj", "ợnw": "ọnw", "ơnjw": "onjw", "ọnwj": "onwj",
+        "ớps": "ơps", "ớpw": "ópw", "ơpsw": "opsw", "ópws": "opws",       
+        "ợpj": "ơpj", "ợpw": "ọpw", "ơpjw": "opjw", "ọpwj": "opwj",
+        "ớts": "ơts", "ớtw": "ótw", "ơtsw": "otsw", "ótws": "otws",       
+        "ợtj": "ơtj", "ợtw": "ọtw", "ơtjw": "otjw", "ọtwj": "otwj"
       }
     }
   ]
