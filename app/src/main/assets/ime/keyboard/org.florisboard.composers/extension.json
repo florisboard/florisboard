@@ -490,8 +490,11 @@
         "úoi": "uói", "ùoi" : "uòi", "ủoi": "uỏi", "ũoi": "uõi", "ụoi": "uọi",
         "uois": "uói", "uoif": "uòi", "uoir": "uỏi", "uoix": "uõi", "uoij": "uọi",
         "uóiw": "ưới", "uòiw": "ười", "uỏiw": "ưởi", "uõiw": "ưỡi", "uọiw": "ượi",
-        "ươis": "ưới", "ươif": "ười", "ươir": "ưởi", "ươix": "ưỡi", "ươij": "ượi"
-
+        "ươis": "ưới", "ươif": "ười", "ươir": "ưởi", "ươix": "ưỡi", "ươij": "ượi",
+        "úom": "uóm", "ùom" : "uòm", "ủom": "uỏm", "ũom": "uõm", "ụom": "uọm",
+        "uoms": "uóm", "uomf": "uòm", "uomr": "uỏm", "uomx": "uõm", "uomj": "uọm",
+        "uómw": "ướm", "uòmw": "ườm", "uỏmw": "ưởm", "uõmw": "ưỡm", "uọmw": "ượm",
+        "ươms": "ướm", "ươmf": "ườm", "ươmr": "ưởm", "ươmx": "ưỡm", "ươmj": "ượm"
       }
     }
   ]
