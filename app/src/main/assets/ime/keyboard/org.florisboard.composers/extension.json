@@ -450,7 +450,25 @@
         "iềngf": "iêngf", "iềnge": "iènge", "iêngfe": "iengfe", "ièngef": "iengef",
         "iểngr": "iêngr", "iểnge": "iẻnge", "iêngre": "iengre", "iẻnger": "ienger",
         "iễngx": "iêngx", "iễnge": "iẽnge", "iêngxe": "iengxe", "iẽngex": "iengex",
-        "iệngj": "iêngj", "iệnge": "iẹnge", "iêngje": "iengje", "iẹngej": "iengej"
+        "iệngj": "iêngj", "iệnge": "iẹnge", "iêngje": "iengje", "iẹngej": "iengej",
+
+        "uyens": "uyén", "uyenf": "uyèn", "uyenr": "uyẻn", "uyenx": "uyẽn", "uyenj": "uyẹn",
+        "uyéne": "uyến", "uyène": "uyền", "uyẻne": "uyển", "uyẽne": "uyễn", "uyẹne": "uyện",
+        "uyêns": "uyến", "uyênf": "uyền", "uyênr": "uyển", "uyênx": "uyễn", "uyênj": "uyện",
+        "uyets": "uyét", "uyetf": "uyèt", "uyetr": "uyẻt", "uyetx": "uyẽt", "uyetj": "uyẹt",
+        "uyéte": "uyết", "uyète": "uyềt", "uyẻte": "uyểt", "uyẽte": "uyễt", "uyẹte": "uyệt",
+        "uyêts": "uyết", "uyêtf": "uyềt", "uyêtr": "uyểt", "uyêtx": "uyễt", "uyêtj": "uyệt",
+
+        "uyếns": "uyêns", "uyếne": "uyéne", "uyênse": "uyense", "uyénes": "uyenes",
+        "uyềnf": "uyênf", "uyềne": "uyène", "uyênfe": "uyenfe", "uyènef": "uyenef",
+        "uyểnr": "uyênr", "uyểne": "uyẻne", "uyênre": "uyenre", "uyẻner": "uyener",
+        "uyễnx": "uyênx", "uyễne": "uyẽne", "uyênxe": "uyenxe", "uyẽnex": "uyenex",
+        "uyệnj": "uyênj", "uyệne": "uyẹne", "uyênje": "uyenje", "uyẹnej": "uyenej",
+        "uyếts": "uyêts", "uyếte": "uyéte", "uyêtse": "uyetse", "uyétes": "uyetes",
+        "uyềtf": "uyêtf", "uyềte": "uyète", "uyêtfe": "uyetfe", "uyètef": "uyetef",
+        "uyểtr": "uyêtr", "uyểte": "uyẻte", "uyêtre": "uyetre", "uyẻter": "uyeter",
+        "uyễtx": "uyêtx", "uyễte": "uyẽte", "uyêtxe": "uyetxe", "uyẽtex": "uyetex",
+        "uyệtj": "uyêtj", "uyệte": "uyẹte", "uyêtje": "uyetje", "uyẹtej": "uyetej"
       }
     }
   ]
