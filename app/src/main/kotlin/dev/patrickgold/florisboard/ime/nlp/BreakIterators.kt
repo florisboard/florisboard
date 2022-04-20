@@ -18,22 +18,29 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.kotlin.GuardedByLock
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
+import io.github.reactivecircus.cache4k.Cache
 
 object BreakIterators {
-    private val wordInstances = guardedByLock { mutableMapOf<FlorisLocale, BreakIterator>() }
+    private val wordInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<MutableList<CacheEntry>>>()
 
     suspend fun <R> withWordInstance(locale: FlorisLocale, action: (BreakIterator) -> R): R {
-        return wordInstances.withLock { wordInstances ->
-            val cachedInstance = wordInstances[locale]
-            val instance = if (cachedInstance != null) {
-                cachedInstance
+        val localeSpecificInstances = wordInstances.get(locale) { guardedByLock { mutableListOf() } }
+        val cacheEntry: CacheEntry
+        localeSpecificInstances.withLock { instances ->
+            val entry = instances.firstOrNull { !it.isUsed }
+            if (entry != null) {
+                cacheEntry = entry.also { it.isUsed = true }
             } else {
-                val newInstance = BreakIterator.getWordInstance(locale.base)
-                wordInstances[locale] = newInstance
-                newInstance
+                cacheEntry = CacheEntry(BreakIterator.getWordInstance(locale.base), isUsed = true)
+                instances.add(cacheEntry)
             }
-            action(instance)
         }
+        val ret = action(cacheEntry.instance)
+        cacheEntry.isUsed = false
+        return ret
     }
+
+    class CacheEntry(val instance: BreakIterator, var isUsed: Boolean = false)
 }

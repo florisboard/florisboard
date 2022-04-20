@@ -295,7 +295,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         keyboardManager.updateActiveEditorInfo(editorInfo)
         activeState.batchEdit {
             activeState.imeUiMode = ImeUiMode.TEXT
-            activeState.isSelectionMode = (editorInfo.initialSelEnd - editorInfo.initialSelStart) != 0
+            activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
             activeEditorInstance.startInputView(editorInfo)
             keyboardManager.updateCapsState()
         }
