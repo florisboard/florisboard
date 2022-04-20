@@ -393,9 +393,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun handleClipboardSelect() = activeEditorInstance?.apply {
         activeState.isManualSelectionMode = if (activeSelection.isSelectionMode) {
             if (activeState.isManualSelectionMode && activeState.isManualSelectionModeStart) {
-                updateSelectionAndNotify(activeSelection.start, activeSelection.start)
+                setSelection(activeSelection.start, activeSelection.start)
             } else {
-                updateSelectionAndNotify(activeSelection.end, activeSelection.end)
+                setSelection(activeSelection.end, activeSelection.end)
             }
             false
         } else {

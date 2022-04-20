@@ -53,6 +53,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
 
 class EditorInstance(private val ims: InputMethodService) {
@@ -81,7 +82,14 @@ class EditorInstance(private val ims: InputMethodService) {
             )
         }
 
-    fun updateSelection(
+    /**
+     * Method which processes selection updates reported by the editor and updates cached input and state accordingly.
+     * NEVER call this method to set the selection as a result of internal actions, for such cases always use
+     * [setSelection]!
+     *
+     * @see InputMethodService.onUpdateSelection
+     */
+    fun onUpdateSelection(
         oldSelStart: Int, oldSelEnd: Int,
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int,
@@ -97,18 +105,45 @@ class EditorInstance(private val ims: InputMethodService) {
         activeSelection = newSel
         inputCache.update(newSel) { editorContent ->
             if (editorContent.composing != candidates) {
-                markComposingRegion(editorContent.composing)
+                setComposingRegion(editorContent.composing)
             }
         }
     }
 
-    fun updateSelectionAndNotify(start: Int, end: Int): Boolean {
+    /**
+     * Sets the selection of the input editor to the specified [start] and [end] values. This method does nothing if
+     * the input connection is not valid or if the input editor is raw.
+     *
+     * @param start The start of the selection (inclusive). May be any value ranging from -1 to positive infinity.
+     * @param end The end of the selection (exclusive). May be any value ranging from -1 to positive infinity.
+     *
+     * @return True on success or if the selection is already at specified position, false otherwise.
+     */
+    fun setSelection(start: Int, end: Int): Boolean {
+        if (activeEditorInfo.isRawInputEditor) return false
+        val newSelection = EditorRange.normalized(start, end)
+        if (activeSelection == newSelection) return true
         val ic = inputConnection ?: return false
-        return if (activeEditorInfo.isRichInputEditor) {
-            phantomSpace.setInactive()
-            ic.setSelection(start, end)
+        phantomSpace.setInactive()
+        inputCache.invalidate()
+        return ic.setSelection(newSelection.start, newSelection.end)
+    }
+
+    /**
+     * Sets the composing region of the input editor to the specified range or removes the composing span. This method
+     * does nothing if the input connection is not valid or if the input editor is raw.
+     *
+     * @param range The region which should be marked as composing.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun setComposingRegion(range: EditorRange): Boolean {
+        if (activeEditorInfo.isRawInputEditor) return false
+        val ic = inputConnection ?: return false
+        return if (!range.isValid || phantomSpace.isActive && !phantomSpace.showComposingRegion) {
+            ic.finishComposingText()
         } else {
-            false
+            ic.setComposingRegion(range.start, range.end)
         }
     }
 
@@ -132,12 +167,14 @@ class EditorInstance(private val ims: InputMethodService) {
             InputAttributes.Type.TEXT -> {
                 activeState.keyVariation = when (editorInfo.inputAttributes.variation) {
                     InputAttributes.Variation.EMAIL_ADDRESS,
-                    InputAttributes.Variation.WEB_EMAIL_ADDRESS -> {
+                    InputAttributes.Variation.WEB_EMAIL_ADDRESS,
+                    -> {
                         KeyVariation.EMAIL_ADDRESS
                     }
                     InputAttributes.Variation.PASSWORD,
                     InputAttributes.Variation.VISIBLE_PASSWORD,
-                    InputAttributes.Variation.WEB_PASSWORD -> {
+                    InputAttributes.Variation.WEB_PASSWORD,
+                    -> {
                         KeyVariation.PASSWORD
                     }
                     InputAttributes.Variation.URI -> {
@@ -158,7 +195,8 @@ class EditorInstance(private val ims: InputMethodService) {
         activeState.isComposingEnabled = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
-            KeyboardMode.PHONE2 -> false
+            KeyboardMode.PHONE2,
+            -> false
             else -> activeState.keyVariation != KeyVariation.PASSWORD &&
                 prefs.suggestion.enabled.get()// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
@@ -167,7 +205,7 @@ class EditorInstance(private val ims: InputMethodService) {
         if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.inputMode = InputMode.NORMAL
         }
-        inputCache.update(editorInfo.initialSelection) { markComposingRegion(it.composing) }
+        inputCache.update(editorInfo.initialSelection) { setComposingRegion(it.composing) }
     }
 
     fun finishInputView() {
@@ -260,6 +298,10 @@ class EditorInstance(private val ims: InputMethodService) {
      *
      * Ignores the current phantom space state and will insert a space depending on the character
      * before selection start. Phantom space will be activated if the text is committed.
+     *
+     * @param text The text to commit in this editor.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitGesture(text: String): Boolean {
         if (text.isEmpty() || activeEditorInfo.isRawInputEditor) return false
@@ -355,7 +397,34 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun deleteBackwards(): Boolean {
         phantomSpace.setInactive()
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
+        inputCache.invalidate()
+        return if (activeEditorInfo.isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
+        } else {
+            val ic = inputConnection ?: return false
+            val editorContent = inputCache.editorContent()
+            val composingText = editorContent.composingText
+            if (composingText.isNotEmpty()) {
+                runBlocking {
+                    BreakIteratorCache.withCharInstance(subtypeManager.activeSubtype().primaryLocale) {
+                        it.setText(composingText)
+                        val end = it.last()
+                        val start = it.previous()
+                        ic.setComposingText(composingText.removeRange(start, end), 1)
+                    }
+                }
+            } else {
+                ic.finishComposingText()
+                runBlocking {
+                    BreakIteratorCache.withCharInstance(subtypeManager.activeSubtype().primaryLocale) {
+                        it.setText(editorContent.textBeforeSelection)
+                        val end = it.last()
+                        val start = it.previous()
+                        ic.deleteSurroundingText(end - start, 0)
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -367,6 +436,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun deleteWordBackwards(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true))
     }
 
@@ -376,6 +446,7 @@ class EditorInstance(private val ims: InputMethodService) {
      *
      * @param n The number of characters to get before the cursor. Must be greater than 0 or this
      *  method will fail.
+     *
      * @return [n] or less characters before the cursor.
      */
     fun getTextBeforeCursor(n: Int): String {
@@ -389,6 +460,7 @@ class EditorInstance(private val ims: InputMethodService) {
      *
      * @param n The number of characters to get after the cursor. Must be greater than 0 or this
      *  method will fail.
+     *
      * @return [n] or less characters after the cursor.
      */
     fun getTextAfterCursor(n: Int): String {
@@ -401,7 +473,7 @@ class EditorInstance(private val ims: InputMethodService) {
         val selection = activeSelection
         if (selection.isNotValid) return false
         if (n <= 0) {
-            return updateSelectionAndNotify(selection.end, selection.end)
+            return setSelection(selection.end, selection.end)
         }
         //var wordsSelected = 0
         //var selStart = selection.end
@@ -440,22 +512,6 @@ class EditorInstance(private val ims: InputMethodService) {
     }
 
     /**
-     * Marks a given [range] as composing and notifies the input connection.
-     *
-     * @param range The region which should be marked as composing.
-     *
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    fun markComposingRegion(range: EditorRange?): Boolean {
-        val ic = inputConnection ?: return false
-        return if (range == null || !range.isValid || phantomSpace.isActive && !phantomSpace.showComposingRegion) {
-            ic.finishComposingText()
-        } else {
-            ic.setComposingRegion(range.start, range.end)
-        }
-    }
-
-    /**
      * Performs a cut command on this editor instance and adjusts both the cursor position and
      * composing region, if any.
      *
@@ -463,6 +519,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performClipboardCut(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         val text = inputConnection?.getSelectedText(0)
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
@@ -480,13 +537,14 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performClipboardCopy(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         val text = inputConnection?.getSelectedText(0)
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
             ims.showShortToast("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
         }
-        return updateSelectionAndNotify(activeSelection.end, activeSelection.end)
+        return setSelection(activeSelection.end, activeSelection.end)
     }
 
     /**
@@ -497,6 +555,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performClipboardPaste(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         return commitClipboardItem(clipboardManager.primaryClip.value).also { result ->
             if (!result) {
                 ims.showShortToast("Failed to paste item.")
@@ -512,8 +571,9 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performClipboardSelectAll(): Boolean {
         phantomSpace.setInactive()
-        markComposingRegion(null)
+        inputCache.invalidate()
         val ic = inputConnection ?: return false
+        ic.finishComposingText()
         if (activeEditorInfo.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
         } else {
@@ -529,6 +589,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performEnter(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         return if (activeEditorInfo.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
@@ -545,6 +606,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performEnterAction(action: ImeOptions.Action): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         val ic = inputConnection ?: return false
         return ic.performEditorAction(action.toInt())
     }
@@ -556,6 +618,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performUndo(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
     }
 
@@ -566,6 +629,7 @@ class EditorInstance(private val ims: InputMethodService) {
      */
     fun performRedo(): Boolean {
         phantomSpace.setInactive()
+        inputCache.invalidate()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
     }
 
@@ -583,7 +647,7 @@ class EditorInstance(private val ims: InputMethodService) {
     fun meta(
         ctrl: Boolean = false,
         alt: Boolean = false,
-        shift: Boolean = false
+        shift: Boolean = false,
     ): Int {
         var metaState = 0
         if (ctrl) {

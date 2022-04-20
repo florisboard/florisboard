@@ -827,11 +827,10 @@ private class TextKeyboardLayoutController(
                         if (abs(event.relUnitCountX) > 0) {
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
-                        markComposingRegion(null)
                         if (activeSelection.isValid) {
-                            updateSelectionAndNotify(
+                            setSelection(
                                 (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
-                                activeSelection.end
+                                activeSelection.end,
                             )
                         }
                     }
@@ -843,7 +842,6 @@ private class TextKeyboardLayoutController(
                         if (abs(event.relUnitCountX) > 0) {
                             inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
-                        markComposingRegion(null)
                         if (activeSelection.isValid && event.absUnitCountX <= 0) {
                             selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
                         }

@@ -24,7 +24,15 @@ import io.github.reactivecircus.cache4k.Cache
 
 object BreakIteratorCache {
     @PublishedApi
+    internal val charInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
+
+    @PublishedApi
     internal val wordInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
+
+    suspend inline fun <R> withCharInstance(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+        val instance = charInstances.get(locale) { guardedByLock { BreakIterator.getCharacterInstance(locale.base) } }
+        return instance.withLock(null, action)
+    }
 
     suspend inline fun <R> withWordInstance(locale: FlorisLocale, action: (BreakIterator) -> R): R {
         val instance = wordInstances.get(locale) { guardedByLock { BreakIterator.getWordInstance(locale.base) } }
