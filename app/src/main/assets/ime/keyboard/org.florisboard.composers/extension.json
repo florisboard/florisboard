@@ -266,7 +266,23 @@
         "ềmf": "êmf", "ềme": "ème", "êmfe": "emfe", "èmef": "emef",
         "ểmr": "êmr", "ểme": "ẻme", "êmre": "emre", "ẻmer": "emer",
         "ễmx": "êmx", "ễme": "ẽme", "êmxe": "emxe", "ẽmex": "emex",
-        "ệmj": "êmj", "ệme": "ẹme", "êmje": "emje", "ẹmej": "emej"
+        "ệmj": "êmj", "ệme": "ẹme", "êmje": "emje", "ẹmej": "emej",
+        "ếns": "êns", "ếne": "éne", "ênse": "ense", "énes": "enes",
+        "ềnf": "ênf", "ềne": "ène", "ênfe": "enfe", "ènef": "enef", 
+        "ểnr": "ênr", "ểne": "ẻne", "ênre": "enre", "ẻner": "ener",
+        "ễnx": "ênx", "ễne": "ẽne", "ênxe": "enxe", "ẽnex": "enex",
+        "ệnj": "ênj", "ệne": "ẹne", "ênje": "enje", "ẹnej": "enej",
+        "ếps": "êps", "ếpe": "épe", "êpse": "epse", "épes": "epes",
+        "ệpj": "êpj", "ệpe": "ẹpe", "êpje": "epje", "ẹpej": "epej",
+        "ếts": "êts", "ếte": "éte", "êtse": "etes", "étes": "etes",
+        "ệtj": "êtj", "ệte": "ẹte", "êtje": "etje", "ẹtej": "etej",
+        "ếnhs": "ênhs", "ếnhe": "énhe", "ênhse": "enhse", "énhes": "enhes",
+        "ềnhf": "ênhf", "ềnhe": "ènhe", "ênhfe": "enhfe", "ènhef": "enhef",
+        "ểnhr": "ênhr", "ểnhe": "ẻnhe", "ênhre": "enhre", "ẻnher": "enher",
+        "ễnhx": "ênhx", "ễnhe": "ẽnhe", "ênhxe": "enhxe", "ẽnhex": "enhex",
+        "ệnhj": "ênhj", "ệnhe": "ẹnhe", "ênhje": "enhje", "ẹnhej": "enhej",
+
+        
       }
     }
   ]
