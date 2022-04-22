@@ -62,6 +62,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -446,11 +447,9 @@ private class TextKeyboardLayoutController(
     context: Context,
 ) : SwipeGesture.Listener, GlideTypingGesture.Listener {
     private val prefs by florisPreferenceModel()
+    private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
 
-    private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
-    private val activeEditorInfo get() = keyboardManager.activeEditorInfo
-    private val activeState get() = keyboardManager.activeState
     private val inputEventDispatcher get() = keyboardManager.inputEventDispatcher
     private val inputFeedbackController get() = FlorisImeService.inputFeedbackController()
     private val keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
@@ -568,10 +567,8 @@ private class TextKeyboardLayoutController(
                         ) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp
                     ) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
-                            activeEditorInstance?.apply {
-                                if (activeSelection.isSelectionMode) {
-                                    deleteBackwards()
-                                }
+                            if (editorInstance.activeContent().selection.isSelectionMode) {
+                                keyboardManager.inputLogic.deleteBackwards()
                             }
                         }
                         onTouchCancelInternal(event, pointer)
@@ -596,10 +593,8 @@ private class TextKeyboardLayoutController(
                                 pointer.initialKey?.computedData?.code == KeyCode.DELETE &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
-                                activeEditorInstance?.apply {
-                                    if (activeSelection.isSelectionMode) {
-                                        deleteBackwards()
-                                    }
+                                if (editorInstance.activeContent().selection.isSelectionMode) {
+                                    keyboardManager.inputLogic.deleteBackwards()
                                 }
                             }
                             onTouchCancelInternal(event, pointer)
@@ -642,10 +637,8 @@ private class TextKeyboardLayoutController(
                 val delayMillis = prefs.keyboard.longPressDelay.get().toLong()
                 when (key.computedData.code) {
                     KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                        activeEditorInstance?.run {
-                            initSelectionStart = activeSelection.start
-                            initSelectionEnd = activeSelection.end
-                        }
+                        initSelectionStart = editorInstance.activeContent().selection.start
+                        initSelectionEnd = editorInstance.activeContent().selection.end
                         delay((delayMillis * 2.5f).toLong())
                         when (prefs.gestures.spaceBarLongPress.get()) {
                             SwipeAction.NO_ACTION,
@@ -817,34 +810,32 @@ private class TextKeyboardLayoutController(
     }
 
     private fun handleDeleteSwipe(event: SwipeGesture.Event): Boolean {
-        if (activeEditorInfo.isRawInputEditor) return false
+        if (editorInstance.activeInfo().isRawInputEditor) return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
 
         return when (event.type) {
             SwipeGesture.Type.TOUCH_MOVE -> when (prefs.gestures.deleteKeySwipeLeft.get()) {
                 SwipeAction.DELETE_CHARACTERS_PRECISELY, SwipeAction.SELECT_CHARACTERS_PRECISELY -> {
-                    activeEditorInstance?.apply {
-                        if (abs(event.relUnitCountX) > 0) {
-                            inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
-                        }
-                        if (activeSelection.isValid) {
-                            setSelection(
-                                (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
-                                activeSelection.end,
-                            )
-                        }
+                    if (abs(event.relUnitCountX) > 0) {
+                        inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
+                    }
+                    val activeSelection = editorInstance.activeContent().selection
+                    if (activeSelection.isValid) {
+                        keyboardManager.inputLogic.setSelection(
+                            (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
+                            activeSelection.end,
+                        )
                     }
                     pointer.shouldBlockNextUp = true
                     true
                 }
                 SwipeAction.DELETE_WORDS_PRECISELY, SwipeAction.SELECT_WORDS_PRECISELY -> {
-                    activeEditorInstance?.apply {
-                        if (abs(event.relUnitCountX) > 0) {
-                            inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
-                        }
-                        if (activeSelection.isValid && event.absUnitCountX <= 0) {
-                            selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
-                        }
+                    if (abs(event.relUnitCountX) > 0) {
+                        inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
+                    }
+                    val activeSelection = editorInstance.activeContent().selection
+                    if (activeSelection.isValid && event.absUnitCountX <= 0) {
+                        keyboardManager.inputLogic.selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
                     }
                     pointer.shouldBlockNextUp = true
                     true

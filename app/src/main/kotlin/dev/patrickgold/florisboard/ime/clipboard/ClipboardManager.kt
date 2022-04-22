@@ -21,9 +21,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
@@ -92,7 +92,7 @@ class ClipboardManager(
 
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
-    private val keyboardManager by context.keyboardManager()
+    private val editorInstance by context.editorInstance()
     private val systemClipboardManager = context.systemService(AndroidClipboardManager::class)
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -314,8 +314,8 @@ class ClipboardManager(
     }
 
     fun pasteItem(item: ClipboardItem) {
-        val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return
-        activeEditorInstance.commitClipboardItem(item).also { result ->
+        val keyboardManager by appContext.keyboardManager()
+        keyboardManager.inputLogic.commitClipboardItem(item).also { result ->
             if (!result) {
                 appContext.showShortToast("Failed to paste item.")
             }
@@ -328,7 +328,7 @@ class ClipboardManager(
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
         if (clipItem == null) return false
 
-        return clipItem.mimeTypes.contains("text/plain") || keyboardManager.activeEditorInfo.contentMimeTypes.any { editorType ->
+        return clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo().contentMimeTypes.any { editorType ->
             clipItem.mimeTypes.any { clipType ->
                 compareMimeTypes(clipType, editorType)
             }

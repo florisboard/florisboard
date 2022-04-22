@@ -26,6 +26,7 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -38,10 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.spellingManager
@@ -96,12 +96,11 @@ private fun DevtoolsClipboardOverlay() {
 @Composable
 private fun DevtoolsInputStateOverlay() {
     val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
+    val editorInstance by context.editorInstance()
 
-    val activeEditorInfo by keyboardManager.observeActiveEditorInfo()
-    val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return
-    val selection = activeEditorInstance.activeSelection
-    val editorContent by activeEditorInstance.inputCache.editorContent.observeAsNonNullState()
+    val activeEditorInfo by editorInstance.activeInfo.collectAsState()
+    val activeEditorContent by editorInstance.activeContent.collectAsState()
+    val selection = activeEditorContent.selection
 
     DevtoolsOverlayBox(title = "Input state overlay") {
         DevtoolsSubGroup(title = "EditorInfo") {
@@ -109,10 +108,10 @@ private fun DevtoolsInputStateOverlay() {
             DevtoolsText(text = "Selection { start=${selection.start}, end=${selection.end} }")
         }
         DevtoolsSubGroup(title = "EditorContent") {
-            DevtoolsText(text = "Before: \"${editorContent.textBeforeSelection}\"")
-            DevtoolsText(text = "Selected: \"${editorContent.selectedText}\"")
-            DevtoolsText(text = "After: \"${editorContent.textAfterSelection}\"")
-            DevtoolsText(text = "ComposingWord: ${editorContent.composing}")
+            DevtoolsText(text = "Before: \"${activeEditorContent.textBeforeSelection}\"")
+            DevtoolsText(text = "Selected: \"${activeEditorContent.selectedText}\"")
+            DevtoolsText(text = "After: \"${activeEditorContent.textAfterSelection}\"")
+            DevtoolsText(text = "ComposingWord: ${activeEditorContent.composing}")
         }
     }
 }

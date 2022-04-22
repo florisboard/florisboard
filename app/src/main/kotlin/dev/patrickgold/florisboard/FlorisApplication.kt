@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
@@ -66,6 +67,7 @@ class FlorisApplication : Application() {
     val assetManager = lazy { AssetManager(this) }
     val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
+    val editorInstance = lazy { EditorInstance(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
     val keyboardManager = lazy { KeyboardManager(this) }
@@ -160,6 +162,8 @@ fun Context.assetManager() = lazy { this.florisApplication().assetManager.value 
 fun Context.cacheManager() = lazy { this.florisApplication().cacheManager.value }
 
 fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
+
+fun Context.editorInstance() = lazy { this.florisApplication().editorInstance.value }
 
 fun Context.extensionManager() = lazy { this.florisApplication().extensionManager.value }
 

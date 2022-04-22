@@ -41,6 +41,20 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
             EditorRange.Unspecified
         }
 
+    fun getInitialTextBeforeCursor(n: Int): CharSequence? {
+        if (n < 1) return null
+        return EditorInfoCompat.getInitialTextBeforeCursor(base, n, 0)
+    }
+
+    fun getInitialTextAfterCursor(n: Int): CharSequence? {
+        if (n < 1) return null
+        return EditorInfoCompat.getInitialTextAfterCursor(base, n, 0)
+    }
+
+    fun getInitialSelectedText(): CharSequence? {
+        return EditorInfoCompat.getInitialSelectedText(base, 0)
+    }
+
     val contentMimeTypes: Array<String>
         get() = EditorInfoCompat.getContentMimeTypes(base)
 

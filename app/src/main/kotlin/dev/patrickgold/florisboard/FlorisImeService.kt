@@ -31,6 +31,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
+import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -48,6 +49,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -72,7 +74,6 @@ import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
-import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
@@ -131,8 +132,8 @@ class FlorisImeService : LifecycleInputMethodService() {
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
 
-        fun activeEditorInstance(): EditorInstance? {
-            return FlorisImeServiceReference.get()?.activeEditorInstance
+        fun currentInputConnection(): InputConnection? {
+            return FlorisImeServiceReference.get()?.currentInputConnection
         }
 
         fun inputFeedbackController(): InputFeedbackController? {
@@ -215,12 +216,12 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     private val prefs by florisPreferenceModel()
+    private val editorInstance by editorInstance()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
 
-    private val activeEditorInstance by lazy { EditorInstance(this) }
     private val activeState get() = keyboardManager.activeState
     private var inputWindowView by mutableStateOf<View?>(null)
     private var inputViewSize by mutableStateOf(IntSize.Zero)
@@ -284,19 +285,17 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onStartInput(info, restarting)
         if (info == null) return
         val editorInfo = FlorisEditorInfo.wrap(info)
-        keyboardManager.updateActiveEditorInfo(editorInfo)
-        activeEditorInstance.startInput(editorInfo)
+        keyboardManager.inputLogic.startInput(editorInfo)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         if (info == null) return
         val editorInfo = FlorisEditorInfo.wrap(info)
-        keyboardManager.updateActiveEditorInfo(editorInfo)
         activeState.batchEdit {
             activeState.imeUiMode = ImeUiMode.TEXT
             activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
-            activeEditorInstance.startInputView(editorInfo)
+            keyboardManager.inputLogic.startInputView(editorInfo)
             keyboardManager.updateCapsState()
         }
     }
@@ -312,7 +311,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
         activeState.batchEdit {
             activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
-            activeEditorInstance.onUpdateSelection(
+            keyboardManager.inputLogic.onUpdateSelection(
                 oldSelStart, oldSelEnd,
                 newSelStart, newSelEnd,
                 candidatesStart, candidatesEnd,
@@ -323,14 +322,12 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onFinishInputView(finishingInput: Boolean) {
         super.onFinishInputView(finishingInput)
-        keyboardManager.updateActiveEditorInfo(FlorisEditorInfo.Unspecified)
-        activeEditorInstance.finishInputView()
+        keyboardManager.inputLogic.finishInputView()
     }
 
     override fun onFinishInput() {
         super.onFinishInput()
-        keyboardManager.updateActiveEditorInfo(FlorisEditorInfo.Unspecified)
-        activeEditorInstance.finishInput()
+        keyboardManager.inputLogic.finishInput()
         nlpManager.clearInlineSuggestions()
     }
 
@@ -385,7 +382,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
-            keyboardManager.updateActiveEditorInfo(FlorisEditorInfo.wrap(info))
+            editorInstance.initialize(FlorisEditorInfo.wrap(info))
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(info)
@@ -651,7 +648,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
                     val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
                     val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
-                    val activeEditorInfo by keyboardManager.observeActiveEditorInfo()
+                    val activeEditorInfo by editorInstance.activeInfo.collectAsState()
                     Box(
                         modifier = Modifier
                             .snyggBackground(layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
@@ -687,7 +684,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                     if (activeEditorInfo.extractedActionId != 0) {
                                         currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
                                     } else {
-                                        activeEditorInstance.performEnterAction(activeEditorInfo.imeOptions.action)
+                                        keyboardManager.inputLogic.performEnterAction(activeEditorInfo.imeOptions.action)
                                     }
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),

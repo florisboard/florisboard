@@ -49,6 +49,7 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -77,6 +78,7 @@ import androidx.emoji2.widget.EmojiTextView
 import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
@@ -122,9 +124,10 @@ fun EmojiPaletteView(
 ) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
+    val editorInstance by context.editorInstance()
     val keyboardManager by context.keyboardManager()
 
-    val activeEditorInfo by keyboardManager.observeActiveEditorInfo()
+    val activeEditorInfo by editorInstance.activeInfo.collectAsState()
     val systemFontPaint = remember(Typeface.DEFAULT) {
         Paint().apply {
             typeface = Typeface.DEFAULT
