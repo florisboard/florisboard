@@ -98,8 +98,8 @@ private fun DevtoolsInputStateOverlay() {
     val context = LocalContext.current
     val editorInstance by context.editorInstance()
 
-    val activeEditorInfo by editorInstance.activeInfo.collectAsState()
-    val activeEditorContent by editorInstance.activeContent.collectAsState()
+    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
+    val activeEditorContent by editorInstance.activeContentFlow.collectAsState()
     val selection = activeEditorContent.selection
 
     DevtoolsOverlayBox(title = "Input state overlay") {

@@ -41,6 +41,9 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
             EditorRange.Unspecified
         }
 
+    val initialCapsMode: InputAttributes.CapsMode
+        get() = InputAttributes.CapsMode.fromFlags(base.initialCapsMode)
+
     fun getInitialTextBeforeCursor(n: Int): CharSequence? {
         if (n < 1) return null
         return EditorInfoCompat.getInitialTextBeforeCursor(base, n, 0)

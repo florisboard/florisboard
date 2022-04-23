@@ -567,8 +567,8 @@ private class TextKeyboardLayoutController(
                         ) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp
                     ) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
-                            if (editorInstance.activeContent().selection.isSelectionMode) {
-                                keyboardManager.inputLogic.deleteBackwards()
+                            if (editorInstance.activeContent.selection.isSelectionMode) {
+                                editorInstance.deleteBackwards()
                             }
                         }
                         onTouchCancelInternal(event, pointer)
@@ -593,8 +593,8 @@ private class TextKeyboardLayoutController(
                                 pointer.initialKey?.computedData?.code == KeyCode.DELETE &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
-                                if (editorInstance.activeContent().selection.isSelectionMode) {
-                                    keyboardManager.inputLogic.deleteBackwards()
+                                if (editorInstance.activeContent.selection.isSelectionMode) {
+                                    editorInstance.deleteBackwards()
                                 }
                             }
                             onTouchCancelInternal(event, pointer)
@@ -637,8 +637,8 @@ private class TextKeyboardLayoutController(
                 val delayMillis = prefs.keyboard.longPressDelay.get().toLong()
                 when (key.computedData.code) {
                     KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                        initSelectionStart = editorInstance.activeContent().selection.start
-                        initSelectionEnd = editorInstance.activeContent().selection.end
+                        initSelectionStart = editorInstance.activeContent.selection.start
+                        initSelectionEnd = editorInstance.activeContent.selection.end
                         delay((delayMillis * 2.5f).toLong())
                         when (prefs.gestures.spaceBarLongPress.get()) {
                             SwipeAction.NO_ACTION,
@@ -810,7 +810,7 @@ private class TextKeyboardLayoutController(
     }
 
     private fun handleDeleteSwipe(event: SwipeGesture.Event): Boolean {
-        if (editorInstance.activeInfo().isRawInputEditor) return false
+        if (editorInstance.activeInfo.isRawInputEditor) return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
 
         return when (event.type) {
@@ -819,9 +819,9 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
-                    val activeSelection = editorInstance.activeContent().selection
+                    val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {
-                        keyboardManager.inputLogic.setSelection(
+                        editorInstance.setSelection(
                             (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
                             activeSelection.end,
                         )
@@ -833,9 +833,9 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
-                    val activeSelection = editorInstance.activeContent().selection
+                    val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid && event.absUnitCountX <= 0) {
-                        keyboardManager.inputLogic.selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
+                        editorInstance.selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
                     }
                     pointer.shouldBlockNextUp = true
                     true

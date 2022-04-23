@@ -28,7 +28,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import dev.patrickgold.florisboard.lib.android.setOrClearPrimaryClip
@@ -314,8 +313,8 @@ class ClipboardManager(
     }
 
     fun pasteItem(item: ClipboardItem) {
-        val keyboardManager by appContext.keyboardManager()
-        keyboardManager.inputLogic.commitClipboardItem(item).also { result ->
+        val editorInstance by appContext.editorInstance()
+        editorInstance.commitClipboardItem(item).also { result ->
             if (!result) {
                 appContext.showShortToast("Failed to paste item.")
             }
@@ -328,7 +327,7 @@ class ClipboardManager(
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
         if (clipItem == null) return false
 
-        return clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo().contentMimeTypes.any { editorType ->
+        return clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo.contentMimeTypes.any { editorType ->
             clipItem.mimeTypes.any { clipType ->
                 compareMimeTypes(clipType, editorType)
             }

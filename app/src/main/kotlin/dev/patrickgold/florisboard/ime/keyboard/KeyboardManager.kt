@@ -41,7 +41,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
-import dev.patrickgold.florisboard.ime.editor.InputLogic
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
@@ -94,8 +93,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     val resources = KeyboardManagerResources()
     val smartbarActions = SmartbarActions()
-
-    val inputLogic = InputLogic(context)
     val activeState = KeyboardState.new()
 
     private val renderInfoGuard = Mutex(locked = false)
@@ -158,7 +155,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
         renderInfoGuard.withLock {
             action()
-            val editorInfo = editorInstance.activeInfo()
+            val editorInfo = editorInstance.activeInfo
             val state = activeState.snapshot()
             val subtype = subtypeManager.activeSubtype()
             val mode = activeState.keyboardMode
@@ -222,7 +219,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     fun updateCapsState() {
         if (activeState.inputMode != InputMode.CAPS_LOCK) {
             val shift = prefs.correction.autoCapitalization.get() &&
-                inputLogic.cursorCapsMode != InputAttributes.CapsMode.NONE
+                editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
             activeState.inputMode = when {
                 shift -> InputMode.SHIFT_LOCK
                 else -> InputMode.NORMAL
@@ -287,13 +284,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     fun commitCandidate(candidate: NlpManager.Candidate) {
         when (candidate) {
-            is NlpManager.Candidate.Word -> inputLogic.commitCompletion(candidate.word)
-            is NlpManager.Candidate.Clip -> inputLogic.commitClipboardItem(candidate.clipboardItem)
+            is NlpManager.Candidate.Word -> editorInstance.commitCompletion(candidate.word)
+            is NlpManager.Candidate.Clip -> editorInstance.commitClipboardItem(candidate.clipboardItem)
         }
     }
 
     fun commitGesture(word: String) {
-        inputLogic.commitGesture(fixCase(word))
+        editorInstance.commitGesture(fixCase(word))
     }
 
     /**
@@ -313,8 +310,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int, count: Int) = inputLogic.apply {
+    private fun handleArrow(code: Int, count: Int) = editorInstance.apply {
         val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
+        val activeSelection = editorInstance.activeContent.selection
         when (code) {
             KeyCode.ARROW_DOWN -> {
                 if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
@@ -378,12 +376,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.CLIPBOARD_SELECT] event.
      */
-    private fun handleClipboardSelect() = inputLogic.apply {
+    private fun handleClipboardSelect() {
+        val activeSelection = editorInstance.activeContent.selection
         activeState.isManualSelectionMode = if (activeSelection.isSelectionMode) {
             if (activeState.isManualSelectionMode && activeState.isManualSelectionModeStart) {
-                setSelection(activeSelection.start, activeSelection.start)
+                editorInstance.setSelection(activeSelection.start, activeSelection.start)
             } else {
-                setSelection(activeSelection.end, activeSelection.end)
+                editorInstance.setSelection(activeSelection.end, activeSelection.end)
             }
             false
         } else {
@@ -400,7 +399,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
-        inputLogic.deleteBackwards()
+        editorInstance.deleteBackwards()
     }
 
     /**
@@ -412,26 +411,26 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
-        inputLogic.deleteWordBackwards()
+        editorInstance.deleteWordBackwards()
     }
 
     /**
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
-        if (editorInstance.activeInfo().imeOptions.flagNoEnterAction) {
-            inputLogic.performEnter()
+        if (editorInstance.activeInfo.imeOptions.flagNoEnterAction) {
+            editorInstance.performEnter()
         } else {
-            when (val action = editorInstance.activeInfo().imeOptions.action) {
+            when (val action = editorInstance.activeInfo.imeOptions.action) {
                 ImeOptions.Action.DONE,
                 ImeOptions.Action.GO,
                 ImeOptions.Action.NEXT,
                 ImeOptions.Action.PREVIOUS,
                 ImeOptions.Action.SEARCH,
                 ImeOptions.Action.SEND -> {
-                    inputLogic.performEnterAction(action)
+                    editorInstance.performEnterAction(action)
                 }
-                else -> inputLogic.performEnter()
+                else -> editorInstance.performEnter()
             }
         }
     }
@@ -504,15 +503,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
             if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
-                val text = inputLogic.getTextBeforeCursor(2)
+                val text = editorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
-                    inputLogic.deleteBackwards()
-                    inputLogic.commitText(". ")
+                    editorInstance.deleteBackwards()
+                    editorInstance.commitText(". ")
                     return
                 }
             }
         }
-        inputLogic.commitText(KeyCode.SPACE.toChar().toString())
+        editorInstance.commitText(KeyCode.SPACE.toChar().toString())
     }
 
     /**
@@ -603,11 +602,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
             KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
-            KeyCode.CLIPBOARD_CUT -> inputLogic.performClipboardCut()
-            KeyCode.CLIPBOARD_COPY -> inputLogic.performClipboardCopy()
-            KeyCode.CLIPBOARD_PASTE -> inputLogic.performClipboardPaste()
+            KeyCode.CLIPBOARD_CUT -> editorInstance.performClipboardCut()
+            KeyCode.CLIPBOARD_COPY -> editorInstance.performClipboardCopy()
+            KeyCode.CLIPBOARD_PASTE -> editorInstance.performClipboardPaste()
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
-            KeyCode.CLIPBOARD_SELECT_ALL -> inputLogic.performClipboardSelectAll()
+            KeyCode.CLIPBOARD_SELECT_ALL -> editorInstance.performClipboardSelectAll()
             KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistory()
             KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
             KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
@@ -634,7 +633,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.KANA_KATA -> handleKanaKata()
             KeyCode.KANA_HALF_KATA -> handleKanaHalfKata()
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
-            KeyCode.REDO -> inputLogic.performRedo()
+            KeyCode.REDO -> editorInstance.performRedo()
             KeyCode.SETTINGS -> FlorisImeService.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
             KeyCode.SPACE -> handleSpace(ev)
@@ -644,7 +643,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
                 prefs.smartbar.enabled.let { it.set(!it.get()) }
             }
-            KeyCode.UNDO -> inputLogic.performUndo()
+            KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
             KeyCode.VIEW_NUMERIC_ADVANCED -> activeState.keyboardMode = KeyboardMode.NUMERIC_ADVANCED
@@ -654,7 +653,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
                 if (activeState.imeUiMode == ImeUiMode.MEDIA) {
-                    inputLogic.commitText(ev.data.asString(isForDisplay = false))
+                    editorInstance.commitText(ev.data.asString(isForDisplay = false))
                     return@batchEdit
                 }
                 when (activeState.keyboardMode) {
@@ -665,20 +664,20 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = ev.data.asString(isForDisplay = false)
-                            inputLogic.commitText(text)
+                            editorInstance.commitText(text)
                         }
                         else -> when (ev.data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = ev.data.asString(isForDisplay = false)
-                                inputLogic.commitText(text)
+                                editorInstance.commitText(text)
                             }
                         }
                     }
                     else -> when (ev.data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = ev.data.asString(isForDisplay = false)
-                            inputLogic.commitText(text)
+                            editorInstance.commitText(text)
                         }
                         else -> {
                             flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $ev.data" }

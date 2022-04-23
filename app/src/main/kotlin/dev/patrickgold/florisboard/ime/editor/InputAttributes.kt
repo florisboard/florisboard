@@ -26,24 +26,24 @@ import android.view.inputmethod.EditorInfo
  * @see EditorInfo.inputType for mask table
  */
 @JvmInline
-value class InputAttributes private constructor(private val inputType: Int) {
+value class InputAttributes private constructor(val raw: Int) {
     val type: Type
-        get() = Type.fromInt(inputType and InputType.TYPE_MASK_CLASS)
+        get() = Type.fromInt(raw and InputType.TYPE_MASK_CLASS)
 
     val variation: Variation
         get() = when (type) {
-            Type.DATETIME -> when (inputType and InputType.TYPE_MASK_VARIATION) {
+            Type.DATETIME -> when (raw and InputType.TYPE_MASK_VARIATION) {
                 InputType.TYPE_DATETIME_VARIATION_DATE -> Variation.DATE
                 InputType.TYPE_DATETIME_VARIATION_NORMAL -> Variation.NORMAL
                 InputType.TYPE_DATETIME_VARIATION_TIME -> Variation.TIME
                 else -> Variation.NORMAL
             }
-            Type.NUMBER -> when (inputType and InputType.TYPE_MASK_VARIATION) {
+            Type.NUMBER -> when (raw and InputType.TYPE_MASK_VARIATION) {
                 InputType.TYPE_NUMBER_VARIATION_NORMAL -> Variation.NORMAL
                 InputType.TYPE_NUMBER_VARIATION_PASSWORD -> Variation.PASSWORD
                 else -> Variation.NORMAL
             }
-            Type.TEXT -> when (inputType and InputType.TYPE_MASK_VARIATION) {
+            Type.TEXT -> when (raw and InputType.TYPE_MASK_VARIATION) {
                 InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS -> Variation.EMAIL_ADDRESS
                 InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT -> Variation.EMAIL_SUBJECT
                 InputType.TYPE_TEXT_VARIATION_FILTER -> Variation.FILTER
@@ -65,28 +65,28 @@ value class InputAttributes private constructor(private val inputType: Int) {
         }
 
     val capsMode: CapsMode
-        get() = if (type == Type.TEXT) CapsMode.fromFlags(inputType) else CapsMode.NONE
+        get() = if (type == Type.TEXT) CapsMode.fromFlags(raw) else CapsMode.NONE
 
     val flagNumberDecimal: Boolean
-        get() = type == Type.NUMBER && (inputType and InputType.TYPE_NUMBER_FLAG_DECIMAL != 0)
+        get() = type == Type.NUMBER && (raw and InputType.TYPE_NUMBER_FLAG_DECIMAL != 0)
 
     val flagNumberSigned: Boolean
-        get() = type == Type.NUMBER && (inputType and InputType.TYPE_NUMBER_FLAG_SIGNED != 0)
+        get() = type == Type.NUMBER && (raw and InputType.TYPE_NUMBER_FLAG_SIGNED != 0)
 
     val flagTextAutoComplete: Boolean
-        get() = type == Type.TEXT && (inputType and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE != 0)
+        get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE != 0)
 
     val flagTextAutoCorrect: Boolean
-        get() = type == Type.TEXT && (inputType and InputType.TYPE_TEXT_FLAG_AUTO_CORRECT != 0)
+        get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_AUTO_CORRECT != 0)
 
     val flagTextImeMultiLine: Boolean
-        get() = type == Type.TEXT && (inputType and InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE != 0)
+        get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE != 0)
 
     val flagTextMultiLine: Boolean
-        get() = type == Type.TEXT && (inputType and InputType.TYPE_TEXT_FLAG_MULTI_LINE != 0)
+        get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_MULTI_LINE != 0)
 
     val flagTextNoSuggestions: Boolean
-        get() = type == Type.TEXT && (inputType and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0)
+        get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0)
 
     companion object {
         fun wrap(inputType: Int) = InputAttributes(inputType)

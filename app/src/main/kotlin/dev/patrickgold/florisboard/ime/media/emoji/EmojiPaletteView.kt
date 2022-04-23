@@ -127,7 +127,7 @@ fun EmojiPaletteView(
     val editorInstance by context.editorInstance()
     val keyboardManager by context.keyboardManager()
 
-    val activeEditorInfo by editorInstance.activeInfo.collectAsState()
+    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
     val systemFontPaint = remember(Typeface.DEFAULT) {
         Paint().apply {
             typeface = Typeface.DEFAULT
