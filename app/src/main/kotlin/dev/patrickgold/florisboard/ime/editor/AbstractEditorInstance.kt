@@ -25,7 +25,6 @@ import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Suppress("BlockingMethodInNonBlockingContext")
@@ -45,49 +44,40 @@ abstract class AbstractEditorInstance(context: Context) {
 
     private val _activeContentFlow = MutableStateFlow(EditorContent.Unspecified)
     val activeContentFlow = _activeContentFlow.asStateFlow()
-    val activeContent: EditorContent = _activeContentFlow.value
+    inline var activeContent: EditorContent
+        get() = activeContentFlow.value
+        private set(v) { _activeContentFlow.value = v }
 
     private val _activeCursorCapsModeFlow = MutableStateFlow(InputAttributes.CapsMode.NONE)
     val activeCursorCapsModeFlow = _activeCursorCapsModeFlow.asStateFlow()
-    val activeCursorCapsMode: InputAttributes.CapsMode = _activeCursorCapsModeFlow.value
+    inline var activeCursorCapsMode: InputAttributes.CapsMode
+        get() = activeCursorCapsModeFlow.value
+        private set(v) { _activeCursorCapsModeFlow.value = v }
 
     private val _activeInfoFlow = MutableStateFlow(FlorisEditorInfo.Unspecified)
     val activeInfoFlow = _activeInfoFlow.asStateFlow()
-    val activeInfo: FlorisEditorInfo = _activeInfoFlow.value
-
-    init {
-        scope.launch {
-            activeContentFlow.collectLatest { content ->
-                if (activeInfo.isRichInputEditor) {
-                    val ic = currentInputConnection() ?: return@collectLatest
-                    if (content.composing.isValid) {
-                        ic.setComposingRegion(content.composing.start, content.composing.end)
-                    } else {
-                        ic.finishComposingText()
-                    }
-                }
-            }
-        }
-    }
+    inline var activeInfo: FlorisEditorInfo
+        get() = activeInfoFlow.value
+        private set(v) { _activeInfoFlow.value = v }
 
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
     open fun handleStartInput(editorInfo: FlorisEditorInfo) {
-        _activeInfoFlow.value = editorInfo
-        _activeContentFlow.value = EditorContent.Unspecified
-        _activeCursorCapsModeFlow.value = editorInfo.initialCapsMode
+        activeInfo = editorInfo
+        activeCursorCapsMode = editorInfo.initialCapsMode
+        activeContent = EditorContent.Unspecified
         currentInputConnection()?.requestCursorUpdates(CursorUpdateAll)
     }
 
     open fun handleStartInputView(editorInfo: FlorisEditorInfo) {
-        _activeInfoFlow.value = editorInfo
+        activeInfo = editorInfo
         val selection = editorInfo.initialSelection
         if (selection.isNotValid || editorInfo.isRawInputEditor) {
-            _activeContentFlow.value = EditorContent.Unspecified
-            _activeCursorCapsModeFlow.value = InputAttributes.CapsMode.NONE
+            activeCursorCapsMode = InputAttributes.CapsMode.NONE
+            activeContent = EditorContent.Unspecified
             return
         }
-        _activeCursorCapsModeFlow.value = editorInfo.initialCapsMode
+        activeCursorCapsMode = editorInfo.initialCapsMode
 
         // Get Text
         val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor) ?: ""
@@ -95,29 +85,31 @@ abstract class AbstractEditorInstance(context: Context) {
         val selectedText = editorInfo.getInitialSelectedText() ?: ""
 
         scope.launch {
-            initialize(selection, textBeforeSelection, textAfterSelection, selectedText).also { content ->
+            initialize(editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText).also { content ->
                 setComposingRegion(content.composing)
             }
         }
     }
 
     open fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
-        val ic = currentInputConnection()
-        if (ic == null || newSelection.isNotValid) {
-            reset()
+        val editorInfo = activeInfo
+        if (newSelection.isNotValid || editorInfo.isRawInputEditor) {
+            activeCursorCapsMode = InputAttributes.CapsMode.NONE
+            activeContent = EditorContent.Unspecified
             return
         }
-        _activeCursorCapsModeFlow.value = InputAttributes.CapsMode.fromFlags(
-            ic.getCursorCapsMode(activeInfo.inputAttributes.raw)
+        val ic = currentInputConnection() ?: return
+        activeCursorCapsMode = InputAttributes.CapsMode.fromFlags(
+            ic.getCursorCapsMode(editorInfo.inputAttributes.raw)
         )
 
         // Get Text
-        val textBeforeSelection = ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: ""
+        val textBeforeSelection = if (newSelection.start > 0) ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: "" else ""
         val textAfterSelection = ic.getTextAfterCursor(NumCharsAfterCursor, 0) ?: ""
-        val selectedText = ic.getSelectedText(0) ?: ""
+        val selectedText = if (newSelection.isSelectionMode) ic.getSelectedText(0) ?: "" else ""
 
         scope.launch {
-            initialize(newSelection, textBeforeSelection, textAfterSelection, selectedText).also { content ->
+            initialize(editorInfo, newSelection, textBeforeSelection, textAfterSelection, selectedText).also { content ->
                 if (content.composing != composing) {
                     setComposingRegion(content.composing)
                 }
@@ -135,12 +127,13 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     protected open fun reset() {
-        _activeContentFlow.value = EditorContent.Unspecified
-        _activeCursorCapsModeFlow.value = InputAttributes.CapsMode.NONE
-        _activeInfoFlow.value = FlorisEditorInfo.Unspecified
+        activeInfo = FlorisEditorInfo.Unspecified
+        activeCursorCapsMode = InputAttributes.CapsMode.NONE
+        activeContent = EditorContent.Unspecified
     }
 
     private suspend fun initialize(
+        editorInfo: FlorisEditorInfo,
         selection: EditorRange,
         textBeforeSelection: CharSequence,
         textAfterSelection: CharSequence,
@@ -155,12 +148,12 @@ abstract class AbstractEditorInstance(context: Context) {
 
         // Check consistency and exit if necessary
         if (offset < 0 || selection.translatedBy(-offset) != localSelection) {
-            reset()
+            activeContent = EditorContent.Unspecified
             return EditorContent.Unspecified
         }
 
         // Determine local composing word range, if any
-        val localComposing = if (localSelection.isCursorMode && textBeforeSelection.isNotEmpty()) {
+        val localComposing = if (shouldDetermineComposingRegion(editorInfo) && localSelection.isCursorMode && textBeforeSelection.isNotEmpty()) {
             determineLocalComposing(textBeforeSelection)
         } else {
             EditorRange.Unspecified
@@ -174,8 +167,12 @@ abstract class AbstractEditorInstance(context: Context) {
             toString()
         }
         val content = EditorContent(text, offset, localSelection, localComposing)
-        _activeContentFlow.value = content
+        activeContent = content
         return content
+    }
+
+    protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
+        return editorInfo.isRichInputEditor
     }
 
     private suspend fun determineLocalComposing(textBeforeSelection: CharSequence): EditorRange {
@@ -192,12 +189,19 @@ abstract class AbstractEditorInstance(context: Context) {
         }
     }
 
-    protected open fun setComposingRegion(composing: EditorRange) {
+    private fun setComposingRegion(composing: EditorRange) {
         val ic = currentInputConnection() ?: return
         if (composing.isValid) {
             ic.setComposingRegion(composing.start, composing.end)
         } else {
             ic.finishComposingText()
         }
+    }
+
+    protected fun setSelection(selection: EditorRange): Boolean {
+        if (activeInfo.isRawInputEditor) return false
+        if (activeContent.selection == selection) return true
+        val ic = currentInputConnection() ?: return false
+        return ic.setSelection(selection.start, selection.end)
     }
 }

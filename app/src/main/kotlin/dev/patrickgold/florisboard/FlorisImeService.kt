@@ -112,6 +112,7 @@ import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.util.ViewUtils
+import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 
@@ -283,6 +284,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onStartInput(info: EditorInfo?, restarting: Boolean) {
+        flogInfo { "restarting=$restarting info=${info?.debugSummarize()}" }
         super.onStartInput(info, restarting)
         if (info == null) return
         val editorInfo = FlorisEditorInfo.wrap(info)
@@ -290,6 +292,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        flogInfo { "restarting=$restarting info=${info?.debugSummarize()}" }
         super.onStartInputView(info, restarting)
         if (info == null) return
         val editorInfo = FlorisEditorInfo.wrap(info)
@@ -309,6 +312,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         candidatesStart: Int,
         candidatesEnd: Int,
     ) {
+        flogInfo { "old={start=$oldSelStart,end=$oldSelEnd} new={start=$newSelStart,end=$newSelEnd} composing={start=$candidatesStart,end=$candidatesEnd}" }
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
         activeState.batchEdit {
             activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
@@ -322,11 +326,13 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
+        flogInfo { "finishing=$finishingInput" }
         super.onFinishInputView(finishingInput)
         editorInstance.handleFinishInputView()
     }
 
     override fun onFinishInput() {
+        flogInfo { "(no args)" }
         super.onFinishInput()
         editorInstance.handleFinishInput()
         nlpManager.clearInlineSuggestions()

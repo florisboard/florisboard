@@ -25,7 +25,6 @@ import android.os.SystemClock
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
-import android.view.inputmethod.InputConnection
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
@@ -128,6 +127,11 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
     }
 
+    override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
+        return super.shouldDetermineComposingRegion(editorInfo) &&
+            (phantomSpace.isInactive || phantomSpace.showComposingRegion)
+    }
+
     /**
      * Sets the selection of the input editor to the specified [start] and [end] values. This method does nothing if
      * the input connection is not valid or if the input editor is raw.
@@ -138,20 +142,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success or if the selection is already at specified position, false otherwise.
      */
     fun setSelection(start: Int, end: Int): Boolean {
-        if (activeInfo.isRawInputEditor) return false
-        val newSelection = EditorRange.normalized(start, end)
-        if (activeContent.selection == newSelection) return true
-        val ic = currentInputConnection() ?: return false
         phantomSpace.setInactive()
-        return ic.setSelection(newSelection.start, newSelection.end)
-    }
-
-    override fun setComposingRegion(composing: EditorRange) {
-        if (phantomSpace.isActive && !phantomSpace.showComposingRegion) {
-            super.setComposingRegion(EditorRange.Unspecified)
-        } else {
-            super.setComposingRegion(composing)
-        }
+        val selection = EditorRange.normalized(start, end)
+        return super.setSelection(selection)
     }
 
     /**
@@ -684,6 +677,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
         val isActive: Boolean
             get() = state.get() and F_IS_ACTIVE != 0
+
+        val isInactive: Boolean
+            get() = !isActive
 
         val showComposingRegion: Boolean
             get() = state.get() and F_SHOW_COMPOSING_REGION != 0

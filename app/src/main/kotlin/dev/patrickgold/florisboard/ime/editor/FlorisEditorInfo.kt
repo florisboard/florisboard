@@ -73,6 +73,21 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val emojiCompatReplaceAll: Boolean
         get() = base.extras?.getBoolean(EmojiCompat.EDITOR_INFO_REPLACE_ALL_KEY, false) ?: false
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as FlorisEditorInfo
+
+        if (base != other.base) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return base.hashCode()
+    }
+
     companion object {
         val Unspecified = FlorisEditorInfo(EditorInfo())
 
