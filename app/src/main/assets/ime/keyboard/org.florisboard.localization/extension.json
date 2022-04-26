@@ -75,6 +75,10 @@
       "authors": [ "M-Koushan" ]
     },
     {
+      "id": "fa3",
+      "authors": [ "SaeID-Rz" ]
+    },
+    {
       "id": "fi",
       "authors": [ "patrickgold" ]
     },
@@ -445,6 +449,18 @@
         "symbols": "org.florisboard.layouts:persian",
         "symbols2": "org.florisboard.layouts:persian",
         "numericRow": "org.florisboard.layouts:persian"
+      }
+    },
+    {
+      "languageTag": "fa-FA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:fa3",
+      "preferred": {
+        "characters": "org.florisboard.layouts:persian3",
+        "symbols": "org.florisboard.layouts:persian",
+        "symbols2": "org.florisboard.layouts:persian",
+        "numericRow": "org.florisboard.layouts:western_arabic"
       }
     },
     {
