@@ -18,6 +18,8 @@
 
 package dev.patrickgold.florisboard.lib.kotlin
 
+import android.icu.text.BreakIterator
+import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -79,4 +81,36 @@ private fun StringBuilder.formatCurlyArg(name: String, value: Any?) {
         this.replace(start, end, value.toString())
         index = this.lastIndexOf(spec)
     }
+}
+
+suspend fun String.measureUChars(
+    numUnicodeChars: Int,
+    locale: FlorisLocale = FlorisLocale.default(),
+): Int {
+    return BreakIteratorCache.character(locale) {
+        it.setText(this)
+        val start = it.first()
+        var end: Int
+        var n = 0
+        do {
+            end = it.next()
+        } while (end != BreakIterator.DONE && ++n < numUnicodeChars)
+        it.current() - start
+    }.coerceIn(this.indices)
+}
+
+suspend fun String.measureLastUChars(
+    numUnicodeChars: Int,
+    locale: FlorisLocale = FlorisLocale.default(),
+): Int {
+    return BreakIteratorCache.character(locale) {
+        it.setText(this)
+        val end = it.last()
+        var start: Int
+        var n = 0
+        do {
+            start = it.previous()
+        } while (start != BreakIterator.DONE && ++n < numUnicodeChars)
+        end - it.current()
+    }.coerceIn(this.indices)
 }

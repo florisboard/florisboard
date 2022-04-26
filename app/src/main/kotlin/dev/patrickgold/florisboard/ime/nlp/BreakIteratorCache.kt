@@ -21,7 +21,6 @@ import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.kotlin.GuardedByLock
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import io.github.reactivecircus.cache4k.Cache
-import kotlinx.coroutines.runBlocking
 
 object BreakIteratorCache {
     @PublishedApi
@@ -30,21 +29,13 @@ object BreakIteratorCache {
     @PublishedApi
     internal val wordInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
 
-    suspend inline fun <R> character(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+    suspend inline fun <R> character(locale: FlorisLocale, crossinline action: (BreakIterator) -> R): R {
         val instance = charInstances.get(locale) { guardedByLock { BreakIterator.getCharacterInstance(locale.base) } }
         return instance.withLock { action(it) }
     }
 
-    inline fun <R> characterBlocking(locale: FlorisLocale, crossinline action: (BreakIterator) -> R): R {
-        return runBlocking { character(locale, action) }
-    }
-
-    suspend inline fun <R> word(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+    suspend inline fun <R> word(locale: FlorisLocale, crossinline action: (BreakIterator) -> R): R {
         val instance = wordInstances.get(locale) { guardedByLock { BreakIterator.getWordInstance(locale.base) } }
         return instance.withLock(null, action)
-    }
-
-    inline fun <R> wordBlocking(locale: FlorisLocale, crossinline action: (BreakIterator) -> R): R {
-        return runBlocking { word(locale, action) }
     }
 }

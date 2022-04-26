@@ -37,7 +37,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
 import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -159,40 +158,17 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun commitText(text: String): Boolean {
-        if (text.isEmpty()) return false
-        val ic = currentInputConnection() ?: return false
-        ic.beginBatchEdit()
+    override fun commitText(text: String): Boolean {
         val activeSelection = activeContent.selection
         val isWordComponent = TextProcessor.isWord(text)
         val isPhantomSpaceActive = phantomSpace.isActive && activeSelection.isValid &&
             getTextBeforeCursor(1) != SPACE && isWordComponent
-        when {
-            activeInfo.isRawInputEditor || activeSelection.isSelectionMode -> {
-                ic.finishComposingText()
-                if (isPhantomSpaceActive) {
-                    ic.commitText("$SPACE$text", 1)
-                } else {
-                    ic.commitText(text, 1)
-                }
-            }
-            else -> when {
-                isPhantomSpaceActive -> {
-                    ic.finishComposingText()
-                    ic.commitText("$SPACE$text", 1)
-                }
-                isWordComponent -> {
-                    val composingText = activeContent.composingText
-                    ic.setComposingText("$composingText$text", 1)
-                }
-                else -> {
-                    ic.finishComposingText()
-                    ic.commitText(text, 1)
-                }
-            }
+        if (isPhantomSpaceActive) {
+            super.commitText("$SPACE$text")
+        } else {
+            super.commitText(text)
         }
         phantomSpace.setInactive()
-        ic.endBatchEdit()
         return true
     }
 
@@ -331,30 +307,10 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
         } else {
             val ic = currentInputConnection() ?: return false
-            val activeSelection = activeContent.selection
-            if (activeSelection.isSelectionMode) {
+            if (activeContent.selection.isSelectionMode) {
                 ic.commitText("", 1)
             } else {
-                val editorContent = activeContent
-                val composingText = editorContent.composingText
-                if (composingText.isNotEmpty()) {
-                    BreakIteratorCache.characterBlocking(subtypeManager.activeSubtype().primaryLocale) {
-                        it.setText(composingText)
-                        val end = it.last()
-                        val start = it.previous()
-                        ic.setComposingText(composingText.removeRange(start, end), 1)
-                    }
-                } else {
-                    ic.beginBatchEdit()
-                    ic.finishComposingText()
-                    BreakIteratorCache.characterBlocking(subtypeManager.activeSubtype().primaryLocale) {
-                        it.setText(editorContent.textBeforeSelection)
-                        val end = it.last()
-                        val start = it.previous()
-                        ic.deleteSurroundingText(end - start, 0)
-                    }
-                    ic.endBatchEdit()
-                }
+                deleteUCharsBeforeCursor(1)
             }
         }
     }
@@ -369,34 +325,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     fun deleteWordBackwards(): Boolean {
         phantomSpace.setInactive()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true))
-    }
-
-    /**
-     * Gets [n] characters before the cursor's current position. The resulting string may be any
-     * length ranging from 0 to n.
-     *
-     * @param n The number of characters to get before the cursor. Must be greater than 0 or this
-     *  method will fail.
-     *
-     * @return [n] or less characters before the cursor.
-     */
-    fun getTextBeforeCursor(n: Int): String {
-        if (n < 1) return ""
-        return activeContent.textBeforeSelection.takeLast(n)
-    }
-
-    /**
-     * Gets [n] characters after the cursor's current position. The resulting string may be any
-     * length ranging from 0 to n.
-     *
-     * @param n The number of characters to get after the cursor. Must be greater than 0 or this
-     *  method will fail.
-     *
-     * @return [n] or less characters after the cursor.
-     */
-    fun getTextAfterCursor(n: Int): String {
-        if (n < 1) return ""
-        return activeContent.textAfterSelection.take(n)
     }
 
     fun selectionSetNWordsLeft(n: Int): Boolean {
