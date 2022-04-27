@@ -531,7 +531,9 @@ private class TextKeyboardLayoutController(
                         pointer.index = pointerIndex
                         val alwaysTriggerOnMove = (pointer.hasTriggeredGestureMove
                             && (pointer.initialKey?.computedData?.code == KeyCode.DELETE
-                            && prefs.gestures.deleteKeySwipeLeft.get() == SwipeAction.DELETE_CHARACTERS_PRECISELY
+                            && prefs.gestures.deleteKeySwipeLeft.get().let {
+                                it == SwipeAction.DELETE_CHARACTERS_PRECISELY || it == SwipeAction.SELECT_CHARACTERS_PRECISELY
+                            }
                             || pointer.initialKey?.computedData?.code == KeyCode.SPACE
                             || pointer.initialKey?.computedData?.code == KeyCode.CJK_SPACE))
                         if (swipeGestureDetector.onTouchMove(
