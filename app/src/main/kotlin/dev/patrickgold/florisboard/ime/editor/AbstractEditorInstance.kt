@@ -18,10 +18,16 @@ package dev.patrickgold.florisboard.ime.editor
 
 import android.content.Context
 import android.icu.text.BreakIterator
+import android.inputmethodservice.InputMethodService
+import android.os.SystemClock
+import android.view.InputDevice
+import android.view.KeyCharacterMap
+import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
 import dev.patrickgold.florisboard.lib.kotlin.measureLastUChars
+import dev.patrickgold.florisboard.lib.kotlin.measureLastUWords
 import dev.patrickgold.florisboard.lib.kotlin.measureUChars
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.MainScope
@@ -243,13 +249,23 @@ abstract class AbstractEditorInstance(context: Context) {
 
     protected fun setSelection(selection: EditorRange): Boolean {
         if (activeInfo.isRawInputEditor) return false
-        if (activeContent.selection == selection) return true
+        val content = expectedContent ?: activeContent
+        if (content.selection == selection) return true
         val ic = currentInputConnection() ?: return false
-        return ic.setSelection(selection.start, selection.end)
+        ic.beginBatchEdit()
+        runBlocking {
+            val newContent = content
+                .copy(localSelection = selection.translatedBy(-content.offset))
+                .generateCopy(selection = selection)
+            expectedContent = newContent
+            ic.setSelection(selection.start, selection.end)
+            ic.setComposingRegion(newContent.composing)
+        }
+        ic.endBatchEdit()
+        return true
     }
 
     open fun commitText(text: String): Boolean {
-        if (text.isEmpty()) return false
         val ic = currentInputConnection() ?: return false
         val content = expectedContent ?: activeContent
         val selection = content.selection
@@ -260,7 +276,6 @@ abstract class AbstractEditorInstance(context: Context) {
         } else runBlocking {
             val newSelection = EditorRange(selection.start + text.length, selection.start + text.length)
             val newContent = content.generateCopy(
-                editorInfo = activeInfo,
                 selection = newSelection,
                 textBeforeSelection =
                     if (selection.isSelectionMode) {
@@ -273,26 +288,34 @@ abstract class AbstractEditorInstance(context: Context) {
             )
             expectedContent = newContent
             ic.commitText(text, 1)
-            if (newContent.composing.isValid) {
-                ic.setComposingRegion(newContent.composing)
-            }
+            ic.setComposingRegion(newContent.composing)
         }
         ic.endBatchEdit()
         return true
     }
 
-    protected fun deleteUCharsBeforeCursor(n: Int): Boolean {
+    protected fun deleteBeforeCursor(type: TextType, n: Int): Boolean {
         val ic = currentInputConnection()
         if (ic == null || n < 1) return false
         val content = expectedContent ?: activeContent
-        if (content.selection.start == 0) return true
+        if (content.selection.isValid && content.selection.start == 0) return true
         val oldTextBeforeSelection = content.textBeforeSelection
-        return if (oldTextBeforeSelection.isNotEmpty()) {
+        return if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
+            // If editor is rich and text before selection is empty we seem to have an invalid state here, so we fall
+            // back to emulating a hardware backspace.
+            when (type) {
+                TextType.Characters -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, count = n)
+                TextType.Words -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true), count = n)
+            }
+        } else {
             runBlocking {
-                val length = oldTextBeforeSelection.measureLastUChars(n, subtypeManager.activeSubtype().primaryLocale)
+                val locale = subtypeManager.activeSubtype().primaryLocale
+                val length = when (type) {
+                    TextType.Characters -> oldTextBeforeSelection.measureLastUChars(n, locale)
+                    TextType.Words -> oldTextBeforeSelection.measureLastUWords(n, locale)
+                }
                 val newSelection = content.selection.translatedBy(-length)
                 val newContent = content.generateCopy(
-                    editorInfo = activeInfo,
                     selection = newSelection,
                     textBeforeSelection = oldTextBeforeSelection.dropLast(length),
                 )
@@ -304,8 +327,6 @@ abstract class AbstractEditorInstance(context: Context) {
                 ic.endBatchEdit()
                 true
             }
-        } else {
-            ic.deleteSurroundingText(n, 0)
         }
     }
 
@@ -345,5 +366,116 @@ abstract class AbstractEditorInstance(context: Context) {
             val length = text.measureUChars(n, subtypeManager.activeSubtype().primaryLocale)
             text.take(length)
         }
+    }
+
+    /**
+     * Constructs a meta state integer flag which can be used for setting the `metaState` field when sending a KeyEvent
+     * to the input connection. If this method is called without a meta modifier set to true, the default value `0` is
+     * returned.
+     *
+     * @param ctrl Set to true to enable the CTRL meta modifier. Defaults to false.
+     * @param alt Set to true to enable the ALT meta modifier. Defaults to false.
+     * @param shift Set to true to enable the SHIFT meta modifier. Defaults to false.
+     *
+     * @return An integer containing all meta flags passed and formatted for use in a [KeyEvent].
+     */
+    fun meta(
+        ctrl: Boolean = false,
+        alt: Boolean = false,
+        shift: Boolean = false,
+    ): Int {
+        var metaState = 0
+        if (ctrl) {
+            metaState = metaState or KeyEvent.META_CTRL_ON or KeyEvent.META_CTRL_LEFT_ON
+        }
+        if (alt) {
+            metaState = metaState or KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON
+        }
+        if (shift) {
+            metaState = metaState or KeyEvent.META_SHIFT_ON or KeyEvent.META_SHIFT_LEFT_ON
+        }
+        return metaState
+    }
+
+    private fun sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
+        val ic = currentInputConnection() ?: return false
+        return ic.sendKeyEvent(
+            KeyEvent(
+                eventTime,
+                eventTime,
+                KeyEvent.ACTION_DOWN,
+                keyEventCode,
+                0,
+                metaState,
+                KeyCharacterMap.VIRTUAL_KEYBOARD,
+                0,
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
+                InputDevice.SOURCE_KEYBOARD
+            )
+        )
+    }
+
+    private fun sendUpKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
+        val ic = currentInputConnection() ?: return false
+        return ic.sendKeyEvent(
+            KeyEvent(
+                eventTime,
+                SystemClock.uptimeMillis(),
+                KeyEvent.ACTION_UP,
+                keyEventCode,
+                0,
+                metaState,
+                KeyCharacterMap.VIRTUAL_KEYBOARD,
+                0,
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
+                InputDevice.SOURCE_KEYBOARD
+            )
+        )
+    }
+
+    /**
+     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set meta state.
+     *
+     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
+     * @param metaState Flags indicating which meta keys are currently pressed.
+     * @param count How often the key is pressed while the meta keys passed are down. Must be greater than or equal to
+     *  `1`, else this method will immediately return false.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), count: Int = 1): Boolean {
+        if (count < 1) return false
+        val ic = currentInputConnection() ?: return false
+        ic.beginBatchEdit()
+        val eventTime = SystemClock.uptimeMillis()
+        if (metaState and KeyEvent.META_CTRL_ON != 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_ALT_ON != 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_SHIFT_ON != 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+        }
+        for (n in 0 until count) {
+            sendDownKeyEvent(eventTime, keyEventCode, metaState)
+            sendUpKeyEvent(eventTime, keyEventCode, metaState)
+        }
+        if (metaState and KeyEvent.META_SHIFT_ON != 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_ALT_ON != 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_CTRL_ON != 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+        }
+        ic.endBatchEdit()
+        return true
+    }
+
+    protected enum class TextType {
+        Characters,
+        Words;
     }
 }

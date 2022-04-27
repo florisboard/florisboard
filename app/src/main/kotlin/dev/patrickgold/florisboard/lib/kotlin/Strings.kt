@@ -95,8 +95,8 @@ suspend fun String.measureUChars(
         do {
             end = it.next()
         } while (end != BreakIterator.DONE && ++n < numUnicodeChars)
-        it.current() - start
-    }.coerceIn(this.indices)
+        (if (end == BreakIterator.DONE) this.length else end) - start
+    }.coerceIn(0, this.length)
 }
 
 suspend fun String.measureLastUChars(
@@ -111,6 +111,38 @@ suspend fun String.measureLastUChars(
         do {
             start = it.previous()
         } while (start != BreakIterator.DONE && ++n < numUnicodeChars)
-        end - it.current()
-    }.coerceIn(this.indices)
+        end - (if (start == BreakIterator.DONE) 0 else start)
+    }.coerceIn(0, this.length)
+}
+
+suspend fun String.measureUWords(
+    numUnicodeWords: Int,
+    locale: FlorisLocale = FlorisLocale.default(),
+): Int {
+    return BreakIteratorCache.word(locale) {
+        it.setText(this)
+        val start = it.first()
+        var end: Int
+        var n = 0
+        do {
+            end = it.next()
+        } while (end != BreakIterator.DONE && ++n < numUnicodeWords)
+        (if (end == BreakIterator.DONE) this.length else end) - start
+    }.coerceIn(0, this.length)
+}
+
+suspend fun String.measureLastUWords(
+    numUnicodeWords: Int,
+    locale: FlorisLocale = FlorisLocale.default(),
+): Int {
+    return BreakIteratorCache.word(locale) {
+        it.setText(this)
+        val end = it.last()
+        var start: Int
+        var n = 0
+        do {
+            start = it.previous()
+        } while (start != BreakIterator.DONE && ++n < numUnicodeWords)
+        end - (if (start == BreakIterator.DONE) 0 else start)
+    }.coerceIn(0, this.length)
 }

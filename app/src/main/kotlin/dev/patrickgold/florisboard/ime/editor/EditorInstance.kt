@@ -20,12 +20,7 @@ import android.content.ClipDescription
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.inputmethodservice.InputMethodService
-import android.os.SystemClock
-import android.view.InputDevice
-import android.view.KeyCharacterMap
 import android.view.KeyEvent
-import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.BuildConfig
@@ -44,17 +39,19 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
+    companion object {
+        private const val SPACE = " "
+    }
+
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
-    private val subtypeManager by context.subtypeManager()
     private val scope = MainScope()
 
     private val activeState get() = keyboardManager.activeState
@@ -185,17 +182,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun commitCompletion(text: String): Boolean {
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
-        val ic = currentInputConnection() ?: return false
-        ic.beginBatchEdit()
-        val activeSelection = activeContent.selection
-        if (phantomSpace.isActive && activeSelection.isValid && getTextBeforeCursor(1) != SPACE) {
-            ic.finishComposingText()
-            ic.commitText(SPACE, 1)
-        }
-        ic.setComposingText(text, 1)
         phantomSpace.setActive(showComposingRegion = false)
-        ic.endBatchEdit()
-        return true
+        return commitText(text)
     }
 
     /**
@@ -210,20 +198,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun commitGesture(text: String): Boolean {
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
-        val ic = currentInputConnection() ?: return false
-        ic.beginBatchEdit()
-        ic.finishComposingText()
-        val activeSelection = activeContent.selection
-        if (activeSelection.start > 0) {
-            val previous = getTextBeforeCursor(1)
-            if (TextProcessor.isWord(previous) || previous.isDigitsOnly()) {
-                ic.commitText(SPACE, 1)
-            }
-        }
-        ic.setComposingText(text, 1)
         phantomSpace.setActive(showComposingRegion = true)
-        ic.endBatchEdit()
-        return true
+        return commitText(text)
     }
 
     /**
@@ -303,28 +279,27 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun deleteBackwards(): Boolean {
         phantomSpace.setInactive()
-        return if (activeInfo.isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
+        return if (activeContent.selection.isSelectionMode) {
+            commitText("")
         } else {
-            val ic = currentInputConnection() ?: return false
-            if (activeContent.selection.isSelectionMode) {
-                ic.commitText("", 1)
-            } else {
-                deleteUCharsBeforeCursor(1)
-            }
+            deleteBeforeCursor(TextType.Characters, 1)
         }
     }
 
     /**
      * Executes a backward delete on this editor's text. If a text selection is active, all
-     * characters inside this selection will be removed, else only the left-most character from
+     * characters inside this selection will be removed, else only the left-most word from
      * the cursor's position.
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteWordBackwards(): Boolean {
         phantomSpace.setInactive()
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true))
+        return if (activeContent.selection.isSelectionMode) {
+            commitText("")
+        } else {
+            deleteBeforeCursor(TextType.Words, 1)
+        }
     }
 
     fun selectionSetNWordsLeft(n: Int): Boolean {
@@ -384,7 +359,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         } else {
             appContext.showShortToast("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
         }
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
+        return deleteBackwards()
     }
 
     /**
@@ -485,119 +460,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
     }
 
-    /**
-     * Constructs a meta state integer flag which can be used for setting the `metaState` field when sending a KeyEvent
-     * to the input connection. If this method is called without a meta modifier set to true, the default value `0` is
-     * returned.
-     *
-     * @param ctrl Set to true to enable the CTRL meta modifier. Defaults to false.
-     * @param alt Set to true to enable the ALT meta modifier. Defaults to false.
-     * @param shift Set to true to enable the SHIFT meta modifier. Defaults to false.
-     *
-     * @return An integer containing all meta flags passed and formatted for use in a [KeyEvent].
-     */
-    fun meta(
-        ctrl: Boolean = false,
-        alt: Boolean = false,
-        shift: Boolean = false,
-    ): Int {
-        var metaState = 0
-        if (ctrl) {
-            metaState = metaState or KeyEvent.META_CTRL_ON or KeyEvent.META_CTRL_LEFT_ON
-        }
-        if (alt) {
-            metaState = metaState or KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON
-        }
-        if (shift) {
-            metaState = metaState or KeyEvent.META_SHIFT_ON or KeyEvent.META_SHIFT_LEFT_ON
-        }
-        return metaState
-    }
-
-    private fun sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
-        val ic = currentInputConnection() ?: return false
-        return ic.sendKeyEvent(
-            KeyEvent(
-                eventTime,
-                eventTime,
-                KeyEvent.ACTION_DOWN,
-                keyEventCode,
-                0,
-                metaState,
-                KeyCharacterMap.VIRTUAL_KEYBOARD,
-                0,
-                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
-                InputDevice.SOURCE_KEYBOARD
-            )
-        )
-    }
-
-    private fun sendUpKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
-        val ic = currentInputConnection() ?: return false
-        return ic.sendKeyEvent(
-            KeyEvent(
-                eventTime,
-                SystemClock.uptimeMillis(),
-                KeyEvent.ACTION_UP,
-                keyEventCode,
-                0,
-                metaState,
-                KeyCharacterMap.VIRTUAL_KEYBOARD,
-                0,
-                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
-                InputDevice.SOURCE_KEYBOARD
-            )
-        )
-    }
-
-    /**
-     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set meta state.
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @param metaState Flags indicating which meta keys are currently pressed.
-     * @param count How often the key is pressed while the meta keys passed are down. Must be greater than or equal to
-     *  `1`, else this method will immediately return false.
-     *
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), count: Int = 1): Boolean {
-        if (count < 1) return false
-        val ic = currentInputConnection() ?: return false
-        ic.beginBatchEdit()
-        val eventTime = SystemClock.uptimeMillis()
-        if (metaState and KeyEvent.META_CTRL_ON != 0) {
-            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
-        }
-        if (metaState and KeyEvent.META_ALT_ON != 0) {
-            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
-        }
-        if (metaState and KeyEvent.META_SHIFT_ON != 0) {
-            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
-        }
-        for (n in 0 until count) {
-            sendDownKeyEvent(eventTime, keyEventCode, metaState)
-            sendUpKeyEvent(eventTime, keyEventCode, metaState)
-        }
-        if (metaState and KeyEvent.META_SHIFT_ON != 0) {
-            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
-        }
-        if (metaState and KeyEvent.META_ALT_ON != 0) {
-            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
-        }
-        if (metaState and KeyEvent.META_CTRL_ON != 0) {
-            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
-        }
-        ic.endBatchEdit()
-        return true
-    }
-
     override fun reset() {
         super.reset()
         phantomSpace.setInactive()
-    }
-
-    companion object {
-        private const val SPACE = " "
     }
 
     class PhantomSpaceState {
