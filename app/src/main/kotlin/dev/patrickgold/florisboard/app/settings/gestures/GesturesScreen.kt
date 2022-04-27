@@ -139,6 +139,11 @@ fun GesturesScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__gestures__delete_key_swipe_left__label),
                 entries = SwipeAction.deleteSwipeListEntries(),
             )
+            ListPreference(
+                prefs.gestures.deleteKeyLongPress,
+                title = stringRes(R.string.pref__gestures__delete_key_long_press__label),
+                entries = SwipeAction.deleteLongPressListEntries(),
+            )
             DialogSliderPreference(
                 prefs.gestures.swipeVelocityThreshold,
                 title = stringRes(R.string.pref__gestures__swipe_velocity_threshold__label),

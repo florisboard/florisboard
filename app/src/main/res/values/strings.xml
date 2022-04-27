@@ -358,6 +358,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Space bar swipe right</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Space bar long press</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Delete key swipe left</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Delete key long press</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
@@ -757,8 +758,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">No action</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Cycle to previous keyboard mode</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Cycle to next keyboard mode</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Delete character before cursor</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Delete characters precisely</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Delete current word</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Delete word before cursor</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Delete words precisely</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Hide keyboard</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Insert space</string>

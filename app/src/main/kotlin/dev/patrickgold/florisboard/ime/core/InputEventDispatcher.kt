@@ -20,9 +20,12 @@ import android.os.SystemClock
 import androidx.collection.SparseArrayCompat
 import androidx.collection.forEach
 import androidx.collection.set
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent.Action
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineDispatcher
@@ -48,6 +51,7 @@ class InputEventDispatcher private constructor(
     private val defaultDispatcher: CoroutineDispatcher,
     private val repeatableKeyCodes: IntArray
 ) : InputKeyEventSender {
+    private val prefs by florisPreferenceModel()
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
     private val mainScope: CoroutineScope = CoroutineScope(mainDispatcher + SupervisorJob())
     private val defaultScope: CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
@@ -108,16 +112,31 @@ class InputEventDispatcher private constructor(
                 val startTime = System.nanoTime()
                 flogDebug(LogTopic.KEY_EVENTS) { ev.toString() }
                 when (ev.action) {
-                    InputKeyEvent.Action.DOWN -> {
+                    Action.DOWN -> {
                         if (pressedKeys.indexOfKey(ev.data.code) >= 0) continue
                         pressedKeys[ev.data.code] = PressedKeyInfo(
                             eventTimeDown = ev.eventTime,
                             repeatKeyPressJob = if (!repeatableKeyCodes.contains(ev.data.code)) { null } else {
                                 defaultScope.launch {
                                     delay(600)
+                                    val data = when (ev.data.code) {
+                                        KeyCode.DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
+                                            SwipeAction.DELETE_WORD -> TextKeyData.DELETE_WORD
+                                            else -> TextKeyData.DELETE
+                                        }
+                                        KeyCode.FORWARD_DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
+                                            SwipeAction.DELETE_WORD -> TextKeyData.FORWARD_DELETE_WORD
+                                            else -> TextKeyData.FORWARD_DELETE
+                                        }
+                                        else -> ev.data
+                                    }
+                                    val delayMs = when (data.code) {
+                                        KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE_WORD -> 550L
+                                        else -> 50L
+                                    }
                                     while (isActive) {
-                                        channel.send(InputKeyEvent.repeat(ev.data))
-                                        delay(50)
+                                        keyEventReceiver?.onInputKeyRepeat(InputKeyEvent.repeat(data))
+                                        delay(delayMs)
                                     }
                                 }
                             }
@@ -129,7 +148,7 @@ class InputEventDispatcher private constructor(
                             lastKeyEventDown = ev
                         }
                     }
-                    InputKeyEvent.Action.DOWN_UP -> {
+                    Action.DOWN_UP -> {
                         pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyDown(ev)
@@ -140,7 +159,7 @@ class InputEventDispatcher private constructor(
                             lastKeyEventUp = ev
                         }
                     }
-                    InputKeyEvent.Action.UP -> {
+                    Action.UP -> {
                         pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyUp(ev)
@@ -149,14 +168,14 @@ class InputEventDispatcher private constructor(
                             lastKeyEventUp = ev
                         }
                     }
-                    InputKeyEvent.Action.REPEAT -> {
+                    Action.REPEAT -> {
                         if (pressedKeys.indexOfKey(ev.data.code) >= 0) {
                             withContext(mainDispatcher) {
                                 keyEventReceiver?.onInputKeyRepeat(ev)
                             }
                         }
                     }
-                    InputKeyEvent.Action.CANCEL -> {
+                    Action.CANCEL -> {
                         pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyCancel(ev)

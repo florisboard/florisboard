@@ -670,6 +670,7 @@ private class TextKeyboardLayoutController(
                         ) {
                             popupUiController.extend(key, size)
                             inputFeedbackController?.keyLongPress(key.computedData)
+                            pointer.shouldBlockNextUp = true
                         }
                     }
                 }

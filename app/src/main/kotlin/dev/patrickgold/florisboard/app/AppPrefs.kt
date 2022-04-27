@@ -204,6 +204,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "gestures__delete_key_swipe_left",
             default = SwipeAction.DELETE_CHARACTERS_PRECISELY,
         )
+        val deleteKeyLongPress = enum(
+            key = "gestures__delete_key_long_press",
+            default = SwipeAction.DELETE_CHARACTER,
+        )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
             default = 32,

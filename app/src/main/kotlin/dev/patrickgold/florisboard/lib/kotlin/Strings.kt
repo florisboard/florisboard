@@ -126,7 +126,8 @@ suspend fun String.measureUWords(
         var n = 0
         do {
             end = it.next()
-        } while (end != BreakIterator.DONE && ++n < numUnicodeWords)
+            if (it.ruleStatus != BreakIterator.WORD_NONE) n++
+        } while (end != BreakIterator.DONE && n < numUnicodeWords)
         (if (end == BreakIterator.DONE) this.length else end) - start
     }.coerceIn(0, this.length)
 }
@@ -141,8 +142,9 @@ suspend fun String.measureLastUWords(
         var start: Int
         var n = 0
         do {
+            if (it.ruleStatus != BreakIterator.WORD_NONE) n++
             start = it.previous()
-        } while (start != BreakIterator.DONE && ++n < numUnicodeWords)
+        } while (start != BreakIterator.DONE && n < numUnicodeWords)
         end - (if (start == BreakIterator.DONE) 0 else start)
     }.coerceIn(0, this.length)
 }
