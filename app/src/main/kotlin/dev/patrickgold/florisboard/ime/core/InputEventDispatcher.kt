@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,50 +16,36 @@
 
 package dev.patrickgold.florisboard.ime.core
 
-import android.os.SystemClock
 import androidx.collection.SparseArrayCompat
-import androidx.collection.forEach
 import androidx.collection.set
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent.Action
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import kotlinx.coroutines.CoroutineDispatcher
+import dev.patrickgold.florisboard.lib.android.removeAndReturn
+import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.runBlocking
 
-/**
- * The main logic point of processing input events and delegating them to the registered event receivers. Currently,
- * only [InputKeyEvent]s are supported, but in the future this class is thought to be the single point where input
- * events can be dispatched.
- */
-class InputEventDispatcher private constructor(
-    channelCapacity: Int,
-    private val mainDispatcher: CoroutineDispatcher,
-    private val defaultDispatcher: CoroutineDispatcher,
-    private val repeatableKeyCodes: IntArray
-) : InputKeyEventSender {
+class InputEventDispatcher private constructor(private val repeatableKeyCodes: IntArray) {
+    companion object {
+        fun new(repeatableKeyCodes: IntArray = intArrayOf()) = InputEventDispatcher(repeatableKeyCodes.clone())
+    }
+
     private val prefs by florisPreferenceModel()
-    private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
-    private val mainScope: CoroutineScope = CoroutineScope(mainDispatcher + SupervisorJob())
-    private val defaultScope: CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
-    private val pressedKeys: SparseArrayCompat<PressedKeyInfo> = SparseArrayCompat()
-    var lastKeyEventDown: InputKeyEvent? = null
-        private set
-    var lastKeyEventUp: InputKeyEvent? = null
-        private set
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    private val pressedKeys = guardedByLock { SparseArrayCompat<PressedKeyInfo>() }
+    private var lastKeyEventDown: EventData? = null
+    private var lastKeyEventUp: EventData? = null
 
     /**
      * The input key event register. If null, the dispatcher will still process input, but won't dispatch them to an
@@ -67,141 +53,130 @@ class InputEventDispatcher private constructor(
      */
     var keyEventReceiver: InputKeyEventReceiver? = null
 
-    companion object {
-        /**
-         * The default input event channel capacity to be used in [new].
-         */
-        private const val DEFAULT_CHANNEL_CAPACITY: Int = 64
+    private fun determineLongPressDelay(data: KeyData): Long {
+        val delayMillis = prefs.keyboard.longPressDelay.get().toLong()
+        val factor = when (data.code) {
+            KeyCode.SPACE, KeyCode.CJK_SPACE, KeyCode.SHIFT -> 2.5f
+            KeyCode.LANGUAGE_SWITCH -> 2.0f
+            else -> 1.0f
+        }
+        return (delayMillis * factor).toLong()
+    }
 
-        /**
-         * Creates a new [InputEventDispatcher] instance from given arguments and returns it.
-         *
-         * @param channelCapacity The capacity of this input channel, defaults to [DEFAULT_CHANNEL_CAPACITY].
-         * @param mainDispatcher The main dispatcher used to switch the context to call the receiver callbacks.
-         *  Defaults to [Dispatchers.Main].
-         * @param defaultDispatcher The default dispatcher used to switch the context to call the receiver callbacks.
-         *  Defaults to [Dispatchers.Default].
-         * @param repeatableKeyCodes An int array of all key codes which are repeatable while being pressed down.
-         *
-         * @return A new [InputEventDispatcher] instance initialized with given arguments.
-         */
-        fun new(
-            channelCapacity: Int = DEFAULT_CHANNEL_CAPACITY,
-            mainDispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
-            defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
-            repeatableKeyCodes: IntArray = intArrayOf()
-        ): InputEventDispatcher = InputEventDispatcher(
-             channelCapacity, mainDispatcher, defaultDispatcher, repeatableKeyCodes.clone()
-        )
+    private fun determineRepeatDelay(data: KeyData): Long {
+        val delayMillis = 50
+        val factor = when (data.code) {
+            KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE_WORD -> 5.0f
+            else -> 1.0f
+        }
+        return (delayMillis * factor).toLong()
+    }
 
-        private fun <T> SparseArrayCompat<T>.removeAndReturn(key: Int): T? {
-            val elem = get(key)
-            return if (elem == null) {
-                null
-            } else {
-                remove(key)
-                elem
+    private fun determineRepeatData(data: KeyData): KeyData {
+        return when (data.code) {
+            KeyCode.DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
+                SwipeAction.DELETE_WORD -> TextKeyData.DELETE_WORD
+                else -> TextKeyData.DELETE
             }
+            KeyCode.FORWARD_DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
+                SwipeAction.DELETE_WORD -> TextKeyData.FORWARD_DELETE_WORD
+                else -> TextKeyData.FORWARD_DELETE
+            }
+            else -> data
         }
     }
 
-    init {
-        defaultScope.launch {
-            for (ev in channel) {
-                if (!isActive) break
-                val startTime = System.nanoTime()
-                flogDebug(LogTopic.KEY_EVENTS) { ev.toString() }
-                when (ev.action) {
-                    Action.DOWN -> {
-                        if (pressedKeys.indexOfKey(ev.data.code) >= 0) continue
-                        pressedKeys[ev.data.code] = PressedKeyInfo(
-                            eventTimeDown = ev.eventTime,
-                            repeatKeyPressJob = if (!repeatableKeyCodes.contains(ev.data.code)) { null } else {
-                                defaultScope.launch {
-                                    delay(600)
-                                    val data = when (ev.data.code) {
-                                        KeyCode.DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
-                                            SwipeAction.DELETE_WORD -> TextKeyData.DELETE_WORD
-                                            else -> TextKeyData.DELETE
-                                        }
-                                        KeyCode.FORWARD_DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
-                                            SwipeAction.DELETE_WORD -> TextKeyData.FORWARD_DELETE_WORD
-                                            else -> TextKeyData.FORWARD_DELETE
-                                        }
-                                        else -> ev.data
-                                    }
-                                    val delayMs = when (data.code) {
-                                        KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE_WORD -> 550L
-                                        else -> 50L
-                                    }
-                                    while (isActive) {
-                                        keyEventReceiver?.onInputKeyRepeat(InputKeyEvent.repeat(data))
-                                        delay(delayMs)
-                                    }
-                                }
+    fun sendDown(
+        data: KeyData,
+        onLongPress: () -> Boolean = { false },
+        onRepeat: () -> Boolean = { true },
+    ) = runBlocking {
+        val result = pressedKeys.withLock { pressedKeys ->
+            if (pressedKeys.containsKey(data.code)) return@withLock false
+            pressedKeys[data.code] = PressedKeyInfo(System.currentTimeMillis()).also { pressedKeyInfo ->
+                pressedKeyInfo.job = scope.launch {
+                    val longPressDelay = determineLongPressDelay(data)
+                    delay(longPressDelay)
+                    if (onLongPress()) {
+                        pressedKeyInfo.blockUp = true
+                    } else if (repeatableKeyCodes.contains(data.code)) {
+                        val repeatData = determineRepeatData(data)
+                        val repeatDelay = determineRepeatDelay(repeatData)
+                        while (isActive) {
+                            if (onRepeat()) {
+                                keyEventReceiver?.onInputKeyRepeat(repeatData)
+                                pressedKeyInfo.blockUp = true
                             }
-                        )
-                        withContext(mainDispatcher) {
-                            keyEventReceiver?.onInputKeyDown(ev)
-                        }
-                        if (ev.data.code != KeyCode.INTERNAL_BATCH_EDIT) {
-                            lastKeyEventDown = ev
-                        }
-                    }
-                    Action.DOWN_UP -> {
-                        pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
-                        withContext(mainDispatcher) {
-                            keyEventReceiver?.onInputKeyDown(ev)
-                            keyEventReceiver?.onInputKeyUp(ev)
-                        }
-                        if (ev.data.code != KeyCode.INTERNAL_BATCH_EDIT) {
-                            lastKeyEventDown = ev
-                            lastKeyEventUp = ev
-                        }
-                    }
-                    Action.UP -> {
-                        pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
-                        withContext(mainDispatcher) {
-                            keyEventReceiver?.onInputKeyUp(ev)
-                        }
-                        if (ev.data.code != KeyCode.INTERNAL_BATCH_EDIT) {
-                            lastKeyEventUp = ev
-                        }
-                    }
-                    Action.REPEAT -> {
-                        if (pressedKeys.indexOfKey(ev.data.code) >= 0) {
-                            withContext(mainDispatcher) {
-                                keyEventReceiver?.onInputKeyRepeat(ev)
-                            }
-                        }
-                    }
-                    Action.CANCEL -> {
-                        pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
-                        withContext(mainDispatcher) {
-                            keyEventReceiver?.onInputKeyCancel(ev)
+                            delay(repeatDelay)
                         }
                     }
                 }
-                flogDebug(LogTopic.KEY_EVENTS) { "Time elapsed: ${(System.nanoTime() - startTime) / 1_000_000}" }
             }
-            pressedKeys.forEach { _, value -> value.repeatKeyPressJob?.cancel() }
-            pressedKeys.clear()
+            return@withLock true
+        }
+        if (result) {
+            keyEventReceiver?.onInputKeyDown(data)
+            lastKeyEventDown = EventData(System.currentTimeMillis(), data)
         }
     }
 
-    override fun send(ev: InputKeyEvent) {
-        channel.trySend(ev)
+    fun sendUp(data: KeyData) = runBlocking {
+        val result = pressedKeys.withLock { pressedKeys ->
+            if (pressedKeys.containsKey(data.code)) {
+                val pressedKeyInfo = pressedKeys.removeAndReturn(data.code)?.also { it.cancelJobs() }
+                return@withLock pressedKeyInfo?.blockUp == false
+            }
+            return@withLock false
+        }
+        if (result) {
+            keyEventReceiver?.onInputKeyUp(data)
+            lastKeyEventUp = EventData(System.currentTimeMillis(), data)
+        }
+    }
+
+    fun sendDownUp(data: KeyData) = runBlocking {
+        pressedKeys.withLock { pressedKeys ->
+            pressedKeys.removeAndReturn(data.code)?.also { it.cancelJobs() }
+        }
+        val eventData = EventData(System.currentTimeMillis(), data)
+        keyEventReceiver?.onInputKeyDown(data)
+        lastKeyEventDown = eventData
+        keyEventReceiver?.onInputKeyUp(data)
+        lastKeyEventUp = eventData
+    }
+
+    fun sendCancel(data: KeyData) = runBlocking {
+        val result = pressedKeys.withLock { pressedKeys ->
+            if (pressedKeys.containsKey(data.code)) {
+                pressedKeys.removeAndReturn(data.code)?.also { it.cancelJobs() }
+                return@withLock true
+            }
+            return@withLock false
+        }
+        if (result) {
+            keyEventReceiver?.onInputKeyCancel(data)
+        }
     }
 
     /**
-     * Checks if there's currently a key down with given [code].
+     * Checks if there's currently a key down with given [data].
      *
-     * @param code The key code to check for.
+     * @param data The key data to check for.
      *
-     * @return True if the given [code] is currently down, false otherwise.
+     * @return True if the given [data] is currently down, false otherwise.
      */
-    fun isPressed(code: Int): Boolean {
-        return pressedKeys.indexOfKey(code) >= 0
+    fun isPressed(data: KeyData): Boolean = runBlocking {
+        pressedKeys.withLock { it.containsKey(data.code) }
+    }
+
+    fun isConsecutiveDown(data: KeyData, maxTimeDiff: Long): Boolean {
+        val event = lastKeyEventDown ?: return false
+        return event.data.code == data.code && (System.currentTimeMillis() - event.time) < maxTimeDiff
+    }
+
+    fun isConsecutiveUp(data: KeyData, maxTimeDiff: Long): Boolean {
+        val event = lastKeyEventUp ?: return false
+        return event.data.code == data.code && (System.currentTimeMillis() - event.time) < maxTimeDiff
     }
 
     /**
@@ -209,158 +184,23 @@ class InputEventDispatcher private constructor(
      */
     fun close() {
         keyEventReceiver = null
-        mainScope.cancel()
-        defaultScope.cancel()
+        scope.cancel()
     }
 
-    data class PressedKeyInfo(
+    private data class PressedKeyInfo(
         val eventTimeDown: Long,
-        val repeatKeyPressJob: Job?
+        var job: Job? = null,
+        var blockUp: Boolean = false,
+    ) {
+        fun cancelJobs() {
+            job?.cancel()
+        }
+    }
+
+    data class EventData(
+        val time: Long,
+        val data: KeyData
     )
-}
-
-/**
- * Data class representing a single input key event.
- *
- * @property eventTime The exact event time when this event occurred, measured in milliseconds since a static point in
- *  the past. The exact point is irrelevant, but while this input dispatcher is active, the point must not change in
- *  order for difference time calculation to succeed.
- * @property action The action of this event.
- * @property data The data of this event.
- * @property count The count how often this event occurred. Is only respected by other methods if the [action] of this
- *  event is [Action.DOWN_UP] or [Action.REPEAT], else always 1 is assumed.
- */
-data class InputKeyEvent(
-    val eventTime: Long,
-    val action: Action,
-    val data: KeyData,
-    val count: Int
-) {
-    companion object {
-        /**
-         * Creates a new input key event with given [keyData] and sets the action to [Action.DOWN].
-         *
-         * @param keyData The key data of the input key event event to create.
-         *
-         * @return The created input key event.
-         */
-        fun down(keyData: KeyData): InputKeyEvent {
-            return InputKeyEvent(
-                eventTime = SystemClock.uptimeMillis(),
-                action = Action.DOWN,
-                data = keyData,
-                count = 1
-            )
-        }
-
-        /**
-         * Creates a new input key event with given [keyData] and sets the action to [Action.DOWN_UP].
-         *
-         * @param keyData The key data of the input key event event to create.
-         * @param count How often this event occurred. Must be grater or equal to 1, defaults to 1.
-         *
-         * @return The created input key event.
-         */
-        fun downUp(keyData: KeyData, count: Int = 1): InputKeyEvent {
-            return InputKeyEvent(
-                eventTime = SystemClock.uptimeMillis(),
-                action = Action.DOWN_UP,
-                data = keyData,
-                count = count
-            )
-        }
-
-        /**
-         * Creates a new input key event with given [keyData] and sets the action to [Action.UP].
-         *
-         * @param keyData The key data of the input key event event to create.
-         *
-         * @return The created input key event.
-         */
-        fun up(keyData: KeyData): InputKeyEvent {
-            return InputKeyEvent(
-                eventTime = SystemClock.uptimeMillis(),
-                action = Action.UP,
-                data = keyData,
-                count = 1
-            )
-        }
-
-        /**
-         * Creates a new input key event with given [keyData] and sets the action to [Action.REPEAT].
-         *
-         * @param keyData The key data of the input key event event to create.
-         * @param count How often this event occurred. Must be grater or equal to 1, defaults to 1.
-         *
-         * @return The created input key event.
-         */
-        fun repeat(keyData: KeyData, count: Int = 1): InputKeyEvent {
-            return InputKeyEvent(
-                eventTime = SystemClock.uptimeMillis(),
-                action = Action.REPEAT,
-                data = keyData,
-                count = count
-            )
-        }
-
-        /**
-         * Creates a new input key event with given [keyData] and sets the action to [Action.CANCEL].
-         *
-         * @param keyData The key data of the input key event event to create.
-         *
-         * @return The created input key event.
-         */
-        fun cancel(keyData: KeyData): InputKeyEvent {
-            return InputKeyEvent(
-                eventTime = SystemClock.uptimeMillis(),
-                action = Action.CANCEL,
-                data = keyData,
-                count = 1
-            )
-        }
-    }
-
-    /**
-     * Checks if the [other] input key event is a consecutive event while respecting [maxEventTimeDiff].
-     *
-     * @param other The other input key event to compare with this one.
-     * @param maxEventTimeDiff The maximum event time diff between this event and [other], in milliseconds.
-     *
-     * @return True if this event is a consecutive event of [other], false otherwise.
-     */
-    fun isConsecutiveEventOf(other: InputKeyEvent?, maxEventTimeDiff: Long): Boolean {
-        return other != null && data.code == other.data.code && eventTime - other.eventTime <= maxEventTimeDiff
-    }
-
-    /**
-     * Returns a string representation of this input key event.
-     */
-    override fun toString(): String {
-        return "FlorisKeyEvent { eventTime=${eventTime}ms, action=$action, data=$data, count=$count }"
-    }
-
-    /**
-     * The action of an input key event.
-     */
-    enum class Action {
-        DOWN,
-        DOWN_UP,
-        UP,
-        REPEAT,
-        CANCEL,
-    }
-}
-
-/**
- * Interface which represents an input key event sender.
- */
-interface InputKeyEventSender {
-    /**
-     * Sends given input key event [ev] to the underlying input channel, awaiting to be processed.
-     *
-     * @param ev The input key event to send.
-     */
-    fun send(ev: InputKeyEvent)
 }
 
 /**
@@ -370,28 +210,28 @@ interface InputKeyEventReceiver {
     /**
      * Event method which gets called when a key went down.
      *
-     * @param ev The associated input key event.
+     * @param data The associated input key data.
      */
-    fun onInputKeyDown(ev: InputKeyEvent)
+    fun onInputKeyDown(data: KeyData)
 
     /**
      * Event method which gets called when a key went up.
      *
-     * @param ev The associated input key event.
+     * @param data The associated input key data.
      */
-    fun onInputKeyUp(ev: InputKeyEvent)
+    fun onInputKeyUp(data: KeyData)
 
     /**
      * Event method which gets called when a key is called repeatedly while being pressed down.
      *
-     * @param ev The associated input key event.
+     * @param data The associated input key data.
      */
-    fun onInputKeyRepeat(ev: InputKeyEvent)
+    fun onInputKeyRepeat(data: KeyData)
 
     /**
      * Event method which gets called when a key press is cancelled.
      *
-     * @param ev The associated input key event.
+     * @param data The associated input key data.
      */
-    fun onInputKeyCancel(ev: InputKeyEvent)
+    fun onInputKeyCancel(data: KeyData)
 }

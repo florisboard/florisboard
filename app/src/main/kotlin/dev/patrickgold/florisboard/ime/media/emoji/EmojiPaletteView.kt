@@ -79,7 +79,6 @@ import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -216,7 +215,7 @@ fun EmojiPaletteView(
                                 fontSize = emojiKeyFontSize,
                                 fontSizeMultiplier = fontSizeMultiplier,
                                 onEmojiInput = { emoji ->
-                                    keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(emoji))
+                                    keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                                     scope.launch {
                                         EmojiRecentlyUsedHelper.addEmoji(prefs, emoji)
                                     }

@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
@@ -278,7 +277,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             else -> null
         }
         if (keyData != null) {
-            inputEventDispatcher.send(InputKeyEvent.downUp(keyData))
+            inputEventDispatcher.sendDownUp(keyData)
         }
     }
 
@@ -310,8 +309,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int, count: Int) = editorInstance.apply {
-        val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
+    private fun handleArrow(code: Int, count: Int = 1) = editorInstance.apply {
+        val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(TextKeyData.SHIFT)
         val activeSelection = editorInstance.activeContent.selection
         when (code) {
             KeyCode.ARROW_DOWN -> {
@@ -450,8 +449,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.SHIFT] down event.
      */
-    private fun handleShiftDown(ev: InputKeyEvent) {
-        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.get().toLong())) {
+    private fun handleShiftDown(data: KeyData) {
+        if (inputEventDispatcher.isConsecutiveDown(data, prefs.keyboard.longPressDelay.get().toLong())) {
             activeState.inputMode = InputMode.CAPS_LOCK
         } else {
             if (activeState.inputMode == InputMode.NORMAL) {
@@ -473,10 +472,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.CAPS_LOCK] event.
      */
     private fun handleCapsLock() {
-        val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
-        if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
-            activeState.inputMode = InputMode.CAPS_LOCK
-        }
+        activeState.inputMode = InputMode.CAPS_LOCK
     }
 
     /**
@@ -490,7 +486,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
-    private fun handleSpace(ev: InputKeyEvent) {
+    private fun handleSpace(data: KeyData) {
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -502,7 +498,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
-            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
+            if (inputEventDispatcher.isConsecutiveUp(data, prefs.keyboard.longPressDelay.get().toLong())) {
                 val text = editorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
                     editorInstance.deleteBackwards()
@@ -575,14 +571,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         activeState.isCharHalfWidth = true
     }
 
-    override fun onInputKeyDown(ev: InputKeyEvent) {
-        when (ev.data.code) {
-            KeyCode.SHIFT -> handleShiftDown(ev)
+    override fun onInputKeyDown(data: KeyData) {
+        when (data.code) {
+            KeyCode.SHIFT -> handleShiftDown(data)
         }
     }
 
-    override fun onInputKeyUp(ev: InputKeyEvent) = activeState.batchEdit {
-        when (ev.data.code) {
+    override fun onInputKeyUp(data: KeyData) = activeState.batchEdit {
+        when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
             KeyCode.ARROW_RIGHT,
@@ -590,14 +586,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_START_OF_PAGE,
             KeyCode.MOVE_END_OF_PAGE,
             KeyCode.MOVE_START_OF_LINE,
-            KeyCode.MOVE_END_OF_LINE -> handleArrow(
-                code = ev.data.code,
-                count = when (ev.action) {
-                    InputKeyEvent.Action.DOWN_UP,
-                    InputKeyEvent.Action.REPEAT -> ev.count
-                    else -> 1
-                },
-            )
+            KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
             KeyCode.CAPS_LOCK -> handleCapsLock()
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
@@ -636,7 +625,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.REDO -> editorInstance.performRedo()
             KeyCode.SETTINGS -> FlorisImeService.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
-            KeyCode.SPACE -> handleSpace(ev)
+            KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
@@ -653,34 +642,34 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
                 if (activeState.imeUiMode == ImeUiMode.MEDIA) {
-                    editorInstance.commitText(ev.data.asString(isForDisplay = false))
+                    editorInstance.commitText(data.asString(isForDisplay = false))
                     return@batchEdit
                 }
                 when (activeState.keyboardMode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
                     KeyboardMode.PHONE,
-                    KeyboardMode.PHONE2 -> when (ev.data.type) {
+                    KeyboardMode.PHONE2 -> when (data.type) {
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
-                            val text = ev.data.asString(isForDisplay = false)
+                            val text = data.asString(isForDisplay = false)
                             editorInstance.commitText(text)
                         }
-                        else -> when (ev.data.code) {
+                        else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
-                                val text = ev.data.asString(isForDisplay = false)
+                                val text = data.asString(isForDisplay = false)
                                 editorInstance.commitText(text)
                             }
                         }
                     }
-                    else -> when (ev.data.type) {
+                    else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
-                            val text = ev.data.asString(isForDisplay = false)
+                            val text = data.asString(isForDisplay = false)
                             editorInstance.commitText(text)
                         }
                         else -> {
-                            flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $ev.data" }
+                            flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }
                         }
                     }
                 }
@@ -691,15 +680,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    override fun onInputKeyCancel(ev: InputKeyEvent) {
-        when (ev.data.code) {
+    override fun onInputKeyCancel(data: KeyData) {
+        when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
         }
     }
 
-    override fun onInputKeyRepeat(ev: InputKeyEvent) {
-        FlorisImeService.inputFeedbackController()?.keyRepeatedAction(ev.data)
-        onInputKeyUp(ev)
+    override fun onInputKeyRepeat(data: KeyData) {
+        FlorisImeService.inputFeedbackController()?.keyRepeatedAction(data)
+        onInputKeyUp(data)
     }
 
     inner class KeyboardManagerResources {
