@@ -39,8 +39,10 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.kotlin.measureLastUWords
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
@@ -304,45 +306,15 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
     fun selectionSetNWordsLeft(n: Int): Boolean {
         phantomSpace.setInactive()
-        val activeSelection = activeContent.selection
-        if (activeSelection.isNotValid) return false
+        val content = activeContent
+        val selection = content.selection
+        if (selection.isNotValid) return false
         if (n <= 0) {
-            return setSelection(activeSelection.end, activeSelection.end)
+            return setSelection(selection.end, selection.end)
         }
-        //var wordsSelected = 0
-        //var selStart = selection.end
-        ////val currentWord = cachedInput.currentWord
-        ////val wordsBeforeCurrent = cachedInput.wordsBeforeCurrent
-        //if (currentWord != null && currentWord.isValid) {
-        //    if (selStart > currentWord.start) {
-        //        selStart = currentWord.start
-        //        if (++wordsSelected == n) {
-        //            updateSelectionAndNotify(selStart, selection.end)
-        //            return true
-        //        }
-        //    }
-        //    for (word in wordsBeforeCurrent.reversed()) {
-        //        if (selStart > word.start) {
-        //            selStart = word.start
-        //            if (++wordsSelected == n) {
-        //                updateSelectionAndNotify(selStart, selection.end)
-        //                return true
-        //            }
-        //        }
-        //    }
-        //} else {
-        //    for (word in wordsBeforeCurrent.reversed()) {
-        //        if (selStart > word.start) {
-        //            selStart = word.start
-        //            if (++wordsSelected == n) {
-        //                updateSelectionAndNotify(selStart, selection.end)
-        //                return true
-        //            }
-        //        }
-        //    }
-        //}
-        //updateSelectionAndNotify(0, selection.end)
-        return true
+        val textToAnalyze = content.text.substring(0, content.localSelection.end)
+        val length = runBlocking { textToAnalyze.measureLastUWords(n) }
+        return setSelection((selection.end - length).coerceAtLeast(0), selection.end)
     }
 
     /**
