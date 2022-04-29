@@ -162,7 +162,8 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         }
         KeyCode.ENTER -> {
             val imeOptions = evaluator.activeEditorInfo().imeOptions
-            if (imeOptions.flagNoEnterAction) {
+            val inputAttributes = evaluator.activeEditorInfo().inputAttributes
+            if (imeOptions.flagNoEnterAction || inputAttributes.flagTextMultiLine) {
                 R.drawable.ic_keyboard_return
             } else {
                 when (imeOptions.action) {

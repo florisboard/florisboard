@@ -417,10 +417,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
-        if (editorInstance.activeInfo.imeOptions.flagNoEnterAction) {
+        val info = editorInstance.activeInfo
+        val isShiftPressed = inputEventDispatcher.isPressed(TextKeyData.SHIFT)
+        if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && isShiftPressed) {
             editorInstance.performEnter()
         } else {
-            when (val action = editorInstance.activeInfo.imeOptions.action) {
+            when (val action = info.imeOptions.action) {
                 ImeOptions.Action.DONE,
                 ImeOptions.Action.GO,
                 ImeOptions.Action.NEXT,

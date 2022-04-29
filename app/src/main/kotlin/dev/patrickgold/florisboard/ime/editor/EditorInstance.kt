@@ -325,7 +325,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun performClipboardCut(): Boolean {
         phantomSpace.setInactive()
-        val text = currentInputConnection()?.getSelectedText(0)
+        val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
@@ -342,7 +342,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun performClipboardCopy(): Boolean {
         phantomSpace.setInactive()
-        val text = currentInputConnection()?.getSelectedText(0)
+        val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
@@ -377,12 +377,11 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         val ic = currentInputConnection() ?: return false
         ic.finishComposingText()
-        if (activeInfo.isRawInputEditor) {
+        return if (activeInfo.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
         } else {
             ic.performContextMenuAction(android.R.id.selectAll)
         }
-        return true
     }
 
     /**
