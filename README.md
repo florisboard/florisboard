@@ -1,5 +1,5 @@
 <img align="left" width="80" height="80"
-src="fastlane/metadata/android/en-US/images/icon.png" alt="App icon">
+src=".github/repo_icon.png" alt="App icon">
 
 # FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
 

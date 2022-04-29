@@ -72,11 +72,10 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = stringRes(R.string.devtools__show_spelling_overlay__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
-            // TODO: remove this preference once word suggestions are re-implemented in 0.3.15/16
             SwitchPreference(
-                prefs.devtools.overrideWordSuggestionsMinHeapRestriction,
-                title = "Override min heap size restriction for word suggestions",
-                summary = "This allows you to use word suggestions even if your heap size is not intended for it and can break FlorisBoard",
+                prefs.devtools.showKeyTouchBoundaries,
+                title = stringRes(R.string.devtools__show_key_touch_boundaries__label),
+                summary = stringRes(R.string.devtools__show_key_touch_boundaries__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(

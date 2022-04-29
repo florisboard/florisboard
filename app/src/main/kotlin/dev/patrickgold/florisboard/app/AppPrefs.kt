@@ -144,8 +144,8 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_spelling_overlay",
             default = false,
         )
-        val overrideWordSuggestionsMinHeapRestriction = boolean(
-            key = "devtools__override_word_suggestions_min_heap_restriction",
+        val showKeyTouchBoundaries = boolean(
+            key = "devtools__show_touch_boundaries",
             default = false,
         )
     }
@@ -182,7 +182,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val spaceBarSwipeUp = enum(
             key = "gestures__space_bar_swipe_up",
-            default = SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT,
+            default = SwipeAction.NO_ACTION,
         )
         val spaceBarSwipeLeft = enum(
             key = "gestures__space_bar_swipe_left",
@@ -202,7 +202,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
-            default = 36,
+            default = 32,
         )
         val swipeVelocityThreshold = int(
             key = "gestures__swipe_velocity_threshold",

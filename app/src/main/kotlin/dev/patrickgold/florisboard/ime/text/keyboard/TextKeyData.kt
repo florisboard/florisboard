@@ -458,6 +458,12 @@ class TextKeyData(
             code = KeyCode.LANGUAGE_SWITCH,
             label = "language_switch",
         )
+        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
+        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
+            label = "toggle_smartbar_visibility",
+        )
 
         /** Predefined key data for [KeyCode.IME_SHOW_UI] */
         val IME_SHOW_UI = TextKeyData(

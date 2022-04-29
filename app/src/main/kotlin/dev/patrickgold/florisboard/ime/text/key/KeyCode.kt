@@ -96,6 +96,7 @@ object KeyCode {
     const val IME_PREV_SUBTYPE =            -225
     const val IME_NEXT_SUBTYPE =            -226
     const val LANGUAGE_SWITCH =             -227
+    const val TOGGLE_SMARTBAR_VISIBILITY =  -228
 
     const val IME_SHOW_UI =                 -231
     const val IME_HIDE_UI =                 -232
