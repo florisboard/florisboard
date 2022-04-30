@@ -284,7 +284,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         return if (activeContent.selection.isSelectionMode) {
             commitText("")
         } else {
-            deleteBeforeCursor(TextType.Characters, 1)
+            deleteBeforeCursor(TextType.CHARACTERS, 1)
         }
     }
 
@@ -300,7 +300,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         return if (activeContent.selection.isSelectionMode) {
             commitText("")
         } else {
-            deleteBeforeCursor(TextType.Words, 1)
+            deleteBeforeCursor(TextType.WORDS, 1)
         }
     }
 

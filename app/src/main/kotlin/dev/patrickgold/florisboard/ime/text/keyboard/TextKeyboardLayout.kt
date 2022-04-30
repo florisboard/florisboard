@@ -528,18 +528,11 @@ private class TextKeyboardLayoutController(
                             }
                             || pointer.initialKey?.computedData?.code == KeyCode.SPACE
                             || pointer.initialKey?.computedData?.code == KeyCode.CJK_SPACE))
-                        if (swipeGestureDetector.onTouchMove(
-                                event,
-                                pointer,
-                                alwaysTriggerOnMove
-                            ) || pointer.hasTriggeredGestureMove
-                        ) {
+                        if (swipeGestureDetector.onTouchMove(event, pointer, alwaysTriggerOnMove) || pointer.hasTriggeredGestureMove) {
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
                                 activeKey.isPressed = false
-                                if (inputEventDispatcher.isPressed(activeKey.computedData)) {
-                                    inputEventDispatcher.sendCancel(activeKey.computedData)
-                                }
+                                inputEventDispatcher.sendCancel(activeKey.computedData)
                             }
                         } else {
                             onTouchMoveInternal(event, pointer)
@@ -553,13 +546,10 @@ private class TextKeyboardLayoutController(
                 val pointer = pointerMap.findById(pointerId)
                 if (pointer != null) {
                     pointer.index = pointerIndex
-                    if (swipeGestureDetector.onTouchUp(
-                            event,
-                            pointer
-                        ) || pointer.hasTriggeredGestureMove
-                    ) {
+                    if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
-                            if (editorInstance.activeContent.selection.isSelectionMode) {
+                            val selection = editorInstance.activeContent.selection
+                            if (selection.isSelectionMode) {
                                 editorInstance.deleteBackwards()
                             }
                         }
@@ -576,16 +566,13 @@ private class TextKeyboardLayoutController(
                 for (pointer in pointerMap) {
                     if (pointer.id == pointerId) {
                         pointer.index = pointerIndex
-                        if (swipeGestureDetector.onTouchUp(
-                                event,
-                                pointer
-                            ) || pointer.hasTriggeredGestureMove
-                        ) {
+                        if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove) {
                             if (pointer.hasTriggeredGestureMove &&
                                 pointer.initialKey?.computedData?.code == KeyCode.DELETE &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_CHARACTERS_PRECISELY &&
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
-                                if (editorInstance.activeContent.selection.isSelectionMode) {
+                                val selection = editorInstance.activeContent.selection
+                                if (selection.isSelectionMode) {
                                     editorInstance.deleteBackwards()
                                 }
                             }
@@ -709,15 +696,11 @@ private class TextKeyboardLayoutController(
                     if (retData == activeKey.computedData) {
                         inputEventDispatcher.sendUp(activeKey.computedData)
                     } else {
-                        if (inputEventDispatcher.isPressed(activeKey.computedData)) {
-                            inputEventDispatcher.sendCancel(activeKey.computedData)
-                        }
+                        inputEventDispatcher.sendCancel(activeKey.computedData)
                         inputEventDispatcher.sendDownUp(retData)
                     }
                 } else {
-                    if (inputEventDispatcher.isPressed(activeKey.computedData)) {
-                        inputEventDispatcher.sendCancel(activeKey.computedData)
-                    }
+                    inputEventDispatcher.sendCancel(activeKey.computedData)
                 }
                 popupUiController.hide()
             } else {

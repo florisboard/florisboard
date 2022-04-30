@@ -26,6 +26,7 @@ import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
+import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.lib.kotlin.measureLastUChars
 import dev.patrickgold.florisboard.lib.kotlin.measureLastUWords
 import dev.patrickgold.florisboard.lib.kotlin.measureUChars
@@ -35,7 +36,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.concurrent.atomic.AtomicBoolean
 
 @Suppress("BlockingMethodInNonBlockingContext")
 abstract class AbstractEditorInstance(context: Context) {
@@ -53,15 +53,12 @@ abstract class AbstractEditorInstance(context: Context) {
     private val subtypeManager by context.subtypeManager()
     private val scope = MainScope()
 
-    private val batchEditState = AtomicBoolean(false)
-    var expectedContent: EditorContent? = null
-
-    private val _activeContentFlow = MutableStateFlow(EditorContent.Unspecified)
-    val activeContentFlow = _activeContentFlow.asStateFlow()
-    inline var activeContent: EditorContent
-        get() = activeContentFlow.value
+    private val _activeInfoFlow = MutableStateFlow(FlorisEditorInfo.Unspecified)
+    val activeInfoFlow = _activeInfoFlow.asStateFlow()
+    inline var activeInfo: FlorisEditorInfo
+        get() = activeInfoFlow.value
         private set(v) {
-            _activeContentFlow.value = v
+            _activeInfoFlow.value = v
         }
 
     private val _activeCursorCapsModeFlow = MutableStateFlow(InputAttributes.CapsMode.NONE)
@@ -72,13 +69,18 @@ abstract class AbstractEditorInstance(context: Context) {
             _activeCursorCapsModeFlow.value = v
         }
 
-    private val _activeInfoFlow = MutableStateFlow(FlorisEditorInfo.Unspecified)
-    val activeInfoFlow = _activeInfoFlow.asStateFlow()
-    inline var activeInfo: FlorisEditorInfo
-        get() = activeInfoFlow.value
+    private val _activeContentFlow = MutableStateFlow(EditorContent.Unspecified)
+    val activeContentFlow = _activeContentFlow.asStateFlow()
+    inline var activeContent: EditorContent
+        get() = expectedContent() ?: activeContentFlow.value
         private set(v) {
-            _activeInfoFlow.value = v
+            _activeContentFlow.value = v
         }
+    private val expectedContentQueue = ExpectedContentQueue()
+
+    fun expectedContent(): EditorContent? {
+        return runBlocking { expectedContentQueue.peekNewestOrNull() }
+    }
 
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
@@ -128,16 +130,15 @@ abstract class AbstractEditorInstance(context: Context) {
             ic.getCursorCapsMode(editorInfo.inputAttributes.raw)
         )
 
-        val expected = expectedContent
-        if (expected != null) {
-            expectedContent = null
-            if (activeContent.selection == oldSelection && expected.selection == newSelection &&
-                expected.composing == composing && expected.textBeforeSelection.length >= NumCharsSafeMarginBeforeCursor.coerceAtMost(
-                    expected.selection.start)
-            ) {
-                activeContent = expected
-                return
+        val expected = runBlocking {
+            expectedContentQueue.popUntilOrNull {
+                it.selection == newSelection && it.composing == composing &&
+                    it.textBeforeSelection.length >= NumCharsSafeMarginBeforeCursor.coerceAtMost(it.selection.start)
             }
+        }
+        if (expected != null) {
+            activeContent = expected
+            return
         }
 
         // Get Text
@@ -165,7 +166,6 @@ abstract class AbstractEditorInstance(context: Context) {
 
     open fun handleFinishInput() {
         reset()
-        batchEditState.set(false)
         currentInputConnection()?.requestCursorUpdates(CursorUpdateNone)
     }
 
@@ -173,6 +173,7 @@ abstract class AbstractEditorInstance(context: Context) {
         activeInfo = FlorisEditorInfo.Unspecified
         activeCursorCapsMode = InputAttributes.CapsMode.NONE
         activeContent = EditorContent.Unspecified
+        runBlocking { expectedContentQueue.clear() }
     }
 
     private suspend fun generateContent(
@@ -249,7 +250,7 @@ abstract class AbstractEditorInstance(context: Context) {
 
     protected fun setSelection(selection: EditorRange): Boolean {
         if (activeInfo.isRawInputEditor) return false
-        val content = expectedContent ?: activeContent
+        val content = activeContent
         if (content.selection == selection) return true
         val ic = currentInputConnection() ?: return false
         ic.beginBatchEdit()
@@ -257,7 +258,7 @@ abstract class AbstractEditorInstance(context: Context) {
             val newContent = content
                 .copy(localSelection = selection.translatedBy(-content.offset))
                 .generateCopy(selection = selection)
-            expectedContent = newContent
+            expectedContentQueue.push(newContent)
             ic.setSelection(selection.start, selection.end)
             ic.setComposingRegion(newContent.composing)
         }
@@ -267,7 +268,7 @@ abstract class AbstractEditorInstance(context: Context) {
 
     open fun commitText(text: String): Boolean {
         val ic = currentInputConnection() ?: return false
-        val content = expectedContent ?: activeContent
+        val content = activeContent
         val selection = content.selection
         ic.beginBatchEdit()
         ic.finishComposingText()
@@ -286,7 +287,7 @@ abstract class AbstractEditorInstance(context: Context) {
                     },
                 selectedText = "",
             )
-            expectedContent = newContent
+            expectedContentQueue.push(newContent)
             ic.commitText(text, 1)
             ic.setComposingRegion(newContent.composing)
         }
@@ -297,29 +298,29 @@ abstract class AbstractEditorInstance(context: Context) {
     protected fun deleteBeforeCursor(type: TextType, n: Int): Boolean {
         val ic = currentInputConnection()
         if (ic == null || n < 1) return false
-        val content = expectedContent ?: activeContent
+        val content = activeContent
         if (content.selection.isValid && content.selection.start == 0) return true
         val oldTextBeforeSelection = content.textBeforeSelection
         return if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
             // If editor is rich and text before selection is empty we seem to have an invalid state here, so we fall
             // back to emulating a hardware backspace.
             when (type) {
-                TextType.Characters -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, count = n)
-                TextType.Words -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true), count = n)
+                TextType.CHARACTERS -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, count = n)
+                TextType.WORDS -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true), count = n)
             }
         } else {
             runBlocking {
                 val locale = subtypeManager.activeSubtype().primaryLocale
                 val length = when (type) {
-                    TextType.Characters -> oldTextBeforeSelection.measureLastUChars(n, locale)
-                    TextType.Words -> oldTextBeforeSelection.measureLastUWords(n, locale)
+                    TextType.CHARACTERS -> oldTextBeforeSelection.measureLastUChars(n, locale)
+                    TextType.WORDS -> oldTextBeforeSelection.measureLastUWords(n, locale)
                 }
                 val newSelection = content.selection.translatedBy(-length)
                 val newContent = content.generateCopy(
                     selection = newSelection,
                     textBeforeSelection = oldTextBeforeSelection.dropLast(length),
                 )
-                expectedContent = newContent
+                expectedContentQueue.push(newContent)
                 ic.beginBatchEdit()
                 ic.finishComposingText()
                 ic.deleteSurroundingText(length, 0)
@@ -475,7 +476,39 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     protected enum class TextType {
-        Characters,
-        Words;
+        CHARACTERS,
+        WORDS;
+    }
+
+    private class ExpectedContentQueue {
+        private val list = guardedByLock { mutableListOf<EditorContent>() }
+
+        suspend fun popUntilOrNull(predicate: (EditorContent) -> Boolean): EditorContent? {
+            return list.withLock { list ->
+                while (list.isNotEmpty()) {
+                    val item = list.removeFirst()
+                    if (predicate(item)) return@withLock item
+                }
+                return@withLock null
+            }
+        }
+
+        suspend fun push(item: EditorContent) {
+            list.withLock { list ->
+                list.add(item)
+            }
+        }
+
+        suspend fun peekNewestOrNull(): EditorContent? {
+            return list.withLock { list ->
+                list.lastOrNull()
+            }
+        }
+
+        suspend fun clear() {
+            list.withLock { list ->
+                list.clear()
+            }
+        }
     }
 }
