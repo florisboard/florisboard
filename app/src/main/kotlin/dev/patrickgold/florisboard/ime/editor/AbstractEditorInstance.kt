@@ -108,11 +108,13 @@ abstract class AbstractEditorInstance(context: Context) {
         val selectedText = editorInfo.getInitialSelectedText() ?: ""
 
         scope.launch {
-            activeContent = generateContent(editorInfo,
+            activeContent = generateContent(
+                editorInfo,
                 selection,
                 textBeforeSelection,
                 textAfterSelection,
-                selectedText).also { content ->
+                selectedText,
+            ).also { content ->
                 ic.setComposingRegion(content.composing)
             }
         }
@@ -148,11 +150,13 @@ abstract class AbstractEditorInstance(context: Context) {
         val selectedText = if (newSelection.isSelectionMode) ic.getSelectedText(0) ?: "" else ""
 
         scope.launch {
-            activeContent = generateContent(editorInfo,
+            activeContent = generateContent(
+                editorInfo,
                 newSelection,
                 textBeforeSelection,
                 textAfterSelection,
-                selectedText).also { content ->
+                selectedText,
+            ).also { content ->
                 if (content.composing != composing) {
                     ic.setComposingRegion(content.composing)
                 }
@@ -398,27 +402,25 @@ abstract class AbstractEditorInstance(context: Context) {
         return metaState
     }
 
-    private fun sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
-        val ic = currentInputConnection() ?: return false
-        return ic.sendKeyEvent(
+    private fun InputConnection.sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int, repeat: Int = 0): Boolean {
+        return this.sendKeyEvent(
             KeyEvent(
                 eventTime,
                 eventTime,
                 KeyEvent.ACTION_DOWN,
                 keyEventCode,
-                0,
+                repeat,
                 metaState,
                 KeyCharacterMap.VIRTUAL_KEYBOARD,
                 0,
                 KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
-                InputDevice.SOURCE_KEYBOARD
+                InputDevice.SOURCE_KEYBOARD,
             )
         )
     }
 
-    private fun sendUpKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
-        val ic = currentInputConnection() ?: return false
-        return ic.sendKeyEvent(
+    private fun InputConnection.sendUpKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
+        return this.sendKeyEvent(
             KeyEvent(
                 eventTime,
                 SystemClock.uptimeMillis(),
@@ -429,7 +431,7 @@ abstract class AbstractEditorInstance(context: Context) {
                 KeyCharacterMap.VIRTUAL_KEYBOARD,
                 0,
                 KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
-                InputDevice.SOURCE_KEYBOARD
+                InputDevice.SOURCE_KEYBOARD,
             )
         )
     }
@@ -450,26 +452,26 @@ abstract class AbstractEditorInstance(context: Context) {
         ic.beginBatchEdit()
         val eventTime = SystemClock.uptimeMillis()
         if (metaState and KeyEvent.META_CTRL_ON != 0) {
-            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+            ic.sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
         }
         if (metaState and KeyEvent.META_ALT_ON != 0) {
-            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+            ic.sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
         }
         if (metaState and KeyEvent.META_SHIFT_ON != 0) {
-            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+            ic.sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
         for (n in 0 until count) {
-            sendDownKeyEvent(eventTime, keyEventCode, metaState)
-            sendUpKeyEvent(eventTime, keyEventCode, metaState)
+            ic.sendDownKeyEvent(eventTime, keyEventCode, metaState, n)
         }
+        ic.sendUpKeyEvent(eventTime, keyEventCode, metaState)
         if (metaState and KeyEvent.META_SHIFT_ON != 0) {
-            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+            ic.sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
         if (metaState and KeyEvent.META_ALT_ON != 0) {
-            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+            ic.sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
         }
         if (metaState and KeyEvent.META_CTRL_ON != 0) {
-            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+            ic.sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
         }
         ic.endBatchEdit()
         return true

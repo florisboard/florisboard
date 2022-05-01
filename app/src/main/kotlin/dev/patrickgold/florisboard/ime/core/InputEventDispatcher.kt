@@ -159,14 +159,14 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
     }
 
     /**
-     * Checks if there's currently a key down with given [data].
+     * Checks if there's currently a key down with given [code].
      *
-     * @param data The key data to check for.
+     * @param code The key code to check for.
      *
-     * @return True if the given [data] is currently down, false otherwise.
+     * @return True if the given [code] is currently down, false otherwise.
      */
-    fun isPressed(data: KeyData): Boolean = runBlocking {
-        pressedKeys.withLock { it.containsKey(data.code) }
+    fun isPressed(code: Int): Boolean = runBlocking {
+        pressedKeys.withLock { it.containsKey(code) }
     }
 
     fun isConsecutiveDown(data: KeyData, maxTimeDiff: Long): Boolean {

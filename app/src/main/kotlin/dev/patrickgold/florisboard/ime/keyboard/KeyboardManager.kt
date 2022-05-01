@@ -309,61 +309,62 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int, count: Int = 1) = editorInstance.apply {
-        val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(TextKeyData.SHIFT)
-        val activeSelection = editorInstance.activeContent.selection
+    fun handleArrow(code: Int, count: Int = 1) = editorInstance.apply {
+        val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
+        val content = activeContent
+        val selection = content.selection
         when (code) {
-            KeyCode.ARROW_DOWN -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
-                    activeState.isManualSelectionModeStart = false
-                    activeState.isManualSelectionModeEnd = true
-                }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
-            }
             KeyCode.ARROW_LEFT -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
                     activeState.isManualSelectionModeEnd = false
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(shift = isShiftPressed), count)
             }
             KeyCode.ARROW_RIGHT -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
                     activeState.isManualSelectionModeEnd = true
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(shift = isShiftPressed), count)
             }
             KeyCode.ARROW_UP -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
                     activeState.isManualSelectionModeEnd = false
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isShiftPressed), count)
             }
+            KeyCode.ARROW_DOWN -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = false
+                    activeState.isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
+            }
             KeyCode.MOVE_START_OF_PAGE -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
                     activeState.isManualSelectionModeEnd = false
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(alt = true, shift = isShiftPressed), count)
             }
             KeyCode.MOVE_END_OF_PAGE -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
                     activeState.isManualSelectionModeEnd = true
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(alt = true, shift = isShiftPressed), count)
             }
             KeyCode.MOVE_START_OF_LINE -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
                     activeState.isManualSelectionModeEnd = false
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(alt = true, shift = isShiftPressed), count)
             }
             KeyCode.MOVE_END_OF_LINE -> {
-                if (!activeSelection.isSelectionMode && activeState.isManualSelectionMode) {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
                     activeState.isManualSelectionModeEnd = true
                 }
@@ -418,7 +419,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     private fun handleEnter() {
         val info = editorInstance.activeInfo
-        val isShiftPressed = inputEventDispatcher.isPressed(TextKeyData.SHIFT)
+        val isShiftPressed = inputEventDispatcher.isPressed(KeyCode.SHIFT)
         if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && isShiftPressed) {
             editorInstance.performEnter()
         } else {

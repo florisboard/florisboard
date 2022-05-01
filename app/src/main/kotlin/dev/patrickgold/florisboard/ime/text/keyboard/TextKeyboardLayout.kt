@@ -829,14 +829,10 @@ private class TextKeyboardLayoutController(
                     val action = prefs.gestures.spaceBarSwipeLeft.get()
                     if (action == SwipeAction.MOVE_CURSOR_LEFT) {
                         abs(event.relUnitCountX).let {
-                            val count = if (!pointer.hasTriggeredGestureMove) {
-                                it - 1
-                            } else {
-                                it
-                            }
+                            val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                inputEventDispatcher.sendDownUp(TextKeyData.ARROW_LEFT)
+                                keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
                             }
                         }
                         true
@@ -848,14 +844,10 @@ private class TextKeyboardLayoutController(
                     val action = prefs.gestures.spaceBarSwipeRight.get()
                     if (action == SwipeAction.MOVE_CURSOR_RIGHT) {
                         abs(event.relUnitCountX).let {
-                            val count = if (!pointer.hasTriggeredGestureMove) {
-                                it - 1
-                            } else {
-                                it
-                            }
+                            val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                inputEventDispatcher.sendDownUp(TextKeyData.ARROW_RIGHT)
+                                keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
                             }
                         }
                         true
