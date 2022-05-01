@@ -1,8 +1,8 @@
 {
   "all": {
     "ی": {
+      "main": { "code": 1574, "label": "ئ" },
       "relevant": [
-        { "code": 1574, "label": "ئ" },
         { "code": 1610, "label": "ي" },
         { "code": 1746, "label": "ے" }
       ]
