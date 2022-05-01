@@ -25,11 +25,8 @@ import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
+import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
-import dev.patrickgold.florisboard.lib.kotlin.measureLastUChars
-import dev.patrickgold.florisboard.lib.kotlin.measureLastUWords
-import dev.patrickgold.florisboard.lib.kotlin.measureUChars
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,6 +49,7 @@ abstract class AbstractEditorInstance(context: Context) {
 
     private val subtypeManager by context.subtypeManager()
     private val scope = MainScope()
+    protected val breakIterators = BreakIteratorGroup()
 
     private val _activeInfoFlow = MutableStateFlow(FlorisEditorInfo.Unspecified)
     val activeInfoFlow = _activeInfoFlow.asStateFlow()
@@ -231,7 +229,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     private suspend fun determineLocalComposing(textBeforeSelection: CharSequence): EditorRange {
-        return BreakIteratorCache.word(subtypeManager.activeSubtype().primaryLocale) {
+        return breakIterators.word(subtypeManager.activeSubtype().primaryLocale) {
             it.setText(textBeforeSelection.toString())
             val end = it.last()
             val isWord = it.ruleStatus != BreakIterator.WORD_NONE
@@ -282,13 +280,10 @@ abstract class AbstractEditorInstance(context: Context) {
             val newSelection = EditorRange(selection.start + text.length, selection.start + text.length)
             val newContent = content.generateCopy(
                 selection = newSelection,
-                textBeforeSelection =
-                    if (selection.isSelectionMode) {
-                        content.textBeforeSelection
-                    } else buildString {
-                        append(content.textBeforeSelection)
-                        append(text)
-                    },
+                textBeforeSelection = buildString {
+                    append(content.textBeforeSelection)
+                    append(text)
+                },
                 selectedText = "",
             )
             expectedContentQueue.push(newContent)
@@ -316,8 +311,8 @@ abstract class AbstractEditorInstance(context: Context) {
             runBlocking {
                 val locale = subtypeManager.activeSubtype().primaryLocale
                 val length = when (type) {
-                    TextType.CHARACTERS -> oldTextBeforeSelection.measureLastUChars(n, locale)
-                    TextType.WORDS -> oldTextBeforeSelection.measureLastUWords(n, locale)
+                    TextType.CHARACTERS -> breakIterators.measureLastUChars(oldTextBeforeSelection, n, locale)
+                    TextType.WORDS -> breakIterators.measureLastUWords(oldTextBeforeSelection, n, locale)
                 }
                 val newSelection = content.selection.translatedBy(-length)
                 val newContent = content.generateCopy(
@@ -345,11 +340,11 @@ abstract class AbstractEditorInstance(context: Context) {
      *
      * @return [n] or less characters before the cursor.
      */
-    fun getTextBeforeCursor(n: Int): String {
-        if (n < 1) return ""
+    fun EditorContent.getTextBeforeCursor(n: Int): String {
+        if (n < 1 || text.isEmpty()) return ""
         return runBlocking {
-            val text = activeContent.textBeforeSelection
-            val length = text.measureLastUChars(n, subtypeManager.activeSubtype().primaryLocale)
+            val text = textBeforeSelection
+            val length = breakIterators.measureLastUChars(text, n, subtypeManager.activeSubtype().primaryLocale)
             text.takeLast(length)
         }
     }
@@ -364,11 +359,11 @@ abstract class AbstractEditorInstance(context: Context) {
      *
      * @return [n] or less characters after the cursor.
      */
-    fun getTextAfterCursor(n: Int): String {
-        if (n < 1) return ""
+    fun EditorContent.getTextAfterCursor(n: Int): String {
+        if (n < 1 || text.isEmpty()) return ""
         return runBlocking {
-            val text = activeContent.textAfterSelection
-            val length = text.measureUChars(n, subtypeManager.activeSubtype().primaryLocale)
+            val text = textAfterSelection
+            val length = breakIterators.measureUChars(text, n, subtypeManager.activeSubtype().primaryLocale)
             text.take(length)
         }
     }

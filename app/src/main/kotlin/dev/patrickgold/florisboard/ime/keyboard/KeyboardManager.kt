@@ -502,7 +502,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
             if (inputEventDispatcher.isConsecutiveUp(data, prefs.keyboard.longPressDelay.get().toLong())) {
-                val text = editorInstance.getTextBeforeCursor(2)
+                val text = editorInstance.run { activeContent.getTextBeforeCursor(2) }
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
                     editorInstance.deleteBackwards()
                     editorInstance.commitText(". ")

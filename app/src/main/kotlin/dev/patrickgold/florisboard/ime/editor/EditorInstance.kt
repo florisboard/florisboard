@@ -39,7 +39,6 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.kotlin.measureLastUWords
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -72,6 +71,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun handleStartInputView(editorInfo: FlorisEditorInfo) {
+        phantomSpace.setInactive()
         super.handleStartInputView(editorInfo)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
@@ -158,17 +158,13 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     override fun commitText(text: String): Boolean {
-        val activeSelection = activeContent.selection
-        val isWordComponent = TextProcessor.isWord(text)
-        val isPhantomSpaceActive = phantomSpace.isActive && activeSelection.isValid &&
-            getTextBeforeCursor(1) != SPACE && isWordComponent
-        if (isPhantomSpaceActive) {
+        val isPhantomSpaceActive = phantomSpace.determine(text)
+        phantomSpace.setInactive()
+        return if (isPhantomSpaceActive) {
             super.commitText("$SPACE$text")
         } else {
             super.commitText(text)
         }
-        phantomSpace.setInactive()
-        return true
     }
 
     /**
@@ -184,8 +180,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun commitCompletion(text: String): Boolean {
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
-        phantomSpace.setActive(showComposingRegion = false)
-        return commitText(text)
+        return commitText(text).also { phantomSpace.setActive(showComposingRegion = false) }
     }
 
     /**
@@ -200,8 +195,13 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun commitGesture(text: String): Boolean {
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
+        val isPhantomSpaceActive = phantomSpace.determine(text, forceActive = true)
         phantomSpace.setActive(showComposingRegion = true)
-        return commitText(text)
+        return if (isPhantomSpaceActive) {
+            super.commitText("$SPACE$text")
+        } else {
+            super.commitText(text)
+        }
     }
 
     /**
@@ -313,7 +313,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             return setSelection(selection.end, selection.end)
         }
         val textToAnalyze = content.text.substring(0, content.localSelection.end)
-        val length = runBlocking { textToAnalyze.measureLastUWords(n) }
+        val length = runBlocking { breakIterators.measureLastUWords(textToAnalyze, n) }
         return setSelection((selection.end - length).coerceAtLeast(0), selection.end)
     }
 
@@ -434,6 +434,14 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     override fun reset() {
         super.reset()
         phantomSpace.setInactive()
+    }
+
+    private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
+        val content = activeContent
+        val selection = content.selection
+        val isWordComponent = TextProcessor.isWord(text)
+        return (isActive || forceActive) && selection.isValid && selection.start > 0 &&
+            content.getTextBeforeCursor(1) != SPACE && isWordComponent
     }
 
     class PhantomSpaceState {

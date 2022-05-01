@@ -18,8 +18,6 @@
 
 package dev.patrickgold.florisboard.lib.kotlin
 
-import android.icu.text.BreakIterator
-import dev.patrickgold.florisboard.ime.nlp.BreakIteratorCache
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -81,70 +79,4 @@ private fun StringBuilder.formatCurlyArg(name: String, value: Any?) {
         this.replace(start, end, value.toString())
         index = this.lastIndexOf(spec)
     }
-}
-
-suspend fun String.measureUChars(
-    numUnicodeChars: Int,
-    locale: FlorisLocale = FlorisLocale.default(),
-): Int {
-    return BreakIteratorCache.character(locale) {
-        it.setText(this)
-        val start = it.first()
-        var end: Int
-        var n = 0
-        do {
-            end = it.next()
-        } while (end != BreakIterator.DONE && ++n < numUnicodeChars)
-        (if (end == BreakIterator.DONE) this.length else end) - start
-    }.coerceIn(0, this.length)
-}
-
-suspend fun String.measureLastUChars(
-    numUnicodeChars: Int,
-    locale: FlorisLocale = FlorisLocale.default(),
-): Int {
-    return BreakIteratorCache.character(locale) {
-        it.setText(this)
-        val end = it.last()
-        var start: Int
-        var n = 0
-        do {
-            start = it.previous()
-        } while (start != BreakIterator.DONE && ++n < numUnicodeChars)
-        end - (if (start == BreakIterator.DONE) 0 else start)
-    }.coerceIn(0, this.length)
-}
-
-suspend fun String.measureUWords(
-    numUnicodeWords: Int,
-    locale: FlorisLocale = FlorisLocale.default(),
-): Int {
-    return BreakIteratorCache.word(locale) {
-        it.setText(this)
-        val start = it.first()
-        var end: Int
-        var n = 0
-        do {
-            end = it.next()
-            if (it.ruleStatus != BreakIterator.WORD_NONE) n++
-        } while (end != BreakIterator.DONE && n < numUnicodeWords)
-        (if (end == BreakIterator.DONE) this.length else end) - start
-    }.coerceIn(0, this.length)
-}
-
-suspend fun String.measureLastUWords(
-    numUnicodeWords: Int,
-    locale: FlorisLocale = FlorisLocale.default(),
-): Int {
-    return BreakIteratorCache.word(locale) {
-        it.setText(this)
-        val end = it.last()
-        var start: Int
-        var n = 0
-        do {
-            if (it.ruleStatus != BreakIterator.WORD_NONE) n++
-            start = it.previous()
-        } while (start != BreakIterator.DONE && n < numUnicodeWords)
-        end - (if (start == BreakIterator.DONE) 0 else start)
-    }.coerceIn(0, this.length)
 }
