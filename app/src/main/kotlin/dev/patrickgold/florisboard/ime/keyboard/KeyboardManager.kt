@@ -28,15 +28,18 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
+import dev.patrickgold.florisboard.ime.editor.ImeOptions
+import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
@@ -78,6 +81,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
+    private val editorInstance by context.editorInstance()
     private val extensionManager by context.extensionManager()
     private val glideTypingManager by context.glideTypingManager()
     private val subtypeManager by context.subtypeManager()
@@ -88,8 +92,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     val resources = KeyboardManagerResources()
     val smartbarActions = SmartbarActions()
-
-    private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
     val activeState = KeyboardState.new()
 
     private val renderInfoGuard = Mutex(locked = false)
@@ -152,6 +154,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
         renderInfoGuard.withLock {
             action()
+            val editorInfo = editorInstance.activeInfo
             val state = activeState.snapshot()
             val subtype = subtypeManager.activeSubtype()
             val mode = activeState.keyboardMode
@@ -163,6 +166,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }.await()
             val computingEvaluator = KeyboardComputingEvaluator(
                 keyboard = computedKeyboard,
+                editorInfo = editorInfo,
                 state = state,
                 subtype = subtype,
             )
@@ -176,11 +180,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 state = state,
                 evaluator = computingEvaluator,
             ))
-            smartbarClipboardCursorRenderInfo(state)
+            smartbarClipboardCursorRenderInfo(editorInfo, state)
         }
     }
 
-    private suspend fun smartbarClipboardCursorRenderInfo(state: KeyboardState) {
+    private suspend fun smartbarClipboardCursorRenderInfo(editorInfo: FlorisEditorInfo, state: KeyboardState) {
         val mode = KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW
         val subtype = Subtype.DEFAULT
         val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
@@ -191,6 +195,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }.await()
         val computingEvaluator = KeyboardComputingEvaluator(
             keyboard = computedKeyboard,
+            editorInfo = editorInfo,
             state = state,
             subtype = subtype,
         )
@@ -213,7 +218,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     fun updateCapsState() {
         if (activeState.inputMode != InputMode.CAPS_LOCK) {
             val shift = prefs.correction.autoCapitalization.get() &&
-                activeEditorInstance?.cursorCapsMode != InputAttributes.CapsMode.NONE
+                editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
             activeState.inputMode = when {
                 shift -> InputMode.SHIFT_LOCK
                 else -> InputMode.NORMAL
@@ -272,19 +277,19 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             else -> null
         }
         if (keyData != null) {
-            inputEventDispatcher.send(InputKeyEvent.downUp(keyData))
+            inputEventDispatcher.sendDownUp(keyData)
         }
     }
 
     fun commitCandidate(candidate: NlpManager.Candidate) {
         when (candidate) {
-            is NlpManager.Candidate.Word -> activeEditorInstance?.commitCompletion(candidate.word)
-            is NlpManager.Candidate.Clip -> activeEditorInstance?.commitClipboardItem(candidate.clipboardItem)
+            is NlpManager.Candidate.Word -> editorInstance.commitCompletion(candidate.word)
+            is NlpManager.Candidate.Clip -> editorInstance.commitClipboardItem(candidate.clipboardItem)
         }
     }
 
     fun commitGesture(word: String) {
-        activeEditorInstance?.commitGesture(fixCase(word))
+        editorInstance.commitGesture(fixCase(word))
     }
 
     /**
@@ -304,16 +309,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int, count: Int) = activeEditorInstance?.apply {
+    fun handleArrow(code: Int, count: Int = 1) = editorInstance.apply {
         val isShiftPressed = activeState.isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
+        val content = activeContent
+        val selection = content.selection
         when (code) {
-            KeyCode.ARROW_DOWN -> {
-                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
-                    activeState.isManualSelectionModeStart = false
-                    activeState.isManualSelectionModeEnd = true
-                }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
-            }
             KeyCode.ARROW_LEFT -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
@@ -334,6 +334,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     activeState.isManualSelectionModeEnd = false
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isShiftPressed), count)
+            }
+            KeyCode.ARROW_DOWN -> {
+                if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
+                    activeState.isManualSelectionModeStart = false
+                    activeState.isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
             }
             KeyCode.MOVE_START_OF_PAGE -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
@@ -369,12 +376,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.CLIPBOARD_SELECT] event.
      */
-    private fun handleClipboardSelect() = activeEditorInstance?.apply {
-        activeState.isManualSelectionMode = if (selection.isSelectionMode) {
+    private fun handleClipboardSelect() {
+        val activeSelection = editorInstance.activeContent.selection
+        activeState.isManualSelectionMode = if (activeSelection.isSelectionMode) {
             if (activeState.isManualSelectionMode && activeState.isManualSelectionModeStart) {
-                selection.updateAndNotify(selection.start, selection.start)
+                editorInstance.setSelection(activeSelection.start, activeSelection.start)
             } else {
-                selection.updateAndNotify(selection.end, selection.end)
+                editorInstance.setSelection(activeSelection.end, activeSelection.end)
             }
             false
         } else {
@@ -391,7 +399,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
-        activeEditorInstance?.deleteBackwards()
+        editorInstance.deleteBackwards()
     }
 
     /**
@@ -403,26 +411,28 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
-        activeEditorInstance?.deleteWordBackwards()
+        editorInstance.deleteWordBackwards()
     }
 
     /**
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
-        if (activeState.imeOptions.flagNoEnterAction) {
-            activeEditorInstance?.performEnter()
+        val info = editorInstance.activeInfo
+        val isShiftPressed = inputEventDispatcher.isPressed(KeyCode.SHIFT)
+        if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && isShiftPressed) {
+            editorInstance.performEnter()
         } else {
-            when (activeState.imeOptions.enterAction) {
-                ImeOptions.EnterAction.DONE,
-                ImeOptions.EnterAction.GO,
-                ImeOptions.EnterAction.NEXT,
-                ImeOptions.EnterAction.PREVIOUS,
-                ImeOptions.EnterAction.SEARCH,
-                ImeOptions.EnterAction.SEND -> {
-                    activeEditorInstance?.performEnterAction(activeState.imeOptions.enterAction)
+            when (val action = info.imeOptions.action) {
+                ImeOptions.Action.DONE,
+                ImeOptions.Action.GO,
+                ImeOptions.Action.NEXT,
+                ImeOptions.Action.PREVIOUS,
+                ImeOptions.Action.SEARCH,
+                ImeOptions.Action.SEND -> {
+                    editorInstance.performEnterAction(action)
                 }
-                else -> activeEditorInstance?.performEnter()
+                else -> editorInstance.performEnter()
             }
         }
     }
@@ -442,8 +452,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.SHIFT] down event.
      */
-    private fun handleShiftDown(ev: InputKeyEvent) {
-        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.get().toLong())) {
+    private fun handleShiftDown(data: KeyData) {
+        if (inputEventDispatcher.isConsecutiveDown(data, prefs.keyboard.longPressDelay.get().toLong())) {
             activeState.inputMode = InputMode.CAPS_LOCK
         } else {
             if (activeState.inputMode == InputMode.NORMAL) {
@@ -465,10 +475,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.CAPS_LOCK] event.
      */
     private fun handleCapsLock() {
-        val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
-        if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
-            activeState.inputMode = InputMode.CAPS_LOCK
-        }
+        activeState.inputMode = InputMode.CAPS_LOCK
     }
 
     /**
@@ -482,7 +489,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
-    private fun handleSpace(ev: InputKeyEvent) {
+    private fun handleSpace(data: KeyData) {
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -493,18 +500,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 else -> { /* Do nothing */ }
             }
         }
-        val instance = activeEditorInstance ?: return
         if (prefs.correction.doubleSpacePeriod.get()) {
-            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
-                val text = instance.getTextBeforeCursor(2)
+            if (inputEventDispatcher.isConsecutiveUp(data, prefs.keyboard.longPressDelay.get().toLong())) {
+                val text = editorInstance.run { activeContent.getTextBeforeCursor(2) }
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
-                    instance.deleteBackwards()
-                    instance.commitText(". ")
+                    editorInstance.deleteBackwards()
+                    editorInstance.commitText(". ")
                     return
                 }
             }
         }
-        instance.commitText(KeyCode.SPACE.toChar().toString())
+        editorInstance.commitText(KeyCode.SPACE.toChar().toString())
     }
 
     /**
@@ -568,14 +574,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         activeState.isCharHalfWidth = true
     }
 
-    override fun onInputKeyDown(ev: InputKeyEvent) {
-        when (ev.data.code) {
-            KeyCode.SHIFT -> handleShiftDown(ev)
-        }
-    }
-
-    override fun onInputKeyUp(ev: InputKeyEvent) = activeState.batchEdit {
-        when (ev.data.code) {
+    override fun onInputKeyDown(data: KeyData) {
+        when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
             KeyCode.ARROW_RIGHT,
@@ -583,23 +583,35 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_START_OF_PAGE,
             KeyCode.MOVE_END_OF_PAGE,
             KeyCode.MOVE_START_OF_LINE,
-            KeyCode.MOVE_END_OF_LINE -> handleArrow(
-                code = ev.data.code,
-                count = when (ev.action) {
-                    InputKeyEvent.Action.DOWN_UP,
-                    InputKeyEvent.Action.REPEAT -> ev.count
-                    else -> 1
-                },
-            )
+            KeyCode.MOVE_END_OF_LINE -> {
+                editorInstance.massSelection.begin()
+            }
+            KeyCode.SHIFT -> handleShiftDown(data)
+        }
+    }
+
+    override fun onInputKeyUp(data: KeyData) = activeState.batchEdit {
+        when (data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> {
+                editorInstance.massSelection.end()
+                handleArrow(data.code)
+            }
             KeyCode.CAPS_LOCK -> handleCapsLock()
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
             KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
-            KeyCode.CLIPBOARD_CUT -> activeEditorInstance?.performClipboardCut()
-            KeyCode.CLIPBOARD_COPY -> activeEditorInstance?.performClipboardCopy()
-            KeyCode.CLIPBOARD_PASTE -> activeEditorInstance?.performClipboardPaste()
+            KeyCode.CLIPBOARD_CUT -> editorInstance.performClipboardCut()
+            KeyCode.CLIPBOARD_COPY -> editorInstance.performClipboardCopy()
+            KeyCode.CLIPBOARD_PASTE -> editorInstance.performClipboardPaste()
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
-            KeyCode.CLIPBOARD_SELECT_ALL -> activeEditorInstance?.performClipboardSelectAll()
+            KeyCode.CLIPBOARD_SELECT_ALL -> editorInstance.performClipboardSelectAll()
             KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistory()
             KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
             KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
@@ -626,17 +638,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.KANA_KATA -> handleKanaKata()
             KeyCode.KANA_HALF_KATA -> handleKanaHalfKata()
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
-            KeyCode.REDO -> activeEditorInstance?.performRedo()
+            KeyCode.REDO -> editorInstance.performRedo()
             KeyCode.SETTINGS -> FlorisImeService.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
-            KeyCode.SPACE -> handleSpace(ev)
+            KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
             KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
                 prefs.smartbar.enabled.let { it.set(!it.get()) }
             }
-            KeyCode.UNDO -> activeEditorInstance?.performUndo()
+            KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
             KeyCode.VIEW_NUMERIC_ADVANCED -> activeState.keyboardMode = KeyboardMode.NUMERIC_ADVANCED
@@ -646,34 +658,34 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
                 if (activeState.imeUiMode == ImeUiMode.MEDIA) {
-                    activeEditorInstance?.commitText(ev.data.asString(isForDisplay = false))
+                    editorInstance.commitText(data.asString(isForDisplay = false))
                     return@batchEdit
                 }
                 when (activeState.keyboardMode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
                     KeyboardMode.PHONE,
-                    KeyboardMode.PHONE2 -> when (ev.data.type) {
+                    KeyboardMode.PHONE2 -> when (data.type) {
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
-                            val text = ev.data.asString(isForDisplay = false)
-                            activeEditorInstance?.commitText(text)
+                            val text = data.asString(isForDisplay = false)
+                            editorInstance.commitText(text)
                         }
-                        else -> when (ev.data.code) {
+                        else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
-                                val text = ev.data.asString(isForDisplay = false)
-                                activeEditorInstance?.commitText(text)
+                                val text = data.asString(isForDisplay = false)
+                                editorInstance.commitText(text)
                             }
                         }
                     }
-                    else -> when (ev.data.type) {
+                    else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
-                            val text = ev.data.asString(isForDisplay = false)
-                            activeEditorInstance?.commitText(text)
+                            val text = data.asString(isForDisplay = false)
+                            editorInstance.commitText(text)
                         }
                         else -> {
-                            flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $ev.data" }
+                            flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }
                         }
                     }
                 }
@@ -684,15 +696,35 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    override fun onInputKeyCancel(ev: InputKeyEvent) {
-        when (ev.data.code) {
+    override fun onInputKeyCancel(data: KeyData) {
+        when (data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> {
+                editorInstance.massSelection.end()
+            }
             KeyCode.SHIFT -> handleShiftCancel()
         }
     }
 
-    override fun onInputKeyRepeat(ev: InputKeyEvent) {
-        FlorisImeService.inputFeedbackController()?.keyRepeatedAction(ev.data)
-        onInputKeyUp(ev)
+    override fun onInputKeyRepeat(data: KeyData) {
+        FlorisImeService.inputFeedbackController()?.keyRepeatedAction(data)
+        when (data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
+            else -> onInputKeyUp(data)
+        }
     }
 
     inner class KeyboardManagerResources {
@@ -754,9 +786,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     private inner class KeyboardComputingEvaluator(
         val keyboard: Keyboard,
+        val editorInfo: FlorisEditorInfo,
         val state: KeyboardState,
         val subtype: Subtype,
     ) : ComputingEvaluator {
+
+        override fun activeEditorInfo(): FlorisEditorInfo = editorInfo
 
         override fun activeState(): KeyboardState = state
 
@@ -772,14 +807,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             return when (data.code) {
                 KeyCode.CLIPBOARD_COPY,
                 KeyCode.CLIPBOARD_CUT -> {
-                    state.isSelectionMode && state.isRichInputEditor
+                    state.isSelectionMode && editorInfo.isRichInputEditor
                 }
                 KeyCode.CLIPBOARD_PASTE,
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                     clipboardManager.canBePasted(clipboardManager.primaryClip.value)
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
-                    state.isRichInputEditor
+                    editorInfo.isRichInputEditor
                 }
                 else -> true
             }

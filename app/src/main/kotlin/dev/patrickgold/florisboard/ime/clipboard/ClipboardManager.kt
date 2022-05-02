@@ -21,9 +21,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
@@ -91,6 +91,7 @@ class ClipboardManager(
 
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
+    private val editorInstance by context.editorInstance()
     private val systemClipboardManager = context.systemService(AndroidClipboardManager::class)
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -312,8 +313,8 @@ class ClipboardManager(
     }
 
     fun pasteItem(item: ClipboardItem) {
-        val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return
-        activeEditorInstance.commitClipboardItem(item).also { result ->
+        val editorInstance by appContext.editorInstance()
+        editorInstance.commitClipboardItem(item).also { result ->
             if (!result) {
                 appContext.showShortToast("Failed to paste item.")
             }
@@ -325,17 +326,12 @@ class ClipboardManager(
      */
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
         if (clipItem == null) return false
-        val activeEditorInstance = FlorisImeService.activeEditorInstance() ?: return false
 
-        return clipItem.mimeTypes.contains("text/plain") || activeEditorInstance.contentMimeTypes?.any { editorType ->
+        return clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo.contentMimeTypes.any { editorType ->
             clipItem.mimeTypes.any { clipType ->
-                if (editorType != null) {
-                    compareMimeTypes(clipType, editorType)
-                } else {
-                    false
-                }
+                compareMimeTypes(clipType, editorType)
             }
-        } == true
+        }
     }
 
     /**

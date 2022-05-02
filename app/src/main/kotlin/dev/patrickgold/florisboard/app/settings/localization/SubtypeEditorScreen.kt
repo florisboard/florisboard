@@ -64,7 +64,6 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownLikeButton
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
@@ -267,17 +266,12 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                             overflow = TextOverflow.Ellipsis,
                         )
                         val systemLocales = remember {
-                            if (AndroidVersion.ATLEAST_API24_N) {
-                                val list = mutableListOf<FlorisLocale>()
-                                val localeList = configuration.locales
-                                for (n in 0 until localeList.size()) {
-                                    list.add(FlorisLocale.from(localeList.get(n)))
-                                }
-                                list
-                            } else {
-                                @Suppress("DEPRECATION")
-                                listOf(FlorisLocale.from(configuration.locale))
+                            val list = mutableListOf<FlorisLocale>()
+                            val localeList = configuration.locales
+                            for (n in 0 until localeList.size()) {
+                                list.add(FlorisLocale.from(localeList.get(n)))
                             }
+                            list
                         }
                         val suggestedPresets = remember(subtypePresets) {
                             val presets = mutableListOf<SubtypePreset>()

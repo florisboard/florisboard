@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 31
         versionCode = 80
         versionName = "0.3.15"
@@ -171,6 +171,7 @@ dependencies {
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta08")
+    implementation("io.github.reactivecircus.cache4k:cache4k:0.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("androidx.room:room-runtime:2.4.2")

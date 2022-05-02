@@ -49,6 +49,7 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -75,10 +76,9 @@ import androidx.compose.ui.window.Popup
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.widget.EmojiTextView
 import com.google.accompanist.flowlayout.FlowRow
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -123,16 +123,16 @@ fun EmojiPaletteView(
 ) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
+    val editorInstance by context.editorInstance()
     val keyboardManager by context.keyboardManager()
 
+    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
     val systemFontPaint = remember(Typeface.DEFAULT) {
         Paint().apply {
             typeface = Typeface.DEFAULT
         }
     }
-    val metadataVersion = remember {
-        FlorisImeService.activeEditorInstance()?.emojiCompatMetadataVersion ?: 0
-    }
+    val metadataVersion = activeEditorInfo.emojiCompatMetadataVersion
     val emojiCompatInstance = tryOrNull { EmojiCompat.get().takeIf { it.loadState == EmojiCompat.LOAD_STATE_SUCCEEDED } }
     val emojiMappings = remember(emojiCompatInstance, metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->
@@ -215,7 +215,7 @@ fun EmojiPaletteView(
                                 fontSize = emojiKeyFontSize,
                                 fontSizeMultiplier = fontSizeMultiplier,
                                 onEmojiInput = { emoji ->
-                                    keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(emoji))
+                                    keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                                     scope.launch {
                                         EmojiRecentlyUsedHelper.addEmoji(prefs, emoji)
                                     }

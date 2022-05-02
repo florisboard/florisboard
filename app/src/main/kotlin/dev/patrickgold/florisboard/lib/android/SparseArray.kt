@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2022 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.nlp
+package dev.patrickgold.florisboard.lib.android
 
-object TextProcessor {
-    fun isWord(text: CharSequence): Boolean {
-        return text.codePoints().allMatch { Character.isLetterOrDigit(it) }
+import androidx.collection.SparseArrayCompat
+
+fun <T> SparseArrayCompat<T>.removeAndReturn(key: Int): T? {
+    val elem = get(key)
+    return if (elem == null) {
+        null
+    } else {
+        remove(key)
+        elem
     }
 }

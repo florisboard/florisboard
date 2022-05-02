@@ -24,9 +24,9 @@ import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.util.*
@@ -34,6 +34,7 @@ import java.util.*
 class NlpManager(context: Context) {
     private val prefs by florisPreferenceModel()
     private val clipboardManager by context.clipboardManager()
+    private val editorInstance by context.editorInstance()
 
     private val _suggestions = MutableLiveData<SuggestionList2?>(null)
     val suggestions: LiveData<SuggestionList2?> get() = _suggestions
@@ -147,7 +148,7 @@ class NlpManager(context: Context) {
 
     private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
         if (prefs.smartbar.enabled.get() && prefs.smartbar.primaryActionsAutoExpandCollapse.get()) {
-            val isSelection = FlorisImeService.activeEditorInstance()?.selection?.isSelectionMode ?: true
+            val isSelection = editorInstance.activeContent.selection.isSelectionMode
             val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
             prefs.smartbar.primaryActionsExpandWithAnimation.set(false)
             prefs.smartbar.primaryActionsExpanded.set(isExpanded)

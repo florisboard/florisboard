@@ -36,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -87,7 +86,7 @@ fun QuickActionsRow(modifier: Modifier = Modifier) = with(LocalDensity.current) 
                         .fillMaxHeight()
                         .aspectRatio(1f),
                     onClick = {
-                        keyboardManager.inputEventDispatcher.send(InputKeyEvent.downUp(smartbarAction.data))
+                        keyboardManager.inputEventDispatcher.sendDownUp(smartbarAction.data)
                     },
                 ) {
                     Box(

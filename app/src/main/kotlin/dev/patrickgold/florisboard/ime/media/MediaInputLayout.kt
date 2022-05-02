@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
@@ -58,8 +57,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun MediaInputLayout(
@@ -124,18 +121,13 @@ internal fun KeyboardLikeButton(
                     awaitPointerEventScope {
                         awaitFirstDown(requireUnconsumed = false).also { it.consumeDownChange() }
                         isPressed = true
-                        inputEventDispatcher.send(InputKeyEvent.down(keyData))
-                        val repeatedAction = launch {
-                            delay(300)
-                            inputEventDispatcher.send(InputKeyEvent.repeat(keyData))
-                        }
+                        inputEventDispatcher.sendDown(keyData)
                         val up = waitForUpOrCancellation()
-                        repeatedAction.cancel()
                         isPressed = false
                         if (up != null) {
-                            inputEventDispatcher.send(InputKeyEvent.up(keyData))
+                            inputEventDispatcher.sendUp(keyData)
                         } else {
-                            inputEventDispatcher.send(InputKeyEvent.cancel(keyData))
+                            inputEventDispatcher.sendCancel(keyData)
                         }
                     }
                 }

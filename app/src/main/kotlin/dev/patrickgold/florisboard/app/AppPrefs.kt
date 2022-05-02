@@ -140,6 +140,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_primary_clip",
             default = false,
         )
+        val showInputStateOverlay = boolean(
+            key = "devtools__show_input_state_overlay",
+            default = false,
+        )
         val showSpellingOverlay = boolean(
             key = "devtools__show_spelling_overlay",
             default = false,
@@ -200,6 +204,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "gestures__delete_key_swipe_left",
             default = SwipeAction.DELETE_CHARACTERS_PRECISELY,
         )
+        val deleteKeyLongPress = enum(
+            key = "gestures__delete_key_long_press",
+            default = SwipeAction.DELETE_CHARACTER,
+        )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
             default = 32,
@@ -231,6 +239,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val previewRefreshDelay = int(
             key = "glide__preview_refresh_delay",
             default = 150,
+        )
+        val immediateBackspaceDeletesWord = boolean(
+            key = "glide__immediate_backspace_deletes_word",
+            default = true,
         )
     }
 

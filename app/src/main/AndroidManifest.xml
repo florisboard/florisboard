@@ -105,7 +105,7 @@
 
         <!-- Import File Bridging Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.app.ui.ext.ImportFileActivity"
+            android:name="dev.patrickgold.florisboard.app.ext.ImportFileActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:launchMode="singleTask"
@@ -123,7 +123,7 @@
 
         <!-- Crash Dialog Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.crashutility.CrashDialogActivity"
+            android:name="dev.patrickgold.florisboard.lib.crashutility.CrashDialogActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>

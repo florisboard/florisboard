@@ -151,7 +151,6 @@ class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
-                INTERNAL_BATCH_EDIT,
             )
         }
 
@@ -483,13 +482,6 @@ class TextKeyData(
             type = KeyType.CHARACTER,
             code = KeyCode.SETTINGS,
             label = "settings",
-        )
-
-        /** Predefined key data for [KeyCode.INTERNAL_BATCH_EDIT] */
-        val INTERNAL_BATCH_EDIT = TextKeyData(
-            type = KeyType.FUNCTION,
-            code = KeyCode.INTERNAL_BATCH_EDIT,
-            label = "internal_batch_edit",
         )
     }
 }
