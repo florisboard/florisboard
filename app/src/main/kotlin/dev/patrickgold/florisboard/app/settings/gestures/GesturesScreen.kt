@@ -81,6 +81,12 @@ fun GesturesScreen() = FlorisScreen {
                 stepIncrement = 25,
                 enabledIf = { prefs.glide.enabled isEqualTo true && prefs.glide.showPreview isEqualTo true },
             )
+            SwitchPreference(
+                prefs.glide.immediateBackspaceDeletesWord,
+                title = stringRes(R.string.pref__glide__immediate_backspace_deletes_word__label),
+                summary = stringRes(R.string.pref__glide__immediate_backspace_deletes_word__summary),
+                enabledIf = { prefs.glide.enabled isEqualTo true },
+            )
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__gestures__general_title)) {

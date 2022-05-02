@@ -240,6 +240,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "glide__preview_refresh_delay",
             default = 150,
         )
+        val immediateBackspaceDeletesWord = boolean(
+            key = "glide__immediate_backspace_deletes_word",
+            default = true,
+        )
     }
 
     val inputFeedback = InputFeedback()

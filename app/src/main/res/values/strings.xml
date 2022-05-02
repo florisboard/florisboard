@@ -346,6 +346,8 @@
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Always delete word</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Pressing delete right after a glide deletes the whole word</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>

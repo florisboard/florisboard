@@ -296,8 +296,12 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteBackwards(): Boolean {
+        val content = activeContent
+        if (phantomSpace.isActive && content.composing.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
+            return deleteWordBackwards()
+        }
         phantomSpace.setInactive()
-        return if (activeContent.selection.isSelectionMode) {
+        return if (content.selection.isSelectionMode) {
             commitText("")
         } else {
             deleteBeforeCursor(TextType.CHARACTERS, 1)
