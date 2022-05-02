@@ -118,6 +118,14 @@ abstract class AbstractEditorInstance(context: Context) {
         }
     }
 
+    protected fun handleMassSelectionUpdate(newSelection: EditorRange, composing: EditorRange) {
+        activeCursorCapsMode = InputAttributes.CapsMode.NONE
+        activeContent = EditorContent.selectionOnly(newSelection)
+        if (composing.isValid) {
+            currentInputConnection()?.setComposingRegion(EditorRange.Unspecified)
+        }
+    }
+
     open fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
         val ic = currentInputConnection()
         val editorInfo = activeInfo

@@ -576,6 +576,16 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     override fun onInputKeyDown(data: KeyData) {
         when (data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> {
+                editorInstance.massSelection.begin()
+            }
             KeyCode.SHIFT -> handleShiftDown(data)
         }
     }
@@ -589,7 +599,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_START_OF_PAGE,
             KeyCode.MOVE_END_OF_PAGE,
             KeyCode.MOVE_START_OF_LINE,
-            KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
+            KeyCode.MOVE_END_OF_LINE -> {
+                editorInstance.massSelection.end()
+                handleArrow(data.code)
+            }
             KeyCode.CAPS_LOCK -> handleCapsLock()
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
@@ -685,13 +698,33 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     override fun onInputKeyCancel(data: KeyData) {
         when (data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> {
+                editorInstance.massSelection.end()
+            }
             KeyCode.SHIFT -> handleShiftCancel()
         }
     }
 
     override fun onInputKeyRepeat(data: KeyData) {
         FlorisImeService.inputFeedbackController()?.keyRepeatedAction(data)
-        onInputKeyUp(data)
+        when (data.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
+            else -> onInputKeyUp(data)
+        }
     }
 
     inner class KeyboardManagerResources {

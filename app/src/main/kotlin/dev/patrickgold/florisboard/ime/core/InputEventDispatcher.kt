@@ -121,16 +121,20 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
     }
 
     fun sendUp(data: KeyData) = runBlocking {
-        val result = pressedKeys.withLock { pressedKeys ->
+        val (result, isBlocked) = pressedKeys.withLock { pressedKeys ->
             if (pressedKeys.containsKey(data.code)) {
                 val pressedKeyInfo = pressedKeys.removeAndReturn(data.code)?.also { it.cancelJobs() }
-                return@withLock pressedKeyInfo?.blockUp == false
+                return@withLock true to (pressedKeyInfo?.blockUp == true)
             }
-            return@withLock false
+            return@withLock false to false
         }
         if (result) {
-            keyEventReceiver?.onInputKeyUp(data)
-            lastKeyEventUp = EventData(System.currentTimeMillis(), data)
+            if (!isBlocked) {
+                keyEventReceiver?.onInputKeyUp(data)
+                lastKeyEventUp = EventData(System.currentTimeMillis(), data)
+            } else {
+                keyEventReceiver?.onInputKeyCancel(data)
+            }
         }
     }
 

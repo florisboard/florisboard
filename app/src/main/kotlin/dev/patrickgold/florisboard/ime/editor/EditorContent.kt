@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.editor
 
+import dev.patrickgold.florisboard.lib.kotlin.safeSubstring
+
 /**
  * A snapshot window of an input editor content around the selection/cursor.
  *
@@ -29,16 +31,16 @@ data class EditorContent(
     val localComposing: EditorRange,
 ) {
     val textBeforeSelection: String
-        get() = if (localSelection.isValid) text.substring(0, localSelection.start) else ""
+        get() = if (localSelection.isValid) text.safeSubstring(0, localSelection.start) else ""
 
     val selectedText: String
-        get() = if (localSelection.isValid) text.substring(localSelection.start, localSelection.end) else ""
+        get() = if (localSelection.isValid) text.safeSubstring(localSelection.start, localSelection.end) else ""
 
     val textAfterSelection: String
-        get() = if (localSelection.isValid) text.substring(localSelection.end) else ""
+        get() = if (localSelection.isValid) text.safeSubstring(localSelection.end) else ""
 
     val composingText: String
-        get() = if (localComposing.isValid) text.substring(localComposing.start, localComposing.end) else ""
+        get() = if (localComposing.isValid) text.safeSubstring(localComposing.start, localComposing.end) else ""
 
     val selection: EditorRange
         get() = if (offset > 0) localSelection.translatedBy(offset) else localSelection
@@ -48,5 +50,7 @@ data class EditorContent(
 
     companion object {
         val Unspecified = EditorContent("", -1, EditorRange.Unspecified, EditorRange.Unspecified)
+
+        fun selectionOnly(selection: EditorRange) = EditorContent("", -1, selection, EditorRange.Unspecified)
     }
 }

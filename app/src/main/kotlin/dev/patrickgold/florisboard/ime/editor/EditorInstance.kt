@@ -57,6 +57,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
     private val activeState get() = keyboardManager.activeState
     val phantomSpace = PhantomSpaceState()
+    val massSelection = MassSelectionState()
 
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
@@ -72,6 +73,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
     override fun handleStartInputView(editorInfo: FlorisEditorInfo) {
         phantomSpace.setInactive()
+        massSelection.reset()
         super.handleStartInputView(editorInfo)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
@@ -123,6 +125,20 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.inputMode = InputMode.NORMAL
         }
+    }
+
+    override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
+        if (massSelection.isActive) {
+            super.handleMassSelectionUpdate(newSelection, composing)
+        } else {
+            super.handleSelectionUpdate(oldSelection, newSelection, composing)
+        }
+    }
+
+    override fun handleFinishInputView() {
+        phantomSpace.setInactive()
+        massSelection.reset()
+        super.handleFinishInputView()
     }
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
@@ -467,6 +483,31 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         companion object {
             private const val F_IS_ACTIVE = 0x1
             private const val F_SHOW_COMPOSING_REGION = 0x2
+        }
+    }
+
+    inner class MassSelectionState {
+        private val state = AtomicInteger(0)
+
+        val isActive: Boolean
+            get() = state.get() > 0
+
+        val isInactive: Boolean
+            get() = !isActive
+
+        fun begin() {
+            state.incrementAndGet()
+        }
+
+        fun end() {
+            if (state.decrementAndGet() == 0) {
+                // We need to emulate a selection update to update the content if mass selection has ended
+                handleSelectionUpdate(EditorRange.Unspecified, activeContent.selection, EditorRange.Unspecified)
+            }
+        }
+
+        fun reset() {
+            state.set(0)
         }
     }
 }
