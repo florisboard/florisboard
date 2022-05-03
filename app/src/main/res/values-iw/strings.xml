@@ -183,7 +183,6 @@
     <string name="enum__one_handed_mode__end" comment="Enum value label">מצב ליד ימין</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">ללא פעולה</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">מחיקת תווים בקפדנות</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">מחק מילה נוכחית</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">מחיקת מילים בקפדנות</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">הסתר מקשים</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">הכנס רווח</string>

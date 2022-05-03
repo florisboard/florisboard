@@ -660,7 +660,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Przejdź do poprzedniego trybu klawiatury</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Przejdź do następnego trybu klawiatury</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Precyzyjne usuwanie słów</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Usuń bieżące słowo</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Precyzyjne usuwanie słów</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ukryj klawiaturę</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Wstaw spację</string>

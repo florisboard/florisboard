@@ -417,7 +417,6 @@
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Cureyên jêr ên klavyeyê bi kar bîne</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Bê çalakî</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Karakteran bi rastî jê bibe</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Peyva heyî jê dibe</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Peyvan bi rastî jê bibire</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Klavyeyê veşêre</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Cih têxê</string>

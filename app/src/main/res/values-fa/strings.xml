@@ -331,7 +331,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">چرخش به حالت صفحه کلید پیشین</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">چرخش به حالت صفحه کلید پسین</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">حذف کردن دقیق حروف</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">حذف کلمه کنونی</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">حذف دقیق‌ کلمات</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">مخفی کردن کیبورد</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">وارد کردن فاصله</string>

@@ -187,7 +187,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Siirry edelliseen näppäimistötilaan</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Siirry seuraavaan näppäimistötilaan</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Tarkka merkkien poisto</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Poista nykyinen sana</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Poista sanat tarkasti</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Piilota näppäimistö</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Lisää välilyönti</string>

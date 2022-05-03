@@ -191,7 +191,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Перейти до попереднього режиму клавіатури</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Перейти до наступного режиму клавіатури</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Точне видалення символів</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Видалити поточне слово</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Точне видалення слова</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Приховати клавіатуру</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Вставити пробіл</string>

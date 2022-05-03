@@ -364,7 +364,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ruller til forrige tastatur-modus</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ruller til neste tastatur-modus</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Slett tegn nøyaktig</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Slett gjeldende ord</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Slett ord nøyaktig</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skjul tastatur</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Sett inn mellomrom</string>

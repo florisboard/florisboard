@@ -674,7 +674,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passa alla modalità precedente</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passa alla modalità successiva</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Cancella lettere con precisione</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Cancella la parola attuale</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Cancella parole con precisione</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Nascondi tastiera</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Inserisci spazio</string>

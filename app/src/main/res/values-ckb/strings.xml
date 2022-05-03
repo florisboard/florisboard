@@ -505,6 +505,8 @@
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">جێگۆڕینی لەبەرگیراوەکانی ئێستا لەگەڵ لەبەرگیراوەی بەرنامەکە</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">پیشاندانی ڕاستکردنەوەی ڕێنووس</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">پیشاندانی ڕاستکردنەوەی هەڵەی ڕێنووس لەسەروی تەختەکلیل</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">پیشاندانی سنوورەکانی کلیل</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">هێڵکاریکردنی سنوورەکانی کلیل دەسلێدان بە سوور</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">لابردنی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">سڕینەوەی ووشە زیادکراوەکانی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\" ڕێکخستنەوەی</string>
@@ -687,7 +689,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">گەڕانەوە بۆ شێوازی پێشوو</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">گەڕانەوە بۆ شێوازی دواتر</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">سڕینەوەی پیتەکان یەک بە یەک</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">سڕینەوەی ووشەی ئێستا</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">سڕینەوەی ووشەکان یەک بە یەک</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">لابردنی تەختەکلیل</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">زیادکردنی ماوە</string>
@@ -709,6 +710,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">گۆڕین بۆ تەختەکلیلی پێشوو</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">گۆڕین بۆ زمانی پێشوو</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">گۆڕین بۆ زمانی دواتر</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">شاردنەوە/ پیشاندانی بەشی سەرەوە</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">هەمیشە ڕووناک</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">هەمیشە تاریک</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">بەپێی سیستەم</string>

@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Klavyeyi sola kaydır.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Klavyeyi sağa kaydır.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojiler</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojiler</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emojiler</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">En fazla emoji geçmiş sayısı</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Tercih edilen emoji ten rengi</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Tercih edilen emoji saç tipi</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Suratlar &amp; İfadeler</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Kişiler &amp; Bedenler</string>
@@ -22,6 +26,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Nesneler</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Semboller</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bayraklar</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Geçmiş emoji bulunamadı. Emojileri kullanmaya başladığınızda burada gözükecektir.</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} son kullanılan emojilerden kaldırıldı</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Hızlı erişim tuşu. Basılı tutarak, kelime önerileri ve hızlı erişim tuşları arasında geçin yapar.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Yazı düzenleme panelinden çık.</string>
@@ -83,6 +89,20 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Uygulama Elemanları</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Dahili Depolama</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Harici Sağlayıcı</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Açık temayı seç</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Koyu temayı seç</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">İndirilen temaları düzenle</string>
+    <string name="settings__theme_editor__add_rule">Kural ekle</string>
+    <string name="settings__theme_editor__edit_rule">Kuralı düzenle</string>
+    <string name="settings__theme_editor__rule_groups">Gruplar</string>
+    <string name="settings__theme_editor__rule_modes">Modlar</string>
+    <string name="settings__theme_editor__code_placeholder">Kod</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Kaydediliyor…</string>
+    <string name="settings__theme_editor__add_property">Özellik Ekle</string>
+    <string name="settings__theme_editor__edit_property">Özelliği düzenle</string>
+    <string name="settings__theme_editor__property_name">Özellik adı</string>
+    <string name="settings__theme_editor__property_value">Özellik değeri</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Tüm köşeler için uygula</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ses &amp; Titreşim</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>
@@ -395,7 +415,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Önceki klavye moduna geç</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Sonraki klavye moduna geç</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Harfleri tam olarak sil</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Şu anki sözcüğü sil</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Sözcükleri tam olarak sil</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Klavyeyi gizle</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Boşluk koy</string>
