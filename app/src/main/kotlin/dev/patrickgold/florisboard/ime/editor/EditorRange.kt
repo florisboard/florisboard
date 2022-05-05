@@ -50,7 +50,7 @@ data class EditorRange(val start: Int, val end: Int) {
         return EditorRange(start + offset, end + offset)
     }
 
-    override fun toString(): String = "EditorRange { start=$start, end=$end }"
+    override fun toString(): String = "{ start=$start, end=$end }"
 
     companion object {
         /** Unspecified range */
