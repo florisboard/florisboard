@@ -34,6 +34,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class InputEventDispatcher private constructor(private val repeatableKeyCodes: IntArray) {
     companion object {
@@ -97,13 +98,15 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
                 pressedKeyInfo.job = scope.launch {
                     val longPressDelay = determineLongPressDelay(data)
                     delay(longPressDelay)
-                    if (onLongPress()) {
+                    val longPressResult = withContext(Dispatchers.Main) { onLongPress() }
+                    if (longPressResult) {
                         pressedKeyInfo.blockUp = true
                     } else if (repeatableKeyCodes.contains(data.code)) {
                         val repeatData = determineRepeatData(data)
                         val repeatDelay = determineRepeatDelay(repeatData)
                         while (isActive) {
-                            if (onRepeat()) {
+                            val onRepeatResult = withContext(Dispatchers.Main) { onRepeat() }
+                            if (onRepeatResult) {
                                 keyEventReceiver?.onInputKeyRepeat(repeatData)
                                 pressedKeyInfo.blockUp = true
                             }
