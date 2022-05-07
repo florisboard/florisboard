@@ -832,10 +832,13 @@ private class TextKeyboardLayoutController(
                             val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                // TODO: Maybe find way to integrate this into mass select?
-                                //keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
-                                val selection = editorInstance.activeContent.selection
-                                editorInstance.setSelection(selection.end - count, selection.end - count)
+                                if (editorInstance.activeInfo.isRawInputEditor) {
+                                    keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
+                                } else {
+                                    // TODO: Maybe find way to integrate this into mass select?
+                                    val selection = editorInstance.activeContent.selection
+                                    editorInstance.setSelection(selection.end - count, selection.end - count)
+                                }
                             }
                         }
                         true
@@ -850,10 +853,13 @@ private class TextKeyboardLayoutController(
                             val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                // TODO: Maybe find way to integrate this into mass select?
-                                //keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
-                                val selection = editorInstance.activeContent.selection
-                                editorInstance.setSelection(selection.end + count, selection.end + count)
+                                if (editorInstance.activeInfo.isRawInputEditor) {
+                                    // TODO: Maybe find way to integrate this into mass select?
+                                    keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
+                                } else {
+                                    val selection = editorInstance.activeContent.selection
+                                    editorInstance.setSelection(selection.end + count, selection.end + count)
+                                }
                             }
                         }
                         true
