@@ -101,9 +101,12 @@ abstract class AbstractEditorInstance(context: Context) {
         activeCursorCapsMode = editorInfo.initialCapsMode
 
         // Get Text
-        val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor) ?: ""
-        val textAfterSelection = editorInfo.getInitialTextAfterCursor(NumCharsAfterCursor) ?: ""
-        val selectedText = editorInfo.getInitialSelectedText() ?: ""
+        val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor)
+            ?: ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: ""
+        val textAfterSelection = editorInfo.getInitialTextAfterCursor(NumCharsAfterCursor)
+            ?: ic.getTextAfterCursor(NumCharsAfterCursor, 0) ?: ""
+        val selectedText = editorInfo.getInitialSelectedText()
+            ?: ic.getSelectedText(0) ?: ""
 
         scope.launch {
             activeContent = generateContent(
@@ -306,7 +309,8 @@ abstract class AbstractEditorInstance(context: Context) {
         val ic = currentInputConnection()
         if (ic == null || n < 1) return false
         val content = activeContent
-        if (content.selection.isValid && content.selection.start == 0) return true
+        // Cannot perform below check due to editors which lie about their correct selection
+        //if (content.selection.isValid && content.selection.start == 0) return true
         val oldTextBeforeSelection = content.textBeforeSelection
         return if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
             // If editor is rich and text before selection is empty we seem to have an invalid state here, so we fall
