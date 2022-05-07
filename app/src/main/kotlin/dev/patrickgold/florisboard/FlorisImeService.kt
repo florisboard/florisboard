@@ -338,18 +338,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         nlpManager.clearInlineSuggestions()
     }
 
-    //override fun onWordHistoryChanged(
-    //    currentWord: EditorInstance.Region?,
-    //    wordsBeforeCurrent: List<EditorInstance.Region>,
-    //    wordsAfterCurrent: List<EditorInstance.Region>,
-    //) {
-    //    if (currentWord == null || !currentWord.isValid || !activeState.isComposingEnabled) {
-    //        nlpManager.clearSuggestions()
-    //        return
-    //    }
-    //    nlpManager.suggest(currentWord.text, listOf())
-    //}
-
     override fun onWindowShown() {
         super.onWindowShown()
         if (isWindowShown) {

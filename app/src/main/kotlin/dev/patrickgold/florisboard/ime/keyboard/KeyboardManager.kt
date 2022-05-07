@@ -59,6 +59,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +67,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 
 data class RenderInfo(
     val version: Int = 0,
@@ -84,6 +86,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val editorInstance by context.editorInstance()
     private val extensionManager by context.extensionManager()
     private val glideTypingManager by context.glideTypingManager()
+    private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -148,6 +151,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         clipboardManager.primaryClip.observeForever {
             updateRenderInfo()
+        }
+        scope.launch {
+            withContext(Dispatchers.Main) {
+                nlpManager.clearSuggestions()
+            }
+            editorInstance.activeContentFlow.collect { content ->
+                if (content.composing.isNotValid || !activeState.isComposingEnabled) {
+                    nlpManager.clearSuggestions()
+                    return@collect
+                }
+                nlpManager.suggest(content.composingText, listOf())
+            }
         }
     }
 
