@@ -101,7 +101,7 @@
     <string name="settings__theme_editor__add_rule">Rêbazekê tevlî bike</string>
     <string name="settings__theme_editor__edit_rule">Rêbazê serrast bike</string>
     <string name="settings__theme_editor__rule_groups">Kom</string>
-    <string name="settings__theme_editor__rule_modes">Moda</string>
+    <string name="settings__theme_editor__rule_shift_states">Moda</string>
     <string name="settings__theme_editor__rule_selectors">Hilbijêr</string>
     <string name="settings__theme_editor__code_already_exists">Ev koda mifteyan jixwe hatîye pênasekirin.</string>
     <string name="snygg__rule_element__key">Kilîd</string>
@@ -395,9 +395,9 @@
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Alfaya Kesk a Sor</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Qet nîşan nede</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Asayî</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Asayî</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Tu carî nîşan nede</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dînamîk nîşan bide</string>

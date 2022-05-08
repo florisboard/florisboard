@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">目标元件</string>
     <string name="settings__theme_editor__rule_codes">目标键码</string>
     <string name="settings__theme_editor__rule_groups">规则组</string>
-    <string name="settings__theme_editor__rule_modes">模式</string>
+    <string name="settings__theme_editor__rule_shift_states">模式</string>
     <string name="settings__theme_editor__rule_selectors">选择器</string>
     <string name="settings__theme_editor__add_code">添加键码</string>
     <string name="settings__theme_editor__edit_code">编辑键码</string>
@@ -658,9 +658,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">长按后自动选择的字符始终是提示符号，如果没有提示符号可用，则为主重音</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">智能优先</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">长按后自动选择的字符根据当前语言和布局，动态决定是主重音还是提示符号</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">正常</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift 锁定</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">大写锁定</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">正常</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift 锁定</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">大写锁定</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">从不显示</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">始终显示</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">动态显示</string>

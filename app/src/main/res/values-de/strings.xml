@@ -104,7 +104,7 @@
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
     <string name="settings__theme_editor__rule_element">Zielelement</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
-    <string name="settings__theme_editor__rule_modes">Modi</string>
+    <string name="settings__theme_editor__rule_shift_states">Modi</string>
     <string name="settings__theme_editor__rule_selectors">Selektoren</string>
     <string name="settings__theme_editor__add_code">Key code hinzufügen</string>
     <string name="settings__theme_editor__edit_code">Key code bearbeiten</string>
@@ -652,9 +652,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, ist immer das Hinweissymbol, oder der primäre Akzent, wenn kein Hinweissymbol verfügbar ist</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Intelligente Priorisierung</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, wird je nach Sprache und Layout dynamisch, entweder als Hauptakzent oder als Hinweissymbol festgelegt</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Feststelltaste</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Feststelltaste</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Feststelltaste</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Feststelltaste</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nie anzeigen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch anzeigen</string>

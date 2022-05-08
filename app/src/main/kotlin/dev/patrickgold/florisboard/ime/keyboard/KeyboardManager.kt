@@ -33,19 +33,19 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
+import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
@@ -231,12 +231,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun updateCapsState() {
-        if (activeState.inputMode != InputMode.CAPS_LOCK) {
+        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK) {
             val shift = prefs.correction.autoCapitalization.get() &&
                 editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
-            activeState.inputMode = when {
-                shift -> InputMode.SHIFT_LOCK
-                else -> InputMode.NORMAL
+            activeState.inputShiftState = when {
+                shift -> InputShiftState.SHIFTED_AUTOMATIC
+                else -> InputShiftState.UNSHIFTED
             }
         }
     }
@@ -314,9 +314,19 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      *    otherwise            , abc -> abc
      */
     fun fixCase(word: String): String {
-        return when(activeState.inputMode) {
-            InputMode.CAPS_LOCK -> word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
-            InputMode.SHIFT_LOCK -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(subtypeManager.activeSubtype().primaryLocale.base) else it.toString() }
+        return when(activeState.inputShiftState) {
+            InputShiftState.CAPS_LOCK -> {
+                word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
+            }
+            InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
+                word.replaceFirstChar {
+                    if (it.isLowerCase()) {
+                        it.titlecase(subtypeManager.activeSubtype().primaryLocale.base)
+                    } else {
+                        it.toString()
+                    }
+                }
+            }
             else -> word
         }
     }
@@ -469,12 +479,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     private fun handleShiftDown(data: KeyData) {
         if (inputEventDispatcher.isConsecutiveDown(data)) {
-            activeState.inputMode = InputMode.CAPS_LOCK
+            activeState.inputShiftState = InputShiftState.CAPS_LOCK
         } else {
-            if (activeState.inputMode == InputMode.NORMAL) {
-                activeState.inputMode = InputMode.SHIFT_LOCK
+            if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
+                activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
             } else {
-                activeState.inputMode = InputMode.NORMAL
+                activeState.inputShiftState = InputShiftState.UNSHIFTED
             }
         }
     }
@@ -490,14 +500,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.CAPS_LOCK] event.
      */
     private fun handleCapsLock() {
-        activeState.inputMode = InputMode.CAPS_LOCK
+        activeState.inputShiftState = InputShiftState.CAPS_LOCK
     }
 
     /**
      * Handles a [KeyCode.SHIFT] cancel event.
      */
     private fun handleShiftCancel() {
-        activeState.inputMode = InputMode.NORMAL
+        activeState.inputShiftState = InputShiftState.UNSHIFTED
     }
 
     /**
@@ -704,8 +714,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         }
                     }
                 }
-                if (activeState.inputMode != InputMode.CAPS_LOCK) {
-                    activeState.inputMode = InputMode.NORMAL
+                if (activeState.inputShiftState != InputShiftState.CAPS_LOCK) {
+                    activeState.inputShiftState = InputShiftState.UNSHIFTED
                 }
             }
         }

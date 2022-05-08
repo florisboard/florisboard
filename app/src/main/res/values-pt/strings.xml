@@ -103,7 +103,7 @@
     <string name="settings__theme_editor__no_rules_defined">Esta folha de estilo não tem regras definidas. Adicione uma regra para começar a editar.</string>
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_modes">Modos</string>
+    <string name="settings__theme_editor__rule_shift_states">Modos</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
     <string name="settings__theme_editor__code_already_exists">Este código já está definido.</string>
     <string name="settings__theme_editor__code_placeholder">Código</string>
@@ -564,9 +564,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo será sempre o símbolo ou o acento principal caso não exista um símbolo</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioridade inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo é decidido por ser o acento principal ou o símbolo, tendo por base o idioma e a disposição atual</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift Lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps Lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift Lock</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps Lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Não mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinamicamente</string>

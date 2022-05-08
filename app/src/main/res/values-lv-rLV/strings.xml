@@ -104,7 +104,7 @@
     <string name="settings__theme_editor__rule_already_exists">Šis stila lapas nosacījums jau ir noteikts.</string>
     <string name="settings__theme_editor__rule_element">Mērķa elements</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
-    <string name="settings__theme_editor__rule_modes">Veidi</string>
+    <string name="settings__theme_editor__rule_shift_states">Veidi</string>
     <string name="settings__theme_editor__rule_selectors">Atlasītāji</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
@@ -645,9 +645,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir norādes zīme vai galvenā uzsvara zīme, ja norādes zīme nav pieejama</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Viedā priekšrokas noteikšana</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme (galvenā uzsvara vai norādes zīme) pēc ilga piespiediena tiek noteikta atbilstoši pašreizējai valodai un izkārtojumam</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Vispārpieņemts</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Pārslēgs</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Burtslēgs</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Vispārpieņemts</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Pārslēgs</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Burtslēgs</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nerādīt nekad</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Rādīt pielāgojoties</string>

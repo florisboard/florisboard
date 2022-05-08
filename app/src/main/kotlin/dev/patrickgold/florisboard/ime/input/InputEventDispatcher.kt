@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.patrickgold.florisboard.ime.input
 
 import android.os.SystemClock
 import android.view.ViewConfiguration

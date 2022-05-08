@@ -333,7 +333,7 @@ private fun TextKeyButton(
     val keyStyle = FlorisImeTheme.style.get(
         element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
         code = key.computedData.code,
-        mode = renderInfo.state.inputMode.value,
+        mode = renderInfo.state.inputShiftState.value,
         isPressed = key.isPressed && key.isEnabled,
         isDisabled = !key.isEnabled,
     )
@@ -395,7 +395,7 @@ private fun TextKeyButton(
             val keyHintStyle = FlorisImeTheme.style.get(
                 element = FlorisImeUi.KeyHint,
                 code = key.computedHintData.code,
-                mode = renderInfo.state.inputMode.value,
+                mode = renderInfo.state.inputShiftState.value,
                 isPressed = key.isPressed,
             )
             val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier

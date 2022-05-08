@@ -100,7 +100,7 @@
     <string name="settings__theme_editor__rule_element">مؤلفه مورد نظر</string>
     <string name="settings__theme_editor__rule_codes">کد کلیدهای مورد نظر</string>
     <string name="settings__theme_editor__rule_groups">گروه ها</string>
-    <string name="settings__theme_editor__rule_modes">حالت ها</string>
+    <string name="settings__theme_editor__rule_shift_states">حالت ها</string>
     <string name="settings__theme_editor__rule_selectors">انتخابگرها</string>
     <string name="settings__theme_editor__add_code">افزودن کد کلید</string>
     <string name="settings__theme_editor__edit_code">ویرایش کد کلید</string>
@@ -316,9 +316,9 @@
     <!-- State strings -->
     <string name="state__disabled">غیرفعال شد</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">عادی</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">قفل Shift</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">قفل Caps</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">عادی</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">قفل Shift</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">قفل Caps</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">هرگز نشان نده</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">همیشه نشان بده</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">به صورت پویا نشان بده</string>

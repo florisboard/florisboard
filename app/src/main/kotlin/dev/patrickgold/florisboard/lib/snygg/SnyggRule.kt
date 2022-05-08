@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.lib.snygg
 
 import androidx.compose.runtime.saveable.Saver
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
@@ -34,7 +34,7 @@ data class SnyggRule(
     val element: String,
     val codes: List<Int> = emptyList(),
     val groups: List<Int> = emptyList(),
-    val modes: List<Int> = emptyList(),
+    val shiftStates: List<Int> = emptyList(),
     val pressedSelector: Boolean = false,
     val focusSelector: Boolean = false,
     val disabledSelector: Boolean = false,
@@ -49,7 +49,7 @@ data class SnyggRule(
         const val ATTRIBUTE_OR = '|'
         const val CODES_KEY = "code"
         const val GROUPS_KEY = "group"
-        const val MODES_KEY = "mode"
+        const val SHIFT_STATES_KEY = "shiftstate"
 
         const val SELECTOR_COLON = ':'
         const val PRESSED_SELECTOR = "pressed"
@@ -58,15 +58,17 @@ data class SnyggRule(
 
         @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
-            """^(@?)[a-zA-Z0-9-]+(\[(code|group|mode)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
-        private val Placeholders = mapOf(
+            """^(@?)[a-zA-Z0-9-]+(\[(code|group|shiftstate)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
+
+        val Placeholders = mapOf(
             "c:delete" to KeyCode.DELETE,
             "c:enter" to KeyCode.ENTER,
             "c:shift" to KeyCode.SHIFT,
             "c:space" to KeyCode.SPACE,
-            "m:normal" to InputMode.NORMAL.value,
-            "m:shiftlock" to InputMode.SHIFT_LOCK.value,
-            "m:capslock" to InputMode.CAPS_LOCK.value,
+            "sh:unshifted" to InputShiftState.UNSHIFTED.value,
+            "sh:shifted_manual" to InputShiftState.SHIFTED_MANUAL.value,
+            "sh:shifted_automatic" to InputShiftState.SHIFTED_AUTOMATIC.value,
+            "sh:caps_lock" to InputShiftState.CAPS_LOCK.value,
         )
 
         private val PreferredElementSorting = listOf(
@@ -112,7 +114,7 @@ data class SnyggRule(
                 }
                 val codes = mutableListOf<Int>()
                 val groups = mutableListOf<Int>()
-                val modes = mutableListOf<Int>()
+                val shiftStates = mutableListOf<Int>()
                 val attributes = elementAndAttributes.split(ATTRIBUTE_OPEN, ATTRIBUTE_CLOSE)
                 val isAnnotation = attributes[0].startsWith(ANNOTATION_MARKER)
                 val element = if (isAnnotation) attributes[0].substring(1) else attributes[0]
@@ -124,13 +126,13 @@ data class SnyggRule(
                         when (key) {
                             CODES_KEY -> codes
                             GROUPS_KEY -> groups
-                            MODES_KEY -> modes
+                            SHIFT_STATES_KEY -> shiftStates
                             else -> null
                         }?.addAll(values.map { it.toInt(10) })
                     }
                 }
                 return SnyggRule(
-                    isAnnotation, element, codes.toList(), groups.toList(), modes.toList(),
+                    isAnnotation, element, codes.toList(), groups.toList(), shiftStates.toList(),
                     pressedSelector, focusSelector, disabledSelector,
                 )
             } catch (e: Exception) {
@@ -146,7 +148,7 @@ data class SnyggRule(
         append(element)
         appendAttribute(CODES_KEY, codes)
         appendAttribute(GROUPS_KEY, groups)
-        appendAttribute(MODES_KEY, modes)
+        appendAttribute(SHIFT_STATES_KEY, shiftStates)
         appendSelector(PRESSED_SELECTOR, pressedSelector)
         appendSelector(FOCUS_SELECTOR, focusSelector)
         appendSelector(DISABLED_SELECTOR, disabledSelector)
@@ -183,14 +185,14 @@ data class SnyggRule(
                     0 -> when {
                         this.codes.size != other.codes.size -> this.codes.size.compareTo(other.codes.size)
                         this.groups.size != other.groups.size -> this.groups.size.compareTo(other.groups.size)
-                        this.modes.size != other.modes.size -> this.modes.size.compareTo(other.modes.size)
+                        this.shiftStates.size != other.shiftStates.size -> this.shiftStates.size.compareTo(other.shiftStates.size)
                         else -> {
                             this.codes.indices.firstNotNullOfOrNull { n ->
                                 (this.codes[n].compareTo(other.codes[n])).takeIf { it != 0 }
                             } ?: this.groups.indices.firstNotNullOfOrNull { n ->
                                 (this.groups[n].compareTo(other.groups[n])).takeIf { it != 0 }
-                            } ?: this.modes.indices.firstNotNullOfOrNull { n ->
-                                (this.modes[n].compareTo(other.modes[n])).takeIf { it != 0 }
+                            } ?: this.shiftStates.indices.firstNotNullOfOrNull { n ->
+                                (this.shiftStates[n].compareTo(other.shiftStates[n])).takeIf { it != 0 }
                             } ?: 0
                         }
                     }
@@ -208,7 +210,7 @@ data class SnyggRule(
     private fun comparatorWeight(): Int {
         return (if (codes.isNotEmpty()) 0x01 else 0) +
             (if (groups.isNotEmpty()) 0x02 else 0) +
-            (if (modes.isNotEmpty()) 0x04 else 0) +
+            (if (shiftStates.isNotEmpty()) 0x04 else 0) +
             (if (pressedSelector) 0x08 else 0) +
             (if (focusSelector) 0x10 else 0) +
             (if (disabledSelector) 0x20 else 0)
@@ -224,7 +226,7 @@ data class SnyggRule(
         if (element != other.element) return false
         if (!codes.containsAll(other.codes) || !other.codes.containsAll(codes)) return false
         if (!groups.containsAll(other.groups) || !other.groups.containsAll(groups)) return false
-        if (!modes.containsAll(other.modes) || !other.modes.containsAll(modes)) return false
+        if (!shiftStates.containsAll(other.shiftStates) || !other.shiftStates.containsAll(shiftStates)) return false
         if (pressedSelector != other.pressedSelector) return false
         if (focusSelector != other.focusSelector) return false
         if (disabledSelector != other.disabledSelector) return false
@@ -241,7 +243,7 @@ data class SnyggRule(
         for (group in groups.sorted()) {
             result = 31 * result + group.hashCode()
         }
-        for (mode in modes.sorted()) {
+        for (mode in shiftStates.sorted()) {
             result = 31 * result + mode.hashCode()
         }
         result = 31 * result + pressedSelector.hashCode()

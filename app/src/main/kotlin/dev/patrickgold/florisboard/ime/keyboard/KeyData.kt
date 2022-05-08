@@ -195,7 +195,7 @@ data class VariationSelector(
  *
  * Example usage in a layout JSON file:
  * ```
- * { "$": "case_selector",
+ * { "$": "layout_direction_selector",
  *   "ltr": { "code":   59, "label": ";" },
  *   "rtl": { "code":   58, "label": ":" }
  * }

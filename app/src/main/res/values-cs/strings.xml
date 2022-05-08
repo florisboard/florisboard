@@ -101,7 +101,7 @@
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
     <string name="settings__theme_editor__rule_element">Cílový prvek</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
-    <string name="settings__theme_editor__rule_modes">Režimy</string>
+    <string name="settings__theme_editor__rule_shift_states">Režimy</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
     <string name="settings__theme_editor__add_property">Přidat vlastnost</string>
@@ -367,7 +367,7 @@
     <!-- State strings -->
     <string name="state__disabled">Vypnuto</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normální</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normální</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>

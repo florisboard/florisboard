@@ -112,7 +112,6 @@ class TextKeyData(
                 FORWARD_DELETE,
                 FORWARD_DELETE_WORD,
                 SHIFT,
-                SHIFT_LOCK,
                 CAPS_LOCK,
                 ARROW_LEFT,
                 ARROW_RIGHT,
@@ -233,12 +232,6 @@ class TextKeyData(
             type = KeyType.MODIFIER,
             code = KeyCode.SHIFT,
             label = "shift",
-        )
-        /** Predefined key data for [KeyCode.SHIFT_LOCK] */
-        val SHIFT_LOCK = TextKeyData(
-            type = KeyType.MODIFIER,
-            code = KeyCode.SHIFT_LOCK,
-            label = "shift_lock",
         )
         /** Predefined key data for [KeyCode.CAPS_LOCK] */
         val CAPS_LOCK = TextKeyData(

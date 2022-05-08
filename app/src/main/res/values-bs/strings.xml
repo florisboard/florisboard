@@ -80,7 +80,7 @@
     <!-- State strings -->
     <string name="state__disabled">Onemogućeno</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normalno</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normalno</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikad ne prikaži</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Uvijek prikaži</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Prikaži dinamički</string>
