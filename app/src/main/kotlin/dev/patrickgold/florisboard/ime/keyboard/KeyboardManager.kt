@@ -231,7 +231,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun updateCapsState() {
-        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK) {
+        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             val shift = prefs.correction.autoCapitalization.get() &&
                 editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
             activeState.inputShiftState = when {
@@ -492,8 +492,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.SHIFT] up event.
      */
-    private fun handleShiftUp() {
-        //activeState.shiftLock = newCapsState
+    private fun handleShiftUp(data: KeyData) {
+        //if (activeState.inputShiftState != InputShiftState.CAPS_LOCK &&
+        //    !inputEventDispatcher.isUninterruptedEventSequence(data)) {
+        //    activeState.inputShiftState = InputShiftState.UNSHIFTED
+        //}
     }
 
     /**
@@ -665,7 +668,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.REDO -> editorInstance.performRedo()
             KeyCode.SETTINGS -> FlorisImeService.launchSettings()
-            KeyCode.SHIFT -> handleShiftUp()
+            KeyCode.SHIFT -> handleShiftUp(data)
             KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
@@ -714,7 +717,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         }
                     }
                 }
-                if (activeState.inputShiftState != InputShiftState.CAPS_LOCK) {
+                if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
                     activeState.inputShiftState = InputShiftState.UNSHIFTED
                 }
             }

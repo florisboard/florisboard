@@ -64,6 +64,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
+import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
@@ -602,9 +603,9 @@ private class TextKeyboardLayoutController(
 
         val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
-            inputEventDispatcher.sendDown(
+            pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
                 data = key.computedData,
-                onLongPress = {
+                onLongPress = onLongPress@ {
                     when (key.computedData.code) {
                         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                             when (prefs.gestures.spaceBarLongPress.get()) {
@@ -620,7 +621,7 @@ private class TextKeyboardLayoutController(
                         KeyCode.SHIFT -> {
                             inputEventDispatcher.sendDownUp(TextKeyData.CAPS_LOCK)
                             inputFeedbackController?.keyLongPress(key.computedData)
-                            true
+                            false
                         }
                         KeyCode.LANGUAGE_SWITCH -> {
                             inputEventDispatcher.sendDownUp(TextKeyData.SYSTEM_INPUT_METHOD_PICKER)
@@ -685,6 +686,8 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchUpInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        pointer.pressedKeyInfo?.cancelJobs()
+        pointer.pressedKeyInfo = null
 
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
@@ -717,6 +720,8 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        pointer.pressedKeyInfo?.cancelJobs()
+        pointer.pressedKeyInfo = null
 
         val activeKey = pointer.activeKey
         if (activeKey != null) {
@@ -982,12 +987,14 @@ private class TextKeyboardLayoutController(
         var initialKey: TextKey? = null
         var activeKey: TextKey? = null
         var hasTriggeredGestureMove: Boolean = false
+        var pressedKeyInfo: InputEventDispatcher.PressedKeyInfo? = null
 
         override fun reset() {
             super.reset()
             initialKey = null
             activeKey = null
             hasTriggeredGestureMove = false
+            pressedKeyInfo = null
         }
 
         override fun toString(): String {

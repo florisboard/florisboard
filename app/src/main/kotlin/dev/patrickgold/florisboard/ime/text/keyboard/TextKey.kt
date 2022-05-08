@@ -255,4 +255,8 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             }
         }
     }
+
+    override fun toString(): String {
+        return computedData.toString()
+    }
 }
