@@ -493,10 +493,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] up event.
      */
     private fun handleShiftUp(data: KeyData) {
-        //if (activeState.inputShiftState != InputShiftState.CAPS_LOCK &&
-        //    !inputEventDispatcher.isUninterruptedEventSequence(data)) {
-        //    activeState.inputShiftState = InputShiftState.UNSHIFTED
-        //}
+        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK &&
+            !inputEventDispatcher.isUninterruptedEventSequence(data)) {
+            activeState.inputShiftState = InputShiftState.UNSHIFTED
+        }
     }
 
     /**

@@ -533,7 +533,7 @@ private class TextKeyboardLayoutController(
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
                                 activeKey.isPressed = false
-                                inputEventDispatcher.sendCancel(activeKey.computedData)
+                                inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                             }
                         } else {
                             onTouchMoveInternal(event, pointer)
@@ -603,8 +603,9 @@ private class TextKeyboardLayoutController(
 
         val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
+            key.computedDataOnDown = key.computedData
             pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
-                data = key.computedData,
+                data = key.computedDataOnDown,
                 onLongPress = onLongPress@ {
                     when (key.computedData.code) {
                         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
@@ -696,21 +697,21 @@ private class TextKeyboardLayoutController(
             if (popupUiController.isSuitableForPopups(activeKey)) {
                 val retData = popupUiController.getActiveKeyData(activeKey)
                 if (retData != null && !pointer.hasTriggeredGestureMove) {
-                    if (retData == activeKey.computedData) {
-                        inputEventDispatcher.sendUp(activeKey.computedData)
+                    if (retData == activeKey.computedDataOnDown) {
+                        inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
                     } else {
-                        inputEventDispatcher.sendCancel(activeKey.computedData)
+                        inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                         inputEventDispatcher.sendDownUp(retData)
                     }
                 } else {
-                    inputEventDispatcher.sendCancel(activeKey.computedData)
+                    inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                 }
                 popupUiController.hide()
             } else {
                 if (pointer.hasTriggeredGestureMove) {
-                    inputEventDispatcher.sendCancel(activeKey.computedData)
+                    inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                 } else {
-                    inputEventDispatcher.sendUp(activeKey.computedData)
+                    inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
                 }
             }
             pointer.activeKey = null
@@ -726,7 +727,7 @@ private class TextKeyboardLayoutController(
         val activeKey = pointer.activeKey
         if (activeKey != null) {
             activeKey.isPressed = false
-            inputEventDispatcher.sendCancel(activeKey.computedData)
+            inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
             if (popupUiController.isSuitableForPopups(activeKey)) {
                 popupUiController.hide()
             }
@@ -751,7 +752,7 @@ private class TextKeyboardLayoutController(
                 initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code != KeyCode.SHIFT &&
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
                     activeKey?.let {
-                        inputEventDispatcher.sendUp(popupUiController.getActiveKeyData(it) ?: it.computedData)
+                        inputEventDispatcher.sendUp(popupUiController.getActiveKeyData(it) ?: it.computedDataOnDown)
                     }
                     inputEventDispatcher.sendCancel(TextKeyData.SHIFT)
                     true
