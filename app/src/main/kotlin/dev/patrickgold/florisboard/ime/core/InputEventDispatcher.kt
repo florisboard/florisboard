@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import android.os.SystemClock
+import android.view.ViewConfiguration
 import androidx.collection.SparseArrayCompat
 import androidx.collection.set
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -38,6 +40,9 @@ import kotlinx.coroutines.withContext
 
 class InputEventDispatcher private constructor(private val repeatableKeyCodes: IntArray) {
     companion object {
+        private val DoubleTapTimeout = ViewConfiguration.getDoubleTapTimeout().toLong()
+        private val KeyRepeatDelay = ViewConfiguration.getKeyRepeatDelay().toLong()
+
         fun new(repeatableKeyCodes: IntArray = intArrayOf()) = InputEventDispatcher(repeatableKeyCodes.clone())
     }
 
@@ -57,7 +62,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
     private fun determineLongPressDelay(data: KeyData): Long {
         val delayMillis = prefs.keyboard.longPressDelay.get().toLong()
         val factor = when (data.code) {
-            KeyCode.SPACE, KeyCode.CJK_SPACE, KeyCode.SHIFT -> 2.5f
+            KeyCode.SPACE, KeyCode.CJK_SPACE, KeyCode.SHIFT -> 2.2f
             KeyCode.LANGUAGE_SWITCH -> 2.0f
             else -> 1.0f
         }
@@ -65,12 +70,11 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
     }
 
     private fun determineRepeatDelay(data: KeyData): Long {
-        val delayMillis = 50
         val factor = when (data.code) {
             KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE_WORD -> 5.0f
             else -> 1.0f
         }
-        return (delayMillis * factor).toLong()
+        return (KeyRepeatDelay * factor).toLong()
     }
 
     private fun determineRepeatData(data: KeyData): KeyData {
@@ -94,7 +98,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
     ) = runBlocking {
         val result = pressedKeys.withLock { pressedKeys ->
             if (pressedKeys.containsKey(data.code)) return@withLock false
-            pressedKeys[data.code] = PressedKeyInfo(System.currentTimeMillis()).also { pressedKeyInfo ->
+            pressedKeys[data.code] = PressedKeyInfo(SystemClock.uptimeMillis()).also { pressedKeyInfo ->
                 pressedKeyInfo.job = scope.launch {
                     val longPressDelay = determineLongPressDelay(data)
                     delay(longPressDelay)
@@ -119,7 +123,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         }
         if (result) {
             keyEventReceiver?.onInputKeyDown(data)
-            lastKeyEventDown = EventData(System.currentTimeMillis(), data)
+            lastKeyEventDown = EventData(SystemClock.uptimeMillis(), data)
         }
     }
 
@@ -134,7 +138,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         if (result) {
             if (!isBlocked) {
                 keyEventReceiver?.onInputKeyUp(data)
-                lastKeyEventUp = EventData(System.currentTimeMillis(), data)
+                lastKeyEventUp = EventData(SystemClock.uptimeMillis(), data)
             } else {
                 keyEventReceiver?.onInputKeyCancel(data)
             }
@@ -145,7 +149,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         pressedKeys.withLock { pressedKeys ->
             pressedKeys.removeAndReturn(data.code)?.also { it.cancelJobs() }
         }
-        val eventData = EventData(System.currentTimeMillis(), data)
+        val eventData = EventData(SystemClock.uptimeMillis(), data)
         keyEventReceiver?.onInputKeyDown(data)
         lastKeyEventDown = eventData
         keyEventReceiver?.onInputKeyUp(data)
@@ -176,14 +180,14 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         pressedKeys.withLock { it.containsKey(code) }
     }
 
-    fun isConsecutiveDown(data: KeyData, maxTimeDiff: Long): Boolean {
+    fun isConsecutiveDown(data: KeyData): Boolean {
         val event = lastKeyEventDown ?: return false
-        return event.data.code == data.code && (System.currentTimeMillis() - event.time) < maxTimeDiff
+        return event.data.code == data.code && (SystemClock.uptimeMillis() - event.time) < DoubleTapTimeout
     }
 
-    fun isConsecutiveUp(data: KeyData, maxTimeDiff: Long): Boolean {
+    fun isConsecutiveUp(data: KeyData): Boolean {
         val event = lastKeyEventUp ?: return false
-        return event.data.code == data.code && (System.currentTimeMillis() - event.time) < maxTimeDiff
+        return event.data.code == data.code && (SystemClock.uptimeMillis() - event.time) < DoubleTapTimeout
     }
 
     /**
@@ -206,7 +210,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
 
     data class EventData(
         val time: Long,
-        val data: KeyData
+        val data: KeyData,
     )
 }
 

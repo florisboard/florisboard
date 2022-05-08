@@ -468,7 +468,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(data: KeyData) {
-        if (inputEventDispatcher.isConsecutiveDown(data, prefs.keyboard.longPressDelay.get().toLong())) {
+        if (inputEventDispatcher.isConsecutiveDown(data)) {
             activeState.inputMode = InputMode.CAPS_LOCK
         } else {
             if (activeState.inputMode == InputMode.NORMAL) {
@@ -516,7 +516,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
-            if (inputEventDispatcher.isConsecutiveUp(data, prefs.keyboard.longPressDelay.get().toLong())) {
+            if (inputEventDispatcher.isConsecutiveUp(data)) {
                 val text = editorInstance.run { activeContent.getTextBeforeCursor(2) }
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
                     editorInstance.deleteBackwards()
