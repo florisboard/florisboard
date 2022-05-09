@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.input
 import android.os.SystemClock
 import android.view.ViewConfiguration
 import androidx.collection.SparseArrayCompat
+import androidx.collection.isNotEmpty
 import androidx.collection.set
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -186,6 +187,10 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
      */
     fun isPressed(code: Int): Boolean = runBlocking {
         pressedKeys.withLock { it.containsKey(code) }
+    }
+
+    fun isAnyPressed(): Boolean = runBlocking {
+        pressedKeys.withLock { it.isNotEmpty() }
     }
 
     fun isConsecutiveDown(data: KeyData): Boolean {

@@ -392,9 +392,9 @@ class PopupUiController(
      */
     fun getActiveKeyData(key: Key): KeyData? {
         return if (key is TextKey) {
-            val extRenderInfo = extRenderInfo ?: return key.computedDataOnDown
+            val extRenderInfo = extRenderInfo ?: return key.computedData
             val element = getElementOrNull(extRenderInfo.elements, activeElementIndex)
-            element?.data ?: key.computedDataOnDown
+            element?.data ?: key.computedData
         } else {
             null
         }

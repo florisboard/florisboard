@@ -605,7 +605,7 @@ private class TextKeyboardLayoutController(
         if (key != null && key.isEnabled) {
             key.computedDataOnDown = key.computedData
             pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
-                data = key.computedDataOnDown,
+                data = key.computedData,
                 onLongPress = onLongPress@ {
                     when (key.computedData.code) {
                         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
@@ -697,8 +697,13 @@ private class TextKeyboardLayoutController(
             if (popupUiController.isSuitableForPopups(activeKey)) {
                 val retData = popupUiController.getActiveKeyData(activeKey)
                 if (retData != null && !pointer.hasTriggeredGestureMove) {
-                    if (retData == activeKey.computedDataOnDown) {
-                        inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
+                    if (retData == activeKey.computedData) {
+                        if (activeKey.computedData != activeKey.computedDataOnDown) {
+                            inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
+                            inputEventDispatcher.sendDownUp(activeKey.computedData)
+                        } else {
+                            inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
+                        }
                     } else {
                         inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                         inputEventDispatcher.sendDownUp(retData)
@@ -711,7 +716,12 @@ private class TextKeyboardLayoutController(
                 if (pointer.hasTriggeredGestureMove) {
                     inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                 } else {
-                    inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
+                    if (activeKey.computedData != activeKey.computedDataOnDown) {
+                        inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
+                        inputEventDispatcher.sendDownUp(activeKey.computedData)
+                    } else {
+                        inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
+                    }
                 }
             }
             pointer.activeKey = null
