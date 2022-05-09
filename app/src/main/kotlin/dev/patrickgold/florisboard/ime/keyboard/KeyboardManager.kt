@@ -710,7 +710,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
-                            editorInstance.commitText(text)
+                            editorInstance.commitChar(text)
                         }
                         else -> {
                             flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }

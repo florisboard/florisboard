@@ -26,6 +26,8 @@ import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.MainScope
@@ -40,7 +42,7 @@ abstract class AbstractEditorInstance(context: Context) {
         private const val NumCharsBeforeCursor: Int = 256
         private const val NumCharsAfterCursor: Int = 128
         private const val NumCharsSafeMarginBeforeCursor: Int = 128
-        private const val NumCharsSafeMarginAfterCursor: Int = 0
+        //private const val NumCharsSafeMarginAfterCursor: Int = 0
 
         private const val CursorUpdateAll: Int =
             InputConnection.CURSOR_UPDATE_MONITOR or InputConnection.CURSOR_UPDATE_IMMEDIATE
@@ -235,6 +237,8 @@ abstract class AbstractEditorInstance(context: Context) {
         return generateContent(editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText)
     }
 
+    abstract fun determineComposer(composerName: ExtensionComponentName): Composer
+
     protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
         return editorInfo.isRichInputEditor
     }
@@ -279,6 +283,42 @@ abstract class AbstractEditorInstance(context: Context) {
         return true
     }
 
+    open fun commitChar(char: String): Boolean {
+        val content = activeContent
+        val selection = content.selection
+        // TODO: length enforcement to 1 may be an issue for some Unicode chars which are 2 Java chars
+        if (char.length != 1 || selection.isNotValid || selection.isSelectionMode || activeInfo.isRawInputEditor) {
+            return commitText(char)
+        }
+        val ic = currentInputConnection() ?: return false
+        val composer = determineComposer(subtypeManager.activeSubtype().composer)
+        val previous = content.textBeforeSelection.takeLast(composer.toRead)
+        val (rm, finalText) = composer.getActions(previous, char[0])
+        if (rm <= 0) {
+            commitText(finalText)
+        } else runBlocking {
+            ic.beginBatchEdit()
+            val newSelection = EditorRange.cursor(selection.start - rm + finalText.length)
+            val newContent = content.generateCopy(
+                selection = newSelection,
+                textBeforeSelection = buildString {
+                    append(content.textBeforeSelection.dropLast(rm))
+                    append(finalText)
+                },
+                selectedText = "",
+            )
+            expectedContentQueue.push(newContent)
+            // Utilize composing region to replace previous chars without using delete. This avoids flickering in the
+            // target editor and improves the UX
+            ic.setComposingRegion(content.selection.start - rm, content.selection.start)
+            ic.setComposingText(finalText, 1)
+            // Now set the proper composing region we expect
+            ic.setComposingRegion(newContent.composing)
+            ic.endBatchEdit()
+        }
+        return true
+    }
+
     open fun commitText(text: String): Boolean {
         val ic = currentInputConnection() ?: return false
         val content = activeContent
@@ -288,7 +328,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (activeInfo.isRawInputEditor) {
             ic.commitText(text, 1)
         } else runBlocking {
-            val newSelection = EditorRange(selection.start + text.length, selection.start + text.length)
+            val newSelection = EditorRange.cursor(selection.start + text.length)
             val newContent = content.generateCopy(
                 selection = newSelection,
                 textBeforeSelection = buildString {

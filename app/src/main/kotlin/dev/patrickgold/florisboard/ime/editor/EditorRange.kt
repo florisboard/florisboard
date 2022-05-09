@@ -56,6 +56,8 @@ data class EditorRange(val start: Int, val end: Int) {
         /** Unspecified range */
         val Unspecified = EditorRange(-1, -1)
 
+        fun cursor(position: Int) = EditorRange(start = position, end = position)
+
         fun normalized(start: Int, end: Int) = EditorRange(start = min(start, end), end = max(start, end))
     }
 }
