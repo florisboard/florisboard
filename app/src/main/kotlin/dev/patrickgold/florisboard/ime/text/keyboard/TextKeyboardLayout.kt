@@ -620,8 +620,11 @@ private class TextKeyboardLayoutController(
                             true
                         }
                         KeyCode.SHIFT -> {
-                            inputEventDispatcher.sendDownUp(TextKeyData.CAPS_LOCK)
-                            inputFeedbackController?.keyLongPress(key.computedData)
+                            if (inputEventDispatcher.isUninterruptedEventSequence(key.computedData)) {
+                                inputEventDispatcher.sendDownUp(TextKeyData.CAPS_LOCK)
+                                inputFeedbackController?.keyLongPress(key.computedData)
+                            }
+                            // We always return false here to prevent blockade for the up touch event
                             false
                         }
                         KeyCode.LANGUAGE_SWITCH -> {
