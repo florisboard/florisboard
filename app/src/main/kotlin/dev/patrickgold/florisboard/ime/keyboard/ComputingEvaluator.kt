@@ -24,6 +24,8 @@ import dev.patrickgold.florisboard.ime.text.key.InputMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 
+const val ARABIC_SUBTYPE_ID = 1650783336946L
+
 interface ComputingEvaluator {
     fun activeState(): KeyboardState
 
@@ -152,7 +154,9 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_smartphone
         }
         KeyCode.DELETE -> {
-            R.drawable.ic_backspace
+            showIconBasedOnOnSubtype(
+                R.drawable.ic_ar_backspace,
+                R.drawable.ic_backspace)
         }
         KeyCode.ENTER -> {
             val imeOptions = evaluator.activeState().imeOptions
@@ -228,4 +232,8 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         }
         else -> null
     }
+}
+
+fun ComputingEvaluator.showIconBasedOnOnSubtype(arDraw: Int?, enDraw: Int?): Int? {
+    return if(activeSubtype().id == ARABIC_SUBTYPE_ID) arDraw else enDraw
 }
