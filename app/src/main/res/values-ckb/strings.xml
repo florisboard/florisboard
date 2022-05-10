@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">بەشی مەبەست</string>
     <string name="settings__theme_editor__rule_codes">سەرچاوەی کۆدی مەبەست</string>
     <string name="settings__theme_editor__rule_groups">گرووپ</string>
-    <string name="settings__theme_editor__rule_modes">شێواز</string>
+    <string name="settings__theme_editor__rule_shift_states">شێواز</string>
     <string name="settings__theme_editor__rule_selectors">هەڵبژاردن</string>
     <string name="settings__theme_editor__add_code">زیادکردنی کۆدی دوگمە</string>
     <string name="settings__theme_editor__edit_code">دەستکاریکردنی کۆد</string>
@@ -654,9 +654,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">پیشاندانی یەکەم هێمای خانەی دووەم لەکاتی دەست راگرتن</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">هەڵبژاردنی زیرەک</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">پیشاندانی یەکەم پیت یان هێمای خانەی دووەم لەکاتی دەست راگرتن بەخۆکاری بەپێی زمانی هەڵبژێردراو</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">بنەڕەتی</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">قفڵکردنی شێفت</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">گەورەکردنی شێفت</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">بنەڕەتی</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">قفڵکردنی شێفت</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">گەورەکردنی شێفت</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">شاردنەوە</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">هەمیشە پیشاندان</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">پیشاندانی زیرەکانە</string>

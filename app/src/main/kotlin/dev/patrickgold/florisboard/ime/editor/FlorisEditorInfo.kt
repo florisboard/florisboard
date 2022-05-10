@@ -58,6 +58,34 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
         return EditorInfoCompat.getInitialSelectedText(base, 0)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as FlorisEditorInfo
+
+        if (inputAttributes.raw != other.inputAttributes.raw) return false
+        if (imeOptions.raw != other.imeOptions.raw) return false
+        if (packageName != other.packageName) return false
+        if (initialSelection != other.initialSelection) return false
+        if (initialCapsMode != other.initialCapsMode) return false
+        if (extractedActionLabel != other.extractedActionLabel) return false
+        if (extractedActionId != other.extractedActionId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = inputAttributes.raw.hashCode()
+        result = 31 * result + imeOptions.raw.hashCode()
+        result = 31 * result + (packageName?.hashCode() ?: 0)
+        result = 31 * result + initialSelection.hashCode()
+        result = 31 * result + initialCapsMode.hashCode()
+        result = 31 * result + (extractedActionLabel?.hashCode() ?: 0)
+        result = 31 * result + extractedActionId
+        return result
+    }
+
     val contentMimeTypes: Array<String>
         get() = EditorInfoCompat.getContentMimeTypes(base)
 
@@ -72,21 +100,6 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
 
     val emojiCompatReplaceAll: Boolean
         get() = base.extras?.getBoolean(EmojiCompat.EDITOR_INFO_REPLACE_ALL_KEY, false) ?: false
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as FlorisEditorInfo
-
-        if (base != other.base) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return base.hashCode()
-    }
 
     companion object {
         val Unspecified = FlorisEditorInfo(EditorInfo())

@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.theme
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
 
@@ -60,7 +60,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     }
     FlorisImeUi.Key(
         codes = listOf(KeyCode.SHIFT),
-        modes = listOf(InputMode.CAPS_LOCK.value),
+        modes = listOf(InputShiftState.CAPS_LOCK.value),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }

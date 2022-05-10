@@ -115,7 +115,7 @@
     <string name="settings__theme_editor__rule_element">Target element</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_shift_states">Shift states</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add key code</string>
     <string name="settings__theme_editor__edit_code">Edit key code</string>
@@ -718,9 +718,10 @@
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
 
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Unshifted</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shifted (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shifted (automatic)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
 
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>

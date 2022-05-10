@@ -33,19 +33,19 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
+import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
@@ -59,6 +59,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +67,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 
 data class RenderInfo(
     val version: Int = 0,
@@ -84,6 +86,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val editorInstance by context.editorInstance()
     private val extensionManager by context.extensionManager()
     private val glideTypingManager by context.glideTypingManager()
+    private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -142,12 +145,25 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         subtypeManager.activeSubtype.observeForever { newSubtype ->
             updateRenderInfo()
+            updateCapsState()
             if (prefs.glide.enabled.get()) {
                 glideTypingManager.setWordData(newSubtype)
             }
         }
         clipboardManager.primaryClip.observeForever {
             updateRenderInfo()
+        }
+        scope.launch {
+            withContext(Dispatchers.Main) {
+                nlpManager.clearSuggestions()
+            }
+            editorInstance.activeContentFlow.collect { content ->
+                if (content.composing.isNotValid || !activeState.isComposingEnabled) {
+                    nlpManager.clearSuggestions()
+                    return@collect
+                }
+                nlpManager.suggest(content.composingText, listOf())
+            }
         }
     }
 
@@ -216,12 +232,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun updateCapsState() {
-        if (activeState.inputMode != InputMode.CAPS_LOCK) {
-            val shift = prefs.correction.autoCapitalization.get() &&
-                editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
-            activeState.inputMode = when {
-                shift -> InputMode.SHIFT_LOCK
-                else -> InputMode.NORMAL
+        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+            val shift = prefs.correction.autoCapitalization.get()
+                && subtypeManager.activeSubtype().primaryLocale.supportsCapitalization
+                && editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
+            activeState.inputShiftState = when {
+                shift -> InputShiftState.SHIFTED_AUTOMATIC
+                else -> InputShiftState.UNSHIFTED
             }
         }
     }
@@ -299,9 +316,19 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      *    otherwise            , abc -> abc
      */
     fun fixCase(word: String): String {
-        return when(activeState.inputMode) {
-            InputMode.CAPS_LOCK -> word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
-            InputMode.SHIFT_LOCK -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(subtypeManager.activeSubtype().primaryLocale.base) else it.toString() }
+        return when(activeState.inputShiftState) {
+            InputShiftState.CAPS_LOCK -> {
+                word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
+            }
+            InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
+                word.replaceFirstChar {
+                    if (it.isLowerCase()) {
+                        it.titlecase(subtypeManager.activeSubtype().primaryLocale.base)
+                    } else {
+                        it.toString()
+                    }
+                }
+            }
             else -> word
         }
     }
@@ -453,13 +480,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(data: KeyData) {
-        if (inputEventDispatcher.isConsecutiveDown(data, prefs.keyboard.longPressDelay.get().toLong())) {
-            activeState.inputMode = InputMode.CAPS_LOCK
+        if (inputEventDispatcher.isConsecutiveDown(data)) {
+            activeState.inputShiftState = InputShiftState.CAPS_LOCK
         } else {
-            if (activeState.inputMode == InputMode.NORMAL) {
-                activeState.inputMode = InputMode.SHIFT_LOCK
+            if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
+                activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
             } else {
-                activeState.inputMode = InputMode.NORMAL
+                activeState.inputShiftState = InputShiftState.UNSHIFTED
             }
         }
     }
@@ -467,22 +494,25 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.SHIFT] up event.
      */
-    private fun handleShiftUp() {
-        //activeState.shiftLock = newCapsState
+    private fun handleShiftUp(data: KeyData) {
+        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isAnyPressed() &&
+            !inputEventDispatcher.isUninterruptedEventSequence(data)) {
+            activeState.inputShiftState = InputShiftState.UNSHIFTED
+        }
     }
 
     /**
      * Handles a [KeyCode.CAPS_LOCK] event.
      */
     private fun handleCapsLock() {
-        activeState.inputMode = InputMode.CAPS_LOCK
+        activeState.inputShiftState = InputShiftState.CAPS_LOCK
     }
 
     /**
      * Handles a [KeyCode.SHIFT] cancel event.
      */
     private fun handleShiftCancel() {
-        activeState.inputMode = InputMode.NORMAL
+        activeState.inputShiftState = InputShiftState.UNSHIFTED
     }
 
     /**
@@ -501,7 +531,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
-            if (inputEventDispatcher.isConsecutiveUp(data, prefs.keyboard.longPressDelay.get().toLong())) {
+            if (inputEventDispatcher.isConsecutiveUp(data)) {
                 val text = editorInstance.run { activeContent.getTextBeforeCursor(2) }
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
                     editorInstance.deleteBackwards()
@@ -640,7 +670,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.REDO -> editorInstance.performRedo()
             KeyCode.SETTINGS -> FlorisImeService.launchSettings()
-            KeyCode.SHIFT -> handleShiftUp()
+            KeyCode.SHIFT -> handleShiftUp(data)
             KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
@@ -682,15 +712,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
-                            editorInstance.commitText(text)
+                            editorInstance.commitChar(text)
                         }
                         else -> {
                             flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }
                         }
                     }
                 }
-                if (activeState.inputMode != InputMode.CAPS_LOCK) {
-                    activeState.inputMode = InputMode.NORMAL
+                if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                    activeState.inputShiftState = InputShiftState.UNSHIFTED
                 }
             }
         }

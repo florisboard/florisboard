@@ -185,6 +185,16 @@ class FlorisLocale private constructor(val base: Locale) {
     val iso3Country: String get() = base.isO3Country
 
     /**
+     * Returns true if this language has a capitalization concept, false otherwise.
+     * TODO: this is absolutely not exhaustive and hard-coded, find solution based on ICU or system
+     */
+    val supportsCapitalization: Boolean
+        get() = when (language) {
+            "zh", "ko" -> false
+            else -> true
+        }
+
+    /**
      * Generates the language tag for this locale in the format `xx`,
      * `xx-YY` or `xx-YY-zzz` and returns it as a string.
      *

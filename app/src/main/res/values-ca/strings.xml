@@ -95,7 +95,7 @@
     <string name="settings__theme_editor__add_rule">Afegir norma</string>
     <string name="settings__theme_editor__edit_rule">Editar norma</string>
     <string name="settings__theme_editor__rule_groups">Grups</string>
-    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_shift_states">Modes</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_property">Afegir propietat</string>
     <string name="settings__theme_editor__edit_property">Editar propietat</string>
@@ -176,7 +176,7 @@
     <string name="state__enabled">Habilitat</string>
     <!-- Enum label and description strings -->
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent està prioritzat</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>

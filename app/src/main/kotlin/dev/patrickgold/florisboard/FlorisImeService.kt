@@ -76,9 +76,9 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
+import dev.patrickgold.florisboard.ime.input.InputFeedbackController
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
@@ -338,18 +338,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         nlpManager.clearInlineSuggestions()
     }
 
-    //override fun onWordHistoryChanged(
-    //    currentWord: EditorInstance.Region?,
-    //    wordsBeforeCurrent: List<EditorInstance.Region>,
-    //    wordsAfterCurrent: List<EditorInstance.Region>,
-    //) {
-    //    if (currentWord == null || !currentWord.isValid || !activeState.isComposingEnabled) {
-    //        nlpManager.clearSuggestions()
-    //        return
-    //    }
-    //    nlpManager.suggest(currentWord.text, listOf())
-    //}
-
     override fun onWindowShown() {
         super.onWindowShown()
         if (isWindowShown) {
@@ -532,7 +520,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         val activeState by keyboardManager.observeActiveState()
         val keyboardStyle = FlorisImeTheme.style.get(
             element = FlorisImeUi.Keyboard,
-            mode = activeState.inputMode.value,
+            mode = activeState.inputShiftState.value,
         )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {

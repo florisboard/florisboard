@@ -33,12 +33,15 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.nlp.TextProcessor
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -123,7 +126,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             //!instance.inputAttributes.flagTextNoSuggestions
         }
         if (!prefs.correction.rememberCapsLockState.get()) {
-            activeState.inputMode = InputMode.NORMAL
+            activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
     }
 
@@ -139,6 +142,10 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         massSelection.reset()
         super.handleFinishInputView()
+    }
+
+    override fun determineComposer(composerName: ExtensionComponentName): Composer {
+        return keyboardManager.resources.composers.value?.get(composerName) ?: Appender.DefaultInstance
     }
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
@@ -159,6 +166,16 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         val selection = EditorRange.normalized(start, end)
         return super.setSelection(selection)
+    }
+
+    override fun commitChar(char: String): Boolean {
+        val isPhantomSpaceActive = phantomSpace.determine(char)
+        phantomSpace.setInactive()
+        return if (isPhantomSpaceActive) {
+            super.commitChar("$SPACE$char")
+        } else {
+            super.commitChar(char)
+        }
     }
 
     /**
@@ -219,31 +236,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             super.commitText(text)
         }
     }
-
-    /**
-     * Internal helper, replacing a call to currentInputConnection().commitText with text composition in mind.
-     */
-    //private fun doCommitText(text: String): Pair<String, Boolean> {
-    //    val ic = currentInputConnection() ?: return "" to false
-    //    val composer = keyboardManager.resources.composers.value?.get(subtypeManager.activeSubtype().composer) ?: Appender()
-    //    return if (text.length != 1) {
-    //        ic.commitText(text, 1)
-    //    } else {
-    //        ic.beginBatchEdit()
-    //        ic.finishComposingText()
-    //        val previous = getTextBeforeCursor(composer.toRead)
-    //        val (rm, finalText) = composer.getActions(previous, text[0])
-    //        if (rm == 0) {
-    //            ic.commitText(finalText, 1)
-    //        } else {
-    //            val et = ic.getExtractedText(ExtractedTextRequest(), 0)
-    //            ic.setComposingRegion(et.selectionStart-rm, et.selectionStart)
-    //            ic.setComposingText(finalText, 1)
-    //        }
-    //        ic.endBatchEdit()
-    //        Pair(true, finalText)
-    //    }
-    //}
 
     /**
      * Commits the given [ClipboardItem]. If the clip data is text (incl. HTML), it delegates to [commitText].

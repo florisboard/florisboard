@@ -98,20 +98,21 @@ private fun DevtoolsInputStateOverlay() {
     val context = LocalContext.current
     val editorInstance by context.editorInstance()
 
-    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-    val activeEditorContent by editorInstance.activeContentFlow.collectAsState()
-    val selection = activeEditorContent.selection
+    val info by editorInstance.activeInfoFlow.collectAsState()
+    val content by editorInstance.activeContentFlow.collectAsState()
+    val selection = content.selection
 
     DevtoolsOverlayBox(title = "Input state overlay") {
         DevtoolsSubGroup(title = "EditorInfo") {
-            DevtoolsText(text = "Type=${activeEditorInfo.inputAttributes.type} Variation=${activeEditorInfo.inputAttributes.variation} IsRich=${activeEditorInfo.isRichInputEditor}")
-            DevtoolsText(text = "Selection { start=${selection.start}, end=${selection.end} }")
+            DevtoolsText(text = "Type=${info.inputAttributes.type} Variation=${info.inputAttributes.variation} IsRich=${info.isRichInputEditor}")
+            DevtoolsText(text = "InitialSelection: ${info.initialSelection}")
         }
         DevtoolsSubGroup(title = "EditorContent") {
-            DevtoolsText(text = "Before: \"${activeEditorContent.textBeforeSelection}\"")
-            DevtoolsText(text = "Selected: \"${activeEditorContent.selectedText}\"")
-            DevtoolsText(text = "After: \"${activeEditorContent.textAfterSelection}\"")
-            DevtoolsText(text = "ComposingWord: ${activeEditorContent.composing}")
+            DevtoolsText(text = "Selection: { start=${selection.start}, end=${selection.end} }")
+            DevtoolsText(text = "Before: \"${content.textBeforeSelection}\"")
+            DevtoolsText(text = "Selected: \"${content.selectedText}\"")
+            DevtoolsText(text = "After: \"${content.textAfterSelection}\"")
+            DevtoolsText(text = "ComposingWord: ${content.composing}")
         }
     }
 }

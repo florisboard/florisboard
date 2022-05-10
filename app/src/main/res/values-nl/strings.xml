@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">Doelwit element</string>
     <string name="settings__theme_editor__rule_codes">Doelwit sleutelcode</string>
     <string name="settings__theme_editor__rule_groups">Groepen</string>
-    <string name="settings__theme_editor__rule_modes">Modussen</string>
+    <string name="settings__theme_editor__rule_shift_states">Modussen</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Sleutelcode toevoegen</string>
     <string name="settings__theme_editor__edit_code">Sleutelcode bewerken</string>
@@ -360,7 +360,7 @@
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint krijgt prioriteit</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Het eerste geselecteerde teken na een lange indruk is altijd het hint symbool, of het primaire accent als er geen hint symbool beschikbaar is</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Slimme prioriteiten</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normaal</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normaal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nooit tonen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Altijd tonen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch tonen</string>

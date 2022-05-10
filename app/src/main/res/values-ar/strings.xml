@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">العنصر المستهدف</string>
     <string name="settings__theme_editor__rule_codes">رموز المفتاح المستهدف</string>
     <string name="settings__theme_editor__rule_groups">مجموعات</string>
-    <string name="settings__theme_editor__rule_modes">أنماط</string>
+    <string name="settings__theme_editor__rule_shift_states">أنماط</string>
     <string name="settings__theme_editor__rule_selectors">محددات</string>
     <string name="settings__theme_editor__add_code">إضافة رموز المفتاح</string>
     <string name="settings__theme_editor__edit_code">تعديل رمز المفتاح</string>
@@ -658,9 +658,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">دائمًا ما يكون الحرف الأولي المحدد بعد الضغط لفترة طويلة هو رمز التلميح ، أو العلامة الأساسية في حالة عدم توفر رمز تلميح</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">تحديد الاولويات الذكي</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">يتم تحديد الحرف الأولي المحدد بعد الضغط لفترة طويلة ديناميكيًا ليكون إما العلامة الأساسية أو رمز التلميح ، بناءً على اللغة والتخطيط الحاليين</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">عادي</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">مفتاح قفل التغيير Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">مفتاح الحروف الكبيرة</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">عادي</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">مفتاح قفل التغيير Shift lock</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">مفتاح الحروف الكبيرة</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">لا تُظهر أبداً</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">الإظهار دائماً</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">يعين بشكل ديناميكي</string>

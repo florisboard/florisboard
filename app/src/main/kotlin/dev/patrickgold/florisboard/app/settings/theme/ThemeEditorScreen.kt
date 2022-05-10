@@ -600,10 +600,10 @@ private fun SnyggRuleRow(
                 }
             }
             if (rule.codes.isNotEmpty()) {
-                AttributesList(text = "codes", list = remember(rule.codes) { rule.codes.toString() })
+                AttributesList(text = "code", list = remember(rule.codes) { rule.codes.toString() })
             }
-            if (rule.modes.isNotEmpty()) {
-                AttributesList(text = "modes", list = remember(rule.modes) { rule.modes.toString() })
+            if (rule.shiftStates.isNotEmpty()) {
+                AttributesList(text = "shiftstate", list = remember(rule.shiftStates) { rule.shiftStates.toString() })
             }
         }
         if (showEditBtn) {

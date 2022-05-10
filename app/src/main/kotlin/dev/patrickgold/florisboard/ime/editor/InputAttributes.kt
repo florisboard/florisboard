@@ -88,6 +88,8 @@ value class InputAttributes private constructor(val raw: Int) {
     val flagTextNoSuggestions: Boolean
         get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0)
 
+
+
     companion object {
         fun wrap(inputType: Int) = InputAttributes(inputType)
     }

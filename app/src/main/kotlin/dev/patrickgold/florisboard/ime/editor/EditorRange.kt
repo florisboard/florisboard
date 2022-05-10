@@ -50,11 +50,13 @@ data class EditorRange(val start: Int, val end: Int) {
         return EditorRange(start + offset, end + offset)
     }
 
-    override fun toString(): String = "EditorRange { start=$start, end=$end }"
+    override fun toString(): String = "{ start=$start, end=$end }"
 
     companion object {
         /** Unspecified range */
         val Unspecified = EditorRange(-1, -1)
+
+        fun cursor(position: Int) = EditorRange(start = position, end = position)
 
         fun normalized(start: Int, end: Int) = EditorRange(start = min(start, end), end = max(start, end))
     }

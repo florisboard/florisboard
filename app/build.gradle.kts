@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
     kotlin("plugin.serialization")
+    id("com.google.devtools.ksp")
     id("com.google.android.gms.oss-licenses-plugin")
     id("de.mannodermaus.android-junit5")
 }
@@ -36,14 +36,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    Pair("room.schemaLocation", "$projectDir/schemas"),
-                    Pair("room.incremental", "true"),
-                    Pair("room.expandProjection", "true")
-                )
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+            arg("room.expandProjection", "true")
         }
 
         externalNativeBuild {
@@ -165,9 +161,9 @@ dependencies {
     implementation("androidx.emoji2:emoji2:1.1.0")
     implementation("androidx.emoji2:emoji2-views:1.1.0")
     implementation("androidx.navigation:navigation-compose:2.4.2")
-    implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
-    implementation("com.google.accompanist:accompanist-insets:0.23.0")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.0")
+    implementation("com.google.accompanist:accompanist-flowlayout:0.23.1")
+    implementation("com.google.accompanist:accompanist-insets:0.23.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta08")
@@ -175,7 +171,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("androidx.room:room-runtime:2.4.2")
-    kapt("androidx.room:room-compiler:2.4.2")
+    ksp("androidx.room:room-compiler:2.4.2")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
     testImplementation("io.kotest:kotest-assertions-core:5.2.3")

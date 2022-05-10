@@ -96,7 +96,7 @@
     <string name="settings__theme_editor__edit_rule">Szabály szerkesztése</string>
     <string name="settings__theme_editor__rule_element">Cél elem</string>
     <string name="settings__theme_editor__rule_groups">Csoportok</string>
-    <string name="settings__theme_editor__rule_modes">Módok</string>
+    <string name="settings__theme_editor__rule_shift_states">Módok</string>
     <string name="settings__theme_editor__rule_selectors">Választók</string>
     <string name="settings__theme_editor__add_code">Billentyűkód hozzáadása</string>
     <string name="settings__theme_editor__edit_code">Billentyűkód szerkesztése</string>
@@ -542,9 +542,9 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Göndör haj</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Ősz haj</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Kopasz</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normál</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift zárolása</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normál</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift zárolása</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Soha ne jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mindig jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamikus megjelenítés</string>

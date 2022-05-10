@@ -64,6 +64,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
+import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
@@ -333,7 +334,7 @@ private fun TextKeyButton(
     val keyStyle = FlorisImeTheme.style.get(
         element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
         code = key.computedData.code,
-        mode = renderInfo.state.inputMode.value,
+        mode = renderInfo.state.inputShiftState.value,
         isPressed = key.isPressed && key.isEnabled,
         isDisabled = !key.isEnabled,
     )
@@ -395,7 +396,7 @@ private fun TextKeyButton(
             val keyHintStyle = FlorisImeTheme.style.get(
                 element = FlorisImeUi.KeyHint,
                 code = key.computedHintData.code,
-                mode = renderInfo.state.inputMode.value,
+                mode = renderInfo.state.inputShiftState.value,
                 isPressed = key.isPressed,
             )
             val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
@@ -532,7 +533,7 @@ private class TextKeyboardLayoutController(
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
                                 activeKey.isPressed = false
-                                inputEventDispatcher.sendCancel(activeKey.computedData)
+                                inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                             }
                         } else {
                             onTouchMoveInternal(event, pointer)
@@ -602,9 +603,10 @@ private class TextKeyboardLayoutController(
 
         val key = keyboard.getKeyForPos(event.getX(pointer.index), event.getY(pointer.index))
         if (key != null && key.isEnabled) {
-            inputEventDispatcher.sendDown(
+            key.computedDataOnDown = key.computedData
+            pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
                 data = key.computedData,
-                onLongPress = {
+                onLongPress = onLongPress@ {
                     when (key.computedData.code) {
                         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                             when (prefs.gestures.spaceBarLongPress.get()) {
@@ -618,9 +620,12 @@ private class TextKeyboardLayoutController(
                             true
                         }
                         KeyCode.SHIFT -> {
-                            inputEventDispatcher.sendDownUp(TextKeyData.CAPS_LOCK)
-                            inputFeedbackController?.keyLongPress(key.computedData)
-                            true
+                            if (inputEventDispatcher.isUninterruptedEventSequence(key.computedData)) {
+                                inputEventDispatcher.sendDownUp(TextKeyData.CAPS_LOCK)
+                                inputFeedbackController?.keyLongPress(key.computedData)
+                            }
+                            // We always return false here to prevent blockade for the up touch event
+                            false
                         }
                         KeyCode.LANGUAGE_SWITCH -> {
                             inputEventDispatcher.sendDownUp(TextKeyData.SYSTEM_INPUT_METHOD_PICKER)
@@ -685,6 +690,8 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchUpInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        pointer.pressedKeyInfo?.cancelJobs()
+        pointer.pressedKeyInfo = null
 
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
@@ -694,20 +701,30 @@ private class TextKeyboardLayoutController(
                 val retData = popupUiController.getActiveKeyData(activeKey)
                 if (retData != null && !pointer.hasTriggeredGestureMove) {
                     if (retData == activeKey.computedData) {
-                        inputEventDispatcher.sendUp(activeKey.computedData)
+                        if (activeKey.computedData != activeKey.computedDataOnDown) {
+                            inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
+                            inputEventDispatcher.sendDownUp(activeKey.computedData)
+                        } else {
+                            inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
+                        }
                     } else {
-                        inputEventDispatcher.sendCancel(activeKey.computedData)
+                        inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                         inputEventDispatcher.sendDownUp(retData)
                     }
                 } else {
-                    inputEventDispatcher.sendCancel(activeKey.computedData)
+                    inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                 }
                 popupUiController.hide()
             } else {
                 if (pointer.hasTriggeredGestureMove) {
-                    inputEventDispatcher.sendCancel(activeKey.computedData)
+                    inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                 } else {
-                    inputEventDispatcher.sendUp(activeKey.computedData)
+                    if (activeKey.computedData != activeKey.computedDataOnDown) {
+                        inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
+                        inputEventDispatcher.sendDownUp(activeKey.computedData)
+                    } else {
+                        inputEventDispatcher.sendUp(activeKey.computedDataOnDown)
+                    }
                 }
             }
             pointer.activeKey = null
@@ -717,11 +734,13 @@ private class TextKeyboardLayoutController(
 
     private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
+        pointer.pressedKeyInfo?.cancelJobs()
+        pointer.pressedKeyInfo = null
 
         val activeKey = pointer.activeKey
         if (activeKey != null) {
             activeKey.isPressed = false
-            inputEventDispatcher.sendCancel(activeKey.computedData)
+            inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
             if (popupUiController.isSuitableForPopups(activeKey)) {
                 popupUiController.hide()
             }
@@ -746,7 +765,7 @@ private class TextKeyboardLayoutController(
                 initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code != KeyCode.SHIFT &&
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
                     activeKey?.let {
-                        inputEventDispatcher.sendUp(popupUiController.getActiveKeyData(it) ?: it.computedData)
+                        inputEventDispatcher.sendUp(popupUiController.getActiveKeyData(it) ?: it.computedDataOnDown)
                     }
                     inputEventDispatcher.sendCancel(TextKeyData.SHIFT)
                     true
@@ -832,10 +851,13 @@ private class TextKeyboardLayoutController(
                             val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                // TODO: Maybe find way to integrate this into mass select?
-                                //keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
-                                val selection = editorInstance.activeContent.selection
-                                editorInstance.setSelection(selection.end - count, selection.end - count)
+                                if (editorInstance.activeInfo.isRawInputEditor) {
+                                    keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
+                                } else {
+                                    // TODO: Maybe find way to integrate this into mass select?
+                                    val selection = editorInstance.activeContent.selection
+                                    editorInstance.setSelection(selection.end - count, selection.end - count)
+                                }
                             }
                         }
                         true
@@ -850,10 +872,13 @@ private class TextKeyboardLayoutController(
                             val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                // TODO: Maybe find way to integrate this into mass select?
-                                //keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
-                                val selection = editorInstance.activeContent.selection
-                                editorInstance.setSelection(selection.end + count, selection.end + count)
+                                if (editorInstance.activeInfo.isRawInputEditor) {
+                                    // TODO: Maybe find way to integrate this into mass select?
+                                    keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
+                                } else {
+                                    val selection = editorInstance.activeContent.selection
+                                    editorInstance.setSelection(selection.end + count, selection.end + count)
+                                }
                             }
                         }
                         true
@@ -976,12 +1001,14 @@ private class TextKeyboardLayoutController(
         var initialKey: TextKey? = null
         var activeKey: TextKey? = null
         var hasTriggeredGestureMove: Boolean = false
+        var pressedKeyInfo: InputEventDispatcher.PressedKeyInfo? = null
 
         override fun reset() {
             super.reset()
             initialKey = null
             activeKey = null
             hasTriggeredGestureMove = false
+            pressedKeyInfo = null
         }
 
         override fun toString(): String {

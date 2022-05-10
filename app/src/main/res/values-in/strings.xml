@@ -106,7 +106,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__rule_element">Elemen target</string>
     <string name="settings__theme_editor__rule_codes">Kode target tombol</string>
     <string name="settings__theme_editor__rule_groups">Grup</string>
-    <string name="settings__theme_editor__rule_modes">Mode</string>
+    <string name="settings__theme_editor__rule_shift_states">Mode</string>
     <string name="settings__theme_editor__rule_selectors">Pemilih</string>
     <string name="settings__theme_editor__add_code">Tambahkan kode tombol</string>
     <string name="settings__theme_editor__edit_code">Edit kode tombol</string>
@@ -659,9 +659,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan simbol petunjuk, atau aksen utama jika tidak ada simbol petunjuk yang tersedia</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritas pintar</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama secara dinamis akan memutuskan untuk menjadi aksen utama atau simbol petunjuk, berdasarkan bahasa dan tata letak saat ini</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Jangan tampilkan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Selalu tampilkan</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Tampilkan secara dinamis</string>

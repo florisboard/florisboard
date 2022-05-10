@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 
@@ -191,7 +191,7 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_settings
         }
         KeyCode.SHIFT -> {
-            when (evaluator.activeState().inputMode != InputMode.NORMAL) {
+            when (evaluator.activeState().inputShiftState != InputShiftState.UNSHIFTED) {
                 true -> R.drawable.ic_keyboard_capslock
                 else -> R.drawable.ic_keyboard_arrow_up
             }
