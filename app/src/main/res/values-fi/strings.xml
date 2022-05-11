@@ -176,7 +176,6 @@
     <!-- State strings -->
     <string name="state__disabled">Poissa käytöstä</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normaali</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Älä näytä koskaan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Näytä aina</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Näytä dynaamisesti</string>

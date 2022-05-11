@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">Elemento de destino</string>
     <string name="settings__theme_editor__rule_codes">Códigos de teclas de destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_shift_states">Modos</string>
+    <string name="settings__theme_editor__rule_shift_states">Alterar estados</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
     <string name="settings__theme_editor__add_code">Adicionar código de tecla</string>
     <string name="settings__theme_editor__edit_code">Editar código de tecla</string>
@@ -658,8 +658,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é sempre a sugestão de símbolo ou o acento principal se nenhuma sugestão de símbolo estiver disponível</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorização inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é decidido dinamicamente como o acento principal ou a sugestão de símbolo, com base no idioma e layout atuais</string>
-    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
-    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Inalterado</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Alterado (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Alterado (automático)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nunca mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Sempre mostrar</string>

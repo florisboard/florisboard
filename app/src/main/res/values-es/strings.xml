@@ -105,7 +105,6 @@
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
     <string name="settings__theme_editor__rule_codes">Códigos de clave destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_shift_states">Modos</string>
     <string name="settings__theme_editor__rule_selectors">Selectores</string>
     <string name="settings__theme_editor__add_code">Añadir código clave</string>
     <string name="settings__theme_editor__edit_code">Editar código clave</string>
@@ -640,9 +639,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el símbolo, o el acento principal si no hay símbolo disponible</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorización inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será decidido dinámicamente entre el símbolo o el acento principal, de acuerdo al idioma y distribución del teclado actual</string>
-    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
-    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Bloq Mayús</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar nunca</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar siempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinámicamente</string>

@@ -180,7 +180,6 @@
     <!-- State strings -->
     <string name="state__disabled">Вимкнено</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Нормальний</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ніколи не відображати</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Завжди відображати</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамічно показувати</string>

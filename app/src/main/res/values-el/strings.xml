@@ -447,8 +447,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Ο αρχικός χαρακτήρας που επιλέγεται μετά από παρατεταμένο πάτημα είναι πάντα το υπονοούμενο σύμβολο, ή ο κύριος τονισμός εάν δεν υπάρχει διαθέσιμο υπονοούμενο σύμβολο</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Έξυπνη προτεραιοποίηση</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Ο αρχικός χαρακτήρας που επιλέγεται μετά από παρατεταμένο πάτημα αποφασίζεται δυναμικά ώστε να είναι είτε ο κύριος τονισμός, είτε το υπονοούμενο σύμβολο, βάσει της τρέχουσας γλώσσας και διάταξης</string>
-    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Κανονικό</string>
-    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Κεφαλαία</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Να μην εμφανίζεται ποτέ</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Να εμφανίζεται πάντα</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Να εμφανίζεται δυναμικά</string>

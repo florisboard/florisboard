@@ -48,6 +48,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard sisteminizde etkinleştirilmediği için giriş seçeneklerinde görüntülenemez. Bu durumu düzeltmek için tıklayın.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard varsayılan giriş seçeneği değil. Düzeltmek için tıklayın.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Diller &amp; Düzenler</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Dil isimlerini şu şekilde göster</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Alt Türler</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dil/dizilim ekle</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Dil/dizilim düzenle</string>
@@ -92,10 +93,10 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Açık temayı seç</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Koyu temayı seç</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">İndirilen temaları düzenle</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Renkleri şu şekilde göster</string>
     <string name="settings__theme_editor__add_rule">Kural ekle</string>
     <string name="settings__theme_editor__edit_rule">Kuralı düzenle</string>
     <string name="settings__theme_editor__rule_groups">Gruplar</string>
-    <string name="settings__theme_editor__rule_shift_states">Modlar</string>
     <string name="settings__theme_editor__code_placeholder">Kod</string>
     <string name="settings__theme_editor__code_recording_placeholder">Kaydediliyor…</string>
     <string name="settings__theme_editor__add_property">Özellik Ekle</string>
@@ -272,7 +273,7 @@
     <string name="about__repository__title" comment="Preference title">Veri havuzu (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Kaynak kodu, tartışmalar, sorunlar ve bilgi</string>
     <string name="about__privacy_policy__title" comment="Preference title">Gizlilik politikası</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Bu proje için gizlilik politikası</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Bu projenin gizlilik politikası</string>
     <string name="about__project_license__title" comment="Preference title">Proje lisansı</string>
     <string name="about__project_license__summary" comment="Preference summary">FlorisBoard {license_name} altında lisanslıdır</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hata. Lisans bilgisi yüklenemedi. \n-&gt; Sebep: {error_message}</string>
@@ -285,13 +286,14 @@
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Gizlilik politikası</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Depo</string>
     <string name="setup__enable_ime__title">Etkinleştir {app_name}</string>
-    <string name="setup__enable_ime__description">Android, kullanabilmeniz için her özel klavyenin ayrı ayrı etkinleştirilmesini gerektirir. Sistem <i>Language &amp; Input</i> Ayarları, orada \"{app_name}\" etkinleştirin.</string>
-    <string name="setup__enable_ime__open_settings_btn">Sistem ayarlarını açın</string>
-    <string name="setup__select_ime__title">Seç {app_name}</string>
-    <string name="setup__select_ime__description">{app_name} sistemde etkin. Aktif olarak kullanmak için, giriş seçici iletişim kutusunda seçerek {app_name} uygulamasına geçin!</string>
+    <string name="setup__enable_ime__description">Android, her özel klavyenin siz kullanmadan önce ayrı ayrı etkinleştirilmesini gerektirir. Sistem <i>Diller &amp; Giriş</i> ayarını açın, oradan \"{app_name}\"\'u etkinleştirin.</string>
+    <string name="setup__enable_ime__open_settings_btn">Sistem Ayarlarını Açın</string>
+    <string name="setup__select_ime__title">{app_name}\'u Seç</string>
+    <string name="setup__select_ime__description">{app_name} sisteminizde etkinleştirildi. Aktif olarak kullanmak için, giriş seçme penceresinde seçerek {app_name}\'a geçin!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Klavyeyi Değiştir</string>
-    <string name="setup__finish_up__title">Tamamen Bitir</string>
+    <string name="setup__finish_up__title">Bitir</string>
     <string name="setup__finish_up__description_p1">{app_name} sistemde etkin ve özelleştirilmeye hazır.</string>
+    <string name="setup__finish_up__description_p2">Herhangi bir sorunla, hatayla, çökmeyle karşılaşırsanız veya sadece bir öneride bulunmak isterseniz, hakkında ekranından proje deposuna göz atın!</string>
     <string name="setup__finish_up__finish_btn">Özelleştirmeye Başla</string>
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
@@ -394,9 +396,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakter her zaman ipucu sembolüdür veya ipucu sembolü yoksa birincil vurgudur</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Akıllı önceliklendirme</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakterin, geçerli dil ve düzene bağlı olarak ya birincil vurgu ya da ipucu sembolü olduğuna dinamik olarak karar verilir</string>
-    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Normal</string>
-    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Üst karakter kilidi</string>
-    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Büyük harf kilidi</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Asla gösterme</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Her zaman göster</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamik olarak göster</string>
