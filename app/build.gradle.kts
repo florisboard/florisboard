@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace = "dev.patrickgold.florisboard"
     compileSdk = 31
     buildToolsVersion = "31.0.0"
     ndkVersion = "22.1.7171670"
