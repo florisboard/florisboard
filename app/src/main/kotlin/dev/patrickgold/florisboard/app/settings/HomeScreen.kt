@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.lib.android.launchUrl
+import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
@@ -81,7 +83,7 @@ fun HomeScreen() = FlorisScreen {
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Note on the new Settings UI",
+                        text = "Welcome to the 0.3.16 beta series!",
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold,
                     )
@@ -98,8 +100,9 @@ fun HomeScreen() = FlorisScreen {
                     }
                 }
                 if (!isCollapsed) {
-                    Text("Welcome to the new Settings of FlorisBoard!\n")
-                    Text("It has been quite a long time since 0.3.13, but since then a lot has changed. FlorisBoard has undergone a major overhaul and now uses a completely new UI library, backend logic and also the Settings have been completely revamped. A big thanks goes to all my beta testers who continuously provided feedback and tested things out, this made the development much more interactive and better!\n")
+                    Text("The 0.3.16 beta series focuses on preparing the keyboard for word suggestions in 0.4.0, getting rid of the input lag and improve input connection handling. Most work is already done, now I am focusing on fixing introduced bugs and generally fixing a lot of bugs to improve the stability of this keyboard.\n")
+                    Text("If you have general feedback on this rework or want to report a newly broken/buggy input for a specific app (or all apps), please make sure to post your feedback in this thread:\n")
+                    FlorisButton(onClick = { context.launchUrl("https://github.com/florisboard/florisboard/discussions/1827") }, text = "Open feedback thread")
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Note that this release does not contain support for word suggestions (will show the current word plus numbers as a placeholder).", color = Color.Red)
                     Text("Please DO NOT file an issue for this. It is already more than known and a major goal for implementation in 0.4.0. Thank you!\n")

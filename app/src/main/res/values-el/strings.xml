@@ -9,9 +9,12 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Μεταφορά πληκτρολογίου στα αριστερά.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Μεταφορά πληκτρολογίου στα δεξιά.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Εικονίδια Emoji</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Εικονίδια Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Εικονίδια emoticon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Μέγιστο μέγεθος ιστορικού εικονιδίων emoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Προτιμώμενος τόνος επιδερμίδας εικονιδίων emoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Φατσούλες &amp; Συναισθήματα</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Άνθρωποι &amp; Σώμα</string>
@@ -86,6 +89,10 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Επιλογή θέματος μέρας</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Επιλογή θέματος νύχτας</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Διαχείριση εγκατεστημένων θεμάτων</string>
+    <string name="snygg__rule_element__glide_trail">Διαδρομή ολίσθησης</string>
+    <string name="snygg__rule_selector__disabled">Απενεργοποιημένο</string>
+    <string name="snygg__property_name__var_primary">Πρωτεύον χρώμα</string>
+    <string name="snygg__property_name__var_secondary">Δευτερεύον χρώμα</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ήχος &amp; Δόνηση</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ηχητική ανάδραση / Ήχοι</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ενεργοποίηση ηχητικής ανάδρασης</string>
@@ -138,11 +145,18 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Προσθήκη των αναδυόμενων πλήκτρων συμβόλων στην προεπιλεγμένη διάταξη</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Καθυστέρηση παρατεταμένου πατήματος πλήκτρου</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Το πλήκτρο διαστήματος επιστρέφει στη διάταξη χαρακτήρων</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Αυτόματη επαναφορά στη διάταξη χαρακτήρων όταν βρίσκεστε στη διάταξη συμβόλων ή αριθμών</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Έξυπνη Μπάρα</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Αντιστροφή των πλήκτρων εναλλαγής</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Αντιστρέφει τα πλήκτρα εναλλαγής της σειράς ενεργειών</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Διάταξη σειράς</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Κύριες ενέργειες</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Προτάσεις &amp; Διορθώσεις</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
@@ -433,8 +447,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Ο αρχικός χαρακτήρας που επιλέγεται μετά από παρατεταμένο πάτημα είναι πάντα το υπονοούμενο σύμβολο, ή ο κύριος τονισμός εάν δεν υπάρχει διαθέσιμο υπονοούμενο σύμβολο</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Έξυπνη προτεραιοποίηση</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Ο αρχικός χαρακτήρας που επιλέγεται μετά από παρατεταμένο πάτημα αποφασίζεται δυναμικά ώστε να είναι είτε ο κύριος τονισμός, είτε το υπονοούμενο σύμβολο, βάσει της τρέχουσας γλώσσας και διάταξης</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Κανονικό</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Κεφαλαία</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Να μην εμφανίζεται ποτέ</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Να εμφανίζεται πάντα</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Να εμφανίζεται δυναμικά</string>
@@ -453,7 +465,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Εναλλαγή στην προηγούμενη λειτουργία πληκτρολογίου</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Εναλλαγή στην επόμενη λειτουργία πληκτρολογίου</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Διαγραφή χαρακτήρων με ακρίβεια</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Διαγραφή της τρέχουσας λέξης</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Διαγραφή λέξεων με ακρίβεια</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Απόκρυψη πληκτρολογίου</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Εισαγωγή διαστήματος</string>

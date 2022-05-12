@@ -67,6 +67,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             SwitchPreference(
+                prefs.devtools.showInputStateOverlay,
+                title = stringRes(R.string.devtools__show_input_state_overlay__label),
+                summary = stringRes(R.string.devtools__show_input_state_overlay__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
                 prefs.devtools.showSpellingOverlay,
                 title = stringRes(R.string.devtools__show_spelling_overlay__label),
                 summary = stringRes(R.string.devtools__show_spelling_overlay__summary),

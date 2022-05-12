@@ -112,7 +112,6 @@ class TextKeyData(
                 FORWARD_DELETE,
                 FORWARD_DELETE_WORD,
                 SHIFT,
-                SHIFT_LOCK,
                 CAPS_LOCK,
                 ARROW_LEFT,
                 ARROW_RIGHT,
@@ -151,7 +150,6 @@ class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
-                INTERNAL_BATCH_EDIT,
             )
         }
 
@@ -234,12 +232,6 @@ class TextKeyData(
             type = KeyType.MODIFIER,
             code = KeyCode.SHIFT,
             label = "shift",
-        )
-        /** Predefined key data for [KeyCode.SHIFT_LOCK] */
-        val SHIFT_LOCK = TextKeyData(
-            type = KeyType.MODIFIER,
-            code = KeyCode.SHIFT_LOCK,
-            label = "shift_lock",
         )
         /** Predefined key data for [KeyCode.CAPS_LOCK] */
         val CAPS_LOCK = TextKeyData(
@@ -483,13 +475,6 @@ class TextKeyData(
             type = KeyType.CHARACTER,
             code = KeyCode.SETTINGS,
             label = "settings",
-        )
-
-        /** Predefined key data for [KeyCode.INTERNAL_BATCH_EDIT] */
-        val INTERNAL_BATCH_EDIT = TextKeyData(
-            type = KeyType.FUNCTION,
-            code = KeyCode.INTERNAL_BATCH_EDIT,
-            label = "internal_batch_edit",
         )
     }
 }

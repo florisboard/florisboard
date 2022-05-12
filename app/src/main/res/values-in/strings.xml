@@ -45,7 +45,7 @@
     <string name="settings__help" comment="General label for help buttons in Settings">Bantuan</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Standar sistem</string>
-    <string name="settings__home__title" comment="Title of the Home screen">Selamat datang ke {app_name}</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Selamat datang di {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard tidak diaktifkan di sistem dan tidak akan tersedia sebagai metode input di pilihan input.
 Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard tidak dipilih sebagai metode input default. Klik di sini untuk menyelesaikan masalah ini.</string>
@@ -106,7 +106,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__rule_element">Elemen target</string>
     <string name="settings__theme_editor__rule_codes">Kode target tombol</string>
     <string name="settings__theme_editor__rule_groups">Grup</string>
-    <string name="settings__theme_editor__rule_modes">Mode</string>
+    <string name="settings__theme_editor__rule_shift_states">Status shift</string>
     <string name="settings__theme_editor__rule_selectors">Pemilih</string>
     <string name="settings__theme_editor__add_code">Tambahkan kode tombol</string>
     <string name="settings__theme_editor__edit_code">Edit kode tombol</string>
@@ -222,7 +222,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Getaran tekanan tombol</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Getaran tekanan lama tombol</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Getaran aksi berulang tombol</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Getarn gestur geser</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Getaran gestur geser</string>
     <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Getaran gestur geser bergerak</string>
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">mis. tombol, tab emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">mis. menu popup</string>
@@ -320,6 +320,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__glide_trail_fade_duration">Lamanya memudarnya jejak geser</string>
     <string name="pref__glide_preview_refresh_delay">Pratinjau penundaan penyegaran</string>
     <string name="pref__glide__show_preview">Tampilkan pratinjau saat ketikan geser</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Selalu hapus kata</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Menekan hapus setelah sebuah geser menghapus seluruh kata</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestur umum</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestur batang spasi</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Gestur lain / Gestur ambang</string>
@@ -332,6 +334,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Geser batang spasi ke kanan</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Tekan lama bilah spasi</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Tombol hapus geser ke kiri</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Tekanan lama tombol hapus</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Ambang batas kecepatan geser</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Ambang jarak geser</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Tingkat lanjut</string>
@@ -503,8 +506,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Melapisi penggunaan tumpukan memori dan ukuran maksimal di sudut kanan atas</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Tampilkan klip utama</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Menampilkan klip utama papan klip</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Tampilkan hamparan status masukan</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Menampilkan status masukan saat ini untuk pengawakutuan</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Tampilkan overlay pengejaan</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Menampilkan hasil pengejaan saat ini untuk pengawakutuan</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Tampilkan perbatasan sentuhan tombol</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Gariskan perbatasan sentuhan tombol dalam warna merah</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Bersihkan data kamus pengguna internal</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Akan membersihkan semua kata-kata dari tabel basisdata kamus</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atur ulang flag \"{flag_name}\"</string>
@@ -652,9 +659,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan simbol petunjuk, atau aksen utama jika tidak ada simbol petunjuk yang tersedia</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritas pintar</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama secara dinamis akan memutuskan untuk menjadi aksen utama atau simbol petunjuk, berdasarkan bahasa dan tata letak saat ini</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Tidak di-shift</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Di-shift (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Di-shift (otomatis)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Kunci huruf kapital</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Jangan tampilkan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Selalu tampilkan</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Tampilkan secara dinamis</string>
@@ -686,8 +694,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Tidak ada aksi</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ubah ke mode keyboard sebelumnya</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ubah ke mode keyboard selanjutnya</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Hapus karakter sebelum kursor</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Hapus karakter secara tepat</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Hapus kata saat ini</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Hapus kata sebelum kursor</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Hapus kata secara tepat</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Sembunyikan keyboard</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Masukkan spasi</string>
@@ -709,6 +718,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Beralih ke keyboard sebelumnya</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Beralih ke subtipe sebelumnya</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Beralih ke subtipe selanjutnya</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Alih visibilitas Smartbar</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Selalu pagi</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Selalu malam</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Ikuti sistem</string>

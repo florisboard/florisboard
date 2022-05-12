@@ -20,11 +20,15 @@ import android.content.Context
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
+import dev.patrickgold.florisboard.ime.editor.ImeOptions
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 
 interface ComputingEvaluator {
+    fun activeEditorInfo(): FlorisEditorInfo
+
     fun activeState(): KeyboardState
 
     fun activeSubtype(): Subtype
@@ -45,6 +49,8 @@ interface ComputingEvaluator {
 }
 
 object DefaultComputingEvaluator : ComputingEvaluator {
+    override fun activeEditorInfo(): FlorisEditorInfo = FlorisEditorInfo.Unspecified
+
     override fun activeState(): KeyboardState = KeyboardState.new()
 
     override fun activeSubtype(): Subtype = Subtype.DEFAULT
@@ -155,19 +161,20 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_backspace
         }
         KeyCode.ENTER -> {
-            val imeOptions = evaluator.activeState().imeOptions
-            if (imeOptions.flagNoEnterAction) {
+            val imeOptions = evaluator.activeEditorInfo().imeOptions
+            val inputAttributes = evaluator.activeEditorInfo().inputAttributes
+            if (imeOptions.flagNoEnterAction || inputAttributes.flagTextMultiLine) {
                 R.drawable.ic_keyboard_return
             } else {
-                when (imeOptions.enterAction) {
-                    ImeOptions.EnterAction.DONE -> R.drawable.ic_done
-                    ImeOptions.EnterAction.GO -> R.drawable.ic_arrow_right_alt
-                    ImeOptions.EnterAction.NEXT -> R.drawable.ic_arrow_right_alt
-                    ImeOptions.EnterAction.NONE -> R.drawable.ic_keyboard_return
-                    ImeOptions.EnterAction.PREVIOUS -> R.drawable.ic_arrow_right_alt
-                    ImeOptions.EnterAction.SEARCH -> R.drawable.ic_search
-                    ImeOptions.EnterAction.SEND -> R.drawable.ic_send
-                    ImeOptions.EnterAction.UNSPECIFIED -> R.drawable.ic_keyboard_return
+                when (imeOptions.action) {
+                    ImeOptions.Action.DONE -> R.drawable.ic_done
+                    ImeOptions.Action.GO -> R.drawable.ic_arrow_right_alt
+                    ImeOptions.Action.NEXT -> R.drawable.ic_arrow_right_alt
+                    ImeOptions.Action.NONE -> R.drawable.ic_keyboard_return
+                    ImeOptions.Action.PREVIOUS -> R.drawable.ic_arrow_right_alt
+                    ImeOptions.Action.SEARCH -> R.drawable.ic_search
+                    ImeOptions.Action.SEND -> R.drawable.ic_send
+                    ImeOptions.Action.UNSPECIFIED -> R.drawable.ic_keyboard_return
                 }
             }
         }
@@ -184,7 +191,7 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_settings
         }
         KeyCode.SHIFT -> {
-            when (evaluator.activeState().inputMode != InputMode.NORMAL) {
+            when (evaluator.activeState().inputShiftState != InputShiftState.UNSHIFTED) {
                 true -> R.drawable.ic_keyboard_capslock
                 else -> R.drawable.ic_keyboard_arrow_up
             }

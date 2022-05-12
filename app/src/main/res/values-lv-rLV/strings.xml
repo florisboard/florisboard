@@ -103,11 +103,22 @@
     <string name="settings__theme_editor__no_rules_defined">Šī stila lapa nesatur nosacījumus. Lai to pielāgotu, jāpievieno kāds nosacījums.</string>
     <string name="settings__theme_editor__rule_already_exists">Šis stila lapas nosacījums jau ir noteikts.</string>
     <string name="settings__theme_editor__rule_element">Mērķa elements</string>
+    <string name="settings__theme_editor__rule_codes">Mērķa taustiņu kodi</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
-    <string name="settings__theme_editor__rule_modes">Veidi</string>
+    <string name="settings__theme_editor__rule_shift_states">Pārslēgšanās taustiņa stāvokļi</string>
     <string name="settings__theme_editor__rule_selectors">Atlasītāji</string>
+    <string name="settings__theme_editor__add_code">Pievienot taustiņa kodu</string>
+    <string name="settings__theme_editor__edit_code">Labot taustiņa kodu</string>
+    <string name="settings__theme_editor__no_codes_defined">Pielietot nosacījumu visām mērķa daļām.</string>
+    <string name="settings__theme_editor__codes_defined">Pielietot nosacījumu tikai mērķa daļām ar šiem taustiņu kodiem:</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
+    <string name="settings__theme_editor__code_help_text">Vai arī šīs saites palīdzēs atrast atbilstošo taustiņa kodu:</string>
+    <string name="settings__theme_editor__code_placeholder">Kods</string>
+    <string name="settings__theme_editor__code_recording_help_text">Lai atrastu taustiņa kodu, jāizmanto poga blakus koda ievades laukam. Tiklīdz tā ir piespiesta, tā tiks ierakstīts nākamais taustiņa piesitiens, un kods tiks ievietots ievades laukā.</string>
+    <string name="settings__theme_editor__code_recording_started">Taustiņa koda ierakstīšana ir sākusies</string>
+    <string name="settings__theme_editor__code_recording_stopped">Taustiņa koda ierakstīšana ir apturēta</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} ir jābūt noklusējuma tastatūrai, lai varētu ierakstīt taustiņa kodu</string>
     <string name="settings__theme_editor__code_recording_placeholder">Ieraksta…</string>
     <string name="settings__theme_editor__add_property">Pievienot īpašību</string>
     <string name="settings__theme_editor__edit_property">Labot īpašību</string>
@@ -308,6 +319,8 @@
     <string name="pref__glide_trail_fade_duration">Slīdēšanas pēdu izzušanas laiks</string>
     <string name="pref__glide_preview_refresh_delay">Priekšskatīt atsvaidzināšanas aizkavi</string>
     <string name="pref__glide__show_preview">Rādīt priekšskatījumu slīdošās rakstīšanas laikā</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Vienmēr izdzēst vārdu</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Dzēšanas taustiņa nospiešana uzreiz pēc slidināšanas izdzēš visu vārdu</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Vispārējas kustības</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Atstarpes taustiņa kustības</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Citas kustības / Kustību sliekšņi</string>
@@ -320,6 +333,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Pavilkt no atstarpes taustiņa pa labi</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Atstarpes taustiņa ilga piespiešana</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Pavilkt no izdzēšanas taustiņa pa kreisi</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dzēšanas taustiņa ilga piespiešana</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Pavilkšanas ātruma slieksnis</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Pavilkšanas attāluma slieksnis</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Papildus</string>
@@ -491,8 +505,12 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Rādīt galveno vienumu</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Pārklāj pašreizējo galveno starpliktuves vienumu</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Rādīt ievades stāvokļa pārklājumu</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Pārklāj pašreizējo ievades stāvokli atkļūdošanai</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Rādīt pareizrakstības pārklājumu</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Pārklāj pašreizējo pareizrakstības iznākumu atkļūdošanai</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Rādīt taustiņa pieskārienu robežas</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Izcelt taustiņa pieskārienu robežas sarkanā krāsā</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atiestatīt iezīmi \"{flag_name}\"</string>
@@ -640,9 +658,10 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir norādes zīme vai galvenā uzsvara zīme, ja norādes zīme nav pieejama</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Viedā priekšrokas noteikšana</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme (galvenā uzsvara vai norādes zīme) pēc ilga piespiediena tiek noteikta atbilstoši pašreizējai valodai un izkārtojumam</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Vispārpieņemts</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Pārslēgs</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Burtslēgs</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Nepārslēgts</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Pārslēgts (pašrocīgi)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Pārslēgts (automātiski)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Burtslēgs</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nerādīt nekad</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Rādīt pielāgojoties</string>
@@ -674,8 +693,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nav darbības</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Pārslēgties uz iepriekšējo tastatūras veidu</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Pārslēgties uz nākamo tastatūras veidu</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Dzēst rakstzīmi pirms rādītāja</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Rūpīgi izdzēst rakstzīmes</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Izdzēst pašreizējo vārdu</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Dzēst vārdu pirms rādītāja</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Rūpīgi izdzēst vārdus</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Paslēpt tastatūru</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Ievietot atstarpi</string>
@@ -697,6 +717,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Pārslēgties uz iepriekšējo tastatūru</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Pārslēgties uz iepriekšējo apakšveidu</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Pārslēgties uz nākamo apakšveidu</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Pārslēgt viedjoslas redzamību</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Vienmēr diena</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Vienmēr nakts</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Pielāgot sistēmai</string>

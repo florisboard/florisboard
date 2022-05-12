@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mou el teclat a l\'esquerra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mou el teclat a la dreta.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emoticones</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticones</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Talla màxima de l\'historial d\'emoticones</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Color de pell preferit per les emoticones</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Pentinat preferit per les emoticones</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emocions &amp; Emoticones</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persones &amp; Cos</string>
@@ -42,6 +46,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i per tant no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per resoldre aquest problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per resoldre aquest problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomes &amp; Disposicions</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostrar noms d\'idiomes a</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipus</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar el subtipus</string>
@@ -86,15 +91,28 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecciona el tema del dia</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecciona el tema de nit</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Mostrar els colors com</string>
     <string name="settings__theme_editor__add_rule">Afegir norma</string>
     <string name="settings__theme_editor__edit_rule">Editar norma</string>
     <string name="settings__theme_editor__rule_groups">Grups</string>
-    <string name="settings__theme_editor__rule_modes">Modes</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_property">Afegir propietat</string>
     <string name="settings__theme_editor__edit_property">Editar propietat</string>
     <string name="settings__theme_editor__property_name">Nom de la propietat</string>
     <string name="settings__theme_editor__property_value">Valor de la propietat</string>
+    <string name="snygg__rule_selector__pressed">Premut</string>
+    <string name="snygg__rule_selector__focus">Enfocat</string>
+    <string name="snygg__rule_selector__disabled">Desactivat</string>
+    <string name="snygg__property_name__width">Amplada</string>
+    <string name="snygg__property_name__height">Altura</string>
+    <string name="snygg__property_name__background">Fons</string>
+    <string name="snygg__property_name__foreground">Primer pla</string>
+    <string name="snygg__property_name__border_color">Color dels marges</string>
+    <string name="snygg__property_name__border_style">Estil del marge</string>
+    <string name="snygg__property_name__border_width">Amplada del marge</string>
+    <string name="snygg__property_name__font_family">Tipus de lletra</string>
+    <string name="snygg__property_name__font_size">Mida de la lletra</string>
+    <string name="snygg__property_name__font_style">Estil de tipus de lletra</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; vibracions</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retroacció hàptica / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilita la retroacció hàptica</string>
@@ -157,7 +175,6 @@
     <string name="state__enabled">Habilitat</string>
     <!-- Enum label and description strings -->
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent està prioritzat</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>

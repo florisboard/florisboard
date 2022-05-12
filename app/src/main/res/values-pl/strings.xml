@@ -104,7 +104,6 @@
     <string name="settings__theme_editor__rule_already_exists">Ta reguła arkusza stylów jest już zdefiniowana.</string>
     <string name="settings__theme_editor__rule_element">Element docelowy</string>
     <string name="settings__theme_editor__rule_groups">Grupy</string>
-    <string name="settings__theme_editor__rule_modes">Tryby</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
     <string name="settings__theme_editor__code_invalid">Ten kod jest nieprawidłowy. Upewnij się, że kod mieści się w zakresie od {c_min} do {c_max} dla znaków lub od {i_min} do {i_max} dla wewnętrznych kluczy specjalnych.</string>
@@ -630,9 +629,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest zawsze symbolem podpowiedzi lub głównym akcentem, jeśli nie jest dostępny symbol podpowiedzi</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Inteligentna priorytetyzacja</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest dynamicznie określany jako główny akcent lub symbol podpowiedzi, w oparciu o bieżący język i układ</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normalny</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Trzymanie shift</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nigdy nie pokazuj</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Zawsze pokazuj</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Pokazuj dynamicznie</string>
@@ -660,7 +656,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Przejdź do poprzedniego trybu klawiatury</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Przejdź do następnego trybu klawiatury</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Precyzyjne usuwanie słów</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Usuń bieżące słowo</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Precyzyjne usuwanie słów</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ukryj klawiaturę</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Wstaw spację</string>

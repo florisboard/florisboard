@@ -28,6 +28,7 @@ enum class SwipeAction {
     NO_ACTION,
     CYCLE_TO_PREVIOUS_KEYBOARD_MODE,
     CYCLE_TO_NEXT_KEYBOARD_MODE,
+    DELETE_CHARACTER,
     DELETE_CHARACTERS_PRECISELY,
     DELETE_WORD,
     DELETE_WORDS_PRECISELY,
@@ -175,6 +176,18 @@ enum class SwipeAction {
             entry(
                 key = SELECT_WORDS_PRECISELY,
                 label = stringRes(R.string.enum__swipe_action__select_words_precisely),
+            )
+        }
+
+        @Composable
+        fun deleteLongPressListEntries() = listPrefEntries {
+            entry(
+                key = DELETE_CHARACTER,
+                label = stringRes(R.string.enum__swipe_action__delete_character),
+            )
+            entry(
+                key = DELETE_WORD,
+                label = stringRes(R.string.enum__swipe_action__delete_word),
             )
         }
     }

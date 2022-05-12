@@ -50,7 +50,7 @@ class SnyggStylesheet(
                 rule.element == referenceRule.element
                     && (rule.codes.isEmpty() || referenceRule.codes.isEmpty() || rule.codes.any { it in referenceRule.codes })
                     && (rule.groups.isEmpty() || referenceRule.groups.isEmpty() || rule.groups.any { it in referenceRule.groups })
-                    && (rule.modes.isEmpty() || referenceRule.modes.isEmpty() || rule.modes.any { it in referenceRule.modes })
+                    && (rule.shiftStates.isEmpty() || referenceRule.shiftStates.isEmpty() || rule.shiftStates.any { it in referenceRule.shiftStates })
                     && ((referenceRule.pressedSelector == rule.pressedSelector) || !rule.pressedSelector)
                     && ((referenceRule.focusSelector == rule.focusSelector) || !rule.focusSelector)
                     && ((referenceRule.disabledSelector == rule.disabledSelector) || !rule.disabledSelector)
@@ -71,7 +71,7 @@ class SnyggStylesheet(
                 rule.element == element
                     && (code == Unspecified || rule.codes.isEmpty() || rule.codes.contains(code))
                     && (group == Unspecified || rule.groups.isEmpty() || rule.groups.contains(group))
-                    && (mode == Unspecified || rule.modes.isEmpty() || rule.modes.contains(mode))
+                    && (mode == Unspecified || rule.shiftStates.isEmpty() || rule.shiftStates.contains(mode))
                     && (isPressed == rule.pressedSelector || !rule.pressedSelector)
                     && (isFocus == rule.focusSelector || !rule.focusSelector)
                     && (isDisabled == rule.disabledSelector || !rule.disabledSelector)

@@ -81,6 +81,12 @@ fun GesturesScreen() = FlorisScreen {
                 stepIncrement = 25,
                 enabledIf = { prefs.glide.enabled isEqualTo true && prefs.glide.showPreview isEqualTo true },
             )
+            SwitchPreference(
+                prefs.glide.immediateBackspaceDeletesWord,
+                title = stringRes(R.string.pref__glide__immediate_backspace_deletes_word__label),
+                summary = stringRes(R.string.pref__glide__immediate_backspace_deletes_word__summary),
+                enabledIf = { prefs.glide.enabled isEqualTo true },
+            )
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__gestures__general_title)) {
@@ -138,6 +144,11 @@ fun GesturesScreen() = FlorisScreen {
                 prefs.gestures.deleteKeySwipeLeft,
                 title = stringRes(R.string.pref__gestures__delete_key_swipe_left__label),
                 entries = SwipeAction.deleteSwipeListEntries(),
+            )
+            ListPreference(
+                prefs.gestures.deleteKeyLongPress,
+                title = stringRes(R.string.pref__gestures__delete_key_long_press__label),
+                entries = SwipeAction.deleteLongPressListEntries(),
             )
             DialogSliderPreference(
                 prefs.gestures.swipeVelocityThreshold,

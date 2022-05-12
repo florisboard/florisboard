@@ -75,7 +75,6 @@
     <!-- State strings -->
     <string name="state__disabled">Malŝaltita</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Norma</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Neniam montri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Ĉiam montri</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Malvalidigita</string>

@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import androidx.compose.ui.unit.LayoutDirection
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -138,6 +139,56 @@ class CaseSelector(
 }
 
 /**
+ * Allows to select an [AbstractKeyData] based on the current shift state. Note that this type of selector only really
+ * makes sense in a text context, though technically speaking it can be used anywhere, so this implementation allows
+ * for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is `shift_state_selector`.
+ *
+ * Example usage in a layout JSON file:
+ * ```
+ * { "$": "shift_state_selector",
+ *   "shiftedManual": { "code":   59, "label": ";" },
+ *   "default": { "code":   58, "label": ":" }
+ * }
+ * ```
+ *
+ * @property unshifted The key data to use if the current shift state is [InputShiftState.UNSHIFTED], falling back to
+ *  [default] if unspecified.
+ * @property shifted The key data to use if the current shift state is either [InputShiftState.SHIFTED_MANUAL] or
+ *  [InputShiftState.SHIFTED_AUTOMATIC]. Is overridden if [shiftedManual] or [shiftedAutomatic] is specified.
+ * @property shiftedManual The key data to use if the current shift state is [InputShiftState.SHIFTED_MANUAL],
+ *  falling back to [shifted] or [default] if unspecified.
+ * @property shiftedAutomatic The key data to use if the current shift state is [InputShiftState.SHIFTED_AUTOMATIC],
+ *  falling back to [shifted] or [default] if unspecified.
+ * @property capsLock The key data to use if the current shift state is [InputShiftState.CAPS_LOCK], falling back to
+ *  [default] if unspecified.
+ * @property default The key data to use if the current shift state is set to a value not specified by this selector.
+ *  If a key data is provided for all shift states possible this key data will never be used.
+ */
+@Serializable
+@SerialName("shift_state_selector")
+class ShiftStateSelector(
+    val unshifted: AbstractKeyData? = null,
+    val shifted: AbstractKeyData? = null,
+    val shiftedManual: AbstractKeyData? = null,
+    val shiftedAutomatic: AbstractKeyData? = null,
+    val capsLock: AbstractKeyData? = null,
+    val default: AbstractKeyData? = null,
+) : AbstractKeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData? {
+        return when (evaluator.activeState().inputShiftState) {
+            InputShiftState.UNSHIFTED -> unshifted ?: default
+            InputShiftState.SHIFTED_MANUAL -> shiftedManual ?: shifted ?: default
+            InputShiftState.SHIFTED_AUTOMATIC -> shiftedAutomatic ?: shifted ?: default
+            InputShiftState.CAPS_LOCK -> capsLock ?: default
+        }?.compute(evaluator)
+    }
+
+    override fun asString(isForDisplay: Boolean): String {
+        return ""
+    }
+}
+
+/**
  * Allows to select an [AbstractKeyData] based on the current variation. Note that this type of selector only really
  * makes sense in a text context, though technically speaking it can be used anywhere, so this implementation allows
  * for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is `variation_selector`.
@@ -195,7 +246,7 @@ data class VariationSelector(
  *
  * Example usage in a layout JSON file:
  * ```
- * { "$": "case_selector",
+ * { "$": "layout_direction_selector",
  *   "ltr": { "code":   59, "label": ";" },
  *   "rtl": { "code":   58, "label": ":" }
  * }

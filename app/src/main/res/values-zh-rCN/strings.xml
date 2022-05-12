@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">目标元件</string>
     <string name="settings__theme_editor__rule_codes">目标键码</string>
     <string name="settings__theme_editor__rule_groups">规则组</string>
-    <string name="settings__theme_editor__rule_modes">模式</string>
+    <string name="settings__theme_editor__rule_shift_states">Shift 键状态</string>
     <string name="settings__theme_editor__rule_selectors">选择器</string>
     <string name="settings__theme_editor__add_code">添加键码</string>
     <string name="settings__theme_editor__edit_code">编辑键码</string>
@@ -319,6 +319,8 @@
     <string name="pref__glide_trail_fade_duration">滑动轨迹淡出时间</string>
     <string name="pref__glide_preview_refresh_delay">预览更新延迟</string>
     <string name="pref__glide__show_preview">滑动输入时显示预览</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">总是删除单词</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">手势滑动后紧接着按删除键删除整个单词</string>
     <string name="pref__gestures__general_title" comment="Preference group title">通用手势</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">空格键手势</string>
     <string name="pref__gestures__other_title" comment="Preference group title">其他手势 / 手势阈值</string>
@@ -331,6 +333,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">空格键向右滑动</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">空格键长按</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">删除键向左滑动</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">删除键长按</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">滑动触发速度阈值</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">滑动触发距离阈值</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">高级</string>
@@ -502,8 +505,12 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">右上角叠加显示堆内存使用情况和最大大小</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">显示主要剪贴板条目</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">叠加显示剪贴板当前的主要剪贴板条目</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">显示输入状态叠加层</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">覆盖显示当前输入状态，调试用</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">显示拼写叠加层</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">叠加显示当前拼写结果，调试用</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">显示按键触摸边界</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">用红色线显示出按键触摸边界</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">清空内部用户词典数据库</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">从词典数据库表中清除所有词语</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">重置“{flag_name}”标志</string>
@@ -651,9 +658,10 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">长按后自动选择的字符始终是提示符号，如果没有提示符号可用，则为主重音</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">智能优先</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">长按后自动选择的字符根据当前语言和布局，动态决定是主重音还是提示符号</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">正常</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift 锁定</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">大写锁定</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">未 Shift</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">已 Shift（手动）</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">已 Shift（自动）</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">大写锁定</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">从不显示</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">始终显示</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">动态显示</string>
@@ -685,8 +693,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">无操作</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">循环切换到上一个键盘模式</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">循环切换到下一个键盘模式</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">删除光标前的字符</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">精确删除字符</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">删除当前单词</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">删除光标前的单词</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">精确删除单词</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">隐藏键盘</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">插入空格</string>
@@ -708,6 +717,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">切换到上一个键盘</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">切换到上一个键盘子类型</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">切换到下一个键盘子类型</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">切换智能栏是否可见</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">始终日间模式</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">始终夜间模式</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">跟随系统设置</string>
