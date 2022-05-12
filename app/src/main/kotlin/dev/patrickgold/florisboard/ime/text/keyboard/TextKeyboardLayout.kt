@@ -123,7 +123,8 @@ fun TextKeyboardLayout(
             else -> false
         }
     }
-    val glideEnabled by prefs.glide.enabled.observeAsState()
+    val glideEnabledInternal by prefs.glide.enabled.observeAsState()
+    val glideEnabled = glideEnabledInternal && renderInfo.evaluator.activeEditorInfo().isRichInputEditor
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
         .foreground.solidColor(default = Color.Green)
@@ -463,11 +464,12 @@ private class TextKeyboardLayoutController(
     lateinit var keyboard: TextKeyboard
     var size = Size.Zero
 
+    val isGlideEnabled: Boolean get() = prefs.glide.enabled.get() && editorInstance.activeInfo.isRichInputEditor
+
     fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
         swipeGestureDetector.onTouchEvent(event)
-
-        if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
+        if (isGlideEnabled && keyboard.mode == KeyboardMode.CHARACTERS) {
             val glidePointer = pointerMap.findById(0)
             if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
                 for (pointer in pointerMap) {
@@ -771,7 +773,7 @@ private class TextKeyboardLayoutController(
                     true
                 }
                 initialKey.computedData.code > KeyCode.SPACE && !popupUiController.isShowingExtendedPopup -> when {
-                    !prefs.glide.enabled.get() && !pointer.hasTriggeredGestureMove -> when (event.type) {
+                    !isGlideEnabled && !pointer.hasTriggeredGestureMove -> when (event.type) {
                         SwipeGesture.Type.TOUCH_UP -> {
                             val swipeAction = when (event.direction) {
                                 SwipeGesture.Direction.UP -> prefs.gestures.swipeUp.get()
@@ -934,7 +936,7 @@ private class TextKeyboardLayoutController(
     }
 
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
-        if (prefs.glide.enabled.get()) {
+        if (isGlideEnabled) {
             glideDataForDrawing.add(point to System.currentTimeMillis())
         }
     }
