@@ -131,6 +131,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
+        phantomSpace.setInactiveFromUpdate()
         if (massSelection.isActive) {
             super.handleMassSelectionUpdate(newSelection, composing)
         } else {
@@ -457,6 +458,12 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     class PhantomSpaceState {
+        companion object {
+            private const val F_IS_ACTIVE = 0x1
+            private const val F_SHOW_COMPOSING_REGION = 0x2
+            private const val F_STAY_ACTIVE_NEXT_UPDATE = 0x4
+        }
+
         private val state = AtomicInteger(0)
 
         val isActive: Boolean
@@ -468,17 +475,22 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val showComposingRegion: Boolean
             get() = state.get() and F_SHOW_COMPOSING_REGION != 0
 
-        fun setActive(showComposingRegion: Boolean) {
-            state.set(F_IS_ACTIVE or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0))
+        fun setActive(showComposingRegion: Boolean, stayActiveNextUpdate: Boolean = true) {
+            state.set(
+                F_IS_ACTIVE
+                    or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0)
+                    or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0)
+            )
         }
 
         fun setInactive() {
             state.set(0)
         }
 
-        companion object {
-            private const val F_IS_ACTIVE = 0x1
-            private const val F_SHOW_COMPOSING_REGION = 0x2
+        fun setInactiveFromUpdate() {
+            state.updateAndGet { state ->
+                if ((state and F_STAY_ACTIVE_NEXT_UPDATE) != 0) (state and F_STAY_ACTIVE_NEXT_UPDATE.inv()) else 0
+            }
         }
     }
 
