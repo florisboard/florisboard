@@ -1,13 +1,14 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
     kotlin("plugin.serialization")
+    id("com.google.devtools.ksp")
     id("com.google.android.gms.oss-licenses-plugin")
     id("de.mannodermaus.android-junit5")
 }
 
 android {
+    namespace = "dev.patrickgold.florisboard"
     compileSdk = 31
     buildToolsVersion = "31.0.0"
     ndkVersion = "22.1.7171670"
@@ -29,21 +30,17 @@ android {
 
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 31
-        versionCode = 80
-        versionName = "0.3.15"
+        versionCode = 82
+        versionName = "0.3.16"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    Pair("room.schemaLocation", "$projectDir/schemas"),
-                    Pair("room.incremental", "true"),
-                    Pair("room.expandProjection", "true")
-                )
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+            arg("room.expandProjection", "true")
         }
 
         externalNativeBuild {
@@ -118,7 +115,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = ""
+            versionNameSuffix = "-beta02"
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
@@ -165,16 +162,17 @@ dependencies {
     implementation("androidx.emoji2:emoji2:1.1.0")
     implementation("androidx.emoji2:emoji2-views:1.1.0")
     implementation("androidx.navigation:navigation-compose:2.4.2")
-    implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
-    implementation("com.google.accompanist:accompanist-insets:0.23.0")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.0")
+    implementation("com.google.accompanist:accompanist-flowlayout:0.23.1")
+    implementation("com.google.accompanist:accompanist-insets:0.23.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta08")
     implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta08")
+    implementation("io.github.reactivecircus.cache4k:cache4k:0.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("androidx.room:room-runtime:2.4.2")
-    kapt("androidx.room:room-compiler:2.4.2")
+    ksp("androidx.room:room-compiler:2.4.2")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
     testImplementation("io.kotest:kotest-assertions-core:5.2.3")

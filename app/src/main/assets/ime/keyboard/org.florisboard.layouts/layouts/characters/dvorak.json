@@ -1,46 +1,46 @@
 [
   [
-    { "$": "variation_selector",
-      "default":  { "$": "case_selector",
-        "lower": { "code":   39, "label": "'", "popup": {
+    { "$": "shift_state_selector",
+      "shiftedManual": { "code":   34, "label": "\"", "popup": {
+        "relevant": [
+          { "code":   33, "label": "!" },
+          { "code":   39, "label": "'"}
+        ]
+      } },
+      "default": { "$": "variation_selector",
+        "email":   { "code":   64, "label": "@" },
+        "uri":     { "code":   47, "label": "/" },
+        "default": { "code":   39, "label": "'", "popup": {
           "relevant": [
             { "code":   33, "label": "!" },
             { "code":   34, "label": "\"" }
           ]
-        } },
-        "upper": { "code":   34, "label": "\"", "popup": {
-          "relevant": [
-            { "code":   33, "label": "!" },
-            { "code":   39, "label": "'"}
-          ]
         } }
-      },
-      "email":    { "code":   64, "label": "@" },
-      "uri":      { "code":   47, "label": "/" }
+      }
     },
-    { "$": "case_selector",
-      "lower": { "code":   44, "label": ",", "popup": {
-        "relevant": [
-          { "code":   60, "label": "<" },
-          { "code":   63, "label": "?" }
-        ]
-      } },
-      "upper": { "code":   60, "label": "<", "popup": {
+    { "$": "shift_state_selector",
+      "shiftedManual": { "code":   60, "label": "<", "popup": {
         "relevant": [
           { "code":   44, "label": "," },
           { "code":   63, "label": "?" }
         ]
+      } },
+      "default": { "code":   44, "label": ",", "popup": {
+        "relevant": [
+          { "code":   60, "label": "<" },
+          { "code":   63, "label": "?" }
+        ]
       } }
     },
-    { "$": "case_selector",
-      "lower": { "code":   46, "label": ".", "popup": {
-        "relevant": [
-          { "code":   62, "label": ">" }
-        ]
-      } },
-      "upper": { "code":   62, "label": ">", "popup": {
+    { "$": "shift_state_selector",
+      "shiftedManual": { "code":   62, "label": ">", "popup": {
         "relevant": [
           { "code":   46, "label": "." }
+        ]
+      } },
+      "default": { "code":   46, "label": ".", "popup": {
+        "relevant": [
+          { "code":   62, "label": ">" }
         ]
       } }
     },

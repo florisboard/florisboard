@@ -713,7 +713,7 @@
     },
     {
       "languageTag": "vi-VN",
-      "composer": "org.florisboard.composers:basic-telex",
+      "composer": "org.florisboard.composers:telex",
       "currencySet": "org.florisboard.currencysets:vietnamese_dong",
       "popupMapping": "org.florisboard.localization:vi-VN",
       "preferred": {

@@ -14,7 +14,7 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikonok</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <string name="prefs__media__emoji_recently_used_max_size">Emojielőzmények maximális mérete</string>
-    <string name="prefs__media__emoji_preferred_skin_tone">Előnyben részesített emoji bőrszín</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Előnyben részesített emoji-bőrszín</string>
     <string name="prefs__media__emoji_preferred_hair_style">Előnyben részesített emoji hajstílus</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Mosolyok és érzelmek</string>
@@ -26,6 +26,7 @@
     <string name="emoji__category__objects" comment="Emoji category name">Tárgyak</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Szimbólumok</string>
     <string name="emoji__category__flags" comment="Emoji category name">Zászlók</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nem található mostanában használt emoji. Az emojik automatikusan megjelennek itt, amint elkezdi őket beírni.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Profi tipp: nyomjon hosszan a mostanában használt emojikra, hogy eltávolítsa őket ebből a nézetből!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} eltávolítva a mostanában használt emojik közül</string>
     <!-- Smartbar strings -->
@@ -48,7 +49,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, beviteli módszerként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Nyelvek és elrendezések</string>
-    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Nyelvnevek megjelenítése ebben</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Nyelvek neveinek megjelenítése ebben</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Altípusok</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
@@ -90,12 +91,19 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Éjjeli téma kiválasztása</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Telepített témák kezelése</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Színek megjelenítése mint</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Billentyűzet megjelenítése párbeszádpanelek után</string>
     <string name="settings__theme_editor__add_rule">Szabály hozzáadása</string>
     <string name="settings__theme_editor__edit_rule">Szabály szerkesztése</string>
     <string name="settings__theme_editor__rule_element">Cél elem</string>
     <string name="settings__theme_editor__rule_groups">Csoportok</string>
-    <string name="settings__theme_editor__rule_modes">Módok</string>
     <string name="settings__theme_editor__rule_selectors">Választók</string>
+    <string name="settings__theme_editor__add_code">Billentyűkód hozzáadása</string>
+    <string name="settings__theme_editor__edit_code">Billentyűkód szerkesztése</string>
+    <string name="settings__theme_editor__no_codes_defined">Szabály alkalmazása az összes célelemre.</string>
+    <string name="settings__theme_editor__codes_defined">Szabály alkalmazása csak a következő billentyűkódokkal rendelkező elemekre:</string>
+    <string name="settings__theme_editor__code_already_exists">Ez a billentyűkód már definiálva van.</string>
+    <string name="settings__theme_editor__code_placeholder">Kód</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Rögzítés…</string>
     <string name="settings__theme_editor__add_property">Tulajdonság hozzáadása</string>
     <string name="settings__theme_editor__edit_property">Tulajdonság szerkesztése</string>
     <string name="settings__theme_editor__property_already_exists">A jelenlegi szabályon belül egy tulajdonság már létezik ezzel a névvel.</string>
@@ -104,8 +112,11 @@
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Alkalmazás az összes sarokra</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Éjszakai téma</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Szegély nélküli</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Stíluslap útvonala</string>
     <string name="snygg__rule_element__defines">Változók</string>
+    <string name="snygg__rule_element__keyboard">Billentyűzetablak</string>
     <string name="snygg__rule_element__key">Billentyű</string>
+    <string name="snygg__rule_element__key_popup">Felugró billentyű</string>
     <string name="snygg__rule_element__clipboard_header">Vágólap fejléc</string>
     <string name="snygg__rule_element__clipboard_item">Vágólap elem</string>
     <string name="snygg__rule_element__glide_trail">Csúszási nyomvonal</string>
@@ -129,15 +140,23 @@
     <string name="snygg__property_name__font_style">Betűstílus</string>
     <string name="snygg__property_name__font_variant">Betű változat</string>
     <string name="snygg__property_name__font_weight">Betű vastagság</string>
+    <string name="snygg__property_name__shadow_elevation">Árnyék kiemelés</string>
     <string name="snygg__property_name__shape">Alakzat</string>
     <string name="snygg__property_name__var_primary">Elsődleges szín</string>
     <string name="snygg__property_name__var_primary_variant">Elsődleges szín (változat)</string>
     <string name="snygg__property_name__var_secondary">Másodlagos szín</string>
     <string name="snygg__property_name__var_secondary_variant">Másodlagos szín (változat)</string>
     <string name="snygg__property_name__var_background">Közös háttér</string>
+    <string name="snygg__property_name__var_surface">Közös felület</string>
+    <string name="snygg__property_name__var_surface_variant">Közös felület (változat)</string>
+    <string name="snygg__property_name__var_on_background">Háttér előtere</string>
+    <string name="snygg__property_name__var_on_surface">Felület előtere</string>
+    <string name="snygg__property_name__var_shape">Közös forma</string>
+    <string name="snygg__property_name__var_shape_variant">Közös forma (változat)</string>
     <string name="snygg__property_value__explicit_inherit">Örökölt</string>
     <string name="snygg__property_value__solid_color">Egyszínű</string>
     <string name="snygg__property_value__image_ref">Képhivatkozás</string>
+    <string name="snygg__property_value__rectangle_shape">Téglalap forma</string>
     <string name="snygg__property_value__circle_shape">Kör alakzat</string>
     <string name="snygg__property_value__dp_size">Méret (dp)</string>
     <string name="snygg__property_value__sp_size">Méret (dp)</string>
@@ -148,14 +167,20 @@
     <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainak figyelmen kívül hagyása</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Az alábbi beállítások használata, akkor is ha a hang le van tiltva a rendszerben. Nem működik, ha a rendszer csengőhang le van némítva</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Gombnyomáshangok</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Hosszú gombnyomás hangja</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Ismételt billentyűművelet hangja</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptikus visszajelzés / vibráció</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptikus visszajelzés engedélyezése</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainak figyelmen kívül hagyása</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Az alábbi beállítások használata, akkor is ha a haptika le van tiltva a rendszerben</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Rezgés közvetlen kiváltása</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Rezgés időtartama</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Gombnyomás rezgése</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Hosszú gombnyomás rezgése</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Ismételt billentyűművelet rezgése</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">pl. billentyűk, gombok,emoji fülek</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">pl. felugró menü</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">pl. törlés gomb</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nincs implementálva</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Billentyűzet</string>
@@ -184,11 +209,14 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
     <string name="pref__smartbar__any_row_type__label" comment="Preference title">Sorelrendezés</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Elsődleges műveletek</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatikus kinyitás/becsukás</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatkusan kinyitja becsukja az elsődleges műveletsávot a jelenlegi állapotnak megfelelően</string>
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Másodlagos műveletek</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Javaslatok és javítások</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Javaslatok megjelenítési módja</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Vágólap javaslatok időtúllépése</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
@@ -210,6 +238,7 @@
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Belső felhasználói szótár</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Rendszer felhasználói szótár</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Ez a felhasználói szótár egyetlen szót sem tartalmaz.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Gyakoriság: {freq}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Az összes nyelvhez</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Rendszerkezelő felület megnyitása</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Felhasználói szótár sikeresen importálva!</string>
@@ -218,6 +247,7 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Szó szerkesztése</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Szó</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Adjon meg egy szót</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Adjon meg egy egyező szót: {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Nyelvkód (opcionális)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesztusok és csúsztatott gépelés</string>
     <string name="pref__glide__title" comment="Preference group title">Csúsztatott gépelés</string>
@@ -251,6 +281,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Beállítások nyelve</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Kikapcsolja azokat a funkciókat, amelyek a bevitt adataival dolgoznak</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Helyesírás-ellenőrző</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Rendszerszintű kikapcsolás. Nem fognak piros vonalak megjelenni a szövegmezőkben a hibás szavak alatt. Érintse meg a változtatáshoz.</string>
@@ -265,6 +296,8 @@
     <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Archívum importálása</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Nyelv választása</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Nyelvkód (pl. en_US)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Toldalékfájl kiválasztása (.aff)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Szótárfájl kiválasztása (.dic)</string>
     <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Importálás hitelesítése</string>
     <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Hol szerezhetek szótárakat?</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">ha ez a lista nem tartalmazza a szótárakat a nyelvéhez, vagy a nyelvjárásához, akkor manuálisan is kereshet egy Hunspell szótárat és importálhatja az \'aff\' és a \'dic\' fájlokat.</string>
@@ -280,7 +313,7 @@
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Valami rosszul sült el: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Változáslista</string>
     <string name="about__changelog__summary" comment="Preference summary">Újdonságok</string>
-    <string name="about__repository__title" comment="Preference title">Tároló (GitHub)</string>
+    <string name="about__repository__title" comment="Preference title">Kódtár (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Forráskód, megbeszélések, hibák és információ</string>
     <string name="about__privacy_policy__title" comment="Preference title">Adatvédelmi Irányelvek</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">A projekt adatvédelmi irányelvei</string>
@@ -292,16 +325,20 @@
     <string name="setup__title" comment="Title of Setup">Üdvözöljük!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Köszönjük, hogy a {app_name}ot használja. Ez a gyors beállítás végigvezeti a {app_name} eszközön való használatához szükséges lépéseken.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Adatvédelmi Irányelvek</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Tároló</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Kódtár</string>
     <string name="setup__enable_ime__title">{app_name} engedélyezése</string>
     <string name="setup__enable_ime__open_settings_btn">Rendszerbeállítások megnyitása</string>
     <string name="setup__select_ime__title">{app_name} kiválasztása</string>
+    <string name="setup__select_ime__description">{app_name} most már engedélyezve van a rendszerben. Hogy aktívan használja, váltson {app_name}ra a bevitelkiválasztó párbeszédablakban!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Billentyűzet váltása</string>
     <string name="setup__finish_up__title">Befejezés</string>
+    <string name="setup__finish_up__description_p1">{app_name} most már engedélyezve van a rendszerben, és csak arra vár, hogy személyre szabja.</string>
+    <string name="setup__finish_up__description_p2">Ha bármilyen hibával vagy összeomlással találkozik, vagy csak javaslatot szeretne tenni, nézze meg a projekt kódtárját a névjegy képernyőn!</string>
     <string name="setup__finish_up__finish_btn">Személyre szabás megkezdése</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Mentés és visszaállítás</string>
     <string name="backup_and_restore__back_up__title">Adatok biztonsági mentése</string>
+    <string name="backup_and_restore__back_up__summary">Biztonsági mentés arcívum generálása a beállításokból és a személyre szabásokból</string>
     <string name="backup_and_restore__back_up__destination">Biztonsági mentés céljának kiválasztása</string>
     <string name="backup_and_restore__back_up__destination_file_sys">Helyi fájlrendszer</string>
     <string name="backup_and_restore__back_up__destination_share_intent">Más alkalmazás a megosztás menün keresztül</string>
@@ -311,6 +348,7 @@
     <string name="backup_and_restore__back_up__files_ime_spelling">Helyesírási kiterjesztések / szótárak</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Téma kiterjesztések</string>
     <string name="backup_and_restore__back_up__success">Biztonsági mentés archívum sikeresen exportálva!</string>
+    <string name="backup_and_restore__back_up__failure">Nem sikerült exportálni a biztonsági mentés archívumot: {error_message}</string>
     <string name="backup_and_restore__restore__title">Adatok visszaállítása</string>
     <string name="backup_and_restore__restore__files">Válassza ki, hogy mit szeretne visszaállítani</string>
     <string name="backup_and_restore__restore__metadata">Kiválasztott biztonsági mentés archívum</string>
@@ -341,6 +379,7 @@
     <string name="clipboard__empty__title">A vágólapja üres</string>
     <string name="clipboard__empty__message">Ha kimásolta a szövegeket vagy a képeket, itt fognak megjelenni.</string>
     <string name="clipboard__locked__title">A vágólapja zárolva van</string>
+    <string name="clipboard__locked__message">Elsőnek oldja fel az eszközét, hogy elérje a vágólapelőzményeit.</string>
     <string name="clipboard__group_pinned">Kitűzött</string>
     <string name="clipboard__group_recent">Legutóbbi</string>
     <string name="clipboard__group_other">Egyéb</string>
@@ -362,8 +401,9 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">A rendszervágólap frissítései a Florisboard vágólapján is megjelennek</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Szinkronizálás a rendszervágólapra</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">A Florisboard vágólapjának frissítései a rendszervágólapon is megjelennek</string>
-    <string name="pref__clipboard__group_clipboard_history__label">Vágólap előzmények</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Vágólapelőzmények</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Vágólapelőzmények engedélyezése</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Vágólapelemek megőrzése gyors elérésre</string>
     <string name="pref__clipboard__clean_up_old__label">Régi elemek törlése</string>
     <string name="pref__clipboard__clean_up_after__label">Régi elemek törlése ezután:</string>
     <string name="pref__clipboard__limit_history_size__label">Előzmények méretének korlátozása</string>
@@ -373,6 +413,11 @@
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Fejlesztői eszközök engedélyezése</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Eszközök kifejezetten hibakereséshez és hibaelhárításhoz</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Heap memória statisztika megjelenítése</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Elsődleges vágólap megjelenítése</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Billentyűérintési határok megjelenítése</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Billentyű érintési határok körvonalának vörös kiemelése</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">{flag_name} zászló visszaállítása</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Összeomlásjelentő képernyő tesztelése</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android rendszereszközök</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globális Android beállítások</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Biztonságos Android beállítások</string>
@@ -421,6 +466,8 @@
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Billentyűzet kiterjesztés importálása</string>
     <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Helyesírási kiterjesztés / szótár importálása</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Téma kiterjesztés importálása</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">A fájlt nem lehet importálni. Oka:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Nem támogatott vagy ismeretlen fájltípus.</string>
     <!-- Action strings -->
     <string name="action__add">Hozzáadás</string>
     <string name="action__apply">Alkalmaz</string>
@@ -450,10 +497,13 @@
     <!-- Error strings (generic) -->
     <string name="error__title">Hiba</string>
     <string name="error__details">Részletek</string>
+    <string name="error__invalid">Érvénytelen</string>
     <string name="error__snackbar_message">Valami rosszul sült el</string>
     <string name="error__snackbar_message_template">Valami rosszul sült el: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">pl. {example}</string>
     <string name="general__no_browser_app_found_for_url">Nem található böngészőalkalmazás az URL kezeléséhez: {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45;, &#45; kiválasztása</string>
     <string name="general__unlimited">Korlátlan</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Álló</string>
@@ -474,7 +524,12 @@
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Vörös zöld kék alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Megjelenítés mindig</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Ne jelenjen meg</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Ne mutassa a billentyűzetet a szerkesztő-párbeszédpanel bezárása után</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Utolsó állapot megjegyzése</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Rendszer nyelve</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">A nyelvnevek az alkalmazásban és a billentyűzeten az egész rendszerre beállított nyelv szerint jelennek meg</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Beállított nyelv</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">A nyelvnevek az alkalmazásban és a billentyűzeten a beállított nyelv szerint jelennek meg</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Alapértelmezett bőrszín</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Világos bőrszín</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Középvilágos bőrszín</string>
@@ -486,9 +541,6 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Göndör haj</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Ősz haj</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Kopasz</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normál</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift zárolása</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Soha ne jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mindig jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamikus megjelenítés</string>
@@ -498,6 +550,10 @@
     <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Elsődleges sor felett</string>
     <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Elsődleges sor alatt</string>
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Másodlagos sor elhelyezése az elsődleges sor és a billentyűzet között</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Felső kezdet</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Felső vég</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Alsó vég</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Gyors műveletek</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Vágólap kurzor eszközök</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Sor a leggyakrabban használt vágólap és kurzormozgató eszközökkel</string>
@@ -510,7 +566,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Váltás az előző billentyűzetmódra</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Váltás a következő billentyűzetmódra</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Karakterek pontos törlése</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">A jelenlegi szó törlése</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Szavak pontos törlése</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Billentyűzet elrejtése</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Szóköz beszúrása</string>
@@ -532,6 +587,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Váltás az előző billentyűzetre</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Váltás az előző altípusra</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Váltás a következő altípusra</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Okossáv láthatóságának váltása</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Mindig nappali</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Mindig éjszakai</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Rendszertéma követése</string>

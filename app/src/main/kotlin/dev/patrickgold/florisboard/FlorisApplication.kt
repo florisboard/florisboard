@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
@@ -33,7 +34,6 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.lib.NativeStr
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
@@ -67,6 +67,7 @@ class FlorisApplication : Application() {
     val assetManager = lazy { AssetManager(this) }
     val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
+    val editorInstance = lazy { EditorInstance(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
     val keyboardManager = lazy { KeyboardManager(this) }
@@ -89,7 +90,7 @@ class FlorisApplication : Application() {
             )
             CrashUtility.install(this)
 
-            if (AndroidVersion.ATLEAST_API24_N && !UserManagerCompat.isUserUnlocked(this)) {
+            if (!UserManagerCompat.isUserUnlocked(this)) {
                 val context = createDeviceProtectedStorageContext()
                 initICU(context)
                 prefs.initializeBlocking(context)
@@ -161,6 +162,8 @@ fun Context.assetManager() = lazy { this.florisApplication().assetManager.value 
 fun Context.cacheManager() = lazy { this.florisApplication().cacheManager.value }
 
 fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
+
+fun Context.editorInstance() = lazy { this.florisApplication().editorInstance.value }
 
 fun Context.extensionManager() = lazy { this.florisApplication().extensionManager.value }
 

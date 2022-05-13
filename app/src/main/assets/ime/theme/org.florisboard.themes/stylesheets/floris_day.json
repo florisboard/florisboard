@@ -39,7 +39,7 @@
     "background": "var(--primary-variant)",
     "foreground": "var(--on-surface)"
   },
-  "key[code={c:shift}][mode={m:capslock}]": {
+  "key[code={c:shift}][shiftstate={sh:caps_lock}]": {
     "foreground": "var(--secondary)"
   },
   "key[code={c:space}]": {
