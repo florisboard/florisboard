@@ -534,7 +534,6 @@ private class TextKeyboardLayoutController(
                         if (swipeGestureDetector.onTouchMove(event, pointer, alwaysTriggerOnMove) || pointer.hasTriggeredGestureMove) {
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
-                                activeKey.isPressed = false
                                 inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                             }
                         } else {
