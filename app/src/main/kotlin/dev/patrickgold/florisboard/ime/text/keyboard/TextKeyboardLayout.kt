@@ -474,7 +474,8 @@ private class TextKeyboardLayoutController(
         swipeGestureDetector.onTouchEvent(event)
         if (isGlideEnabled && keyboard.mode == KeyboardMode.CHARACTERS) {
             val glidePointer = pointerMap.findById(0)
-            if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
+            val isNotBlocked = glidePointer?.hasTriggeredLongPress != true
+            if (isNotBlocked && glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
                 for (pointer in pointerMap) {
                     if (pointer.activeKey != null) {
                         onTouchCancelInternal(event, pointer)
@@ -611,6 +612,7 @@ private class TextKeyboardLayoutController(
             pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
                 data = key.computedData,
                 onLongPress = onLongPress@ {
+                    pointer.hasTriggeredLongPress = true
                     when (key.computedData.code) {
                         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                             when (prefs.gestures.spaceBarLongPress.get()) {
@@ -1005,6 +1007,7 @@ private class TextKeyboardLayoutController(
         var initialKey: TextKey? = null
         var activeKey: TextKey? = null
         var hasTriggeredGestureMove: Boolean = false
+        var hasTriggeredLongPress: Boolean = false
         var pressedKeyInfo: InputEventDispatcher.PressedKeyInfo? = null
 
         override fun reset() {
@@ -1012,6 +1015,7 @@ private class TextKeyboardLayoutController(
             initialKey = null
             activeKey = null
             hasTriggeredGestureMove = false
+            hasTriggeredLongPress = false
             pressedKeyInfo = null
         }
 
