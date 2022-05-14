@@ -2,9 +2,9 @@
   "$": "ime.extension.keyboard",
   "meta": {
     "id": "org.florisboard.localization",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "title": "Default subtype presets / popup mappings",
-    "description": "Default subptye presets and popup mappings which are always available.",
+    "description": "Default subtype presets and popup mappings which are always available.",
     "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
     "license": "apache-2.0"
   },
@@ -12,6 +12,14 @@
     "org.florisboard.composers",
     "org.florisboard.currencysets",
     "org.florisboard.layouts"
+  ],
+  "punctuationRules": [
+    {
+      "id": "default",
+      "label": "Default",
+      "symbolsPrecedingSpace": ".*[.,;:!?‽&%)\\]}»©®™\\p{L}0-9]",
+      "symbolsFollowingSpace": "[\\p{L}0-9].*"
+    }
   ],
   "popupMappings": [
     { "id": "default", "authors": [ "patrickgold" ] },
