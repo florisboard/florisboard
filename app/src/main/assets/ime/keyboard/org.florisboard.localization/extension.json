@@ -87,6 +87,10 @@
       "authors": [ "patrickgold" ]
     },
     {
+      "id": "hi",
+      "authors": [ "Pratyush" ]
+    },
+    {
       "id": "hr",
       "authors": [ "hedidnothingwrong" ]
     },
@@ -484,6 +488,16 @@
       "popupMapping": "org.florisboard.localization:eo",
       "preferred": {
         "characters": "org.florisboard.layouts:esperanto"
+      }
+    },
+    {
+      "languageTag": "hi",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "popupMapping": "org.florisboard.localization:hi",
+      "preferred": {
+        "characters": "org.florisboard.layouts:hindi",
+        "numericRow": "org.florisboard.layouts:devanagari"
       }
     },
     {

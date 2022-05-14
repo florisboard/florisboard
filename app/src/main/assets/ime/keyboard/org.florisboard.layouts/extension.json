@@ -161,6 +161,13 @@
         "modifier": "org.florisboard.layouts:hebrew"
       },
       {
+        "id": "hindi",
+        "label": "हिन्दी",
+        "authors": [ "Pratyush" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:hindi"
+      },
+      {
         "id": "hungarian",
         "label": "Hungarian",
         "authors": [ "zoli111, gabik65", "patrickgold" ],
@@ -408,6 +415,12 @@
         "label": "עברית",
         "authors": [ "Antony" ],
         "direction": "rtl"
+      },
+      {
+        "id": "hindi",
+        "label": "हिन्दी",
+        "authors": ["Pratyush" ],
+        "direction": "ltr"
       },
       {
         "id": "jis",
