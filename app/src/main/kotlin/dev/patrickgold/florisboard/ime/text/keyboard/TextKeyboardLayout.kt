@@ -190,7 +190,7 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL
                     -> {
-                        val clonedEvent = MotionEvent.obtain(event)
+                        val clonedEvent = MotionEvent.obtainNoHistory(event)
                         touchEventChannel
                             .trySend(clonedEvent)
                             .onFailure {

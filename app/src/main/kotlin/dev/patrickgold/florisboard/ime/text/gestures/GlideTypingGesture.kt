@@ -86,8 +86,10 @@ class GlideTypingGesture {
 
                         }
 
-                        if (pointerData.isActuallyGesture == true)
-                            pointerData.positions.last().let { point -> listeners.forEach { it.onGlideAddPoint(point) } }
+                        if (pointerData.isActuallyGesture == true) {
+                            pointerData.positions.last()
+                                .let { point -> listeners.forEach { it.onGlideAddPoint(point) } }
+                        }
                     }
                     return pointerData.isActuallyGesture ?: false
                 }
