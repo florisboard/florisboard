@@ -116,7 +116,7 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
      * @return The currency set or a fallback.
      */
     fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.default()
+        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.Fallback
     }
 
     /**

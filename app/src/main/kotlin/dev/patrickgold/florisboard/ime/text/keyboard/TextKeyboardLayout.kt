@@ -76,6 +76,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -123,7 +124,9 @@ fun TextKeyboardLayout(
             else -> false
         }
     }
-    val glideEnabled by prefs.glide.enabled.observeAsState()
+    val glideEnabledInternal by prefs.glide.enabled.observeAsState()
+    val glideEnabled = glideEnabledInternal && renderInfo.evaluator.activeEditorInfo().isRichInputEditor &&
+        renderInfo.evaluator.activeState().keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
         .foreground.solidColor(default = Color.Green)
@@ -187,7 +190,7 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL
                     -> {
-                        val clonedEvent = MotionEvent.obtain(event)
+                        val clonedEvent = MotionEvent.obtainNoHistory(event)
                         touchEventChannel
                             .trySend(clonedEvent)
                             .onFailure {
@@ -463,13 +466,16 @@ private class TextKeyboardLayoutController(
     lateinit var keyboard: TextKeyboard
     var size = Size.Zero
 
+    val isGlideEnabled: Boolean get() = prefs.glide.enabled.get() && editorInstance.activeInfo.isRichInputEditor &&
+        keyboardManager.activeState.keyVariation != KeyVariation.PASSWORD
+
     fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
         swipeGestureDetector.onTouchEvent(event)
-
-        if (prefs.glide.enabled.get() && keyboard.mode == KeyboardMode.CHARACTERS) {
+        if (isGlideEnabled && keyboard.mode == KeyboardMode.CHARACTERS) {
             val glidePointer = pointerMap.findById(0)
-            if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
+            val isNotBlocked = glidePointer?.hasTriggeredLongPress != true
+            if (isNotBlocked && glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
                 for (pointer in pointerMap) {
                     if (pointer.activeKey != null) {
                         onTouchCancelInternal(event, pointer)
@@ -532,7 +538,6 @@ private class TextKeyboardLayoutController(
                         if (swipeGestureDetector.onTouchMove(event, pointer, alwaysTriggerOnMove) || pointer.hasTriggeredGestureMove) {
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
-                                activeKey.isPressed = false
                                 inputEventDispatcher.sendCancel(activeKey.computedDataOnDown)
                             }
                         } else {
@@ -607,6 +612,7 @@ private class TextKeyboardLayoutController(
             pointer.pressedKeyInfo = inputEventDispatcher.sendDown(
                 data = key.computedData,
                 onLongPress = onLongPress@ {
+                    pointer.hasTriggeredLongPress = true
                     when (key.computedData.code) {
                         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                             when (prefs.gestures.spaceBarLongPress.get()) {
@@ -771,7 +777,7 @@ private class TextKeyboardLayoutController(
                     true
                 }
                 initialKey.computedData.code > KeyCode.SPACE && !popupUiController.isShowingExtendedPopup -> when {
-                    !prefs.glide.enabled.get() && !pointer.hasTriggeredGestureMove -> when (event.type) {
+                    !isGlideEnabled && !pointer.hasTriggeredGestureMove -> when (event.type) {
                         SwipeGesture.Type.TOUCH_UP -> {
                             val swipeAction = when (event.direction) {
                                 SwipeGesture.Direction.UP -> prefs.gestures.swipeUp.get()
@@ -934,7 +940,7 @@ private class TextKeyboardLayoutController(
     }
 
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
-        if (prefs.glide.enabled.get()) {
+        if (isGlideEnabled) {
             glideDataForDrawing.add(point to System.currentTimeMillis())
         }
     }
@@ -1001,6 +1007,7 @@ private class TextKeyboardLayoutController(
         var initialKey: TextKey? = null
         var activeKey: TextKey? = null
         var hasTriggeredGestureMove: Boolean = false
+        var hasTriggeredLongPress: Boolean = false
         var pressedKeyInfo: InputEventDispatcher.PressedKeyInfo? = null
 
         override fun reset() {
@@ -1008,6 +1015,7 @@ private class TextKeyboardLayoutController(
             initialKey = null
             activeKey = null
             hasTriggeredGestureMove = false
+            hasTriggeredLongPress = false
             pressedKeyInfo = null
         }
 

@@ -28,13 +28,18 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.subtypeManager
 import java.util.*
 
 class NlpManager(context: Context) {
     private val prefs by florisPreferenceModel()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
+    private val keyboardManager by context.keyboardManager()
+    private val subtypeManager by context.subtypeManager()
 
     private val _suggestions = MutableLiveData<SuggestionList2?>(null)
     val suggestions: LiveData<SuggestionList2?> get() = _suggestions
@@ -56,6 +61,27 @@ class NlpManager(context: Context) {
         prefs.suggestion.clipboardContentEnabled.observeForever {
             assembleCandidates()
         }
+    }
+
+    /**
+     * Gets the punctuation rule from the currently active subtype and returns it. Falls back to a default one if the
+     * subtype does not exist or defines an invalid punctuation rule.
+     *
+     * @return The punctuation rule or a fallback.
+     */
+    fun getActivePunctuationRule(): PunctuationRule {
+        return getPunctuationRule(subtypeManager.activeSubtype())
+    }
+
+    /**
+     * Gets the punctuation rule from the given subtype and returns it. Falls back to a default one if the subtype does
+     * not exist or defines an invalid punctuation rule.
+     *
+     * @return The punctuation rule or a fallback.
+     */
+    fun getPunctuationRule(subtype: Subtype): PunctuationRule {
+        return keyboardManager.resources.punctuationRules.value
+            ?.get(subtype.punctuationRule) ?: PunctuationRule.Fallback
     }
 
     fun suggest(

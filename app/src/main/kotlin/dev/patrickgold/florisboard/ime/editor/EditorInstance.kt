@@ -32,7 +32,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.nlp.TextProcessor
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
@@ -42,6 +41,7 @@ import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.nlpManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -56,6 +56,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
+    private val nlpManager by context.nlpManager()
     private val scope = MainScope()
 
     private val activeState get() = keyboardManager.activeState
@@ -131,6 +132,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
+        phantomSpace.setInactiveFromUpdate()
         if (massSelection.isActive) {
             super.handleMassSelectionUpdate(newSelection, composing)
         } else {
@@ -451,12 +453,20 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
         val content = activeContent
         val selection = content.selection
-        val isWordComponent = TextProcessor.isWord(text)
-        return (isActive || forceActive) && selection.isValid && selection.start > 0 &&
-            content.getTextBeforeCursor(1) != SPACE && isWordComponent
+        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0) return false
+        val textBefore = content.getTextBeforeCursor(2)
+        val punctuationRule = nlpManager.getActivePunctuationRule()
+        return punctuationRule.symbolsPrecedingSpace.matches(textBefore) &&
+            punctuationRule.symbolsFollowingSpace.matches(text)
     }
 
     class PhantomSpaceState {
+        companion object {
+            private const val F_IS_ACTIVE = 0x1
+            private const val F_SHOW_COMPOSING_REGION = 0x2
+            private const val F_STAY_ACTIVE_NEXT_UPDATE = 0x4
+        }
+
         private val state = AtomicInteger(0)
 
         val isActive: Boolean
@@ -468,17 +478,22 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val showComposingRegion: Boolean
             get() = state.get() and F_SHOW_COMPOSING_REGION != 0
 
-        fun setActive(showComposingRegion: Boolean) {
-            state.set(F_IS_ACTIVE or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0))
+        fun setActive(showComposingRegion: Boolean, stayActiveNextUpdate: Boolean = true) {
+            state.set(
+                F_IS_ACTIVE
+                    or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0)
+                    or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0)
+            )
         }
 
         fun setInactive() {
             state.set(0)
         }
 
-        companion object {
-            private const val F_IS_ACTIVE = 0x1
-            private const val F_SHOW_COMPOSING_REGION = 0x2
+        fun setInactiveFromUpdate() {
+            state.updateAndGet { state ->
+                if ((state and F_STAY_ACTIVE_NEXT_UPDATE) != 0) (state and F_STAY_ACTIVE_NEXT_UPDATE.inv()) else 0
+            }
         }
     }
 
