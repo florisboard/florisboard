@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
@@ -108,6 +109,7 @@ internal fun KeyboardLikeButton(
     keyData: KeyData,
     content: @Composable RowScope.() -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     var isPressed by remember { mutableStateOf(false) }
     val keyStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.EmojiKey,
@@ -122,6 +124,7 @@ internal fun KeyboardLikeButton(
                         awaitFirstDown(requireUnconsumed = false).also { it.consumeDownChange() }
                         isPressed = true
                         inputEventDispatcher.sendDown(keyData)
+                        inputFeedbackController.keyPress(keyData)
                         val up = waitForUpOrCancellation()
                         isPressed = false
                         if (up != null) {

@@ -79,7 +79,9 @@ import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -248,6 +250,7 @@ private fun EmojiCategoriesTabRow(
     activeCategory: EmojiCategory,
     onCategoryChange: (EmojiCategory) -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
     val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
     val unselectedContentColor = tabStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
@@ -273,7 +276,10 @@ private fun EmojiCategoriesTabRow(
     ) {
         for (category in EmojiCategoryValues) {
             Tab(
-                onClick = { onCategoryChange(category) },
+                onClick = {
+                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                    onCategoryChange(category)
+                },
                 selected = activeCategory == category,
                 icon = { Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
@@ -298,6 +304,7 @@ private fun EmojiKey(
     onEmojiInput: (Emoji) -> Unit,
     onLongPress: (Emoji) -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
@@ -307,10 +314,14 @@ private fun EmojiKey(
             .height(FlorisImeSizing.smartbarHeight)
             .pointerInput(Unit) {
                 detectTapGestures(
+                    onPress = {
+                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                    },
                     onTap = {
                         onEmojiInput(base)
                     },
                     onLongPress = {
+                        inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
                         onLongPress(base)
                         if (variations.isNotEmpty()) {
                             showVariantsBox = true
