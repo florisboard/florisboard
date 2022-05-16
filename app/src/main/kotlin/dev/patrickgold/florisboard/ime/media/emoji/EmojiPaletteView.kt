@@ -89,7 +89,6 @@ import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
@@ -135,8 +134,9 @@ fun EmojiPaletteView(
         }
     }
     val metadataVersion = activeEditorInfo.emojiCompatMetadataVersion
-    val emojiCompatInstance = tryOrNull { EmojiCompat.get().takeIf { it.loadState == EmojiCompat.LOAD_STATE_SUCCEEDED } }
-    val emojiMappings = remember(emojiCompatInstance, metadataVersion, systemFontPaint) {
+    val replaceAll = activeEditorInfo.emojiCompatReplaceAll
+    val emojiCompatInstance by FlorisEmojiCompat.getAsFlow(replaceAll).collectAsState()
+    val emojiMappings = remember(emojiCompatInstance, fullEmojiMappings, metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->
             emojiSetList.mapNotNull { emojiSet ->
                 emojiSet.emojis.filter { emoji ->
