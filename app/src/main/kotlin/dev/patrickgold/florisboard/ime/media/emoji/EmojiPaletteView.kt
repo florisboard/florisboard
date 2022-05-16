@@ -25,6 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -311,7 +312,7 @@ private fun EmojiKey(
 
     Box(
         modifier = Modifier
-            .height(FlorisImeSizing.smartbarHeight)
+            .aspectRatio(1f)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
