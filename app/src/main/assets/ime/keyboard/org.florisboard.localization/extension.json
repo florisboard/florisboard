@@ -37,6 +37,7 @@
     { "id": "es", "authors": [ "patrickgold" ] },
     { "id": "fa", "authors": [ "PHELAT" ] },
     { "id": "fa2", "authors": [ "M-Koushan" ] },
+    { "id": "fa3", "authors": [ "SaeID-Rz" ] },
     { "id": "fi", "authors": [ "patrickgold" ] },
     { "id": "fo", "authors": [ "BinFlush" ] },
     { "id": "fr", "authors": [ "patrickgold" ] },
@@ -318,6 +319,18 @@
         "symbols": "org.florisboard.layouts:persian",
         "symbols2": "org.florisboard.layouts:persian",
         "numericRow": "org.florisboard.layouts:persian"
+      }
+    },
+    {
+      "languageTag": "fa-FA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:fa3",
+      "preferred": {
+        "characters": "org.florisboard.layouts:persian3",
+        "symbols": "org.florisboard.layouts:persian",
+        "symbols2": "org.florisboard.layouts:persian",
+        "numericRow": "org.florisboard.layouts:western_arabic"
       }
     },
     {
