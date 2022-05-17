@@ -25,11 +25,11 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
 
     val imeOptions = ImeOptions.wrap(base.imeOptions)
 
-    val isRawInputEditor: Boolean
-        get() = inputAttributes.type == InputAttributes.Type.NULL
-
     val isRichInputEditor: Boolean
-        get() = inputAttributes.type != InputAttributes.Type.NULL
+        get() = inputAttributes.type != InputAttributes.Type.NULL || initialSelection.isValid
+
+    val isRawInputEditor: Boolean
+        get() = !isRichInputEditor
 
     val packageName: String?
         get() = base.packageName

@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
+import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingService
@@ -89,6 +90,7 @@ class FlorisApplication : Application() {
                 flogOutputs = Flog.OUTPUT_CONSOLE,
             )
             CrashUtility.install(this)
+            FlorisEmojiCompat.init(this)
 
             if (!UserManagerCompat.isUserUnlocked(this)) {
                 val context = createDeviceProtectedStorageContext()

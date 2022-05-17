@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
 import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
+import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
@@ -37,6 +38,7 @@ import kotlinx.serialization.Transient
  * @property secondaryLocales The secondary locales of this subtype. May be an empty list.
  * @property composer The composer name to composer characters the way they should.
  * @property currencySet The currency set name to display the correct currency symbols for this subtype.
+ * @property punctuationRule The punctuation rule to correctly insert auto-spaces.
  * @property popupMapping The popup mapping name to correctly show popups for this subtype.
  * @property layoutMap The layout map to properly display the correct layout for each layout type.
  */
@@ -47,6 +49,7 @@ data class Subtype(
     val secondaryLocales: List<FlorisLocale>,
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
+    val punctuationRule: ExtensionComponentName = extCorePunctuationRule("default"),
     val popupMapping: ExtensionComponentName,
     val layoutMap: SubtypeLayoutMap,
 ) {
@@ -60,6 +63,7 @@ data class Subtype(
             secondaryLocales = emptyList(),
             composer = extCoreComposer("appender"),
             currencySet = extCoreCurrencySet("dollar"),
+            punctuationRule = extCorePunctuationRule("default"),
             popupMapping = extCorePopupMapping("en"),
             layoutMap = SubtypeLayoutMap(characters = extCoreLayout("qwerty")),
         )
@@ -246,6 +250,7 @@ data class SubtypePreset(
     val locale: FlorisLocale,
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
+    val punctuationRule: ExtensionComponentName = extCorePunctuationRule("default"),
     val popupMapping: ExtensionComponentName = extCorePopupMapping("default"),
     val preferred: SubtypeLayoutMap,
 ) {
@@ -256,6 +261,7 @@ data class SubtypePreset(
             secondaryLocales = listOf(),
             composer = composer,
             currencySet = currencySet,
+            punctuationRule = punctuationRule,
             popupMapping = popupMapping,
             layoutMap = preferred,
         )
