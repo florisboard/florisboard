@@ -347,7 +347,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         private val cachedIdealLength = ConcurrentHashMap<String, Float>()
         private fun getCachedIdealLength(word: String, idealGesture: Gesture): Float {
-            return cachedIdealLength.getOrPut(word, { idealGesture.getLength() })
+            return cachedIdealLength.getOrPut(word) { idealGesture.getLength() }
         }
 
         companion object {
@@ -416,14 +416,14 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
     }
 
-    class Gesture(private val xs: FloatArray, private val ys: FloatArray, private var size: Int) {
-        val isEmpty: Boolean
-            get() = size == 0
-
-        constructor() : this(FloatArray(MAX_SIZE), FloatArray(MAX_SIZE), 0)
-
+    class Gesture(
+        private val xs: FloatArray = FloatArray(MAX_SIZE),
+        private val ys: FloatArray = FloatArray(MAX_SIZE),
+        private var size: Int = 0,
+    ) {
         companion object {
-            private const val MAX_SIZE = 300
+            // TODO: Find out optimal max size
+            private const val MAX_SIZE = 500
 
             fun generateIdealGestures(word: String, keysByCharacter: SparseArrayCompat<TextKey>): List<Gesture> {
                 val idealGesture = Gesture()
@@ -496,6 +496,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                 return sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2))
             }
         }
+
+        val isEmpty: Boolean
+            get() = size == 0
 
         fun addPoint(x: Float, y: Float) {
             if (size >= MAX_SIZE) {

@@ -105,7 +105,6 @@
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
     <string name="settings__theme_editor__rule_codes">Códigos de clave destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_modes">Modos</string>
     <string name="settings__theme_editor__rule_selectors">Selectores</string>
     <string name="settings__theme_editor__add_code">Añadir código clave</string>
     <string name="settings__theme_editor__edit_code">Editar código clave</string>
@@ -640,9 +639,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el símbolo, o el acento principal si no hay símbolo disponible</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorización inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será decidido dinámicamente entre el símbolo o el acento principal, de acuerdo al idioma y distribución del teclado actual</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Bloq Mayús</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar nunca</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar siempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinámicamente</string>
@@ -667,7 +663,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Alternar con el modo de teclado anterior</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Alternar con el modo de teclado siguiente</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Eliminar caracteres con precisión</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Eliminar palabra actual</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Eliminar palabras con precisión</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ocultar teclado</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Insertar espacio</string>
@@ -689,6 +684,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Cambiar a teclado anterior</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Cambiar a subtipo anterior</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Cambiar al subtipo siguiente</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Alternar visibilidad de la barra inteligente</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Siempre claro</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Siempre oscuro</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">De acuerdo al sistema</string>

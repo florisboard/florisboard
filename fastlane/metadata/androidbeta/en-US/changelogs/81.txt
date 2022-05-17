@@ -1,0 +1,5 @@
+This release is a major rework of the editor instance handling and should reduce input lag by a lot, while fixing quite some annoying input bugs regarding phantom space, double-space period and delete key resetting the keyboard should have been fixed.
+
+Please note that the minimum required Android version has been raised from Android 6 to Android 7, see the detailed changelog for the reason why this step was necessary.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.16-beta01

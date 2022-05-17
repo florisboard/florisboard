@@ -103,11 +103,23 @@
     <string name="settings__theme_editor__no_rules_defined">Questo file di stile non ha regole definite. Aggiungi una regola per iniziare a personalizzare questo file di stile.</string>
     <string name="settings__theme_editor__rule_already_exists">Questa regola del file di stile è già definita.</string>
     <string name="settings__theme_editor__rule_element">Elemento di destinazione</string>
+    <string name="settings__theme_editor__rule_codes">Codici tasto di destinazione</string>
     <string name="settings__theme_editor__rule_groups">Gruppi</string>
-    <string name="settings__theme_editor__rule_modes">Modalità</string>
+    <string name="settings__theme_editor__rule_shift_states">Stati Maiusc</string>
     <string name="settings__theme_editor__rule_selectors">Selettori</string>
+    <string name="settings__theme_editor__add_code">Aggiungi codice tasto</string>
+    <string name="settings__theme_editor__edit_code">Modifica codice tasto</string>
+    <string name="settings__theme_editor__no_codes_defined">Applica la regola a tutti gli elementi di destinazione.</string>
+    <string name="settings__theme_editor__codes_defined">Applica la regola solo agli elementi di destinazione con i seguenti codici tasto:</string>
     <string name="settings__theme_editor__code_already_exists">Questo codice di tasto è già definito.</string>
     <string name="settings__theme_editor__code_invalid">Questo codice di tasto non è valido. Assicurarsi che il codice di tasto sia compreso nell\'intervallo da {c_min} a {c_max} per i caratteri o da {i_min} a {i_max} per tasti speciali interni.</string>
+    <string name="settings__theme_editor__code_help_text">In alternativa, i seguenti link ti aiuteranno a trovare il codice di tasto corrispondente:</string>
+    <string name="settings__theme_editor__code_placeholder">Codice</string>
+    <string name="settings__theme_editor__code_recording_help_text">Per trovare il codice di un tasto, usare il pulsante accanto al campo di immissione del codice. Una volta attivato, registrerà la successiva pressione del tasto e inserirà il codice nel campo di input.</string>
+    <string name="settings__theme_editor__code_recording_started">Registrazione del codice tasto iniziata</string>
+    <string name="settings__theme_editor__code_recording_stopped">Registrazione del codice tasto terminata</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} deve essere la tastiera predefinita per registrare un codice tasto</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Registrazione in corso…</string>
     <string name="settings__theme_editor__add_property">Aggiungi proprietà</string>
     <string name="settings__theme_editor__edit_property">Modifica proprietà</string>
     <string name="settings__theme_editor__property_already_exists">Una proprietà con questo nome esiste già all\'interno della regola corrente.</string>
@@ -307,6 +319,8 @@
     <string name="pref__glide_trail_fade_duration">Tempo di dissolvenza del percorso di scorrimento</string>
     <string name="pref__glide_preview_refresh_delay">Ritardo di aggiornamento dell\'anteprima</string>
     <string name="pref__glide__show_preview">Mostra l\'anteprima durante la digitazione a scorrimento</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Elimina sempre la parola</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Premendo Elimina subito dopo uno scorrimento si elimina l\'intera parola</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gesti generali</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesti della barra di spazio</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Altri gesti / Sogli dei gesti</string>
@@ -318,7 +332,8 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Swipe a sinistra sulla barra spaziatrice</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Swipe a destra sulla barra spaziatrice</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressione prolungata sulla barra di spazio</string>
-    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe a sinistra sul tasto di cancellazione all\'indietro</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe a sinistra sul tasto Elimina</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pressione prolungata del tasto Elimina</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Soglia di velocità dello swipe</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Soglia di distanza dello swipe</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzate</string>
@@ -490,8 +505,12 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Mostra l\'utilizzo e la dimensione massima della memoria heap nell\'angolo in alto a destra</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostra clip principale</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Sovrappone la clip principale corrente degli appunti</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Mostra overlay dello stato di input</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Sovrappone lo stato di input corrente per il debug</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Mostra overlay ortografico</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Sovrappone gli attuali risultati di ortografia per il debug</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Mostra i limiti del tocco tasto</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Delinea i limiti della pressione del tasto in rosso</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Cancella il dizionario utente interno</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Cancella tutte le parole dal dizionario</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset impostazione \"{flag_name}\"</string>
@@ -639,9 +658,10 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo la pressione prolungata è l\'accento principale, o il suggerimento se non c\'è un accento principale</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritizzazione intelligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo una pressione prolungata viene deciso dinamicamente tra l\'accento principale o il suggerimento, in base alla lingua e al layout selezionati</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normale</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift Lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Bloc maiusc</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Maiusc disattivato</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Maiusc attivato (manuale)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Maiusc attivato (automatico)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Bloc maiusc</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Non visualizzare mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostra sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostra dinamicamente</string>
@@ -673,8 +693,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nessuna azione</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passa alla modalità precedente</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passa alla modalità successiva</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Elimina il carattere prima del cursore</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Cancella lettere con precisione</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Cancella la parola attuale</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Cancella la parola prima del cursore</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Cancella parole con precisione</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Nascondi tastiera</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Inserisci spazio</string>
@@ -696,6 +717,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Passa alla tastiera precedente</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Vai allo stile di input precedente</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Vai allo stile di input successivo</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Attiva/Disattiva visibilità della Smartbar</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Sempre chiaro</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Sempre scuro</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Come da Sistema</string>

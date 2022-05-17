@@ -48,7 +48,6 @@ object KeyCode {
     const val FORWARD_DELETE =                -9
     const val FORWARD_DELETE_WORD =          -10
     const val SHIFT =                        -11
-    const val SHIFT_LOCK =                   -12
     const val CAPS_LOCK =                    -13
 
     const val ARROW_LEFT =                   -21
@@ -113,7 +112,6 @@ object KeyCode {
     const val CURRENCY_SLOT_5 =             -805
     const val CURRENCY_SLOT_6 =             -806
 
-    const val INTERNAL_BATCH_EDIT =         -901
     const val MULTIPLE_CODE_POINTS =        -902
 
     const val CHAR_WIDTH_SWITCHER =        -9701

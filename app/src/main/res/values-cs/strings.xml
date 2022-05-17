@@ -101,7 +101,6 @@
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
     <string name="settings__theme_editor__rule_element">Cílový prvek</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
-    <string name="settings__theme_editor__rule_modes">Režimy</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
     <string name="settings__theme_editor__add_property">Přidat vlastnost</string>
@@ -146,6 +145,36 @@
     <string name="snygg__property_name__font_family">Rodina písem</string>
     <string name="snygg__property_name__font_size">Velikost písma</string>
     <string name="snygg__property_name__font_style">Styl písma</string>
+    <string name="snygg__property_name__shadow_elevation">Výška stínu</string>
+    <string name="snygg__property_name__shape">Tvar</string>
+    <string name="snygg__property_name__var_primary">Hlavní barva</string>
+    <string name="snygg__property_name__var_primary_variant">Hlavní barva (varianta)</string>
+    <string name="snygg__property_name__var_secondary">Sekundární barva</string>
+    <string name="snygg__property_name__var_secondary_variant">Sekundární barva (varianta)</string>
+    <string name="snygg__property_name__var_background">Běžné pozadí</string>
+    <string name="snygg__property_name__var_surface">Běžný povrch</string>
+    <string name="snygg__property_name__var_surface_variant">Běžný povrch (varianta)</string>
+    <string name="snygg__property_name__var_on_primary">Primární popředí</string>
+    <string name="snygg__property_name__var_on_secondary">Sekundární popředí</string>
+    <string name="snygg__property_name__var_on_background">Popředí pozadí</string>
+    <string name="snygg__property_name__var_on_surface">Popředí povrchu</string>
+    <string name="snygg__property_name__var_on_surface_variant">Popředí povrchu (varianta)</string>
+    <string name="snygg__property_name__var_shape">Běžný tvar</string>
+    <string name="snygg__property_name__var_shape_variant">Běžný tvar (varianta)</string>
+    <string name="snygg__property_value__explicit_inherit">Zdědit</string>
+    <string name="snygg__property_value__solid_color">Pevná barva</string>
+    <string name="snygg__property_value__image_ref">Odkaz na obrázek</string>
+    <string name="snygg__property_value__rectangle_shape">Obdélníkový tvar</string>
+    <string name="snygg__property_value__circle_shape">Kruhový tvar</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Tvar ořezaného rohu (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Tvar ořezaného rohu (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Zaoblený tvar rohu (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Zaoblený tvar rohu (%)</string>
+    <string name="snygg__property_value__dp_size">Velikost (dp)</string>
+    <string name="snygg__property_value__sp_size">Velikost (sp)</string>
+    <string name="snygg__property_value__percentage_size">Velikost (%)</string>
+    <string name="snygg__property_value__defined_var">Odkaz na proměnnou</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky &amp; Vibrace</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Hmatová odezva / vibrace</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Povolit hmatovou odezvu</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
@@ -212,11 +241,22 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Přidat, prohlédnout nebo upravit slova ve vlastním interním slovníku</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Vlastní interní slovník</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Vlastní systémový slovník</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvence: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvence: {freq} | Zkratka: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pro všechny jazyky</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Otevření správce systému UI</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Vlastní slovník úspěšně importován!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Vlastní slovník úspěšně exportován!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Přidat slovo</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Upravit slovo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Slovo</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Prosím, zadejte slovo</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Prosím, zadejte slovo shodující se s {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvence (mezi {f_min} a {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím, zadejte hodnotu frekvence</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím, zadejte platné číslo v zadaných rozmezích</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Prosím, zadejte zkratku shodující se s {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta a psaní tahem</string>
     <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>
@@ -243,18 +283,23 @@
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motiv nastavení</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Temná</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Kontrola pravopisu</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jazyky</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Kontrola pravopisu bude používat jména z vašeho seznamu kontaktů</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
     <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Spravovat slovníky</string>
     <string name="settings__spelling__import__title" comment="Title for the import screen">Importovat slovník</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Vybrat zdroj</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importovat archiv</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Vybrat jazyk</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Kód jazyka (např. cs_CZ)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Ověřit import</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>
@@ -262,12 +307,21 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
+    <string name="about__version__title" comment="Preference title">Verze</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
+    <string name="about__changelog__title" comment="Preference title">Změny</string>
+    <string name="about__changelog__summary" comment="Preference summary">Co je nového</string>
+    <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskuze, problémy a informace</string>
     <string name="about__privacy_policy__title" comment="Preference title">Soukromí</string>
+    <string name="about__project_license__title" comment="Preference title">Licence projektu</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Vítejte!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Soukromí</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Předvolby</string>
+    <string name="backup_and_restore__restore__title">Obnovit data</string>
+    <string name="backup_and_restore__restore__files">Vyberte, co obnovit</string>
+    <string name="backup_and_restore__restore__mode">Obnovovací reřim</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
@@ -282,6 +336,7 @@
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Schránka</string>
     <string name="clipboard__disabled__enable_button">Zapnout historii schránky</string>
+    <string name="clipboard__group_pinned">Připnuto</string>
     <string name="clipboard__group_other">Ostatní</string>
     <string name="clip__clear_history">Smazat historii</string>
     <string name="clip__unpin_item">Odepnout položku</string>
@@ -311,7 +366,6 @@
     <!-- State strings -->
     <string name="state__disabled">Vypnuto</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normální</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>
@@ -323,7 +377,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Mód přechodu k předchozí klávesnici</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Mód přechodu k další klávesnici</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Smazat znaky přesně</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Smazat aktuální slovo</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Smazat slova přesně</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skrýt klávesnici</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Vložit mezeru</string>

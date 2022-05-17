@@ -13,7 +13,7 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Maximale Größe des Emoji-Verlaufs</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Maximale Länge des Emoji-Verlaufs</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Bevorzugte Emoji-Hautfarbe</string>
     <string name="prefs__media__emoji_preferred_hair_style">Bevorzugte Emoji-Haarfarbe</string>
     <!-- Emoji strings -->
@@ -26,9 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekte</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggen</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Keine kürzlich verwendeten Emojis gefunden. Sobald Sie Emojis verwendet haben erscheinen diese hier.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt, um diese wieder aus dieser Ansicht zu entfernen!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} wurde von den kürzlich verwendeten Emojis entfernt</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Keine kürzlich verwendeten Emojis. Sobald Emojis getippt werden, erscheinen diese hier.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt um diese wieder aus der Ansicht zu entfernen!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} wurde aus \"kürzlich verwendeten Emojis\" entfernt</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Schaltet mit einem Klick zwischen Wortvorschlägen und Schnellzugriffsleiste um.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Textbearbeitung verlassen.</string>
@@ -104,8 +104,9 @@
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
     <string name="settings__theme_editor__rule_element">Zielelement</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
-    <string name="settings__theme_editor__rule_modes">Modi</string>
     <string name="settings__theme_editor__rule_selectors">Selektoren</string>
+    <string name="settings__theme_editor__add_code">Key code hinzufügen</string>
+    <string name="settings__theme_editor__edit_code">Key code bearbeiten</string>
     <string name="settings__theme_editor__no_codes_defined">Regel auf alle Zielelemente anwenden.</string>
     <string name="settings__theme_editor__codes_defined">Regel nur auf Zielelemente mit folgenden Codes anwenden:</string>
     <string name="settings__theme_editor__code_already_exists">Dieser Tastencode ist bereits definiert.</string>
@@ -113,6 +114,8 @@
     <string name="settings__theme_editor__code_help_text">Alternativ werden die folgenden Links helfen die korrespondierenden Codes zu finden:</string>
     <string name="settings__theme_editor__code_placeholder">Code</string>
     <string name="settings__theme_editor__code_recording_help_text">Um den Code einer Taste zu ermitteln, verwenden Sie die Schaltfläche neben dem Code-Eingabefeld. Sobald sie aktiviert ist, zeichnet sie den nächsten Tastendruck auf und fügt den Code in das Eingabefeld ein.</string>
+    <string name="settings__theme_editor__code_recording_started">Key code aufnahme gestartet</string>
+    <string name="settings__theme_editor__code_recording_stopped">Key code aufnahme beendet</string>
     <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} muss die standard Tastatur-App sein, um eine Taste aufzunehmen</string>
     <string name="settings__theme_editor__code_recording_placeholder">Aufnahme läuft…</string>
     <string name="settings__theme_editor__add_property">Eigenschaft hinzufügen</string>
@@ -139,6 +142,7 @@
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
     <string name="snygg__rule_element__smartbar_secondary_row">Smartbar Sekundärleiste</string>
     <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primäre Aktionszeile Schalter</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar sekundäre Aktionen umschalten</string>
     <string name="snygg__rule_element__smartbar_quick_action">Smartbar Schnellzugriff</string>
     <string name="snygg__rule_element__smartbar_key">Smartbartaste</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar Wortkandidat</string>
@@ -243,6 +247,8 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Akzente in Popups</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Fügt Akzente zu Symbol-Popups des Standart Layout hinzu</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zu Buchstaben zurück</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
@@ -251,9 +257,11 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Tausche Schalter für Zugriffsleisten</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Vertauscht die Schnellzugriffs-Leisten</string>
     <string name="pref__smartbar__any_row_type__label" comment="Preference title">Reihenlayout</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primäre Aktion</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatisch aus-/einklappen</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Klappt die primäre Aktionsleiste abhängig vom aktuellen Status automatisch ein/aus</string>
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundäre Aktionen</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zweite Navigationsleiste anzeigen</string>
     <!-- Typing strings -->
@@ -309,6 +317,7 @@
     <string name="pref__glide_trail_fade_duration">Ausblendzeit der Spur</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Löschtaste löscht ganzes Wort nach Glide-Typing-Eingabe</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Allgemeine Gesten</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere Gesten / Gesten Schwellenwerte</string>
@@ -321,6 +330,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Leertaste nach rechts wischen</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Leertaste lang drücken</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Löschtaste nach links wischen</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Aktion bei lang gedrückter Löschtaste</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Gesten-Distanzschwelle</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Erweitert</string>
@@ -333,6 +343,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zeige die App in der Übersicht</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privaten Modus erzwingen</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Deaktiviert Funktionen die mit Eingabedaten arbeiten</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rechtschreibprüfung</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Verwende Tastatur-Rechtschreibprüfung-Konfiguration</string>
@@ -493,6 +504,8 @@
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Zeigt das aktuell aktive Element der Zwischenablage</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Zeige Rechtschreibprüfungs-Overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Blendet die aktuellen Ergebnisse der Rechtschreibprüfung fürs Debugging ein</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Tastendruck-Umrandungen einschalten</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Umrandet die gedrückte Taste in Rot</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Interne Benutzerwörterbuch-Datenbank leeren</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Leert alle Wörter von der Wörterbuch-Datenbank</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\"-Einstellung zurücksetzen</string>
@@ -640,9 +653,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, ist immer das Hinweissymbol, oder der primäre Akzent, wenn kein Hinweissymbol verfügbar ist</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Intelligente Priorisierung</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, wird je nach Sprache und Layout dynamisch, entweder als Hauptakzent oder als Hinweissymbol festgelegt</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Feststelltaste</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Feststelltaste</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nie anzeigen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch anzeigen</string>
@@ -660,6 +670,9 @@
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Ende unten</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Anfang unten</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Schnellzugriffe</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Sortierbare Schnellaktionen im Zeilenformat mit Überlaufmenu</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Werkzeuge für die Zwischenablage</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Zeile mit am meisten genutzen Zwischenablage und Cursor-bewegungs Werkzeugen</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Einfach</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Nur Farbeigenschaften werden angezeigt. Eigenschaften und Regeln werden übersetzt.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Erweitert</string>
@@ -671,8 +684,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Keine Aktion</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Wechsle zum vorherigen Tastaturmodus</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Wechsle zum nächsten Tastaturmodus</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Löscht einzelne Zeichen</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Zeichen einzeln löschen</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Aktuelles Wort löschen</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Löscht ganze Wörter</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Ganzes Wort löschen</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Tastatur ausblenden</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Leerzeichen einfügen</string>
@@ -694,6 +708,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Wechsle zur vorherigen Tastatur</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Wechsle zum vorherigen Subtyp</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Wechsle zum nächsten Subtyp</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Smartbar sichtbarkeit umschalten</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Immer Tag</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Immer Nacht</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">System-Design folgen</string>

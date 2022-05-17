@@ -98,12 +98,12 @@ class SnyggRuleTest : FunSpec({
                     SnyggRule(element = "test", groups = listOf(11)),
                 ),
                 row(
-                    SnyggRule(element = "test", modes = listOf(0)),
-                    SnyggRule(element = "test", modes = listOf(1)),
+                    SnyggRule(element = "test", shiftStates = listOf(0)),
+                    SnyggRule(element = "test", shiftStates = listOf(1)),
                 ),
                 row(
-                    SnyggRule(element = "test", codes = listOf(32), modes = listOf(0)),
-                    SnyggRule(element = "test", codes = listOf(32), modes = listOf(1)),
+                    SnyggRule(element = "test", codes = listOf(32), shiftStates = listOf(0)),
+                    SnyggRule(element = "test", codes = listOf(32), shiftStates = listOf(1)),
                 ),
                 row(
                     SnyggRule(element = "test", pressedSelector = false),
@@ -196,34 +196,34 @@ class SnyggRuleTest : FunSpec({
                 false,
             ),
             row(
-                SnyggRule(element = "test", modes = listOf(0, 1, 2)),
-                SnyggRule(element = "test", modes = listOf(0, 1, 2)),
+                SnyggRule(element = "test", shiftStates = listOf(0, 1, 2)),
+                SnyggRule(element = "test", shiftStates = listOf(0, 1, 2)),
                 true,
             ),
             row(
-                SnyggRule(element = "test", modes = listOf()),
-                SnyggRule(element = "test", modes = listOf(0)),
+                SnyggRule(element = "test", shiftStates = listOf()),
+                SnyggRule(element = "test", shiftStates = listOf(0)),
                 false,
             ),
 
             row(
-                SnyggRule(element = "test", modes = listOf(0, 1, 2)),
-                SnyggRule(element = "test", modes = listOf(0, 1, 2)),
+                SnyggRule(element = "test", shiftStates = listOf(0, 1, 2)),
+                SnyggRule(element = "test", shiftStates = listOf(0, 1, 2)),
                 true,
             ),
             row(
-                SnyggRule(element = "test", modes = listOf()),
-                SnyggRule(element = "test", modes = listOf(2)),
+                SnyggRule(element = "test", shiftStates = listOf()),
+                SnyggRule(element = "test", shiftStates = listOf(2)),
                 false,
             ),
             row(
-                SnyggRule(element = "test", modes = listOf(1)),
-                SnyggRule(element = "test", modes = listOf(2)),
+                SnyggRule(element = "test", shiftStates = listOf(1)),
+                SnyggRule(element = "test", shiftStates = listOf(2)),
                 false,
             ),
             row(
-                SnyggRule(element = "system-nav-bar", modes = listOf(2)),
-                SnyggRule(element = "system-nav-bar", modes = listOf(1, 2)),
+                SnyggRule(element = "system-nav-bar", shiftStates = listOf(2)),
+                SnyggRule(element = "system-nav-bar", shiftStates = listOf(1, 2)),
                 false,
             ),
             row(
@@ -234,7 +234,7 @@ class SnyggRuleTest : FunSpec({
 
             row(
                 SnyggRule(element = "test", codes = listOf(10)),
-                SnyggRule(element = "test", modes = listOf(2)),
+                SnyggRule(element = "test", shiftStates = listOf(2)),
                 false,
             ),
         )

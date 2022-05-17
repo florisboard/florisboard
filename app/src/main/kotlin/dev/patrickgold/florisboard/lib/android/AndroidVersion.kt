@@ -20,10 +20,6 @@ import android.os.Build
 
 @Suppress("unused")
 object AndroidVersion {
-    /** Android 7 **/
-    inline val ATLEAST_API24_N get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-    inline val ATMOST_API24_N get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N
-
     /** Android 7.1 **/
     inline val ATLEAST_API25_N_MR1 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
     inline val ATMOST_API25_N_MR1 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1

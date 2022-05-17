@@ -100,7 +100,6 @@
     <string name="settings__theme_editor__rule_element">مؤلفه مورد نظر</string>
     <string name="settings__theme_editor__rule_codes">کد کلیدهای مورد نظر</string>
     <string name="settings__theme_editor__rule_groups">گروه ها</string>
-    <string name="settings__theme_editor__rule_modes">حالت ها</string>
     <string name="settings__theme_editor__rule_selectors">انتخابگرها</string>
     <string name="settings__theme_editor__add_code">افزودن کد کلید</string>
     <string name="settings__theme_editor__edit_code">ویرایش کد کلید</string>
@@ -316,9 +315,6 @@
     <!-- State strings -->
     <string name="state__disabled">غیرفعال شد</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">عادی</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">قفل Shift</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">قفل Caps</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">هرگز نشان نده</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">همیشه نشان بده</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">به صورت پویا نشان بده</string>
@@ -331,7 +327,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">چرخش به حالت صفحه کلید پیشین</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">چرخش به حالت صفحه کلید پسین</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">حذف کردن دقیق حروف</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">حذف کلمه کنونی</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">حذف دقیق‌ کلمات</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">مخفی کردن کیبورد</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">وارد کردن فاصله</string>

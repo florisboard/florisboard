@@ -26,6 +26,12 @@ import java.util.*
  */
 typealias EmojiLayoutDataMap = EnumMap<EmojiCategory, MutableList<EmojiSet>>
 
+val PlaceholderLayoutDataMap = EmojiLayoutDataMap(EmojiCategory::class.java).also { map ->
+    for (category in EmojiCategory.values()) {
+        map[category] = mutableListOf()
+    }
+}
+
 private var cachedEmojiLayoutMap: EmojiLayoutDataMap? = null
 
 /**

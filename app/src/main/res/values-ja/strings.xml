@@ -104,7 +104,6 @@
     <string name="settings__theme_editor__rule_already_exists">このスタイルシートルールはすでに定義されています。</string>
     <string name="settings__theme_editor__rule_element">ターゲット要素</string>
     <string name="settings__theme_editor__rule_groups">グループ</string>
-    <string name="settings__theme_editor__rule_modes">モード</string>
     <string name="settings__theme_editor__rule_selectors">セレクター</string>
     <string name="settings__theme_editor__code_already_exists">このキーコードはすでに定義されています。</string>
     <string name="settings__theme_editor__code_invalid">このキーコードは無効です。 キーコードが、文字の場合は {c_min} から {c_max} の範囲内、内部特殊キーの場合は {i_min} から {i_max} の範囲内にあることを確認してください。</string>

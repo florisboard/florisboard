@@ -350,7 +350,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Det første tegnet som velges etter langt trykk er alltid tipssymbolet eller den primære aksenten hvis det ikke finnes noe tipssymbol</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritisering</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Det første tegnet valgt etter et langt trykk bestemmes dynamisk for å være enten den primære aksenten eller tipssymbolet, basert på gjeldende språk og oppsett</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis alltid</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisk visning</string>
@@ -364,7 +363,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ruller til forrige tastatur-modus</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ruller til neste tastatur-modus</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Slett tegn nøyaktig</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Slett gjeldende ord</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Slett ord nøyaktig</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skjul tastatur</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Sett inn mellomrom</string>
