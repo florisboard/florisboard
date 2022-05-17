@@ -105,6 +105,7 @@
     <string name="settings__theme_editor__rule_element">Élément cible</string>
     <string name="settings__theme_editor__rule_codes">Codes clés de la cible</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
+    <string name="settings__theme_editor__rule_shift_states">États de décalage</string>
     <string name="settings__theme_editor__rule_selectors">Sélecteurs</string>
     <string name="settings__theme_editor__add_code">Ajouter un code clé</string>
     <string name="settings__theme_editor__edit_code">Modifier le code de la clé</string>
@@ -655,6 +656,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorité intelligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est décidé de manière dynamique pour être soit l\'accent principal, soit le symbole de l\'indice, en fonction de la langue et de la disposition actuelles.</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Non décalé</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Verrouillage des majuscules</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ne jamais afficher</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Toujours afficher</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Affichage dynamique</string>
