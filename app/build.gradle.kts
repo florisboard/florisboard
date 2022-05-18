@@ -1,10 +1,29 @@
+/*
+ * Copyright (C) 2022 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Suppress needed until https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed
+@file:Suppress("DSL_SCOPE_VIOLATION")
+
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("plugin.serialization")
-    id("com.google.devtools.ksp")
-    id("com.google.android.gms.oss-licenses-plugin")
-    id("de.mannodermaus.android-junit5")
+    id(libs.plugins.agp.application.get().pluginId)
+    id(libs.plugins.gms.oss.licenses.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.serialization.get().pluginId)
+    id(libs.plugins.ksp.get().pluginId)
+    id(libs.plugins.mannodermaus.android.junit5.get().pluginId)
 }
 
 android {
@@ -84,7 +103,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.get()
     }
 
     externalNativeBuild {
@@ -149,37 +168,37 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.activity:activity-ktx:1.4.0")
-    implementation("androidx.autofill:autofill:1.1.0")
-    implementation("androidx.collection:collection-ktx:1.2.0")
-    implementation("androidx.compose.material:material:1.1.1")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
-    implementation("androidx.compose.ui:ui:1.1.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.core:core-splashscreen:1.0.0-beta02")
-    implementation("androidx.emoji2:emoji2:1.1.0")
-    implementation("androidx.emoji2:emoji2-views:1.1.0")
-    implementation("androidx.navigation:navigation-compose:2.4.2")
-    implementation("com.google.accompanist:accompanist-flowlayout:0.23.1")
-    implementation("com.google.accompanist:accompanist-insets:0.23.1")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta08")
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta08")
-    implementation("dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta08")
-    implementation("io.github.reactivecircus.cache4k:cache4k:0.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    implementation("androidx.room:room-runtime:2.4.2")
-    ksp("androidx.room:room-compiler:2.4.2")
+    implementation(libs.accompanist.flowlayout)
+    implementation(libs.accompanist.insets)
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.autofill)
+    implementation(libs.androidx.collection.ktx)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.emoji2)
+    implementation(libs.androidx.emoji2.views)
+    implementation(libs.androidx.navigation.compose)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.cache4k)
+    implementation(libs.jetpref.datastore.model)
+    implementation(libs.jetpref.datastore.ui)
+    implementation(libs.jetpref.material.ui)
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.serialization.json)
 
-    testImplementation("io.kotest:kotest-runner-junit5:5.2.3")
-    testImplementation("io.kotest:kotest-assertions-core:5.2.3")
-    testImplementation("io.kotest:kotest-property:5.2.3")
-    testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.5.0")
-    testImplementation("nl.jqno.equalsverifier:equalsverifier:3.10")
+    testImplementation(libs.equalsverifier)
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.extensions.roboelectric)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner.junit5)
 
-    androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
-    androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
+    androidTestImplementation(libs.androidx.test.ext)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }
