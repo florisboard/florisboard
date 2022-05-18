@@ -16,8 +16,6 @@
 
 rootProject.name = "FlorisBoard"
 
-enableFeaturePreview("VERSION_CATALOGS")
-
 pluginManagement {
     repositories {
         gradlePluginPortal()

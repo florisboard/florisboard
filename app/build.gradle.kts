@@ -18,12 +18,14 @@
 @file:Suppress("DSL_SCOPE_VIOLATION")
 
 plugins {
-    id(libs.plugins.agp.application.get().pluginId)
+    alias(libs.plugins.agp.application)
+    //alias(libs.plugins.gms.oss.licenses)
+    // Must still use old syntax sadly
     id(libs.plugins.gms.oss.licenses.get().pluginId)
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.serialization.get().pluginId)
-    id(libs.plugins.ksp.get().pluginId)
-    id(libs.plugins.mannodermaus.android.junit5.get().pluginId)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.mannodermaus.android.junit5)
 }
 
 android {
