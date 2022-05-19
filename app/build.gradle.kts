@@ -113,7 +113,7 @@ android {
     }
 
     buildTypes {
-        named("debug").configure {
+        named("debug") {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
 
@@ -131,11 +131,13 @@ android {
             resValue("string", "floris_app_name", "FlorisBoard Debug")
         }
 
-        create("beta") // Needed because by default the "beta" BuildType does not exist
-        named("beta").configure {
+        create("beta") {
             applicationIdSuffix = ".beta"
             versionNameSuffix = "-beta03"
-            proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
+
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            isShrinkResources = true
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
@@ -143,8 +145,10 @@ android {
             resValue("string", "floris_app_name", "FlorisBoard Beta")
         }
 
-        named("release").configure {
-            proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
+        named("release") {
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            isShrinkResources = true
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
