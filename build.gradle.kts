@@ -19,16 +19,9 @@
 
 plugins {
     alias(libs.plugins.agp.application) apply false
-    //alias(libs.plugins.gms.oss.licenses) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.mannodermaus.android.junit5) apply false
-}
-
-buildscript {
-    dependencies {
-        // We currently have to rely on the legacy way of defining plugins
-        classpath("com.google.android.gms:oss-licenses-plugin:${libs.plugins.gms.oss.licenses.get().version}")
-    }
+    alias(libs.plugins.mikepenz.aboutlibraries) apply false
 }

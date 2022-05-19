@@ -1,0 +1,14 @@
+{
+  "uniqueId": "icu4c",
+  "name": "ICU4C Native C library",
+  "developers": [
+    {
+      "name": "The Unicode Consortium",
+      "organisationUrl": "https://github.com/unicode-org"
+    }
+  ],
+  "website": "https://github.com/unicode-org/icu",
+  "licenses": [
+    "icu4c"
+  ]
+}

@@ -19,13 +19,11 @@
 
 plugins {
     alias(libs.plugins.agp.application)
-    //alias(libs.plugins.gms.oss.licenses)
-    // Must still use old syntax sadly
-    id(libs.plugins.gms.oss.licenses.get().pluginId)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.mannodermaus.android.junit5)
+    alias(libs.plugins.mikepenz.aboutlibraries)
 }
 
 android {
@@ -155,6 +153,10 @@ android {
         }
     }
 
+    aboutLibraries {
+        configPath = "app/src/main/config"
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -194,6 +196,8 @@ dependencies {
     implementation(libs.jetpref.material.ui)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.mikepenz.aboutlibraries.core)
+    implementation(libs.mikepenz.aboutlibraries.compose)
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)
