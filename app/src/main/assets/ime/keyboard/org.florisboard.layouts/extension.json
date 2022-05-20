@@ -161,6 +161,13 @@
         "modifier": "org.florisboard.layouts:hebrew"
       },
       {
+        "id": "hindi",
+        "label": "हिन्दी",
+        "authors": [ "Pratyush" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:hindi"
+      },
+      {
         "id": "hungarian",
         "label": "Hungarian",
         "authors": [ "zoli111, gabik65", "patrickgold" ],
@@ -261,13 +268,6 @@
         "authors": [ "M-Koushan" ],
         "direction": "rtl",
         "modifier": "org.florisboard.layouts:persian2"
-      },
-      {
-        "id": "persian3",
-        "label": "Persian3",
-        "authors": [ "SaeID-Rz" ],
-        "direction": "rtl",
-        "modifier": "org.florisboard.layouts:persian3"
       },
       {
         "id": "qwerty",
@@ -417,6 +417,12 @@
         "direction": "rtl"
       },
       {
+        "id": "hindi",
+        "label": "हिन्दी",
+        "authors": ["Pratyush" ],
+        "direction": "ltr"
+      },
+      {
         "id": "jis",
         "label": "JIS",
         "authors": [ "waelwindows" ],
@@ -444,12 +450,6 @@
         "id": "persian2",
         "label": "Persian2",
         "authors": [ "M-Koushan" ],
-        "direction": "rtl"
-      },
-      {
-        "id": "persian3",
-        "label": "Persian3",
-        "authors": [ "SaeID-Rz" ],
         "direction": "rtl"
       }
     ],
