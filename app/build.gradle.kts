@@ -155,6 +155,17 @@ android {
             resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
             resValue("string", "floris_app_name", "@string/app_name")
         }
+
+        create("benchmark") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+
+            ndk {
+                // For running FlorisBoard on the emulator
+                abiFilters += listOf("x86", "x86_64")
+            }
+        }
     }
 
     aboutLibraries {
@@ -192,6 +203,7 @@ dependencies {
     implementation(libs.androidx.emoji2)
     implementation(libs.androidx.emoji2.views)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.cache4k)
