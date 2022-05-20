@@ -102,6 +102,7 @@ private class SubtypeEditorState(init: Subtype?) {
                     secondaryLocales = editor.secondaryLocales.value,
                     composer = editor.composer.value,
                     currencySet = editor.currencySet.value,
+                    punctuationRule = editor.punctuationRule.value,
                     popupMapping = editor.popupMapping.value,
                     layoutMap = editor.layoutMap.value,
                 )
@@ -119,6 +120,7 @@ private class SubtypeEditorState(init: Subtype?) {
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
+    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: SelectComponentName)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
@@ -128,6 +130,7 @@ private class SubtypeEditorState(init: Subtype?) {
         secondaryLocales.value = subtype.secondaryLocales
         composer.value = subtype.composer
         currencySet.value = subtype.currencySet
+        punctuationRule.value = subtype.punctuationRule
         popupMapping.value = subtype.popupMapping
         layoutMap.value = subtype.layoutMap
     }
@@ -147,7 +150,7 @@ private class SubtypeEditorState(init: Subtype?) {
         check(layoutMap.value.phone2 != SelectComponentName)
         Subtype(
             id.value, primaryLocale.value, secondaryLocales.value, composer.value,
-            currencySet.value, popupMapping.value, layoutMap.value,
+            currencySet.value, punctuationRule.value, popupMapping.value, layoutMap.value,
         )
     }
 }

@@ -7,7 +7,7 @@
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Излизане от режима за работа с една ръка.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Преместване на клавиатурата отляво.</string>
-    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Премества клавиатурата отдясно.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Преместване на клавиатурата отдясно.</string>
     <!-- Media strings -->
     <string name="settings__media__title">Емоджи</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Емоджи</string>
@@ -17,11 +17,11 @@
     <string name="prefs__media__emoji_preferred_skin_tone">Предпочитан цвят на кожата за емоджи</string>
     <string name="prefs__media__emoji_preferred_hair_style">Предпочитана прическа за емоджи</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Усмивки и Емоции</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Хора и Тяло</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Животни и Природа</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Усмивки и емоции</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Хора и тяло</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Животни и природа</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Храни и напитки</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Пътуване и Забележителности</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Пътуване и забележителности</string>
     <string name="emoji__category__activities" comment="Emoji category name">Дейности</string>
     <string name="emoji__category__objects" comment="Emoji category name">Предмети</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Символи</string>
@@ -269,7 +269,7 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показвай предложения от услуги за автоматично попълване</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
     <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Време за предложения от междинната памет</string>
@@ -349,11 +349,11 @@
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключва обработката на въвежданите от вас данни</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка на правописа</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Използвай конфигурацията за проверка на правописа от клавиатурата</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Използване на настройката за проверка на правописа от клавиатурата</string>
     <string name="pref__spelling__active_spellchecker__label">Проверка на правописа при въвеждане</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Сгрешените думи няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Няма избрана услуга за автоматично попълване. Докоснете, за да промените.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Опция \"Езици\" в системните настройки за проверка на правописа е сложена на \"Използвай системните езици\". Поради грешка, {app_name} може да не проверява правописа. Препоръчително е да я смените на \"{use_floris_config}\".</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа на текстови полета. Докоснете, за да промените.</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Опция \"Езици\" в системните настройки за проверка на правописа е сложена на \"Използване на системните езици\". Поради дефект, {app_name} може да не проверява правописа. Препоръчително е да я смените на „{use_floris_config}“.</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Настройка</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>

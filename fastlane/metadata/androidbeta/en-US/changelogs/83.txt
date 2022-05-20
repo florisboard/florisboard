@@ -1,0 +1,3 @@
+This release fixes a lot of issues regarding glide typing and the emoji palette view.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.16-beta03
