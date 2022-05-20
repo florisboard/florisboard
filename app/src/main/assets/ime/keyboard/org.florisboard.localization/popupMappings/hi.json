@@ -174,8 +174,8 @@
         "main": { "code": -255, "label": ".com" },
         "relevant": [
           { "code": -255, "label": ".in" },
-          { "code": -255, "label": ".gov" },
-          { "code": -255, "label": ".edu" },
+          { "code": -255, "label": ".gov.in" },
+          { "code": -255, "label": ".ac.in" },
           { "code": -255, "label": ".org" },
           { "code": -255, "label": ".net" }
         ]
