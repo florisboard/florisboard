@@ -1,0 +1,75 @@
+[versions]
+# Main
+accompanist = "0.23.1"
+android-gradle-plugin = "7.2.0"
+androidx-activity = "1.4.0"
+androidx-autofill = "1.1.0"
+androidx-collection = "1.2.0"
+androidx-compose = "1.1.1"
+androidx-core = "1.7.0"
+androidx-core-splashscreen = "1.0.0-beta02"
+androidx-emoji2 = "1.1.0"
+androidx-navigation = "2.4.2"
+androidx-room = "2.4.2"
+cache4k = "0.5.0"
+jetpref = "0.1.0-beta08"
+kotlin = "1.6.10"
+kotlinx-coroutines = "1.6.1"
+kotlinx-serialization-json = "1.3.2"
+ksp = "1.6.10-1.0.4"
+mannodermaus-android-junit5 = "1.8.2.0"
+mikepenz-aboutlibraries = "10.2.0"
+
+# Testing
+androidx-test-ext = "1.1.2"
+androidx-test-espresso = "3.3.0"
+equalsverifier = "3.10"
+kotest = "5.2.3"
+kotest-extensions-roboelectric = "0.5.0"
+
+[libraries]
+# Main
+accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
+accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
+androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidx-autofill" }
+androidx-collection-ktx = { module = "androidx.collection:collection-ktx", version.ref = "androidx-collection" }
+androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose" }
+androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "androidx-compose" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
+androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "androidx-emoji2" }
+androidx-emoji2-views = { module = "androidx.emoji2:emoji2-views", version.ref = "androidx-emoji2" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
+jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "jetpref" }
+jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "jetpref" }
+jetpref-material-ui = { module = "dev.patrickgold.jetpref:jetpref-material-ui", version.ref = "jetpref" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }
+mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "mikepenz-aboutlibraries" }
+
+# Testing
+androidx-test-ext = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
+androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
+equalsverifier = { module = "nl.jqno.equalsverifier:equalsverifier", version.ref = "equalsverifier" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-extensions-roboelectric = { module = "io.kotest.extensions:kotest-extensions-robolectric", version.ref = "kotest-extensions-roboelectric" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+
+[plugins]
+# Main
+agp-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+mannodermaus-android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermaus-android-junit5" }
+mikepenz-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "mikepenz-aboutlibraries" }
