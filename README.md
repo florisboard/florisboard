@@ -84,6 +84,8 @@ to get more information on this topic.
   [Android Jetpack](https://github.com/androidx)
 * [Accompanist Compose UI libraries](https://github.com/google/accompanist/) by
   [Google](https://github.com/google)
+* [AboutLibraries](https://github.com/mikepenz/AboutLibraries) by
+  [mikepenz](https://github.com/mikepenz)
 * [Google Material icons](https://github.com/google/material-design-icons) by
   [Google](https://github.com/google)
 * [JetPref preference library](https://github.com/patrickgold/jetpref) by

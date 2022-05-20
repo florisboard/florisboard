@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
@@ -762,6 +763,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         val currencySets = MutableLiveData<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
         val layouts = MutableLiveData<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
         val popupMappings = MutableLiveData<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
+        val punctuationRules = MutableLiveData<Map<ExtensionComponentName, PunctuationRule>>(emptyMap())
         val subtypePresets = MutableLiveData<List<SubtypePreset>>(emptyList())
 
         val anyChanged = MutableLiveData(Unit)
@@ -777,6 +779,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val localCurrencySets = mutableMapOf<ExtensionComponentName, CurrencySet>()
             val localLayouts = mutableMapOf<LayoutType, MutableMap<ExtensionComponentName, LayoutArrangementComponent>>()
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
+            val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
             val localSubtypePresets = mutableListOf<SubtypePreset>()
             for (layoutType in LayoutType.values()) {
                 localLayouts[layoutType] = mutableMapOf()
@@ -796,6 +799,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 keyboardExtension.popupMappings.forEach { popupMapping ->
                     localPopupMappings[ExtensionComponentName(keyboardExtension.meta.id, popupMapping.id)] = popupMapping
                 }
+                keyboardExtension.punctuationRules.forEach { punctuationRule ->
+                    localPunctuationRules[ExtensionComponentName(keyboardExtension.meta.id, punctuationRule.id)] = punctuationRule
+                }
                 localSubtypePresets.addAll(keyboardExtension.subtypePresets)
             }
             localSubtypePresets.sortBy { it.locale.displayName() }
@@ -810,6 +816,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             currencySets.postValue(localCurrencySets)
             layouts.postValue(localLayouts)
             popupMappings.postValue(localPopupMappings)
+            punctuationRules.postValue(localPunctuationRules)
             anyChanged.postValue(Unit)
         }
     }

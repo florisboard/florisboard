@@ -25,6 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -79,7 +80,9 @@ import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -87,7 +90,6 @@ import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
@@ -133,8 +135,9 @@ fun EmojiPaletteView(
         }
     }
     val metadataVersion = activeEditorInfo.emojiCompatMetadataVersion
-    val emojiCompatInstance = tryOrNull { EmojiCompat.get().takeIf { it.loadState == EmojiCompat.LOAD_STATE_SUCCEEDED } }
-    val emojiMappings = remember(emojiCompatInstance, metadataVersion, systemFontPaint) {
+    val replaceAll = activeEditorInfo.emojiCompatReplaceAll
+    val emojiCompatInstance by FlorisEmojiCompat.getAsFlow(replaceAll).collectAsState()
+    val emojiMappings = remember(emojiCompatInstance, fullEmojiMappings, metadataVersion, systemFontPaint) {
         fullEmojiMappings.mapValues { (_, emojiSetList) ->
             emojiSetList.mapNotNull { emojiSet ->
                 emojiSet.emojis.filter { emoji ->
@@ -248,6 +251,7 @@ private fun EmojiCategoriesTabRow(
     activeCategory: EmojiCategory,
     onCategoryChange: (EmojiCategory) -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
     val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
     val unselectedContentColor = tabStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
@@ -273,7 +277,10 @@ private fun EmojiCategoriesTabRow(
     ) {
         for (category in EmojiCategoryValues) {
             Tab(
-                onClick = { onCategoryChange(category) },
+                onClick = {
+                    inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                    onCategoryChange(category)
+                },
                 selected = activeCategory == category,
                 icon = { Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
@@ -298,19 +305,24 @@ private fun EmojiKey(
     onEmojiInput: (Emoji) -> Unit,
     onLongPress: (Emoji) -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
-            .height(FlorisImeSizing.smartbarHeight)
+            .aspectRatio(1f)
             .pointerInput(Unit) {
                 detectTapGestures(
+                    onPress = {
+                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                    },
                     onTap = {
                         onEmojiInput(base)
                     },
                     onLongPress = {
+                        inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
                         onLongPress(base)
                         if (variations.isNotEmpty()) {
                             showVariantsBox = true
