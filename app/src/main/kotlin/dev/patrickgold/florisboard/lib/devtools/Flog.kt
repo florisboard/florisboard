@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.lib.devtools
 import android.content.Context
 import android.util.Log
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.devtools.Flog.OUTPUT_CONSOLE
 import dev.patrickgold.florisboard.lib.devtools.Flog.createTag
 import dev.patrickgold.florisboard.lib.devtools.Flog.getStacktraceElement
@@ -62,7 +61,7 @@ inline fun flogError(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = 
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     if (Flog.checkShouldFlog(topic, Flog.LEVEL_ERROR)) {
-        Flog.log(Flog.LEVEL_ERROR, block())
+        log(Flog.LEVEL_ERROR, block())
     }
 }
 
@@ -91,7 +90,7 @@ inline fun flogWarning(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String 
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     if (Flog.checkShouldFlog(topic, Flog.LEVEL_WARNING)) {
-        Flog.log(Flog.LEVEL_WARNING, block())
+        log(Flog.LEVEL_WARNING, block())
     }
 }
 
@@ -120,7 +119,7 @@ inline fun flogInfo(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     if (Flog.checkShouldFlog(topic, Flog.LEVEL_INFO)) {
-        Flog.log(Flog.LEVEL_INFO, block())
+        log(Flog.LEVEL_INFO, block())
     }
 }
 
@@ -149,7 +148,7 @@ inline fun flogDebug(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = 
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     if (Flog.checkShouldFlog(topic, Flog.LEVEL_DEBUG)) {
-        Flog.log(Flog.LEVEL_DEBUG, block())
+        log(Flog.LEVEL_DEBUG, block())
     }
 }
 
@@ -178,7 +177,7 @@ inline fun flogWtf(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { 
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     if (Flog.checkShouldFlog(topic, Flog.LEVEL_WTF)) {
-        Flog.log(Flog.LEVEL_WTF, block())
+        log(Flog.LEVEL_WTF, block())
     }
 }
 
@@ -230,9 +229,6 @@ object Flog {
 
     /** The maximum log length limit. */
     private const val MAX_LOG_LENGTH: Int =         4000
-
-    /** The maximum tag length limit. */
-    private const val MAX_TAG_LENGTH: Int =         23
 
     private var applicationContext: WeakReference<Context> = WeakReference(null)
     private var isFloggingEnabled: Boolean = false
@@ -289,12 +285,7 @@ object Flog {
     private fun createTag(element: StackTraceElement): String {
         var tag = element.className
         tag = tag.substring(tag.lastIndexOf('.') + 1)
-        // Tag length limit was removed in API 24.
-        return if (tag.length <= MAX_TAG_LENGTH || AndroidVersion.ATLEAST_API24_N) {
-            tag
-        } else {
-            tag.substring(0, MAX_TAG_LENGTH)
-        }
+        return tag
     }
 
     private fun createMessage(element: StackTraceElement, msg: String): String {

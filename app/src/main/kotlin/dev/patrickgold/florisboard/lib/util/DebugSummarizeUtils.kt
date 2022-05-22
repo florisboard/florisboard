@@ -21,7 +21,6 @@ import android.text.InputType
 import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.inputmethod.EditorInfoCompat
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import kotlin.reflect.KClass
 
 private const val SECTION_SEPARATOR = "---"
@@ -41,11 +40,7 @@ fun EditorInfo.debugSummarize(): String {
         append("contentMimeTypes: ").appendLine(EditorInfoCompat.getContentMimeTypes(info).contentToString())
         append("extras: ").appendLine(info.extras?.debugSummarize() ?: "(null)")
         append("hintLocales: ").also {
-            if (AndroidVersion.ATLEAST_API24_N) {
-                appendLine(info.hintLocales?.toLanguageTags() ?: "(null)")
-            } else {
-                appendLine("(null)")
-            }
+            appendLine(info.hintLocales?.toLanguageTags() ?: "(null)")
         }
         append("hintText: ").appendLine(info.hintText ?: "(null)")
         appendLine(SECTION_SEPARATOR)

@@ -13,10 +13,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="dev.patrickgold.florisboard">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -46,14 +44,16 @@
         android:theme="@style/FlorisAppTheme"
         tools:targetApi="s">
 
+        <!-- Allow app to be profiled for benchmarking and baseline profile generation -->
+        <profileable android:shell="true"/>
+
         <!-- IME service -->
         <service
             android:name="dev.patrickgold.florisboard.FlorisImeService"
             android:label="@string/floris_app_name"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:directBootAware="true"
-            android:exported="true"
-            tools:targetApi="n">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.view.InputMethod"/>
             </intent-filter>
@@ -105,7 +105,7 @@
 
         <!-- Import File Bridging Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.app.ui.ext.ImportFileActivity"
+            android:name="dev.patrickgold.florisboard.app.ext.ImportFileActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:launchMode="singleTask"
@@ -123,7 +123,7 @@
 
         <!-- Crash Dialog Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.crashutility.CrashDialogActivity"
+            android:name="dev.patrickgold.florisboard.lib.crashutility.CrashDialogActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>
@@ -145,6 +145,17 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
+        </provider>
+
+        <!-- Disable default EmojiCompat initializer -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                tools:node="remove"/>
         </provider>
 
     </application>

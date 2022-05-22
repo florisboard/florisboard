@@ -3,7 +3,7 @@ src=".github/repo_icon.png" alt="App icon">
 
 # FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
 
-**FlorisBoard** is a free and open-source keyboard for Android 6.0+
+**FlorisBoard** is a free and open-source keyboard for Android 7.0+
 devices. It aims at being modern, user-friendly and customizable while
 fully respecting your privacy. Currently in early-beta state.
 
@@ -84,6 +84,8 @@ to get more information on this topic.
   [Android Jetpack](https://github.com/androidx)
 * [Accompanist Compose UI libraries](https://github.com/google/accompanist/) by
   [Google](https://github.com/google)
+* [AboutLibraries](https://github.com/mikepenz/AboutLibraries) by
+  [mikepenz](https://github.com/mikepenz)
 * [Google Material icons](https://github.com/google/material-design-icons) by
   [Google](https://github.com/google)
 * [JetPref preference library](https://github.com/patrickgold/jetpref) by

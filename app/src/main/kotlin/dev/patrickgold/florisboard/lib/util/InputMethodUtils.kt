@@ -31,6 +31,16 @@ private const val DELIMITER = ':'
 private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisImeService"
 
 object InputMethodUtils {
+    fun isFlorisboardEnabled(context: Context): Boolean {
+        val enabledImeList = AndroidSettings.Secure.getString(context, Settings.Secure.ENABLED_INPUT_METHODS)
+        return enabledImeList != null && parseIsFlorisboardEnabled(context, enabledImeList)
+    }
+
+    fun isFlorisboardSelected(context: Context): Boolean {
+        val selectedIme = AndroidSettings.Secure.getString(context, Settings.Secure.DEFAULT_INPUT_METHOD)
+        return selectedIme != null && parseIsFlorisboardSelected(context, selectedIme)
+    }
+
     @Composable
     fun observeIsFlorisboardEnabled(
         context: Context = LocalContext.current.applicationContext,

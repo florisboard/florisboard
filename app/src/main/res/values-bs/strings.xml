@@ -80,7 +80,6 @@
     <!-- State strings -->
     <string name="state__disabled">Onemogućeno</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normalno</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikad ne prikaži</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Uvijek prikaži</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Prikaži dinamički</string>
@@ -88,7 +87,6 @@
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mod za lijevu ruku</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mod za desnu ruku</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Bez akcije</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Obriši trenutnu riječ</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Sakrij tastaturu</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Unesi razmak</string>
     <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Pomjeri kursor gore</string>

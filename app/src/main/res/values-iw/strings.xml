@@ -174,7 +174,6 @@
     <!-- State strings -->
     <string name="state__disabled">כבוי</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">רגיל</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">לעולם אל תציג</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">הצג תמיד</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">להציג באופן דינמי</string>
@@ -183,7 +182,6 @@
     <string name="enum__one_handed_mode__end" comment="Enum value label">מצב ליד ימין</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">ללא פעולה</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">מחיקת תווים בקפדנות</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">מחק מילה נוכחית</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">מחיקת מילים בקפדנות</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">הסתר מקשים</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">הכנס רווח</string>

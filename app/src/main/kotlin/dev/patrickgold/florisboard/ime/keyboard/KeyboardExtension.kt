@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.lib.ext.Extension
@@ -35,6 +36,7 @@ data class KeyboardExtension(
     val composers: List<Composer> = listOf(),
     val currencySets: List<CurrencySet> = listOf(),
     val layouts: Map<String, List<LayoutArrangementComponent>> = mapOf(),
+    val punctuationRules: List<PunctuationRule> = listOf(),
     val popupMappings: List<PopupMappingComponent> = listOf(),
     val subtypePresets: List<SubtypePreset> = listOf(),
 ) : Extension() {
@@ -74,6 +76,14 @@ inline fun extCoreCurrencySet(id: String): ExtensionComponentName {
 inline fun extCoreLayout(id: String): ExtensionComponentName {
     return ExtensionComponentName(
         extensionId = "org.florisboard.layouts",
+        componentId = id,
+    )
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun extCorePunctuationRule(id: String): ExtensionComponentName {
+    return ExtensionComponentName(
+        extensionId = "org.florisboard.localization",
         componentId = id,
     )
 }

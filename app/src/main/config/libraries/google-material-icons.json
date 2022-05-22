@@ -1,0 +1,14 @@
+{
+  "uniqueId": "google-material-icons",
+  "name": "Google Material Icons",
+  "developers": [
+    {
+      "name": "Google Inc.",
+      "organisationUrl": "https://github.com/google"
+    }
+  ],
+  "website": "https://github.com/google/material-design-icons",
+  "licenses": [
+    "Apache-2.0"
+  ]
+}

@@ -63,22 +63,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
-import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
+import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
@@ -89,6 +88,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
+import dev.patrickgold.florisboard.lib.kotlin.getKeyByValue
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.snygg.SnyggRule
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
@@ -125,9 +125,18 @@ internal fun EditRuleDialog(
     val codes = rememberSaveable(saver = IntListSaver) { initRule.codes.toMutableStateList() }
     var editCodeDialogValue by rememberSaveable { mutableStateOf<Int?>(null) }
     val groups = rememberSaveable(saver = IntListSaver) { initRule.groups.toMutableStateList() }
-    var modeNormal by rememberSaveable { mutableStateOf(initRule.modes.contains(InputMode.NORMAL.value)) }
-    var modeShiftLock by rememberSaveable { mutableStateOf(initRule.modes.contains(InputMode.SHIFT_LOCK.value)) }
-    var modeCapsLock by rememberSaveable { mutableStateOf(initRule.modes.contains(InputMode.CAPS_LOCK.value)) }
+    var shiftStateUnshifted by rememberSaveable {
+        mutableStateOf(initRule.shiftStates.contains(InputShiftState.UNSHIFTED.value))
+    }
+    var shiftStateShiftedManual by rememberSaveable {
+        mutableStateOf(initRule.shiftStates.contains(InputShiftState.SHIFTED_MANUAL.value))
+    }
+    var shiftStateShiftedAutomatic by rememberSaveable {
+        mutableStateOf(initRule.shiftStates.contains(InputShiftState.SHIFTED_AUTOMATIC.value))
+    }
+    var shiftStateCapsLock by rememberSaveable {
+        mutableStateOf(initRule.shiftStates.contains(InputShiftState.CAPS_LOCK.value))
+    }
     var pressedSelector by rememberSaveable { mutableStateOf(initRule.pressedSelector) }
     var focusSelector by rememberSaveable { mutableStateOf(initRule.focusSelector) }
     var disabledSelector by rememberSaveable { mutableStateOf(initRule.disabledSelector) }
@@ -151,10 +160,11 @@ internal fun EditRuleDialog(
                     element = possibleElementNames[elementsSelectedIndex],
                     codes = codes.toList(),
                     groups = groups.toList(),
-                    modes = buildList {
-                        if (modeNormal) { add(InputMode.NORMAL.value) }
-                        if (modeShiftLock) { add(InputMode.SHIFT_LOCK.value) }
-                        if (modeCapsLock) { add(InputMode.CAPS_LOCK.value) }
+                    shiftStates = buildList {
+                        if (shiftStateUnshifted) { add(InputShiftState.UNSHIFTED.value) }
+                        if (shiftStateShiftedManual) { add(InputShiftState.SHIFTED_MANUAL.value) }
+                        if (shiftStateShiftedAutomatic) { add(InputShiftState.SHIFTED_AUTOMATIC.value) }
+                        if (shiftStateCapsLock) { add(InputShiftState.CAPS_LOCK.value) }
                     },
                     pressedSelector = pressedSelector,
                     focusSelector = focusSelector,
@@ -258,33 +268,47 @@ internal fun EditRuleDialog(
                 }
             }
 
-            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_modes)) {
-                Row(modifier = Modifier.florisHorizontalScroll()) {
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
+                FlowRow(mainAxisSpacing = 4.dp) {
                     FlorisChip(
-                        onClick = { modeNormal = !modeNormal },
-                        modifier = Modifier.padding(end = 4.dp),
+                        onClick = { shiftStateUnshifted = !shiftStateUnshifted },
                         text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember { "m:${InputMode.NORMAL.toString().lowercase()}" }
-                            else -> stringRes(R.string.enum__input_mode__normal)
+                            SnyggLevel.DEVELOPER -> remember {
+                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.UNSHIFTED.value)
+                            }
+                            else -> stringRes(R.string.enum__input_shift_state__unshifted)
                         },
-                        color = if (modeNormal) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        color = if (shiftStateUnshifted) MaterialTheme.colors.primaryVariant else Color.Unspecified,
                     )
                     FlorisChip(
-                        onClick = { modeShiftLock = !modeShiftLock },
-                        modifier = Modifier.padding(end = 4.dp),
+                        onClick = { shiftStateShiftedManual = !shiftStateShiftedManual },
                         text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember { "m:${InputMode.SHIFT_LOCK.toString().lowercase()}" }
-                            else -> stringRes(R.string.enum__input_mode__shift_lock)
+                            SnyggLevel.DEVELOPER -> remember {
+                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.SHIFTED_MANUAL.value)
+                            }
+                            else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
                         },
-                        color = if (modeShiftLock) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        color = if (shiftStateShiftedManual) MaterialTheme.colors.primaryVariant else Color.Unspecified,
                     )
                     FlorisChip(
-                        onClick = { modeCapsLock = !modeCapsLock },
+                        onClick = { shiftStateShiftedAutomatic = !shiftStateShiftedAutomatic },
                         text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember { "m:${InputMode.CAPS_LOCK.toString().lowercase()}" }
-                            else -> stringRes(R.string.enum__input_mode__caps_lock)
+                            SnyggLevel.DEVELOPER -> remember {
+                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.SHIFTED_AUTOMATIC.value)
+                            }
+                            else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
                         },
-                        color = if (modeCapsLock) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        color = if (shiftStateShiftedAutomatic) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                    )
+                    FlorisChip(
+                        onClick = { shiftStateCapsLock = !shiftStateCapsLock },
+                        text = when (level) {
+                            SnyggLevel.DEVELOPER -> remember {
+                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.CAPS_LOCK.value)
+                            }
+                            else -> stringRes(R.string.enum__input_shift_state__caps_lock)
+                        },
+                        color = if (shiftStateCapsLock) MaterialTheme.colors.primaryVariant else Color.Unspecified,
                     )
                 }
             }
@@ -367,13 +391,13 @@ private fun EditCodeValueDialog(
     if (isRecordingKey) {
         DisposableEffect(Unit) {
             val receiver = object : InputKeyEventReceiver {
-                override fun onInputKeyDown(ev: InputKeyEvent) = Unit
-                override fun onInputKeyUp(ev: InputKeyEvent) {
-                    inputCodeString = ev.data.code.toString()
+                override fun onInputKeyDown(data: KeyData) = Unit
+                override fun onInputKeyUp(data: KeyData) {
+                    inputCodeString = data.code.toString()
                     isRecordingKey = false
                 }
-                override fun onInputKeyRepeat(ev: InputKeyEvent) = Unit
-                override fun onInputKeyCancel(ev: InputKeyEvent) = Unit
+                override fun onInputKeyRepeat(data: KeyData) = Unit
+                override fun onInputKeyCancel(data: KeyData) = Unit
             }
             val defaultReceiver = keyboardManager.inputEventDispatcher.keyEventReceiver
             keyboardManager.inputEventDispatcher.keyEventReceiver = receiver
@@ -550,7 +574,7 @@ private fun TextKeyDataPreviewBox(
     val label = remember(data) { evaluator.computeLabel(data) }
     val iconId = remember(data) { evaluator.computeIconResId(data) }
     val displayName = remember(data) {
-        if (data.code > 0 && AndroidVersion.ATLEAST_API24_N) {
+        if (data.code > 0) {
             UCharacter.getName(data.code) ?: UCharacter.getExtendedName(data.code)
         } else {
             data.label

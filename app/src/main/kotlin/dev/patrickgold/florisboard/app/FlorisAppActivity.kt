@@ -21,7 +21,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -70,7 +69,6 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
-    private var isDatastoreReady by mutableStateOf(false)
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
@@ -79,8 +77,10 @@ class FlorisAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
-        prefs.datastoreReadyStatus.observe(this) {
-            isDatastoreReady = it
+        prefs.datastoreReadyStatus.observe(this) { ready ->
+            if (ready) {
+                AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+            }
         }
         prefs.advanced.settingsTheme.observe(this) {
             appTheme = it
@@ -96,7 +96,6 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
-        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
@@ -129,7 +128,6 @@ class FlorisAppActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun AppContent() {
         val navController = rememberNavController()

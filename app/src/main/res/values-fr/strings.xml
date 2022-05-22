@@ -105,7 +105,7 @@
     <string name="settings__theme_editor__rule_element">Élément cible</string>
     <string name="settings__theme_editor__rule_codes">Codes clés de la cible</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
-    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_shift_states">États de décalage</string>
     <string name="settings__theme_editor__rule_selectors">Sélecteurs</string>
     <string name="settings__theme_editor__add_code">Ajouter un code clé</string>
     <string name="settings__theme_editor__edit_code">Modifier le code de la clé</string>
@@ -317,6 +317,8 @@
     <string name="pref__glide_trail_fade_duration">Temps de fondu du parcours de glissement</string>
     <string name="pref__glide_preview_refresh_delay">Délai d\'actualisation de l\'aperçu</string>
     <string name="pref__glide__show_preview">Afficher l\'aperçu lors de la saisie en glissant</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Toujours supprimer le mot</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Appuyer sur supprimer juste après un glissement supprime le mot entier</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestes généraux</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestes sur la barre d\'espace</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Autres gestes / Seuils des gestes</string>
@@ -329,6 +331,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Glisser de la barre d\'espace vers la droite</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Appui long sur la barre d\'espace</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Glisser de la touche de suppression vers la gauche</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Touche de suppression pression longue</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Seuil de vitesse de glissement</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Seuil de la distance de glissement</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avancé</string>
@@ -500,8 +503,12 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Afficher en superposé l\'utilisation de mémoire tas et sa taille maximale dans le coin haut droit</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Afficher l\'attache principale</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Superposer l\'attache principale actuelle du presse-papiers</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Afficher la superposition de l\'état de l\'entrée</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Superpose l\'état actuel de l\'entrée pour le débogage</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Afficher la superposition d\'orthographe</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Superpose les résultats d\'orthographe actuels pour le débogage</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Afficher les limites des touches</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Soulignez en rouge les limites des touches clés</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Effacer la base de données du dictionnaire utilisateur interne</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Efface tous les mots de la table de la base de données du dictionnaire</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Réinitialisation du drapeau \"{flag_name}\"</string>
@@ -649,9 +656,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorité intelligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est décidé de manière dynamique pour être soit l\'accent principal, soit le symbole de l\'indice, en fonction de la langue et de la disposition actuelles.</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Verr Maj</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Verr Maj</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Non décalé</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Verrouillage des majuscules</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ne jamais afficher</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Toujours afficher</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Affichage dynamique</string>
@@ -683,8 +689,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Aucune action</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passer au mode de clavier précédent</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passer au mode de clavier suivant</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Effacer le caractère précédant le curseur</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Effacer les caractères avec précision</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Supprimer le mot courant</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Effacer le mot précédant le curseur</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Supprimer les mots avec précision</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Masquer le clavier</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Insérer une espace</string>
@@ -706,6 +713,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Passer au clavier précédent</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Passer à la disposition précédente</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Passer à la disposition suivante</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Modifier la visibilité de la barre intelligente</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Toujours clair</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Toujours sombre</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Suivre le système</string>

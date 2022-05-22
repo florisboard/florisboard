@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.media
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -31,6 +32,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,11 +48,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.core.InputKeyEvent
+import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
+import dev.patrickgold.florisboard.ime.media.emoji.PlaceholderLayoutDataMap
 import dev.patrickgold.florisboard.ime.media.emoji.parseRawEmojiSpecsFile
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
@@ -58,15 +61,19 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun MediaInputLayout(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
+
+    var emojiLayoutDataMap by remember { mutableStateOf(PlaceholderLayoutDataMap) }
+    LaunchedEffect(Unit) {
+        emojiLayoutDataMap = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt")
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Column(
@@ -76,7 +83,7 @@ fun MediaInputLayout(
         ) {
             EmojiPaletteView(
                 modifier = Modifier.weight(1f),
-                fullEmojiMappings = parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt"),
+                fullEmojiMappings = emojiLayoutDataMap,
             )
             Row(
                 modifier = Modifier
@@ -111,6 +118,7 @@ internal fun KeyboardLikeButton(
     keyData: KeyData,
     content: @Composable RowScope.() -> Unit,
 ) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     var isPressed by remember { mutableStateOf(false) }
     val keyStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.EmojiKey,
@@ -124,18 +132,14 @@ internal fun KeyboardLikeButton(
                     awaitPointerEventScope {
                         awaitFirstDown(requireUnconsumed = false).also { it.consumeDownChange() }
                         isPressed = true
-                        inputEventDispatcher.send(InputKeyEvent.down(keyData))
-                        val repeatedAction = launch {
-                            delay(300)
-                            inputEventDispatcher.send(InputKeyEvent.repeat(keyData))
-                        }
+                        inputEventDispatcher.sendDown(keyData)
+                        inputFeedbackController.keyPress(keyData)
                         val up = waitForUpOrCancellation()
-                        repeatedAction.cancel()
                         isPressed = false
                         if (up != null) {
-                            inputEventDispatcher.send(InputKeyEvent.up(keyData))
+                            inputEventDispatcher.sendUp(keyData)
                         } else {
-                            inputEventDispatcher.send(InputKeyEvent.cancel(keyData))
+                            inputEventDispatcher.sendCancel(keyData)
                         }
                     }
                 }

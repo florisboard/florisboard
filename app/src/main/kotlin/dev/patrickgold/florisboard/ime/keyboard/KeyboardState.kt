@@ -18,11 +18,10 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.view.inputmethod.EditorInfo
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.text.key.InputMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.util.concurrent.atomic.AtomicInteger
@@ -43,8 +42,7 @@ import kotlin.properties.Delegates
  * ---------|----------|----------|----------|---------------------------------
  *          |          |          |     1111 | Active [KeyboardMode]
  *          |          |          | 1111     | Active [KeyVariation]
- *          |          |        1 |          | Shift lock flag (shift and caps combined is InputMode id)
- *          |          |       1  |          | Caps lock flag
+ *          |          |       11 |          | InputShiftState
  *          |          |      1   |          | Is selection active (length > 0)
  *          |          |     1    |          | Is manual selection mode
  *          |          |    1     |          | Is manual selection mode (start)
@@ -59,28 +57,6 @@ import kotlin.properties.Delegates
  *      111 |          |          |          | Ime Ui Mode
  *     1    |          |          |          | Layout Direction (0=LTR, 1=RTL)
  *
- * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
- * ---------|----------|----------|----------|---------------------------------
- *          |          |          |     1111 | [ImeOptions.enterAction]
- *          |          |          |    1     | [ImeOptions.flagForceAscii]
- *          |          |          |   1      | [ImeOptions.flagNavigateNext]
- *          |          |          |  1       | [ImeOptions.flagNavigatePrevious]
- *          |          |          | 1        | [ImeOptions.flagNoAccessoryAction]
- *          |          |        1 |          | [ImeOptions.flagNoEnterAction]
- *          |          |       1  |          | [ImeOptions.flagNoExtractUi]
- *          |          |      1   |          | [ImeOptions.flagNoFullscreen]
- *          |          |     1    |          | [ImeOptions.flagNoPersonalizedLearning]
- *          |          |  111     |          | [InputAttributes.type]
- *          |     1111 | 1        |          | [InputAttributes.variation]
- *          |   11     |          |          | [InputAttributes.capsMode]
- *          |  1       |          |          | [InputAttributes.flagNumberDecimal]
- *          | 1        |          |          | [InputAttributes.flagNumberSigned]
- *        1 |          |          |          | [InputAttributes.flagTextAutoComplete]
- *       1  |          |          |          | [InputAttributes.flagTextAutoCorrect]
- *      1   |          |          |          | [InputAttributes.flagTextImeMultiLine]
- *     1    |          |          |          | [InputAttributes.flagTextMultiLine]
- *    1     |          |          |          | [InputAttributes.flagTextNoSuggestions]
- *
  * The resulting structure is only relevant during a runtime lifespan and
  * thus can easily be changed without worrying about destroying some saved state.
  *
@@ -93,8 +69,8 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         const val O_KEYBOARD_MODE: Int =                    0
         const val M_KEY_VARIATION: ULong =                  0x0Fu
         const val O_KEY_VARIATION: Int =                    4
-        const val M_INPUT_MODE: ULong =                     0x03u
-        const val O_INPUT_MODE: Int =                       8
+        const val M_INPUT_SHIFT_STATE: ULong =              0x03u
+        const val O_INPUT_SHIFT_STATE: Int =                8
         const val M_IME_UI_MODE: ULong =                    0x07u
         const val O_IME_UI_MODE: Int =                      24
 
@@ -125,9 +101,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
 
     private var rawValue by Delegates.observable(initValue) { _, old, new -> if (old != new) dispatchState() }
     private val batchEditCount = AtomicInteger(BATCH_ZERO)
-
-    val imeOptions: ImeOptions = ImeOptions(this)
-    val inputAttributes: InputAttributes = InputAttributes(this)
 
     init {
         dispatchState()
@@ -214,17 +187,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         return new(rawValue)
     }
 
-    /**
-     * Updates this state based on the info passed from [editorInfo].
-     *
-     * @param editorInfo The [EditorInfo] used to initialize all flags and regions relevant
-     *  to the info this object provides.
-     */
-    fun update(editorInfo: EditorInfo) {
-        imeOptions.update(editorInfo)
-        inputAttributes.update(editorInfo)
-    }
-
     internal fun getFlag(f: ULong): Boolean {
         return (rawValue and f) != STATE_ALL_ZERO
     }
@@ -268,9 +230,9 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         get() = KeyboardMode.fromInt(getRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE))
         set(v) { setRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE, v.toInt()) }
 
-    var inputMode: InputMode
-        get() = InputMode.fromInt(getRegion(M_INPUT_MODE, O_INPUT_MODE))
-        set(v) { setRegion(M_INPUT_MODE, O_INPUT_MODE, v.toInt()) }
+    var inputShiftState: InputShiftState
+        get() = InputShiftState.fromInt(getRegion(M_INPUT_SHIFT_STATE, O_INPUT_SHIFT_STATE))
+        set(v) { setRegion(M_INPUT_SHIFT_STATE, O_INPUT_SHIFT_STATE, v.toInt()) }
 
     var imeUiMode: ImeUiMode
         get() = ImeUiMode.fromInt(getRegion(M_IME_UI_MODE, O_IME_UI_MODE))
@@ -281,10 +243,10 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         set(v) { setFlag(F_IS_RTL_LAYOUT_DIRECTION, v == LayoutDirection.Rtl) }
 
     val isLowercase: Boolean
-        get() = inputMode == InputMode.NORMAL
+        get() = inputShiftState == InputShiftState.UNSHIFTED
 
     val isUppercase: Boolean
-        get() = inputMode != InputMode.NORMAL
+        get() = inputShiftState != InputShiftState.UNSHIFTED
 
     var isSelectionMode: Boolean
         get() = getFlag(F_IS_SELECTION_MODE)
@@ -309,12 +271,6 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     var isPrivateMode: Boolean
         get() = getFlag(F_IS_PRIVATE_MODE)
         set(v) { setFlag(F_IS_PRIVATE_MODE, v) }
-
-    val isRawInputEditor: Boolean
-        get() = inputAttributes.type == InputAttributes.Type.NULL
-
-    val isRichInputEditor: Boolean
-        get() = inputAttributes.type != InputAttributes.Type.NULL
 
     var isQuickActionsVisible: Boolean
         get() = getFlag(F_IS_QUICK_ACTIONS_VISIBLE)

@@ -26,6 +26,22 @@ inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(local
 
 inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
 
+fun String.safeSubstring(startIndex: Int): String {
+    return try {
+        this.substring(startIndex)
+    } catch (_: IndexOutOfBoundsException) {
+        ""
+    }
+}
+
+fun String.safeSubstring(startIndex: Int, endIndex: Int): String {
+    return try {
+        this.substring(startIndex, endIndex)
+    } catch (_: IndexOutOfBoundsException) {
+        ""
+    }
+}
+
 private const val CURLY_ARG_OPEN = '{'
 private const val CURLY_ARG_CLOSE = '}'
 

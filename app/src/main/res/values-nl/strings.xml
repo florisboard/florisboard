@@ -105,10 +105,13 @@
     <string name="settings__theme_editor__rule_element">Doelwit element</string>
     <string name="settings__theme_editor__rule_codes">Doelwit sleutelcode</string>
     <string name="settings__theme_editor__rule_groups">Groepen</string>
-    <string name="settings__theme_editor__rule_modes">Modussen</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Sleutelcode toevoegen</string>
     <string name="settings__theme_editor__edit_code">Sleutelcode bewerken</string>
+    <string name="settings__theme_editor__no_codes_defined">Regel toepassen op alle doelwit elementen.</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Opnemen…</string>
+    <string name="settings__theme_editor__add_property">Eigenschap toevoegen</string>
+    <string name="settings__theme_editor__edit_property">Eigenschap bewerken</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid &amp; vibraties</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>
@@ -356,7 +359,6 @@
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint krijgt prioriteit</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Het eerste geselecteerde teken na een lange indruk is altijd het hint symbool, of het primaire accent als er geen hint symbool beschikbaar is</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Slimme prioriteiten</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normaal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nooit tonen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Altijd tonen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch tonen</string>
@@ -369,7 +371,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Roteer naar de vorige toetsenbordmodus</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Roteer naar de volgende toetsenbordmodus</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Tekens nauwkeurig verwijderen</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Huidige woord verwijderen</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Woorden nauwkeurig verwijderen</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Toetsenbord verbergen</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Spatie invoegen</string>

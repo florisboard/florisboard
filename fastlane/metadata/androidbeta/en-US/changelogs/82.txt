@@ -1,0 +1,3 @@
+This release fixes a lot of issues regarding the shift key, re-adds support for non-Latin composers (Telex, Korean) and addresses feedback gathered of the new input logic from 0.3.16-beta01.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.16-beta02
