@@ -476,6 +476,13 @@ class TextKeyData(
             code = KeyCode.SETTINGS,
             label = "settings",
         )
+
+        /** Predefined key data for [KeyCode.VOICE_INPUT] */
+        val VOICE_INPUT = TextKeyData(
+            type = KeyType.UNSPECIFIED,
+            code = KeyCode.VOICE_INPUT,
+            label = "voice_input",
+        )
     }
 }
 
