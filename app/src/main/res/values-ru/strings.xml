@@ -35,7 +35,7 @@
     <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Переключить режим одной руки.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Открыть настройки.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Перейти на панель редактирования текста.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Переключиться на режим смайлов.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Переключение в режим просмотра ввода информации.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Кнопка \"Отменить\" для отмены последнего действия</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Кнопка \"Повтор\" для отмены последнего \"Отменить\"</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Если видна, значит активен режим Инкогнито. При нажатии доступна информация об этом режиме.</string>
@@ -44,7 +44,7 @@
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Протестируйте свои настройки</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Помощь</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По умолчанию</string>
-    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">По умолчанию</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Как в системе</string>
     <string name="settings__home__title" comment="Title of the Home screen">Приветствуем в {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включена в системе и поэтому не будет доступна в качестве метода ввода. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
@@ -103,11 +103,23 @@
     <string name="settings__theme_editor__no_rules_defined">В таблице стилей не определены правила. Добавьте правило, чтобы начать её настройку.</string>
     <string name="settings__theme_editor__rule_already_exists">Это правило таблицы стилей уже определено.</string>
     <string name="settings__theme_editor__rule_element">Целевой элемент</string>
+    <string name="settings__theme_editor__rule_codes">Целевые коды клавиш</string>
     <string name="settings__theme_editor__rule_groups">Группы</string>
-    <string name="settings__theme_editor__rule_modes">Режимы</string>
+    <string name="settings__theme_editor__rule_shift_states">Сдвиг</string>
     <string name="settings__theme_editor__rule_selectors">Переключатели</string>
+    <string name="settings__theme_editor__add_code">Добавить код клавиши</string>
+    <string name="settings__theme_editor__edit_code">Изменить код клавиши</string>
+    <string name="settings__theme_editor__no_codes_defined">Применить правило ко всем целевым элементам.</string>
+    <string name="settings__theme_editor__codes_defined">Применить правило только к целевым элементам со следующими кодами клавиш:</string>
     <string name="settings__theme_editor__code_already_exists">Этот код уже используется.</string>
-    <string name="settings__theme_editor__code_invalid">Это неправильный код ключа. Убедитесь, что он находится в диапазоне от {c_min} до {c_max} для символов или от {i_min} до {i_max} для специальных внутренних ключей.</string>
+    <string name="settings__theme_editor__code_invalid">Это неправильный код клавиши. Убедитесь, что он находится в диапазоне от {c_min} до {c_max} для символов или от {i_min} до {i_max} для специальных внутренних клавиш.</string>
+    <string name="settings__theme_editor__code_help_text">В качестве альтернативы следующие ссылки помогут вам найти соответствующий код клавиши:</string>
+    <string name="settings__theme_editor__code_placeholder">Код</string>
+    <string name="settings__theme_editor__code_recording_help_text">Чтобы найти код клавиши, используйте кнопку рядом с полем ввода кода. После активации следующее нажатие кнопки будет записано и код вставлен в поле ввода.</string>
+    <string name="settings__theme_editor__code_recording_started">Началась запись кода клавиши</string>
+    <string name="settings__theme_editor__code_recording_stopped">Запись кода клавиши остановлена</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} должна быть клавиатурой по умолчанию для записи кода клавиши</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Запись…</string>
     <string name="settings__theme_editor__add_property">Добавить свойство</string>
     <string name="settings__theme_editor__edit_property">Изменить свойство</string>
     <string name="settings__theme_editor__property_already_exists">Свойство с таким именем уже существует в текущем правиле.</string>
@@ -246,6 +258,8 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Поменять местами кнопки переключения</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Поменять местами переключатели строки действий</string>
     <string name="pref__smartbar__any_row_type__label" comment="Preference title">Расположение строки</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основные действия</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
@@ -305,6 +319,8 @@
     <string name="pref__glide_trail_fade_duration">Время исчезания непрерывного следа</string>
     <string name="pref__glide_preview_refresh_delay">Задержка обновления предварительного просмотра</string>
     <string name="pref__glide__show_preview">Предварительный просмотр при непрерывном вводе</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Всегда удалять слово</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Нажатие кнопки \"Удалить\" после непрерывного ввода удаляет слово целиком</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Общие жесты</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жесты пробела</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Другие жесты / Пороговые значения жестов</string>
@@ -317,11 +333,12 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Жест вправо на пробеле</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Долгое нажатие пробела</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Жест влево на кнопке удаления</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Долгое нажатие \"Удалить\"</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Порог скорости жеста</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Порог срабатывания жеста</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">По умолчанию (AMOLED)</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Как в системе (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
@@ -488,8 +505,12 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Показывать значения выделенной памяти и максимальный размер в правом верхнем углу</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Показать основную запись</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Наложение текущей основной записи буфера обмена</string>
-    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Показать наложение орфографии</string>
-    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Наложение текущих результатов проверки орфографии для отладки</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Показывать состояние ввода наложением</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Показывать наложением текущее состояние ввода для отладки</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Показывать орфографию наложением</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Показывать наложением текущие результаты проверки орфографии для отладки</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Показывать границы нажатия клавиш</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Обводить границы нажатия клавиш красным контуром</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Очистить внутренний словарь пользователя</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Удаление всех слов из базы внутреннего пользовательского словаря</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Сбросить флаг \"{flag_name}\"</string>
@@ -622,15 +643,25 @@
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры приводятся на родных языках</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">Цвет кожи {emoji} по умолчанию</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">Светлый цвет кожи {emoji}</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">Светловатый цвет кожи {emoji}</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">Нейтральный цвет кожи {emoji}</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">Темноватый цвет кожи {emoji}</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">Тёмный цвет кожи {emoji}</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Обычные волосы</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Рыжие волосы</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Вьющиеся волосы</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Светлые волосы</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Без волос</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является основным акцентом или символом подсказки, если основной акцент недоступен</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Приоритет подсказке</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является символом подсказки или основным акцентом, если символ подсказки недоступен</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Умный приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, динамически определяется как основной акцент или символ подсказки, основываясь на текущем языке и раскладке</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Нормальный</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Без сдвига</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Сдвиг (вручную)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Сдвиг (авто)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps Lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Автоматически</string>
@@ -648,6 +679,7 @@
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Низ начало</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Быстрые действия</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Настраиваемые быстрые действия в формате строки с накладывающимся меню</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменты курсора и буфера обмена</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Строка с наиболее часто используемыми инструментами буфера обмена и перемещения курсора</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
@@ -661,8 +693,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Не задано</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Перейти к предыдущему режиму клавиатуры</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Перейти к следующему режиму клавиатуры</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Удалить символ перед курсором</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Точное удаление символов</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Удалить текущее слово</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Удалить слово перед курсором</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Точное удаление слова</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Скрыть клавиатуру</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Вставить пробел</string>
@@ -684,6 +717,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Переключиться на предыдущую клавиатуру</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Переключиться на предыдущую раскладку</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Переключиться на следующую раскладку</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Переключить видимость умной панели</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Всегда светлая</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Всегда тёмная</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Как в системе</string>

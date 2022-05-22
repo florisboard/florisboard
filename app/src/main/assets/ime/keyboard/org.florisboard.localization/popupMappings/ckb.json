@@ -11,16 +11,18 @@
       ]
     },
     "ی": {
+      "main": { "code": 1610, "label": "ي" },
       "relevant": [
         { "code": 1746, "label": "ے" },
         { "code": 1741, "label": "ۍ" },
-        { "code": 1744, "label": "ې" },
-        { "code": 1610, "label": "ي" },
-        { "code": 1597, "label": "ؽ" }
+        { "code": 1744, "label": "ې" }
       ]
     },
 
-
+    "ێ": {
+      "main": { "code": 1597, "label": "ؽ" }
+    },
+    
     "ﺋ": {
       "relevant": [
         { "code": 65163, "label": "ﺋ" },
@@ -118,19 +120,23 @@
     "~right": {
       "main": { "code": 1567, "label": "؟" },
       "relevant": [
-        { "code": 64, "label": "@" },
-        { "code": 35, "label": "#" },
+        { "code": 40, "label": "(" },
+        { "code": 41, "label": ")" },
+        { "code":  171, "label": "«" },
+        { "code":  187, "label": "»" },
+        { "code": 60, "label": "<" },
+        { "code": 62, "label": ">" },
+        { "code": 1642, "label": "٪" },
+        { "code":   35, "label": "#" },
         { "code": 42, "label": "*" },
-        { "code": 1563, "label": "؛" },
-        { "code": 59, "label": ";" },
-        { "code": 58, "label": ":" },
-        { "code": 44, "label": "," },
-        { "code": 1549, "label": "؍" },
         { "code": 45, "label": "-" },
         { "code": 95, "label": "_" },
-        { "code": 1600, "label": "▬" },
-        { "code": 33, "label": "!" },
-        { "code": 1548, "label": "،" }
+        { "code": 1563, "label": "؛" },
+        { "code": 58, "label": ":" },
+        { "code": 1549, "label": "؍" },
+        { "code": 1643, "label": "٫" },
+        { "code": 1548, "label": "،" },
+        { "code": 33, "label": "!" }
       ]
     }
   },

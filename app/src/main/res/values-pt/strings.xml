@@ -103,7 +103,6 @@
     <string name="settings__theme_editor__no_rules_defined">Esta folha de estilo não tem regras definidas. Adicione uma regra para começar a editar.</string>
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_modes">Modos</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
     <string name="settings__theme_editor__code_already_exists">Este código já está definido.</string>
     <string name="settings__theme_editor__code_placeholder">Código</string>
@@ -143,9 +142,11 @@
     <string name="snygg__property_name__shape">Forma</string>
     <string name="snygg__property_name__var_shape">Froma comum</string>
     <string name="snygg__property_name__var_shape_variant">Forma comun (variante)</string>
+    <string name="snygg__property_value__explicit_inherit">Herdar</string>
     <string name="snygg__property_value__solid_color">Cor sólida</string>
     <string name="snygg__property_value__image_ref">Referência da imagem</string>
     <string name="snygg__property_value__rectangle_shape">Forma de retângulo</string>
+    <string name="snygg__property_value__circle_shape">Forma de círculo</string>
     <string name="snygg__property_value__dp_size">Tamanho (dp)</string>
     <string name="snygg__property_value__sp_size">Tamanho (sp)</string>
     <string name="snygg__property_value__percentage_size">Tamanho (%)</string>
@@ -190,6 +191,7 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar tecla utilitária</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra uma tecla utilitária ao lado da barra de espaço</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ação da tecla utilitária</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Mostrar idioma na barra de espaços</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho das letras</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo de uma mão</string>
@@ -438,6 +440,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Mostra o consumo da memória e o seu tamanho no canto superior direito</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostrar item principal</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Substitui o item principal existente na área de transferência</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Mostrar limite das teclas</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Destacar a vermelho os limites das teclas</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Limpar dicionário do utilizador</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Remove todas as palavras do dicionário do utilizador</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Repor \'flag\' \"{flag_name}\"</string>
@@ -481,6 +485,7 @@
     <string name="ext__editor__create_component__title">Criar componente</string>
     <string name="ext__editor__create_component__title_theme">Criar tema</string>
     <string name="ext__editor__create_component__from_empty">Vazio</string>
+    <string name="ext__editor__create_component__from_existing">De um existente</string>
     <string name="ext__editor__edit_component__title">Editar componente</string>
     <string name="ext__editor__edit_component__title_theme">Editar componente do tema</string>
     <string name="ext__export__success">Extensão exportada com sucesso!</string>
@@ -558,9 +563,6 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo será sempre o símbolo ou o acento principal caso não exista um símbolo</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioridade inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo é decidido por ser o acento principal ou o símbolo, tendo por base o idioma e a disposição atual</string>
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift Lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps Lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Não mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinamicamente</string>
@@ -583,7 +585,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Mudar para o anterior modo de teclado</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Mudar para o próximo modo de teclado</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Eliminar caracteres com precisão</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Eliminar palavra atual</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Eliminar palavras com precisão</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ocultar teclado</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Inserir espaço</string>
@@ -604,6 +605,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Mudar para o teclado anterior</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Mudar para o subtipo anterior</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Mudar para o subtipo seguinte</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Comutar visibilidade da barra inteligente</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Sempre dia</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Sempre noite</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Seguir sistema</string>

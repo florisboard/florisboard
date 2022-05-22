@@ -17,6 +17,10 @@ interface Composer {
 @Serializable
 @SerialName("appender")
 class Appender : Composer {
+    companion object {
+        val DefaultInstance = Appender()
+    }
+
     override val id: String = "appender"
     override val label: String = "Appender"
     override val toRead: Int = 0

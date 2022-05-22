@@ -107,7 +107,6 @@
     <!-- State strings -->
     <string name="state__disabled">Inaktiverad</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Vänsterhandsläge</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Högerhandsläge</string>

@@ -1,3 +1,4 @@
+
 # FlorisBoard's feature roadmap & milestones
 
 This feature roadmap intents to provide transparency to what I want to add to FlorisBoard in the foreseeable future.
@@ -14,44 +15,12 @@ Releases in this section still follow the old versioning scheme, meaning the pat
 naming convention is more confusing than useful, beginning with v0.4.0 development a new release/development cycle will
 be introduced.
 
-### 0.3.14 (completed)
+### 0.3.15 & 0.3.16 (currently 0.3.15 done, 0.3.16 in work)
 
-- Re-write of the Preference core
-    - Reduce redundancy in key/default value definitions
-    - Avoid having to manually add redundant code for adding a new pref
-    - Goes hand-in-hand with the Settings UI re-write
-- Re-write of the Settings UI with Jetpack Compose
-    - Also re-structure UI into a more list-like panel
-    - Adjust theme colors of Settings a bit to make it more modern
-    - Preview the keyboard at any time from within the Settings
-    - Settings language different than device language
-- Re-write the Setup UI in Jetpack Compose
-    - Simplify screen based on previously discussed ideas and mock-ups
-    - Improve backend setup logic
-- Implement base-UI for extensions and further continue development of existing Flex (FlorisBoard extension) format
-    - Allows for a continuous experience of customizing FlorisBoard in different areas
-    - Planned what will use Flex:
-        - Themes
-        - Layouts (Characters, symbols, numeric, ...)
-        - Composers for non-Latin script languages
-        - Word suggestion dictionaries (in 0.4.0)
-        - Spell check dictionaries
-        - User dictionaries (not in 0.3.14)
-        - Other features that require only data and no logic (not in 0.3.14)
-- Maybe full backup of preferences? Not 100% confirmed though and may be pushed back
-- Theme rework part I:
-    - Custom key corner radius
-    - Custom key border color (not shadow!!)
-    - Re-work theme internals so they use Flex extension format and FlexCSS
-- Improvement of the Smartbar
-    - Allow to have multiple Smartbars
-    - Better candidate view (in prep for 0.4.0)
-
-### 0.3.15 & 0.3.16 (current development)
-
-- Hotfix releases for possible bugs in the preference rework
-- Lots and lots of bug fixing in general
-- Preparation work for 0.4.0, fixing text state logic and use break iterator
+- Hotfix releases for possible bugs in the preference rework (in work)
+- Lots and lots of bug fixing in general (in work)
+- Preparation work for 0.4.0, fixing text state logic and use break iterator (done)
+- Reducing or getting rid of input lag some devices experience (done)
 - Clean up of project structure for better future development (done)
 
 ## 0.4.0

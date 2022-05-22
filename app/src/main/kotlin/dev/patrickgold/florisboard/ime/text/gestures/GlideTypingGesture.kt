@@ -5,6 +5,8 @@ import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -18,13 +20,13 @@ class GlideTypingGesture {
      */
     class Detector(context: Context) {
         private var pointerData: PointerData = PointerData(mutableListOf(), 0)
-        private val keySize = context.resources.getDimensionPixelSize(R.dimen.key_width).toDouble()
+        private val keySize = ViewUtils.px2dp(context.resources.getDimension(R.dimen.key_width))
         private val listeners: ArrayList<Listener> = arrayListOf()
         private var pointerId: Int = -1
 
         companion object {
             private const val MAX_DETECT_TIME = 500
-            private const val VELOCITY_THRESHOLD = 0.65
+            private const val VELOCITY_THRESHOLD = 0.10 // dp per ms
             private val SWIPE_GESTURE_KEYS = arrayOf(KeyCode.DELETE, KeyCode.SHIFT, KeyCode.SPACE, KeyCode.CJK_SPACE)
         }
 
@@ -37,12 +39,12 @@ class GlideTypingGesture {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN,
                 MotionEvent.ACTION_POINTER_DOWN -> {
+                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        resetState()
+                    }
                     if (pointerId != -1) {
                         // if we already have another pointer, we don't care
                         return false
-                    }
-                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        resetState()
                     }
                     val pointerIndex = event.actionIndex
                     pointerId = event.getPointerId(pointerIndex)
@@ -67,8 +69,9 @@ class GlideTypingGesture {
                         pointerData.positions.add(pos)
                         if (pointerData.isActuallyGesture == null) {
                             // evaluate whether is actually a gesture
-                            val dist = pointerData.positions[0].dist(pos)
+                            val dist = ViewUtils.px2dp(pointerData.positions[0].dist(pos))
                             val time = (System.currentTimeMillis() - pointerData.startTime) + 1
+                            flogDebug { "Distance glided: $dist dp with velocity: ${dist / time} dp/ms" }
                             if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD && (initialKey?.computedData?.code !in SWIPE_GESTURE_KEYS)) {
                                 pointerData.isActuallyGesture = true
                                 // Let listener know all those points need to be added.
@@ -83,8 +86,10 @@ class GlideTypingGesture {
 
                         }
 
-                        if (pointerData.isActuallyGesture == true)
-                            pointerData.positions.last().let { point -> listeners.forEach { it.onGlideAddPoint(point) } }
+                        if (pointerData.isActuallyGesture == true) {
+                            pointerData.positions.last()
+                                .let { point -> listeners.forEach { it.onGlideAddPoint(point) } }
+                        }
                     }
                     return pointerData.isActuallyGesture ?: false
                 }

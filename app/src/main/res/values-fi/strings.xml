@@ -176,7 +176,6 @@
     <!-- State strings -->
     <string name="state__disabled">Poissa käytöstä</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normaali</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Älä näytä koskaan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Näytä aina</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Näytä dynaamisesti</string>
@@ -187,7 +186,6 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Siirry edelliseen näppäimistötilaan</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Siirry seuraavaan näppäimistötilaan</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Tarkka merkkien poisto</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Poista nykyinen sana</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Poista sanat tarkasti</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Piilota näppäimistö</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Lisää välilyönti</string>

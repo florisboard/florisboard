@@ -115,7 +115,7 @@
     <string name="settings__theme_editor__rule_element">Target element</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_modes">Modes</string>
+    <string name="settings__theme_editor__rule_shift_states">Shift states</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add key code</string>
     <string name="settings__theme_editor__edit_code">Edit key code</string>
@@ -346,6 +346,8 @@
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Always delete word</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Pressing delete right after a glide deletes the whole word</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
@@ -358,6 +360,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Space bar swipe right</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Space bar long press</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Delete key swipe left</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Delete key long press</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
@@ -545,6 +548,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlays the heap memory usage and max size in the top-right corner</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Show primary clip</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Overlays the current primary clip of the clipboard</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Show input state overlay</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Overlays the current input state for debugging</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Show spelling overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
@@ -713,9 +718,10 @@
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
 
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
-    <string name="enum__input_mode__shift_lock" comment="Enum value label">Shift lock</string>
-    <string name="enum__input_mode__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Unshifted</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shifted (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shifted (automatic)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
 
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
@@ -755,8 +761,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">No action</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Cycle to previous keyboard mode</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Cycle to next keyboard mode</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Delete character before cursor</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Delete characters precisely</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Delete current word</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Delete word before cursor</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Delete words precisely</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Hide keyboard</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Insert space</string>

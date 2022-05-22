@@ -2,9 +2,9 @@
   "$": "ime.extension.keyboard",
   "meta": {
     "id": "org.florisboard.localization",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "title": "Default subtype presets / popup mappings",
-    "description": "Default subptye presets and popup mappings which are always available.",
+    "description": "Default subtype presets and popup mappings which are always available.",
     "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
     "license": "apache-2.0"
   },
@@ -13,187 +13,61 @@
     "org.florisboard.currencysets",
     "org.florisboard.layouts"
   ],
-  "popupMappings": [
+  "punctuationRules": [
     {
       "id": "default",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "ar",
-      "authors": [ "HeiWiper" ]
-    },
-    {
-      "id": "bg",
-      "authors": [ "iorvethe" ]
-    },
-    {
-      "id": "ca",
-      "authors": [ "mikelloc" ]
-    },
-    {
-      "id": "ckb",
-      "authors": [ "GoRaN" ]
-    },
-    {
-      "id": "cs",
-      "authors": [ "stefan-misik" ]
-    },
-    {
-      "id": "da",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "de",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "de-DE-neobone",
-      "authors": [ "ostrya" ]
-    },
-    {
-      "id": "el",
-      "authors": [ "tsiflimagas" ]
-    },
-    {
-      "id": "en",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "eo",
-      "authors": [ "jeremiah-miller" ]
-    },
-    {
-      "id": "es",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "fa",
-      "authors": [ "PHELAT" ]
-    },
-    {
-      "id": "fa2",
-      "authors": [ "M-Koushan" ]
-    },
-    {
-      "id": "fi",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "fo",
-      "authors": [ "BinFlush" ]
-    },
-    {
-      "id": "fr",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "hr",
-      "authors": [ "hedidnothingwrong" ]
-    },
-    {
-      "id": "hu",
-      "authors": [ "zoli111, gabik65" ]
-    },
-    {
-      "id": "hy",
-      "authors": [ "PJTSearch" ]
-    },
-    {
-      "id": "is",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "it",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "iw",
-      "authors": [ "Antony" ]
-    },
-    {
-      "id": "ja-JP-jis",
-      "authors": [ "waelwindows" ]
-    },
-    {
-      "id": "ko",
-      "authors": [ "patrickgold", "Hayleia" ]
-    },
-    {
-      "id": "ku",
-      "authors": [ "GoRaN" ]
-    },
-    {
-      "id": "lt",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "lv",
-      "authors": [ "patrickgold", "eandersons" ]
-    },
-    {
-      "id": "nb",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "nn",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "pl",
-      "authors": [ "Mikołaj Biel" ]
-    },
-    {
-      "id": "pt",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "pt-BR",
-      "authors": [ "rickym7" ]
-    },
-    {
-      "id": "ro",
-      "authors": [ "bertin0" ]
-    },
-    {
-      "id": "ru",
-      "authors": [ "williamtheaker", "33kk" ]
-    },
-    {
-      "id": "rue",
-      "authors": [ "svvvst" ]
-    },
-    {
-      "id": "sk",
-      "authors": [ "stefan-misik", "majso" ]
-    },
-    {
-      "id": "sr",
-      "authors": [ "hedidnothingwrong", "GrbavaCigla" ]
-    },
-    {
-      "id": "sv",
-      "authors": [ "patrickgold" ]
-    },
-    {
-      "id": "tr",
-      "authors": [ "kisekinopureya", "patrickgold", "dvrnynr" ]
-    },
-    {
-      "id": "uk",
-      "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ]
-    },
-    {
-      "id": "uk-cyr-ext",
-      "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ]
-    },
-    {
-      "id": "ur-PK",
-      "authors": [ "mubashir-rehman", "mirfatif" ]
-    },
-    {
-      "id": "vi-VN",
-      "authors": [ "patrickgold", "Hayleia" ]
+      "label": "Default",
+      "symbolsPrecedingSpace": ".*[.,;:!?‽&%)\\]}»©®™\\p{L}0-9]",
+      "symbolsFollowingSpace": "[\\p{L}0-9].*"
     }
+  ],
+  "popupMappings": [
+    { "id": "default", "authors": [ "patrickgold" ] },
+    { "id": "ar", "authors": [ "HeiWiper" ] },
+    { "id": "bg", "authors": [ "iorvethe" ] },
+    { "id": "ca", "authors": [ "mikelloc" ] },
+    { "id": "ckb", "authors": [ "GoRaN" ] },
+    { "id": "cs", "authors": [ "stefan-misik" ] },
+    { "id": "da", "authors": [ "patrickgold" ] },
+    { "id": "de", "authors": [ "patrickgold" ] },
+    { "id": "de-DE-neobone", "authors": [ "ostrya" ] },
+    { "id": "el", "authors": [ "tsiflimagas" ] },
+    { "id": "en", "authors": [ "patrickgold" ] },
+    { "id": "eo", "authors": [ "jeremiah-miller" ] },
+    { "id": "es", "authors": [ "patrickgold" ] },
+    { "id": "fa", "authors": [ "PHELAT" ] },
+    { "id": "fa2", "authors": [ "M-Koushan" ] },
+    { "id": "fa3", "authors": [ "SaeID-Rz" ] },
+    { "id": "fi", "authors": [ "patrickgold" ] },
+    { "id": "fo", "authors": [ "BinFlush" ] },
+    { "id": "fr", "authors": [ "patrickgold" ] },
+    { "id": "hr", "authors": [ "hedidnothingwrong" ] },
+    { "id": "hu", "authors": [ "zoli111, gabik65" ] },
+    { "id": "hy", "authors": [ "PJTSearch" ] },
+    { "id": "is", "authors": [ "patrickgold" ] },
+    { "id": "it", "authors": [ "patrickgold" ] },
+    { "id": "iw", "authors": [ "Antony" ] },
+    { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
+    { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
+    { "id": "ku", "authors": [ "GoRaN" ] },
+    { "id": "lt", "authors": [ "patrickgold" ] },
+    { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
+    { "id": "nb", "authors": [ "patrickgold" ] },
+    { "id": "nn", "authors": [ "patrickgold" ] },
+    { "id": "pl", "authors": [ "Mikołaj Biel" ] },
+    { "id": "pt", "authors": [ "patrickgold" ] },
+    { "id": "pt-BR", "authors": [ "rickym7" ] },
+    { "id": "ro", "authors": [ "bertin0" ] },
+    { "id": "ru", "authors": [ "williamtheaker", "33kk" ] },
+    { "id": "rue", "authors": [ "svvvst" ] },
+    { "id": "sk", "authors": [ "stefan-misik", "majso" ] },
+    { "id": "sr", "authors": [ "hedidnothingwrong", "GrbavaCigla" ] },
+    { "id": "sv", "authors": [ "patrickgold" ] },
+    { "id": "tr", "authors": [ "kisekinopureya", "patrickgold", "dvrnynr" ] },
+    { "id": "uk", "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ] },
+    { "id": "uk-cyr-ext", "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ] },
+    { "id": "ur-PK", "authors": [ "mubashir-rehman", "mirfatif" ] },
+    { "id": "vi-VN", "authors": [ "patrickgold", "Hayleia" ] }
   ],
   "subtypePresets": [
     {
@@ -445,6 +319,18 @@
         "symbols": "org.florisboard.layouts:persian",
         "symbols2": "org.florisboard.layouts:persian",
         "numericRow": "org.florisboard.layouts:persian"
+      }
+    },
+    {
+      "languageTag": "fa-FA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:fa3",
+      "preferred": {
+        "characters": "org.florisboard.layouts:persian3",
+        "symbols": "org.florisboard.layouts:persian",
+        "symbols2": "org.florisboard.layouts:persian",
+        "numericRow": "org.florisboard.layouts:western_arabic"
       }
     },
     {
@@ -713,7 +599,7 @@
     },
     {
       "languageTag": "vi-VN",
-      "composer": "org.florisboard.composers:basic-telex",
+      "composer": "org.florisboard.composers:telex",
       "currencySet": "org.florisboard.currencysets:vietnamese_dong",
       "popupMapping": "org.florisboard.localization:vi-VN",
       "preferred": {

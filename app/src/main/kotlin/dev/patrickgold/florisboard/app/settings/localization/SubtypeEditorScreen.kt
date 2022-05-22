@@ -64,7 +64,6 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownLikeButton
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
@@ -103,6 +102,7 @@ private class SubtypeEditorState(init: Subtype?) {
                     secondaryLocales = editor.secondaryLocales.value,
                     composer = editor.composer.value,
                     currencySet = editor.currencySet.value,
+                    punctuationRule = editor.punctuationRule.value,
                     popupMapping = editor.popupMapping.value,
                     layoutMap = editor.layoutMap.value,
                 )
@@ -120,6 +120,7 @@ private class SubtypeEditorState(init: Subtype?) {
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
+    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: SelectComponentName)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
@@ -129,6 +130,7 @@ private class SubtypeEditorState(init: Subtype?) {
         secondaryLocales.value = subtype.secondaryLocales
         composer.value = subtype.composer
         currencySet.value = subtype.currencySet
+        punctuationRule.value = subtype.punctuationRule
         popupMapping.value = subtype.popupMapping
         layoutMap.value = subtype.layoutMap
     }
@@ -148,7 +150,7 @@ private class SubtypeEditorState(init: Subtype?) {
         check(layoutMap.value.phone2 != SelectComponentName)
         Subtype(
             id.value, primaryLocale.value, secondaryLocales.value, composer.value,
-            currencySet.value, popupMapping.value, layoutMap.value,
+            currencySet.value, punctuationRule.value, popupMapping.value, layoutMap.value,
         )
     }
 }
@@ -267,17 +269,12 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                             overflow = TextOverflow.Ellipsis,
                         )
                         val systemLocales = remember {
-                            if (AndroidVersion.ATLEAST_API24_N) {
-                                val list = mutableListOf<FlorisLocale>()
-                                val localeList = configuration.locales
-                                for (n in 0 until localeList.size()) {
-                                    list.add(FlorisLocale.from(localeList.get(n)))
-                                }
-                                list
-                            } else {
-                                @Suppress("DEPRECATION")
-                                listOf(FlorisLocale.from(configuration.locale))
+                            val list = mutableListOf<FlorisLocale>()
+                            val localeList = configuration.locales
+                            for (n in 0 until localeList.size()) {
+                                list.add(FlorisLocale.from(localeList.get(n)))
                             }
+                            list
                         }
                         val suggestedPresets = remember(subtypePresets) {
                             val presets = mutableListOf<SubtypePreset>()

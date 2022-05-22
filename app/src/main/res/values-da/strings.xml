@@ -139,13 +139,11 @@
     <string name="state__disabled">Deaktivéret</string>
     <string name="state__enabled">Aktivéret</string>
     <!-- Enum label and description strings -->
-    <string name="enum__input_mode__normal" comment="Enum value label">Normal</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldrig</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis altid</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Vis dynamisk</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Slet tegn præcist</string>
-    <string name="enum__swipe_action__delete_word" comment="Enum value label">Slet nuværende ord</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Slet ord præcist</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skjul tastatur</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Indsæt mellemrum</string>

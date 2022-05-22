@@ -22,6 +22,11 @@
         { "$": "auto_text_key", "code":  337, "label": "ő" }
       ]
     },
+    "ö": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  337, "label": "ő" }
+      ]
+    },
     "u": {
       "relevant": [
         { "$": "auto_text_key", "code":  250, "label": "ú" },
@@ -29,6 +34,11 @@
         { "$": "auto_text_key", "code":  369, "label": "ű" }
       ]
     },
+    "ü": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  369, "label": "ű" }
+      ]
+    },    
     "~right": {
       "main": { "code":   44, "label": "," },
       "relevant": [
@@ -58,13 +68,13 @@
   },
   "uri": {
     "~right": {
-      "main": { "code": -255, "label": ".com" },
+      "main": { "code": -255, "label": ".hu" },
       "relevant": [
-        { "code": -255, "label": ".gov" },
-        { "code": -255, "label": ".edu" },
-        { "code": -255, "label": ".hu" },
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".net" },
         { "code": -255, "label": ".org" },
-        { "code": -255, "label": ".net" }
+        { "code": -255, "label": ".eu" },
+        { "code": -255, "label": ".gov.hu" }        
       ]
     }
   }

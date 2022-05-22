@@ -1,8 +1,5 @@
 [
   [
-    { "code": 1600, "label": "kashida", "popup":
-    { "main": { "code": 8204, "label": "half_space" }
-    } },
     { "code":    0, "type": "placeholder" },
     { "code":   -7, "label": "delete", "type": "enter_editing" }
   ],
