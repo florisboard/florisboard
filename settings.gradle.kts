@@ -33,3 +33,4 @@ dependencyResolutionManagement {
 }
 
 include(":app")
+include(":benchmark")
