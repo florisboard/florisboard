@@ -96,6 +96,7 @@ import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
 import dev.patrickgold.florisboard.lib.android.launchActivity
 import dev.patrickgold.florisboard.lib.android.setLocale
+import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
 import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
@@ -236,6 +237,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             }
+            ims.showShortToast("Failed to find voice IME, do you have one installed?")
             return false
         }
     }
