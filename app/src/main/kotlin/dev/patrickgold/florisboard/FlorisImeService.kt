@@ -32,6 +32,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -212,6 +213,28 @@ class FlorisImeService : LifecycleInputMethodService() {
             } catch (e: Exception) {
                 flogError { "Unable to switch to the next IME" }
                 imm?.showInputMethodPicker()
+            }
+            return false
+        }
+
+        fun switchToVoiceInputMethod(): Boolean {
+            val ims = FlorisImeServiceReference.get() ?: return false
+            val imm = ims.systemServiceOrNull(InputMethodManager::class) ?: return false
+            val list: List<InputMethodInfo> = imm.enabledInputMethodList
+            for (el in list) {
+                for (i in 0 until el.subtypeCount){
+                    if (el.getSubtypeAt(i).mode != "voice") continue
+                    if (AndroidVersion.ATLEAST_API28_P) {
+                        ims.switchInputMethod(el.id)
+                        return true
+                    } else {
+                        ims.window.window?.let { window ->
+                            @Suppress("DEPRECATION")
+                            imm.setInputMethod(window.attributes.token, el.id)
+                            return true
+                        }
+                    }
+                }
             }
             return false
         }

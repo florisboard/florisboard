@@ -157,6 +157,9 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             // TODO: find a better icon for compact mode
             R.drawable.ic_smartphone
         }
+        KeyCode.VOICE_INPUT -> {
+            R.drawable.ic_keyboard_voice
+        }
         KeyCode.DELETE -> {
             R.drawable.ic_backspace
         }

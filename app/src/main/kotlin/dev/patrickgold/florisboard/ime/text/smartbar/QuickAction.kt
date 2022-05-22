@@ -38,6 +38,7 @@ private val QuickActionSet = setOf<QuickAction>(
     QuickAction.Key(TextKeyData.SETTINGS),
     QuickAction.Key(TextKeyData.IME_UI_MODE_MEDIA),
     QuickAction.Key(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
+    QuickAction.Key(TextKeyData.VOICE_INPUT),
     QuickAction.Key(TextKeyData.IME_UI_MODE_CLIPBOARD),
 )
 
