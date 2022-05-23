@@ -20,12 +20,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.lib.android.AndroidSettings
+import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -43,7 +46,10 @@ fun DevtoolsScreen() = FlorisScreen {
     title = stringRes(R.string.devtools__title)
     previewFieldVisible = true
 
+    val context = LocalContext.current
     val navController = LocalNavController.current
+    val extensionManager by context.extensionManager()
+
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
 
     content {
@@ -161,6 +167,30 @@ fun DevtoolsScreen() = FlorisScreen {
             Preference(
                 title = "prefs.internal.versionLastChangelog",
                 summary = versionLastChangelog,
+            )
+        }
+
+        PreferenceGroup(title = "ExtensionManager index paths") {
+            Preference(
+                title = "keyboardExtensions",
+                summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
+                onClick = {
+                    context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
+                },
+            )
+            Preference(
+                title = "spellingDicts",
+                summary = extensionManager.spellingDicts.internalModuleDir.absolutePath,
+                onClick = {
+                    context.showLongToast(extensionManager.spellingDicts.internalModuleDir.absolutePath)
+                },
+            )
+            Preference(
+                title = "themes",
+                summary = extensionManager.themes.internalModuleDir.absolutePath,
+                onClick = {
+                    context.showLongToast(extensionManager.themes.internalModuleDir.absolutePath)
+                },
             )
         }
 

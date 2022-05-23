@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
 import dev.patrickgold.florisboard.ime.text.composing.KanaUnicode
 import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import dev.patrickgold.florisboard.lib.android.FileObserver
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -42,6 +42,8 @@ import dev.patrickgold.florisboard.lib.kotlin.throwOnFailure
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
@@ -78,6 +80,9 @@ class ExtensionManager(context: Context) {
         const val IME_KEYBOARD_PATH = "ime/keyboard"
         const val IME_SPELLING_PATH = "ime/spelling"
         const val IME_THEME_PATH = "ime/theme"
+
+        private const val FILE_OBSERVER_MASK =
+            FileObserver.CLOSE_WRITE or FileObserver.DELETE or FileObserver.MOVED_FROM or FileObserver.MOVED_TO
     }
 
     private val appContext by context.appContext()
@@ -87,6 +92,12 @@ class ExtensionManager(context: Context) {
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
+
+    fun init() {
+        keyboardExtensions.init()
+        spellingDicts.init()
+        themes.init()
+    }
 
     fun import(ext: Extension) {
         val workingDir = requireNotNull(ext.workingDir) { "No working dir specified" }
@@ -141,44 +152,50 @@ class ExtensionManager(context: Context) {
 
         private val assetsModuleRef = FlorisRef.assets(modulePath)
         private val internalModuleRef = FlorisRef.internal(modulePath)
-        private val internalModuleDir = internalModuleRef.absoluteFile(appContext)
+        var internalModuleDir = internalModuleRef.absoluteFile(appContext)
 
         private var staticExtensions = listOf<T>()
-        private val fileObserverMask =
-            FileObserver.CLOSE_WRITE or FileObserver.DELETE or
-            FileObserver.MOVED_FROM or FileObserver.MOVED_TO
-        private val fileObserver = if (AndroidVersion.ATLEAST_API29_Q) {
-            object : FileObserver(internalModuleDir, fileObserverMask) {
-                override fun onEvent(event: Int, path: String?) = onEventCallback(event, path)
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            object : FileObserver(internalModuleDir.absolutePath, fileObserverMask) {
-                override fun onEvent(event: Int, path: String?) = onEventCallback(event, path)
-            }
-        }
-
-        private fun onEventCallback(event: Int, path: String?) {
-            flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
-            if (path == null) return
-            ioScope.launch {
-                refresh()
-            }
-        }
+        private var fileObserver: FileObserver? = null
+        private val initGuard = Mutex()
+        private val refreshGuard = Mutex()
 
         init {
             value = emptyList()
             ioScope.launch {
-                internalModuleDir.mkdirs()
-                staticExtensions = indexAssetsModule()
-                refresh()
-                fileObserver.startWatching()
+                refreshGuard.withLock {
+                    staticExtensions = indexAssetsModule()
+                }
             }
         }
 
-        private fun refresh() {
-            val dynamicExtensions = staticExtensions + indexInternalModule()
-            postValue(dynamicExtensions)
+        fun init() {
+            ioScope.launch {
+                initGuard.withLock {
+                    // Update internal module dir to actual path and make directory if not exists
+                    internalModuleDir = internalModuleRef.absoluteFile(appContext)
+                    internalModuleDir.mkdirs()
+
+                    // Refresh index to new state
+                    refresh()
+
+                    // Stop watching on old file observer if one exists and start new observer on new path
+                    fileObserver?.stopWatching()
+                    fileObserver = FileObserver(internalModuleDir, FILE_OBSERVER_MASK) { event, path ->
+                        flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
+                        if (path == null) return@FileObserver
+                        ioScope.launch {
+                            refresh()
+                        }
+                    }.also { it.startWatching() }
+                }
+            }
+        }
+
+        private suspend fun refresh() {
+            refreshGuard.withLock {
+                val dynamicExtensions = staticExtensions + indexInternalModule()
+                postValue(dynamicExtensions)
+            }
         }
 
         private fun indexAssetsModule(): List<T> {
