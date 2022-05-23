@@ -95,12 +95,12 @@ class FlorisApplication : Application() {
             if (!UserManagerCompat.isUserUnlocked(this)) {
                 val context = createDeviceProtectedStorageContext()
                 initICU(context)
-                prefs.initializeBlocking(context)
                 registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
             } else {
                 initICU(this)
                 cacheDir?.deleteContentsRecursively()
                 prefs.initializeBlocking(this)
+                prefs.advanced.forcePrivateMode.set(true)
                 clipboardManager.value.initializeForContext(this)
             }
 
