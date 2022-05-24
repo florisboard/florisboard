@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.lib
 
+import dev.patrickgold.florisboard.lib.kotlin.titlecase
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -226,9 +227,7 @@ class FlorisLocale private constructor(val base: Locale) {
      * @see java.util.Locale.getDisplayLanguage
      */
     fun displayLanguage(locale: FlorisLocale = default()): String {
-        return base.getDisplayLanguage(locale.base).replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(locale.base) else it.toString()
-        }
+        return base.getDisplayLanguage(locale.base).titlecase(locale)
     }
 
     /**
