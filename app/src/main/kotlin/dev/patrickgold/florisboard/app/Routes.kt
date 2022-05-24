@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import dev.patrickgold.florisboard.app.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
+import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
@@ -121,6 +122,8 @@ object Routes {
         const val AndroidLocales = "devtools/android/locales"
         const val AndroidSettings = "devtools/android/settings/{name}"
         fun AndroidSettings(name: String) = AndroidSettings.curlyFormat("name" to name)
+
+        const val ExportDebugLog = "export-debug-log"
     }
 
     object Ext {
@@ -215,6 +218,7 @@ object Routes {
                 val name = navBackStack.arguments?.getString("name")
                 AndroidSettingsScreen(name)
             }
+            composable(Devtools.ExportDebugLog) { ExportDebugLogScreen() }
 
             composable(Ext.Edit) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
