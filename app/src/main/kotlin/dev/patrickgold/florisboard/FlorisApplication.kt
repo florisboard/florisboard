@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Handler
 import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
@@ -64,6 +65,7 @@ class FlorisApplication : Application() {
     }
 
     private val prefs by florisPreferenceModel()
+    private val mainHandler by lazy { Handler(mainLooper) }
 
     val assetManager = lazy { AssetManager(this) }
     val cacheManager = lazy { CacheManager(this) }
@@ -93,22 +95,26 @@ class FlorisApplication : Application() {
             FlorisEmojiCompat.init(this)
 
             if (!UserManagerCompat.isUserUnlocked(this)) {
-                val context = createDeviceProtectedStorageContext()
-                initICU(context)
-                prefs.initializeBlocking(context)
-                registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
-            } else {
-                initICU(this)
                 cacheDir?.deleteContentsRecursively()
-                prefs.initializeBlocking(this)
-                clipboardManager.value.initializeForContext(this)
+                extensionManager.value.init()
+                registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
+                return
             }
 
-            DictionaryManager.init(this)
+            init()
         } catch (e: Exception) {
             CrashUtility.stageException(e)
             return
         }
+    }
+
+    fun init() {
+        initICU(this)
+        cacheDir?.deleteContentsRecursively()
+        extensionManager.value.init()
+        prefs.initializeBlocking(this)
+        clipboardManager.value.initializeForContext(this)
+        DictionaryManager.init(this)
     }
 
     fun initICU(context: Context): Boolean {
@@ -142,9 +148,7 @@ class FlorisApplication : Application() {
                 } catch (e: Exception) {
                     flogError { e.toString() }
                 }
-                cacheDir?.deleteContentsRecursively()
-                prefs.initializeBlocking(this@FlorisApplication)
-                clipboardManager.value.initializeForContext(this@FlorisApplication)
+                mainHandler.post { init() }
             }
         }
     }
