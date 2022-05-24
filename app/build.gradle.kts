@@ -17,6 +17,9 @@
 // Suppress needed until https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed
 @file:Suppress("DSL_SCOPE_VIOLATION")
 
+import java.io.ByteArrayOutputStream
+import java.io.File
+
 plugins {
     alias(libs.plugins.agp.application)
     alias(libs.plugins.kotlin.android)
@@ -38,7 +41,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = "1.8"
         freeCompilerArgs = listOf(
             "-Xallow-result-return-type",
             "-Xopt-in=kotlin.RequiresOptIn",
@@ -55,6 +58,8 @@ android {
         versionName = "0.3.16"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
 
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
@@ -115,7 +120,7 @@ android {
     buildTypes {
         named("debug") {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug"
+            versionNameSuffix = "-debug-${getGitCommitHash(short = true)}"
 
             isDebuggable = true
             isJniDebuggable = false
@@ -223,4 +228,21 @@ dependencies {
 
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
+}
+
+fun getGitCommitHash(short: Boolean = false): String {
+    if (!File(".git").exists()) {
+        return "null"
+    }
+
+    val stdout = ByteArrayOutputStream()
+    exec {
+        if (short) {
+            commandLine("git", "rev-parse", "--short", "HEAD")
+        } else {
+            commandLine("git", "rev-parse", "HEAD")
+        }
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
 }
