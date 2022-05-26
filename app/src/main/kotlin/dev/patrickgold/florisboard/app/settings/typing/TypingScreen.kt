@@ -75,7 +75,7 @@ fun TypingScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.suggestion.clipboardContentTimeout,
                 title = stringRes(R.string.pref__suggestion__clipboard_content_timeout__label),
-                unit = stringRes(R.string.unit__seconds__symbol),
+                valueLabel = { stringRes(R.string.unit__seconds__symbol, "v" to it) },
                 min = 30,
                 max = 300,
                 stepIncrement = 5,
