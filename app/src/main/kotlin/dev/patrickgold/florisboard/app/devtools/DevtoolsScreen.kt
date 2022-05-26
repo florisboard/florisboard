@@ -115,6 +115,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 onClick = { throw DebugOnPurposeCrashException() },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            Preference(
+                title = "Debug log",
+                summary = "View and export the debug log",
+                onClick = { navController.navigate(Routes.Devtools.ExportDebugLog) },
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
         }
 
         PreferenceGroup(title = stringRes(R.string.devtools__group_android__title)) {

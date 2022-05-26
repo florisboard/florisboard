@@ -26,6 +26,10 @@ inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(local
 
 inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
 
+inline fun String.titlecase(locale: FlorisLocale = FlorisLocale.ROOT): String {
+    return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale.base) else it.toString() }
+}
+
 fun String.safeSubstring(startIndex: Int): String {
     return try {
         this.substring(startIndex)
