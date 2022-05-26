@@ -65,7 +65,7 @@ fun ClipboardScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.clipboard.cleanUpAfter,
                 title = stringRes(R.string.pref__clipboard__clean_up_after__label),
-                unit = pluralsRes(R.plurals.unit__minutes__written, prefs.clipboard.cleanUpAfter.get()),
+                valueLabel = { pluralsRes(R.plurals.unit__minutes__written, it, "v" to it) },
                 min = 0,
                 max = 120,
                 stepIncrement = 5,
@@ -79,7 +79,7 @@ fun ClipboardScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.clipboard.maxHistorySize,
                 title = stringRes(R.string.pref__clipboard__max_history_size__label),
-                unit = pluralsRes(R.plurals.unit__items__written, prefs.clipboard.maxHistorySize.get()),
+                valueLabel = { pluralsRes(R.plurals.unit__items__written, it, "v" to it) },
                 min = 5,
                 max = 100,
                 stepIncrement = 5,

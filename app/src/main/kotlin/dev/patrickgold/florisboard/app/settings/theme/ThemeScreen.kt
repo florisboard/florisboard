@@ -35,13 +35,11 @@ import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
-@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun ThemeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__theme__title)

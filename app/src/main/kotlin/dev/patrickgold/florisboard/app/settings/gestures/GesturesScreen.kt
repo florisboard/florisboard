@@ -60,7 +60,7 @@ fun GesturesScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.glide.trailDuration,
                 title = stringRes(R.string.pref__glide_trail_fade_duration),
-                unit = stringRes(R.string.unit__milliseconds__symbol),
+                valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
                 min = 0,
                 max = 500,
                 stepIncrement = 10,
@@ -75,7 +75,7 @@ fun GesturesScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.glide.previewRefreshDelay,
                 title = stringRes(R.string.pref__glide_preview_refresh_delay),
-                unit = stringRes(R.string.unit__milliseconds__symbol),
+                valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
                 min = 50,
                 max = 500,
                 stepIncrement = 25,
@@ -153,7 +153,7 @@ fun GesturesScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.gestures.swipeVelocityThreshold,
                 title = stringRes(R.string.pref__gestures__swipe_velocity_threshold__label),
-                unit = stringRes(R.string.unit__display_pixel_per_seconds__symbol),
+                valueLabel = { stringRes(R.string.unit__display_pixel_per_seconds__symbol, "v" to it) },
                 min = 400,
                 max = 4000,
                 stepIncrement = 100,
@@ -161,7 +161,7 @@ fun GesturesScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.gestures.swipeDistanceThreshold,
                 title = stringRes(R.string.pref__gestures__swipe_distance_threshold__label),
-                unit = stringRes(R.string.unit__display_pixel__symbol),
+                valueLabel = { stringRes(R.string.unit__display_pixel__symbol, "v" to it) },
                 min = 12,
                 max = 72,
                 stepIncrement = 1,

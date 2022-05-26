@@ -48,7 +48,7 @@ fun InputFeedbackScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.inputFeedback.audioVolume,
                 title = stringRes(R.string.pref__input_feedback__audio_volume__label),
-                unit = stringRes(R.string.unit__percent__symbol),
+                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
                 min = 1,
                 max = 100,
                 stepIncrement = 1,
@@ -107,7 +107,7 @@ fun InputFeedbackScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationDuration,
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_duration__label),
-                unit = stringRes(R.string.unit__milliseconds__symbol),
+                valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
                 min = 1,
                 max = 100,
                 stepIncrement = 1,
@@ -116,9 +116,11 @@ fun InputFeedbackScreen() = FlorisScreen {
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationStrength,
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_strength__label),
-                summary = InputFeedbackController.generateVibrationStrengthErrorSummary() ?:
-                stringRes(R.string.unit__percent__symbol),
-                unit = stringRes(R.string.unit__percent__symbol),
+                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+                summary = { strength ->
+                    InputFeedbackController.generateVibrationStrengthErrorSummary()
+                        ?: stringRes(R.string.unit__percent__symbol, "v" to strength)
+                },
                 min = 1,
                 max = 100,
                 stepIncrement = 1,
