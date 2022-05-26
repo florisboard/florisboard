@@ -158,24 +158,25 @@ internal fun SnyggValueIcon(
     }
 }
 
-private const val AlwaysPercentUpscaleFactor = 3
+private const val UpscaleFactor = 3
+private const val UpscaleMaxAbsoluteValue = 100
 
 fun SnyggShapeValue.alwaysPercentShape(): Shape {
     return when (this) {
         is SnyggRoundedCornerDpShapeValue -> {
             RoundedCornerShape(
-                this.topStart.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.topEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomStart.value.toInt() * AlwaysPercentUpscaleFactor,
+                (this.topStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
+                (this.topEnd.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
+                (this.bottomEnd.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
+                (this.bottomStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
             )
         }
         is SnyggCutCornerDpShapeValue -> {
             CutCornerShape(
-                this.topStart.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.topEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomEnd.value.toInt() * AlwaysPercentUpscaleFactor,
-                this.bottomStart.value.toInt() * AlwaysPercentUpscaleFactor,
+                (this.topStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
+                (this.topEnd.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
+                (this.bottomEnd.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
+                (this.bottomStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
             )
         }
         else -> this.shape
