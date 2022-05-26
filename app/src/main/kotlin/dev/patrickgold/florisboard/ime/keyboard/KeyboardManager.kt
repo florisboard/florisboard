@@ -58,6 +58,8 @@ import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.kotlin.titlecase
+import dev.patrickgold.florisboard.lib.kotlin.uppercase
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.nlpManager
@@ -319,16 +321,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     fun fixCase(word: String): String {
         return when(activeState.inputShiftState) {
             InputShiftState.CAPS_LOCK -> {
-                word.uppercase(subtypeManager.activeSubtype().primaryLocale.base)
+                word.uppercase(subtypeManager.activeSubtype().primaryLocale)
             }
             InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
-                word.replaceFirstChar {
-                    if (it.isLowerCase()) {
-                        it.titlecase(subtypeManager.activeSubtype().primaryLocale.base)
-                    } else {
-                        it.toString()
-                    }
-                }
+                word.titlecase(subtypeManager.activeSubtype().primaryLocale)
             }
             else -> word
         }
