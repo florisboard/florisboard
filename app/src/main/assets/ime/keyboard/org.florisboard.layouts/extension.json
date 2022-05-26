@@ -179,6 +179,12 @@
         "direction": "ltr"
       },
       {
+        "id": "indonesian",
+        "label": "Indonesian (QWERTY)",
+        "authors": [ "Linerly" ],
+        "direction": "ltr"
+      },
+      {
         "id": "ipa",
         "label": "International Phonetic Alphabet",
         "authors": [ "Huy-Ngo" ],
