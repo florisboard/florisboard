@@ -285,7 +285,7 @@
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:dollar",
       "popupMapping": "org.florisboard.localization:id",
-      "preffered: {
+      "preffered": {
         "characters": "org.florisboard.layouts:qwerty"
       }
     },
