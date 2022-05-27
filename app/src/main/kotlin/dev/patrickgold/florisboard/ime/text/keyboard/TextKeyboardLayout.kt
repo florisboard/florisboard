@@ -699,6 +699,11 @@ private class TextKeyboardLayoutController(
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
 
+        if (pointer.hasTriggeredMassSelection) {
+            pointer.hasTriggeredMassSelection = false
+            editorInstance.massSelection.end()
+        }
+
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
@@ -742,6 +747,11 @@ private class TextKeyboardLayoutController(
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
         pointer.pressedKeyInfo?.cancelJobs()
         pointer.pressedKeyInfo = null
+
+        if (pointer.hasTriggeredMassSelection) {
+            pointer.hasTriggeredMassSelection = false
+            editorInstance.massSelection.end()
+        }
 
         val activeKey = pointer.activeKey
         if (activeKey != null) {
@@ -857,13 +867,11 @@ private class TextKeyboardLayoutController(
                             val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                if (editorInstance.activeInfo.isRawInputEditor) {
-                                    keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
-                                } else {
-                                    // TODO: Maybe find way to integrate this into mass select?
-                                    val selection = editorInstance.activeContent.selection
-                                    editorInstance.setSelection(selection.end - count, selection.end - count)
+                                if (!pointer.hasTriggeredMassSelection) {
+                                    pointer.hasTriggeredMassSelection = true
+                                    editorInstance.massSelection.begin()
                                 }
+                                keyboardManager.handleArrow(KeyCode.ARROW_LEFT, count)
                             }
                         }
                         true
@@ -878,13 +886,11 @@ private class TextKeyboardLayoutController(
                             val count = if (!pointer.hasTriggeredGestureMove) it - 1 else it
                             if (count > 0) {
                                 inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
-                                if (editorInstance.activeInfo.isRawInputEditor) {
-                                    // TODO: Maybe find way to integrate this into mass select?
-                                    keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
-                                } else {
-                                    val selection = editorInstance.activeContent.selection
-                                    editorInstance.setSelection(selection.end + count, selection.end + count)
+                                if (!pointer.hasTriggeredMassSelection) {
+                                    pointer.hasTriggeredMassSelection = true
+                                    editorInstance.massSelection.begin()
                                 }
+                                keyboardManager.handleArrow(KeyCode.ARROW_RIGHT, count)
                             }
                         }
                         true
@@ -1008,6 +1014,7 @@ private class TextKeyboardLayoutController(
         var activeKey: TextKey? = null
         var hasTriggeredGestureMove: Boolean = false
         var hasTriggeredLongPress: Boolean = false
+        var hasTriggeredMassSelection: Boolean = false
         var pressedKeyInfo: InputEventDispatcher.PressedKeyInfo? = null
 
         override fun reset() {
@@ -1016,6 +1023,7 @@ private class TextKeyboardLayoutController(
             activeKey = null
             hasTriggeredGestureMove = false
             hasTriggeredLongPress = false
+            hasTriggeredMassSelection = false
             pressedKeyInfo = null
         }
 
