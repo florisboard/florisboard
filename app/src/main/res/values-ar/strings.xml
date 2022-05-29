@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">رأس الحافظة</string>
     <string name="snygg__rule_element__clipboard_item">عنصر الحافظة</string>
     <string name="snygg__rule_element__clipboard_item_popup">عنصر الحافظة المنبثق</string>
+    <string name="snygg__rule_element__emoji_key">مفتاح الرموز التعبيرية</string>
+    <string name="snygg__rule_element__emoji_key_popup">انبثاق مفتاح الرموز التعبيرية</string>
+    <string name="snygg__rule_element__emoji_key_tab">تبويب الرموز التعبيرية</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">هيئة شكل الإدخال الأفقي</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">حقل الإدخال الأفقي</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">مهام الإدخال الأفقي</string>
     <string name="snygg__rule_element__glide_trail">مسار الإنزلاق</string>
     <string name="snygg__rule_element__one_handed_panel">لوحة مفاتيح بيد واحدة</string>
     <string name="snygg__rule_element__smartbar_primary_row">صف الشريط الذكي الأساسي</string>

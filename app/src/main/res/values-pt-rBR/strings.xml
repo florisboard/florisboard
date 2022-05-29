@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">Cabeçalho da área de transferência</string>
     <string name="snygg__rule_element__clipboard_item">Item da área de transferência</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up do item da área de transferência</string>
+    <string name="snygg__rule_element__emoji_key">Tecla de emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Popup da tecla de emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Aba de emojis</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Layout de entrada do modo paisagem</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Campo de entrada do modo paisagem</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Ação de entrada do modo paisagem</string>
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
