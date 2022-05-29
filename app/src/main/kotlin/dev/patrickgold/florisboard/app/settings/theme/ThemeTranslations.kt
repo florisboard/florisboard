@@ -68,6 +68,12 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
             FlorisImeUi.ClipboardHeader -> R.string.snygg__rule_element__clipboard_header
             FlorisImeUi.ClipboardItem -> R.string.snygg__rule_element__clipboard_item
             FlorisImeUi.ClipboardItemPopup -> R.string.snygg__rule_element__clipboard_item_popup
+            FlorisImeUi.EmojiKey -> R.string.snygg__rule_element__emoji_key
+            FlorisImeUi.EmojiKeyPopup -> R.string.snygg__rule_element__emoji_key_popup
+            FlorisImeUi.EmojiTab -> R.string.snygg__rule_element__emoji_key_tab
+            FlorisImeUi.ExtractedLandscapeInputLayout -> R.string.snygg__rule_element__extracted_landscape_input_layout
+            FlorisImeUi.ExtractedLandscapeInputField -> R.string.snygg__rule_element__extracted_landscape_input_field
+            FlorisImeUi.ExtractedLandscapeInputAction -> R.string.snygg__rule_element__extracted_landscape_input_action
             FlorisImeUi.GlideTrail -> R.string.snygg__rule_element__glide_trail
             FlorisImeUi.OneHandedPanel -> R.string.snygg__rule_element__one_handed_panel
             FlorisImeUi.SmartbarPrimaryRow -> R.string.snygg__rule_element__smartbar_primary_row

@@ -44,6 +44,7 @@
     { "id": "hr", "authors": [ "hedidnothingwrong" ] },
     { "id": "hu", "authors": [ "zoli111, gabik65" ] },
     { "id": "hy", "authors": [ "PJTSearch" ] },
+    { "id": "id", "authors": [ "Linerly" ] },
     { "id": "is", "authors": [ "patrickgold" ] },
     { "id": "it", "authors": [ "patrickgold" ] },
     { "id": "iw", "authors": [ "Antony" ] },
@@ -277,6 +278,15 @@
       "popupMapping": "org.florisboard.localization:da",
       "preferred": {
         "characters": "org.florisboard.layouts:danish"
+      }
+    },
+    {
+      "languageTag": "id",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:id",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
       }
     },
     {

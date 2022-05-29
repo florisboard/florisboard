@@ -17,13 +17,11 @@
 package dev.patrickgold.florisboard.app.settings.media
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.pluralsRes
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -41,14 +39,15 @@ fun MediaScreen() = FlorisScreen {
             title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
             entries = EmojiSkinTone.listEntries(),
         )
-        val maxSize by prefs.media.emojiRecentlyUsedMaxSize.observeAsState()
         DialogSliderPreference(
             prefs.media.emojiRecentlyUsedMaxSize,
             title = stringRes(R.string.prefs__media__emoji_recently_used_max_size),
-            summary = if (maxSize == 0) {
-                stringRes(R.string.general__unlimited)
-            } else {
-                pluralsRes(R.plurals.unit__items__written, maxSize)
+            valueLabel = { maxSize ->
+                if (maxSize == 0) {
+                    stringRes(R.string.general__unlimited)
+                } else {
+                    pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
+                }
             },
             min = 0,
             max = 120,

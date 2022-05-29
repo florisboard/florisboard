@@ -153,35 +153,6 @@ inline fun flogDebug(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = 
 }
 
 /**
- * Logs a wtf message returned by [block] together with the automatically retrieved
- * calling class and method name either to the console or to a log file. The class name
- * is used for the tag, the method name prepended to the message.
- *
- * This method automatically evaluates if logging is enabled and calls [block] only
- * if a log message should be generated.
- *
- * Optionally a [topic] can also be specified to allow to only partially enable
- * debug messages across the codebase. The passed [topic] is compared with the
- * currently active [Flog.flogTopics] variable and only if at least 1 topic match
- * is found, [block] will be called and a log message written.
- *
- * @param topic The topic of this message. To specify multiple topics, use the binary
- *  OR operator. Defaults to [Flog.TOPIC_OTHER].
- * @param block The lambda expression to evaluate the message which is appended to the
- *  method name. Is called only if logging is enabled and the topics match. Must return
- *  a [String]. If this argument is omitted, only the calling method name will be used
- *  as the log message.
- */
-inline fun flogWtf(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { "" }) {
-    contract {
-        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
-    }
-    if (Flog.checkShouldFlog(topic, Flog.LEVEL_WTF)) {
-        log(Flog.LEVEL_WTF, block())
-    }
-}
-
-/**
  * Helper function to evaluate if a bit flag is set in an integer value.
  *
  * @param flag The flag to check if it is set.
@@ -218,7 +189,6 @@ object Flog {
     const val LEVEL_WARNING: FlogLevel =            0x02u
     const val LEVEL_INFO: FlogLevel =               0x04u
     const val LEVEL_DEBUG: FlogLevel =              0x08u
-    const val LEVEL_WTF: FlogLevel =                0x10u
     const val LEVEL_ALL: FlogLevel =                UInt.MAX_VALUE
 
     const val OUTPUT_CONSOLE: FlogOutput =          0x01u
@@ -348,7 +318,6 @@ object Flog {
             level isSet LEVEL_WARNING ->    Log.w(tag, message)
             level isSet LEVEL_INFO ->       Log.i(tag, message)
             level isSet LEVEL_DEBUG ->      Log.d(tag, message)
-            level isSet LEVEL_WTF ->        Log.wtf(tag, message)
         }
     }
 

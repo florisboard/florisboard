@@ -25,7 +25,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -33,7 +32,6 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
-import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable
@@ -42,7 +40,6 @@ fun SplashScreen() = Box(
     contentAlignment = Alignment.Center,
 ) {
     val prefs by florisPreferenceModel()
-    val context = LocalContext.current
 
     val isModelLoaded by prefs.datastoreReadyStatus.observeAsState()
     val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
@@ -55,9 +52,7 @@ fun SplashScreen() = Box(
 
     LaunchedEffect(isModelLoaded) {
         if (isModelLoaded) {
-            val isConfigured = isImeSetUp ||
-                (InputMethodUtils.isFlorisboardEnabled(context) && InputMethodUtils.isFlorisboardSelected(context))
-            navController.navigate(if (isConfigured) Routes.Settings.Home else Routes.Setup.Screen) {
+            navController.navigate(if (isImeSetUp) Routes.Settings.Home else Routes.Setup.Screen) {
                 popUpTo(Routes.Splash.Screen) {
                     inclusive = true
                 }

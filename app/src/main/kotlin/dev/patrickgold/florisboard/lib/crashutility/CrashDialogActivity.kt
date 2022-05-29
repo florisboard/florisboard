@@ -22,7 +22,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -32,6 +31,8 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.lib.android.stringRes
+import dev.patrickgold.florisboard.lib.devtools.Devtools
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlin.properties.ReadOnlyProperty
@@ -67,36 +68,33 @@ class CrashDialogActivity : ComponentActivity() {
         setContentView(layout)
 
         stacktraces = CrashUtility.getUnhandledStacktraces(this)
+        val versionName = buildString {
+            append("[")
+            append(BuildConfig.VERSION_NAME)
+            append("](")
+            if (BuildConfig.DEBUG) {
+                append(stringRes(R.string.florisboard__commit_by_hash_url, "hash" to BuildConfig.BUILD_COMMIT_HASH))
+            } else {
+                append(stringRes(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME))
+            }
+            append(")")
+        }
         errorReport.apply {
             appendLine("#### Environment information")
-            appendLine("- FlorisBoard Version: ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-            appendLine("- Device: ${getDeviceName()}")
-            appendLine("- Android: ${getAndroidVersion()}")
+            appendLine("- FlorisBoard $versionName (${BuildConfig.VERSION_CODE})")
+            appendLine("- Device: ${Devtools.getDeviceName()}")
+            appendLine("- Android: ${Devtools.getAndroidVersion()}")
             appendLine()
-            appendLine("#### Features enabled")
-            appendLine("```kt")
-            val prefs = prefs
-            if (prefs != null) {
-                try {
-                    appendLine("smartbar = ${prefs.smartbar.enabled.get()}")
-                    appendLine("suggestions = ${prefs.suggestion.enabled.get()}")
-                    appendLine("suggestions_clipboard = ${prefs.suggestion.clipboardContentEnabled.get()}")
-                    appendLine("suggestions_next_word = ${prefs.suggestion.usePrevWords.get()}")
-                    appendLine("glide = ${prefs.glide.enabled.get()}")
-                    appendLine("clipboard_internal = ${prefs.clipboard.useInternalClipboard.get()}")
-                    appendLine("clipboard_history = ${prefs.clipboard.historyEnabled.get()}")
-                } catch (_: Exception) {
-                    appendLine("error: Exception was thrown while retrieving preferences, instance not null.")
-                }
-            } else {
-                appendLine("error: Failed to fetch preferences: PrefHelper instance was null!")
-            }
-            appendLine("```")
+            appendLine("#### Attached logs and stacktrace files")
+            appendCollapsibleSection(
+                summary = "Detailed info (Debug log header)",
+                details = Devtools.generateDebugLog(this@CrashDialogActivity, prefs, includeLogcat = false),
+            )
             appendLine()
             if (stacktraces.isNotEmpty()) {
-                appendLine("#### Attached stacktrace files")
                 stacktraces.forEach {
-                    generateCollapsibleStacktrace(this, it)
+                    appendCollapsibleSection(it.name, it.details)
+                    appendLine()
                 }
             } else {
                 flogWarning(LogTopic.CRASH_UTILITY) {
@@ -139,34 +137,13 @@ class CrashDialogActivity : ComponentActivity() {
      * Rules for collapsible markdown on GitHub:
      *  https://gist.github.com/pierrejoubert73/902cc94d79424356a8d20be2b382e1ab
      */
-    private fun generateCollapsibleStacktrace(sb: StringBuilder, stacktrace: CrashUtility.Stacktrace) {
-        sb.apply {
-            appendLine("<details>")
-            appendLine("<summary>${stacktrace.name}</summary>")
-            appendLine()
-            appendLine("```")
-            appendLine(stacktrace.details)
-            appendLine("```")
-            appendLine("</details>")
-            appendLine()
-        }
-    }
-
-    private fun getDeviceName(): String {
-        val manufacturer = Build.MANUFACTURER
-        val model = Build.MODEL
-        return if (model.lowercase().startsWith(manufacturer.lowercase())) {
-            model.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-        } else {
-            "${manufacturer.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} $model"
-        }
-    }
-
-    private fun getAndroidVersion(): String {
-        val fields = Build.VERSION_CODES::class.java.fields
-        var codeName: String? = null
-        fields.filter { it.getInt(Build.VERSION_CODES::class) == Build.VERSION.SDK_INT }
-            .forEach { codeName = it.name }
-        return codeName?.let { "${Build.VERSION.RELEASE} (cn=$it sdk=${Build.VERSION.SDK_INT})" } ?: "Unknown"
+    private fun StringBuilder.appendCollapsibleSection(summary: String, details: String) {
+        this.appendLine("<details>")
+        this.append("<summary>").append(summary).appendLine("</summary>")
+        this.appendLine()
+        this.appendLine("```")
+        this.appendLine(details)
+        this.appendLine("```")
+        this.appendLine("</details>")
     }
 }
