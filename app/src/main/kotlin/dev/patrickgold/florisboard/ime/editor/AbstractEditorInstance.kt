@@ -100,7 +100,9 @@ abstract class AbstractEditorInstance(context: Context) {
             activeContent = EditorContent.Unspecified
             return
         }
-        activeCursorCapsMode = editorInfo.initialCapsMode
+        // We query the input connection instead of using the initialCapsMode because some apps just don't want to use
+        // EditorInfo's initial fields correctly.
+        activeCursorCapsMode = ic.getCursorCapsMode()
 
         // Get Text
         val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor)
@@ -139,9 +141,7 @@ abstract class AbstractEditorInstance(context: Context) {
             activeContent = EditorContent.Unspecified
             return
         }
-        activeCursorCapsMode = InputAttributes.CapsMode.fromFlags(
-            ic.getCursorCapsMode(editorInfo.inputAttributes.raw)
-        )
+        activeCursorCapsMode = ic.getCursorCapsMode()
 
         val expected = runBlocking {
             expectedContentQueue.popUntilOrNull {
@@ -189,6 +189,12 @@ abstract class AbstractEditorInstance(context: Context) {
         activeCursorCapsMode = InputAttributes.CapsMode.NONE
         activeContent = EditorContent.Unspecified
         runBlocking { expectedContentQueue.clear() }
+    }
+
+    private fun InputConnection.getCursorCapsMode(): InputAttributes.CapsMode {
+        return InputAttributes.CapsMode.fromFlags(
+            this.getCursorCapsMode(activeInfo.inputAttributes.raw)
+        )
     }
 
     private suspend fun generateContent(

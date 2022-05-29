@@ -43,6 +43,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.io.ZipUtils
@@ -118,7 +119,8 @@ fun BackupScreen() = FlorisScreen {
                 context.showLongToast(R.string.backup_and_restore__back_up__success)
                 navController.popBackStack()
             }.onFailure { error ->
-                context.showLongToast(R.string.backup_and_restore__back_up__failure, "error_message" to error.localizedMessage)
+                flogError { error.stackTraceToString() }
+                context.showLongToast(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
                 backupWorkspace = null
             }
         },
@@ -179,7 +181,8 @@ fun BackupScreen() = FlorisScreen {
                 }
             }
         }.onFailure { error ->
-            context.showLongToast(R.string.backup_and_restore__back_up__failure, "error_message" to error.localizedMessage)
+            flogError { error.stackTraceToString() }
+            context.showLongToast(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
             backupWorkspace = null
         }
     }
