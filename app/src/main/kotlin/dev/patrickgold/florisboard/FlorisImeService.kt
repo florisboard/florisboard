@@ -135,9 +135,14 @@ class FlorisImeService : LifecycleInputMethodService() {
     companion object {
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
+        private var CurrentInputConnection = FlorisImeServiceReference.get()?.currentInputConnection
+
+        fun setCurrentInputConnection(inputConnection: InputConnection?) {
+            CurrentInputConnection = inputConnection ?:FlorisImeServiceReference.get()?.currentInputConnection
+        }
 
         fun currentInputConnection(): InputConnection? {
-            return FlorisImeServiceReference.get()?.currentInputConnection
+            return CurrentInputConnection
         }
 
         fun inputFeedbackController(): InputFeedbackController? {
