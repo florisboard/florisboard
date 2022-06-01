@@ -1,7 +1,7 @@
 [versions]
 # Main
 accompanist = "0.23.1"
-android-gradle-plugin = "7.2.0"
+android-gradle-plugin = "7.2.1"
 androidx-activity = "1.4.0"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.2.0"

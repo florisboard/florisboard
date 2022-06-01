@@ -64,6 +64,7 @@
     <string name="settings__theme_editor__rule_groups">그룹</string>
     <string name="snygg__property_name__width">너비</string>
     <string name="snygg__property_name__height">높이</string>
+    <string name="snygg__property_name__background">배경</string>
     <string name="snygg__property_name__border_color">테두리 색</string>
     <string name="snygg__property_name__border_style">테두리 스타일</string>
     <string name="snygg__property_name__border_width">테두리 두께</string>

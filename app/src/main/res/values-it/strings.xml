@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">Intestazione degli appunti</string>
     <string name="snygg__rule_element__clipboard_item">Elemento degli appunti</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elemento degli appunti</string>
+    <string name="snygg__rule_element__emoji_key">Tasto emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Popup tasto emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Scheda emoji</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Layout di input orizzontale</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Campo di input orizzontale</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Azione di input orizzontale</string>
     <string name="snygg__rule_element__glide_trail">Percorso di scorrimento</string>
     <string name="snygg__rule_element__one_handed_panel">Pannello a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Riga principale della Smartbar</string>

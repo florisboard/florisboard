@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">سەرەوەی لەبەرگیراوەکان</string>
     <string name="snygg__rule_element__clipboard_item">لەبەرگیراوەکان</string>
     <string name="snygg__rule_element__clipboard_item_popup">فرمانەکانی لەبەرگیراوەکان</string>
+    <string name="snygg__rule_element__emoji_key">دوگمەی خەندەکان</string>
+    <string name="snygg__rule_element__emoji_key_popup">دوگمەی خەندەکان لاوەکی</string>
+    <string name="snygg__rule_element__emoji_key_tab">بەشی خەندەکان</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">دۆخی ئاسۆیی</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">دۆخی ئاسۆیی</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">فرمانی دۆخی ئاسۆیی</string>
     <string name="snygg__rule_element__glide_trail">هێڵی نووسین بەسەریەکەوە</string>
     <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
     <string name="snygg__rule_element__smartbar_primary_row">ڕەنگی سەرەکی بەشی سەرەوە</string>

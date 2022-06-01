@@ -115,7 +115,7 @@
     <string name="settings__theme_editor__code_invalid">此键码无效。请确保键码在 {c_min} 到 {c_max} 范围内，如果是内部特殊键，在 {i_min} 到 {i_max} 范围内。</string>
     <string name="settings__theme_editor__code_help_text">或者，以下链接将帮助您找到相应的键码：</string>
     <string name="settings__theme_editor__code_placeholder">键码</string>
-    <string name="settings__theme_editor__code_recording_help_text">要查找一个键的键码，请使用代码输入字段旁边的按钮。一旦激活，它将记录下一次按键并将键码插入输入框。</string>
+    <string name="settings__theme_editor__code_recording_help_text">要查找一个键的键码，请使用代码输入框旁边的按钮。一旦激活，它将记录下一次按键并将键码插入输入框。</string>
     <string name="settings__theme_editor__code_recording_started">键码记录已开始</string>
     <string name="settings__theme_editor__code_recording_stopped">键码记录已停止</string>
     <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} 需要设置为默认键盘才能记录键码</string>
@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">剪贴板顶栏</string>
     <string name="snygg__rule_element__clipboard_item">剪贴板条目</string>
     <string name="snygg__rule_element__clipboard_item_popup">剪贴板条目弹出</string>
+    <string name="snygg__rule_element__emoji_key">表情符号键</string>
+    <string name="snygg__rule_element__emoji_key_popup">表情符号键弹出</string>
+    <string name="snygg__rule_element__emoji_key_tab">表情符号选项卡</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">横向输入布局</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">横向输入框</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">横向输入框操作</string>
     <string name="snygg__rule_element__glide_trail">滑动轨迹</string>
     <string name="snygg__rule_element__one_handed_panel">单手面板</string>
     <string name="snygg__rule_element__smartbar_primary_row">智能栏主要行</string>

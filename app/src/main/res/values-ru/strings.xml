@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">Заголовок буфера обмена</string>
     <string name="snygg__rule_element__clipboard_item">Элемент буфера обмена</string>
     <string name="snygg__rule_element__clipboard_item_popup">Всплывающее окно элемента буфера обмена</string>
+    <string name="snygg__rule_element__emoji_key">Кнопка эмодзи</string>
+    <string name="snygg__rule_element__emoji_key_popup">Всплывающее окно кнопки эмодзи</string>
+    <string name="snygg__rule_element__emoji_key_tab">Вкладка эмодзи</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Схема горизонтального ввода</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Горизонтальное поле ввода</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Действие горизонтального ввода</string>
     <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
     <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
     <string name="snygg__rule_element__smartbar_primary_row">Основной ряд умной панели</string>
