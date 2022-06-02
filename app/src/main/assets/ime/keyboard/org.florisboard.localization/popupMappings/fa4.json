@@ -20,6 +20,16 @@
         { "code": 1746, "label": "ے" }
       ]
     },
+    "غ":{
+      "relevant": [
+        { "code":  1594, "label": "غ" }
+      ]
+    },
+    "ذ":{
+      "relevant": [
+        { "code":  1584, "label": "ذ" }
+      ]
+    },
     "ا": {
       "main": { "code": 1570, "label": "آ"}
     },

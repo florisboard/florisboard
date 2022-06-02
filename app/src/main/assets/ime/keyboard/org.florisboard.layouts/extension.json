@@ -283,6 +283,13 @@
         "modifier": "org.florisboard.layouts:persian3"
       },
       {
+        "id": "persian4",
+        "label": "Persian4",
+        "authors": [ "M-Koushan" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:persian2"
+      },
+      {
         "id": "qwerty",
         "label": "QWERTY",
         "authors": [ "patrickgold" ],

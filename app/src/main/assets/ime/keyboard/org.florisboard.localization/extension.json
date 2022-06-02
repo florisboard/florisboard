@@ -344,6 +344,18 @@
       }
     },
     {
+      "languageTag": "fa-FA",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:rial",
+      "popupMapping": "org.florisboard.localization:fa4",
+      "preferred": {
+        "characters": "org.florisboard.layouts:persian4",
+        "symbols": "org.florisboard.layouts:persian",
+        "symbols2": "org.florisboard.layouts:persian",
+        "numericRow": "org.florisboard.layouts:western_arabic"
+      }
+    },
+    {
       "languageTag": "ar",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:rial",
