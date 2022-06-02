@@ -21,8 +21,7 @@
     { "code":  1578, "label": "ت" },
     { "code":  1606, "label": "ن" },
     { "code":  1605, "label": "م" },
-    { "code":  1662, "label": "پ" },
-    { "code":  1705, "label": "ک" }
+    { "code":  1662, "label": "پ" }
   ],
   [
     { "code":  8204, "label": "half_space" },
@@ -31,6 +30,7 @@
     { "code":  1585, "label": "ر" },
     { "code":  1583, "label": "د" },
     { "code":  1608, "label": "و" },
+    { "code":  1705, "label": "ک" },
     { "code":  1711, "label": "گ" }
   ]
 ]
