@@ -81,7 +81,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
                 this.systemServiceOrNull(VibratorManager::class)?.defaultVibrator
             } else {
                 this.systemServiceOrNull(Vibrator::class)
-            }
+            }?.takeIf { it.hasVibrator() }
         }
     }
 
@@ -91,6 +91,14 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     private val vibrator = ims.systemVibratorOrNull()
     private val contentResolver = ims.contentResolver
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    private var systemAudioEnabled: Boolean = false
+    private var systemHapticEnabled: Boolean = false
+
+    fun updateSystemPrefsState() {
+        systemAudioEnabled = systemPref(Settings.System.SOUND_EFFECTS_ENABLED)
+        systemHapticEnabled = systemPref(Settings.System.HAPTIC_FEEDBACK_ENABLED)
+    }
 
     fun keyPress(data: KeyData = TextKeyData.UNSPECIFIED) {
         if (prefs.inputFeedback.audioFeatKeyPress.get()) performAudioFeedback(data, 1.0)
@@ -125,10 +133,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     private fun performAudioFeedback(data: KeyData, factor: Double) {
         if (audioManager == null) return
         if (!prefs.inputFeedback.audioEnabled.get()) return
-
-        if (!prefs.inputFeedback.audioIgnoreSystemSettings.get()) {
-            if (!systemPref(Settings.System.SOUND_EFFECTS_ENABLED)) return
-        }
+        if (!prefs.inputFeedback.audioIgnoreSystemSettings.get() && !systemAudioEnabled) return
 
         scope.launch {
             val volume = (prefs.inputFeedback.audioVolume.get() * factor) / 100.0
@@ -146,12 +151,9 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     }
 
     private fun performHapticFeedback(data: KeyData, factor: Double) {
-        if (vibrator == null || !vibrator.hasVibrator()) return
+        if (vibrator == null) return
         if (!prefs.inputFeedback.hapticEnabled.get()) return
-
-        if (!prefs.inputFeedback.hapticIgnoreSystemSettings.get()) {
-            if (!systemPref(Settings.System.HAPTIC_FEEDBACK_ENABLED)) return
-        }
+        if (!prefs.inputFeedback.hapticIgnoreSystemSettings.get() && !systemHapticEnabled) return
 
         scope.launch {
             if (!prefs.inputFeedback.hapticUseVibrator.get()) {

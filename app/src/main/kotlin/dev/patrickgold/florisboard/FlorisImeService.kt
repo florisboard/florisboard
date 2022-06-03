@@ -373,6 +373,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
         isWindowShown = true
         themeManager.updateActiveTheme()
+        inputFeedbackController.updateSystemPrefsState()
     }
 
     override fun onWindowHidden() {
