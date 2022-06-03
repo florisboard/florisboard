@@ -517,6 +517,8 @@
     <string name="clipboard__group_pinned">Pinned</string>
     <string name="clipboard__group_recent">Recent</string>
     <string name="clipboard__group_other">Other</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_email">Email</string>
     <string name="clip__clear_history">Clear history</string>
     <string name="clip__unpin_item">Unpin item</string>
     <string name="clip__pin_item">Pin item</string>
