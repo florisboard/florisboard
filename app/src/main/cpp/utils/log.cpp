@@ -18,24 +18,8 @@
 #include <unistd.h>
 #include "log.h"
 
-void utils::log_debug(const std::string &tag, const std::string &msg) {
-    __android_log_print(ANDROID_LOG_DEBUG, tag.c_str(), "%s", msg.c_str());
-}
-
-void utils::log_info(const std::string &tag, const std::string &msg) {
-    __android_log_print(ANDROID_LOG_INFO, tag.c_str(), "%s", msg.c_str());
-}
-
-void utils::log_warning(const std::string &tag, const std::string &msg) {
-    __android_log_print(ANDROID_LOG_WARN, tag.c_str(), "%s", msg.c_str());
-}
-
-void utils::log_error(const std::string &tag, const std::string &msg) {
-    __android_log_print(ANDROID_LOG_ERROR, tag.c_str(), "%s", msg.c_str());
-}
-
-void utils::log_wtf(const std::string &tag, const std::string &msg) {
-    __android_log_print(ANDROID_LOG_FATAL, tag.c_str(), "%s", msg.c_str());
+void utils::log(int log_priority, const std::string &tag, const std::string &msg) {
+    __android_log_print(log_priority, tag.c_str(), "%s", msg.c_str());
 }
 
 /**
