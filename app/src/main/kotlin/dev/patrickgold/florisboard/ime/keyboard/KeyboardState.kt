@@ -18,6 +18,8 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
+import android.annotation.SuppressLint
+import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -117,11 +119,12 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     /**
      * Dispatches the new state to all observers if [batchEditCount] is [BATCH_ZERO] (= no active batch edits).
      */
+    @SuppressLint("RestrictedApi")
     private fun dispatchState() {
         if (batchEditCount.get() == BATCH_ZERO) {
-            try {
+            if (ArchTaskExecutor.getInstance().isMainThread) {
                 super.setValue(this)
-            } catch (e: Exception) {
+            } else {
                 super.postValue(this)
             }
         }
