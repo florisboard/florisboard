@@ -41,6 +41,7 @@ Java_dev_patrickgold_florisboard_FlorisApplication_00024Companion_nativeInitICUD
     char *icu_data = new char[size + 1];
     in_file.read(icu_data, size);
     if (!in_file) {
+        delete[] icu_data;
         in_file.close();
         return U_FILE_ACCESS_ERROR;
     }
