@@ -20,6 +20,7 @@ import android.content.Context
 import android.icu.text.BreakIterator
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
+import android.text.TextUtils
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -27,6 +28,7 @@ import android.view.inputmethod.InputConnection
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
 import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.subtypeManager
@@ -49,6 +51,7 @@ abstract class AbstractEditorInstance(context: Context) {
         private const val CursorUpdateNone: Int = 0
     }
 
+    private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
     private val scope = MainScope()
     protected val breakIterators = BreakIteratorGroup()
@@ -98,11 +101,9 @@ abstract class AbstractEditorInstance(context: Context) {
         if (ic == null || selection.isNotValid || editorInfo.isRawInputEditor) {
             activeCursorCapsMode = InputAttributes.CapsMode.NONE
             activeContent = EditorContent.Unspecified
+            keyboardManager.reevaluateInputShiftState()
             return
         }
-        // We query the input connection instead of using the initialCapsMode because some apps just don't want to use
-        // EditorInfo's initial fields correctly.
-        activeCursorCapsMode = ic.getCursorCapsMode()
 
         // Get Text
         val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor)
@@ -113,15 +114,17 @@ abstract class AbstractEditorInstance(context: Context) {
             ?: ic.getSelectedText(0) ?: ""
 
         scope.launch {
-            activeContent = generateContent(
+            val content = generateContent(
                 editorInfo,
                 selection,
                 textBeforeSelection,
                 textAfterSelection,
                 selectedText,
-            ).also { content ->
-                ic.setComposingRegion(content.composing)
-            }
+            )
+            activeCursorCapsMode = content.cursorCapsMode()
+            activeContent = content
+            keyboardManager.reevaluateInputShiftState()
+            ic.setComposingRegion(content.composing)
         }
     }
 
@@ -139,9 +142,9 @@ abstract class AbstractEditorInstance(context: Context) {
         if (ic == null || newSelection.isNotValid || editorInfo.isRawInputEditor) {
             activeCursorCapsMode = InputAttributes.CapsMode.NONE
             activeContent = EditorContent.Unspecified
+            keyboardManager.reevaluateInputShiftState()
             return
         }
-        activeCursorCapsMode = ic.getCursorCapsMode()
 
         val expected = runBlocking {
             expectedContentQueue.popUntilOrNull {
@@ -150,7 +153,9 @@ abstract class AbstractEditorInstance(context: Context) {
             }
         }
         if (expected != null) {
+            activeCursorCapsMode = expected.cursorCapsMode()
             activeContent = expected
+            keyboardManager.reevaluateInputShiftState()
             return
         }
 
@@ -161,16 +166,18 @@ abstract class AbstractEditorInstance(context: Context) {
         val selectedText = if (newSelection.isSelectionMode) ic.getSelectedText(0) ?: "" else ""
 
         scope.launch {
-            activeContent = generateContent(
+            val content = generateContent(
                 editorInfo,
                 newSelection,
                 textBeforeSelection,
                 textAfterSelection,
                 selectedText,
-            ).also { content ->
-                if (content.composing != composing) {
-                    ic.setComposingRegion(content.composing)
-                }
+            )
+            activeCursorCapsMode = content.cursorCapsMode()
+            activeContent = content
+            keyboardManager.reevaluateInputShiftState()
+            if (content.composing != composing) {
+                ic.setComposingRegion(content.composing)
             }
         }
     }
@@ -189,12 +196,6 @@ abstract class AbstractEditorInstance(context: Context) {
         activeCursorCapsMode = InputAttributes.CapsMode.NONE
         activeContent = EditorContent.Unspecified
         runBlocking { expectedContentQueue.clear() }
-    }
-
-    private fun InputConnection.getCursorCapsMode(): InputAttributes.CapsMode {
-        return InputAttributes.CapsMode.fromFlags(
-            this.getCursorCapsMode(activeInfo.inputAttributes.raw)
-        )
     }
 
     private suspend fun generateContent(
@@ -241,6 +242,17 @@ abstract class AbstractEditorInstance(context: Context) {
         selectedText: CharSequence = this.selectedText,
     ): EditorContent {
         return generateContent(editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText)
+    }
+
+    private fun EditorContent.cursorCapsMode(): InputAttributes.CapsMode {
+        return when {
+            localSelection.isNotValid -> InputAttributes.CapsMode.NONE
+            else -> {
+                InputAttributes.CapsMode.fromFlags(
+                    TextUtils.getCapsMode(text, localSelection.start, activeInfo.inputAttributes.raw)
+                )
+            }
+        }
     }
 
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
