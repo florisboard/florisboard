@@ -23,7 +23,6 @@ import android.content.Intent
 import android.view.KeyEvent
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
@@ -39,11 +38,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -57,23 +53,12 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
     private val nlpManager by context.nlpManager()
-    private val scope = MainScope()
 
     private val activeState get() = keyboardManager.activeState
     val phantomSpace = PhantomSpaceState()
     val massSelection = MassSelectionState()
 
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
-
-    init {
-        if (BuildConfig.DEBUG) {
-            scope.launch {
-                activeContentFlow.collect { editorContent ->
-                    flogDebug { editorContent.toString() }
-                }
-            }
-        }
-    }
 
     override fun handleStartInputView(editorInfo: FlorisEditorInfo) {
         phantomSpace.setInactive()

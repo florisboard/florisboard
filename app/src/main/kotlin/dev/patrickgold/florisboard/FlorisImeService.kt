@@ -325,7 +325,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             activeState.imeUiMode = ImeUiMode.TEXT
             activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
             editorInstance.handleStartInputView(editorInfo)
-            keyboardManager.updateCapsState()
         }
     }
 
@@ -346,7 +345,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                 newSelection = EditorRange.normalized(newSelStart, newSelEnd),
                 composing = EditorRange.normalized(candidatesStart, candidatesEnd),
             )
-            keyboardManager.updateCapsState()
         }
     }
 
@@ -373,6 +371,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
         isWindowShown = true
         themeManager.updateActiveTheme()
+        inputFeedbackController.updateSystemPrefsState()
     }
 
     override fun onWindowHidden() {

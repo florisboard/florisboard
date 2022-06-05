@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.lib.FlorisLocale
 
 interface ComputingEvaluator {
     fun activeEditorInfo(): FlorisEditorInfo
@@ -70,6 +71,27 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun slotData(data: KeyData): KeyData? = null
 }
 
+private var cachedDisplayNameState = Triple(FlorisLocale.ROOT, DisplayLanguageNamesIn.SYSTEM_LOCALE, "")
+
+/**
+ * Compute language name with a cache to prevent repetitive calling of `locale.displayName()`, which invokes the
+ * underlying `LocaleNative.getLanguageName()` method and in turn uses the rather slow ICU data table to look up the
+ * language name. This only caches the last display name, but that's more than enough, as a one-time re-computation when
+ * the subtype changes does not hurt, the repetitive computation for the same language hurts.
+ */
+private fun computeLanguageDisplayName(locale: FlorisLocale, displayLanguageNamesIn: DisplayLanguageNamesIn): String {
+    val (cachedLocale, cachedDisplayLanguageNamesIn, cachedDisplayName) = cachedDisplayNameState
+    if (cachedLocale == locale && cachedDisplayLanguageNamesIn == displayLanguageNamesIn) {
+        return cachedDisplayName
+    }
+    val displayName = when (displayLanguageNamesIn) {
+        DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+        DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+    }
+    cachedDisplayNameState = Triple(locale, displayLanguageNamesIn, displayName)
+    return displayName
+}
+
 fun ComputingEvaluator.computeLabel(data: KeyData): String? {
     val evaluator = this
     return if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
@@ -83,10 +105,7 @@ fun ComputingEvaluator.computeLabel(data: KeyData): String? {
             KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                 when (evaluator.keyboard().mode) {
                     KeyboardMode.CHARACTERS -> evaluator.activeSubtype().primaryLocale.let { locale ->
-                        when (displayLanguageNamesIn()) {
-                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
-                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
-                        }
+                        computeLanguageDisplayName(locale, evaluator.displayLanguageNamesIn())
                     }
                     else -> null
                 }
