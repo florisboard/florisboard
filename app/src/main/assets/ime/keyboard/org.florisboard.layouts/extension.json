@@ -112,6 +112,13 @@
         "modifier": "org.florisboard.layouts:dvorak"
       },
       {
+        "id": "dvorak_es",
+        "label": "Dvorak (ÑÇ)",
+        "authors": [ "tsiflimagas" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:dvorak"
+      },
+      {
         "id": "esperanto",
         "label": "Esperanto",
         "authors": [ "jeremiah-miller", "patrickgold" ],

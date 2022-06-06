@@ -137,15 +137,15 @@ value class InputAttributes private constructor(val raw: Int) {
     enum class CapsMode(private val value: Int) {
         NONE(0),
         ALL(1),
-        SENTENCES(2),
-        WORDS(3);
+        WORDS(2),
+        SENTENCES(3);
 
         companion object {
             fun fromFlags(flags: Int): CapsMode {
                 return when {
                     flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS != 0 -> ALL
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES != 0 -> SENTENCES
                     flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS != 0 -> WORDS
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES != 0 -> SENTENCES
                     else -> NONE
                 }
             }
@@ -156,8 +156,8 @@ value class InputAttributes private constructor(val raw: Int) {
         fun toFlags(): Int {
             return when (this) {
                 ALL -> InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-                SENTENCES -> InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
                 WORDS -> InputType.TYPE_TEXT_FLAG_CAP_WORDS
+                SENTENCES -> InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
                 else -> 0
             }
         }
