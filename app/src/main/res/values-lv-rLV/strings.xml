@@ -139,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">Starpliktuves galvene</string>
     <string name="snygg__rule_element__clipboard_item">Starpliktuves vienums</string>
     <string name="snygg__rule_element__clipboard_item_popup">Starpliktuves vienuma uznirstošais lodziņš</string>
+    <string name="snygg__rule_element__emoji_key">Sajūtu rakstzījmju taustiņš</string>
+    <string name="snygg__rule_element__emoji_key_popup">Sajūtu rakstzīmju taustiņa uznirstošais lodziņš</string>
+    <string name="snygg__rule_element__emoji_key_tab">Sajūtu rakstzīmju cilne</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Līmeniskās ievades izkārtojums</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Līmeniskās ievades lauks</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Līmeniskās ievades darbība</string>
     <string name="snygg__rule_element__glide_trail">Slīdēšanas pēdas</string>
     <string name="snygg__rule_element__one_handed_panel">Vienrocīgs panelis</string>
     <string name="snygg__rule_element__smartbar_primary_row">Viedjoslas galvenā rinda</string>
@@ -470,6 +476,8 @@
     <string name="clipboard__group_pinned">Piesprausts</string>
     <string name="clipboard__group_recent">Nesenie</string>
     <string name="clipboard__group_other">Cits</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_email">E-pasta adrese</string>
     <string name="clip__clear_history">Notīrīt vēsturi</string>
     <string name="clip__unpin_item">Atspraust vienumu</string>
     <string name="clip__pin_item">Piespraust vienumu</string>
@@ -615,7 +623,7 @@
     <string name="general__unlimited">Neierobežots</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrets</string>
-    <string name="screen_orientation__landscape">Ainava</string>
+    <string name="screen_orientation__landscape">Līmeniski</string>
     <string name="screen_orientation__vertical">Statenisks</string>
     <string name="screen_orientation__horizontal">Līmenisks</string>
     <!-- State strings -->

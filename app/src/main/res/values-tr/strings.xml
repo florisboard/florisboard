@@ -161,6 +161,14 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Akıllı çubuk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Akıllı Çubuğu Etkinleştir</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Geçiş düğmelerini ters çevir</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Eylem satır geçişlerini ters çevirir</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Satır dizilimi</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Birincil eylemler</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Birincil eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">İkincil eylemler</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">İkincil eylem satırını göster</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing experience screen">Öneriler &amp; Düzeltmeler</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
@@ -218,6 +226,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Kaydırma mesafesi eşiği</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Gelişmiş</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ayarlar teması</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Sistem varsayılanı (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Aydınlık</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Karanlık</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Siyah</string>
@@ -378,6 +387,7 @@
     <string name="ext__error__not_found_title">Eklenti bulunamadı</string>
     <string name="ext__error__not_found_description">\"{id}\" kimlikli uzantı bulunamadı.</string>
     <!-- Action strings -->
+    <string name="action__default">Varsayılan</string>
     <!-- Error strings (generic) -->
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">{url} adresini açmak için tarayıcı uygulaması bulunamadı</string>
@@ -402,12 +412,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Kapalı</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Sol el modu</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Sağ el modu</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Birincil sıranın üstünde</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Birincil satırın üstünde</string>
     <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">İkincil sırayı, uygulama arayüzü ve birincil sıranın arasına yerleştirir</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Birincil sıranın altında</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Birincil satırın altında</string>
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">İkincil sırayı, yazı klavyesi ve birincil sıranın arasına yerleştirir</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Uygulama arayüzünün üstünü kapla</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ortaya çıkan klavye kullanıcı arabirimi yüksekliğini etkilemeden ikincil satırı uygulama kullanıcı arabiriminin üzerine bir kaplama olarak yerleştirir. Bu yerleşimin, uygulama giriş alanının kısmen fazla çizilmesine neden olabileceğini unutmayın</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Hızlı eylemler</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Taşma menüsüyle bir satır biçiminde düzenlenebilir hızlı eylemler</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Pano imleç araçları</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">En sık kullanılan pano ve imleç hareket araçlar satırı</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Sistem dillerini kullan</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Klavye alt türlerini kullan</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Eylem yok</string>

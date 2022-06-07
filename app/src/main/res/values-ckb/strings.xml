@@ -477,6 +477,8 @@
     <string name="clipboard__group_pinned">جێگیرکراو</string>
     <string name="clipboard__group_recent">دوایین لەبەرگیراوە</string>
     <string name="clipboard__group_other">جۆری تر</string>
+    <string name="clipboard__item_description_url">URL بەستەر</string>
+    <string name="clipboard__item_description_email">ئیمەیڵ</string>
     <string name="clip__clear_history">سڕینەوەی مێژوو</string>
     <string name="clip__unpin_item">جێگیر نەکردن</string>
     <string name="clip__pin_item">جێگیر کردن</string>
