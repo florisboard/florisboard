@@ -1,4 +1,3 @@
-
 # FlorisBoard's feature roadmap & milestones
 
 This feature roadmap intents to provide transparency to what I want to add to FlorisBoard in the foreseeable future.
@@ -9,35 +8,70 @@ out a bit on the stable track. If you are interested in following the developmen
 along the beta track releases! These are generally more unstable but you get new stuff faster and can provide early
 feedback, which helps a lot!
 
-## 0.3.x
+## 0.4
 
-Releases in this section still follow the old versioning scheme, meaning the patch number is a feature upgrade. As this
-naming convention is more confusing than useful, beginning with v0.4.0 development a new release/development cycle will
-be introduced.
+Major release which mainly focuses on adding proper word suggestions and inline autocorrect (for Latin-based languages
+only at first). This is a big effort which will take some time to be fully completed. Additionally general small bug
+fixes and improvements will be made alongside the development of the main objective.
 
-### 0.3.15 & 0.3.16 (currently 0.3.15 done, 0.3.16 in work)
+With this release the versioning scheme changes to `0.x.y`, where `x` specifies the major changes, and `y` are just
+small bug fixes and improvements for the former major stable release `x`. This is different to `0.3.x`, where the
+version scheme just did not make any sense anymore, especially with the latest `0.3.x` releases. As for the beta track,
+major developments (`0.x`) will have alpha, beta and release candidate releases on the beta track before it goes live on
+the stable track. Small follow-up bug fixes (`0.x.y`) will be published on both the stable and beta track without
+release candidates.
 
-- Hotfix releases for possible bugs in the preference rework (in work)
-- Lots and lots of bug fixing in general (in work)
-- Preparation work for 0.4.0, fixing text state logic and use break iterator (done)
-- Reducing or getting rid of input lag some devices experience (done)
-- Clean up of project structure for better future development (done)
+### Word suggestions / Autocorrect
 
-## 0.4.0
+The development effort of this feature is quite big, thus it is split into multiple phases:
 
-- Re-adding word suggestions (at least for Latin-based languages at first)
-    - Importing the dictionaries as well as management relies on the Flex extension core and UI in Kotlin
-    - Actually parsing and generating suggestions happens in C++ to avoid another OOM catastrophe like in 0.3.9/10
-    - The actual format of the dictionary and word list source is not decided yet
-- Community repository on GitHub for theme sharing across users (may be 0.5.0)
+**Phase 1: Preparations of suggestions UI & interfacing API (first alpha release(s))**
 
-With this release the versioning scheme changes: the second number now indicates new features, changes in the third "
-patch" number now indicates bug fixes and minor feature additions for the stable track. The development cycle for each
-0.x release will have `-alphaXX` (optional and only for large releases), `-betaXX` and `-rcXX` (release candidate)
-releases on the beta track for interested people to follow along the development. The first release to follow the new
-scheme will be `0.4.0-alpha01` on the beta track.
+- Rework Smartbar suggestions UI
+    - Allow for primary and optionally secondary label (in a smaller font) to be shown per suggestion
+    - Better integrate clipboard suggestions into word suggestion flow
+    - Add long-press suggestion action for user to prevent from showing again
+    - Generally fix and polish suggestions UI design (3-column mode and scrollable mode)
+- Add `SuggestionProvider` interface API
+    - Is responsible for the interaction between UI, input logic and suggestion core
+- Try to add toggle for not underlining the current word (composing region) while not loosing the caching benefits
+- In parallel: Do local research and preps for phase 2
 
-## 0.5.0
+**Phase 2: Add native (C++) Latin word suggestion core (alpha releases)**
+
+- Research and experiment with different approaches/data sources for Latin-based language prediction and autocorrect
+    - Research will mainly be done first locally on Linux to decide what to use
+    - Implementation will be in C++ using STL libraries and if needed other open-source libraries, with compatibility
+      and CPU/memory restrictions on Android devices in mind
+    - Once an experiment runs well locally it will be included in the main project and tested out within the keyboard UI
+      in different alpha releases
+    - Especially at the beginning an idea may be scrapped and replaced by something else if found that another approach
+      is better
+- (Based on research) Introduce new dictionary/language model format
+    - Importing the dictionaries/models as well as management relies on the Flex extension core and UI in Kotlin
+    - Actually parsing and generating suggestions happens in C++
+    - The actual format of the dictionary/model source is not decided yet
+    - Add system in preprocessing stage to properly mark slightly offensive words and prevent extremely offensive words
+      from being included at all
+    - Add system in preprocessing stage to filter out email addresses and phone numbers that may be included in the
+      large datasets which are used for building the models
+
+**Phase 3: Add support for more languages & Allow glide typing to utilize new word prediction system (beta releases)**
+
+- Glide typing: Utilize new prediction system and get rid of current English (US) json dictionary
+- Add support for more languages (Latin-based), may need to utilize datasets like Opensubtitles or Wikimedia, although
+  those need extensive cleaning and are not as reliable
+- Focus on improving performance and stabilizing the Latin suggestion core
+- Possibly address some language-specific issues and ensure suggested word capitalization is correct
+- Finalize Settings and keyboard UI regarding word suggestions.
+
+### Other planned features for 0.4
+
+- General small fixes and improvements
+- Community repository on GitHub for extension sharing across users (may be 0.5.0 though)
+- Localized emoji suggestions (may be 0.5.0 though)
+
+## 0.5
 
 - Complete rework of the Emoji panel
     - Recently used / Emoji history (already implemented with 0.3.14)
@@ -51,18 +85,16 @@ scheme will be `0.4.0-alpha01` on the beta track.
 - Rework branding images and texts of FlorisBoard for the app stores
 - Focus on stability and experience improvements of the app and keyboard
 
-## 0.6.0
+## Backlog
+
+**Features that MAY be added (even in versions mentioned above) or dismissed altogether**
 
 - Full on-board layout editor which allows users to create their own layouts without writing a JSON file
 - Import/Export of custom layout files packed in Flex extensions
-
-## Backlog / Features that MAY be added, even in versions not mentioned above if the feature implementation fits perfectly with another feature
-
 - Theme rework part II
 - Adaptive themes v2
 - Voice-to-text with Mozilla's open-source voice service
 - Text translation
-- Glide typing better word detection
 - Proximity-based key typo detection
 - Floating keyboard
 - Tablet mode / Optimizations for landscape input
