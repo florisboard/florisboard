@@ -131,6 +131,10 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         super.handleFinishInputView()
     }
 
+    override fun determineComposingEnabled(): Boolean {
+        return prefs.suggestion.enabled.get()
+    }
+
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
         return keyboardManager.resources.composers.value?.get(composerName) ?: Appender.DefaultInstance
     }
@@ -276,7 +280,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun deleteBackwards(): Boolean {
         val content = activeContent
-        if (phantomSpace.isActive && content.composing.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
+        if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
             return deleteWordBackwards()
         }
         phantomSpace.setInactive()

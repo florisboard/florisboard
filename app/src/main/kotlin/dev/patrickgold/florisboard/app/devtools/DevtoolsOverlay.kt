@@ -112,7 +112,8 @@ private fun DevtoolsInputStateOverlay() {
             DevtoolsText(text = "Before: \"${content.textBeforeSelection}\"")
             DevtoolsText(text = "Selected: \"${content.selectedText}\"")
             DevtoolsText(text = "After: \"${content.textAfterSelection}\"")
-            DevtoolsText(text = "ComposingWord: ${content.composing}")
+            DevtoolsText(text = "Composing: ${content.composing}")
+            DevtoolsText(text = "CurrentWord: ${content.currentWord}")
         }
     }
 }

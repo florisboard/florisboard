@@ -29,6 +29,7 @@ data class EditorContent(
     val offset: Int,
     val localSelection: EditorRange,
     val localComposing: EditorRange,
+    val localCurrentWord: EditorRange,
 ) {
     val textBeforeSelection: String
         get() = if (localSelection.isValid) text.safeSubstring(0, localSelection.start) else ""
@@ -39,18 +40,23 @@ data class EditorContent(
     val textAfterSelection: String
         get() = if (localSelection.isValid) text.safeSubstring(localSelection.end) else ""
 
-    val composingText: String
-        get() = if (localComposing.isValid) text.safeSubstring(localComposing.start, localComposing.end) else ""
-
     val selection: EditorRange
         get() = if (offset > 0) localSelection.translatedBy(offset) else localSelection
 
     val composing: EditorRange
         get() = if (offset > 0) localComposing.translatedBy(offset) else localComposing
 
-    companion object {
-        val Unspecified = EditorContent("", -1, EditorRange.Unspecified, EditorRange.Unspecified)
+    val currentWord: EditorRange
+        get() = if (offset > 0) localCurrentWord.translatedBy(offset) else localCurrentWord
 
-        fun selectionOnly(selection: EditorRange) = EditorContent("", -1, selection, EditorRange.Unspecified)
+    val currentWordText: String
+        get() = if (localCurrentWord.isValid) text.safeSubstring(localCurrentWord.start, localCurrentWord.end) else ""
+
+    companion object {
+        val Unspecified =
+            EditorContent("", -1, EditorRange.Unspecified, EditorRange.Unspecified, EditorRange.Unspecified)
+
+        fun selectionOnly(selection: EditorRange) =
+            EditorContent("", -1, selection, EditorRange.Unspecified, EditorRange.Unspecified)
     }
 }

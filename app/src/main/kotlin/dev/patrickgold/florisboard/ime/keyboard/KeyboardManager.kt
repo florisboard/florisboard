@@ -165,7 +165,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     nlpManager.clearSuggestions()
                     return@collect
                 }
-                nlpManager.suggest(content.composingText, listOf())
+                nlpManager.suggest(content.currentWordText, listOf())
             }
         }
     }

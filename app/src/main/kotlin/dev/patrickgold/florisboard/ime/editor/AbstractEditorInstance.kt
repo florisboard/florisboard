@@ -218,12 +218,13 @@ abstract class AbstractEditorInstance(context: Context) {
         }
 
         // Determine local composing word range, if any
-        val localComposing =
+        val localCurrentWord =
             if (shouldDetermineComposingRegion(editorInfo) && localSelection.isCursorMode && textBeforeSelection.isNotEmpty()) {
                 determineLocalComposing(textBeforeSelection)
             } else {
                 EditorRange.Unspecified
             }
+        val localComposing = if (determineComposingEnabled()) localCurrentWord else EditorRange.Unspecified
 
         // Build and publish text and content
         val text = buildString {
@@ -231,7 +232,7 @@ abstract class AbstractEditorInstance(context: Context) {
             append(selectedText)
             append(textAfterSelection)
         }
-        return EditorContent(text, offset, localSelection, localComposing)
+        return EditorContent(text, offset, localSelection, localComposing, localCurrentWord)
     }
 
     private suspend fun EditorContent.generateCopy(
@@ -254,6 +255,8 @@ abstract class AbstractEditorInstance(context: Context) {
             }
         }
     }
+
+    abstract fun determineComposingEnabled(): Boolean
 
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
 
