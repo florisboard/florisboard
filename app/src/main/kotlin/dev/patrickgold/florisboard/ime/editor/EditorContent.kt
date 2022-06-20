@@ -46,6 +46,9 @@ data class EditorContent(
     val composing: EditorRange
         get() = if (offset > 0) localComposing.translatedBy(offset) else localComposing
 
+    val composingText: String
+        get() = if (localComposing.isValid) text.safeSubstring(localComposing.start, localComposing.end) else ""
+
     val currentWord: EditorRange
         get() = if (offset > 0) localCurrentWord.translatedBy(offset) else localCurrentWord
 

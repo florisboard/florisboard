@@ -161,11 +161,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 nlpManager.clearSuggestions()
             }
             editorInstance.activeContentFlow.collect { content ->
-                if (content.composing.isNotValid || !activeState.isComposingEnabled) {
+                if (!activeState.isComposingEnabled) {
                     nlpManager.clearSuggestions()
                     return@collect
                 }
-                nlpManager.suggest(content.currentWordText, listOf())
+                nlpManager.suggest(content.composingText, listOf())
             }
         }
     }

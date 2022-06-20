@@ -204,7 +204,19 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun commitCompletion(text: String): Boolean {
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
-        return commitText(text).also { phantomSpace.setActive(showComposingRegion = false) }
+        val content = activeContent
+        return if (content.composing.isValid) {
+            phantomSpace.setActive(showComposingRegion = false)
+            super.finalizeComposingText(text)
+        } else {
+            val isPhantomSpaceActive = phantomSpace.determine(text)
+            phantomSpace.setActive(showComposingRegion = false)
+            return if (isPhantomSpaceActive) {
+                super.commitText("$SPACE$text")
+            } else {
+                super.commitText(text)
+            }
+        }
     }
 
     /**

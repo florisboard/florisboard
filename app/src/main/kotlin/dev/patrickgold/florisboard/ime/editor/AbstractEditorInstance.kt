@@ -366,6 +366,32 @@ abstract class AbstractEditorInstance(context: Context) {
         return true
     }
 
+    open fun finalizeComposingText(text: String): Boolean {
+        val ic = currentInputConnection() ?: return false
+        val content = activeContent
+        val composing = content.composing
+        ic.beginBatchEdit()
+        if (activeInfo.isRawInputEditor || composing.isNotValid) {
+            return false
+        } else runBlocking {
+            val newSelection = EditorRange.cursor(composing.end + (text.length - content.composingText.length))
+            val newContent = content.generateCopy(
+                selection = newSelection,
+                textBeforeSelection = buildString {
+                    append(content.textBeforeSelection)
+                    removeSuffix(content.composingText)
+                    append(text)
+                },
+                selectedText = "",
+            )
+            expectedContentQueue.push(newContent)
+            ic.setComposingText(text, 1)
+            ic.finishComposingText()
+        }
+        ic.endBatchEdit()
+        return true
+    }
+
     protected fun deleteBeforeCursor(type: TextType, n: Int): Boolean {
         val ic = currentInputConnection()
         if (ic == null || n < 1) return false

@@ -90,15 +90,16 @@ class NlpManager(context: Context) {
         currentWord: String,
         precedingWords: List<String>,
     ) {
-        if (currentWord.isBlank() && (precedingWords.isEmpty() || precedingWords.all { it.isBlank() })) {
-            clearSuggestions()
-            return
+        val word = if (currentWord.isBlank() && (precedingWords.isEmpty() || precedingWords.all { it.isBlank() })) {
+            "next"
+        } else {
+            currentWord
         }
         val allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get()
         val maxSuggestionCount = 16 // TODO: make customizable in prefs
         val suggestions = buildList {
             for (n in 0..6) {
-                add("$currentWord$n")
+                add("$word$n")
             }
         }
         _suggestions.postValue(SuggestionList2(suggestions, false))
