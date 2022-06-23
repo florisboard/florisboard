@@ -60,10 +60,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
-    override fun handleStartInputView(editorInfo: FlorisEditorInfo) {
-        phantomSpace.setInactive()
-        massSelection.reset()
-        super.handleStartInputView(editorInfo)
+    override fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+        super.handleStartInputView(editorInfo, isRestart)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
                 activeState.keyVariation = KeyVariation.NORMAL
@@ -123,12 +121,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         } else {
             super.handleSelectionUpdate(oldSelection, newSelection, composing)
         }
-    }
-
-    override fun handleFinishInputView() {
-        phantomSpace.setInactive()
-        massSelection.reset()
-        super.handleFinishInputView()
     }
 
     override fun determineComposingEnabled(): Boolean {
@@ -449,6 +441,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     override fun reset() {
         super.reset()
         phantomSpace.setInactive()
+        massSelection.reset()
     }
 
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {

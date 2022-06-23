@@ -324,7 +324,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         activeState.batchEdit {
             activeState.imeUiMode = ImeUiMode.TEXT
             activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
-            editorInstance.handleStartInputView(editorInfo)
+            editorInstance.handleStartInputView(editorInfo, isRestart = restarting)
         }
     }
 
@@ -401,7 +401,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
-            editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info))
+            editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info), isRestart = true)
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(info)

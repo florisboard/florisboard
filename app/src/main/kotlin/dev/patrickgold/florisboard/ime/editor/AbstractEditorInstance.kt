@@ -94,7 +94,10 @@ abstract class AbstractEditorInstance(context: Context) {
         currentInputConnection()?.requestCursorUpdates(CursorUpdateAll)
     }
 
-    open fun handleStartInputView(editorInfo: FlorisEditorInfo) {
+    open fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+        if (isRestart) {
+            reset() // Just to make sure our state is correct after a restart
+        }
         val ic = currentInputConnection()
         activeInfo = editorInfo
         val selection = editorInfo.initialSelection
