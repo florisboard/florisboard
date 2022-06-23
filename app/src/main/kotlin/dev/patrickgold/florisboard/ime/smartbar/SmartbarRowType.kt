@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.smartbar
+package dev.patrickgold.florisboard.ime.smartbar
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R

@@ -87,7 +87,7 @@ import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidInternalR

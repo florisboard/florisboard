@@ -28,14 +28,14 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.text.smartbar.CandidatesDisplayMode
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
-import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarRowType
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
