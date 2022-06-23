@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,9 +46,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.nlp.NlpManager
+import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -68,7 +68,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val nlpManager by context.nlpManager()
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
-    val candidates by nlpManager.candidates.observeAsNonNullState()
+    val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
 
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
@@ -148,14 +148,14 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun CandidateItem(
-    candidate: NlpManager.Candidate,
+    candidate: SuggestionProvider.Candidate,
     displayMode: CandidatesDisplayMode,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
 ) = with(LocalDensity.current) {
     var isPressed by remember { mutableStateOf(false) }
 
-    val style = if (candidate is NlpManager.Candidate.Clip) {
+    val style = if (candidate is SuggestionProvider.ClipboardCandidate) {
         FlorisImeTheme.style.get(
             element = FlorisImeUi.SmartbarCandidateClip,
             isPressed = isPressed,
@@ -185,7 +185,7 @@ private fun CandidateItem(
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (candidate is NlpManager.Candidate.Clip) {
+        if (candidate.iconId != null) {
             Icon(
                 modifier = Modifier
                     .requiredSize(
@@ -194,7 +194,7 @@ private fun CandidateItem(
                             .toDp() * 1.5f
                     )
                     .padding(end = 4.dp),
-                painter = painterResource(R.drawable.ic_assignment),
+                painter = painterResource(candidate.iconId!!),
                 contentDescription = null,
                 tint = style.foreground.solidColor(),
             )
@@ -209,10 +209,10 @@ private fun CandidateItem(
                         Modifier
                     }
                 ),
-            text = candidate.text(),
+            text = candidate.text.toString(),
             color = style.foreground.solidColor(),
             fontSize = style.fontSize.spSize(),
-            fontWeight = if (candidate.isAutoInsertWord()) FontWeight.Bold else FontWeight.Normal,
+            fontWeight = if (candidate.isAutoCommit) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

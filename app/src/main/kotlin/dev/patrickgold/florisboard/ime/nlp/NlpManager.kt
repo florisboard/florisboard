@@ -27,13 +27,14 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
 class NlpManager(context: Context) {
@@ -46,8 +47,13 @@ class NlpManager(context: Context) {
     private val _suggestions = MutableLiveData<SuggestionList2?>(null)
     val suggestions: LiveData<SuggestionList2?> get() = _suggestions
 
-    private val _candidates = MutableLiveData<List<Candidate>>(emptyList())
-    val candidates: LiveData<List<Candidate>> get() = _candidates
+    private val _activeCandidatesFlow = MutableStateFlow(emptyList<SuggestionProvider.Candidate>())
+    val activeCandidatesFlow = _activeCandidatesFlow.asStateFlow()
+    inline var activeCandidates: List<SuggestionProvider.Candidate>
+        get() = activeCandidatesFlow.value
+        private set(v) {
+            _activeCandidatesFlow.value = v
+        }
 
     private val inlineContentViews = Collections.synchronizedMap<InlineSuggestion, InlineContentView>(hashMapOf())
     private val _inlineSuggestions = MutableLiveData<List<InlineSuggestion>>(emptyList())
@@ -120,17 +126,17 @@ class NlpManager(context: Context) {
                     val now = System.currentTimeMillis()
                     clipboardManager.primaryClip()?.let { item ->
                         if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
-                            add(Candidate.Clip(item))
+                            add(SuggestionProvider.ClipboardCandidate(item))
                             if (item.type == ItemType.TEXT) {
                                 val text = item.stringRepresentation()
                                 NetworkUtils.getUrls(text).forEach { match ->
                                     if (match.value != text) {
-                                        add(Candidate.Clip(item.copy(text = match.value)))
+                                        add(SuggestionProvider.ClipboardCandidate(item.copy(text = match.value)))
                                     }
                                 }
                                 NetworkUtils.getEmailAddresses(text).forEach { match ->
                                     if (match.value != text) {
-                                        add(Candidate.Clip(item.copy(text = match.value)))
+                                        add(SuggestionProvider.ClipboardCandidate(item.copy(text = match.value)))
                                     }
                                 }
                             }
@@ -139,12 +145,12 @@ class NlpManager(context: Context) {
                 }
                 suggestions.value?.let { suggestionList ->
                     suggestionList.forEachIndexed { n, word ->
-                        add(Candidate.Word(word, isAutoInsert = n == 0 && suggestionList.isPrimaryTokenAutoInsert))
+                        add(SuggestionProvider.WordCandidate(word, isAutoCommit = n == 0 && suggestionList.isPrimaryTokenAutoInsert))
                     }
                 }
             }
         }
-        _candidates.postValue(candidates)
+        activeCandidates = candidates
         autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
     }
 
@@ -157,7 +163,7 @@ class NlpManager(context: Context) {
     fun showInlineSuggestions(inlineSuggestions: List<InlineSuggestion>) {
         inlineContentViews.clear()
         _inlineSuggestions.postValue(inlineSuggestions)
-        autoExpandCollapseSmartbarActions(candidates.value, inlineSuggestions)
+        autoExpandCollapseSmartbarActions(activeCandidates, inlineSuggestions)
     }
 
     /**
@@ -166,7 +172,7 @@ class NlpManager(context: Context) {
     fun clearInlineSuggestions() {
         inlineContentViews.clear()
         _inlineSuggestions.postValue(emptyList())
-        autoExpandCollapseSmartbarActions(candidates.value, null)
+        autoExpandCollapseSmartbarActions(activeCandidates, null)
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -201,37 +207,4 @@ class NlpManager(context: Context) {
         candidates: List<String>,
         val isPrimaryTokenAutoInsert: Boolean,
     ) : List<String> by candidates
-
-    /**
-     * Data class describing a computed candidate item.
-     */
-    sealed class Candidate {
-        fun text(): String {
-            return when (this) {
-                is Clip -> clipboardItem.stringRepresentation()
-                is Word -> word
-            }
-        }
-
-        fun isAutoInsertWord(): Boolean {
-            return this is Word && this.isAutoInsert
-        }
-
-        /**
-         * Computed word candidate, used for suggestions provided by the NLP algorithm.
-         *
-         * @property word The word this computed candidate item represents. Used in the callback to provide which word
-         *  should be filled out.
-         * @property isAutoInsert If pressing space bar auto corrects/inserts this word.
-         */
-        data class Word(val word: String, val isAutoInsert: Boolean) : Candidate()
-
-        /**
-         * Computed word candidate, used for clipboard paste suggestions.
-         *
-         * @property clipboardItem The clipboard item this computed candidate item represents. Used in the callback to
-         *  provide which item should be pasted.
-         */
-        data class Clip(val clipboardItem: ClipboardItem) : Candidate()
-    }
 }

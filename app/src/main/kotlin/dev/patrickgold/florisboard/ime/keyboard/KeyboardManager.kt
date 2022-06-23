@@ -40,20 +40,20 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
-import dev.patrickgold.florisboard.ime.nlp.NlpManager
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
-import dev.patrickgold.florisboard.ime.text.composing.Composer
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
+import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarActions
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarActions
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -301,10 +301,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    fun commitCandidate(candidate: NlpManager.Candidate) {
+    fun commitCandidate(candidate: SuggestionProvider.Candidate) {
         when (candidate) {
-            is NlpManager.Candidate.Word -> editorInstance.commitCompletion(candidate.word)
-            is NlpManager.Candidate.Clip -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            is SuggestionProvider.ClipboardCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            else -> editorInstance.commitCompletion(candidate.text.toString())
         }
     }
 
