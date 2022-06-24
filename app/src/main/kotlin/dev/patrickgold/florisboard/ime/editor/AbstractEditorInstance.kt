@@ -100,7 +100,7 @@ abstract class AbstractEditorInstance(context: Context) {
         }
         val ic = currentInputConnection()
         activeInfo = editorInfo
-        val selection = editorInfo.initialSelection
+        var selection = editorInfo.initialSelection
         if (ic == null || selection.isNotValid || editorInfo.isRawInputEditor) {
             activeCursorCapsMode = InputAttributes.CapsMode.NONE
             activeContent = EditorContent.Unspecified
@@ -108,13 +108,19 @@ abstract class AbstractEditorInstance(context: Context) {
             return
         }
 
-        // Get Text
-        val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor)
-            ?: ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: ""
-        val textAfterSelection = editorInfo.getInitialTextAfterCursor(NumCharsAfterCursor)
-            ?: ic.getTextAfterCursor(NumCharsAfterCursor, 0) ?: ""
-        val selectedText = editorInfo.getInitialSelectedText()
-            ?: ic.getSelectedText(0) ?: ""
+        // Get text (ignore initial text of EditorInfo because some apps like to provide an old or invalid state)
+        val textBeforeSelection = ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: ""
+        val textAfterSelection = ic.getTextAfterCursor(NumCharsAfterCursor, 0) ?: ""
+        val selectedText = ic.getSelectedText(0) ?: ""
+
+        // Adjust initial selection issues as some apps like to do everything but provide the correct initial selection
+        if (selection.length != selectedText.length) {
+            selection = EditorRange(textBeforeSelection.length, textBeforeSelection.length + selectedText.length)
+        } else if (selection.start > 0 || selection.end > 0) {
+            if (textBeforeSelection.isEmpty() && textAfterSelection.isEmpty() && selectedText.isEmpty()) {
+                selection = EditorRange(0, 0)
+            }
+        }
 
         scope.launch {
             val content = generateContent(

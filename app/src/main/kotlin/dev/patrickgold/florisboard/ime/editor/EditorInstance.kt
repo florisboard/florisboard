@@ -61,6 +61,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
     override fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+        if (!prefs.correction.rememberCapsLockState.get()) {
+            activeState.inputShiftState = InputShiftState.UNSHIFTED
+        }
         super.handleStartInputView(editorInfo, isRestart)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
@@ -108,9 +111,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 prefs.suggestion.enabled.get()// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
-        }
-        if (!prefs.correction.rememberCapsLockState.get()) {
-            activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
     }
 
