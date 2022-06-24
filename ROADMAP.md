@@ -32,10 +32,23 @@ The development effort of this feature is quite big, thus it is split into multi
     - Better integrate clipboard suggestions into word suggestion flow
     - Add long-press suggestion action for user to prevent from showing again
     - Generally fix and polish suggestions UI design (3-column mode and scrollable mode)
-- Add `SuggestionProvider` interface API
-    - Is responsible for the interaction between UI, input logic and suggestion core
+- Add a `SuggestionProvider` interface API to allow for any specialized implementation to be written
+    - A provider's main task is to receive updates on the current state of the editor (except for raw inputs) and
+      provide both current word autocorrect/suggestions or next word suggestions if there is no current word
+    - The provider can utilize the basic APK asset and file APIs for reading dictionary files, however there is no
+      standardization in parsing as different languages may require different dictionary structures and thus have
+      different requirements
+    - Document API and add dummy implementation to test API
 - Try to add toggle for not underlining the current word (composing region) while not loosing the caching benefits
 - In parallel: Do local research and preps for phase 2
+
+_[Anomaly](https://www.anomaly.ltd/), an Australian software company, will sponsor this project with 1000€ so this phase
+gets implemented first, as they want to use FlorisBoard as a base for
+their [WCC Language Program project (Gurray)](https://www.anomaly.ltd/portfolio/wcc/gurray/). As this fits in perfectly
+with the current dev cycle and this had to be done anyways (some parts like documenting and UI polishing just later in
+the 0.4 milestone), I have accepted this. However in general this does not mean this project accepts sponsoring for any
+feature to be prioritized, as the project's main goals and planned feature timeline must always come first and human dev
+resources are limited._
 
 **Phase 2: Add native (C++) Latin word suggestion core (alpha releases)**
 
