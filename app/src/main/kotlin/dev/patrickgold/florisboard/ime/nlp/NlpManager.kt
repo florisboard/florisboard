@@ -145,7 +145,11 @@ class NlpManager(context: Context) {
                 }
                 suggestions.value?.let { suggestionList ->
                     suggestionList.forEachIndexed { n, word ->
-                        add(SuggestionProvider.WordCandidate(word, isAutoCommit = n == 0 && suggestionList.isPrimaryTokenAutoInsert))
+                        add(SuggestionProvider.WordCandidate(
+                            text = word,
+                            secondaryText = if (n % 2 == 1) "secondary" else null,
+                            isAutoCommit = n == 0 && suggestionList.isPrimaryTokenAutoInsert),
+                        )
                     }
                 }
             }

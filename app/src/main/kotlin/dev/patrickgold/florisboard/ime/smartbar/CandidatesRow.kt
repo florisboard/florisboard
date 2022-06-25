@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.smartbar
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,7 +27,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
+import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
@@ -199,23 +200,31 @@ private fun CandidateItem(
                 tint = style.foreground.solidColor(),
             )
         }
-        Text(
-            modifier = Modifier
-                .wrapContentHeight()
-                .then(
-                    if (displayMode == CandidatesDisplayMode.CLASSIC) {
-                        Modifier.weight(1f)
-                    } else {
-                        Modifier
-                    }
-                ),
-            text = candidate.text.toString(),
-            color = style.foreground.solidColor(),
-            fontSize = style.fontSize.spSize(),
-            fontWeight = if (candidate.isAutoCommit) FontWeight.Bold else FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Column(
+            modifier = if (displayMode == CandidatesDisplayMode.CLASSIC) Modifier.weight(1f) else Modifier,
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = candidate.text.toString(),
+                color = style.foreground.solidColor(),
+                fontSize = style.fontSize.spSize(),
+                fontWeight = if (candidate.isAutoCommit) FontWeight.Bold else FontWeight.Normal,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            if (candidate.secondaryText != null) {
+                Text(
+                    text = candidate.secondaryText!!.toString(),
+                    color = style.foreground.solidColor(),
+                    fontSize = style.fontSize.spSize() safeTimes 0.6,
+                    fontWeight = if (candidate.isAutoCommit) FontWeight.Bold else FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
     }
 }
