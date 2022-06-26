@@ -18,9 +18,9 @@ package dev.patrickgold.florisboard.ime.spelling
 
 import android.content.Context
 import android.util.LruCache
-import android.view.textservice.SuggestionsInfo
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.spellingManager
 import kotlinx.coroutines.CoroutineScope
@@ -38,17 +38,6 @@ class SpellingService(context: Context) {
     companion object {
         private const val LRU_CACHE_MAX_LOCALE_ENTRIES = 4
         private const val LRU_CACHE_MAX_SUGGESTIONS_INFO_ENTRIES = 192
-
-        private val EMPTY_STRING_ARRAY: Array<out String> = arrayOf()
-
-        fun emptySuggestionsInfo() =
-            SuggestionsInfo(0, EMPTY_STRING_ARRAY)
-
-        fun dictMatchSuggestionsInfo() =
-            SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
-
-        fun typoSuggestionsInfo(suggestions: Array<out String>) =
-            SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
     }
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -77,39 +66,40 @@ class SpellingService(context: Context) {
         }
     }
 
-    fun spell(locale: FlorisLocale, word: String, suggestionsLimit: Int): SuggestionsInfo {
+    fun spell(locale: FlorisLocale, word: String, suggestionsLimit: Int): SpellingResult {
         return runBlocking { spellAsync(locale, word, suggestionsLimit).await() }
     }
 
-    suspend fun spellAsync(locale: FlorisLocale, word: String, suggestionsLimit: Int): Deferred<SuggestionsInfo> {
-        val suggestionsCache = getSuggestionsCache(locale) ?: return scope.async { emptySuggestionsInfo() }
+    suspend fun spellAsync(locale: FlorisLocale, word: String, suggestionsLimit: Int): Deferred<SpellingResult> {
+        val suggestionsCache = getSuggestionsCache(locale)
+            ?: return scope.async { SpellingResult.unspecified() }
         return suggestionsCache.getOrGenerateAsync(word) { spellingDict ->
             var isWordOk = false
             if (prefs.spelling.useUdmEntries.get()) {
                 isWordOk = dictionaryManager.spell(word, locale)
             }
             return@getOrGenerateAsync if (isWordOk) {
-                dictMatchSuggestionsInfo()
+                SpellingResult.validWord()
             } else {
                 isWordOk = spellingDict.spell(word)
                 if (isWordOk) {
-                    dictMatchSuggestionsInfo()
+                    SpellingResult.validWord()
                 } else {
                     val suggestions = spellingDict.suggest(word, suggestionsLimit)
-                    typoSuggestionsInfo(suggestions)
+                    SpellingResult.typo(suggestions)
                 }
             }
         }
     }
 
     private inner class SuggestionsCache(size: Int, private val spellingDict: SpellingDict) {
-        private val localCache = LruCache<String, Deferred<SuggestionsInfo>>(size)
+        private val localCache = LruCache<String, Deferred<SpellingResult>>(size)
         private val localCacheGuard = Mutex(locked = false)
 
         suspend inline fun getOrGenerateAsync(
             word: String,
-            crossinline generator: (dict: SpellingDict) -> SuggestionsInfo
-        ): Deferred<SuggestionsInfo> {
+            crossinline generator: (dict: SpellingDict) -> SpellingResult
+        ): Deferred<SpellingResult> {
             contract {
                 callsInPlace(generator, InvocationKind.AT_MOST_ONCE)
             }

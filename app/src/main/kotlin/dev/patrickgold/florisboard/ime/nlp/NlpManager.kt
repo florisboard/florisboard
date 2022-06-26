@@ -47,9 +47,9 @@ class NlpManager(context: Context) {
     private val _suggestions = MutableLiveData<SuggestionList2?>(null)
     val suggestions: LiveData<SuggestionList2?> get() = _suggestions
 
-    private val _activeCandidatesFlow = MutableStateFlow(emptyList<SuggestionProvider.Candidate>())
+    private val _activeCandidatesFlow = MutableStateFlow(emptyList<SuggestionCandidate>())
     val activeCandidatesFlow = _activeCandidatesFlow.asStateFlow()
-    inline var activeCandidates: List<SuggestionProvider.Candidate>
+    inline var activeCandidates: List<SuggestionCandidate>
         get() = activeCandidatesFlow.value
         private set(v) {
             _activeCandidatesFlow.value = v
@@ -126,17 +126,17 @@ class NlpManager(context: Context) {
                     val now = System.currentTimeMillis()
                     clipboardManager.primaryClip()?.let { item ->
                         if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
-                            add(SuggestionProvider.ClipboardCandidate(item))
+                            add(ClipboardSuggestionCandidate(item))
                             if (item.type == ItemType.TEXT) {
                                 val text = item.stringRepresentation()
                                 NetworkUtils.getUrls(text).forEach { match ->
                                     if (match.value != text) {
-                                        add(SuggestionProvider.ClipboardCandidate(item.copy(text = match.value)))
+                                        add(ClipboardSuggestionCandidate(item.copy(text = match.value)))
                                     }
                                 }
                                 NetworkUtils.getEmailAddresses(text).forEach { match ->
                                     if (match.value != text) {
-                                        add(SuggestionProvider.ClipboardCandidate(item.copy(text = match.value)))
+                                        add(ClipboardSuggestionCandidate(item.copy(text = match.value)))
                                     }
                                 }
                             }
@@ -145,11 +145,13 @@ class NlpManager(context: Context) {
                 }
                 suggestions.value?.let { suggestionList ->
                     suggestionList.forEachIndexed { n, word ->
-                        add(SuggestionProvider.WordCandidate(
+                        add(WordSuggestionCandidate(
                             text = word,
                             secondaryText = if (n % 2 == 1) "secondary" else null,
-                            isAutoCommit = n == 0 && suggestionList.isPrimaryTokenAutoInsert),
-                        )
+                            confidence = 0.5,
+                            isAutoCommit = n == 0 && suggestionList.isPrimaryTokenAutoInsert,
+                            sourceProvider = null,
+                        ))
                     }
                 }
             }

@@ -23,3 +23,7 @@ fun <K, V> Map<K, V>.getKeyByValue(value: V): K {
     }
     throw NoSuchElementException("Value $value is missing in the map.")
 }
+
+inline fun <T, reified R> Array<T>.map(transform: (T) -> R): Array<R> {
+    return Array(this.size) { n -> transform(this[n]) }
+}

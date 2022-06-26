@@ -21,8 +21,12 @@ import dev.patrickgold.florisboard.lib.kotlin.safeSubstring
 /**
  * A snapshot window of an input editor content around the selection/cursor.
  *
- * @property text The raw text of the editor content.
- * @property offset The offset of the whole editor content snapshot. Must be at least 0.
+ * @property text The raw text of the editor content. May be the full text or only a partial view.
+ * @property offset The offset of the whole editor content snapshot. `-1` indicates the value is unknown.
+ * @property localSelection The selection reported by the editor, without [offset] included.
+ * @property localComposing The composing region for the editor, without [offset] included.
+ * @property localCurrentWord The current word for the editor (typically the same as [localComposing]), without
+ *  [offset] included.
  */
 data class EditorContent(
     val text: String,

@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
-import android.view.textservice.SuggestionsInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -131,8 +130,7 @@ private fun DevtoolsSpellingOverlay() {
     DevtoolsOverlayBox(title = "Spelling overlay (${sortedEntries.size})") {
         for ((timestamp, wordInfoPair) in sortedEntries) {
             val (word, info) = wordInfoPair
-            val isTypo = (info.suggestionsAttributes and SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO) > 0
-            val suggestions = Array(info.suggestionsCount) { n -> info.getSuggestionAt(n) }
+            val suggestions = info.suggestions()
             Column(modifier = Modifier.padding(horizontal = 8.dp)) {
                 val date = DateFormat.format(Date(timestamp))
                 Text(
@@ -142,8 +140,8 @@ private fun DevtoolsSpellingOverlay() {
                     fontSize = 12.sp,
                 )
                 val details = buildString {
-                    appendLine("isTypo: $isTypo")
-                    if (isTypo) {
+                    appendLine("isTypo: ${info.isTypo} | isGrammarError: ${info.isGrammarError}")
+                    if (info.isTypo || info.isGrammarError) {
                         appendLine("providing corrections list of size n=${suggestions.size}")
                         for ((n, suggestion) in suggestions.withIndex()) {
                             append("  [$n] = string[${suggestion.length}] { \"")

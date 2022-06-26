@@ -41,8 +41,9 @@ import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
-import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarActions
@@ -301,9 +302,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    fun commitCandidate(candidate: SuggestionProvider.Candidate) {
+    fun commitCandidate(candidate: SuggestionCandidate) {
         when (candidate) {
-            is SuggestionProvider.ClipboardCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
             else -> editorInstance.commitCompletion(candidate.text.toString())
         }
     }

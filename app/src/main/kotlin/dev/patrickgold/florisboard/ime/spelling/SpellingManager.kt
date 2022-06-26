@@ -19,11 +19,11 @@ package dev.patrickgold.florisboard.ime.spelling
 import android.content.Context
 import android.net.Uri
 import android.util.LruCache
-import android.view.textservice.SuggestionsInfo
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.read
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
@@ -144,7 +144,7 @@ class SpellingManager(context: Context) {
     val importSourceLabels: List<String>
     val importSourceUrls: List<String?>
 
-    val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SuggestionsInfo>>(10)
+    val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableLiveData(0)
     private val debugOverlayVersionSource = AtomicInteger(0)
 
@@ -373,7 +373,7 @@ class SpellingManager(context: Context) {
         tempFile
     }
 
-    fun addToDebugOverlay(word: String, info: SuggestionsInfo) {
+    fun addToDebugOverlay(word: String, info: SpellingResult) {
         val version = debugOverlayVersionSource.incrementAndGet()
         debugOverlaySuggestionsInfos.put(System.currentTimeMillis(), word to info)
         debugOverlayVersion.postValue(version)

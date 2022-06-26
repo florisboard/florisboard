@@ -47,7 +47,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -149,14 +150,14 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun CandidateItem(
-    candidate: SuggestionProvider.Candidate,
+    candidate: SuggestionCandidate,
     displayMode: CandidatesDisplayMode,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
 ) = with(LocalDensity.current) {
     var isPressed by remember { mutableStateOf(false) }
 
-    val style = if (candidate is SuggestionProvider.ClipboardCandidate) {
+    val style = if (candidate is ClipboardSuggestionCandidate) {
         FlorisImeTheme.style.get(
             element = FlorisImeUi.SmartbarCandidateClip,
             isPressed = isPressed,

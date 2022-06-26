@@ -22,11 +22,12 @@ import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.lib.kotlin.map
 import kotlinx.coroutines.runBlocking
 
 class FlorisSpellCheckerService : SpellCheckerService() {
@@ -84,14 +85,14 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             spellingLocale: FlorisLocale,
             textInfos: Array<out TextInfo>,
             suggestionsLimit: Int,
-        ): Array<SuggestionsInfo> = runBlocking {
+        ): Array<SpellingResult> = runBlocking {
             val retInfos = Array(textInfos.size) { n ->
                 val word = textInfos[n].text ?: ""
                 spellingService.spellAsync(spellingLocale, word, suggestionsLimit)
             }
             Array(textInfos.size) { n ->
                 retInfos[n].await().apply {
-                    setCookieAndSequence(textInfos[n].cookie, textInfos[n].sequence)
+                    suggestionsInfo.setCookieAndSequence(textInfos[n].cookie, textInfos[n].sequence)
                 }
             }
         }
@@ -99,13 +100,14 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
             flogInfo(LogTopic.SPELL_EVENTS) { "text=${textInfo?.text}, limit=$suggestionsLimit" }
 
-            textInfo?.text ?: return SpellingService.emptySuggestionsInfo()
+            textInfo?.text ?: return SpellingResult.unspecified().suggestionsInfo
             setupSpellingIfNecessary()
-            val spellingLocale = cachedSpellingLocale ?: return SpellingService.emptySuggestionsInfo()
+            val spellingLocale = cachedSpellingLocale ?: return SpellingResult.unspecified().suggestionsInfo
 
             return spellingService
                 .spell(spellingLocale, textInfo.text, suggestionsLimit)
                 .sendToDebugOverlayIfEnabled(textInfo)
+                .suggestionsInfo
         }
 
         override fun onGetSuggestionsMultiple(
@@ -119,7 +121,9 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             setupSpellingIfNecessary()
             val spellingLocale = cachedSpellingLocale ?: return emptyArray()
 
-            return spellMultiple(spellingLocale, textInfos, suggestionsLimit).sendToDebugOverlayIfEnabled(textInfos)
+            return spellMultiple(spellingLocale, textInfos, suggestionsLimit)
+                .sendToDebugOverlayIfEnabled(textInfos)
+                .map { it.suggestionsInfo }
         }
 
         override fun onGetSentenceSuggestionsMultiple(
@@ -150,18 +154,18 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             }
         }
 
-        fun SuggestionsInfo.sendToDebugOverlayIfEnabled(
+        fun SpellingResult.sendToDebugOverlayIfEnabled(
             textInfo: TextInfo,
-        ): SuggestionsInfo {
+        ): SpellingResult {
             if (prefs.devtools.showSpellingOverlay.get()) {
                 spellingManager.addToDebugOverlay(textInfo.text, this)
             }
             return this
         }
 
-        fun Array<SuggestionsInfo>.sendToDebugOverlayIfEnabled(
+        fun Array<SpellingResult>.sendToDebugOverlayIfEnabled(
             textInfos: Array<out TextInfo>,
-        ): Array<SuggestionsInfo> {
+        ): Array<SpellingResult> {
             if (prefs.devtools.showSpellingOverlay.get()) {
                 for ((n, info) in this.withIndex()) {
                     spellingManager.addToDebugOverlay(textInfos[n].text, info)
