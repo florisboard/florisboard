@@ -476,6 +476,8 @@
     <string name="clipboard__group_pinned">Закреплено</string>
     <string name="clipboard__group_recent">Недавнее</string>
     <string name="clipboard__group_other">Разное</string>
+    <string name="clipboard__item_description_url">Ссылка</string>
+    <string name="clipboard__item_description_email">Эл. почта</string>
     <string name="clip__clear_history">Очистить историю</string>
     <string name="clip__unpin_item">Открепить</string>
     <string name="clip__pin_item">Закрепить</string>

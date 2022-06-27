@@ -147,8 +147,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             updateRenderInfo()
         }
         subtypeManager.activeSubtype.observeForever { newSubtype ->
+            reevaluateInputShiftState()
             updateRenderInfo()
-            updateCapsState()
             if (prefs.glide.enabled.get()) {
                 glideTypingManager.setWordData(newSubtype)
             }
@@ -234,7 +234,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         return activeState.observeAsNonNullState(neverEqualPolicy())
     }
 
-    fun updateCapsState() {
+    fun reevaluateInputShiftState() {
         if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             val shift = prefs.correction.autoCapitalization.get()
                 && subtypeManager.activeSubtype().primaryLocale.supportsCapitalization

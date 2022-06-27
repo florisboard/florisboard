@@ -28,9 +28,11 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import java.util.*
 
@@ -118,6 +120,19 @@ class NlpManager(context: Context) {
                     clipboardManager.primaryClip()?.let { item ->
                         if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
                             add(Candidate.Clip(item))
+                            if (item.type == ItemType.TEXT) {
+                                val text = item.stringRepresentation()
+                                NetworkUtils.getUrls(text).forEach { match ->
+                                    if (match.value != text) {
+                                        add(Candidate.Clip(item.copy(text = match.value)))
+                                    }
+                                }
+                                NetworkUtils.getEmailAddresses(text).forEach { match ->
+                                    if (match.value != text) {
+                                        add(Candidate.Clip(item.copy(text = match.value)))
+                                    }
+                                }
+                            }
                         }
                     }
                 }

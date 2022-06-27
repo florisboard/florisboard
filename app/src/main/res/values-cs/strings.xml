@@ -9,26 +9,26 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Posunout klávesnici doleva.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Posunout klávesnici doprava.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emotikony</string>
+    <string name="settings__media__title">Emoji</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Maximální velikost historie emotikonů</string>
-    <string name="prefs__media__emoji_preferred_skin_tone">Preferovaná barva pokožky emotikonů</string>
-    <string name="prefs__media__emoji_preferred_hair_style">Preferovaný styl vlasů emotikonů</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Maximální velikost historie emoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Preferovaná barva pokožky emoji</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferovaný styl vlasů emoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky &amp; Emoce</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Lidé &amp; Tělo</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Zvířata &amp; Příroda</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Jídlo &amp; Pití</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Cestování &amp; Místa</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky a emotikony</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Lidé a tělo</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Zvířata a příroda</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Jídlo a pití</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Cestování a místa</string>
     <string name="emoji__category__activities" comment="Emoji category name">Aktivity</string>
     <string name="emoji__category__objects" comment="Emoji category name">Předměty</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboly</string>
     <string name="emoji__category__flags" comment="Emoji category name">Vlajky</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenalezeny žádné nedávno použité emotikony. Jakmile je začnete psát, objeví se automaticky zde.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tip: Stiskněte a držte prst na naposledy použitých emotikonech pro jejich odebrání z daného seznamu!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Emotikon {emoji} byl odebrán z nedávno použitých</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenalezeny žádné nedávno použité emoji. Jakmile je začnete psát, objeví se automaticky zde.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tip: Stiskněte a držte prst na naposledy použitých emoji pro jejich odebrání z daného seznamu!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Emoji {emoji} bylo odebráno z nedávno použitých</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Přepínač rychlé akce. Pokud ho podržíte, přepne mezi návrhy na slova a tlačítky rychlé akce.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Opustit editor textu.</string>
@@ -71,6 +71,7 @@
     <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; vybrat &#8210;</string>
     <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
     <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Doporučená přednastavení podtypů</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Nejsou dostupné žádná doporučená přednastavení. Pro zobrazení všech přednastavení podtypů použijte tlačítko níže.</string>
     <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Přednastavení podtypů</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Zobrazit všechny</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá se, že jste nenakonfigurovali žádné podtypy. Jako fallback bude použit podtyp angličtina/QWERTY!</string>
@@ -99,10 +100,26 @@
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zobrazit klávesnici po dialozích</string>
     <string name="settings__theme_editor__add_rule">Přidat pravidlo</string>
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
+    <string name="settings__theme_editor__no_rules_defined">Tato tabulka stylů nemá definována žádná pravidla. Přidejte pravidlo, abyste mohli začít přizpůsobovat tuto tabulku.</string>
+    <string name="settings__theme_editor__rule_already_exists">Pravidlo této tabulky stylů je již definováno.</string>
     <string name="settings__theme_editor__rule_element">Cílový prvek</string>
+    <string name="settings__theme_editor__rule_codes">Kódy cílových kláves</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
+    <string name="settings__theme_editor__rule_shift_states">Stavy shiftu</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
+    <string name="settings__theme_editor__add_code">Přidat kód klávesy</string>
+    <string name="settings__theme_editor__edit_code">Upravit kód klávesy</string>
+    <string name="settings__theme_editor__no_codes_defined">Použít pravidlo na všechny prvky.</string>
+    <string name="settings__theme_editor__codes_defined">Použít pravidlo pouze na cílové prvky s následujícími kódy kláves:</string>
     <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
+    <string name="settings__theme_editor__code_invalid">Tento kód klávesy není platný. Ujistěte se, že kód klávesy je v rozmezí od {c_min} do {c_max} pro znaky nebo od {i_min} do {i_max} pro interní speciální klávesy.</string>
+    <string name="settings__theme_editor__code_help_text">Případně použijte následující odkazy, které vám pomohou zjistit odpovídající kód klávesy:</string>
+    <string name="settings__theme_editor__code_placeholder">Kód</string>
+    <string name="settings__theme_editor__code_recording_help_text">Pro nalezení kódu klávesy použijte tlačítko vedle vstupního pole kódu. Po aktivaci bude zaznamenáno další stisknutí klávesy a kód bude vložen do vstupního pole.</string>
+    <string name="settings__theme_editor__code_recording_started">Nahrávání kódu klávesy spuštěno</string>
+    <string name="settings__theme_editor__code_recording_stopped">Nahrávání kódu klávesy ukončeno</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">Pro zaznamenání kódu klávesy musí být výchozí klávesnice nastavena na {app_name}</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Nahrávání…</string>
     <string name="settings__theme_editor__add_property">Přidat vlastnost</string>
     <string name="settings__theme_editor__edit_property">Upravit vlastnost</string>
     <string name="settings__theme_editor__property_already_exists">Vlastnost s tímto názvem již v aktuálním pravidle existuje.</string>
@@ -112,7 +129,9 @@
     <string name="settings__theme_editor__property_value_color_dialog_title">Upravit řetězec barvy</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Cesta tabulky stylů</string>
     <string name="snygg__rule_element__defines">Proměnné</string>
+    <string name="snygg__rule_element__defines_description">Pomocí tohoto pravidla definujte proměnné pro opětovné použití běžných barev nebo velikostí ve vaší tabulce stylů.</string>
     <string name="snygg__rule_element__keyboard">Okno klávesnice</string>
     <string name="snygg__rule_element__key">Klávesa</string>
     <string name="snygg__rule_element__key_hint">Nápovědy klávesy</string>
@@ -120,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">Záhlaví schránky</string>
     <string name="snygg__rule_element__clipboard_item">Položka schránky</string>
     <string name="snygg__rule_element__clipboard_item_popup">Vyskakovací nabídka položky schránky</string>
+    <string name="snygg__rule_element__emoji_key">Klávesa emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Vyskakovací okno klávesy emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Záložka emoji</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Rozložení vstupu na šířku</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Pole vstupu na šířku</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Akce vstupu na šířku</string>
     <string name="snygg__rule_element__glide_trail">Stopa tahu</string>
     <string name="snygg__rule_element__one_handed_panel">Režim jedné ruky</string>
     <string name="snygg__rule_element__smartbar_primary_row">Primární řádek chytré lišty</string>
@@ -145,6 +170,8 @@
     <string name="snygg__property_name__font_family">Rodina písem</string>
     <string name="snygg__property_name__font_size">Velikost písma</string>
     <string name="snygg__property_name__font_style">Styl písma</string>
+    <string name="snygg__property_name__font_variant">Varianta písma</string>
+    <string name="snygg__property_name__font_weight">Tloušťka písma</string>
     <string name="snygg__property_name__shadow_elevation">Výška stínu</string>
     <string name="snygg__property_name__shape">Tvar</string>
     <string name="snygg__property_name__var_primary">Hlavní barva</string>
@@ -175,6 +202,17 @@
     <string name="snygg__property_value__percentage_size">Velikost (%)</string>
     <string name="snygg__property_value__defined_var">Odkaz na proměnnou</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky &amp; Vibrace</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Zvuková odezva / zvuky</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Povolit zvukovou odezvu</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Přehrávat zvuky při vstupních událostech, záleží na nastavení systému</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorovat zvuková nastavení systému</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Použít přednastavení níže, i když je zvuk v systému zakázán. Nefunguje, když je ztlumeno systémové vyzvánění</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Hlasitost zvuku pro vstupní události</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvuky stisku klávesy</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Zvuky dlouhého stisku klávesy</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Zvuky opakované akce klávesy</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Zvuky přejetí gestem</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Zvuky přejíždění gestem</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Hmatová odezva / vibrace</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Povolit hmatovou odezvu</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
@@ -184,12 +222,14 @@
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Spustit vibrace přímo namísto použití sady pro hmatovou odezvu systému Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trvání vibrací</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Síla vibrací</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tato funkce vyžaduje hardwarovou podporu řízení amplitudy, která ve vašem zařízení chybí</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Tato funkce vyžaduje podporu řízení amplitudy, která je dostupná pouze na systému Android 8.0 nebo vyšším</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrace při stisku klávesy</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrace při dlouhém stisku klávesy</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibrace při opakované akci klávesy</string>
     <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibrace při gestech</string>
     <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibrace při posouvání prstem při gestech</string>
-    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">např. klávesy, tlačítka, záložky emotikonů</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">např. klávesy, tlačítka, záložky emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">např. vyskakovací nabídky</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">např. klávesa odstranění</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">není implementováno</string>
@@ -216,14 +256,27 @@
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne na znaky</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automaticky se vrátí z nabídky čísel/symbolů ke klasické klávesnici</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Přehodit přepínací tlačítka</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Prohodí přepínače řádku akcí</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Rozložení řádku</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primární akce</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozšíření/sbalení</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí primární řádek akcí v závislosti na současném stavu</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundární akce</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Návrhy a opravy</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zobrazit návrhy na řádku poskytnuté službami automatického doplnění</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Režim zobrazování návrhů</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Návrhy obsahu schránky</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Časový limit pro návrh ze schránky</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalizovat slova na základě aktuálního vstupního kontextu</string>
@@ -231,6 +284,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dvojitou mezerou</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojité poklepání na mezerník vloží tečku a mezeru</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Uživatelské slovníky</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Použít vlastní systémový slovník</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Nabízet slova uložená ve vlastním systémovém slovníku</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Spravovat vlastní systémový slovník</string>
@@ -241,6 +295,7 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Přidat, prohlédnout nebo upravit slova ve vlastním interním slovníku</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Vlastní interní slovník</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Vlastní systémový slovník</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Tento uživatelský slovník neobsahuje žádná slova.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvence: {freq}</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvence: {freq} | Zkratka: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pro všechny jazyky</string>
@@ -258,13 +313,18 @@
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Prosím, zadejte zkratku shodující se s {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Tento kód jazyka neodpovídá očekávané syntaxi. Kód musí být buď pouze jazyk (jako cs), jazyk a země (jako cs_CZ), nebo jazyk, země a skript (jako cs_CZ-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta a psaní tahem</string>
     <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posouváním přes jeho písmena</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Zobrazit stopu tahu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
+    <string name="pref__glide_trail_fade_duration">Doba mizení stopy</string>
+    <string name="pref__glide_preview_refresh_delay">Náhled doby obnovení</string>
     <string name="pref__glide__show_preview">Zobrazit náhled při psaní tahem</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Vždy smazat slovo</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Stisknutí klávesy pro odstranění ihned po přejetí smaže celé slovo</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Obecná gesta</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesta na mezerníku</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Další gesta / Trvání gest</string>
@@ -277,23 +337,33 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Přejetí vpravo přes mezerník</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Dlouhý stisk mezerníku</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Přejetí doleva na klávese mazání</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dlouhé stisknutí klávesy ke smazání</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Práh vzdálenosti přejetí</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Pokročilé</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motiv nastavení</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Výchozí podle systému (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Temná</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Zakáže funkce, které pracují s vašimi vstupními daty</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Kontrola pravopisu</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Použít konfiguraci kontroly pravopisu na klávesnici</string>
+    <string name="pref__spelling__active_spellchecker__label">Kontrola pravopisu v textovém poli</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Systémově zakázáno. V textových polích se nebudou objevovat červené pruhy u nesprávných slov. Klepněte pro změnu.</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfigurace</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jazyky</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Kontrola pravopisu bude používat jména z vašeho seznamu kontaktů</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
     <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Spravovat slovníky</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">Nainstalováno {n}</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Rozšíření / archiv</string>
     <string name="settings__spelling__import__title" comment="Title for the import screen">Importovat slovník</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Vybrat zdroj</string>
     <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importovat archiv</string>
@@ -311,6 +381,7 @@
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <string name="about__changelog__title" comment="Preference title">Změny</string>
     <string name="about__changelog__summary" comment="Preference summary">Co je nového</string>
+    <string name="about__repository__title" comment="Preference title">Repozitář (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskuze, problémy a informace</string>
     <string name="about__privacy_policy__title" comment="Preference title">Soukromí</string>
     <string name="about__project_license__title" comment="Preference title">Licence projektu</string>

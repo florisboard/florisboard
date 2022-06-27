@@ -140,6 +140,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_element__clipboard_header">Tajukan papan klip</string>
     <string name="snygg__rule_element__clipboard_item">Item papan klip</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup item papan klip</string>
+    <string name="snygg__rule_element__emoji_key">Tombol emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Popup tombol emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Tab emoji</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Tata letak masukan lanskap</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Kolom masukan lanskap</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Tindakan masukan lanskap</string>
     <string name="snygg__rule_element__glide_trail">Jejak geser</string>
     <string name="snygg__rule_element__one_handed_panel">Panel satu-tangan</string>
     <string name="snygg__rule_element__smartbar_primary_row">Barisan utama smartbar</string>
@@ -471,6 +477,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clipboard__group_pinned">Disematkan</string>
     <string name="clipboard__group_recent">Terkini</string>
     <string name="clipboard__group_other">Lainnya</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_email">Email</string>
     <string name="clip__clear_history">Hapus riwayat</string>
     <string name="clip__unpin_item">Lepas pin item</string>
     <string name="clip__pin_item">Pin item</string>

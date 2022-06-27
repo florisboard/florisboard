@@ -476,6 +476,8 @@
     <string name="clipboard__group_pinned">置顶</string>
     <string name="clipboard__group_recent">最新</string>
     <string name="clipboard__group_other">其他</string>
+    <string name="clipboard__item_description_url">链接地址</string>
+    <string name="clipboard__item_description_email">电子邮箱</string>
     <string name="clip__clear_history">清除历史记录</string>
     <string name="clip__unpin_item">取消置顶本条</string>
     <string name="clip__pin_item">置顶本条</string>

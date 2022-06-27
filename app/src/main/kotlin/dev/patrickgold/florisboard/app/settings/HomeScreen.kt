@@ -83,7 +83,7 @@ fun HomeScreen() = FlorisScreen {
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Welcome to the 0.3.16 beta series!",
+                        text = "Welcome to 0.3.16!",
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold,
                     )
@@ -100,9 +100,8 @@ fun HomeScreen() = FlorisScreen {
                     }
                 }
                 if (!isCollapsed) {
-                    Text("The 0.3.16 beta series focuses on preparing the keyboard for word suggestions in 0.4.0, getting rid of the input lag and improve input connection handling. Most work is already done, now I am focusing on fixing introduced bugs and generally fixing a lot of bugs to improve the stability of this keyboard.\n")
-                    Text("If you have general feedback on this rework or want to report a newly broken/buggy input for a specific app (or all apps), please make sure to post your feedback in this thread:\n")
-                    FlorisButton(onClick = { context.launchUrl("https://github.com/florisboard/florisboard/discussions/1827") }, text = "Open feedback thread")
+                    Text("This release focuses on improving the stability of this keyboard (see changelog for all details). I want to thank all my beta testers who were able to identify and report a lot of bugs, this helped a lot in ironing out bugs!\n")
+                    Text("This is the last stable release on the 0.3.x track, the development focus now shifts to the 0.4.0 dev cycle, which will introduce word suggestions and inline autocorrect (at first for Latin-based languages) within the keyboard UI. If you are interested in the early steps of this new feature, make sure to follow the beta track, as the development of proper word suggestions will take quite some time.\n")
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Note that this release does not contain support for word suggestions (will show the current word plus numbers as a placeholder).", color = Color.Red)
                     Text("Please DO NOT file an issue for this. It is already more than known and a major goal for implementation in 0.4.0. Thank you!\n")

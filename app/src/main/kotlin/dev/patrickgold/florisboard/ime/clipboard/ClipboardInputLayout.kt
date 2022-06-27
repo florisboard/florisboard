@@ -39,7 +39,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -62,8 +64,10 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
@@ -102,11 +106,13 @@ import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.florisboard.lib.snygg.ui.spSize
+import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
 private val ItemPadding = PaddingValues(vertical = 8.dp, horizontal = 12.dp)
+private val DescriptionPadding = PaddingValues(top = 4.dp, start = 12.dp, end = 12.dp)
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
 
@@ -288,18 +294,22 @@ fun ClipboardInputLayout(
                     )
                 }
             } else {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this }
-                        .padding(ItemPadding),
-                    text = item.stringRepresentation(),
-                    style = TextStyle(textDirection = TextDirection.ContentOrLtr),
-                    color = style.foreground.solidColor(),
-                    fontSize = style.fontSize.spSize(),
-                    maxLines = if (contentScrollInsteadOfClip) Int.MAX_VALUE else 5,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                val text = item.stringRepresentation()
+                Column {
+                    ClipTextItemDescription(text, style)
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this }
+                            .padding(ItemPadding),
+                        text = text,
+                        style = TextStyle(textDirection = TextDirection.ContentOrLtr),
+                        color = style.foreground.solidColor(),
+                        fontSize = style.fontSize.spSize(),
+                        maxLines = if (contentScrollInsteadOfClip) Int.MAX_VALUE else 5,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }
@@ -604,6 +614,55 @@ private fun ClipCategoryTitle(
         fontWeight = FontWeight.Bold,
         fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )
+}
+
+@Composable
+private fun ClipTextItemDescription(
+    text: String,
+    style: SnyggPropertySet,
+    modifier: Modifier = Modifier,
+): Unit = with(LocalDensity.current) {
+    val iconId: Int?
+    val description: String?
+    when {
+        NetworkUtils.isUrl(text) -> {
+            iconId = R.drawable.ic_link
+            description = stringRes(R.string.clipboard__item_description_url)
+        }
+        NetworkUtils.isEmailAddress(text) -> {
+            iconId = R.drawable.ic_email
+            description = stringRes(R.string.clipboard__item_description_email)
+        }
+        else -> {
+            iconId = null
+            description = null
+        }
+    }
+    if (iconId != null && description != null) {
+        Row(
+            modifier = modifier
+                .padding(DescriptionPadding)
+                .offset(y = DescriptionPadding.calculateTopPadding()),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val fontSize = style.fontSize.spSize()
+            Icon(
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .requiredSize(fontSize.toDp()),
+                painter = painterResource(id = iconId),
+                contentDescription = null,
+                tint = style.foreground.solidColor(),
+            )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = description,
+                color = style.foreground.solidColor(),
+                fontSize = fontSize safeTimes 0.8f,
+                fontStyle = FontStyle.Italic,
+            )
+        }
+    }
 }
 
 @Composable
