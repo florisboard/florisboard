@@ -71,11 +71,10 @@ object Backup {
     class FilesSelector {
         var jetprefDatastore by mutableStateOf(true)
         var imeKeyboard by mutableStateOf(true)
-        var imeSpelling by mutableStateOf(true)
         var imeTheme by mutableStateOf(true)
 
         fun atLeastOneSelected(): Boolean {
-            return jetprefDatastore || imeKeyboard || imeSpelling || imeTheme
+            return jetprefDatastore || imeKeyboard || imeTheme
         }
     }
 
@@ -137,11 +136,6 @@ fun BackupScreen() = FlorisScreen {
         if (backupFilesSelector.imeKeyboard) {
             context.filesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH).let { dir ->
                 dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH))
-            }
-        }
-        if (backupFilesSelector.imeSpelling) {
-            context.filesDir.subDir(ExtensionManager.IME_SPELLING_PATH).let { dir ->
-                dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_SPELLING_PATH))
             }
         }
         if (backupFilesSelector.imeTheme) {
@@ -253,11 +247,6 @@ internal fun BackupFilesSelector(
             onClick = { filesSelector.imeKeyboard = !filesSelector.imeKeyboard },
             checked = filesSelector.imeKeyboard,
             text = stringRes(R.string.backup_and_restore__back_up__files_ime_keyboard),
-        )
-        CheckboxListItem(
-            onClick = { filesSelector.imeSpelling = !filesSelector.imeSpelling },
-            checked = filesSelector.imeSpelling,
-            text = stringRes(R.string.backup_and_restore__back_up__files_ime_spelling),
         )
         CheckboxListItem(
             onClick = { filesSelector.imeTheme = !filesSelector.imeTheme },

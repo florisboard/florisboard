@@ -91,9 +91,9 @@ interface SuggestionCandidate {
 class WordSuggestionCandidate(
     override val text: CharSequence,
     override val secondaryText: CharSequence? = null,
-    override val confidence: Double,
+    override val confidence: Double = 0.0,
     override val isAutoCommit: Boolean = false,
-    override val sourceProvider: SuggestionProvider?,
+    override val sourceProvider: SuggestionProvider? = null,
 ) : SuggestionCandidate {
     override val iconId: Int? = null
 }

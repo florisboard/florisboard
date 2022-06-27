@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
 import android.os.Build
+import android.util.LruCache
 import android.util.Size
 import android.view.inputmethod.InlineSuggestion
 import android.widget.inline.InlineContentView
@@ -36,6 +37,7 @@ import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 
 class NlpManager(context: Context) {
     private val prefs by florisPreferenceModel()
@@ -44,8 +46,8 @@ class NlpManager(context: Context) {
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
 
-    private val _suggestions = MutableLiveData<SuggestionList2?>(null)
-    val suggestions: LiveData<SuggestionList2?> get() = _suggestions
+    private val _suggestions = MutableLiveData<List<SuggestionCandidate>>(emptyList())
+    val suggestions: LiveData<List<SuggestionCandidate>> get() = _suggestions
 
     private val _activeCandidatesFlow = MutableStateFlow(emptyList<SuggestionCandidate>())
     val activeCandidatesFlow = _activeCandidatesFlow.asStateFlow()
@@ -58,6 +60,10 @@ class NlpManager(context: Context) {
     private val inlineContentViews = Collections.synchronizedMap<InlineSuggestion, InlineContentView>(hashMapOf())
     private val _inlineSuggestions = MutableLiveData<List<InlineSuggestion>>(emptyList())
     val inlineSuggestions: LiveData<List<InlineSuggestion>> get() = _inlineSuggestions
+
+    val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
+    var debugOverlayVersion = MutableLiveData(0)
+    private val debugOverlayVersionSource = AtomicInteger(0)
 
     init {
         clipboardManager.primaryClip.observeForever {
@@ -105,14 +111,14 @@ class NlpManager(context: Context) {
         val maxSuggestionCount = 16 // TODO: make customizable in prefs
         val suggestions = buildList {
             for (n in 0..6) {
-                add("$word$n")
+                add(WordSuggestionCandidate("$word$n"))
             }
         }
-        _suggestions.postValue(SuggestionList2(suggestions, false))
+        _suggestions.postValue(suggestions)
     }
 
-    fun suggestDirectly(suggestions: List<String>) {
-        _suggestions.postValue(SuggestionList2(suggestions, false))
+    fun suggestDirectly(suggestions: List<SuggestionCandidate>) {
+        _suggestions.postValue(suggestions)
     }
 
     fun clearSuggestions() {
@@ -144,13 +150,11 @@ class NlpManager(context: Context) {
                     }
                 }
                 suggestions.value?.let { suggestionList ->
-                    suggestionList.forEachIndexed { n, word ->
+                    suggestionList.forEachIndexed { n, candidate ->
                         add(WordSuggestionCandidate(
-                            text = word,
+                            text = candidate.text,
                             secondaryText = if (n % 2 == 1) "secondary" else null,
                             confidence = 0.5,
-                            isAutoCommit = n == 0 && suggestionList.isPrimaryTokenAutoInsert,
-                            sourceProvider = null,
                         ))
                     }
                 }
@@ -209,8 +213,15 @@ class NlpManager(context: Context) {
         }
     }
 
-    class SuggestionList2(
-        candidates: List<String>,
-        val isPrimaryTokenAutoInsert: Boolean,
-    ) : List<String> by candidates
+    fun addToDebugOverlay(word: String, info: SpellingResult) {
+        val version = debugOverlayVersionSource.incrementAndGet()
+        debugOverlaySuggestionsInfos.put(System.currentTimeMillis(), word to info)
+        debugOverlayVersion.postValue(version)
+    }
+
+    fun clearDebugOverlay() {
+        val version = debugOverlayVersionSource.incrementAndGet()
+        debugOverlaySuggestionsInfos.evictAll()
+        debugOverlayVersion.postValue(version)
+    }
 }

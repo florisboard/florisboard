@@ -288,19 +288,6 @@
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfiguráció</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Nyelvek</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Felhasználói szótárbejegyzések használata</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Szótárak kezelése</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} telepítve</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Kiterjesztés / archívum</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Új szótár importálása</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Forrás kiválasztása</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Archívum importálása</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Nyelv választása</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Nyelvkód (pl. en_US)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Toldalékfájl kiválasztása (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Szótárfájl kiválasztása (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Importálás hitelesítése</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Hol szerezhetek szótárakat?</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">ha ez a lista nem tartalmazza a szótárakat a nyelvéhez, vagy a nyelvjárásához, akkor manuálisan is kereshet egy Hunspell szótárat és importálhatja az \'aff\' és a \'dic\' fájlokat.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>
@@ -441,11 +428,9 @@
     <string name="ext__error__not_found_title">A kiterjesztés nem található</string>
     <string name="ext__editor__title_create_any">Kiterjesztés létrehozása</string>
     <string name="ext__editor__title_create_keyboard">Billentyűzet kiterjesztés létrehozása</string>
-    <string name="ext__editor__title_create_spelling">Helyesírás kiterjesztés létrehozása</string>
     <string name="ext__editor__title_create_theme">Téma kiterjesztés létrehozása</string>
     <string name="ext__editor__title_edit_any">Kiterjesztés szerkesztése</string>
     <string name="ext__editor__title_edit_keyboard">Billentyűzet kiterjesztés szerkesztése</string>
-    <string name="ext__editor__title_edit_spelling">Helyesírás kiterjesztés szerkesztése</string>
     <string name="ext__editor__title_edit_theme">Téma kiterjesztés szerkesztése</string>
     <string name="ext__editor__metadata__title">Metaadatok kezelése</string>
     <string name="ext__editor__metadata__title_invalid">Érvénytelen metaadatok</string>
@@ -464,7 +449,6 @@
     <string name="ext__import__failure">Nem sikerült importálni a kiterjesztést: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Kiterjesztés importálása</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Billentyűzet kiterjesztés importálása</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Helyesírási kiterjesztés / szótár importálása</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Téma kiterjesztés importálása</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">A fájlt nem lehet importálni. Oka:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Nem támogatott vagy ismeretlen fájltípus.</string>

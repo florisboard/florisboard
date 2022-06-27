@@ -49,9 +49,6 @@ import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
 import dev.patrickgold.florisboard.app.settings.smartbar.SmartbarScreen
-import dev.patrickgold.florisboard.app.settings.spelling.ImportSpellingArchiveScreen
-import dev.patrickgold.florisboard.app.settings.spelling.ManageSpellingDictsScreen
-import dev.patrickgold.florisboard.app.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
@@ -92,10 +89,6 @@ object Routes {
         const val Typing = "settings/typing"
 
         const val Spelling = "settings/spelling"
-        const val SpellingInfo = "settings/spelling/info"
-        const val ManageSpellingDicts = "settings/spelling/manage-dicts"
-        const val ImportSpellingArchive = "settings/spelling/import-archive"
-        const val ImportSpellingAffDic = "settings/spelling/import-aff-dic"
 
         const val Dictionary = "settings/dictionary"
         const val UserDictionary = "settings/dictionary/user-dictionary/{type}"
@@ -186,9 +179,6 @@ object Routes {
             composable(Settings.Typing) { TypingScreen() }
 
             composable(Settings.Spelling) { SpellingScreen() }
-            composable(Settings.SpellingInfo) { SpellingInfoScreen() }
-            composable(Settings.ManageSpellingDicts) { ManageSpellingDictsScreen() }
-            composable(Settings.ImportSpellingArchive) { ImportSpellingArchiveScreen() }
 
             composable(Settings.Dictionary) { DictionaryScreen() }
             composable(Settings.UserDictionary) { navBackStack ->

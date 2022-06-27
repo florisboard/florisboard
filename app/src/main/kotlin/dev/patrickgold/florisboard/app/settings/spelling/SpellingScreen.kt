@@ -26,17 +26,13 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.android.AndroidSettings
 import dev.patrickgold.florisboard.lib.android.launchActivity
 import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
@@ -55,9 +51,7 @@ fun SpellingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__spelling__title)
     previewFieldVisible = true
 
-    val navController = LocalNavController.current
     val context = LocalContext.current
-    val extensionManager by context.extensionManager()
 
     val systemSpellCheckerId by AndroidSettings.Secure.observeAsState(
         key = "selected_spell_checker",
@@ -88,8 +82,7 @@ fun SpellingScreen() = FlorisScreen {
     }
     val florisSpellCheckerEnabled =
         systemSpellCheckerEnabled == "1" &&
-        systemSpellCheckerPkgName == context.packageName &&
-        systemSpellCheckerSubtypeIndex != "0"
+        systemSpellCheckerPkgName == context.packageName
 
     content {
         PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
@@ -135,16 +128,16 @@ fun SpellingScreen() = FlorisScreen {
                             contentPadding = PaddingValues(all = 8.dp),
                             onClick = openSystemSpellCheckerSettings,
                         )
-                        if (systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex == "0") {
-                            FlorisWarningCard(
-                                modifier = Modifier.padding(top = 8.dp),
-                                text = stringRes(
-                                    R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
-                                    "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
-                                ),
-                                onClick = openSystemSpellCheckerSettings,
-                            )
-                        }
+                        //if (systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex == "0") {
+                        //    FlorisWarningCard(
+                        //        modifier = Modifier.padding(top = 8.dp),
+                        //        text = stringRes(
+                        //            R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
+                        //            "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
+                        //        ),
+                        //        onClick = openSystemSpellCheckerSettings,
+                        //    )
+                        //}
                     }
                 } else {
                     FlorisErrorCard(
@@ -154,16 +147,11 @@ fun SpellingScreen() = FlorisScreen {
                 }
             }
         }
-        val spellingDicts by extensionManager.spellingDicts.observeAsState()
         Preference(
             iconId = R.drawable.ic_library_books,
-            title = stringRes(R.string.settings__spelling__manage_dicts__title),
-            summary = stringRes(
-                R.string.settings__spelling__manage_dicts__n_installed,
-                "n" to (spellingDicts?.size ?: 0).toString(),
-            ),
-            onClick = { navController.navigate(Routes.Settings.ManageSpellingDicts) },
-            enabledIf = { florisSpellCheckerEnabled },
+            title = "Manage dictionaries",
+            summary = "Not implemented in this alpha release",
+            enabledIf = { false },
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__spelling__group_spellchecker_config__title)) {

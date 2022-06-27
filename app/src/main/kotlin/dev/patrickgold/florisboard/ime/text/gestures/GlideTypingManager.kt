@@ -4,7 +4,7 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.nlp.SuggestionList
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.io.FlorisRef
@@ -105,15 +105,16 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
             val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
-                val suggestionList = SuggestionList.new(1)
-                suggestions.subList(
-                    1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
-                    maxSuggestionsToShow.coerceAtMost(suggestions.size)
-                ).map { keyboardManager.fixCase(it) }.forEach {
-                    suggestionList.add(it, 255)
+                val suggestionList = buildList {
+                    suggestions.subList(
+                        1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
+                        maxSuggestionsToShow.coerceAtMost(suggestions.size)
+                    ).map { keyboardManager.fixCase(it) }.forEach {
+                        add(WordSuggestionCandidate(it, confidence = 1.0))
+                    }
                 }
-                nlpManager.suggestDirectly(suggestionList.toList())
-                suggestionList.dispose()
+
+                nlpManager.suggestDirectly(suggestionList)
                 if (commit && suggestions.isNotEmpty()) {
                     keyboardManager.commitGesture(suggestions.first())
                 }

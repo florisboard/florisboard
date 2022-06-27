@@ -21,20 +21,22 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.nlp.PlaceholderSpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
-import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.kotlin.map
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class FlorisSpellCheckerService : SpellCheckerService() {
     private val prefs by florisPreferenceModel()
     private val dictionaryManager get() = DictionaryManager.default()
-    private val spellingManager by spellingManager()
-    private val spellingService by spellingService()
+    private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
 
     override fun onCreate() {
@@ -57,7 +59,8 @@ class FlorisSpellCheckerService : SpellCheckerService() {
     }
 
     private inner class FlorisSpellCheckerSession : Session() {
-        private var cachedSpellingLocale: FlorisLocale? = null
+        private var cachedSpellingSubtype: Subtype? = null
+        private var spellingProvider = PlaceholderSpellingProvider
 
         override fun onCreate() {
             flogInfo(LogTopic.SPELL_EVENTS) { "Session requested locale: $locale" }
@@ -66,29 +69,31 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         }
 
         private fun setupSpellingIfNecessary() {
-            val evaluatedLocale = when (prefs.spelling.languageMode.get()) {
+            val evaluatedSubtype = when (prefs.spelling.languageMode.get()) {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
-                    subtypeManager.activeSubtype().primaryLocale
+                    subtypeManager.activeSubtype()
                 }
                 else -> {
-                    FlorisLocale.default()
+                    Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())
                 }
             }
 
-            if (evaluatedLocale != cachedSpellingLocale) {
-                cachedSpellingLocale = evaluatedLocale
+            if (evaluatedSubtype != cachedSpellingSubtype) {
+                cachedSpellingSubtype = evaluatedSubtype
             }
-            flogInfo(LogTopic.SPELL_EVENTS) { "Session actual locale: ${cachedSpellingLocale?.languageTag()}" }
+            flogInfo(LogTopic.SPELL_EVENTS) {
+                "Session actual locale: ${cachedSpellingSubtype?.primaryLocale?.languageTag()}"
+            }
         }
 
         private fun spellMultiple(
-            spellingLocale: FlorisLocale,
+            spellingSubtype: Subtype,
             textInfos: Array<out TextInfo>,
             suggestionsLimit: Int,
         ): Array<SpellingResult> = runBlocking {
             val retInfos = Array(textInfos.size) { n ->
                 val word = textInfos[n].text ?: ""
-                spellingService.spellAsync(spellingLocale, word, suggestionsLimit)
+                async { spellingProvider.spell(spellingSubtype, word, emptyList(), emptyList(), suggestionsLimit) }
             }
             Array(textInfos.size) { n ->
                 retInfos[n].await().apply {
@@ -102,12 +107,14 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             textInfo?.text ?: return SpellingResult.unspecified().suggestionsInfo
             setupSpellingIfNecessary()
-            val spellingLocale = cachedSpellingLocale ?: return SpellingResult.unspecified().suggestionsInfo
+            val spellingSubtype = cachedSpellingSubtype ?: return SpellingResult.unspecified().suggestionsInfo
 
-            return spellingService
-                .spell(spellingLocale, textInfo.text, suggestionsLimit)
-                .sendToDebugOverlayIfEnabled(textInfo)
-                .suggestionsInfo
+            return runBlocking {
+                spellingProvider
+                    .spell(spellingSubtype, textInfo.text, emptyList(), emptyList(), suggestionsLimit)
+                    .sendToDebugOverlayIfEnabled(textInfo)
+                    .suggestionsInfo
+            }
         }
 
         override fun onGetSuggestionsMultiple(
@@ -119,9 +126,9 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             textInfos ?: return emptyArray()
             setupSpellingIfNecessary()
-            val spellingLocale = cachedSpellingLocale ?: return emptyArray()
+            val spellingSubtype = cachedSpellingSubtype ?: return emptyArray()
 
-            return spellMultiple(spellingLocale, textInfos, suggestionsLimit)
+            return spellMultiple(spellingSubtype, textInfos, suggestionsLimit)
                 .sendToDebugOverlayIfEnabled(textInfos)
                 .map { it.suggestionsInfo }
         }
@@ -141,7 +148,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             super.onCancel()
             if (prefs.devtools.showSpellingOverlay.get()) {
-                spellingManager.clearDebugOverlay()
+                nlpManager.clearDebugOverlay()
             }
         }
 
@@ -150,7 +157,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             super.onClose()
             if (prefs.devtools.showSpellingOverlay.get()) {
-                spellingManager.clearDebugOverlay()
+                nlpManager.clearDebugOverlay()
             }
         }
 
@@ -158,7 +165,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             textInfo: TextInfo,
         ): SpellingResult {
             if (prefs.devtools.showSpellingOverlay.get()) {
-                spellingManager.addToDebugOverlay(textInfo.text, this)
+                nlpManager.addToDebugOverlay(textInfo.text, this)
             }
             return this
         }
@@ -168,7 +175,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         ): Array<SpellingResult> {
             if (prefs.devtools.showSpellingOverlay.get()) {
                 for ((n, info) in this.withIndex()) {
-                    spellingManager.addToDebugOverlay(textInfos[n].text, info)
+                    nlpManager.addToDebugOverlay(textInfos[n].text, info)
                 }
             }
             return this

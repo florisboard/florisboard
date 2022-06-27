@@ -236,22 +236,6 @@
     <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Optie \"Talen\" in het spellingscontrolescherm van het systeem is ingesteld op \"Gebruik systeemtalen\". Door een bug kan dit ertoe leiden dat {app_name} geen inline spellingcontrole uitvoert. Overweeg om dit te veranderen in \"{use_floris_config}\".</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuratie</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Talen</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Beheer woordenboeken</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} geïnstalleerd</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Er zijn momenteel geen woordenboeken voor spellingscontrole geïnstalleerd. Voeg de eerste toe met de \'+\'-knop hieronder!</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Nieuw woordenboek importeren</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Selecteer bron</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Selecteer de bron van waar u de extensie van derden heeft gedownload. Dit helpt bij het correct verwerken van de niet-FlorisBoard extensie-indeling en het omzetten in een FlorisBoard extensie-indeling.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importeer archief</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Importeer nu het archief door het bestand te kiezen in het bestandkiezer dialoogvenster.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Selecteer taal</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Taalcode (bv. en_US)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Woordenboekbestand importeren</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Selecteer affix-bestand (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Selecteer woordenboekbestand (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verifieer import</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Controleer of de onderstaande metadata correct is. Als er iets niet klopt, kunt u teruggaan naar een vorige stap en de bron opnieuw selecteren / het archief opnieuw importeren.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Waar kan ik woordenboeken vinden?</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>

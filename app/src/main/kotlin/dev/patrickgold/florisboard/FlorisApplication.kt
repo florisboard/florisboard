@@ -31,8 +31,6 @@ import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
-import dev.patrickgold.florisboard.ime.spelling.SpellingManager
-import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.lib.NativeStr
@@ -75,8 +73,6 @@ class FlorisApplication : Application() {
     val glideTypingManager = lazy { GlideTypingManager(this) }
     val keyboardManager = lazy { KeyboardManager(this) }
     val nlpManager = lazy { NlpManager(this) }
-    val spellingManager = lazy { SpellingManager(this) }
-    val spellingService = lazy { SpellingService(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
     val themeManager = lazy { ThemeManager(this) }
 
@@ -178,10 +174,6 @@ fun Context.glideTypingManager() = lazy { this.florisApplication().glideTypingMa
 fun Context.keyboardManager() = lazy { this.florisApplication().keyboardManager.value }
 
 fun Context.nlpManager() = lazy { this.florisApplication().nlpManager.value }
-
-fun Context.spellingManager() = lazy { this.florisApplication().spellingManager.value }
-
-fun Context.spellingService() = lazy { this.florisApplication().spellingService.value }
 
 fun Context.subtypeManager() = lazy { this.florisApplication().subtypeManager.value }
 

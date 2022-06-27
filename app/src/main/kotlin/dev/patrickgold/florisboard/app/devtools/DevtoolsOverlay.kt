@@ -43,7 +43,7 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
-import dev.patrickgold.florisboard.spellingManager
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.text.SimpleDateFormat
 import java.util.*
@@ -121,10 +121,10 @@ private fun DevtoolsInputStateOverlay() {
 @Composable
 private fun DevtoolsSpellingOverlay() {
     val context = LocalContext.current
-    val spellingManager by context.spellingManager()
+    val nlpManager by context.nlpManager()
 
-    val debugOverlayVersion by spellingManager.debugOverlayVersion.observeAsNonNullState()
-    val suggestionsInfos = remember(debugOverlayVersion) { spellingManager.debugOverlaySuggestionsInfos.snapshot() }
+    val debugOverlayVersion by nlpManager.debugOverlayVersion.observeAsNonNullState()
+    val suggestionsInfos = remember(debugOverlayVersion) { nlpManager.debugOverlaySuggestionsInfos.snapshot() }
 
     val sortedEntries = suggestionsInfos.entries.sortedByDescending { it.key }
     DevtoolsOverlayBox(title = "Spelling overlay (${sortedEntries.size})") {

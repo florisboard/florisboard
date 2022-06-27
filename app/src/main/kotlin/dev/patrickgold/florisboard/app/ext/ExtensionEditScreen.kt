@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
@@ -51,7 +50,6 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
@@ -218,7 +216,6 @@ private fun ExtensionEditScreenSheetSwitcher(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun EditScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
@@ -227,14 +224,12 @@ private fun EditScreen(
     title = stringRes(if (isCreateExt) {
         when (workspace.ext) {
             is KeyboardExtension -> R.string.ext__editor__title_create_keyboard
-            is SpellingExtension -> R.string.ext__editor__title_create_spelling
             is ThemeExtension -> R.string.ext__editor__title_create_theme
             else -> R.string.ext__editor__title_create_any
         }
     } else {
         when (workspace.ext) {
             is KeyboardExtension -> R.string.ext__editor__title_edit_keyboard
-            is SpellingExtension -> R.string.ext__editor__title_edit_spelling
             is ThemeExtension -> R.string.ext__editor__title_edit_theme
             else -> R.string.ext__editor__title_edit_any
         }

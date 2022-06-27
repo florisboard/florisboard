@@ -9,6 +9,8 @@
     <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/florisboard/florisboard/blob/master/app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
     <string name="florisboard__character_key_codes_url" translatable="false">https://unicode-table.com/en</string>
 
+    <string name="general__system_string_placeholder" translatable="false">%s</string>
+
     <string name="key__view_characters" translatable="false">ABC</string>
     <string name="key__view_numeric" translatable="false">1 2\n3 4</string>
     <string name="key__view_phone" translatable="false">123</string>

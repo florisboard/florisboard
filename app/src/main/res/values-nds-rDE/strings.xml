@@ -12,13 +12,6 @@
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rechtschreibkorrektur</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Wörterbücher verwalten</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} installiert</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Keine Rechtschreibkorrektur-Wörterbücher installiert. Füge erst eins mit dem \'+\'-Button unten hinzu!</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Neues Wörterbuch importieren</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Quelle auswählen</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Sprachauswahl</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Sprachcode (e.g. de_DE)</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
     <!-- Back up & Restore -->

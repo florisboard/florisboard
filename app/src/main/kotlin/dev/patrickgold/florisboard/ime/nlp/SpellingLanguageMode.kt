@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.spelling
+package dev.patrickgold.florisboard.ime.nlp
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R

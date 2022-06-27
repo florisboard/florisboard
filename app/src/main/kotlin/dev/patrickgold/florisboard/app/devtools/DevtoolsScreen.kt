@@ -185,13 +185,6 @@ fun DevtoolsScreen() = FlorisScreen {
                 },
             )
             Preference(
-                title = "spellingDicts",
-                summary = extensionManager.spellingDicts.internalModuleDir.absolutePath,
-                onClick = {
-                    context.showLongToast(extensionManager.spellingDicts.internalModuleDir.absolutePath)
-                },
-            )
-            Preference(
                 title = "themes",
                 summary = extensionManager.themes.internalModuleDir.absolutePath,
                 onClick = {

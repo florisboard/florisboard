@@ -16,7 +16,30 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
-typealias Word = String
-typealias Freq = Int
+import dev.patrickgold.florisboard.ime.core.Subtype
 
 const val NATIVE_NULLPTR = 0
+
+object PlaceholderSpellingProvider : SpellingProvider {
+    override suspend fun create() {
+        //
+    }
+
+    override suspend fun preload(subtype: Subtype) {
+        //
+    }
+
+    override suspend fun spell(
+        subtype: Subtype,
+        word: CharSequence,
+        precedingWords: List<CharSequence>,
+        followingWords: List<CharSequence>,
+        maxSuggestionCount: Int
+    ): SpellingResult {
+        return SpellingResult.unspecified()
+    }
+
+    override suspend fun destroy() {
+        //
+    }
+}

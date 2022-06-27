@@ -49,7 +49,6 @@ import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -77,11 +76,6 @@ enum class ExtensionImportScreenType(
     EXT_KEYBOARD(
         id = "ext-keyboard",
         titleResId = R.string.ext__import__ext_keyboard,
-        supportedFiles = listOf(FileRegistry.FlexExtension),
-    ),
-    EXT_SPELLING(
-        id = "ext-spelling",
-        titleResId = R.string.ext__import__ext_spelling,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
     EXT_THEME(
@@ -176,9 +170,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             }
                             ExtensionImportScreenType.EXT_KEYBOARD -> {
                                 ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
-                            }
-                            ExtensionImportScreenType.EXT_SPELLING -> {
-                                ext.takeIf { it is SpellingExtension }?.let { extensionManager.import(it) }
                             }
                             ExtensionImportScreenType.EXT_THEME -> {
                                 ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
