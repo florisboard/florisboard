@@ -274,7 +274,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     private suspend fun determineLocalComposing(textBeforeSelection: CharSequence): EditorRange {
-        return breakIterators.word(subtypeManager.activeSubtype().primaryLocale) {
+        return breakIterators.word(subtypeManager.activeSubtype.primaryLocale) {
             it.setText(textBeforeSelection.toString())
             val end = it.last()
             val isWord = it.ruleStatus != BreakIterator.WORD_NONE
@@ -321,7 +321,7 @@ abstract class AbstractEditorInstance(context: Context) {
             return commitText(char)
         }
         val ic = currentInputConnection() ?: return false
-        val composer = determineComposer(subtypeManager.activeSubtype().composer)
+        val composer = determineComposer(subtypeManager.activeSubtype.composer)
         val previous = content.textBeforeSelection.takeLast(composer.toRead)
         val (rm, finalText) = composer.getActions(previous, char[0])
         if (rm <= 0) {
@@ -417,7 +417,7 @@ abstract class AbstractEditorInstance(context: Context) {
             }
         } else {
             runBlocking {
-                val locale = subtypeManager.activeSubtype().primaryLocale
+                val locale = subtypeManager.activeSubtype.primaryLocale
                 val length = when (type) {
                     TextType.CHARACTERS -> breakIterators.measureLastUChars(oldTextBeforeSelection, n, locale)
                     TextType.WORDS -> breakIterators.measureLastUWords(oldTextBeforeSelection, n, locale)
@@ -452,7 +452,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (n < 1 || text.isEmpty()) return ""
         return runBlocking {
             val text = textBeforeSelection
-            val length = breakIterators.measureLastUChars(text, n, subtypeManager.activeSubtype().primaryLocale)
+            val length = breakIterators.measureLastUChars(text, n, subtypeManager.activeSubtype.primaryLocale)
             text.takeLast(length)
         }
     }
@@ -471,7 +471,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (n < 1 || text.isEmpty()) return ""
         return runBlocking {
             val text = textAfterSelection
-            val length = breakIterators.measureUChars(text, n, subtypeManager.activeSubtype().primaryLocale)
+            val length = breakIterators.measureUChars(text, n, subtypeManager.activeSubtype.primaryLocale)
             text.take(length)
         }
     }

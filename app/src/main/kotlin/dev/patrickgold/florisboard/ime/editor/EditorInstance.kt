@@ -367,7 +367,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun performClipboardPaste(): Boolean {
         phantomSpace.setInactive()
-        return commitClipboardItem(clipboardManager.primaryClip.value).also { result ->
+        return commitClipboardItem(clipboardManager.primaryClip).also { result ->
             if (!result) {
                 appContext.showShortToast("Failed to paste item.")
             }

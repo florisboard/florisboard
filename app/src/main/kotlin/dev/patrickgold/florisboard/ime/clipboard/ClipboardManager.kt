@@ -39,6 +39,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -104,8 +106,11 @@ class ClipboardManager(
 
     private val primaryClipLastFromCallbackGuard = Mutex(locked = false)
     private var primaryClipLastFromCallback: ClipData? = null
-    private val _primaryClip = MutableLiveData<ClipboardItem?>(null)
-    val primaryClip: LiveData<ClipboardItem?> get() = _primaryClip
+    private val _primaryClipFlow = MutableStateFlow<ClipboardItem?>(null)
+    val primaryClipFlow = _primaryClipFlow.asStateFlow()
+    inline var primaryClip
+        get() = primaryClipFlow.value
+        private set(v) { _primaryClipFlow.value = v }
 
     init {
         systemClipboardManager.addPrimaryClipChangedListener(this)
@@ -139,15 +144,11 @@ class ClipboardManager(
 
     fun history(): ClipboardHistory = history.value!!
 
-    fun primaryClip(): ClipboardItem? {
-        return primaryClip.value
-    }
-
     /**
      * Sets the current primary clip without updating the internal clipboard history.
      */
-    fun setPrimaryClip(item: ClipboardItem?) {
-        _primaryClip.postValue(item)
+    fun updatePrimaryClip(item: ClipboardItem?) {
+        primaryClip = item
         if (prefs.clipboard.useInternalClipboard.get()) {
             // Purposely do not sync to system if disabled in prefs
             if (prefs.clipboard.syncToSystem.get()) {
@@ -178,22 +179,22 @@ class ClipboardManager(
                 }
                 if (isDuplicate) return@launch
 
-                val internalPrimaryClip = primaryClip.value
+                val internalPrimaryClip = primaryClip
 
                 if (systemPrimaryClip == null) {
-                    _primaryClip.postValue(null)
+                    primaryClip = null
                     return@launch
                 }
 
                 if (systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
-                    _primaryClip.postValue(null)
+                    primaryClip = null
                     return@launch
                 }
 
                 val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
                 if (!isEqual) {
                     val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
-                    _primaryClip.postValue(item)
+                    primaryClip = item
                     insertOrMoveBeginning(item)
                 }
             }
@@ -205,7 +206,7 @@ class ClipboardManager(
      */
     private fun addNewClip(item: ClipboardItem) {
         insertOrMoveBeginning(item)
-        setPrimaryClip(item)
+        updatePrimaryClip(item)
     }
 
     /**

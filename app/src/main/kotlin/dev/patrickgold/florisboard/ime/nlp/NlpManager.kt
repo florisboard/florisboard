@@ -32,8 +32,12 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
@@ -45,17 +49,19 @@ class NlpManager(context: Context) {
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val _suggestions = MutableLiveData<List<SuggestionCandidate>>(emptyList())
-    val suggestions: LiveData<List<SuggestionCandidate>> get() = _suggestions
+    private val _activeSuggestionsFlow = MutableStateFlow(listOf<SuggestionCandidate>())
+    val activeSuggestionsFlow = _activeSuggestionsFlow.asStateFlow()
+    inline var activeSuggestions
+        get() = activeSuggestionsFlow.value
+        private set(v) { _activeSuggestionsFlow.value = v }
 
-    private val _activeCandidatesFlow = MutableStateFlow(emptyList<SuggestionCandidate>())
+    private val _activeCandidatesFlow = MutableStateFlow(listOf<SuggestionCandidate>())
     val activeCandidatesFlow = _activeCandidatesFlow.asStateFlow()
-    inline var activeCandidates: List<SuggestionCandidate>
+    inline var activeCandidates
         get() = activeCandidatesFlow.value
-        private set(v) {
-            _activeCandidatesFlow.value = v
-        }
+        private set(v) { _activeCandidatesFlow.value = v }
 
     private val inlineContentViews = Collections.synchronizedMap<InlineSuggestion, InlineContentView>(hashMapOf())
     private val _inlineSuggestions = MutableLiveData<List<InlineSuggestion>>(emptyList())
@@ -66,10 +72,10 @@ class NlpManager(context: Context) {
     private val debugOverlayVersionSource = AtomicInteger(0)
 
     init {
-        clipboardManager.primaryClip.observeForever {
+        clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
-        suggestions.observeForever {
+        activeSuggestionsFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
         prefs.suggestion.clipboardContentEnabled.observeForever {
@@ -84,7 +90,7 @@ class NlpManager(context: Context) {
      * @return The punctuation rule or a fallback.
      */
     fun getActivePunctuationRule(): PunctuationRule {
-        return getPunctuationRule(subtypeManager.activeSubtype())
+        return getPunctuationRule(subtypeManager.activeSubtype)
     }
 
     /**
@@ -114,15 +120,15 @@ class NlpManager(context: Context) {
                 add(WordSuggestionCandidate("$word$n"))
             }
         }
-        _suggestions.postValue(suggestions)
+        activeSuggestions = suggestions
     }
 
     fun suggestDirectly(suggestions: List<SuggestionCandidate>) {
-        _suggestions.postValue(suggestions)
+        activeSuggestions = suggestions
     }
 
     fun clearSuggestions() {
-        _suggestions.postValue(null)
+        activeSuggestions = emptyList()
     }
 
     private fun assembleCandidates() {
@@ -130,7 +136,7 @@ class NlpManager(context: Context) {
             if (prefs.smartbar.enabled.get() && prefs.suggestion.enabled.get()) {
                 if (prefs.suggestion.clipboardContentEnabled.get()) {
                     val now = System.currentTimeMillis()
-                    clipboardManager.primaryClip()?.let { item ->
+                    clipboardManager.primaryClip?.let { item ->
                         if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
                             add(ClipboardSuggestionCandidate(item))
                             if (item.type == ItemType.TEXT) {
@@ -149,8 +155,8 @@ class NlpManager(context: Context) {
                         }
                     }
                 }
-                suggestions.value?.let { suggestionList ->
-                    suggestionList.forEachIndexed { n, candidate ->
+                activeSuggestions.let { suggestions ->
+                    suggestions.forEachIndexed { n, candidate ->
                         add(WordSuggestionCandidate(
                             text = candidate.text,
                             secondaryText = if (n % 2 == 1) "secondary" else null,

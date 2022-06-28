@@ -71,7 +71,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private fun setupSpellingIfNecessary() {
             val evaluatedSubtype = when (prefs.spelling.languageMode.get()) {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
-                    subtypeManager.activeSubtype()
+                    subtypeManager.activeSubtype
                 }
                 else -> {
                     Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())

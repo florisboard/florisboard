@@ -66,7 +66,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
      */
     fun setLayout(keys: List<TextKey>) {
         if (keys.isNotEmpty()) {
-            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype())
+            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype)
         }
     }
 

@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -83,7 +82,7 @@ private fun DevtoolsClipboardOverlay() {
     val clipboardManager by context.clipboardManager()
 
     DevtoolsOverlayBox(title = "Clipboard overlay") {
-        val primaryClip by clipboardManager.primaryClip.observeAsState()
+        val primaryClip by clipboardManager.primaryClipFlow.collectAsState()
         Text(
             modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
             text = primaryClip.toString(),
