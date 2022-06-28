@@ -18,8 +18,6 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import dev.patrickgold.florisboard.ime.core.Subtype
 
-const val NATIVE_NULLPTR = 0
-
 object PlaceholderSpellingProvider : SpellingProvider {
     override suspend fun create() {
         //
