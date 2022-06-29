@@ -64,7 +64,7 @@ fun AndroidAssetsManager.bufferedReader(path: String, charset: Charset = Charset
 
 /**
  * Reads an entire APK assets file using specified [charset] or UTF-8 into memory and returns it. This method is not
- * recommended for huge files and has an internal limitation of 2GB.
+ * recommended for huge files and must stay within the heap size limits, or it will result in an OOM error.
  *
  * @param path The relative path of the APK assets file.
  * @param charset The charset used for decoding the raw bytes. Defaults to UTF-8.

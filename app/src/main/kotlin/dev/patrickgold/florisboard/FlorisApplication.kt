@@ -43,9 +43,9 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.AssetManager
 import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
+import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.toNativeStr
 import dev.patrickgold.jetpref.datastore.JetPref
-import java.io.File
 
 @Suppress("unused")
 class FlorisApplication : Application() {
@@ -116,7 +116,7 @@ class FlorisApplication : Application() {
     fun initICU(context: Context): Boolean {
         try {
             val androidAssetManager = context.assets ?: return false
-            val icuTmpDataFile = File(context.cacheDir, "icudt.dat")
+            val icuTmpDataFile = context.cacheDir.subFile("icudt.dat")
             icuTmpDataFile.outputStream().use { os ->
                 androidAssetManager.open(ICU_DATA_ASSET_PATH).use { it.copyTo(os) }
             }
