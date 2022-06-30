@@ -23,7 +23,6 @@ import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.nlp.PlaceholderSpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -60,7 +59,6 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
     private inner class FlorisSpellCheckerSession : Session() {
         private var cachedSpellingSubtype: Subtype? = null
-        private var spellingProvider = PlaceholderSpellingProvider
 
         override fun onCreate() {
             flogInfo(LogTopic.SPELL_EVENTS) { "Session requested locale: $locale" }
@@ -80,6 +78,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             if (evaluatedSubtype != cachedSpellingSubtype) {
                 cachedSpellingSubtype = evaluatedSubtype
+                nlpManager.preload(evaluatedSubtype)
             }
             flogInfo(LogTopic.SPELL_EVENTS) {
                 "Session actual locale: ${cachedSpellingSubtype?.primaryLocale?.languageTag()}"
@@ -93,7 +92,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         ): Array<SpellingResult> = runBlocking {
             val retInfos = Array(textInfos.size) { n ->
                 val word = textInfos[n].text ?: ""
-                async { spellingProvider.spell(spellingSubtype, word, emptyList(), emptyList(), suggestionsLimit) }
+                async { nlpManager.spell(spellingSubtype, word, emptyList(), emptyList(), suggestionsLimit) }
             }
             Array(textInfos.size) { n ->
                 retInfos[n].await().apply {
@@ -110,7 +109,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             val spellingSubtype = cachedSpellingSubtype ?: return SpellingResult.unspecified().suggestionsInfo
 
             return runBlocking {
-                spellingProvider
+                nlpManager
                     .spell(spellingSubtype, textInfo.text, emptyList(), emptyList(), suggestionsLimit)
                     .sendToDebugOverlayIfEnabled(textInfo)
                     .suggestionsInfo

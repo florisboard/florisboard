@@ -58,6 +58,7 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
+import dev.patrickgold.florisboard.ime.core.SubtypeNlpProviderMap
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
@@ -79,6 +80,10 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
 private val SelectComponentName = ExtensionComponentName("00", "00")
+private val SelectNlpProviderId = SelectComponentName.toString()
+private val SelectNlpProviders = SubtypeNlpProviderMap(
+    spelling = SelectNlpProviderId,
+)
 private val SelectLayoutMap = SubtypeLayoutMap(
     characters = SelectComponentName,
     symbols = SelectComponentName,
@@ -100,6 +105,7 @@ private class SubtypeEditorState(init: Subtype?) {
                     id = editor.id.value,
                     primaryLocale = editor.primaryLocale.value,
                     secondaryLocales = editor.secondaryLocales.value,
+                    nlpProviders = editor.nlpProviders.value,
                     composer = editor.composer.value,
                     currencySet = editor.currencySet.value,
                     punctuationRule = editor.punctuationRule.value,
@@ -118,9 +124,10 @@ private class SubtypeEditorState(init: Subtype?) {
     val id: MutableState<Long> = mutableStateOf(init?.id ?: -1)
     val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
+    val nlpProviders: MutableState<SubtypeNlpProviderMap> = mutableStateOf(init?.nlpProviders ?: Subtype.DEFAULT.nlpProviders)
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
-    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: SelectComponentName)
+    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: Subtype.DEFAULT.punctuationRule)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
@@ -137,8 +144,11 @@ private class SubtypeEditorState(init: Subtype?) {
 
     fun toSubtype() = runCatching<Subtype> {
         check(primaryLocale.value != SelectLocale)
+        check(nlpProviders.value.spelling != SelectNlpProviderId)
+        check(nlpProviders.value.suggestion != SelectNlpProviderId)
         check(composer.value != SelectComponentName)
         check(currencySet.value != SelectComponentName)
+        check(punctuationRule.value != SelectComponentName)
         check(popupMapping.value != SelectComponentName)
         check(layoutMap.value.characters != SelectComponentName)
         check(layoutMap.value.symbols != SelectComponentName)
@@ -149,7 +159,7 @@ private class SubtypeEditorState(init: Subtype?) {
         check(layoutMap.value.phone != SelectComponentName)
         check(layoutMap.value.phone2 != SelectComponentName)
         Subtype(
-            id.value, primaryLocale.value, secondaryLocales.value, composer.value,
+            id.value, primaryLocale.value, secondaryLocales.value, nlpProviders.value, composer.value,
             currencySet.value, punctuationRule.value, popupMapping.value, layoutMap.value,
         )
     }

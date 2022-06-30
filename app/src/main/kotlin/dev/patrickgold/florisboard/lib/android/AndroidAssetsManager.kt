@@ -30,7 +30,7 @@ import java.nio.charset.Charset
  * shipped in the APK assets. The typealias is used to allow both the FlorisBoard and Android asset managers to coexist
  * without name clashes.
  */
-typealias AndroidAssetsManager = android.content.res.AssetManager
+typealias AndroidAssetManager = android.content.res.AssetManager
 
 /**
  * Creates a reader using specified [charset] or UTF-8 on the APK file with [path] and returns it.
@@ -42,8 +42,7 @@ typealias AndroidAssetsManager = android.content.res.AssetManager
  *
  * @throws IOException If the file does not exist or another IO error occurred.
  */
-@Throws(IOException::class)
-fun AndroidAssetsManager.reader(path: String, charset: Charset = Charsets.UTF_8): Reader {
+fun AndroidAssetManager.reader(path: String, charset: Charset = Charsets.UTF_8): Reader {
     return this.open(path).reader(charset)
 }
 
@@ -57,8 +56,7 @@ fun AndroidAssetsManager.reader(path: String, charset: Charset = Charsets.UTF_8)
  *
  * @throws IOException If the file does not exist or another IO error occurred.
  */
-@Throws(IOException::class)
-fun AndroidAssetsManager.bufferedReader(path: String, charset: Charset = Charsets.UTF_8): BufferedReader {
+fun AndroidAssetManager.bufferedReader(path: String, charset: Charset = Charsets.UTF_8): BufferedReader {
     return this.open(path).bufferedReader(charset)
 }
 
@@ -73,8 +71,7 @@ fun AndroidAssetsManager.bufferedReader(path: String, charset: Charset = Charset
  *
  * @throws IOException If the file does not exist or another IO error occurred.
  */
-@Throws(IOException::class)
-fun AndroidAssetsManager.readText(path: String, charset: Charset = Charsets.UTF_8): String {
+fun AndroidAssetManager.readText(path: String, charset: Charset = Charsets.UTF_8): String {
     return this.reader(path, charset).use { it.readText() }
 }
 
@@ -86,8 +83,7 @@ fun AndroidAssetsManager.readText(path: String, charset: Charset = Charsets.UTF_
  *
  * @throws IOException If the file does not exist or another IO error occurred.
  */
-@Throws(IOException::class)
-fun AndroidAssetsManager.copy(path: String, dst: FsFile) {
+fun AndroidAssetManager.copy(path: String, dst: FsFile) {
     this.open(path).use { inStream ->
         dst.outputStream().use { outStream ->
             inStream.copyTo(outStream)
@@ -105,13 +101,11 @@ fun AndroidAssetsManager.copy(path: String, dst: FsFile) {
  * @throws IOException If the directory/file does not exist or another IO error occurred. Even in the event of an
  *  exception a partial copy may have been done.
  */
-@Throws(IOException::class)
-fun AndroidAssetsManager.copyRecursively(path: String, dst: FsDir) {
+fun AndroidAssetManager.copyRecursively(path: String, dst: FsDir) {
     this.copyApkAssets(path, "", dst)
 }
 
-@Throws(IOException::class)
-private fun AndroidAssetsManager.copyApkAssets(base: String, path: String, dst: FsDir) {
+private fun AndroidAssetManager.copyApkAssets(base: String, path: String, dst: FsDir) {
     val apkAssetsPath = if (base.isBlank()) path else if (path.isBlank()) base else "$base/$path"
     val list = this.list(apkAssetsPath) ?: return
     if (list.isEmpty()) {

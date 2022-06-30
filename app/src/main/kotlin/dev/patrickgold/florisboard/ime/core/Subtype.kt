@@ -23,11 +23,11 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
+import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Data class which represents an user-specified set of language and layout. String representations
@@ -36,6 +36,7 @@ import kotlinx.serialization.Transient
  * @property id The ID of this subtype.
  * @property primaryLocale The primary locale of this subtype.
  * @property secondaryLocales The secondary locales of this subtype. May be an empty list.
+ * @property nlpProviders The NLP provider map to instantiate the correct provider for each category.
  * @property composer The composer name to composer characters the way they should.
  * @property currencySet The currency set name to display the correct currency symbols for this subtype.
  * @property punctuationRule The punctuation rule to correctly insert auto-spaces.
@@ -47,6 +48,7 @@ data class Subtype(
     val id: Long,
     val primaryLocale: FlorisLocale,
     val secondaryLocales: List<FlorisLocale>,
+    val nlpProviders: SubtypeNlpProviderMap = SubtypeNlpProviderMap(),
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
     val punctuationRule: ExtensionComponentName = extCorePunctuationRule("default"),
@@ -61,6 +63,7 @@ data class Subtype(
             id = -1,
             primaryLocale = FlorisLocale.from("en", "US"),
             secondaryLocales = emptyList(),
+            nlpProviders = SubtypeNlpProviderMap(),
             composer = extCoreComposer("appender"),
             currencySet = extCoreCurrencySet("dollar"),
             punctuationRule = extCorePunctuationRule("default"),
@@ -81,8 +84,10 @@ data class Subtype(
     fun equalsExcludingId(other: Subtype): Boolean {
         if (other.primaryLocale != primaryLocale) return false
         if (other.secondaryLocales != secondaryLocales) return false
+        if (other.nlpProviders != nlpProviders) return false
         if (other.composer != composer) return false
         if (other.currencySet != currencySet) return false
+        if (other.punctuationRule != punctuationRule) return false
         if (other.popupMapping != popupMapping) return false
         if (other.layoutMap != layoutMap) return false
 
@@ -109,8 +114,6 @@ data class SubtypeLayoutMap(
     @SerialName(LayoutTypeId.PHONE2)
     val phone2: ExtensionComponentName = PHONE2_DEFAULT,
 ) {
-    @Transient private var _hashCode: Int = 0
-
     companion object {
         private const val EQUALS =                      "="
         private const val DELIMITER =                   ","
@@ -123,18 +126,6 @@ data class SubtypeLayoutMap(
         private val NUMERIC_ROW_DEFAULT =         extCoreLayout("western_arabic")
         private val PHONE_DEFAULT =               extCoreLayout("telpad")
         private val PHONE2_DEFAULT =              extCoreLayout("telpad")
-    }
-
-    init {
-        var result = characters.hashCode()
-        result = 31 * result + symbols.hashCode()
-        result = 31 * result + symbols2.hashCode()
-        result = 31 * result + numeric.hashCode()
-        result = 31 * result + numericAdvanced.hashCode()
-        result = 31 * result + numericRow.hashCode()
-        result = 31 * result + phone.hashCode()
-        result = 31 * result + phone2.hashCode()
-        _hashCode = result
     }
 
     operator fun get(layoutType: LayoutType): ExtensionComponentName? {
@@ -212,27 +203,16 @@ data class SubtypeLayoutMap(
         append(EQUALS)
         append(phone2)
     }
+}
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as SubtypeLayoutMap
-
-        if (characters != other.characters) return false
-        if (symbols != other.symbols) return false
-        if (symbols2 != other.symbols2) return false
-        if (numeric != other.numeric) return false
-        if (numericAdvanced != other.numericAdvanced) return false
-        if (numericRow != other.numericRow) return false
-        if (phone != other.phone) return false
-        if (phone2 != other.phone2) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return _hashCode
+@Serializable
+data class SubtypeNlpProviderMap(
+    val spelling: String = LatinLanguageProvider.ProviderId,
+    val suggestion: String = LatinLanguageProvider.ProviderId,
+) {
+    inline fun forEach(action: (String, String) -> Unit) {
+        action("spelling", spelling)
+        action("suggestion", suggestion)
     }
 }
 
@@ -248,6 +228,7 @@ data class SubtypePreset(
     @Serializable(with = FlorisLocale.Serializer::class)
     @SerialName("languageTag")
     val locale: FlorisLocale,
+    val nlpProviders: SubtypeNlpProviderMap = SubtypeNlpProviderMap(),
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
     val punctuationRule: ExtensionComponentName = extCorePunctuationRule("default"),
@@ -258,7 +239,8 @@ data class SubtypePreset(
         return Subtype(
             id = -1,
             primaryLocale = locale,
-            secondaryLocales = listOf(),
+            secondaryLocales = emptyList(),
+            nlpProviders = nlpProviders,
             composer = composer,
             currencySet = currencySet,
             punctuationRule = punctuationRule,

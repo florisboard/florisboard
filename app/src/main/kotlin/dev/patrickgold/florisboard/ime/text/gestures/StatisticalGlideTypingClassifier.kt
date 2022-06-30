@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
+import android.content.Context
 import androidx.collection.LruCache
 import androidx.collection.SparseArrayCompat
 import androidx.collection.set
@@ -7,6 +8,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.nlpManager
 import java.text.Normalizer
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -27,11 +29,12 @@ private fun TextKey.baseCode(): Int {
  *
  * Check out Étienne Desticourt's excellent write up at https://github.com/AnySoftKeyboard/AnySoftKeyboard/pull/1870
  */
-class StatisticalGlideTypingClassifier : GlideTypingClassifier {
+class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier {
+    private val nlpManager by context.nlpManager()
+
     private val gesture = Gesture()
     private var keysByCharacter: SparseArrayCompat<TextKey> = SparseArrayCompat()
-    private var words: Set<String> = setOf()
-    private var wordFrequencies: Map<String, Int> = hashMapOf()
+    private var words: List<String> = emptyList()
     private var keys: ArrayList<TextKey> = arrayListOf()
     private lateinit var pruner: Pruner
     private var wordDataSubtype: Subtype? = null
@@ -39,6 +42,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     private var currentSubtype: Subtype? = null
     val ready: Boolean
         get() = currentSubtype == layoutSubtype && wordDataSubtype == layoutSubtype && wordDataSubtype != null
+    private val prunerCache = LruCache<Subtype, Pruner>(PRUNER_CACHE_SIZE)
 
     /**
      * The minimum distance between points to be added to a gesture.
@@ -97,6 +101,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     }
 
     override fun setLayout(keyViews: List<TextKey>, subtype: Subtype) {
+        setWordData(subtype)
         // stop duplicate calls
         if (layoutSubtype == subtype && keys == keyViews) {
             return
@@ -123,22 +128,19 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
     }
 
-    override fun setWordData(words: HashMap<String, Int>, subtype: Subtype) {
+    override fun setWordData(subtype: Subtype) {
         // stop duplicate calls..
         if (wordDataSubtype == subtype) {
             return
         }
 
-        this.words = words.keys.toSet()
-        this.wordFrequencies = words
+        this.words = nlpManager.getListOfWords(subtype)
 
         this.wordDataSubtype = subtype
         if (wordDataSubtype == layoutSubtype) {
             initializePruner(false)
         }
     }
-
-    private val prunerCache = LruCache<Subtype, Pruner>(PRUNER_CACHE_SIZE)
 
     /**
      * Exists because Pruner requires both word data and layout are initialized,
@@ -201,7 +203,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                 val locationDistance = calcLocationDistance(wordGesture, userGesture)
                 val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
                 val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
-                val frequency = wordFrequencies[word]!!
+                val frequency = 255f * nlpManager.getFrequencyForWord(currentSubtype!!, word).toFloat()
                 val confidence = 1.0f / (shapeProbability * locationProbability * frequency)
 
                 var candidateDistanceSortedIndex = 0
@@ -276,7 +278,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * be pruned.
          */
         private val lengthThreshold: Double,
-        words: Set<String>,
+        words: List<String>,
         keysByCharacter: SparseArrayCompat<TextKey>,
     ) {
 

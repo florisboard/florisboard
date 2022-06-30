@@ -30,7 +30,6 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -90,7 +89,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
     private val extensionManager by context.extensionManager()
-    private val glideTypingManager by context.glideTypingManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
@@ -140,20 +138,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         prefs.keyboard.utilityKeyEnabled.observeForever {
             updateRenderInfo()
         }
-        prefs.glide.enabled.observeForever { enabled ->
-            if (enabled) {
-                glideTypingManager.setWordData(subtypeManager.activeSubtype)
-            }
-        }
         activeState.observeForever {
             updateRenderInfo()
         }
-        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { newSubtype ->
+        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
             reevaluateInputShiftState()
             updateRenderInfo()
-            if (prefs.glide.enabled.get()) {
-                glideTypingManager.setWordData(newSubtype)
-            }
         }
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             updateRenderInfo()
@@ -163,7 +153,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 nlpManager.clearSuggestions()
                 return@collectIn
             }
-            nlpManager.suggest(content.composingText, listOf())
+            nlpManager.suggest(subtypeManager.activeSubtype, content)
         }
     }
 

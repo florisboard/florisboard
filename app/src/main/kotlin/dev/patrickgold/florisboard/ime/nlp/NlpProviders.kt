@@ -21,10 +21,22 @@ import dev.patrickgold.florisboard.ime.editor.EditorContent
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
- * limited events, such as [create], [preload], [destroy] and group specific requests. Providers should NEVER do heavy
- * work in the initialization phase of the object, any first-time setup work should be exclusively done in [create].
+ * limited events, such as [create], [preload], [destroy] and group specific requests.
+ *
+ * Providers should NEVER do heavy work in the initialization phase of the object, any first-time setup work should be
+ * exclusively done in [create].
+ *
+ * At any point in time there will only be one provider instance per [providerId], even if the instance inherits from
+ * multiple categories at once.
  */
 sealed interface NlpProvider {
+    /**
+     * The unique identifier of this NLP provider for referencing and selection purposes. It should adhere to the
+     * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html), with the
+     * exception that Java keywords are allowed.
+     */
+    val providerId: String
+
     /**
      * Is called exactly once before any [preload] or task specific requests, which allows to make one-time setups, set
      * up necessary native bindings, threads, etc.
@@ -43,37 +55,6 @@ sealed interface NlpProvider {
      * considered dead and will be queued to be cleaned up by the GC in the next round.
      */
     suspend fun destroy()
-}
-
-/**
- * Interface for an NLP provider specializing in next/current-word suggestion and autocorrect services.
- */
-interface SuggestionProvider : NlpProvider {
-    /**
-     * Callback from the editor logic that the editor content has changed and that new suggestions should be generated
-     * for the new user input. There is no guarantee that candidates returned are actually used, as there may be sudden
-     * context changes or clipboard/emoji suggestions overriding the results (if the user has those enabled).
-     *
-     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
-     *  language for correct dictionary selection.
-     * @param content The current content view around the input cursor.
-     * @param maxCandidateCount The maximum number of candidates this method should return to seamlessly fit into the
-     *  UI. Returning more candidates will result in the overflowing candidates to be dismissed.
-     * @param isPrivateSession Flag indicating if this suggestion call is done within a private session. If true, it
-     *  means that this method should only provide suggestions based on already learned data, but MUST NOT use user
-     *  input to train the language model. Private sessions are mostly triggered in browser incognito windows and some
-     *  messenger apps, however the user may also have this enabled manually.
-     *
-     * @return A list of candidate suggestions for the current editor content state, complying with the max count
-     *  restrictions as best as possible. If the provider cannot at all provide any candidates, an empty list should be
-     *  returned, in which case the UI automatically adapts and shows alternative actions.
-     */
-    suspend fun suggest(
-        subtype: Subtype,
-        content: EditorContent,
-        maxCandidateCount: Int,
-        isPrivateSession: Boolean,
-    ): List<SuggestionCandidate>
 }
 
 /**
@@ -103,9 +84,92 @@ interface SpellingProvider : NlpProvider {
      */
     suspend fun spell(
         subtype: Subtype,
-        word: CharSequence,
-        precedingWords: List<CharSequence>,
-        followingWords: List<CharSequence>,
+        word: String,
+        precedingWords: List<String>,
+        followingWords: List<String>,
         maxSuggestionCount: Int,
     ): SpellingResult
+}
+
+/**
+ * Interface for an NLP provider specializing in next/current-word suggestion and autocorrect services.
+ */
+interface SuggestionProvider : NlpProvider {
+    /**
+     * Callback from the editor logic that the editor content has changed and that new suggestions should be generated
+     * for the new user input. There is no guarantee that candidates returned are actually used, as there may be sudden
+     * context changes or clipboard/emoji suggestions overriding the results (if the user has those enabled).
+     *
+     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     * @param content The current content view around the input cursor.
+     * @param maxCandidateCount The maximum number of candidates this method should return to seamlessly fit into the
+     *  UI. Returning more candidates will result in the overflowing candidates to be dismissed.
+     * @param isPrivateSession Flag indicating if this suggestion call is done within a private session. If true, it
+     *  means that this method should only provide suggestions based on already learned data, but MUST NOT use user
+     *  input to train the language model. Private sessions are mostly triggered in browser incognito windows and some
+     *  messenger apps, however the user may also have this enabled manually.
+     *
+     * @return A list of candidate suggestions for the current editor content state, complying with the max count
+     *  restrictions as best as possible. If the provider cannot at all provide any candidates, an empty list should be
+     *  returned, in which case the UI automatically adapts and shows alternative actions.
+     */
+    suspend fun suggest(
+        subtype: Subtype,
+        content: EditorContent,
+        maxCandidateCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean,
+    ): List<SuggestionCandidate>
+
+    suspend fun getListOfWords(subtype: Subtype): List<String>
+
+    suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double
+}
+
+/**
+ * Fallback NLP provider which implements all provider variants. Is used in case no other providers can be found.
+ */
+object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
+    override val providerId = "org.florisboard.nlp.providers.fallback"
+
+    override suspend fun create() {
+        // Do nothing
+    }
+
+    override suspend fun preload(subtype: Subtype) {
+        // Do nothing
+    }
+
+    override suspend fun spell(
+        subtype: Subtype,
+        word: String,
+        precedingWords: List<String>,
+        followingWords: List<String>,
+        maxSuggestionCount: Int
+    ): SpellingResult {
+        return SpellingResult.unspecified()
+    }
+
+    override suspend fun suggest(
+        subtype: Subtype,
+        content: EditorContent,
+        maxCandidateCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean
+    ): List<SuggestionCandidate> {
+        return emptyList()
+    }
+
+    override suspend fun getListOfWords(subtype: Subtype): List<String> {
+        return emptyList()
+    }
+
+    override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
+        return 0.0
+    }
+
+    override suspend fun destroy() {
+        // Do nothing
+    }
 }

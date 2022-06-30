@@ -1,0 +1,111 @@
+/*
+ * Copyright (C) 2022 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.patrickgold.florisboard.ime.nlp.latin
+
+import android.content.Context
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
+import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.lib.android.readText
+import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
+
+class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
+    companion object {
+        const val ProviderId = "org.florisboard.nlp.providers.latin"
+    }
+
+    private val appContext by context.appContext()
+
+    private val wordData = guardedByLock { mutableMapOf<String, Int>() }
+    private val wordDataSerializer = MapSerializer(String.serializer(), Int.serializer())
+
+    override val providerId = ProviderId
+
+    override suspend fun create() {
+        // Here we initialize out provider, set up a potential neural network, etc.
+    }
+
+    override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
+        // Here we have the chance to preload dictionaries and prepare a neural network for a specific language.
+        // Is kept in sync with the active keyboard subtype of the user, however a new preload does not necessary mean
+        // the previous language is not needed anymore (e.g. if the user constantly switches between two subtypes)
+        wordData.withLock { wordData ->
+            if (wordData.isEmpty()) {
+                val rawData = appContext.assets.readText("ime/dict/data.json")
+                val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
+                wordData.putAll(jsonData)
+            }
+        }
+    }
+
+    override suspend fun spell(
+        subtype: Subtype,
+        word: String,
+        precedingWords: List<String>,
+        followingWords: List<String>,
+        maxSuggestionCount: Int
+    ): SpellingResult {
+        return when (word.lowercase()) {
+            "typo" -> SpellingResult.typo(arrayOf("typo1", "typo2", "typo3"))
+            "gerror" -> SpellingResult.grammarError(arrayOf("grammar1", "grammar2", "grammar3"))
+            else -> SpellingResult.validWord()
+        }
+    }
+
+    override suspend fun suggest(
+        subtype: Subtype,
+        content: EditorContent,
+        maxCandidateCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean
+    ): List<SuggestionCandidate> {
+        val word = content.composingText.ifBlank { "next" }
+        val suggestions = buildList {
+            for (n in 0..maxCandidateCount) {
+                add(WordSuggestionCandidate(
+                    text = "$word$n",
+                    secondaryText = if (n % 2 == 1) "secondary" else null,
+                    confidence = 0.5,
+                ))
+            }
+        }
+        return suggestions
+    }
+
+    override suspend fun getListOfWords(subtype: Subtype): List<String> {
+        return wordData.withLock { it.keys.toList() }
+    }
+
+    override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
+        return wordData.withLock { it.getOrDefault(word, 0) / 255.0 }
+    }
+
+    override suspend fun destroy() {
+        // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
+        // the app process is killed.
+    }
+}
