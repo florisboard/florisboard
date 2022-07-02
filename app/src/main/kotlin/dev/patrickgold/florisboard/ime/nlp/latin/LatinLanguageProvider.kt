@@ -67,7 +67,9 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         word: String,
         precedingWords: List<String>,
         followingWords: List<String>,
-        maxSuggestionCount: Int
+        maxSuggestionCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean,
     ): SpellingResult {
         return when (word.lowercase()) {
             "typo" -> SpellingResult.typo(arrayOf("typo1", "typo2", "typo3"))
@@ -81,7 +83,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         content: EditorContent,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
-        isPrivateSession: Boolean
+        isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
         val word = content.composingText.ifBlank { "next" }
         val suggestions = buildList {

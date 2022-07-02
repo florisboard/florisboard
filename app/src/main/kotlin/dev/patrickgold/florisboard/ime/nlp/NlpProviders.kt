@@ -78,6 +78,14 @@ interface SpellingProvider : NlpProvider {
      *  also be empty, if no surrounding context can be provided.
      * @param maxSuggestionCount The maximum number of suggestions this method should return to seamlessly fit into the
      *  UI. Returning more suggestions will result in the overflowing suggestions to be dismissed.
+     * @param allowPossiblyOffensive Flag indicating if possibly offensive words are allowed to be suggested. If false,
+     *  the suggestion algorithm must treat possibly offensive input as unknown words and ensure before returning that
+     *  no potential offensive words for given language are included. This flag is based on explicit choice of the user
+     *  in the Settings and should be respected as best as possible.
+     * @param isPrivateSession Flag indicating if this suggestion call is done within a private session. If true, it
+     *  means that this method should only provide suggestions based on already learned data, but MUST NOT use user
+     *  input to train the language model. Private sessions are mostly triggered in browser incognito windows and some
+     *  messenger apps, however the user may also have this enabled manually.
      *
      * @return A spelling result object, which indicates both the validity of this word and if needed suggested
      *  corrections for the misspelled word.
@@ -88,6 +96,8 @@ interface SpellingProvider : NlpProvider {
         precedingWords: List<String>,
         followingWords: List<String>,
         maxSuggestionCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean,
     ): SpellingResult
 }
 
@@ -105,6 +115,10 @@ interface SuggestionProvider : NlpProvider {
      * @param content The current content view around the input cursor.
      * @param maxCandidateCount The maximum number of candidates this method should return to seamlessly fit into the
      *  UI. Returning more candidates will result in the overflowing candidates to be dismissed.
+     * @param allowPossiblyOffensive Flag indicating if possibly offensive words are allowed to be suggested. If false,
+     *  the suggestion algorithm must treat possibly offensive input as unknown words and ensure before returning that
+     *  no potential offensive words for given language are included. This flag is based on explicit choice of the user
+     *  in the Settings and should be respected as best as possible.
      * @param isPrivateSession Flag indicating if this suggestion call is done within a private session. If true, it
      *  means that this method should only provide suggestions based on already learned data, but MUST NOT use user
      *  input to train the language model. Private sessions are mostly triggered in browser incognito windows and some
@@ -146,7 +160,9 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         word: String,
         precedingWords: List<String>,
         followingWords: List<String>,
-        maxSuggestionCount: Int
+        maxSuggestionCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean,
     ): SpellingResult {
         return SpellingResult.unspecified()
     }
@@ -156,7 +172,7 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         content: EditorContent,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
-        isPrivateSession: Boolean
+        isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
         return emptyList()
     }

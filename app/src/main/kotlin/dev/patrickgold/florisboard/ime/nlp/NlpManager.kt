@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
 import android.os.Build
+import android.os.SystemClock
 import android.util.LruCache
 import android.util.Size
 import android.view.inputmethod.InlineSuggestion
@@ -45,9 +46,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.properties.Delegates
 
 class NlpManager(context: Context) {
     private val prefs by florisPreferenceModel()
@@ -59,15 +63,14 @@ class NlpManager(context: Context) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val providers = guardedByLock {
         mapOf(
-            LatinLanguageProvider.ProviderId to ProviderIntanceWrapper(LatinLanguageProvider(context)),
+            LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
         )
     }
 
-    private val _activeSuggestionsFlow = MutableStateFlow(listOf<SuggestionCandidate>())
-    val activeSuggestionsFlow = _activeSuggestionsFlow.asStateFlow()
-    inline var activeSuggestions
-        get() = activeSuggestionsFlow.value
-        private set(v) { _activeSuggestionsFlow.value = v }
+    private val internalSuggestionsGuard = Mutex()
+    private var internalSuggestions by Delegates.observable(SystemClock.uptimeMillis() to listOf<SuggestionCandidate>()) { _, _, _ ->
+        scope.launch { assembleCandidates() }
+    }
 
     private val _activeCandidatesFlow = MutableStateFlow(listOf<SuggestionCandidate>())
     val activeCandidatesFlow = _activeCandidatesFlow.asStateFlow()
@@ -85,9 +88,6 @@ class NlpManager(context: Context) {
 
     init {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
-            assembleCandidates()
-        }
-        activeSuggestionsFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
         prefs.suggestion.clipboardContentEnabled.observeForever {
@@ -140,6 +140,10 @@ class NlpManager(context: Context) {
         }
     }
 
+    /**
+     * Spell wrapper helper which calls the spelling provider and returns the result. Coroutine management must be done
+     * by the source spell checker service.
+     */
     suspend fun spell(
         subtype: Subtype,
         word: String,
@@ -147,25 +151,47 @@ class NlpManager(context: Context) {
         followingWords: List<String>,
         maxSuggestionCount: Int
     ): SpellingResult {
-        return getSpellingProvider(subtype).spell(subtype, word, precedingWords, followingWords, maxSuggestionCount)
-    }
-
-    suspend fun suggest(subtype: Subtype, content: EditorContent) {
-        activeSuggestions = getSuggestionProvider(subtype).suggest(
+        return getSpellingProvider(subtype).spell(
             subtype = subtype,
-            content = content,
-            maxCandidateCount = 8,
+            word = word,
+            precedingWords = precedingWords,
+            followingWords = followingWords,
+            maxSuggestionCount = maxSuggestionCount,
             allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
             isPrivateSession = false,
         )
     }
 
+    fun suggest(subtype: Subtype, content: EditorContent) {
+        val reqTime = SystemClock.uptimeMillis()
+        scope.launch {
+            val suggestions = getSuggestionProvider(subtype).suggest(
+                subtype = subtype,
+                content = content,
+                maxCandidateCount = 8,
+                allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                isPrivateSession = false,
+            )
+            internalSuggestionsGuard.withLock {
+                if (internalSuggestions.first < reqTime) {
+                    internalSuggestions = reqTime to suggestions
+                }
+            }
+        }
+    }
+
     fun suggestDirectly(suggestions: List<SuggestionCandidate>) {
-        activeSuggestions = suggestions
+        val reqTime = SystemClock.uptimeMillis()
+        runBlocking {
+            internalSuggestions = reqTime to suggestions
+        }
     }
 
     fun clearSuggestions() {
-        activeSuggestions = emptyList()
+        val reqTime = SystemClock.uptimeMillis()
+        runBlocking {
+            internalSuggestions = reqTime to emptyList()
+        }
     }
 
     fun getListOfWords(subtype: Subtype): List<String> {
@@ -200,13 +226,17 @@ class NlpManager(context: Context) {
                         }
                     }
                 }
-                activeSuggestions.let { suggestions ->
-                    suggestions.forEachIndexed { n, candidate ->
-                        add(WordSuggestionCandidate(
-                            text = candidate.text,
-                            secondaryText = if (n % 2 == 1) "secondary" else null,
-                            confidence = 0.5,
-                        ))
+                runBlocking {
+                    internalSuggestionsGuard.withLock {
+                        internalSuggestions.let { (_, suggestions) ->
+                            suggestions.forEachIndexed { n, candidate ->
+                                add(WordSuggestionCandidate(
+                                    text = candidate.text,
+                                    secondaryText = if (n % 2 == 1) "secondary" else null,
+                                    confidence = 0.5,
+                                ))
+                            }
+                        }
                     }
                 }
             }
@@ -276,7 +306,7 @@ class NlpManager(context: Context) {
         debugOverlayVersion.postValue(version)
     }
 
-    private class ProviderIntanceWrapper(val provider: NlpProvider) {
+    private class ProviderInstanceWrapper(val provider: NlpProvider) {
         private var isInstanceAlive = AtomicBoolean(false)
 
         suspend fun createIfNecessary() {
