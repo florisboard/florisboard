@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">چالاککردنی دۆخی تایبەت</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">ناچالاککردنی ئەو تایبەتمەندیانەی پەیوەستن بە پارێزگارییەوە</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">هەڵەی ڕێنووس</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">بەکارهێنانی ڕێکخستنی بەرنامەکە</string>
-    <string name="pref__spelling__active_spellchecker__label">پشکنینی هەڵەی ڕێنووسی ناو دەقەکان</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">ناچالاککردنی ڕاستکەرەوەی سیستەم، هێڵی سوور پیشان نادرێت لەکاتی نووسینی ووشە هەڵەکاندا، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">هیچ ڕاستکەرەوەیەکی هەڵەی ڕێنووس دیارینەکراوە، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">بژاردەی \"زمانەکان\" لە شاشەی پشکنەری سپێڵی سیستەم دا دانراوە بۆ \"بەکارهێنانی زمانەکانی سیستەم\". بەهۆی هەڵەیەک ئەمە لەوانەیە ببێتە هۆی {app_name} بۆ ئەنجامنەدانی پشکنینی حینجەی ناو هێڵ. ڕەچاوکردنی گۆڕینی بۆ \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">ڕێکخستنەکان</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زمان</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[بەردەست‌نیە] پێشنیارکردنی ناوەکان</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">پێشنیارکردنی لیستی ناوەکان لەکاتی نووسیندا</string>

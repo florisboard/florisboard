@@ -87,8 +87,6 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Stavekontrol</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfiguration</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprog</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Omkring</string>

@@ -284,13 +284,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Impor modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa as funcionalidades que utilizam os dados introduzidos</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Corretor ortográfico</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Utilizar configuração de verificação ortográfica do teclado</string>
-    <string name="pref__spelling__active_spellchecker__label">Verificação ortográfica de campos de texto</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado globalmente. Não serão mostradas riscas vermelhas se existirem palavras erradas. Toque para alterar.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Não definiu o serviço de verificação ortográfica. Toque para alterar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">A opção \"Idiomas\" no ecrã de verificação ortográfica do sistema está definida como \"Usar idiomas do sistema\". Devido a um erro, esta opção pode impedir que {app_name} não consiga efetuar a verificação orográfica. Considere alterar para {use_floris_config}.</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuração</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NÃO IMPLEMENTADO] Utilizar nome dos contactos</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">A verificação ortográfica irá analisar a sua lista de contactos</string>

@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключва обработката на въвежданите от вас данни</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка на правописа</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Използване на настройката за проверка на правописа от клавиатурата</string>
-    <string name="pref__spelling__active_spellchecker__label">Проверка на правописа при въвеждане</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Сгрешените думи няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа на текстови полета. Докоснете, за да промените.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Опция \"Езици\" в системните настройки за проверка на правописа е сложена на \"Използване на системните езици\". Поради дефект, {app_name} може да не проверява правописа. Препоръчително е да я смените на „{use_floris_config}“.</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Настройка</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват и имената от контактите</string>

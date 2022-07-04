@@ -290,20 +290,19 @@
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Show secondary action row</string>
 
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Display suggestions</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Provides suggestions while you type</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
+    <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
-    <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[NOT YET INCLUDED] Display suggestions while you type</string>
-    <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently only English (US). May fail to load if insufficient heap size is available.</string>
-    <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
-    <string translatable="false" name="pref__suggestion__use_pref_words__label" comment="Preference title">[NOT YET INCLUDED] Next-word suggestions</string>
-    <string translatable="false" name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Use previous words for generating suggestions</string>
-    <string translatable="false" name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">[NOT YET INCLUDED] Block possibly offensive words</string>
-    <string translatable="false" name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Clipboard suggestion timeout</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -311,6 +310,14 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
+    <string name="pref__spelling__title" comment="Preference group title">Spelling</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Disabled system-wide. No red lines will appear in text fields for incorrect words. Tap to change.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">No inline text spell checker service set. Tap to change.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Languages</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Use names from contacts</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Look up names from your contact list</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Use user dictionary entries</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Look up entries from the user dictionaries</string>
 
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">User dictionaries</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Enable system user dictionary</string>
@@ -381,20 +388,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Force private mode</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disables features which work with your input data</string>
-
-    <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Spell checker</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Use keyboard spell checker config</string>
-    <string name="pref__spelling__active_spellchecker__label">Inline text field spell checking</string>
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Disabled system-wide. No red lines will appear in text fields for incorrect words. Tap to change.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">No inline text spell checker service set. Tap to change.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Option \"Languages\" in the system spell checker screen is set to \"Use system languages\". Due to a bug this may cause {app_name} to not perform inline spell checking. Consider changing it to \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuration</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Languages</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Use names from contacts</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Spell checker will look up names from your contact list</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Use user dictionary entries</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Spell checker will look up entries from the user dictionaries, if these are enabled</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>

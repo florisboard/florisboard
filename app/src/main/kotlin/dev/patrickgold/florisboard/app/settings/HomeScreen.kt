@@ -39,8 +39,6 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.android.launchUrl
-import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
@@ -130,14 +128,9 @@ fun HomeScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.Smartbar) },
         )
         Preference(
-            iconId = R.drawable.ic_settings_suggest,
+            iconId = R.drawable.ic_spellcheck,
             title = stringRes(R.string.settings__typing__title),
             onClick = { navController.navigate(Routes.Settings.Typing) },
-        )
-        Preference(
-            iconId = R.drawable.ic_spellcheck,
-            title = stringRes(R.string.settings__spelling__title),
-            onClick = { navController.navigate(Routes.Settings.Spelling) },
         )
         Preference(
             iconId = R.drawable.ic_library_books,

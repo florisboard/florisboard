@@ -190,13 +190,8 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Alltid privat modus</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Stavekontroll</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Bruk tastatur-stavekontroll konfigurasjon</string>
-    <string name="pref__spelling__active_spellchecker__label">Kontroll av linjebundet tekstfelt</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Innstillingen \"Språk\" i system-ordliste-skjermen er satt til \"Bruk systemspråk\". På grunn av en bug kan dette føre til at {app_name} ikke får utført linjebundet stavekontroll. Vurder å endre den til \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfigurasjon</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[IKKE IMPLEMENTERT] Bruk navn fra kontaktlisten</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Stavekontroll vil bruke navn fra din kontaktliste for å kontrollere staving</string>

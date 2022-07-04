@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forza la modalità privata</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disabilita le funzioni che funzionano con i tuoi dati di input</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Controllo ortografico</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usa la configurazione del controllo ortografico della tastiera</string>
-    <string name="pref__spelling__active_spellchecker__label">Controllo vocale del campo di testo inline</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Disabilitato a livello di sistema. Nessuna sottolineatura rossa apparirà nei campi di testo per parole incorrette. Tocca qui per cambiare.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nessun servizio di controllo ortografico del testo in linea impostato. Tocca per cambiare.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">L\'opzione \"Lingue\" del controllo ortografico di sistema è impostato su \"Utilizza le lingue di sistema\". A causa di un bug questo potrebbe impedire a {app_name} di effettuare il controllo ortografico. Si consiglia di cambiarla a \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Impostazioni</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Lingue</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usa i nomi dalla rubrica</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Il controllo ortografico cercherà i nomi dalla tua rubrica</string>

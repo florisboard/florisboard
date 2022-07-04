@@ -228,13 +228,8 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forceer privémodus</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Spellingcontrole</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gebruik toetsenbord spellingscontrole configuratie</string>
-    <string name="pref__spelling__active_spellchecker__label">Inline tekstveld spellingscontrole</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systeem-breed uitgeschakeld. Er zullen geen rode lijnen verschijnen in tekstvelden voor incorrecte woorden. Klik om te wijzigen.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Geen inline spellingscontrole ingesteld. Klik om te wijzigen.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Optie \"Talen\" in het spellingscontrolescherm van het systeem is ingesteld op \"Gebruik systeemtalen\". Door een bug kan dit ertoe leiden dat {app_name} geen inline spellingcontrole uitvoert. Overweeg om dit te veranderen in \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuratie</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Talen</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>

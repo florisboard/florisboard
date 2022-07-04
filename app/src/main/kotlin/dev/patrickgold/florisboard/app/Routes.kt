@@ -49,7 +49,6 @@ import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
 import dev.patrickgold.florisboard.app.settings.smartbar.SmartbarScreen
-import dev.patrickgold.florisboard.app.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
@@ -87,8 +86,6 @@ object Routes {
         const val Smartbar = "settings/smartbar"
 
         const val Typing = "settings/typing"
-
-        const val Spelling = "settings/spelling"
 
         const val Dictionary = "settings/dictionary"
         const val UserDictionary = "settings/dictionary/user-dictionary/{type}"
@@ -177,8 +174,6 @@ object Routes {
             composable(Settings.Smartbar) { SmartbarScreen() }
 
             composable(Settings.Typing) { TypingScreen() }
-
-            composable(Settings.Spelling) { SpellingScreen() }
 
             composable(Settings.Dictionary) { DictionaryScreen() }
             composable(Settings.UserDictionary) { navBackStack ->

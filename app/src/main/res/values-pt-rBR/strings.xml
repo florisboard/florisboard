@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forçar o modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa recursos que funcionam com seus dados de entrada</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Corretor ortográfico</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuração do corretor ortográfico do teclado</string>
-    <string name="pref__spelling__active_spellchecker__label">Verificação ortográfica do campo de texto embutido</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado em todo o sistema. Nenhuma linha vermelha aparecerá nos campos de texto para palavras incorretas. Toque para mudar.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nenhum serviço de corretor ortográfico de texto embutido definido. Toque para mudar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">A opção \"Idiomas\" na tela do corretor ortográfico do sistema está configurada para \"Usar idiomas do sistema\". Devido a um bug que pode causar ao {app_name} não executar a verificação ortográfica embutida. Considere mudar para \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuração</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NÃO IMPLEMENTADO] Use nomes de contatos</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">O corretor ortográfico procurará nomes na sua lista de contatos</string>

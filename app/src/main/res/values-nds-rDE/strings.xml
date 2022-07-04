@@ -10,7 +10,6 @@
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Rechtschreibkorrektur</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->

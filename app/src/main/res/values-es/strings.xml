@@ -336,13 +336,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Deshabilita funciones que trabajan con sus datos de entrada</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Corrector ortográfico</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuración del corrector ortográfico del teclado</string>
-    <string name="pref__spelling__active_spellchecker__label">Corrección ortográfica de campos de texto inline</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Deshabilitado a nivel sistema. No se mostrarán líneas rojas en campos de texto con palabras incorrectas. Toque para cambiar.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">No se ha establecido ningún servicio de corrección ortográfica inline. Toque para cambiar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">La opción \"Idiomas\" en el corrector ortográfico del sistema está definida para \"Usar idiomas del sistema\". Debido a un error, esto podría causar que {app_name} no pueda efectuar la corrección ortográfica inline. Considere cambiarlo a \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuración</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[SIN IMPLEMENTAR] Usar nombres de contactos</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">El corrector ortográfico usará los nombres de su lista de contactos</string>

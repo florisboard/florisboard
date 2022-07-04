@@ -222,13 +222,8 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Πάντα ενεργοποιημένο σε Android 10+ λόγω περιορισμών του συστήματος</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Εξαναγκασμός ιδιωτικής λειτουργίας</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Ορθογραφικός έλεγχος</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Χρήση της ρύθμισης ορθογραφικού ελέγχου πληκτρολογίου</string>
-    <string name="pref__spelling__active_spellchecker__label">Ενσωματωμένος ορθογραφικός ελέγχος πεδίου κειμένου</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Απενεργοποιημένο σε επίπεδο συστήματος. Δε θα εμφανιστούν κόκκινες γραμμές σε πεδία κειμένου για λανθασμένες λέξεις. Πατήστε για αλλαγή.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Δεν έχει οριστεί υπηρεσία ενσωματωμένου ορθογραφικού ελέγχου κειμένου. Πατήστε για αλλαγή.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Η επιλογή \"Γλώσσες\" στην οθόνη ορθογραφικού ελέγχου συστήματος έχει οριστεί σε \"Χρήση γλωσσών συστήματος\". Λόγω ενός προβλήματος αυτό ίσως προκαλέσει το {app_name} να μην εκτελέσει ενσωματωμένο ορθογραφικό έλεγχο. Σκεφτείτε να το αλλάξετε σε \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Ρύθμιση παραμέτρων</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Γλώσσες</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ΜΗ ΕΦΑΡΜΟΣΜΈΝΟ] Χρήση ονομάτων από τις επαφές</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>

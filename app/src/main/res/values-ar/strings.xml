@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">تعطيل الميزات التي تعمل مع بيانات الإدخال الخاصة بك</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">المدقق الإملائي</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">استخدم اعدادات المدقق الإملائي المدمجة بلوحة المفاتيح</string>
-    <string name="pref__spelling__active_spellchecker__label">تدقيق إملائي في حقل النص المضمن</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">معطل على مستوى النظام. لن تظهر أي خطوط حمراء في الحقول النصية للكلمات غير الصحيحة. انقر للتغيير.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">لم يتم تعيين خدمة المدقق الإملائي للنص المضمّن. انقر للتغيير.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">تم تعيين خيار \"اللغات\" في شاشة المدقق الإملائي للنظام على \"استخدام لغات النظام\". نظرًا لوجود خطأ ، قد يتسبب هذا في عدم قيام {app_name} بإجراء تدقيق إملائي مضمّن. ضع في اعتبارك تغييره إلى \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">التكوين</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">اللغات</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم الأسماء من جهات الاتصال</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">سيقوم المدقق الإملائي بالبحث عن الأسماء من قائمة جهات الاتصال الخاصة بك</string>

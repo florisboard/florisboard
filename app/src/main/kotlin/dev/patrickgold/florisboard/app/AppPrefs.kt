@@ -590,10 +590,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "suggestion__display_mode",
             default = CandidatesDisplayMode.DYNAMIC_SCROLLABLE,
         )
-        val usePrevWords = boolean(
-            key = "suggestion__use_prev_words",
-            default = true,
-        )
         val blockPossiblyOffensive = boolean(
             key = "suggestion__block_possibly_offensive",
             default = true,
@@ -604,7 +600,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val clipboardContentTimeout = int(
             key = "suggestion__clipboard_content_timeout",
-            default = 30,
+            default = 60,
         )
     }
 

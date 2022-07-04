@@ -210,8 +210,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">چک کننده نگارش</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">پیکربندی</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زبان‌ها</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>

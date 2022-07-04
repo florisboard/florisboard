@@ -323,13 +323,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Wymuś tryb prywatny</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wyłącza funkcje, które działają z twoim danymi, które wpisujesz</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Sprawdzanie pisowni</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Użyj konfiguracji sprawdzania pisowni klawiatury</string>
-    <string name="pref__spelling__active_spellchecker__label">Sprawdzanie pisowni w polu tekstowym</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Wyłączone w całym systemie. W przypadku nieprawidłowych słów w polach tekstowych nie pojawią się czerwone linie. Dotknij, aby zmienić.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nie ustawiono usługi sprawdzania pisowni w tekście. Dotknij, aby zmienić.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Opcja „Języki” na ekranie sprawdzania pisowni systemu jest ustawiona na „Użyj języków systemu”. Z powodu błędu może to spowodować, że aplikacja {app_name} nie wykona wbudowanego sprawdzania pisowni. Rozważ zmianę na „{use_floris_config}”.</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfiguracja</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Języki</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[Niezaimplementowane] Użyj nazw z kontaktów</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Słownik będzie wyszukiwał nazwy z listy kontaktów</string>

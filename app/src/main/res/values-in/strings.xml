@@ -355,13 +355,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Menonaktifkan fitur-fitur yang bekerja dengan data input Anda</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Pemeriksa ejaan</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gunakan konfigurasi pemeriksa ejaan keyboard</string>
-    <string name="pref__spelling__active_spellchecker__label">Pemeriksa ejaan kolom teks inline</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Dinonaktifkan di sistem. Tidak ada lagi garis merah di kolom teks atau kata-kata yang tidak benar. Ketuk untuk mengubahnya.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Tidak ada pemeriksa ejaan teks inline yang diatur. Ketuk untuk mengubahnya.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Opsi \"Bahasa\" di pemeriksa ejaan sistem diatur ke \"Gunakan bahasa sistem\". Karena ada bug ini mungkin akan membuat {app_name} untuk tidak melakukan pemeriksa ejaan inline. Pertimbangkan untuk mengubahnya menjadi \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfigurasi</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Bahasa</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[BELUM DIIMPLEMENTASIKAN] Gunakan nama dari kontak</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pemeriksa ejaan akan mencari nama-nama dari daftar kontak Anda</string>

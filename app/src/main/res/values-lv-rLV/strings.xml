@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Atspējo iespēkas, kas darbojas ar ievades datiem</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Pareizrakstības pārbaudītājs</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Izmantot tastatūras pareizrakstības pārbaudītāja uzstādījumus</string>
-    <string name="pref__spelling__active_spellchecker__label">Iekļauta teksta lauka pareizrakstības pārbaude</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Atspējots sistēmā. Nepareizi vārdi netiks pasvītroti ar sarkanu līniju. Piesist, lai mainītu.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nav norādīta iekļauta teksta lauka pareizrakstības pārbaudīšanas pakalpe. Piesist, lai mainītu.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Iespēja \"Valodas\" sistēmas pareizrakstības pārbaudītāja skatā ir iestatīta uz \"Izmantot sistēmas valodas\". Nepilnības dēļ tas var iemesls, kādēļ {app_name} neveic iekļauto pareizrakstības pārbaudi. Ir ieteicams apsvērt mainīt to uz \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Uzstādījumi</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Valodas</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NAV IZSTRĀDĀTS] Izmantot kontaktpersonu vārdus</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pareizrakstības pārbaudītājs meklēs vārdus kontaktpersonu sarakstā</string>

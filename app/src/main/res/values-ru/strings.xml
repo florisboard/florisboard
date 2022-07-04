@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Всегда в режиме Инкогнито</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключает функции, завязанные на введенных словах</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка орфографии</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Использовать настройки проверки правописания</string>
-    <string name="pref__spelling__active_spellchecker__label">Проверка орфографии в текстовых полях</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Отключено для всей системы. В случае написания слов неправильно в текстовых полях не появятся красные подчёркивания. Нажмите, чтобы изменить.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Не настроена служба проверки орфографии текстовых полей. Нажмите, чтобы изменить.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Параметр \"Языки\" на экране настройки проверки орфографии установлен на \"Использовать системные языки\". Из-за ошибки это может привести к тому, что {app_name} не будет выполнять проверку орфографии в текстовых полях. Попробуйте изменить значение параметра на \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Параметры</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Язык</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[не реализовано] Использовать имена контактов</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>

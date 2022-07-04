@@ -354,13 +354,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">强制隐私模式</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">禁用能够使用您的输入数据的功能</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">拼写检查工具</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">使用键盘的拼写检查工具配置</string>
-    <string name="pref__spelling__active_spellchecker__label">内嵌式文本框拼写检查</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。对于不正确的单词，文本框中不会出现红线。点击进行更改。</string>
     <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。点击进行更改。</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">系统拼写检查界面中的“语言”选项设置为“使用系统语言”。由于存在漏洞，这可能会导致 {app_name} 不执行内嵌式拼写检查。请考虑将其更改为“{use_floris_config}”。</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">配置</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">语言</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[未完成] 使用联系人姓名</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">拼写检查工具将从您的联系人列表中查找姓名</string>

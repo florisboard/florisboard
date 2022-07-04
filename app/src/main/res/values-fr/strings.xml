@@ -346,13 +346,8 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactiver les fonctionalitées qui utilise vos données d\'entrée</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Correcteur d\'orthographe</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Utiliser la configuration du correcteur orthographique du clavier</string>
-    <string name="pref__spelling__active_spellchecker__label">Vérification orthographique des champs de texte en ligne</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Désactivé à l\'échelle du système. Aucune ligne rouge n\'apparaîtra dans les champs de texte pour les mots incorrects. Appuyez pour changer.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Aucun service de vérificateur d\'orthographe de texte en ligne activé. Appuyez pour changer.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">L\'option \"Langues\" dans l\'écran correcteur orthographique du système est définie sur \"Utiliser les langues du système\". En raison d\'un bug, {app_name} peut ne pas effectuer de vérification orthographique en ligne. Pensez à le changer en \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuration</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Langues</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NON IMPLÉMENTÉ] Utiliser les noms des contacts</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Le vérificateur orthographique utilisera les noms de votre liste de contacts</string>

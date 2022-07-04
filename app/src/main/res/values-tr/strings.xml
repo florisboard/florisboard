@@ -235,13 +235,8 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Yazım denetleyicisi</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Klavye yazım denetleyicisi ayarlarını kullan</string>
-    <string name="pref__spelling__active_spellchecker__label">Satır içi metin alanı yazım denetimi</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı bırakıldı. Yanlış kelimeler için metin alanlarında kırmızı çizgiler görünmeyecektir. Değiştirmek için dokunun.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmadı. Değiştirmek için dokunun.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Sistem yazım denetimi ekranındaki \"Diller\" seçeneği \"Sistem dillerini kullan\" olarak ayarlanmıştır. Bir hata nedeniyle bu, {app_name} öğesinin satır içi yazım denetimi yapmamasına neden olabilir. \"{use_floris_config}\" olarak değiştirmeyi düşünün.</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Ayarlar</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Diller</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[HENÜZ UYGULANMAMIŞ] Rehberdeki isimleri kullan</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Yazım denetleyici rehberinizdeki isimlere bakacak</string>
