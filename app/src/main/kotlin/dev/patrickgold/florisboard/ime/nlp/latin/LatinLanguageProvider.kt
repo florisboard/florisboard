@@ -35,6 +35,8 @@ import kotlinx.serialization.json.Json
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
+        // Default user ID used for all subtypes, unless otherwise specified.
+        // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.latin"
     }
 
@@ -46,7 +48,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     override val providerId = ProviderId
 
     override suspend fun create() {
-        // Here we initialize out provider, set up a potential neural network, etc.
+        // Here we initialize our provider, set up a potential neural network, etc.
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
@@ -96,6 +98,18 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
         }
         return suggestions
+    }
+
+    override suspend fun notifySuggestionAccepted(subtype: Subtype, suggestion: SuggestionCandidate) {
+        // Ignore for now
+    }
+
+    override suspend fun notifySuggestionReverted(subtype: Subtype, suggestion: SuggestionCandidate) {
+        // Ignore for now
+    }
+
+    override suspend fun removeSuggestion(subtype: Subtype, suggestion: SuggestionCandidate): Boolean {
+        return false
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> {

@@ -46,6 +46,9 @@ sealed interface NlpProvider {
     /**
      * Is called at least once before a task specific request occurs, to allow for locale-specific preloading of
      * dictionaries and language models.
+     *
+     * @param subtype Information about the subtype to preload, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
      */
     suspend fun preload(subtype: Subtype)
 
@@ -136,8 +139,59 @@ interface SuggestionProvider : NlpProvider {
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate>
 
+    /**
+     * Is called when a suggestion has been accepted, either manually by the user or automatically through auto-commit.
+     * This is purely a notification about an event and can safely be ignored if not needed.
+     *
+     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     * @param suggestion The exact suggestion candidate which has been accepted.
+     */
+    suspend fun notifySuggestionAccepted(subtype: Subtype, suggestion: SuggestionCandidate)
+
+    /**
+     * Is called when a previously automatically accepted suggestion has been reverted by the user with backspace. This
+     * is purely a notification about an event and can safely be ignored if not needed.
+     *
+     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     * @param suggestion The exact suggestion candidate which has been reverted.
+     */
+    suspend fun notifySuggestionReverted(subtype: Subtype, suggestion: SuggestionCandidate)
+
+    /**
+     * Called if the user requests to prevent a certain suggested word from showing again. It is up to the actual
+     * implementation to adhere to this user request, this removal is not enforced nor monitored by the NLP manager.
+     *
+     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     * @param suggestion The exact suggestion candidate which the user does not want to see again.
+     *
+     * @return True if the removal request is supported and is accepted, false otherwise.
+     */
+    suspend fun removeSuggestion(subtype: Subtype, suggestion: SuggestionCandidate): Boolean
+
+    /**
+     * Interop method allowing the glide typing logic to perform its own magic.
+     *
+     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     *
+     * @return The list of word for the given language(s). If the language is not supported, an empty list should be
+     *  returned.
+     */
     suspend fun getListOfWords(subtype: Subtype): List<String>
 
+    /**
+     * Interop method allowing the glide typing logic to perform its own magic.
+     *
+     * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     * @param word The word which frequency is requested.
+     *
+     * @return The frequency of [word] as a double precision floating value between 0.0 and 1.0. If [word] does not
+     *  exist, 0.0 should be returned.
+     */
     suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double
 }
 
@@ -175,6 +229,18 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
         return emptyList()
+    }
+
+    override suspend fun notifySuggestionAccepted(subtype: Subtype, suggestion: SuggestionCandidate) {
+        // Do nothing
+    }
+
+    override suspend fun notifySuggestionReverted(subtype: Subtype, suggestion: SuggestionCandidate) {
+        // Do nothing
+    }
+
+    override suspend fun removeSuggestion(subtype: Subtype, suggestion: SuggestionCandidate): Boolean {
+        return false
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> {

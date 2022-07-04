@@ -54,7 +54,7 @@ interface SuggestionCandidate {
     val confidence: Double
 
     /**
-     * If true, it indicates that this candidate item will be automatically committed to the target editor once the
+     * If true, it indicates that this candidate item should be automatically committed to the target editor once the
      * user inserts a non-letter character.
      *
      * In the UI, auto-insert candidates use a visual distinction such as bold font or a different color, depending
@@ -63,7 +63,14 @@ interface SuggestionCandidate {
      * Only set this property to true if the algorithm has a high confidence that this suggestion is what the user
      * wanted to type.
      */
-    val isAutoCommit: Boolean
+    val isEligibleForAutoCommit: Boolean
+
+    /**
+     * If true, it indicates that this candidate item should be user removable (by long-pressing). This flag should
+     * only be set if it actually makes sense for this type of candidate to be removable and if the linked source
+     * provider supports this action.
+     */
+    val isEligibleForUserRemoval: Boolean
 
     /**
      * Optional icon ID for showing an icon on the start of the candidate item. Mainly used for special suggestions
@@ -92,14 +99,16 @@ class WordSuggestionCandidate(
     override val text: CharSequence,
     override val secondaryText: CharSequence? = null,
     override val confidence: Double = 0.0,
-    override val isAutoCommit: Boolean = false,
+    override val isEligibleForAutoCommit: Boolean = false,
+    override val isEligibleForUserRemoval: Boolean = true,
     override val sourceProvider: SuggestionProvider? = null,
 ) : SuggestionCandidate {
     override val iconId: Int? = null
 }
 
 /**
- * Default implementation for a clipboard candidate. Should generally not be used by a suggestion provider.
+ * Default implementation for a clipboard candidate. Should generally not be used by a suggestion provider, except by
+ * the clipboard suggestion provider.
  *
  * @see SuggestionCandidate
  */
@@ -110,7 +119,9 @@ class ClipboardSuggestionCandidate(val clipboardItem: ClipboardItem) : Suggestio
 
     override val confidence: Double = 1.0
 
-    override val isAutoCommit: Boolean = false
+    override val isEligibleForAutoCommit: Boolean = false
+
+    override val isEligibleForUserRemoval: Boolean = false
 
     override val iconId: Int = when (clipboardItem.type) {
         ItemType.TEXT -> when {
