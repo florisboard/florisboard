@@ -194,6 +194,10 @@ class NlpManager(context: Context) {
         }
     }
 
+    fun getAutoCommitCandidate(): SuggestionCandidate? {
+        return activeCandidates.firstOrNull { it.isEligibleForAutoCommit }
+    }
+
     fun getListOfWords(subtype: Subtype): List<String> {
         return runBlocking { getSuggestionProvider(subtype).getListOfWords(subtype) }
     }
@@ -228,15 +232,7 @@ class NlpManager(context: Context) {
                 }
                 runBlocking {
                     internalSuggestionsGuard.withLock {
-                        internalSuggestions.let { (_, suggestions) ->
-                            suggestions.forEachIndexed { n, candidate ->
-                                add(WordSuggestionCandidate(
-                                    text = candidate.text,
-                                    secondaryText = if (n % 2 == 1) "secondary" else null,
-                                    confidence = 0.5,
-                                ))
-                            }
-                        }
+                        addAll(internalSuggestions.second)
                     }
                 }
             }

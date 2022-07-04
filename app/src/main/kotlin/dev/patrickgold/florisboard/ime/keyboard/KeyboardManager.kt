@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -289,6 +290,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun commitCandidate(candidate: SuggestionCandidate) {
+        scope.launch {
+            candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
+        }
         when (candidate) {
             is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
             else -> editorInstance.commitCompletion(candidate.text.toString())
@@ -504,6 +508,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * enabled by the user.
      */
     private fun handleSpace(data: KeyData) {
+        nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -673,6 +678,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
                 if (activeState.imeUiMode == ImeUiMode.MEDIA) {
+                    nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
                     editorInstance.commitText(data.asString(isForDisplay = false))
                     return@batchEdit
                 }
@@ -697,6 +703,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
+                            if (!UCharacter.isUAlphabetic(UCharacter.codePointAt(text, 0))) {
+                                nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+                            }
                             editorInstance.commitChar(text)
                         }
                         else -> {

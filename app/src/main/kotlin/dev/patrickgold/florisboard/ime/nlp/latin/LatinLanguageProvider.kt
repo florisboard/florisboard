@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.android.readText
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -48,15 +49,29 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     override val providerId = ProviderId
 
     override suspend fun create() {
-        // Here we initialize our provider, set up a potential neural network, etc.
+        // Here we initialize our provider, set up all things which are not language dependent.
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
         // Here we have the chance to preload dictionaries and prepare a neural network for a specific language.
         // Is kept in sync with the active keyboard subtype of the user, however a new preload does not necessary mean
         // the previous language is not needed anymore (e.g. if the user constantly switches between two subtypes)
+
+        // To read a file from the APK assets the following methods can be used:
+        // appContext.assets.open()
+        // appContext.assets.reader()
+        // appContext.assets.bufferedReader()
+        // appContext.assets.readText()
+        // To copy an APK file/dir to the file system cache (appContext.cacheDir), the following methods are available:
+        // appContext.assets.copy()
+        // appContext.assets.copyRecursively()
+
+        // The subtype we get here contains a lot of data, however we are only interested in subtype.primaryLocale and
+        // subtype.secondaryLocales.
+
         wordData.withLock { wordData ->
             if (wordData.isEmpty()) {
+                // Here we use readText() because the test dictionary is a json dictionary
                 val rawData = appContext.assets.readText("ime/dict/data.json")
                 val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
                 wordData.putAll(jsonData)
@@ -74,8 +89,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         isPrivateSession: Boolean,
     ): SpellingResult {
         return when (word.lowercase()) {
+            // Use typo for typing errors
             "typo" -> SpellingResult.typo(arrayOf("typo1", "typo2", "typo3"))
+            // Use grammar error if the algorithm can detect this. On Android 11 and lower grammar errors are visually
+            // marked as typos due to a lack of support
             "gerror" -> SpellingResult.grammarError(arrayOf("grammar1", "grammar2", "grammar3"))
+            // Use valid word for valid input
             else -> SpellingResult.validWord()
         }
     }
@@ -89,26 +108,31 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     ): List<SuggestionCandidate> {
         val word = content.composingText.ifBlank { "next" }
         val suggestions = buildList {
-            for (n in 0..maxCandidateCount) {
+            for (n in 0 until maxCandidateCount) {
                 add(WordSuggestionCandidate(
                     text = "$word$n",
                     secondaryText = if (n % 2 == 1) "secondary" else null,
                     confidence = 0.5,
+                    isEligibleForAutoCommit = n == 0 && word.startsWith("auto"),
+                    // We set ourselves as the source provider so we can get notify events for our candidate
+                    sourceProvider = this@LatinLanguageProvider,
                 ))
             }
         }
         return suggestions
     }
 
-    override suspend fun notifySuggestionAccepted(subtype: Subtype, suggestion: SuggestionCandidate) {
-        // Ignore for now
+    override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
+        // We can use flogDebug, flogInfo, flogWarning and flogError for debug logging, which is a wrapper for Logcat
+        flogDebug { "notify accepted suggestion $candidate" }
     }
 
-    override suspend fun notifySuggestionReverted(subtype: Subtype, suggestion: SuggestionCandidate) {
-        // Ignore for now
+    override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
+        flogDebug { "notify reverted suggestion $candidate" }
     }
 
-    override suspend fun removeSuggestion(subtype: Subtype, suggestion: SuggestionCandidate): Boolean {
+    override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
+        flogDebug { "remove suggestion request $candidate" }
         return false
     }
 
@@ -122,6 +146,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun destroy() {
         // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
-        // the app process is killed.
+        // the app process is killed (which will most likely always be the case).
     }
 }

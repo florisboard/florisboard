@@ -145,9 +145,9 @@ interface SuggestionProvider : NlpProvider {
      *
      * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
      *  language for correct dictionary selection.
-     * @param suggestion The exact suggestion candidate which has been accepted.
+     * @param candidate The exact suggestion candidate which has been accepted.
      */
-    suspend fun notifySuggestionAccepted(subtype: Subtype, suggestion: SuggestionCandidate)
+    suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate)
 
     /**
      * Is called when a previously automatically accepted suggestion has been reverted by the user with backspace. This
@@ -155,9 +155,9 @@ interface SuggestionProvider : NlpProvider {
      *
      * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
      *  language for correct dictionary selection.
-     * @param suggestion The exact suggestion candidate which has been reverted.
+     * @param candidate The exact suggestion candidate which has been reverted.
      */
-    suspend fun notifySuggestionReverted(subtype: Subtype, suggestion: SuggestionCandidate)
+    suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate)
 
     /**
      * Called if the user requests to prevent a certain suggested word from showing again. It is up to the actual
@@ -165,11 +165,11 @@ interface SuggestionProvider : NlpProvider {
      *
      * @param subtype Information about the current subtype, primarily used for getting the primary and secondary
      *  language for correct dictionary selection.
-     * @param suggestion The exact suggestion candidate which the user does not want to see again.
+     * @param candidate The exact suggestion candidate which the user does not want to see again.
      *
      * @return True if the removal request is supported and is accepted, false otherwise.
      */
-    suspend fun removeSuggestion(subtype: Subtype, suggestion: SuggestionCandidate): Boolean
+    suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean
 
     /**
      * Interop method allowing the glide typing logic to perform its own magic.
@@ -231,15 +231,15 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         return emptyList()
     }
 
-    override suspend fun notifySuggestionAccepted(subtype: Subtype, suggestion: SuggestionCandidate) {
+    override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
         // Do nothing
     }
 
-    override suspend fun notifySuggestionReverted(subtype: Subtype, suggestion: SuggestionCandidate) {
+    override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
         // Do nothing
     }
 
-    override suspend fun removeSuggestion(subtype: Subtype, suggestion: SuggestionCandidate): Boolean {
+    override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
         return false
     }
 
