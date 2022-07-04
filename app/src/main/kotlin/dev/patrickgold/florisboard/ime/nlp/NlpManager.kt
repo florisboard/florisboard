@@ -61,6 +61,7 @@ class NlpManager(context: Context) {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val clipboardSuggestionProvider = ClipboardSuggestionProvider()
     private val providers = guardedByLock {
         mapOf(
             LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
@@ -76,7 +77,9 @@ class NlpManager(context: Context) {
     val activeCandidatesFlow = _activeCandidatesFlow.asStateFlow()
     inline var activeCandidates
         get() = activeCandidatesFlow.value
-        private set(v) { _activeCandidatesFlow.value = v }
+        private set(v) {
+            _activeCandidatesFlow.value = v
+        }
 
     private val inlineContentViews = Collections.synchronizedMap<InlineSuggestion, InlineContentView>(hashMapOf())
     private val _inlineSuggestions = MutableLiveData<List<InlineSuggestion>>(emptyList())
@@ -120,11 +123,13 @@ class NlpManager(context: Context) {
     }
 
     private suspend fun getSpellingProvider(subtype: Subtype): SpellingProvider {
-        return providers.withLock { it[subtype.nlpProviders.spelling] }?.provider as? SpellingProvider ?: FallbackNlpProvider
+        return providers.withLock { it[subtype.nlpProviders.spelling] }?.provider as? SpellingProvider
+            ?: FallbackNlpProvider
     }
 
     private suspend fun getSuggestionProvider(subtype: Subtype): SuggestionProvider {
-        return providers.withLock { it[subtype.nlpProviders.suggestion] }?.provider as? SuggestionProvider ?: FallbackNlpProvider
+        return providers.withLock { it[subtype.nlpProviders.suggestion] }?.provider as? SuggestionProvider
+            ?: FallbackNlpProvider
     }
 
     fun preload(subtype: Subtype) {
@@ -149,7 +154,7 @@ class NlpManager(context: Context) {
         word: String,
         precedingWords: List<String>,
         followingWords: List<String>,
-        maxSuggestionCount: Int
+        maxSuggestionCount: Int,
     ): SpellingResult {
         return getSpellingProvider(subtype).spell(
             subtype = subtype,
@@ -207,38 +212,24 @@ class NlpManager(context: Context) {
     }
 
     private fun assembleCandidates() {
-        val candidates = buildList {
-            if (prefs.smartbar.enabled.get() && prefs.suggestion.enabled.get()) {
-                if (prefs.suggestion.clipboardContentEnabled.get()) {
-                    val now = System.currentTimeMillis()
-                    clipboardManager.primaryClip?.let { item ->
-                        if ((now - item.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
-                            add(ClipboardSuggestionCandidate(item))
-                            if (item.type == ItemType.TEXT) {
-                                val text = item.stringRepresentation()
-                                NetworkUtils.getUrls(text).forEach { match ->
-                                    if (match.value != text) {
-                                        add(ClipboardSuggestionCandidate(item.copy(text = match.value)))
-                                    }
-                                }
-                                NetworkUtils.getEmailAddresses(text).forEach { match ->
-                                    if (match.value != text) {
-                                        add(ClipboardSuggestionCandidate(item.copy(text = match.value)))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                runBlocking {
+        runBlocking {
+            val clipboardCandidates = clipboardSuggestionProvider.suggest(
+                subtype = Subtype.DEFAULT,
+                content = editorInstance.activeContent,
+                maxCandidateCount = 8,
+                allowPossiblyOffensive = false,
+                isPrivateSession = false,
+            )
+            val candidates = clipboardCandidates.ifEmpty {
+                buildList {
                     internalSuggestionsGuard.withLock {
                         addAll(internalSuggestions.second)
                     }
                 }
             }
+            activeCandidates = candidates
+            autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
         }
-        activeCandidates = candidates
-        autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
     }
 
     /**
@@ -263,7 +254,12 @@ class NlpManager(context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun inflateOrGet(context: Context, size: Size, inlineSuggestion: InlineSuggestion, callback: (InlineContentView) -> Unit) {
+    fun inflateOrGet(
+        context: Context,
+        size: Size,
+        inlineSuggestion: InlineSuggestion,
+        callback: (InlineContentView) -> Unit,
+    ) {
         val view = inlineContentViews[inlineSuggestion]
         if (view != null) {
             callback(view)
@@ -315,6 +311,84 @@ class NlpManager(context: Context) {
 
         suspend fun destroyIfNecessary() {
             if (isInstanceAlive.getAndSet(true)) provider.destroy()
+        }
+    }
+
+    inner class ClipboardSuggestionProvider internal constructor() : SuggestionProvider {
+        private var lastClipboardItemId: Long = -1
+
+        override val providerId = "org.florisboard.nlp.providers.clipboard"
+
+        override suspend fun create() {
+            // Do nothing
+        }
+
+        override suspend fun preload(subtype: Subtype) {
+            // Do nothing
+        }
+
+        override suspend fun suggest(
+            subtype: Subtype,
+            content: EditorContent,
+            maxCandidateCount: Int,
+            allowPossiblyOffensive: Boolean,
+            isPrivateSession: Boolean,
+        ): List<SuggestionCandidate> {
+            // Check if enabled
+            if (!prefs.suggestion.clipboardContentEnabled.get()) return emptyList()
+
+            // Check if already used
+            val currentItem = clipboardManager.primaryClip
+            val lastItemId = lastClipboardItemId
+            if (currentItem == null || currentItem.id == lastItemId || content.text.isNotBlank()) return emptyList()
+
+            return buildList {
+                val now = System.currentTimeMillis()
+                if ((now - currentItem.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
+                    add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider))
+                    if (currentItem.type == ItemType.TEXT) {
+                        val text = currentItem.stringRepresentation()
+                        NetworkUtils.getUrls(text).forEach { match ->
+                            if (match.value != text) {
+                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
+                                    sourceProvider = this@ClipboardSuggestionProvider))
+                            }
+                        }
+                        NetworkUtils.getEmailAddresses(text).forEach { match ->
+                            if (match.value != text) {
+                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
+                                    sourceProvider = this@ClipboardSuggestionProvider))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
+            if (candidate is ClipboardSuggestionCandidate) {
+                lastClipboardItemId = candidate.clipboardItem.id
+            }
+        }
+
+        override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
+            // Do nothing
+        }
+
+        override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
+            return false
+        }
+
+        override suspend fun getListOfWords(subtype: Subtype): List<String> {
+            return emptyList()
+        }
+
+        override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
+            return 0.0
+        }
+
+        override suspend fun destroy() {
+            // Do nothing
         }
     }
 }

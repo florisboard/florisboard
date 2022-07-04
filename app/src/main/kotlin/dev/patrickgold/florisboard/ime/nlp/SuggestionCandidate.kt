@@ -112,7 +112,10 @@ class WordSuggestionCandidate(
  *
  * @see SuggestionCandidate
  */
-class ClipboardSuggestionCandidate(val clipboardItem: ClipboardItem) : SuggestionCandidate {
+class ClipboardSuggestionCandidate(
+    val clipboardItem: ClipboardItem,
+    override val sourceProvider: SuggestionProvider?,
+) : SuggestionCandidate {
     override val text: CharSequence = clipboardItem.stringRepresentation()
 
     override val secondaryText: CharSequence? = null
@@ -132,6 +135,4 @@ class ClipboardSuggestionCandidate(val clipboardItem: ClipboardItem) : Suggestio
         ItemType.IMAGE -> R.drawable.ic_image
         ItemType.VIDEO -> R.drawable.ic_videocam
     }
-
-    override val sourceProvider: SuggestionProvider? = null
 }

@@ -114,10 +114,9 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             if (displayMode == CandidatesDisplayMode.CLASSIC) {
                                 Modifier.weight(1f)
                             } else {
-                                Modifier.wrapContentWidth()
+                                Modifier.wrapContentWidth().widthIn(max = 160.dp)
                             }
                         )
-                        .widthIn(max = 180.dp)
                 }
                 val list = when (displayMode) {
                     CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
