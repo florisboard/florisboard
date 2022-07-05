@@ -116,6 +116,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "correction__auto_capitalization",
             default = true,
         )
+        val autoSpacePunctuation = boolean(
+            key = "correction__auto_space_punctuation",
+            default = false,
+        )
         val doubleSpacePeriod = boolean(
             key = "correction__double_space_period",
             default = true,

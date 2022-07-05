@@ -17,8 +17,11 @@
     {
       "id": "default",
       "label": "Default",
-      "symbolsPrecedingSpace": ".*[.,;:!?‽&%)\\]}»©®™\\p{L}0-9]",
-      "symbolsFollowingSpace": "[\\p{L}0-9].*"
+      "symbolsPrecedingAutoSpace": ".,?‽!\"&%)]}»",
+      "symbolsFollowingAutoSpace": "",
+      "symbolsPrecedingPhantomSpace": ".,;:?‽!&%)]}»©®™",
+      "symbolsFollowingPhantomSpace": "¿⸘¡([{",
+      "symbolsTerminatingSentence": ".?‽!"
     }
   ],
   "popupMappings": [

@@ -314,18 +314,40 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     open fun commitChar(char: String): Boolean {
+        return commitChar(
+            char = char,
+            deletePreviousSpace = false,
+            insertSpaceBeforeChar = false,
+            insertSpaceAfterChar = false,
+        )
+    }
+
+    protected fun commitChar(
+        char: String,
+        deletePreviousSpace: Boolean,
+        insertSpaceBeforeChar: Boolean,
+        insertSpaceAfterChar: Boolean,
+    ): Boolean {
         val content = activeContent
         val selection = content.selection
-        // TODO: length enforcement to 1 may be an issue for some Unicode chars which are 2 Java chars
-        if (char.length != 1 || selection.isNotValid || selection.isSelectionMode || activeInfo.isRawInputEditor) {
-            return commitText(char)
+        val isSingleChar = runBlocking {
+            breakIterators.measureUChars(char, 1, subtypeManager.activeSubtype.primaryLocale)
+        } == char.length
+        if (!isSingleChar || selection.isNotValid || selection.isSelectionMode || activeInfo.isRawInputEditor) {
+            return commitTextInternal(char)
         }
         val ic = currentInputConnection() ?: return false
         val composer = determineComposer(subtypeManager.activeSubtype.composer)
-        val previous = content.textBeforeSelection.takeLast(composer.toRead)
-        val (rm, finalText) = composer.getActions(previous, char[0])
+        val previous = content.textBeforeSelection.takeLast(composer.toRead.coerceAtLeast(if (deletePreviousSpace) 1 else 0))
+        val (tempRm, tempText) = composer.getActions(previous, char[0])
+        val rm = if (previous.isNotEmpty() && previous.last() == ' ') tempRm + 1 else tempRm
+        val finalText = buildString(tempText.length + 2) {
+            if (insertSpaceBeforeChar) append(' ')
+            append(tempText)
+            if (insertSpaceAfterChar) append(' ')
+        }
         if (rm <= 0) {
-            commitText(finalText)
+            commitTextInternal(finalText)
         } else runBlocking {
             ic.beginBatchEdit()
             val newSelection = EditorRange.cursor(selection.start - rm + finalText.length)
@@ -349,7 +371,9 @@ abstract class AbstractEditorInstance(context: Context) {
         return true
     }
 
-    open fun commitText(text: String): Boolean {
+    open fun commitText(text: String): Boolean = commitTextInternal(text)
+
+    private fun commitTextInternal(text: String): Boolean {
         val ic = currentInputConnection() ?: return false
         val content = activeContent
         val selection = content.selection

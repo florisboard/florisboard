@@ -55,6 +55,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val nlpManager by context.nlpManager()
 
     private val activeState get() = keyboardManager.activeState
+    val autoSpace = AutoSpaceState()
     val phantomSpace = PhantomSpaceState()
     val massSelection = MassSelectionState()
 
@@ -115,6 +116,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
+        autoSpace.setInactiveFromUpdate()
         phantomSpace.setInactiveFromUpdate()
         if (massSelection.isActive) {
             super.handleMassSelectionUpdate(newSelection, composing)
@@ -146,19 +148,59 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success or if the selection is already at specified position, false otherwise.
      */
     fun setSelection(start: Int, end: Int): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val selection = EditorRange.normalized(start, end)
         return super.setSelection(selection)
     }
 
+    private fun shouldInsertAutoSpaceBefore(text: String): Boolean {
+        if (!prefs.correction.autoSpacePunctuation.get() || text.isEmpty()) return false
+        if (activeInfo.isRawInputEditor) return false
+        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+
+        val punctuationRule = nlpManager.getActivePunctuationRule()
+        val textBefore = activeContent.getTextBeforeCursor(1)
+        return textBefore.isNotEmpty() && !textBefore.last().isWhitespace() &&
+            punctuationRule.symbolsFollowingAutoSpace.contains(text.first())
+    }
+
+    private fun shouldInsertAutoSpaceAfter(text: String): Boolean {
+        if (!prefs.correction.autoSpacePunctuation.get() || text.isEmpty()) return false
+        if (activeInfo.isRawInputEditor) return false
+        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+
+        val punctuationRule = nlpManager.getActivePunctuationRule()
+        val content = activeContent
+        val textBefore = content.getTextBeforeCursor(3).let { textBefore ->
+            if (autoSpace.isActive && textBefore.isNotEmpty() && textBefore.last() == ' ') {
+                textBefore.dropLast(1)
+            } else {
+                textBefore
+            }
+        }
+        return textBefore.isNotEmpty() && !textBefore.last().isWhitespace() &&
+            content.currentWordText.all { !it.isDigit() } &&
+            punctuationRule.symbolsPrecedingAutoSpace.contains(text.first())
+    }
+
     override fun commitChar(char: String): Boolean {
+        val isInsertAutoSpaceBeforeChar = shouldInsertAutoSpaceBefore(char)
+        val isInsertAutoSpaceAfterChar = shouldInsertAutoSpaceAfter(char)
+        val isDeletePreviousSpace = isInsertAutoSpaceAfterChar && autoSpace.isActive
+        if (isInsertAutoSpaceAfterChar) {
+            autoSpace.setActive()
+        } else {
+            autoSpace.setInactive()
+        }
         val isPhantomSpaceActive = phantomSpace.determine(char)
         phantomSpace.setInactive()
-        return if (isPhantomSpaceActive) {
-            super.commitChar("$SPACE$char")
-        } else {
-            super.commitChar(char)
-        }
+        return super.commitChar(
+            char = char,
+            deletePreviousSpace = isDeletePreviousSpace,
+            insertSpaceBeforeChar = isInsertAutoSpaceBeforeChar || isPhantomSpaceActive,
+            insertSpaceAfterChar = isInsertAutoSpaceAfterChar,
+        )
     }
 
     /**
@@ -175,6 +217,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     override fun commitText(text: String): Boolean {
         val isPhantomSpaceActive = phantomSpace.determine(text)
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (isPhantomSpaceActive) {
             super.commitText("$SPACE$text")
@@ -287,6 +330,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
             return deleteWordBackwards()
         }
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (content.selection.isSelectionMode) {
             commitText("")
@@ -303,6 +347,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteWordBackwards(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (activeContent.selection.isSelectionMode) {
             commitText("")
@@ -312,6 +357,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     fun selectionSetNWordsLeft(n: Int): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val content = activeContent
         val selection = content.selection
@@ -331,6 +377,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCut(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
@@ -348,6 +395,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCopy(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
@@ -366,6 +414,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardPaste(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return commitClipboardItem(clipboardManager.primaryClip).also { result ->
             if (!result) {
@@ -381,6 +430,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardSelectAll(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val ic = currentInputConnection() ?: return false
         ic.finishComposingText()
@@ -397,6 +447,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnter(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (activeInfo.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
@@ -413,6 +464,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnterAction(action: ImeOptions.Action): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val ic = currentInputConnection() ?: return false
         return ic.performEditorAction(action.toInt())
@@ -424,6 +476,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performUndo(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
     }
@@ -434,12 +487,14 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performRedo(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
     }
 
     override fun reset() {
         super.reset()
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         massSelection.reset()
     }
@@ -447,11 +502,42 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
         val content = activeContent
         val selection = content.selection
-        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0) return false
+        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
         val textBefore = content.getTextBeforeCursor(2)
         val punctuationRule = nlpManager.getActivePunctuationRule()
-        return punctuationRule.symbolsPrecedingSpace.matches(textBefore) &&
-            punctuationRule.symbolsFollowingSpace.matches(text)
+        return textBefore.length >= 2 && !textBefore[textBefore.length - 2].isWhitespace() &&
+            (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
+                textBefore[textBefore.length - 1].isLetterOrDigit()) &&
+            (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
+    }
+
+    class AutoSpaceState {
+        companion object {
+            private const val F_IS_ACTIVE = 0x1
+            private const val F_STAY_ACTIVE_NEXT_UPDATE = 0x4
+        }
+
+        private val state = AtomicInteger(0)
+
+        val isActive: Boolean
+            get() = state.get() and F_IS_ACTIVE != 0
+
+        val isInactive: Boolean
+            get() = !isActive
+
+        fun setActive(stayActiveNextUpdate: Boolean = true) {
+            state.set(F_IS_ACTIVE or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0))
+        }
+
+        fun setInactive() {
+            state.set(0)
+        }
+
+        fun setInactiveFromUpdate() {
+            state.updateAndGet { state ->
+                if ((state and F_STAY_ACTIVE_NEXT_UPDATE) != 0) (state and F_STAY_ACTIVE_NEXT_UPDATE.inv()) else 0
+            }
+        }
     }
 
     class PhantomSpaceState {

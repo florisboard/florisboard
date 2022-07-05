@@ -100,6 +100,11 @@ fun TypingScreen() = FlorisScreen {
                 summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
             )
             SwitchPreference(
+                prefs.correction.autoSpacePunctuation,
+                title = stringRes(R.string.pref__correction__auto_space_punctuation__label),
+                summary = stringRes(R.string.pref__correction__auto_space_punctuation__summary),
+            )
+            SwitchPreference(
                 prefs.correction.rememberCapsLockState,
                 title = stringRes(R.string.pref__correction__remember_caps_lock_state__label),
                 summary = stringRes(R.string.pref__correction__remember_caps_lock_state__summary),
