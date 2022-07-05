@@ -124,7 +124,7 @@ class ClipboardSuggestionCandidate(
 
     override val isEligibleForAutoCommit: Boolean = false
 
-    override val isEligibleForUserRemoval: Boolean = false
+    override val isEligibleForUserRemoval: Boolean = true
 
     override val iconId: Int = when (clipboardItem.type) {
         ItemType.TEXT -> when {

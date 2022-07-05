@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.forEachGesture
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +40,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
+import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.consumeDownChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -60,6 +65,7 @@ import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.nlpManager
+import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable
@@ -68,6 +74,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
+    val subtypeManager by context.subtypeManager()
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
@@ -137,9 +144,19 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                         candidate = candidate,
                         displayMode = displayMode,
                         onClick = {
-                            // Can't use candidate directly, reason unknown
+                            // Can't use candidate directly
                             keyboardManager.commitCandidate(candidates[n])
                         },
+                        onLongPress = {
+                            // Can't use candidate directly
+                            val candidateItem = candidates[n]
+                            if (candidateItem.isEligibleForUserRemoval) {
+                                nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                            } else {
+                                false
+                            }
+                        },
+                        longPressDelay = prefs.keyboard.longPressDelay.get().toLong(),
                     )
                 }
             }
@@ -153,6 +170,8 @@ private fun CandidateItem(
     displayMode: CandidatesDisplayMode,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
+    onLongPress: () -> Boolean = { false },
+    longPressDelay: Long,
 ) = with(LocalDensity.current) {
     var isPressed by remember { mutableStateOf(false) }
 
@@ -172,16 +191,30 @@ private fun CandidateItem(
         modifier = modifier
             .snyggBackground(style)
             .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
+                forEachGesture {
+                    awaitPointerEventScope {
+                        val down = awaitFirstDown()
                         isPressed = true
-                        tryAwaitRelease()
+                        down.consumeDownChange()
+                        var upOrCancel: PointerInputChange? = null
+                        try {
+                            upOrCancel = withTimeout(longPressDelay) {
+                                waitForUpOrCancellation()
+                            }
+                            upOrCancel?.consumeDownChange()
+                        } catch (_: PointerEventTimeoutCancellationException) {
+                            if (onLongPress()) {
+                                upOrCancel = null
+                                isPressed = false
+                            }
+                            waitForUpOrCancellation()?.consumeDownChange()
+                        }
+                        if (upOrCancel != null) {
+                            onClick()
+                        }
                         isPressed = false
-                    },
-                    onTap = {
-                        onClick()
-                    },
-                )
+                    }
+                }
             }
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,

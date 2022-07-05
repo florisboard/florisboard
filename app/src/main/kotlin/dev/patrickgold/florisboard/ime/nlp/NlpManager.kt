@@ -203,6 +203,21 @@ class NlpManager(context: Context) {
         return activeCandidates.firstOrNull { it.isEligibleForAutoCommit }
     }
 
+    fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
+        return runBlocking { candidate.sourceProvider?.removeSuggestion(subtype, candidate) == true }.also { result ->
+            if (result) {
+                scope.launch {
+                    // Need to re-trigger the suggestions algorithm
+                    if (candidate is ClipboardSuggestionCandidate) {
+                        assembleCandidates()
+                    } else {
+                        suggest(subtypeManager.activeSubtype, editorInstance.activeContent)
+                    }
+                }
+            }
+        }
+    }
+
     fun getListOfWords(subtype: Subtype): List<String> {
         return runBlocking { getSuggestionProvider(subtype).getListOfWords(subtype) }
     }
@@ -376,6 +391,10 @@ class NlpManager(context: Context) {
         }
 
         override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
+            if (candidate is ClipboardSuggestionCandidate) {
+                lastClipboardItemId = candidate.clipboardItem.id
+                return true
+            }
             return false
         }
 
