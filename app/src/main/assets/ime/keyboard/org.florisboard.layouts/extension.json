@@ -199,13 +199,13 @@
       },
       {
         "id": "jcuken_russian",
-        "label": "Russian (JCUKEN)",
+        "label": "Russian (ЙЦУКЕН)",
         "authors": [ "williamtheaker" ],
         "direction": "ltr"
       },
       {
         "id": "jcuken_ukrainian",
-        "label": "Ukrainian (JCUKEN)",
+        "label": "Ukrainian (ЙЦУКЕН)",
         "authors": [ "williamtheaker", "33kk" ],
         "direction": "ltr"
       },
