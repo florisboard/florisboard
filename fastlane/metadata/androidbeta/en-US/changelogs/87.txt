@@ -1,0 +1,3 @@
+This release is a preparation for 0.4 word suggestions (phase1), introduces experimental auto-spacing after punctuation and fixes other issues.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.4.0-alpha01
