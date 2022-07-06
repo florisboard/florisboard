@@ -79,7 +79,6 @@
     <!-- Smartbar strings -->
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">자동 확장/축소</string>
     <!-- Typing strings -->
-    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__view_source_code" comment="Label of View source code button in About">소스 코드</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">오픈 소스 라이선스</string>

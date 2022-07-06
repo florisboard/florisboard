@@ -273,19 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Azioni secondarie</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostra riga di azione secondaria</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggerimenti &amp; Correzioni</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra suggerimenti in linea forniti dall\'autocompilazione</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Mostra suggerimenti</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Fornisce suggerimenti durante la digitazione</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modalità visualizzazione dei suggerimenti</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blocca parole possibilmente offensive</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggerimenti per il contenuto degli appunti</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Timeout suggerimento appunti</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggerisci il contenuto degli appunti copiato in precedenza</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limita i suggerimenti degli appunti a</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Elementi copiati negli ultimi {v} secondi</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra suggerimenti in linea forniti dall\'autocompilazione</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Rendi maiuscole le parole in base al contesto attuale</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Spaziatura automatica dopo la punteggiatura</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Inserisci automaticamente uno spazio dopo un segno di punteggiatura</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Ricorda lo stato del maiuscolo</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Il maiuscolo rimarrà attivo quando ti sposti ad un altro campo di testo</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppio tocco barra spaziatrice</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
+    <string name="pref__spelling__title" comment="Preference group title">Ortografia</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Disabilitato a livello di sistema. Nessuna sottolineatura rossa apparirà nei campi di testo per parole incorrette. Tocca qui per cambiare.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Nessun servizio di controllo ortografico del testo in linea impostato. Tocca per cambiare.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Lingue</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usa i nomi dei contatti</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Cerca i nomi dall\'elenco dei contatti</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Usa le voci del dizionario utente</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Cerca le voci nei dizionari utente</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Dizionari utente</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Abilita il dizionario utente di sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggerisci le parole contenute nel dizionario utente di sistema</string>
@@ -353,14 +368,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre abilitato su Android 10+ a causa delle restrizioni del sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forza la modalità privata</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disabilita le funzioni che funzionano con i tuoi dati di input</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Disabilitato a livello di sistema. Nessuna sottolineatura rossa apparirà nei campi di testo per parole incorrette. Tocca qui per cambiare.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Nessun servizio di controllo ortografico del testo in linea impostato. Tocca per cambiare.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Lingue</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usa i nomi dalla rubrica</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Il controllo ortografico cercherà i nomi dalla tua rubrica</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Usa le voci del dizionario utente</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Il controllo ortografico cercherà le voci del dizionario utente, se abilitato</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informazioni su</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app FlorisBoard</string>

@@ -159,6 +159,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock با رفتن به محل نوشتن بعدی همانگونه بماند</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">فاصله زمانی دوبار-فاصله</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">فشردن دو بار فاصله در فاصله زمانی باعث ادامه دادن فاصله گذاشتن شود</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زبان‌ها</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فعالسازی سیستم لغتنامه کاربر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">پیشنهاد دادن کلمات ذخیره شده از سیستم لغتنامه کاربر</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">مدیریت سیستم لغتنامه کاربر</string>
@@ -209,8 +210,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">قرار دادن آیکون برنامه در لانچر</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زبان‌ها</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>

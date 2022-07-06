@@ -254,12 +254,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">セカンダリーアクション</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">二次アクション行を表示</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">提案&amp; 訂正</string>
     <string name="pref__suggestion__title" comment="Preference group title">提案</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">オートフィルサービスによって提供されるインライン提案を表示する</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">提案表示モード</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">クリップボードコンテンツの提案</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">クリップボードの提案のタイムアウト</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">オートフィルサービスによって提供されるインライン提案を表示する</string>
     <string name="pref__correction__title" comment="Preference group title">訂正</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">自動大文字変換</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">現在の入力コンテキストに基づいて単語を大文字にする</string>
@@ -282,7 +280,6 @@
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">頻度:{freq}</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">頻度:{freq} | ショートカット:{shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">すべての言語</string>
-    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Setup UI strings -->
     <!-- Back up & Restore -->

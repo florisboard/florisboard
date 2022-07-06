@@ -273,12 +273,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">خانەی دووەم</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">پێشنیارکردن و ڕاستکردنەوە</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پیشاندانی پێشنیاری تەواوکەری خۆکاری </string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پیشاندانی پێشنیاری تەواوکەری خۆکاری </string>
     <string name="pref__correction__title" comment="Preference group title">ڕاستکردنەوە</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">گەورەکردنی خۆکاری</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">گەورەکردنی پیتەکان بە خۆکاری تەنها بۆ زمانە لاتینییەکان</string>
@@ -286,6 +284,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">سەرجەم پیتەکان هەمیشە بە گەورەیی(کاپیتاڵ) دەمێننەوە تەنها بۆ ئینگلیزی و زمانە لاتینییەکان</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">دانانی خاڵ بە دوگمەی بۆشایی</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">دووجار دەست بنێیت بە دوگمەی بۆشاییدا خاڵ یان هێمای کۆتایی ڕستە دەنوسێت</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">ناچالاککردنی ڕاستکەرەوەی سیستەم، هێڵی سوور پیشان نادرێت لەکاتی نووسینی ووشە هەڵەکاندا، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">هیچ ڕاستکەرەوەیەکی هەڵەی ڕێنووس دیارینەکراوە، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زمان</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">زیادکراوەکانی فەرهەنگی تایبەت</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">فەرهەنگی بەکارهێنەر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">پێشنیارکردنی ئەو ووشانەی لەفەرهەنگی تایبەتی بەکارهێنەردا پاشەکەوتکراون</string>
@@ -353,14 +355,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">هەمیشە پیشان ئەدرێ لە ئەندرۆیدی 10 بەرەوسەر</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">چالاککردنی دۆخی تایبەت</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">ناچالاککردنی ئەو تایبەتمەندیانەی پەیوەستن بە پارێزگارییەوە</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">ناچالاککردنی ڕاستکەرەوەی سیستەم، هێڵی سوور پیشان نادرێت لەکاتی نووسینی ووشە هەڵەکاندا، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">هیچ ڕاستکەرەوەیەکی هەڵەی ڕێنووس دیارینەکراوە، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زمان</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[بەردەست‌نیە] پێشنیارکردنی ناوەکان</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">پێشنیارکردنی لیستی ناوەکان لەکاتی نووسیندا</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">زیادکراوەکانی فەرهەنگی تایبەت</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">پێشنیارکردنی ئەو ووشانەی بەرکارهێنەر خۆی زیادیکردووە بۆ ناو فەرهەنگی تایبەت</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">دەربارە</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">پیشاندانی ئایکۆنی بەرنامەکە</string>

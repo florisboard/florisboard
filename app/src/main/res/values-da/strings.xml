@@ -71,6 +71,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock vil forblive aktiveret ved skift af tekstfelter</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbelt-mellemrumspunktum</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tast to gange på mellemrum for at indætte et punktum efterfulgt af mellemrum</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprog</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle sprog</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Genvej (valgfri)</string>
@@ -86,8 +87,6 @@
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanceret</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprog</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Omkring</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>

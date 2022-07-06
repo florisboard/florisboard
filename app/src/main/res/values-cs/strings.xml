@@ -271,12 +271,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundární akce</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Návrhy a opravy</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zobrazit návrhy na řádku poskytnuté službami automatického doplnění</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Režim zobrazování návrhů</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Návrhy obsahu schránky</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Časový limit pro návrh ze schránky</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zobrazit návrhy na řádku poskytnuté službami automatického doplnění</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalizovat slova na základě aktuálního vstupního kontextu</string>
@@ -284,6 +282,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dvojitou mezerou</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojité poklepání na mezerník vloží tečku a mezeru</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Systémově zakázáno. V textových polích se nebudou objevovat červené pruhy u nesprávných slov. Klepněte pro změnu.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Není nastavena žádná služba kontroly pravopisu v textu. Klepnutím na tlačítko to změníte.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jazyky</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Uživatelské slovníky</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Použít vlastní systémový slovník</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Nabízet slova uložená ve vlastním systémovém slovníku</string>
@@ -351,12 +353,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Zakáže funkce, které pracují s vašimi vstupními daty</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Systémově zakázáno. V textových polích se nebudou objevovat červené pruhy u nesprávných slov. Klepněte pro změnu.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jazyky</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Kontrola pravopisu bude používat jména z vašeho seznamu kontaktů</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>

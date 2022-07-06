@@ -213,11 +213,9 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ações secundárias</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e correções</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de exibição das sugestões</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Conteúdo da área de transferência</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Tempo limite das sugestões da área de transefrência</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Colocar letras maiúsculas tendo em conta o contexto das palavras</string>
@@ -225,6 +223,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Manter CapsLock quando se muda para outro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Duplo espaço insere ponto final</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ao tocar 2 vezes na barra de espaços, inserir um ponto final e um espaço</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado globalmente. Não serão mostradas riscas vermelhas se existirem palavras erradas. Toque para alterar.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Não definiu o serviço de verificação ortográfica. Toque para alterar.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas do dicionário de utilizador</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Dicionários do utilizador</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ativar dicionário do sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palavras guardadas no dicionário do sistema</string>
@@ -283,14 +285,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre ativa em Android 10+ devido a restrições do sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Impor modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa as funcionalidades que utilizam os dados introduzidos</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado globalmente. Não serão mostradas riscas vermelhas se existirem palavras erradas. Toque para alterar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Não definiu o serviço de verificação ortográfica. Toque para alterar.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NÃO IMPLEMENTADO] Utilizar nome dos contactos</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">A verificação ortográfica irá analisar a sua lista de contactos</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas do dicionário de utilizador</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">A verificação ortográfica irá analisar as entradas dos dicionários do utilizador, se ativos</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre o FlorisBoard</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do FlorisBoard</string>

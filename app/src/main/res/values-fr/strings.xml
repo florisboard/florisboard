@@ -139,6 +139,7 @@
     <string name="snygg__rule_element__clipboard_header">En-tête du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item">Élément du Presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up d\'élément du presse-papiers</string>
+    <string name="snygg__rule_element__emoji_key">Touche Emoji</string>
     <string name="snygg__rule_element__glide_trail">Indicateur de glissement</string>
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
     <string name="snygg__rule_element__smartbar_primary_row">Rangée principale de la barre intelligente</string>
@@ -265,19 +266,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Actions secondaires</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Afficher la ligne d\'actions secondaires</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Saisie</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Afficher les suggestions fournies par les services d\'auto-complétion</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Afficher les suggestions</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Affiche des suggestions lorsque vous tapez</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode d\'affichage des suggestions</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloquer les termes choquants</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggestions de contenu du presse-papiers</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Délai d\'expiration de la suggestion du Presse-papiers</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggére le contenu du presse-papiers précédemment copié</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limiter les suggestions du presse-papier à</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Éléments copiés durant les dernières {v} sec</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Afficher les suggestions fournies par les services d\'auto-complétion</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalisation</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitaliser les mots en fonction du contexte de saisie actuel</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Espace automatique après ponctuation</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Insère automatiquement un espace après la ponctuation</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Se souvenir de l\'état de verrouillage des majuscules</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Le verrouillage des majuscules reste activé lorsque l\'on passe à un autre champ de texte</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Point de double espace</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">En tapant deux fois sur la barre espace, insère un point suivi d\'un espace</string>
+    <string name="pref__spelling__title" comment="Preference group title">Orthographe</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Désactivé à l\'échelle du système. Aucune ligne rouge n\'apparaîtra dans les champs de texte pour les mots incorrects. Appuyez pour changer.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Aucun service de vérificateur d\'orthographe de texte en ligne activé. Appuyez pour changer.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Langues</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Utiliser les noms des contacts</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ajoute des noms depuis votre liste de contacts</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utiliser le dictionnaire utilisateur</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Ajoute des noms depuis les dictionnaires personnels</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Dictionnaires utilisateur</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activer le dictionnaire utilisateur système</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggérer des mots du dictionnaire utilisateur système</string>
@@ -345,14 +361,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactiver les fonctionalitées qui utilise vos données d\'entrée</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Désactivé à l\'échelle du système. Aucune ligne rouge n\'apparaîtra dans les champs de texte pour les mots incorrects. Appuyez pour changer.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Aucun service de vérificateur d\'orthographe de texte en ligne activé. Appuyez pour changer.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Langues</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NON IMPLÉMENTÉ] Utiliser les noms des contacts</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Le vérificateur orthographique utilisera les noms de votre liste de contacts</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utiliser le dictionnaire utilisateur</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Le vérificateur d\'orthographe utilisera les dictionnaires utilisateurs, si ils sont activés</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">À propos</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icône de l\'application FlorisBoard</string>

@@ -273,12 +273,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Допълнителни действия</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ред с допълнителни действия</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Време за предложения от междинната памет</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично въвеждане на главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Използват се главни букви въз основа на контекста на въвеждане</string>
@@ -286,6 +284,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Правописмите грешки няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа в текстови полета. Докоснете, за да промените.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Потребителски речници</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Системен потребителски речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
@@ -353,14 +355,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключва обработката на въвежданите от вас данни</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Сгрешените думи няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа на текстови полета. Докоснете, за да промените.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват и имената от контактите</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">При проверка на правописа се използват и потребителските речници, ако са включени</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението FlorisBoard</string>
@@ -416,10 +410,10 @@
     <string name="backup_and_restore__restore__summary">Възстановява настройките от резервно копие</string>
     <string name="backup_and_restore__restore__files">Изберете какво да бъде възстановено</string>
     <string name="backup_and_restore__restore__metadata">Избор на резервно копие</string>
-    <string name="backup_and_restore__restore__metadata_warn_different_version">Резервното копие е създадено от издание, различно от текущото, което се поддържа от приложението. Въпреки това, може да възникнат незначителни проблеми или някои настройки може да не се прехвърлят изцяло, поради разлики във възможностите.</string>
-    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Този резервен архив е бил генериран в друго приложение, което по принцип не е поддържано. Възможна е загуба на данни, използвайте на свой собствен риск!</string>
-    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Този резервен архив съдържа невалидни мета данни, в следствие на корупция или неправилно модифициране. Възобновяването от този архив е невъзможно, моля изберете друг.</string>
-    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Този резервен архив не съдържа файлове за възобновяване, моля изберете друг.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Резервното копие е създадено от издание, различно от текущото, което, като цяло, се поддържа от приложението. Въпреки това, може да възникнат незначителни проблеми или някои настройки може да не се прехвърлят изцяло, поради разлики във възможностите.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Резервното копие е създадено от друго приложение, което, като цяло, не се поддържа от приложението. Въможна е загуба на данни, възстановете на ваша отговорност!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Резервното копие съдържа грешна описателна информация. Или е била повредена, или неправилно променена. Да възстановите това резервно копие е невъзможно. Изберете друго.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Резервното копие не съдържа файлове, които да бъдат възстановени. Изберете друго.</string>
     <string name="backup_and_restore__restore__mode">Режим на възстановяване</string>
     <string name="backup_and_restore__restore__mode_merge">Сливане със съществуващите данни</string>
     <string name="backup_and_restore__restore__mode_erase_and_overwrite">Изтриване и презаписване на текущите данни</string>
@@ -538,7 +532,7 @@
     <string name="ext__editor__create_component__title_theme">Създаване на тема</string>
     <string name="ext__editor__create_component__from_empty">Празна</string>
     <string name="ext__editor__create_component__from_existing">От съществуваща</string>
-    <string name="ext__editor__create_component__from_empty_warning">Създаването и конфигурирането на празен компонент може да затрудни нови потребители на {app_name}, които не са запознати със спецификите. В такъв случай е препоръчително да копирате съществуващ компонент и да го модифицирате според нуждите си.</string>
+    <string name="ext__editor__create_component__from_empty_warning">Създаването и настройката на празен компонент може да ви затрудни ако сте нов потребител на {app_name} и не сте запознати със спецификите. В такъв случай по-добре копирайте съществуващ компонент и го променете според нуждите си.</string>
     <string name="ext__editor__edit_component__title">Редактиране на компонент</string>
     <string name="ext__editor__edit_component__title_theme">Редактиране на компонент-тема</string>
     <string name="ext__export__success">Темата е изнесена успешно!</string>
@@ -555,7 +549,7 @@
     <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Очакваше се архив с разширение от сериен тип \"{expected_serial_type}\", но вместо това е \"{actual_serial_type}\".</string>
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Очакваше се медиен файл (изображение, аудио, шрифт, т.н.), но бе намерен архив с разширение.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Очакваше се архив с разширение, но бе намерен медиен файл (изображение, аудио, шрифт, т.н.).</string>
-    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Неочаквана грешка при импортиране. Следните детайли бяха предоставени:</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Неочаквана грешка при внасяне. Предоставени са следните подробности:</string>
     <!-- Action strings -->
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>

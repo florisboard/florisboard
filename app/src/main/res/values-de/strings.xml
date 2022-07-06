@@ -103,7 +103,9 @@
     <string name="settings__theme_editor__no_rules_defined">Für das Stylesheet sind keine Regeln definiert. Füge eine Regel hinzu, um dieses Stylesheet anzupassen.</string>
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
     <string name="settings__theme_editor__rule_element">Zielelement</string>
+    <string name="settings__theme_editor__rule_codes">Ziel-Codes</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
+    <string name="settings__theme_editor__rule_shift_states">Umschalt-Status</string>
     <string name="settings__theme_editor__rule_selectors">Selektoren</string>
     <string name="settings__theme_editor__add_code">Key code hinzufügen</string>
     <string name="settings__theme_editor__edit_code">Key code bearbeiten</string>
@@ -137,6 +139,12 @@
     <string name="snygg__rule_element__clipboard_header">Zwischenablagekopfzeile</string>
     <string name="snygg__rule_element__clipboard_item">Zwischenablagenitem</string>
     <string name="snygg__rule_element__clipboard_item_popup">Zwischensblagenitem-Popup</string>
+    <string name="snygg__rule_element__emoji_key">Emoji Taste</string>
+    <string name="snygg__rule_element__emoji_key_popup">Emoji Tasten Pop-Up</string>
+    <string name="snygg__rule_element__emoji_key_tab">Emoji Tab</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Eingabeanordnung im Querformat</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Eingabefeld im Querformat</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Eingabeaktion im Querformat</string>
     <string name="snygg__rule_element__glide_trail">Bewegungsspur</string>
     <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
     <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
@@ -265,19 +273,32 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundäre Aktionen</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zweite Navigationsleiste anzeigen</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Vorschläge &amp; Korrekturen</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Tippen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Vorschläge anzeigen</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Bietet Vorschläge an während Sie tippen</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Darstellungsart für Vorschläge</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Möglicherweise unangebrachte Wörter blockieren</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Inhalt der Zwischenablage</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Timeout für Vorschläge aus der Zwischenablage</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatische Leerzeichen nach Punktsetzung</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatisch ein Leerzeichen nach einem Punkt setzen</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Die festgestellte Umschalttaste bleibt auch beim Wechsel in ein anderes Textfeld aktiviert</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppeltes Leerzeichen durch Punkt ersetzen</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppeltes Tippen auf die Leertaste fügt Punkt und ein Leerzeichen ein</string>
+    <string name="pref__spelling__title" comment="Preference group title">Rechtschreibung</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Systemweit deaktiviert. Es werden keine roten Linien in Textfeldern für falsche Wörter angezeigt. Zum Ändern antippen.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Keinen Inline-Rechtschreibprüfungs-Service eingestellt. Zum Ändern antippen.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprachen</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Namen aus Kontakten verwenden</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Nach Namen in der Kontaktliste Suchen</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Benutzerwörterbücher verwenden</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Nach Einträgen in den Benutzerwörterbüchern suchen</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Benutzerwörterbücher</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">System-Wörterbuch aktivieren</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Wörter vorschlagen, die im System-Benutzerwörterbuch gespeichert sind</string>
@@ -317,6 +338,7 @@
     <string name="pref__glide_trail_fade_duration">Ausblendzeit der Spur</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Wort immer löschen</string>
     <string name="pref__glide__immediate_backspace_deletes_word__summary">Löschtaste löscht ganzes Wort nach Glide-Typing-Eingabe</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Allgemeine Gesten</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
@@ -344,14 +366,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privaten Modus erzwingen</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Deaktiviert Funktionen die mit Eingabedaten arbeiten</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Systemweit deaktiviert. Es werden keine roten Linien in Textfeldern für falsche Wörter angezeigt. Zum Ändern antippen.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Keinen Inline-Rechtschreibprüfungs-Service eingestellt. Zum Ändern antippen.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprachen</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Kontaktnamen benutzen</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Der Rechtschreibprüfer wird Namen aus dem Android Adressbuch einbinden</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Benutzerwörterbücher verwenden</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Der Rechtschreibprüfer wird Einträge aus Benutzerwörterbüchern einbinden, wenn diese aktiviert sind</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Über</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-Icon von FlorisBoard</string>
@@ -442,6 +456,8 @@
     <string name="clipboard__group_pinned">Angeheftet</string>
     <string name="clipboard__group_recent">Aktuell</string>
     <string name="clipboard__group_other">Andere</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_email">E-Mail</string>
     <string name="clip__clear_history">Verlauf leeren</string>
     <string name="clip__unpin_item">Element lösen</string>
     <string name="clip__pin_item">Element anheften</string>
@@ -477,6 +493,8 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Blende den Heap-Speicherverbrauch und die maximale Größe in der oberen rechten Ecke ein</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Zeige aktives Element</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Zeigt das aktuell aktive Element der Zwischenablage</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Zeige Eingabe-Overlay an</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Blendet Eingabe-Overlay zur Fehlersuche ein</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Zeige Rechtschreibprüfungs-Overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Blendet die aktuellen Ergebnisse der Rechtschreibprüfung fürs Debugging ein</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Tastendruck-Umrandungen einschalten</string>
@@ -625,6 +643,10 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, ist immer das Hinweissymbol, oder der primäre Akzent, wenn kein Hinweissymbol verfügbar ist</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Intelligente Priorisierung</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, wird je nach Sprache und Layout dynamisch, entweder als Hauptakzent oder als Hinweissymbol festgelegt</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Nicht umgeschaltet</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Umgeschaltet (manuell)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Umgeschaltet (automatisch)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Feststelltaste</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nie anzeigen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch anzeigen</string>

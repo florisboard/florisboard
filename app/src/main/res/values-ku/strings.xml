@@ -172,11 +172,9 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Pêşniyar û Sererastkirinan</string>
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی لەبەرگیراوەکان</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">ماوەی پیشاندان</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Li gorî konteksa têkevinê ya niha peyvan mezin bikin</string>
@@ -184,6 +182,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock dê bimîne dema ku diçe qada textek din</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dema du-cihî</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Lêdana du caran li ser baroya cîhê serdemek li dû cîhek vedigire</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Ziman</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Ferhengên Bikarhêner</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ferhenga bikarhêner a systemê çalak bike</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ferhenga navxweyî ya bikarhêner çalak bike</string>
@@ -225,10 +224,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Ji ber sînordarkirina pergalê her dem di Android 10+ de çalak e</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Ziman</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[BI CIH NAYÊ ANÎN] Ji kesan navan bi kar bîne</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Kontrolkera rastnivîsê dê têketinên ferhengên bikarhêneran bibîne, heke ev çalak bin</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya FlorisBoard</string>

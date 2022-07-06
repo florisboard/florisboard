@@ -123,7 +123,6 @@
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темна</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показувати значок програми на робочому столі</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Примусово приватний режим</string>
-    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Про додаток</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок програми FlorisBoard</string>

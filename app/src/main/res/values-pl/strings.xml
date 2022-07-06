@@ -245,12 +245,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Dodatkowe akcje</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Pokaż dodatkowy pasek akcji</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestie &amp; Korekty</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Pokaż w wierszu wbudowane sugestie dostarczane przez usługi autouzupełniania</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Tryb wyświetlania sugestii</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Limit czasu sugestii schowka</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Pokaż w wierszu wbudowane sugestie dostarczane przez usługi autouzupełniania</string>
     <string name="pref__correction__title" comment="Preference group title">Korekty</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatyczne wstawianie wielkich liter</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pisz wielkie litery w słowach na podstawie bieżącego kontekstu</string>
@@ -258,6 +256,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pozostanie włączony po przejściu do innego pola tekstowego</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Kropka z podwójną spacją</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dwukrotne naciśnięcie klawisza spacji powoduje wstawienie kropki, po której następuje spacja</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Wyłączone w całym systemie. W przypadku nieprawidłowych słów w polach tekstowych nie pojawią się czerwone linie. Dotknij, aby zmienić.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Nie ustawiono usługi sprawdzania pisowni w tekście. Dotknij, aby zmienić.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Języki</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Użyj wpisów słownika użytkownika</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Słowniki użytkownika</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Włącz systemowy słownik użytkownika</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugeruj słowa przechowywane w słowniku użytkownika systemu</string>
@@ -322,14 +324,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Zawsze włączone na Androidzie 10+ ze względu na ograniczenia systemu</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Wymuś tryb prywatny</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wyłącza funkcje, które działają z twoim danymi, które wpisujesz</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Wyłączone w całym systemie. W przypadku nieprawidłowych słów w polach tekstowych nie pojawią się czerwone linie. Dotknij, aby zmienić.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Nie ustawiono usługi sprawdzania pisowni w tekście. Dotknij, aby zmienić.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Języki</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[Niezaimplementowane] Użyj nazw z kontaktów</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Słownik będzie wyszukiwał nazwy z listy kontaktów</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Użyj wpisów słownika użytkownika</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Sprawdzanie pisowni wyszuka wpisy ze słowników użytkownika, jeśli są one włączone</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informacje o oprogramowaniu</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikacji FlorisBoard</string>

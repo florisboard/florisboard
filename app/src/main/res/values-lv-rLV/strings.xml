@@ -273,12 +273,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Otrējās darbības</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Rādīt otrējo darbību rindu</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Ieteikumi un labojumi</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Attēlot iekļautus ieteikumus, kurus nodrošina pašaizpildīšanas pakalpojumi</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Ieteikumu attēlošanas veids</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Starpliktuves ieteikumu noildze</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Attēlot iekļautus ieteikumus, kurus nodrošina pašaizpildīšanas pakalpojumi</string>
     <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pārveidot vārdu sākumburtus par lielajiem, balstoties uz pašreizējo ievades kopumu</string>
@@ -286,6 +284,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Atspējots sistēmā. Nepareizi vārdi netiks pasvītroti ar sarkanu līniju. Piesist, lai mainītu.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Nav norādīta iekļauta teksta lauka pareizrakstības pārbaudīšanas pakalpe. Piesist, lai mainītu.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Valodas</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Izmantot lietotāja vārdnīcas ierakstus</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Lietotāja vārdnīcas</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Iespējot sistēmas lietotāja vārdnīcu</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti sistēmas lietotāja vārdnīcā</string>
@@ -353,14 +355,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Atspējo iespēkas, kas darbojas ar ievades datiem</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Atspējots sistēmā. Nepareizi vārdi netiks pasvītroti ar sarkanu līniju. Piesist, lai mainītu.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Nav norādīta iekļauta teksta lauka pareizrakstības pārbaudīšanas pakalpe. Piesist, lai mainītu.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Valodas</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NAV IZSTRĀDĀTS] Izmantot kontaktpersonu vārdus</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pareizrakstības pārbaudītājs meklēs vārdus kontaktpersonu sarakstā</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Izmantot lietotāja vārdnīcas ierakstus</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Pareizrakstības pārbaudītājs meklēs ierakstus lietotāja vārdnīcās, ja tās ir iespējotas</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>

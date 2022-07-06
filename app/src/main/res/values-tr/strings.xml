@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Semboller</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bayraklar</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Geçmiş emoji bulunamadı. Emojileri kullanmaya başladığınızda burada gözükecektir.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">İpucu: Son kullanılan emojileri, geçmişten kaldırmak için emojilerin üstüne uzun bir süre tıklayın!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} son kullanılan emojilerden kaldırıldı</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Hızlı erişim tuşu. Basılı tutarak, kelime önerileri ve hızlı erişim tuşları arasında geçin yapar.</string>
@@ -93,7 +94,9 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Açık temayı seç</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Koyu temayı seç</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">İndirilen temaları düzenle</string>
+    <string name="settings__theme_editor__fine_tune__level">Seviyeyi düzenle</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Renkleri şu şekilde göster</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Diyaloglardan sonra klavyeyi görüntüle</string>
     <string name="settings__theme_editor__add_rule">Kural ekle</string>
     <string name="settings__theme_editor__edit_rule">Kuralı düzenle</string>
     <string name="settings__theme_editor__rule_groups">Gruplar</string>
@@ -104,6 +107,27 @@
     <string name="settings__theme_editor__property_name">Özellik adı</string>
     <string name="settings__theme_editor__property_value">Özellik değeri</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Tüm köşeler için uygula</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Gece teması</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Kenarsız</string>
+    <string name="snygg__rule_element__clipboard_item">Pano öğesi</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Pano öğesi için açılan pencere</string>
+    <string name="snygg__rule_element__emoji_key_tab">Emoji sekmesi</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Smartbar için kısayol</string>
+    <string name="snygg__rule_selector__disabled">Kapalı</string>
+    <string name="snygg__property_name__width">Genişlik</string>
+    <string name="snygg__property_name__height">Yükseklik</string>
+    <string name="snygg__property_name__background">Arkaplan</string>
+    <string name="snygg__property_name__foreground">Ön plan</string>
+    <string name="snygg__property_name__border_color">Kenar rengi</string>
+    <string name="snygg__property_name__border_style">Kenar stili</string>
+    <string name="snygg__property_name__border_width">Kenar genişliği</string>
+    <string name="snygg__property_name__font_family">Yazı tipi ailesi</string>
+    <string name="snygg__property_name__font_size">Yazı Boyutu</string>
+    <string name="snygg__property_name__font_style">Yazı tipi</string>
+    <string name="snygg__property_name__var_primary">Birincil renk</string>
+    <string name="snygg__property_value__dp_size">Boyut (dp)</string>
+    <string name="snygg__property_value__sp_size">Boyut (sp)</string>
+    <string name="snygg__property_value__percentage_size">Boyut (%)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ses &amp; Titreşim</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>
@@ -170,11 +194,9 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">İkincil eylemler</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">İkincil eylem satırını göster</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Öneriler &amp; Düzeltmeler</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Öneri gösterim modu</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Pano önerileri zaman aşımı</string>
     <string name="pref__correction__title" comment="Preference group title">Düzeltmeler</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Otomatik olarak büyük harf yap</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">İçeriğe göre kelimelerin ilk harfini büyüt</string>
@@ -182,6 +204,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir yazım alanına geçerken büyük harf kilidini açık tut</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukta nokta</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk tuşuna 2 defa basmak bir nokta ve ardından bir boşluk koyar</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı bırakıldı. Yanlış kelimeler için metin alanlarında kırmızı çizgiler görünmeyecektir. Değiştirmek için dokunun.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmadı. Değiştirmek için dokunun.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Diller</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Kullanıcı sözlüğünü kullan</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Kullanıcı sözlükleri</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Kullanıcı sözlüğünü etkinleştir</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Kullanıcı sözlüğünde saklanan kelimeleri öner</string>
@@ -234,14 +260,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Uygulama simgesini başlatıcıda göster</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı bırakıldı. Yanlış kelimeler için metin alanlarında kırmızı çizgiler görünmeyecektir. Değiştirmek için dokunun.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmadı. Değiştirmek için dokunun.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Diller</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[HENÜZ UYGULANMAMIŞ] Rehberdeki isimleri kullan</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Yazım denetleyici rehberinizdeki isimlere bakacak</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Kullanıcı sözlüğünü kullan</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Eğer aktifse, yazım denetleyici kullanıcı sözlüğünüzdeki girdilere bakacak</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard’un uygulama simgesi</string>

@@ -273,19 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Дополнительные действия</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Показывать строку дополнительных действий</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и автоисправления</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Набор текста</string>
     <string name="pref__suggestion__title" comment="Preference group title">Подсказки</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показывать встроенные предложения, предоставляемые службами автозаполнения</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Показывать предложения</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Предлагать подсказки при наборе текста</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим отображения предложений</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Блокировать возможные оскорбительные слова</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Время отображения предложения буфера обмена</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Предлагать ранее скопированное содержимое буфера обмена</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ограничить предложения буфера обмена до</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Элементы, скопированные за последние {v} с.</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показывать встроенные предложения, предоставляемые службами автозаполнения</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Авто-пробел после знаков препинания</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматически вставлять пробел после знака препинания</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">При двойном нажатии на пробел вставляется точка, за которой следует пробел</string>
+    <string name="pref__spelling__title" comment="Preference group title">Орфография</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Отключено для всей системы. В случае написания слов неправильно в текстовых полях не появятся красные подчёркивания. Нажмите, чтобы изменить.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Не настроена служба проверки орфографии текстовых полей. Нажмите, чтобы изменить.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Язык</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Использовать имена из контактов</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Поиск имен в списке контактов</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Использовать записи из словаря пользователя</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Поиск записей в пользовательских словарях</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Пользовательские словари</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
@@ -353,14 +368,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Всегда в режиме Инкогнито</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключает функции, завязанные на введенных словах</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Отключено для всей системы. В случае написания слов неправильно в текстовых полях не появятся красные подчёркивания. Нажмите, чтобы изменить.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Не настроена служба проверки орфографии текстовых полей. Нажмите, чтобы изменить.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Язык</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[не реализовано] Использовать имена контактов</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Использовать записи из словаря пользователя</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Проверка правописания будеть использовать записи из пользовательских словарей, если они существуют</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">О приложении</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок приложения FlorisBoard</string>

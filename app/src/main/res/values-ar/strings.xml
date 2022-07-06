@@ -273,19 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">المهام الثانوية</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">توسيع صف المهام الثانوي</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">الاقتراحات و التصحيح</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">الكتابة</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">إظهار الاقتراحات المضمنة التي تقدمها خدمات الملء التلقائي</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">عرض الاقتراحات</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">عرض الإقراحات أثناء الكتابة</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">وضع عرض الإقتراحات</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">حجب الكلمات التي من المحتمل كونها مسيئة</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">إقتراحات محتوى الحافظة</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">مهلة إقتراحات حافظة لوحة المفاتيح</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">اقتراح المحتويات المنسوخة في سجل الحافظة</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">تحديد حجم مخصص لاقتراحات الحافظة إلى</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">العناصر التي تم نسخها خلال آخر {v}</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">إظهار الاقتراحات المضمنة التي تقدمها خدمات الملء التلقائي</string>
     <string name="pref__correction__title" comment="Preference group title">التصحيحات</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">استخدام الأحرف الكبيرة في الكلمات على حسب سياق نص الإدخال الحالي</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">مسافة تلقائية بعد علامات الترقيم</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">وضع بشكل تلقائي مسافة بعد علامات الترقيم</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">تذكر حالة زر الأحرف الكبيرة</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">يضل وضع الأحرف الكبيرة قيد التشغيل عند الإنتقال إلى حقل نصي آخر</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">نقطة المسافة المزدوجة</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
+    <string name="pref__spelling__title" comment="Preference group title">التدقيق الإملائي</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">معطل على مستوى النظام. لن تظهر أي خطوط حمراء في الحقول النصية للكلمات غير الصحيحة. انقر للتغيير.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">لم يتم تعيين خدمة المدقق الإملائي للنص المضمّن. انقر للتغيير.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">اللغات</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">استخدم الأسماء من جهات الاتصال</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">استخدم الأسماء من جهات الاتصال</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">استخدم إدخالات قاموس المستخدم</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">النظر إلى المدخلات من قاموس المستخدم</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">قاموس المستخدم</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">تفعيل قاموس مستخدم النظام</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في قاموس مستخدم النظام</string>
@@ -353,14 +368,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">تعطيل الميزات التي تعمل مع بيانات الإدخال الخاصة بك</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">معطل على مستوى النظام. لن تظهر أي خطوط حمراء في الحقول النصية للكلمات غير الصحيحة. انقر للتغيير.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">لم يتم تعيين خدمة المدقق الإملائي للنص المضمّن. انقر للتغيير.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">اللغات</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم الأسماء من جهات الاتصال</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">سيقوم المدقق الإملائي بالبحث عن الأسماء من قائمة جهات الاتصال الخاصة بك</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">استخدم إدخالات قاموس المستخدم</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">سيبحث المدقق الإملائي عن إدخالات من قواميس المستخدم ، إذا تم تمكينها</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق FlorisBoard</string>
@@ -451,6 +458,8 @@
     <string name="clipboard__group_pinned">مثبّت</string>
     <string name="clipboard__group_recent">حديث</string>
     <string name="clipboard__group_other">أخرى</string>
+    <string name="clipboard__item_description_url">الرابط</string>
+    <string name="clipboard__item_description_email">البريد الإلكتروني</string>
     <string name="clip__clear_history">مسح السجل</string>
     <string name="clip__unpin_item">إلغاء تثبيت العنصر</string>
     <string name="clip__pin_item">تثبيت العنصر</string>

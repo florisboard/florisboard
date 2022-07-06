@@ -258,12 +258,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Acciones secundarias</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar fila de acciones secundarias</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Sugerencias &amp; Correciones</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Muestra sugerencias inline ofrecidas por servicios de autocompletado</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de visualización de sugerencias</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugerencias del contenido del portapapeles</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Tiempo de espera de sugerencias del portapapeles</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Muestra sugerencias inline ofrecidas por servicios de autocompletado</string>
     <string name="pref__correction__title" comment="Preference group title">Correcciones</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Poner en mayúsculas las palabras según el contexto de entrada actual</string>
@@ -271,6 +269,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">El bloqueo de las mayúsculas se mantendrá cuando se pase a otro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punto y doble espacio</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Pulsar espacio dos veces para insertar un punto seguido de un espacio</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Deshabilitado a nivel sistema. No se mostrarán líneas rojas en campos de texto con palabras incorrectas. Toque para cambiar.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">No se ha establecido ningún servicio de corrección ortográfica inline. Toque para cambiar.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas del diccionario de usuario</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Diccionarios del usuario</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilitar diccionario personal del sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palabras almacenadas en el diccionario personal del sistema</string>
@@ -335,14 +337,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Habilitado siempre en Android 10+ debido a restricciones del sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Deshabilita funciones que trabajan con sus datos de entrada</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Deshabilitado a nivel sistema. No se mostrarán líneas rojas en campos de texto con palabras incorrectas. Toque para cambiar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">No se ha establecido ningún servicio de corrección ortográfica inline. Toque para cambiar.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[SIN IMPLEMENTAR] Usar nombres de contactos</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">El corrector ortográfico usará los nombres de su lista de contactos</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas del diccionario de usuario</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">El corrector ortográfico buscará entradas de los diccionarios de usuario, si éstas están habilitadas</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Acerca de</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icono de la aplicación de FlorisBoard</string>

@@ -20,7 +20,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">ⵔⴰⴷ ⵓⵎⴰⵏⵏ ⴳ ⵓⴼⵍⵍⴰ ⵏ ⵓⵏⴰⵙⵉⵡ</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">ⵉⵙⵓⵎⵔⵏ</string>
-    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">ⵅⴼ</string>
     <!-- Setup UI strings -->

@@ -138,6 +138,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock forblir på når du flytter til et annet tekstfelt</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbel-mellomrom punktum</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Om du trykker to ganger på mellomromstasten settes det inn et punktum etterfulgt av et mellomrom</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Bruk brukerordlisteoppføringer</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Brukerordlister</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktiver system-brukerordliste</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Anbefal ord lagret i system-brukerordlisten</string>
@@ -189,14 +193,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Vis app-ikon i programmeny</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Alltid privat modus</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[IKKE IMPLEMENTERT] Bruk navn fra kontaktlisten</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Stavekontroll vil bruke navn fra din kontaktliste for å kontrollere staving</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Bruk brukerordlisteoppføringer</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Stavekontroll vil bruke brukerordlister, hvis disse er aktivert</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard\'s app ikon</string>

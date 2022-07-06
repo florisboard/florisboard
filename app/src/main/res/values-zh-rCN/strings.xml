@@ -273,12 +273,10 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">次要操作</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">显示次要操作行</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">建议 &amp; 更正</string>
     <string name="pref__suggestion__title" comment="Preference group title">建议</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">显示由自动填充服务提供的内嵌式建议</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">建议显示模式</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">剪贴板内容建议</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">剪贴板建议超时时间</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">显示由自动填充服务提供的内嵌式建议</string>
     <string name="pref__correction__title" comment="Preference group title">更正</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">自动大写</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">根据当前输入上下文将单词首字母大写</string>
@@ -286,6 +284,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">移动到另一个文本框时，大写锁定将保持原状态</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">双空格句号</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">在空格键上点击两次会插入一个句号加一个空格</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。对于不正确的单词，文本框中不会出现红线。点击进行更改。</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。点击进行更改。</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">语言</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">使用用户词典条目</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">用户词典</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">启用系统用户词典</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">建议中使用存储在系统用户词典中的词条</string>
@@ -353,14 +355,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">由于系统限制，在安卓 10+ 上始终启用</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">强制隐私模式</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">禁用能够使用您的输入数据的功能</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。对于不正确的单词，文本框中不会出现红线。点击进行更改。</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。点击进行更改。</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">语言</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[未完成] 使用联系人姓名</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">拼写检查工具将从您的联系人列表中查找姓名</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">使用用户词典条目</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">如果启用了这些条目，拼写检查工具将从用户词典中查找条目</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">关于</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 的应用图标</string>

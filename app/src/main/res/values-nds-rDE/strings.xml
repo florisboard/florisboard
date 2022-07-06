@@ -9,8 +9,6 @@
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Sprachauswahl</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
     <!-- Back up & Restore -->

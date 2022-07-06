@@ -214,11 +214,9 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Másodlagos műveletek</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Javaslatok és javítások</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Javaslatok megjelenítési módja</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Vágólap javaslatok időtúllépése</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
@@ -226,6 +224,9 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha mozog egy másik szövegmezőbe</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Rendszerszintű kikapcsolás. Nem fognak piros vonalak megjelenni a szövegmezőkben a hibás szavak alatt. Érintse meg a változtatáshoz.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Nyelvek</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Felhasználói szótárbejegyzések használata</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Felhasználói szótárak</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Rendszer felhasználói szótárának engedélyezése</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">A rendszer felhasználói szótárban tárolt szavak ajánlása</string>
@@ -282,10 +283,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Kikapcsolja azokat a funkciókat, amelyek a bevitt adataival dolgoznak</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Rendszerszintű kikapcsolás. Nem fognak piros vonalak megjelenni a szövegmezőkben a hibás szavak alatt. Érintse meg a változtatáshoz.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Nyelvek</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Felhasználói szótárbejegyzések használata</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>

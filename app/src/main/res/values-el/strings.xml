@@ -158,11 +158,9 @@
     <string name="pref__smartbar__any_row_type__label" comment="Preference title">Διάταξη σειράς</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Κύριες ενέργειες</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Προτάσεις &amp; Διορθώσεις</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Λειτουργία προβολής προτάσεων</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Προτάσεις περιεχομένου προχείρου</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Λήξη προτάσεων προχείρου</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
@@ -170,6 +168,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Τα κεφαλαία θα παραμείνουν ενεργοποιημένα όταν μεταβείτε σε διαφορετικό πεδίο κειμένου</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Τελεία με διπλό-κενό</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Το διπλό πάτημα του πλήκτρου διαστήματος εισάγει μία τελεία ακολουθούμενη από ένα διάστημα</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Απενεργοποιημένο σε επίπεδο συστήματος. Δε θα εμφανιστούν κόκκινες γραμμές σε πεδία κειμένου για λανθασμένες λέξεις. Πατήστε για αλλαγή.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Δεν έχει οριστεί υπηρεσία ενσωματωμένου ορθογραφικού ελέγχου κειμένου. Πατήστε για αλλαγή.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Γλώσσες</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Χρήση καταχωρήσεων λεξικού χρήστη</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Λεξικά χρήστη</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ενεργοποίηση λεξικού χρήστη στο σύστημα</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Προτάσεις λέξεων αποθηκευμένων στο λεξικό χρήστη στο σύστημα</string>
@@ -221,14 +223,6 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Εμφάνιση του εικονιδίου της εφαρμογής στον εκκινητή</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Πάντα ενεργοποιημένο σε Android 10+ λόγω περιορισμών του συστήματος</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Εξαναγκασμός ιδιωτικής λειτουργίας</string>
-    <!-- Spelling UI strings -->
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Απενεργοποιημένο σε επίπεδο συστήματος. Δε θα εμφανιστούν κόκκινες γραμμές σε πεδία κειμένου για λανθασμένες λέξεις. Πατήστε για αλλαγή.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Δεν έχει οριστεί υπηρεσία ενσωματωμένου ορθογραφικού ελέγχου κειμένου. Πατήστε για αλλαγή.</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Γλώσσες</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ΜΗ ΕΦΑΡΜΟΣΜΈΝΟ] Χρήση ονομάτων από τις επαφές</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Χρήση καταχωρήσεων λεξικού χρήστη</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Ο ορθογραφικός έλεγχος θα ψάξει τις καταχωρήσεις από το λεξικό χρήστη, εάν αυτές είναι ενεργές</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Σχετικά με</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Εικονίδιο εφαρμογής του FlorisBoard</string>
