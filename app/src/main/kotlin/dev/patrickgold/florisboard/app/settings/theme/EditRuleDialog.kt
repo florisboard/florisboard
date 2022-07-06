@@ -72,12 +72,12 @@ import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
@@ -242,7 +242,7 @@ internal fun EditRuleDialog(
                 text = stringRes(R.string.settings__theme_editor__rule_codes),
                 trailingIconTitle = {
                     FlorisIconButton(
-                        onClick = { editCodeDialogValue = NATIVE_NULLPTR },
+                        onClick = { editCodeDialogValue = NATIVE_NULLPTR.toInt() },
                         modifier = Modifier.offset(x = 12.dp),
                         icon = painterResource(R.drawable.ic_add),
                     )
@@ -349,7 +349,7 @@ private fun EditCodeValueDialog(
     }
     var showKeyCodesHelp by rememberSaveable(codeValue) { mutableStateOf(false) }
     var showError by rememberSaveable(codeValue) { mutableStateOf(false) }
-    var errorId by rememberSaveable(codeValue) { mutableStateOf(NATIVE_NULLPTR) }
+    var errorId by rememberSaveable(codeValue) { mutableStateOf(NATIVE_NULLPTR.toInt()) }
 
     val focusRequester = remember { FocusRequester() }
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
@@ -413,12 +413,12 @@ private fun EditCodeValueDialog(
     }
 
     JetPrefAlertDialog(
-        title = stringRes(if (codeValue == NATIVE_NULLPTR) {
+        title = stringRes(if (codeValue == NATIVE_NULLPTR.toInt()) {
             R.string.settings__theme_editor__add_code
         } else {
             R.string.settings__theme_editor__edit_code
         }),
-        confirmLabel = stringRes(if (codeValue == NATIVE_NULLPTR) {
+        confirmLabel = stringRes(if (codeValue == NATIVE_NULLPTR.toInt()) {
             R.string.action__add
         } else {
             R.string.action__apply
@@ -438,7 +438,7 @@ private fun EditCodeValueDialog(
                     showError = true
                 }
                 else -> {
-                    if (codeValue != NATIVE_NULLPTR) {
+                    if (codeValue != NATIVE_NULLPTR.toInt()) {
                         onDelete(codeValue)
                     }
                     onAdd(code)
@@ -448,7 +448,7 @@ private fun EditCodeValueDialog(
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
-        neutralLabel = if (codeValue != NATIVE_NULLPTR) {
+        neutralLabel = if (codeValue != NATIVE_NULLPTR.toInt()) {
             stringRes(R.string.action__delete)
         } else {
             null

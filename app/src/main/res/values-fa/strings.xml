@@ -210,14 +210,7 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">چک کننده نگارش</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">پیکربندی</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زبان‌ها</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">مدیریت لغتنامه ها</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} نصب شده</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">درحال حاضر هیچ لغتنامه ای برای چک کننده نگارش نصب نشده است. اولین لغتنامه را با زدن روی دکمه \'+\' زیر اضافه کنید!</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">وارد کردن لغتنامه جدید</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">انتخاب منبع</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>

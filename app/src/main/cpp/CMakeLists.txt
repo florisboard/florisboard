@@ -18,17 +18,12 @@ add_library(ICU::uc STATIC IMPORTED)
 set_property(TARGET ICU::uc PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicuuc.a")
 
 ### FlorisBoard ###
-add_subdirectory(nuspell)
 add_subdirectory(utils)
-add_subdirectory(ime/nlp)
-add_subdirectory(ime/spelling)
 
 add_library(
         florisboard-native
         SHARED
         dev_patrickgold_florisboard_FlorisApplication.cpp
-        dev_patrickgold_florisboard_ime_nlp_SuggestionList.cpp
-        dev_patrickgold_florisboard_ime_spelling_SpellingDict.cpp
 )
 
 target_compile_options(florisboard-native PRIVATE -ffunction-sections -fdata-sections -fexceptions)
@@ -41,8 +36,5 @@ target_link_libraries(
         log
         ICU::uc
         ICU::data
-        Nuspell::nuspell
         utils
-        ime-nlp
-        ime-spelling
 )

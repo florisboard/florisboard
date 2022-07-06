@@ -17,8 +17,7 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.content.Context
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import dev.patrickgold.florisboard.lib.android.bufferedReader
 import java.util.*
 
 /**
@@ -58,7 +57,7 @@ fun parseRawEmojiSpecsFile(
         emojiEditorList = null
     }
 
-    BufferedReader(InputStreamReader(context.assets.open(path))).useLines { lines ->
+    context.assets.bufferedReader(path).useLines { lines ->
         for (line in lines) {
             if (line.startsWith("#")) {
                 // Comment line

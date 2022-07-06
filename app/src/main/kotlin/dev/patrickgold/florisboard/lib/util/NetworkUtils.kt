@@ -28,19 +28,19 @@ object NetworkUtils {
     private val UrlRegex = """(?<Url>(?:(?:(?:https?:\/\/)?$HostRegex)|(?:https?:\/\/[a-zA-Z]+))(?::$TcpIpPortRegex)?(?:\/[\p{L}0-9.,;?'\\\/+&%$#=~_\-]*)?)""".toRegex()
     private val EmailRegex = """(?<Email>(?:[a-z0-9!#${'$'}%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#${'$'}%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@$HostRegex)""".toRegex()
 
-    fun isUrl(str: String): Boolean {
+    fun isUrl(str: CharSequence): Boolean {
         return UrlRegex.matches(str.trim())
     }
 
-    fun getUrls(str: String): List<MatchGroup> {
+    fun getUrls(str: CharSequence): List<MatchGroup> {
         return UrlRegex.findAll(str).mapNotNull { it.groups["Url"] }.toList()
     }
 
-    fun isEmailAddress(str: String): Boolean {
+    fun isEmailAddress(str: CharSequence): Boolean {
         return EmailRegex.matches(str.trim())
     }
 
-    fun getEmailAddresses(str: String): List<MatchGroup> {
+    fun getEmailAddresses(str: CharSequence): List<MatchGroup> {
         return EmailRegex.findAll(str).mapNotNull { it.groups["Email"] }.toList()
     }
 }

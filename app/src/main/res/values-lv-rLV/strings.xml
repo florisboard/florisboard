@@ -354,38 +354,13 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Atspējo iespēkas, kas darbojas ar ievades datiem</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Pareizrakstības pārbaudītājs</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Izmantot tastatūras pareizrakstības pārbaudītāja uzstādījumus</string>
-    <string name="pref__spelling__active_spellchecker__label">Iekļauta teksta lauka pareizrakstības pārbaude</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Atspējots sistēmā. Nepareizi vārdi netiks pasvītroti ar sarkanu līniju. Piesist, lai mainītu.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nav norādīta iekļauta teksta lauka pareizrakstības pārbaudīšanas pakalpe. Piesist, lai mainītu.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Iespēja \"Valodas\" sistēmas pareizrakstības pārbaudītāja skatā ir iestatīta uz \"Izmantot sistēmas valodas\". Nepilnības dēļ tas var iemesls, kādēļ {app_name} neveic iekļauto pareizrakstības pārbaudi. Ir ieteicams apsvērt mainīt to uz \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Uzstādījumi</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Valodas</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NAV IZSTRĀDĀTS] Izmantot kontaktpersonu vārdus</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pareizrakstības pārbaudītājs meklēs vārdus kontaktpersonu sarakstā</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Izmantot lietotāja vārdnīcas ierakstus</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Pareizrakstības pārbaudītājs meklēs ierakstus lietotāja vārdnīcās, ja tās ir iespējotas</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Pārvaldīt vārdnīcas</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} uzstādīta</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Pašlaik nav uzstādīta neviena vārdnīca pareizrakstības pārbaudītājam. Pievienot kādu var ar zemāk esošo \"+\" pogu.</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Paplašinājums / Arhīvs</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Pielikuma + vārdnīcas datne</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Ievietot jaunu vārdnīcu</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Atlasīt avotu</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Jāatlasa avots, no kura tika lejupielādēts trešo pušu paplašinājums. Tas palīdz pareizi apstrādāt ne FlorisBoard paplašinājumu veidolu un pārveidot to par FlorisBoard paplašinājuma veidolā.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Ievietot arhīvu</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Tagad jāievieto arhīvs - jāatlasa datni datņu atlasītāja logā.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Atlasīt valodu</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Valodas kods (piem., en_US)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Ievietot pielikumu/vārdnīcu datnes</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Atlasīt pielikuma datni (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Atlasīt vārdnīcas datni (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Ievietošanas apstiprināšana</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Jāapstiprina, ka zemāk esošie metadati ir pareizi. Ja kaut kas ir neatbilstošs, var pārslēgties uz iepriekšējo soli un vēlreiz atlasīt avotu vai ievietot arhīvu.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Kur iegūt vārdnīcas?</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard izmanto Nuspell kā pareizrakstības pārbaudītāja dzini, kas nozīmē, ka ir pieejams plašs vārdnīcu klāsts, jo Hunspell tiek izmantots arī citās programmatūrās. Zemāk esošajā sarakstā ir norādīti daži pašrocīgi atlasīti avoti, ko ievietošanas pārvaldītājs atbalsta. Ir jālejupielādē arhīva datne vai vārdnīcas faili, pēc tam ievietošanas pārvaldītājā jānorāda pareizais avots (tas ir būtiski, lai pareizi nolasītu arhīva veidolu).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">ja šajā sarakstā nav vārdnīcu nepieciešamajai valodai vai izloksnei, ir iespējams pašrocīgi meklēt Hunspell vārdnīcu un ievietot \'aff\' un \'dic\' datnes.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>
@@ -550,11 +525,9 @@
     <string name="ext__error__not_found_description">Netika atrasts neviens paplašinājums ar Id \"{id}\".</string>
     <string name="ext__editor__title_create_any">Izveidot paplašinājumu</string>
     <string name="ext__editor__title_create_keyboard">Izveidot tastatūras paplašinājumu</string>
-    <string name="ext__editor__title_create_spelling">Izveidot pareizrakstības paplašinājumu</string>
     <string name="ext__editor__title_create_theme">Izveidot izskata paplašinājumu</string>
     <string name="ext__editor__title_edit_any">Labot paplašinājumu</string>
     <string name="ext__editor__title_edit_keyboard">Labot tastatūras paplašinājumu</string>
-    <string name="ext__editor__title_edit_spelling">Labot pareizrakstības paplašinājumu</string>
     <string name="ext__editor__title_edit_theme">Labot izskata paplašinājumu</string>
     <string name="ext__editor__metadata__title">Pārvaldīt metadatus</string>
     <string name="ext__editor__metadata__title_invalid">Nederīgi metadati</string>
@@ -574,7 +547,6 @@
     <string name="ext__import__failure">Neizdevās ievietot paplašinājumu: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Iekļaut paplašinājumu</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Ievietot tastatūras paplašinājumu</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Ievietot pareizrakstības paplašinājumu/vārdnīcu</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Ievietot izskata paplašinājumu</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Datni nevar ievietot. Iemesls:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Neatbalstīts vai neatpazīts datnes veids.</string>

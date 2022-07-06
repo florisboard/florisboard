@@ -17,15 +17,13 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -37,21 +35,24 @@ val SubtypeJsonConfig = Json {
 }
 
 /**
- * Class which acts as a high level helper for the raw implementation of subtypes in the prefs.
- * Also interprets the default subtype list defined in ime/config.json and provides helper
- * arrays for the language spinner.
- *
- * @property prefs Reference to the preferences, where the raw subtype settings are accessible.
- * @property subtypes The currently active subtypes.
+ * Class which acts as a high level helper for the raw implementation of subtypes in the prefs. Additionally provides
+ * helper methods for the in-keyboard language switch process.
  */
-class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
+class SubtypeManager(context: Context) {
     private val prefs by florisPreferenceModel()
     private val keyboardManager by context.keyboardManager()
 
-    private val _subtypes = MutableLiveData<List<Subtype>>(emptyList())
-    val subtypes: LiveData<List<Subtype>> get() = _subtypes
-    private val _activeSubtype = MutableLiveData(Subtype.DEFAULT)
-    val activeSubtype: LiveData<Subtype> get() = _activeSubtype
+    private val _subtypesFlow = MutableStateFlow(listOf<Subtype>())
+    val subtypesFlow = _subtypesFlow.asStateFlow()
+    inline var subtypes
+        get() = subtypesFlow.value
+        private set(v) { _subtypesFlow.value = v }
+
+    private val _activeSubtypeFlow = MutableStateFlow(Subtype.DEFAULT)
+    val activeSubtypeFlow = _activeSubtypeFlow.asStateFlow()
+    inline var activeSubtype
+        get() = activeSubtypeFlow.value
+        private set(v) { _activeSubtypeFlow.value = v }
 
     init {
         prefs.localization.subtypes.observeForever { listRaw ->
@@ -61,14 +62,10 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
             } else {
                 emptyList()
             }
-            _subtypes.postValue(list)
+            subtypes = list
             evaluateActiveSubtype(list)
         }
     }
-
-    fun subtypes() = _subtypes.value!!
-
-    fun activeSubtype() = _activeSubtype.value!!
 
     private fun persistNewSubtypeList(list: List<Subtype>) {
         val listRaw = SubtypeJsonConfig.encodeToString(list)
@@ -88,7 +85,7 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
         if (subtype.id != activeSubtypeId) {
             prefs.localization.activeSubtypeId.set(subtype.id)
         }
-        _activeSubtype.postValue(subtype)
+        activeSubtype = subtype
     }
 
     /**
@@ -100,7 +97,7 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
      */
     fun addSubtype(subtype: Subtype): Boolean {
         val subtypeToAdd = subtype.copy(id = System.currentTimeMillis())
-        val subtypeList = _subtypes.value!!
+        val subtypeList = subtypes
         if (subtypeList.find { it.equalsExcludingId(subtype) } != null) {
             return false
         }
@@ -126,7 +123,7 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
      * @return The subtype or null, if no matching subtype could be found.
      */
     fun getSubtypeById(id: Long): Subtype? {
-        val subtypeList = _subtypes.value!!
+        val subtypeList = subtypes
         return subtypeList.find { it.id == id }
     }
 
@@ -149,7 +146,7 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
      * @param subtypeToModify The subtype with the new details but same id.
      */
     fun modifySubtypeWithSameId(subtypeToModify: Subtype) {
-        val subtypeList = _subtypes.value!!
+        val subtypeList = subtypes
         val index = subtypeList.indexOfFirst { subtypeToModify.id == it.id }
         if (index >= 0 && index < subtypeList.size) {
             val newSubtypeList = subtypeList.mapIndexed { n, subtype ->
@@ -170,7 +167,7 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
      * @param subtypeToRemove The subtype which should be removed.
      */
     fun removeSubtype(subtypeToRemove: Subtype) {
-        val subtypeList = _subtypes.value!!
+        val subtypeList = subtypes
         val indexToRemove = subtypeList.indexOf(subtypeToRemove)
         if (indexToRemove in subtypeList.indices) {
             val newSubtypeList = subtypeList.mapIndexedNotNull { n, subtype ->
@@ -189,15 +186,15 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
      * Switch to the previous subtype in the subtype list if possible.
      */
     fun switchToPrevSubtype() {
-        val subtypeList = _subtypes.value!!
-        val activeSubtype = _activeSubtype.value!!
+        val subtypeList = subtypes
+        val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
         var newActiveSubtype: Subtype = Subtype.DEFAULT
         for (subtype in subtypeList.asReversed()) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
                 newActiveSubtype = subtype
-            } else if (subtype == activeSubtype) {
+            } else if (subtype == cachedActiveSubtype) {
                 triggerNextSubtype = true
             }
         }
@@ -205,22 +202,22 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
             newActiveSubtype = subtypeList.last()
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
-        _activeSubtype.postValue(newActiveSubtype)
+        activeSubtype = newActiveSubtype
     }
 
     /**
      * Switch to the next subtype in the subtype list if possible.
      */
     fun switchToNextSubtype() {
-        val subtypeList = _subtypes.value!!
-        val activeSubtype = _activeSubtype.value!!
+        val subtypeList = subtypes
+        val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
         var newActiveSubtype: Subtype = Subtype.DEFAULT
         for (subtype in subtypeList) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
                 newActiveSubtype = subtype
-            } else if (subtype == activeSubtype) {
+            } else if (subtype == cachedActiveSubtype) {
                 triggerNextSubtype = true
             }
         }
@@ -228,6 +225,6 @@ class SubtypeManager(context: Context) : CoroutineScope by MainScope() {
             newActiveSubtype = subtypeList.first()
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
-        _activeSubtype.postValue(newActiveSubtype)
+        activeSubtype = newActiveSubtype
     }
 }

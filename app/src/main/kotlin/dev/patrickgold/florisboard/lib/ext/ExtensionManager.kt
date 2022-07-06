@@ -23,7 +23,6 @@ import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
@@ -62,7 +61,6 @@ val ExtensionJsonConfig = Json {
     serializersModule = SerializersModule {
         polymorphic(Extension::class) {
             subclass(KeyboardExtension::class, KeyboardExtension.serializer())
-            subclass(SpellingExtension::class, SpellingExtension.serializer())
             subclass(ThemeExtension::class, ThemeExtension.serializer())
         }
         polymorphic(Composer::class) {
@@ -78,7 +76,6 @@ val ExtensionJsonConfig = Json {
 class ExtensionManager(context: Context) {
     companion object {
         const val IME_KEYBOARD_PATH = "ime/keyboard"
-        const val IME_SPELLING_PATH = "ime/spelling"
         const val IME_THEME_PATH = "ime/theme"
 
         private const val FILE_OBSERVER_MASK =
@@ -90,12 +87,10 @@ class ExtensionManager(context: Context) {
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
-    val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
 
     fun init() {
         keyboardExtensions.init()
-        spellingDicts.init()
         themes.init()
     }
 
@@ -104,7 +99,6 @@ class ExtensionManager(context: Context) {
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
             is KeyboardExtension -> IME_KEYBOARD_PATH
-            is SpellingExtension -> IME_SPELLING_PATH
             is ThemeExtension -> IME_THEME_PATH
             else -> error("Unknown extension type")
         }
@@ -130,7 +124,6 @@ class ExtensionManager(context: Context) {
 
     fun getExtensionById(id: String): Extension? {
         keyboardExtensions.value?.find { it.meta.id == id }?.let { return it }
-        spellingDicts.value?.find { it.meta.id == id }?.let { return it }
         themes.value?.find { it.meta.id == id }?.let { return it }
         return null
     }

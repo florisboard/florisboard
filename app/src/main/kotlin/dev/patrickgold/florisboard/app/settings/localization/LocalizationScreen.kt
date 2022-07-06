@@ -21,6 +21,7 @@ import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -73,8 +74,8 @@ fun LocalizationScreen() = FlorisScreen {
             entries = DisplayLanguageNamesIn.listEntries(),
         )
         PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
-            val subtypes by subtypeManager.subtypes.observeAsNonNullState()
-            if (subtypes.isNullOrEmpty()) {
+            val subtypes by subtypeManager.subtypesFlow.collectAsState()
+            if (subtypes.isEmpty()) {
                 FlorisWarningCard(
                     modifier = Modifier.padding(all = 8.dp),
                     text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),

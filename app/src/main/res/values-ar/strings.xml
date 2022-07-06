@@ -354,38 +354,13 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">تعطيل الميزات التي تعمل مع بيانات الإدخال الخاصة بك</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">المدقق الإملائي</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">استخدم اعدادات المدقق الإملائي المدمجة بلوحة المفاتيح</string>
-    <string name="pref__spelling__active_spellchecker__label">تدقيق إملائي في حقل النص المضمن</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">معطل على مستوى النظام. لن تظهر أي خطوط حمراء في الحقول النصية للكلمات غير الصحيحة. انقر للتغيير.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">لم يتم تعيين خدمة المدقق الإملائي للنص المضمّن. انقر للتغيير.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">تم تعيين خيار \"اللغات\" في شاشة المدقق الإملائي للنظام على \"استخدام لغات النظام\". نظرًا لوجود خطأ ، قد يتسبب هذا في عدم قيام {app_name} بإجراء تدقيق إملائي مضمّن. ضع في اعتبارك تغييره إلى \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">التكوين</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">اللغات</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم الأسماء من جهات الاتصال</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">سيقوم المدقق الإملائي بالبحث عن الأسماء من قائمة جهات الاتصال الخاصة بك</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">استخدم إدخالات قاموس المستخدم</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">سيبحث المدقق الإملائي عن إدخالات من قواميس المستخدم ، إذا تم تمكينها</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">إدارة القواميس</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} مثبت</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">لا توجد قواميس مدقق إملائي مثبتة حاليًا. أضف أول واحد بالزر \"+\" أدناه!</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">ملحق / أرشيف</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">ملف قاموس + Affix</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">استيراد قاموس جديد</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">حدد المصدر</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">حدد المصدر الذي قمت بتنزيل ملحق الجهة الخارجية منه. يساعد هذا في تحليل تنسيق الامتداد الذي لايدعمه FlorisBoard بشكل صحيح وتحويله إلى تنسيق يدعمه FlorisBoard.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">استعادة أرشيف</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">الآن قم باستيراد الأرشيف عن طريق اختيار الملف في مربع حوار منتقي الملفات.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">اختر اللغة</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">رمز اللغة (مثلًا en_GB)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">استيراد ملفات الملحقات / القواميس</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">حدد ملف الملحق (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">حدد ملف القاموس (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">تحقق من الاستيراد</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">تحقق من صحة البيانات الوصفية أدناه. إذا كان هناك شيء غير صحيح ، يمكنك الرجوع إلى الخطوة السابقة وإعادة تحديد المصدر / إعادة استيراد الأرشيف.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">من أين أحصل على القواميس؟</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">يستخدم FlorisBoard Nuspell كمحرك للمدقق الإملائي ، مما يعني أن هناك قدرًا هائلاً من القواميس المتاحة ، حيث يتم استخدام Hunspell بواسطة العديد من البرامج الأخرى أيضًا. تعرض القائمة أدناه بعض المصادر المختارة يدويًا والتي يدعمها مدير الاستيراد. قم بتنزيل إما ملف الأرشيف أو ملفات القاموس ، ثم اختر المصدر الصحيح في مدير الاستيراد (من المهم قراءة تنسيق الأرشيف بشكل صحيح).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">إذا كانت هذه القائمة لا تحتوي على قواميس للغة أو لهجتك ، فيمكنك أيضًا البحث يدويًا عن قاموس Hunspell واستيراد ملف \"aff\" و \"dic\" لهذا الغرض.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق FlorisBoard</string>
@@ -548,11 +523,9 @@
     <string name="ext__error__not_found_description">تعذر العثور على ملحق بالمعرف \"{id}\".</string>
     <string name="ext__editor__title_create_any">إنشاء ملحق</string>
     <string name="ext__editor__title_create_keyboard">انشاء ملحق لوحة المفاتيح</string>
-    <string name="ext__editor__title_create_spelling">إنشاء ملحق تهجئة</string>
     <string name="ext__editor__title_create_theme">إنشاء ملحق سمة</string>
     <string name="ext__editor__title_edit_any">تعديل الملحق</string>
     <string name="ext__editor__title_edit_keyboard">تعديل ملحق لوحة المفاتيح</string>
-    <string name="ext__editor__title_edit_spelling">تعديل ملحق التهجئة</string>
     <string name="ext__editor__title_edit_theme">تعديل ملحق الثيم</string>
     <string name="ext__editor__metadata__title">ادارة البيانات الوصفية</string>
     <string name="ext__editor__metadata__title_invalid">بيانات وصفية غير معروفة</string>
@@ -572,7 +545,6 @@
     <string name="ext__import__failure">فشل في استيراد الاضافة: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">إستيراد الملحقات</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">استيراد ملحقات لوحة المفاتيح</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">استيراد ملحقات التهجئة/ القاموس</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">استيراد ملحقات الثيم</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">الملف لايمكن استرداده. السبب:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">نوع الملف غير مدعوم أو غير معروف.</string>

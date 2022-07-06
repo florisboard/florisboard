@@ -2,13 +2,9 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.nlp.SuggestionList
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import kotlin.math.min
 
 /**
@@ -29,15 +24,13 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     }
 
     private val prefs by florisPreferenceModel()
-    private val assetManager by context.assetManager()
     private val keyboardManager by context.keyboardManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private var glideTypingClassifier = StatisticalGlideTypingClassifier()
+    private var glideTypingClassifier = StatisticalGlideTypingClassifier(context)
     private var lastTime = System.currentTimeMillis()
-    private val wordDataCache = guardedByLock { hashMapOf<String, Int>() }
 
     override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
@@ -66,24 +59,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
      */
     fun setLayout(keys: List<TextKey>) {
         if (keys.isNotEmpty()) {
-            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype())
-        }
-    }
-
-    /**
-     * Set the word data for the internal gesture classifier
-     */
-    fun setWordData(subtype: Subtype) {
-        scope.launch(Dispatchers.Default) {
-            wordDataCache.withLock { wordDataCache ->
-                if (wordDataCache.isEmpty()) {
-                    // FIXME: get this info from dictionary.
-                    val data = assetManager.loadTextAsset(FlorisRef.assets("ime/dict/data.json")).getOrThrow()
-                    val json = JSONObject(data)
-                    wordDataCache.putAll(json.keys().asSequence().map { it to json.getInt(it) })
-                }
-                glideTypingClassifier.setWordData(wordDataCache, subtype)
-            }
+            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype)
         }
     }
 
@@ -105,15 +81,16 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
             val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
-                val suggestionList = SuggestionList.new(1)
-                suggestions.subList(
-                    1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
-                    maxSuggestionsToShow.coerceAtMost(suggestions.size)
-                ).map { keyboardManager.fixCase(it) }.forEach {
-                    suggestionList.add(it, 255)
+                val suggestionList = buildList {
+                    suggestions.subList(
+                        1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
+                        maxSuggestionsToShow.coerceAtMost(suggestions.size)
+                    ).map { keyboardManager.fixCase(it) }.forEach {
+                        add(WordSuggestionCandidate(it, confidence = 1.0))
+                    }
                 }
-                nlpManager.suggestDirectly(suggestionList.toList())
-                suggestionList.dispose()
+
+                nlpManager.suggestDirectly(suggestionList)
                 if (commit && suggestions.isNotEmpty()) {
                     keyboardManager.commitGesture(suggestions.first())
                 }

@@ -354,38 +354,13 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">强制隐私模式</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">禁用能够使用您的输入数据的功能</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">拼写检查工具</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">使用键盘的拼写检查工具配置</string>
-    <string name="pref__spelling__active_spellchecker__label">内嵌式文本框拼写检查</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。对于不正确的单词，文本框中不会出现红线。点击进行更改。</string>
     <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。点击进行更改。</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">系统拼写检查界面中的“语言”选项设置为“使用系统语言”。由于存在漏洞，这可能会导致 {app_name} 不执行内嵌式拼写检查。请考虑将其更改为“{use_floris_config}”。</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">配置</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">语言</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[未完成] 使用联系人姓名</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">拼写检查工具将从您的联系人列表中查找姓名</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">使用用户词典条目</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">如果启用了这些条目，拼写检查工具将从用户词典中查找条目</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">管理词典</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">已安装 {n} 个</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">当前没有安装拼写检查词典。使用下面的“+”按钮添加第一个！</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">扩展 / 档案</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">词缀 + 词典文件</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">导入新的词典</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">选择来源</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">选择您下载第三方扩展的来源。这有助于正确解析非 FlorisBoard 扩展格式并将其转换为 FlorisBoard 格式。</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">导入档案</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">现在通过在文件选择对话框中选择文件来导入档案。</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">选择语言</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">语言代码（例如：\"en_US\"）</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">导入词缀 / 词典文件</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">选择词缀 (.aff) 文件</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">选择要导入的词典 (.dic) 文件</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">验证导入</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">验证以下元数据是否正确。如果出现错误，您可以切换回上一步并重新选择源 / 重新导入档案。</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">我在哪里可以获得词典？</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard 使用 Nuspell 作为拼写检查引擎，这意味着有大量可用的字典，因为许多其他软件也使用 Hunspell。下面的列表显示了几个手动筛选的导入管理器支持的源。请下载档案文件或词典文件，然后在导入管理器中选择正确的源（这对于正确读取档案格式很重要）。</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">如果此列表不包含您的语言或方言的词典，您也可以手动搜索 Hunspell 词典并为此导入“aff”和“dic”文件。</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">关于</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 的应用图标</string>
@@ -550,11 +525,9 @@
     <string name="ext__error__not_found_description">找不到 ID 为“{id}”的扩展。</string>
     <string name="ext__editor__title_create_any">添加新扩展</string>
     <string name="ext__editor__title_create_keyboard">添加键盘扩展</string>
-    <string name="ext__editor__title_create_spelling">添加拼写扩展</string>
     <string name="ext__editor__title_create_theme">添加主题扩展</string>
     <string name="ext__editor__title_edit_any">编辑扩展</string>
     <string name="ext__editor__title_edit_keyboard">编辑键盘扩展</string>
-    <string name="ext__editor__title_edit_spelling">编辑拼写扩展</string>
     <string name="ext__editor__title_edit_theme">编辑主题扩展</string>
     <string name="ext__editor__metadata__title">管理元数据</string>
     <string name="ext__editor__metadata__title_invalid">无效的元数据</string>
@@ -574,7 +547,6 @@
     <string name="ext__import__failure">导入扩展失败：{error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">导入扩展</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">导入键盘扩展</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">导入拼写扩展 / 词典</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">导入主题扩展</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">无法导入文件。原因：</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">不支持或无法识别的文件类型。</string>

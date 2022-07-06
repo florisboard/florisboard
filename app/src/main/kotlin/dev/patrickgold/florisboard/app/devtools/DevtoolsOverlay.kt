@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
-import android.view.textservice.SuggestionsInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -28,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +42,7 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
-import dev.patrickgold.florisboard.spellingManager
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.text.SimpleDateFormat
 import java.util.*
@@ -84,7 +82,7 @@ private fun DevtoolsClipboardOverlay() {
     val clipboardManager by context.clipboardManager()
 
     DevtoolsOverlayBox(title = "Clipboard overlay") {
-        val primaryClip by clipboardManager.primaryClip.observeAsState()
+        val primaryClip by clipboardManager.primaryClipFlow.collectAsState()
         Text(
             modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
             text = primaryClip.toString(),
@@ -112,7 +110,8 @@ private fun DevtoolsInputStateOverlay() {
             DevtoolsText(text = "Before: \"${content.textBeforeSelection}\"")
             DevtoolsText(text = "Selected: \"${content.selectedText}\"")
             DevtoolsText(text = "After: \"${content.textAfterSelection}\"")
-            DevtoolsText(text = "ComposingWord: ${content.composing}")
+            DevtoolsText(text = "Composing: ${content.composing}")
+            DevtoolsText(text = "CurrentWord: ${content.currentWord}")
         }
     }
 }
@@ -121,17 +120,16 @@ private fun DevtoolsInputStateOverlay() {
 @Composable
 private fun DevtoolsSpellingOverlay() {
     val context = LocalContext.current
-    val spellingManager by context.spellingManager()
+    val nlpManager by context.nlpManager()
 
-    val debugOverlayVersion by spellingManager.debugOverlayVersion.observeAsNonNullState()
-    val suggestionsInfos = remember(debugOverlayVersion) { spellingManager.debugOverlaySuggestionsInfos.snapshot() }
+    val debugOverlayVersion by nlpManager.debugOverlayVersion.observeAsNonNullState()
+    val suggestionsInfos = remember(debugOverlayVersion) { nlpManager.debugOverlaySuggestionsInfos.snapshot() }
 
     val sortedEntries = suggestionsInfos.entries.sortedByDescending { it.key }
     DevtoolsOverlayBox(title = "Spelling overlay (${sortedEntries.size})") {
         for ((timestamp, wordInfoPair) in sortedEntries) {
             val (word, info) = wordInfoPair
-            val isTypo = (info.suggestionsAttributes and SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO) > 0
-            val suggestions = Array(info.suggestionsCount) { n -> info.getSuggestionAt(n) }
+            val suggestions = info.suggestions()
             Column(modifier = Modifier.padding(horizontal = 8.dp)) {
                 val date = DateFormat.format(Date(timestamp))
                 Text(
@@ -141,8 +139,8 @@ private fun DevtoolsSpellingOverlay() {
                     fontSize = 12.sp,
                 )
                 val details = buildString {
-                    appendLine("isTypo: $isTypo")
-                    if (isTypo) {
+                    appendLine("isTypo: ${info.isTypo} | isGrammarError: ${info.isGrammarError}")
+                    if (info.isTypo || info.isGrammarError) {
                         appendLine("providing corrections list of size n=${suggestions.size}")
                         for ((n, suggestion) in suggestions.withIndex()) {
                             append("  [$n] = string[${suggestion.length}] { \"")

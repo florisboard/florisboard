@@ -346,38 +346,13 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactiver les fonctionalitées qui utilise vos données d\'entrée</string>
     <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Correcteur d\'orthographe</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Utiliser la configuration du correcteur orthographique du clavier</string>
-    <string name="pref__spelling__active_spellchecker__label">Vérification orthographique des champs de texte en ligne</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Désactivé à l\'échelle du système. Aucune ligne rouge n\'apparaîtra dans les champs de texte pour les mots incorrects. Appuyez pour changer.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Aucun service de vérificateur d\'orthographe de texte en ligne activé. Appuyez pour changer.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">L\'option \"Langues\" dans l\'écran correcteur orthographique du système est définie sur \"Utiliser les langues du système\". En raison d\'un bug, {app_name} peut ne pas effectuer de vérification orthographique en ligne. Pensez à le changer en \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuration</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Langues</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NON IMPLÉMENTÉ] Utiliser les noms des contacts</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Le vérificateur orthographique utilisera les noms de votre liste de contacts</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utiliser le dictionnaire utilisateur</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Le vérificateur d\'orthographe utilisera les dictionnaires utilisateurs, si ils sont activés</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Gérer les dictionnaires</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} installé</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Aucun dictionnaire de vérification orthographique n’est installé. Ajoutez-en un avec le bouton « + » ci-dessous !</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extension / Archive</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affixe + Fichier dictionnaire</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Importer un nouveau dictionnaire</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Sélectionner la source</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Sélectionnez la source à partir de laquelle vous avez téléchargé l\'extension tierce. Cela aide à analyser correctement le format d\'extension non-FlorisBoard et à le convertir en un format FlorisBoard.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importer une archive</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Importez maintenant l\'archive en choisissant le fichier dans la boîte de dialogue du sélecteur de fichier.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Sélectionner la langue</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Code de la langue (ex. fr_FR)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Importer des fichiers d\'affixes/dictionnaires</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Sélectionner un fichier affixe (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Sélectionner le fichier dictionnaire (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Vérifier l\'import</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Vérifiez que les métadonnées ci-dessous sont correctes. Si quelque chose est incorrect, vous pouvez revenir à une étape précédente et sélectionner la source / réimporter l\'archive.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Où trouver des dictionnaires ?</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard utilise Nuspell comme moteur de vérification orthographique, il dispose donc d’un grand nombre de dictionnaire, car Hunspell est utilisé par beaucoup d’autres logiciels. La liste ci-dessous montre quelques sources sélectionnées manuellement qui sont supportés par le gestionnaire d’importation. Téléchargez soit le fichier archive, ou les fichiers du dictionnaire, puis dans le gestionnaire d’importation, choisissez la source adéquate (nécessaire pour lire le format de l’archive correctement).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">si la liste ne contient pas de dictionnaires pour votre langue ou dialecte, vous pouvez aussi aller chercher manuellement un dictionnaire Hunspell et importer ses fichiers « aff » et « dic ».</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">À propos</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icône de l\'application FlorisBoard</string>
@@ -540,11 +515,9 @@
     <string name="ext__error__not_found_description">Aucune extension avec l\'ID \"{id}\" n\'a pu être trouvée.</string>
     <string name="ext__editor__title_create_any">Créer une extension</string>
     <string name="ext__editor__title_create_keyboard">Créer une extension de clavier</string>
-    <string name="ext__editor__title_create_spelling">Créer une extension orthographique</string>
     <string name="ext__editor__title_create_theme">Créer une extension de thème</string>
     <string name="ext__editor__title_edit_any">Modifier l\'extension</string>
     <string name="ext__editor__title_edit_keyboard">Modifier l\'extension du clavier</string>
-    <string name="ext__editor__title_edit_spelling">Modifier l\'extension orthographique</string>
     <string name="ext__editor__title_edit_theme">Modifier l\'extension de thème</string>
     <string name="ext__editor__metadata__title">Gérer les métadonnées</string>
     <string name="ext__editor__metadata__title_invalid">Métadonnées invalides</string>
@@ -564,7 +537,6 @@
     <string name="ext__import__failure">Échec de l\'importation de l\'extension : {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importer l\'extension</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importer une extension de clavier</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Importer l\'extension orthographique / le dictionnaire</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importer l\'extension de thème</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Le fichier ne peut pas être importé. Raison :</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Type de fichier non pris en charge ou non reconnu.</string>

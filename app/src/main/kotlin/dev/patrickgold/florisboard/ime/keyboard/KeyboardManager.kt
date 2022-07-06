@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -30,7 +31,6 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -40,24 +40,27 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
-import dev.patrickgold.florisboard.ime.nlp.NlpManager
+import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarActions
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
-import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarActions
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.kotlin.collectIn
+import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.kotlin.titlecase
 import dev.patrickgold.florisboard.lib.kotlin.uppercase
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
@@ -70,7 +73,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 
 data class RenderInfo(
     val version: Int = 0,
@@ -88,7 +90,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
     private val extensionManager by context.extensionManager()
-    private val glideTypingManager by context.glideTypingManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
@@ -138,35 +139,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         prefs.keyboard.utilityKeyEnabled.observeForever {
             updateRenderInfo()
         }
-        prefs.glide.enabled.observeForever { enabled ->
-            if (enabled) {
-                glideTypingManager.setWordData(subtypeManager.activeSubtype())
-            }
-        }
         activeState.observeForever {
             updateRenderInfo()
         }
-        subtypeManager.activeSubtype.observeForever { newSubtype ->
+        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
             reevaluateInputShiftState()
             updateRenderInfo()
-            if (prefs.glide.enabled.get()) {
-                glideTypingManager.setWordData(newSubtype)
-            }
         }
-        clipboardManager.primaryClip.observeForever {
+        clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             updateRenderInfo()
         }
-        scope.launch {
-            withContext(Dispatchers.Main) {
+        editorInstance.activeContentFlow.collectIn(scope) { content ->
+            if (!activeState.isComposingEnabled) {
                 nlpManager.clearSuggestions()
+                return@collectIn
             }
-            editorInstance.activeContentFlow.collect { content ->
-                if (content.composing.isNotValid || !activeState.isComposingEnabled) {
-                    nlpManager.clearSuggestions()
-                    return@collect
-                }
-                nlpManager.suggest(content.composingText, listOf())
-            }
+            nlpManager.suggest(subtypeManager.activeSubtype, content)
         }
     }
 
@@ -175,7 +163,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             action()
             val editorInfo = editorInstance.activeInfo
             val state = activeState.snapshot()
-            val subtype = subtypeManager.activeSubtype()
+            val subtype = subtypeManager.activeSubtype
             val mode = activeState.keyboardMode
             val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
                 layoutManager.computeKeyboardAsync(
@@ -237,7 +225,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     fun reevaluateInputShiftState() {
         if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             val shift = prefs.correction.autoCapitalization.get()
-                && subtypeManager.activeSubtype().primaryLocale.supportsCapitalization
+                && subtypeManager.activeSubtype.primaryLocale.supportsCapitalization
                 && editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
             activeState.inputShiftState = when {
                 shift -> InputShiftState.SHIFTED_AUTOMATIC
@@ -250,7 +238,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * @return If the language switch should be shown.
      */
     fun shouldShowLanguageSwitch(): Boolean {
-        return subtypeManager.subtypes().size > 1
+        return subtypeManager.subtypes.size > 1
     }
 
     fun toggleOneHandedMode(isRight: Boolean) {
@@ -301,10 +289,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    fun commitCandidate(candidate: NlpManager.Candidate) {
+    fun commitCandidate(candidate: SuggestionCandidate) {
+        scope.launch {
+            candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
+        }
         when (candidate) {
-            is NlpManager.Candidate.Word -> editorInstance.commitCompletion(candidate.word)
-            is NlpManager.Candidate.Clip -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            else -> editorInstance.commitCompletion(candidate.text.toString())
         }
     }
 
@@ -321,10 +312,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     fun fixCase(word: String): String {
         return when(activeState.inputShiftState) {
             InputShiftState.CAPS_LOCK -> {
-                word.uppercase(subtypeManager.activeSubtype().primaryLocale)
+                word.uppercase(subtypeManager.activeSubtype.primaryLocale)
             }
             InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
-                word.titlecase(subtypeManager.activeSubtype().primaryLocale)
+                word.titlecase(subtypeManager.activeSubtype.primaryLocale)
             }
             else -> word
         }
@@ -517,6 +508,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * enabled by the user.
      */
     private fun handleSpace(data: KeyData) {
+        nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -643,9 +635,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
             KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                 if (prefs.clipboard.clearPrimaryClipDeletesLastItem.get()) {
-                    clipboardManager.primaryClip()?.let { clipboardManager.deleteClip(it) }
+                    clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it) }
                 }
-                clipboardManager.setPrimaryClip(null)
+                clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToast(R.string.clipboard__cleared_primary_clip)
             }
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode(isRight = false)
@@ -686,6 +678,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
             else -> {
                 if (activeState.imeUiMode == ImeUiMode.MEDIA) {
+                    nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
                     editorInstance.commitText(data.asString(isForDisplay = false))
                     return@batchEdit
                 }
@@ -710,6 +703,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
+                            if (!UCharacter.isUAlphabetic(UCharacter.codePointAt(text, 0))) {
+                                nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+                            }
                             editorInstance.commitChar(text)
                         }
                         else -> {
@@ -845,7 +841,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 KeyCode.CLIPBOARD_PASTE,
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
-                    clipboardManager.canBePasted(clipboardManager.primaryClip.value)
+                    clipboardManager.canBePasted(clipboardManager.primaryClip)
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     editorInfo.isRichInputEditor

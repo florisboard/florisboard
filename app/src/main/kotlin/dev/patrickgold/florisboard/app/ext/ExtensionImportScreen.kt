@@ -48,9 +48,8 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.nlp.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
@@ -77,11 +76,6 @@ enum class ExtensionImportScreenType(
     EXT_KEYBOARD(
         id = "ext-keyboard",
         titleResId = R.string.ext__import__ext_keyboard,
-        supportedFiles = listOf(FileRegistry.FlexExtension),
-    ),
-    EXT_SPELLING(
-        id = "ext-spelling",
-        titleResId = R.string.ext__import__ext_spelling,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
     EXT_THEME(
@@ -116,14 +110,14 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 if (extensionManager.getExtensionById(ext.meta.id)?.sourceRef?.isAssets == true) {
                     R.string.ext__import__file_skip_ext_core
                 } else {
-                    NATIVE_NULLPTR
+                    NATIVE_NULLPTR.toInt()
                 }
             }
             fileInfo.mediaType == FileRegistry.FlexExtension.mediaType -> {
                 R.string.ext__import__file_skip_ext_corrupted
             }
             else -> {
-                NATIVE_NULLPTR
+                NATIVE_NULLPTR.toInt()
             }
         }
     }
@@ -156,7 +150,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             }
             val enabled = remember(importResult) {
                 importResult?.getOrNull()?.takeIf { workspace ->
-                    workspace.inputFileInfos.any { it.skipReason == NATIVE_NULLPTR }
+                    workspace.inputFileInfos.any { it.skipReason == NATIVE_NULLPTR.toInt() }
                 } != null
             }
             ButtonBarButton(
@@ -166,7 +160,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 val workspace = importResult!!.getOrThrow()
                 runCatching {
                     for (fileInfo in workspace.inputFileInfos) {
-                        if (fileInfo.skipReason != NATIVE_NULLPTR) {
+                        if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
                             continue
                         }
                         val ext = fileInfo.ext
@@ -176,9 +170,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             }
                             ExtensionImportScreenType.EXT_KEYBOARD -> {
                                 ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
-                            }
-                            ExtensionImportScreenType.EXT_SPELLING -> {
-                                ext.takeIf { it is SpellingExtension }?.let { extensionManager.import(it) }
                             }
                             ExtensionImportScreenType.EXT_THEME -> {
                                 ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
@@ -313,7 +304,7 @@ private fun FileInfoView(
                     )
                 }
             }
-            if (fileInfo.skipReason != NATIVE_NULLPTR) {
+            if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .height(19.dp)
