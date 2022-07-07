@@ -54,7 +54,8 @@ fully respecting your privacy. Currently in early-beta state.
 </tr>
 </table>
 
-Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summary) versioning scheme and enter the public beta on Google Play.
+Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summary) versioning scheme.
+Beginning with v0.5.0 FlorisBoard will enter the public beta on Google Play.
 
 ## Highlighted features
 - Integrated clipboard manager / history
