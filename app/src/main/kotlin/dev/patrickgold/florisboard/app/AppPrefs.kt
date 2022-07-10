@@ -27,11 +27,11 @@ import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
-import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
@@ -44,6 +44,7 @@ import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -652,5 +653,28 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "theme__editor_level",
             default = SnyggLevel.ADVANCED,
         )
+    }
+
+    override fun migrate(entry: PreferenceMigrationEntry): PreferenceMigrationEntry {
+        return when (entry.key) {
+            // Migrate enums from their lowercase to uppercase representation
+            // Keep migration rule until: 0.5 dev cycle
+            "advanced__settings_theme", "gestures__swipe_up", "gestures__swipe_down", "gestures__swipe_left",
+            "gestures__swipe_right", "gestures__space_bar_swipe_up", "gestures__space_bar_swipe_left",
+            "gestures__space_bar_swipe_right", "gestures__space_bar_long_press", "gestures__delete_key_swipe_left",
+            "gestures__delete_key_long_press", "keyboard__hinted_number_row_mode", "keyboard__hinted_symbols_mode",
+            "keyboard__utility_key_action", "keyboard__one_handed_mode", "keyboard__landscape_input_ui_mode",
+            "localization__display_language_names_in", "media__emoji_preferred_skin_tone",
+            "media__emoji_preferred_hair_style", "smartbar__primary_actions_row_type",
+            "smartbar__secondary_actions_placement", "smartbar__secondary_actions_row_type", "spelling__language_mode",
+            "suggestion__display_mode", "theme__mode", "theme__editor_display_colors_as",
+            "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
+            -> {
+                entry.transform(rawValue = entry.rawValue.uppercase())
+            }
+
+            // Default: keep entry
+            else -> entry.keepAsIs()
+        }
     }
 }
