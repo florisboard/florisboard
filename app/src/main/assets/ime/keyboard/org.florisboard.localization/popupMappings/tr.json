@@ -1,5 +1,8 @@
 {
   "all": {
+    "a": {
+      "main": { "$": "auto_text_key", "code":  226, "label": "â" }
+    },
     "c": {
       "main": { "$": "auto_text_key", "code":  231, "label": "ç" }
     },
@@ -10,13 +13,19 @@
       "main": { "$": "case_selector",
         "lower": { "code":  305, "label": "ı" },
         "upper": { "code":   73, "label": "I" }
-      }
+      },
+      "relevant": [
+        { "$": "auto_text_key", "code":  238, "label": "î" }
+      ]
     },
     "ı": {
       "main": { "$": "case_selector",
         "lower": { "code":  105, "label": "i" },
         "upper": { "code":  304, "label": "İ" }
-      }
+      },
+      "relevant": [
+        { "$": "auto_text_key", "code":  238, "label": "î" }
+      ]
     },
     "o": {
       "main": { "$": "auto_text_key", "code":  246, "label": "ö" }
@@ -25,7 +34,10 @@
       "main": { "$": "auto_text_key", "code":  351, "label": "ş" }
     },
     "u": {
-      "main": { "$": "auto_text_key", "code":  252, "label": "ü" }
+      "main": { "$": "auto_text_key", "code":  252, "label": "ü" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  251, "label": "û" }
+      ]
     },
     "~right": {
       "main": { "code":   44, "label": "," },
