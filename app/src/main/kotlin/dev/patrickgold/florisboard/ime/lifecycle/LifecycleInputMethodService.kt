@@ -29,7 +29,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
-import androidx.savedstate.ViewTreeSavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import kotlinx.coroutines.CoroutineScope
 
 open class LifecycleInputMethodService : InputMethodService(),
@@ -42,16 +42,15 @@ open class LifecycleInputMethodService : InputMethodService(),
     val uiScope: CoroutineScope
         get() = lifecycle.coroutineScope
 
+    final override val savedStateRegistry: SavedStateRegistry
+        get() = savedStateRegistryController.savedStateRegistry
+
     final override fun getLifecycle(): Lifecycle {
         return lifecycleRegistry
     }
 
     final override fun getViewModelStore(): ViewModelStore {
         return store
-    }
-
-    final override fun getSavedStateRegistry(): SavedStateRegistry {
-        return savedStateRegistryController.savedStateRegistry
     }
 
     @CallSuper
@@ -66,7 +65,7 @@ open class LifecycleInputMethodService : InputMethodService(),
         val decorView = window!!.window!!.decorView
         ViewTreeLifecycleOwner.set(decorView, this)
         ViewTreeViewModelStoreOwner.set(decorView, this)
-        ViewTreeSavedStateRegistryOwner.set(decorView, this)
+        decorView.setViewTreeSavedStateRegistryOwner(this)
     }
 
     @CallSuper
