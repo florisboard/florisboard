@@ -503,9 +503,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val content = activeContent
         val selection = content.selection
         if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
-        val textBefore = content.getTextBeforeCursor(2)
+        val textBefore = content.getTextBeforeCursor(1)
         val punctuationRule = nlpManager.getActivePunctuationRule()
-        return textBefore.length >= 2 && !textBefore[textBefore.length - 2].isWhitespace() &&
+        return textBefore.isNotEmpty() &&
             (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
                 textBefore[textBefore.length - 1].isLetterOrDigit()) &&
             (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
