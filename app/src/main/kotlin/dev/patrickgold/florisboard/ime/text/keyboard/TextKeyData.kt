@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.icu.lang.UCharacter
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -495,10 +496,7 @@ class AutoTextKeyData(
     override val groupId: Int = KeyData.GROUP_DEFAULT,
     override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
-    @Transient private val lower: TextKeyData =
-        TextKeyData(type, Character.toLowerCase(code), label.lowercase(FlorisLocale.default()), groupId, popup)
-    @Transient private val upper: TextKeyData =
-        TextKeyData(type, Character.toUpperCase(code), label.uppercase(FlorisLocale.default()), groupId, popup)
+    @Transient private val state = AutoLetterState()
 
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
@@ -506,7 +504,8 @@ class AutoTextKeyData(
                 TextKeyData(data.type, data.code, data.label, groupId, popup)
             }
         } else {
-            if (evaluator.activeState().isUppercase) { upper } else { lower }
+            state.recomputeIfNecessary(evaluator.activeSubtype().primaryLocale)
+            if (evaluator.activeState().isUppercase) { state.upper } else { state.lower }
         }
     }
 
@@ -525,6 +524,33 @@ class AutoTextKeyData(
 
     override fun toString(): String {
         return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
+    }
+
+    private inner class AutoLetterState {
+        private var locale: FlorisLocale = FlorisLocale.ROOT
+        var lower: TextKeyData = TextKeyData.UNSPECIFIED
+            private set
+        var upper: TextKeyData = TextKeyData.UNSPECIFIED
+            private set
+
+        fun recomputeIfNecessary(locale: FlorisLocale) {
+            if (this.locale == locale) return
+            this.locale = locale
+            lower = TextKeyData(
+                type,
+                UCharacter.toString(code).lowercase(locale).codePointAt(0),
+                label.lowercase(locale),
+                groupId,
+                popup,
+            )
+            upper = TextKeyData(
+                type,
+                UCharacter.toString(code).uppercase(locale).codePointAt(0),
+                label.uppercase(locale),
+                groupId,
+                popup,
+            )
+        }
     }
 }
 
