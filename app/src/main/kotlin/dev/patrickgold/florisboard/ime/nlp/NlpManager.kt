@@ -369,7 +369,9 @@ class NlpManager(context: Context) {
                             addAll(NetworkUtils.getPhoneNumbers(text))
                         }
                         matches.forEachIndexed { i, match ->
-                            val isUniqueMatch = matches.subList(0, i).all { it.range.intersect(match.range).isEmpty() }
+                            val isUniqueMatch = matches.subList(0, i).all { prevMatch ->
+                                prevMatch.value != match.value && prevMatch.range.intersect(match.range).isEmpty()
+                            }
                             if (match.value != text && isUniqueMatch) {
                                 add(ClipboardSuggestionCandidate(
                                     clipboardItem = currentItem.copy(
