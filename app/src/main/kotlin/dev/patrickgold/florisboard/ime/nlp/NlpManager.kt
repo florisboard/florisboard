@@ -363,16 +363,28 @@ class NlpManager(context: Context) {
                     add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider))
                     if (currentItem.type == ItemType.TEXT) {
                         val text = currentItem.stringRepresentation()
-                        NetworkUtils.getUrls(text).forEach { match ->
-                            if (match.value != text) {
-                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
-                                    sourceProvider = this@ClipboardSuggestionProvider))
-                            }
+                        val matches = buildList {
+                            addAll(NetworkUtils.getEmailAddresses(text))
+                            addAll(NetworkUtils.getUrls(text))
+                            addAll(NetworkUtils.getPhoneNumbers(text))
                         }
-                        NetworkUtils.getEmailAddresses(text).forEach { match ->
-                            if (match.value != text) {
-                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
-                                    sourceProvider = this@ClipboardSuggestionProvider))
+                        matches.forEachIndexed { i, match ->
+                            val isUniqueMatch = matches.subList(0, i).all { prevMatch ->
+                                prevMatch.value != match.value && prevMatch.range.intersect(match.range).isEmpty()
+                            }
+                            if (match.value != text && isUniqueMatch) {
+                                add(ClipboardSuggestionCandidate(
+                                    clipboardItem = currentItem.copy(
+                                        // TODO: adjust regex of phone number so we don't need to manually strip the
+                                        //  parentheses from the match results
+                                        text = if (match.value.startsWith("(") && match.value.endsWith(")")) {
+                                            match.value.substring(1, match.value.length - 1)
+                                        } else {
+                                            match.value
+                                        }
+                                    ),
+                                    sourceProvider = this@ClipboardSuggestionProvider,
+                                ))
                             }
                         }
                     }

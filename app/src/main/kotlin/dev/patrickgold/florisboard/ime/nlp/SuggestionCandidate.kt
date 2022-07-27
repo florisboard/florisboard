@@ -128,8 +128,9 @@ class ClipboardSuggestionCandidate(
 
     override val iconId: Int = when (clipboardItem.type) {
         ItemType.TEXT -> when {
-            NetworkUtils.isUrl(text) -> R.drawable.ic_link
             NetworkUtils.isEmailAddress(text) -> R.drawable.ic_email
+            NetworkUtils.isUrl(text) -> R.drawable.ic_link
+            NetworkUtils.isPhoneNumber(text) -> R.drawable.ic_phone
             else -> R.drawable.ic_assignment
         }
         ItemType.IMAGE -> R.drawable.ic_image
