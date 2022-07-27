@@ -363,20 +363,14 @@ class NlpManager(context: Context) {
                     add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider))
                     if (currentItem.type == ItemType.TEXT) {
                         val text = currentItem.stringRepresentation()
-                        NetworkUtils.getEmailAddresses(text).forEach { match ->
-                            if (match.value != text) {
-                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
-                                    sourceProvider = this@ClipboardSuggestionProvider))
-                            }
+                        val matches = buildList {
+                            addAll(NetworkUtils.getEmailAddresses(text))
+                            addAll(NetworkUtils.getUrls(text))
+                            addAll(NetworkUtils.getPhoneNumbers(text))
                         }
-                        NetworkUtils.getUrls(text).forEach { match ->
-                            if (match.value != text) {
-                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
-                                    sourceProvider = this@ClipboardSuggestionProvider))
-                            }
-                        }
-                        NetworkUtils.getPhoneNumbers(text).forEach { match ->
-                            if (match.value != text) {
+                        matches.forEachIndexed { i, match ->
+                            val isUniqueMatch = matches.subList(0, i).all { it.range.intersect(match.range).isEmpty() }
+                            if (match.value != text && isUniqueMatch) {
                                 add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
                                     sourceProvider = this@ClipboardSuggestionProvider))
                             }
