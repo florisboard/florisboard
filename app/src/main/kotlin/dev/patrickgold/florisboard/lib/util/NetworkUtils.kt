@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.lib.util
 
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
+
 /**
  * Helper object containing methods to validate and extract network names and components from strings.
  */
@@ -34,6 +36,7 @@ object NetworkUtils {
     }
 
     fun getUrls(str: CharSequence): List<MatchGroup> {
+        if (AndroidVersion.ATMOST_API25_N_MR1) return emptyList() // See issue #1970
         return UrlRegex.findAll(str).mapNotNull { it.groups["Url"] }.toList()
     }
 
@@ -42,6 +45,7 @@ object NetworkUtils {
     }
 
     fun getEmailAddresses(str: CharSequence): List<MatchGroup> {
+        if (AndroidVersion.ATMOST_API25_N_MR1) return emptyList() // See issue #1970
         return EmailRegex.findAll(str).mapNotNull { it.groups["Email"] }.toList()
     }
 
@@ -50,6 +54,7 @@ object NetworkUtils {
     }
 
     fun getPhoneNumbers(str: CharSequence): List<MatchGroup> {
+        if (AndroidVersion.ATMOST_API25_N_MR1) return emptyList() // See issue #1970
         return PhoneNumberRegex.findAll(str).mapNotNull { it.groups["Phone"] }.toList()
     }
 }
