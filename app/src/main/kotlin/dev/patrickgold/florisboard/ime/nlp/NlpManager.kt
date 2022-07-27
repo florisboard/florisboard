@@ -371,8 +371,18 @@ class NlpManager(context: Context) {
                         matches.forEachIndexed { i, match ->
                             val isUniqueMatch = matches.subList(0, i).all { it.range.intersect(match.range).isEmpty() }
                             if (match.value != text && isUniqueMatch) {
-                                add(ClipboardSuggestionCandidate(currentItem.copy(text = match.value),
-                                    sourceProvider = this@ClipboardSuggestionProvider))
+                                add(ClipboardSuggestionCandidate(
+                                    clipboardItem = currentItem.copy(
+                                        // TODO: adjust regex of phone number so we don't need to manually strip the
+                                        //  parentheses from the match results
+                                        text = if (match.value.startsWith("(") && match.value.endsWith(")")) {
+                                            match.value.substring(1, match.value.length - 1)
+                                        } else {
+                                            match.value
+                                        }
+                                    ),
+                                    sourceProvider = this@ClipboardSuggestionProvider,
+                                ))
                             }
                         }
                     }
