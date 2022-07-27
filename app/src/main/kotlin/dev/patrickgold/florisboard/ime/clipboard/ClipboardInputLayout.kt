@@ -625,13 +625,17 @@ private fun ClipTextItemDescription(
     val iconId: Int?
     val description: String?
     when {
+        NetworkUtils.isEmailAddress(text) -> {
+            iconId = R.drawable.ic_email
+            description = stringRes(R.string.clipboard__item_description_email)
+        }
         NetworkUtils.isUrl(text) -> {
             iconId = R.drawable.ic_link
             description = stringRes(R.string.clipboard__item_description_url)
         }
-        NetworkUtils.isEmailAddress(text) -> {
-            iconId = R.drawable.ic_email
-            description = stringRes(R.string.clipboard__item_description_email)
+        NetworkUtils.isPhoneNumber(text) -> {
+            iconId = R.drawable.ic_phone
+            description = stringRes(R.string.clipboard__item_description_phone)
         }
         else -> {
             iconId = null
