@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="FlorisAppTheme" parent="Theme.SplashScreen.IconBackground">
+    <style name="FlorisAppTheme.Splash" parent="Theme.SplashScreen.IconBackground">
+        <item name="postSplashScreenTheme">@style/FlorisAppTheme</item>
+        <item name="windowSplashScreenBackground">@color/florisApp_windowBackground</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/ic_app_icon_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/floris_app_icon_foreground</item>
+
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <style name="FlorisAppTheme" parent="android:style/Theme.Material.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
@@ -13,12 +22,6 @@
         <item name="android:colorBackground">@color/florisApp_windowBackground</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
-
-        <!-- SplashScreen related attributes -->
-        <item name="postSplashScreenTheme">@android:style/Theme.Material.NoActionBar</item>
-        <item name="windowSplashScreenBackground">@color/florisApp_windowBackground</item>
-        <item name="windowSplashScreenIconBackgroundColor">@color/ic_app_icon_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/floris_app_icon_foreground</item>
     </style>
 
     <style name="CrashDialogTheme" parent="android:Theme.Material"/>

@@ -54,15 +54,10 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
-import dev.patrickgold.florisboard.app.splash.SplashScreen
 import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 
 @Suppress("FunctionName")
 object Routes {
-    object Splash {
-        const val Screen = "splash"
-    }
-
     object Setup {
         const val Screen = "setup"
     }
@@ -146,8 +141,6 @@ object Routes {
             navController = navController,
             startDestination = startDestination,
         ) {
-            composable(Splash.Screen) { SplashScreen() }
-
             composable(Setup.Screen) { SetupScreen() }
 
             composable(Settings.Home) { HomeScreen() }

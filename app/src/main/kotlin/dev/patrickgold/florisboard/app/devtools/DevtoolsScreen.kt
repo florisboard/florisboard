@@ -99,14 +99,7 @@ fun DevtoolsScreen() = FlorisScreen {
             Preference(
                 title = stringRes(R.string.devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
                 summary = stringRes(R.string.devtools__reset_flag_is_ime_set_up__summary),
-                onClick = {
-                    prefs.internal.isImeSetUp.set(false)
-                    navController.navigate(Routes.Setup.Screen) {
-                        popUpTo(Routes.Settings.Home) {
-                            inclusive = true
-                        }
-                    }
-                },
+                onClick = { prefs.internal.isImeSetUp.set(false) },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(
