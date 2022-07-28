@@ -192,7 +192,6 @@ tasks.withType<Test> {
 
 dependencies {
     implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
