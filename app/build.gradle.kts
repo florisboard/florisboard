@@ -44,9 +44,8 @@ android {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf(
             "-Xallow-result-return-type",
-            "-Xopt-in=kotlin.RequiresOptIn",
-            "-Xopt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=compatibility",
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xjvm-default=all-compatibility",
         )
     }
 

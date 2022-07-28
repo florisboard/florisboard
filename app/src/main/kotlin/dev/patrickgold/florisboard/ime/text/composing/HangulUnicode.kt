@@ -61,7 +61,7 @@ class HangulUnicode : Composer {
             return Pair(0, ""+c)
         }
         val lastChar = s.last()
-        val lastOrd = lastChar.toInt()
+        val lastOrd = lastChar.code
 
         if (lastChar in initials && c in medials) {
             return Pair(1, "${syllable(initials.indexOf(lastChar), medials.indexOf(c), 0)}")
@@ -96,9 +96,9 @@ class HangulUnicode : Composer {
                 return Pair(1, "${syllable(ini, medials.indexOf(tple!![1][tple[0].indexOf(c)]), 0)}")
             }
         } else if (lastChar in medialComp.keys && medialComp[lastChar]?.get(0)?.contains(c) == true) { // medial+final
-            return Pair(1, ""+ medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)]);
+            return Pair(1, ""+ medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)])
         } else if (lastChar in finalComp.keys && finalComp[lastChar]?.get(0)?.contains(c) == true) { // final+final
-            return Pair(1, ""+ finalComp[lastChar]?.get(1)!![finalComp[lastChar]?.get(0)!!.indexOf(c)]);
+            return Pair(1, ""+ finalComp[lastChar]?.get(1)!![finalComp[lastChar]?.get(0)!!.indexOf(c)])
         }
 
         return Pair(0, ""+c)
