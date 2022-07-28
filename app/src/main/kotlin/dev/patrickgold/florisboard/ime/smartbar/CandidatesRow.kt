@@ -42,7 +42,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.PointerInputChange
-import androidx.compose.ui.input.pointer.consumeDownChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -195,19 +194,19 @@ private fun CandidateItem(
                     awaitPointerEventScope {
                         val down = awaitFirstDown()
                         isPressed = true
-                        down.consumeDownChange()
+                        if (down.pressed != down.previousPressed) down.consume()
                         var upOrCancel: PointerInputChange? = null
                         try {
                             upOrCancel = withTimeout(longPressDelay) {
                                 waitForUpOrCancellation()
                             }
-                            upOrCancel?.consumeDownChange()
+                            upOrCancel?.let { if (it.pressed != it.previousPressed) it.consume() }
                         } catch (_: PointerEventTimeoutCancellationException) {
                             if (onLongPress()) {
                                 upOrCancel = null
                                 isPressed = false
                             }
-                            waitForUpOrCancellation()?.consumeDownChange()
+                            waitForUpOrCancellation()?.let { if (it.pressed != it.previousPressed) it.consume() }
                         }
                         if (upOrCancel != null) {
                             onClick()

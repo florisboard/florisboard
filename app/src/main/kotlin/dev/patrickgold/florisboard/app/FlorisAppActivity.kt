@@ -22,6 +22,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -36,9 +39,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -101,11 +101,9 @@ class FlorisAppActivity : ComponentActivity() {
         setContent {
             ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
-                    ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
-                        Surface(color = MaterialTheme.colors.background) {
-                            SystemUiApp()
-                            AppContent()
-                        }
+                    Surface(color = MaterialTheme.colors.background) {
+                        SystemUiApp()
+                        AppContent()
                     }
                 }
             }
@@ -145,7 +143,8 @@ class FlorisAppActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier
                         .statusBarsPadding()
-                        .navigationBarsWithImePadding(),
+                        .navigationBarsPadding()
+                        .imePadding(),
                 ) {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),

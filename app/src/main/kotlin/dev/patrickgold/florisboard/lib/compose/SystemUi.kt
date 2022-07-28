@@ -102,6 +102,12 @@ private class FlorisSystemUiController(
     private val window = view.context.findWindow()!!
     private val windowInsetsController = WindowInsetsControllerCompat(window, view)
 
+    override var systemBarsBehavior: Int
+        get() = windowInsetsController.systemBarsBehavior
+        set(value) {
+            windowInsetsController.systemBarsBehavior = value
+        }
+
     override fun setStatusBarColor(
         color: Color,
         darkIcons: Boolean,

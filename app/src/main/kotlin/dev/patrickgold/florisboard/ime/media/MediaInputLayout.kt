@@ -130,7 +130,9 @@ internal fun KeyboardLikeButton(
             forEachGesture {
                 coroutineScope {
                     awaitPointerEventScope {
-                        awaitFirstDown(requireUnconsumed = false).also { it.consumeDownChange() }
+                        awaitFirstDown(requireUnconsumed = false).also {
+                            if (it.pressed != it.previousPressed) it.consume()
+                        }
                         isPressed = true
                         inputEventDispatcher.sendDown(keyData)
                         inputFeedbackController.keyPress(keyData)
