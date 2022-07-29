@@ -124,8 +124,6 @@ class FlorisAppActivity : ComponentActivity() {
             } else {
                 this.hideAppIcon()
             }
-        } else {
-            this.showAppIcon()
         }
     }
 
