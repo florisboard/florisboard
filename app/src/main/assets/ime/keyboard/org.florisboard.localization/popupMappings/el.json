@@ -2,41 +2,74 @@
   "all": {
     "α": {
       "relevant": [
-        { "$": "auto_text_key", "code":  940, "label": "ά" }
+        { "$": "case_selector",
+          "lower": { "code":  940, "label": "ά" },
+          "upper": { "code":  902, "label": "Ά" }
+        }
       ]
     },
     "ε": {
       "relevant": [
-        { "$": "auto_text_key", "code":  941, "label": "έ" }
+        { "$": "case_selector",
+          "lower": { "code":  941, "label": "έ" },
+          "upper": { "code":  904, "label": "Έ" }
+        }
       ]
     },
     "η": {
       "relevant": [
-        { "$": "auto_text_key", "code":  942, "label": "ή" }
+        { "$": "case_selector",
+          "lower": { "code":  942, "label": "ή" },
+          "upper": { "code":  905, "label": "Ή" }
+        }
       ]
     },
     "ι": {
-      "main": { "$": "auto_text_key", "code":  943, "label": "ί" },
+      "main": { "$": "case_selector",
+        "lower": { "code":  943, "label": "ί" },
+        "upper": { "code":  906, "label": "Ί" }
+      },
       "relevant": [
-        { "$": "auto_text_key", "code":  912, "label": "ΐ" },
-        { "$": "auto_text_key", "code":  970, "label": "ϊ" }
+        { "$": "case_selector",
+          "lower": { "code":  912, "label": "ΐ" },
+          "upper": { "$": "multi_text_key", "codePoints":  [921, 776, 769], "label": "Ϊ́" }
+        },
+        { "$": "case_selector",
+          "lower": { "code":  970, "label": "ϊ" },
+          "upper": { "code":  938, "label": "Ϊ" }
+        }
       ]
     },
     "ο": {
       "relevant": [
-        { "$": "auto_text_key", "code":  972, "label": "ό" }
+        { "$": "case_selector",
+          "lower": { "code":  972, "label": "ό" },
+          "upper": { "code":  908, "label": "Ό" }
+        }
       ]
     },
     "υ": {
-      "main": { "$": "auto_text_key", "code":  973, "label": "ύ" },
+      "main": { "$": "case_selector",
+        "lower": { "code":  973, "label": "ύ" },
+        "upper": { "code":  910, "label": "Ύ" }
+      },
       "relevant": [
-        { "$": "auto_text_key", "code":  944, "label": "ΰ" },
-        { "$": "auto_text_key", "code":  971, "label": "ϋ" }
+        { "$": "case_selector",
+          "lower": { "code":  944, "label": "ΰ" },
+          "upper": { "$": "multi_text_key", "codePoints":  [933, 776, 769], "label": "Ϋ́" }
+        },
+        { "$": "case_selector",
+          "lower": { "code":  971, "label": "ϋ" },
+          "upper": { "code":  939, "label": "Ϋ" }
+        }
       ]
     },
     "ω": {
       "relevant": [
-        { "$": "auto_text_key", "code":  974, "label": "ώ" }
+        { "$": "case_selector",
+          "lower": { "code":  974, "label": "ώ" },
+          "upper": { "code":  911, "label": "Ώ" }
+        }
       ]
     },
     "~right": {
