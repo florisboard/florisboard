@@ -43,8 +43,8 @@
     },
     "z": {
       "relevant": [
-        { "$": "auto_text_key", "code":  378, "label": "ź" },
-        { "$": "auto_text_key", "code":  380, "label": "ż" }
+        { "$": "auto_text_key", "code":  380, "label": "ż" },
+        { "$": "auto_text_key", "code":  378, "label": "ź" }
       ]
     },
     "~right": {
