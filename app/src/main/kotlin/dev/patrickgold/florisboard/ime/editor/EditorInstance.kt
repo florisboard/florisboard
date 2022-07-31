@@ -130,7 +130,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
-        return keyboardManager.resources.composers.value?.get(composerName) ?: Appender.DefaultInstance
+        return keyboardManager.resources.composers.value?.get(composerName) ?: Appender
     }
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {

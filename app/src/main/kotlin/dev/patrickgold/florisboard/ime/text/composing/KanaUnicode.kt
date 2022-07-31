@@ -317,30 +317,31 @@ class KanaUnicode : Composer {
             rev.getOrElse(l) { base[char] }
         }
         return if (trans != null) {
-            Pair(1, ""+trans)
+            1 to trans.toString()
         } else if (isComposingCharacter(l) && isComposingCharacter(c)) {
-            Pair(1, if (l == c && !sticky) { "" } else { ""+c  })
+            1 to if (l == c && !sticky) { "" } else { ""+c  }
         } else {
-            Pair(0, if (addOnFalse) { ""+c } else { "" })
+            0 to if (addOnFalse) { ""+c } else { "" }
         }
     }
 
-    override fun getActions(s: String, c: Char): Pair<Int, String> {
-        // s is "at least the last 1 character of what's currently here"
-        if (s.isEmpty()) {
+    override fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
+        val c = toInsert.firstOrNull() ?: return 0 to toInsert
+        // precedingText is "at least the last 1 character of what's currently here"
+        if (precedingText.isEmpty()) {
             return if (c == smallSentinel || isComposingCharacter(c)) {
-                Pair(0, "")
+                0 to ""
             } else {
-                Pair(0, ""+c)
+                0 to toInsert
             }
         }
-        val lastChar = s.last()
+        val lastChar = precedingText.last()
 
         return when {
             isDakuten(c) -> handleTransform(lastChar, c, daku, reverseDaku, true)
             isHandakuten(c) -> handleTransform(lastChar, c, handaku, reverseHandaku, true)
             c == smallSentinel -> handleTransform(lastChar, c, small, reverseSmall, false)
-            else -> Pair(0, ""+c)
+            else -> 0 to toInsert
         }
     }
 }
