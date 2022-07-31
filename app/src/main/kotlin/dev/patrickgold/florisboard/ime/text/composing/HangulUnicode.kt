@@ -55,12 +55,13 @@ class HangulUnicode : Composer {
         return listOf(initial, medial, fin)
     }
 
-    override fun getActions(s: String, c: Char): Pair<Int, String> {
-        // s is "at least the last 1 character of what's currently here"
-        if (s.isEmpty()) {
-            return Pair(0, ""+c)
+    override fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
+        val c = toInsert.firstOrNull()
+        // precedingText is "at least the last 1 character of what's currently here"
+        if (precedingText.isEmpty() || c == null) {
+            return 0 to toInsert
         }
-        val lastChar = s.last()
+        val lastChar = precedingText.last()
         val lastOrd = lastChar.code
 
         if (lastChar in initials && c in medials) {
@@ -69,38 +70,41 @@ class HangulUnicode : Composer {
             val (ini, med, fin) = syllableBlocks(lastOrd)
 
             // underscore is a sentinel in the "finals" string
-            if (c == '_')
-                return Pair(0, ""+c)
+            if (c == '_') {
+                return 0 to toInsert
+            }
 
             //  if there is no final and the new char is a final, merge
-            if (fin == 0 && c in finals)
-                return Pair(1, "${syllable(ini, med, finals.indexOf(c))}")
+            if (fin == 0 && c in finals) {
+                return 1 to "${syllable(ini, med, finals.indexOf(c))}"
+            }
 
             // if there is already a final but it is mergeable with the new char into a composed final, merge
             if ((finals[fin] in finalComp) && c in finalComp[finals[fin]]!![0]) {
                 val tple = finalComp[finals[fin]]
-                return Pair(1, "${syllable(ini, med, finals.indexOf(tple!![1][tple[0].indexOf(c)]))}")
+                return 1 to "${syllable(ini, med, finals.indexOf(tple!![1][tple[0].indexOf(c)]))}"
             }
 
             // if there is a simple final and the new char is a medial, split the old syllable
             if (fin != 0 && finals[fin] !in finalCompRev && c in medials)
-                return Pair(1, "${syllable(ini, med, 0)}${syllable(initials.indexOf(finals[fin]), medials.indexOf(c), 0)}")
+                return 1 to "${syllable(ini, med, 0)}${syllable(initials.indexOf(finals[fin]), medials.indexOf(c), 0)}"
 
             // if there is a composed final and the new char is a medial, split the old final
-            if (finals[fin] in finalCompRev && c in medials)
-                return Pair(1, "${syllable(ini, med, finals.indexOf(finalCompRev.getValue(finals[fin])[0]))}${syllable(initials.indexOf(finalCompRev.getValue(finals[fin])[1]), medials.indexOf(c), 0)}")
+            if (finals[fin] in finalCompRev && c in medials) {
+                return 1 to "${syllable(ini, med, finals.indexOf(finalCompRev.getValue(finals[fin])[0]))}${syllable(initials.indexOf(finalCompRev.getValue(finals[fin])[1]), medials.indexOf(c), 0)}"
+            }
 
             // if no final yet, and current medial can be composed with new char, merge
             if (medials[med] in medialComp && c in medialComp.getValue(medials[med])[0] && fin == 0) {
                 val tple = medialComp[medials[med]]
-                return Pair(1, "${syllable(ini, medials.indexOf(tple!![1][tple[0].indexOf(c)]), 0)}")
+                return 1 to "${syllable(ini, medials.indexOf(tple!![1][tple[0].indexOf(c)]), 0)}"
             }
         } else if (lastChar in medialComp.keys && medialComp[lastChar]?.get(0)?.contains(c) == true) { // medial+final
-            return Pair(1, ""+ medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)])
+            return 1 to ""+ medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)]
         } else if (lastChar in finalComp.keys && finalComp[lastChar]?.get(0)?.contains(c) == true) { // final+final
-            return Pair(1, ""+ finalComp[lastChar]?.get(1)!![finalComp[lastChar]?.get(0)!!.indexOf(c)])
+            return 1 to ""+ finalComp[lastChar]?.get(1)!![finalComp[lastChar]?.get(0)!!.indexOf(c)]
         }
 
-        return Pair(0, ""+c)
+        return 0 to toInsert
     }
 }

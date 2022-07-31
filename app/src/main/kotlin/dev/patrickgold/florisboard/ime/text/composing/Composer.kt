@@ -3,30 +3,42 @@ package dev.patrickgold.florisboard.ime.text.composing
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
 
+/**
+ * Base interface for a text composer. A composer allows to dynamically transform text, which is especially useful for
+ * languages with complicated scripts, where providing one key for each letter is not really possible.
+ */
 interface Composer {
     val id: String
     val label: String
     val toRead: Int
 
-    fun getActions(s: String, c: Char): Pair<Int, String>
+    /**
+     * Requests the composer to provide an action for given [precedingText] and the character [toInsert].
+     *
+     * @param precedingText The preceding text which is already committed to the target editor field. The string is
+     *  typically [toRead] characters long, however it can also be empty or have more characters than [toRead].
+     * @param toInsert The character (either single char or single char + diacritics) which are about to be inserted.
+     *
+     * @return A pair of an integer specifying how many chars from the end to delete from [precedingText] and a string
+     *  representing the new transformed character to insert. If the composer does not have an action, `0 to toInsert`
+     *  should be returned.
+     */
+    fun getActions(precedingText: String, toInsert: String): Pair<Int, String>
 }
 
+/**
+ * Default composer which simply appends any text to insert to the preceding text. Is also used as a fallback.
+ */
 @Serializable
 @SerialName("appender")
-class Appender : Composer {
-    companion object {
-        val DefaultInstance = Appender()
-    }
+object Appender : Composer {
+    override val id = "appender"
+    override val label = "Appender"
+    override val toRead = 0
 
-    override val id: String = "appender"
-    override val label: String = "Appender"
-    override val toRead: Int = 0
-
-    override fun getActions(s: String, c: Char): Pair<Int, String> {
-        return 0 to c.toString()
+    override fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
+        return 0 to toInsert
     }
 }
 
@@ -35,23 +47,21 @@ class Appender : Composer {
 class WithRules(
     override val id: String,
     override val label: String,
-    val rules: JsonObject,
+    val rules: Map<String, String>,
 ) : Composer {
-    override val toRead: Int = rules.keys.toList().sortedBy { it.length }.reversed()[0].length - 1
+    override val toRead = (rules.keys.maxOf { it.length } - 1).coerceAtLeast(0)
 
-    @Transient val ruleOrder: List<String> = rules.keys.toList().sortedBy { it.length }.reversed()
-    @Transient val ruleMap: Map<String, String> =
-        rules.entries.associate { it.key to (it.value as JsonPrimitive).content }
+    @Transient val ruleOrder = rules.keys.toList().sortedBy { it.length }.reversed()
 
-    override fun getActions(s: String, c: Char): Pair<Int, String> {
-        val str = "${s}$c"
+    override fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
+        val str = precedingText + toInsert
         for (key in ruleOrder) {
             if (str.lowercase().endsWith(key)) {
-                val value = ruleMap.getValue(key)
+                val value = rules.getValue(key)
                 val firstOfKey = str.takeLast(key.length).take(1)
-                return (key.length-1) to (if (firstOfKey.uppercase().equals(firstOfKey, false)) value.uppercase() else value)
+                return (key.length - 1) to (if (firstOfKey.uppercase() == firstOfKey) value.uppercase() else value)
             }
         }
-        return 0 to c.toString()
+        return 0 to toInsert
     }
 }
