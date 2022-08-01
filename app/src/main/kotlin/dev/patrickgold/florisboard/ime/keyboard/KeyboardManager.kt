@@ -165,6 +165,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val state = activeState.snapshot()
             val subtype = subtypeManager.activeSubtype
             val mode = activeState.keyboardMode
+            // We need to reset the snapshot input shift state for non-character layouts, because the shift mechanic
+            // only makes sense for the character layouts.
+            if (mode != KeyboardMode.CHARACTERS) {
+                state.inputShiftState = InputShiftState.UNSHIFTED
+            }
             val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
                 layoutManager.computeKeyboardAsync(
                     keyboardMode = mode,
