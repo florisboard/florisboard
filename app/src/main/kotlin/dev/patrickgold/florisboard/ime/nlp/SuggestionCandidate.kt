@@ -95,7 +95,7 @@ interface SuggestionCandidate {
  *
  * @see SuggestionCandidate
  */
-class WordSuggestionCandidate(
+data class WordSuggestionCandidate(
     override val text: CharSequence,
     override val secondaryText: CharSequence? = null,
     override val confidence: Double = 0.0,
@@ -112,7 +112,7 @@ class WordSuggestionCandidate(
  *
  * @see SuggestionCandidate
  */
-class ClipboardSuggestionCandidate(
+data class ClipboardSuggestionCandidate(
     val clipboardItem: ClipboardItem,
     override val sourceProvider: SuggestionProvider?,
 ) : SuggestionCandidate {

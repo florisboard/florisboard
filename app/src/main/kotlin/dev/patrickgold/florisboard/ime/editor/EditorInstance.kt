@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -227,25 +228,26 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     /**
-     * Completes the given [text] in the current composing region. Does nothing if the current
+     * Completes the given [candidate] in the current composing region. Does nothing if the current
      * input editor is not rich or if the input connection is invalid.
      *
      * Current phantom space state is respected and a space char will be inserted accordingly.
      * Phantom space will be activated if the text is committed.
      *
-     * @param text The text to complete in this editor.
+     * @param candidate The candidate to complete in this editor.
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun commitCompletion(text: String): Boolean {
+    fun commitCompletion(candidate: SuggestionCandidate): Boolean {
+        val text = candidate.text.toString()
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
         val content = activeContent
         return if (content.composing.isValid) {
-            phantomSpace.setActive(showComposingRegion = false)
+            phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
             super.finalizeComposingText(text)
         } else {
             val isPhantomSpaceActive = phantomSpace.determine(text)
-            phantomSpace.setActive(showComposingRegion = false)
+            phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
             return if (isPhantomSpaceActive) {
                 super.commitText("$SPACE$text")
             } else {
@@ -548,6 +550,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
 
         private val state = AtomicInteger(0)
+        var candidateForRevert: SuggestionCandidate? = null
+            private set
 
         val isActive: Boolean
             get() = state.get() and F_IS_ACTIVE != 0
@@ -558,21 +562,30 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val showComposingRegion: Boolean
             get() = state.get() and F_SHOW_COMPOSING_REGION != 0
 
-        fun setActive(showComposingRegion: Boolean, stayActiveNextUpdate: Boolean = true) {
+        fun setActive(
+            showComposingRegion: Boolean,
+            stayActiveNextUpdate: Boolean = true,
+            candidate: SuggestionCandidate? = null,
+        ) {
             state.set(
                 F_IS_ACTIVE
                     or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0)
                     or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0)
             )
+            candidateForRevert = candidate
         }
 
         fun setInactive() {
             state.set(0)
+            candidateForRevert = null
         }
 
         fun setInactiveFromUpdate() {
-            state.updateAndGet { state ->
+            val prevStateValue = state.getAndUpdate { state ->
                 if ((state and F_STAY_ACTIVE_NEXT_UPDATE) != 0) (state and F_STAY_ACTIVE_NEXT_UPDATE.inv()) else 0
+            }
+            if ((prevStateValue and F_STAY_ACTIVE_NEXT_UPDATE) == 0) {
+                candidateForRevert = null
             }
         }
     }

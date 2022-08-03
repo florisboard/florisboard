@@ -124,15 +124,15 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
         // We can use flogDebug, flogInfo, flogWarning and flogError for debug logging, which is a wrapper for Logcat
-        flogDebug { "notify accepted suggestion $candidate" }
+        flogDebug { candidate.toString() }
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
-        flogDebug { "notify reverted suggestion $candidate" }
+        flogDebug { candidate.toString() }
     }
 
     override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
-        flogDebug { "remove suggestion request $candidate" }
+        flogDebug { candidate.toString() }
         return false
     }
 

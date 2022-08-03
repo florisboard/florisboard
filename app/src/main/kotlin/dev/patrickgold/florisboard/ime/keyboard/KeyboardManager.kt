@@ -300,7 +300,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         when (candidate) {
             is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
-            else -> editorInstance.commitCompletion(candidate.text.toString())
+            else -> editorInstance.commitCompletion(candidate)
         }
     }
 
@@ -410,6 +410,19 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
+    private fun revertPreviouslyAcceptedCandidate() {
+        editorInstance.phantomSpace.candidateForRevert?.let { candidateForRevert ->
+            candidateForRevert.sourceProvider?.let { sourceProvider ->
+                scope.launch {
+                    sourceProvider.notifySuggestionReverted(
+                        subtype = subtypeManager.activeSubtype,
+                        candidate = candidateForRevert,
+                    )
+                }
+            }
+        }
+    }
+
     /**
      * Handles a [KeyCode.DELETE] event.
      */
@@ -419,6 +432,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
+        revertPreviouslyAcceptedCandidate()
         editorInstance.deleteBackwards()
     }
 
@@ -431,6 +445,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
+        revertPreviouslyAcceptedCandidate()
         editorInstance.deleteWordBackwards()
     }
 
