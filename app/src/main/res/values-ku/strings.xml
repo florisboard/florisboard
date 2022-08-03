@@ -100,10 +100,27 @@
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Piştî diyalogan klavyeyê nîşande</string>
     <string name="settings__theme_editor__add_rule">Rêbazekê tevlî bike</string>
     <string name="settings__theme_editor__edit_rule">Rêbazê serrast bike</string>
+    <string name="settings__theme_editor__rule_element">Hêmana armancê</string>
+    <string name="settings__theme_editor__rule_codes">Kodên sereke yên armanc</string>
     <string name="settings__theme_editor__rule_groups">Kom</string>
     <string name="settings__theme_editor__rule_selectors">Hilbijêr</string>
+    <string name="settings__theme_editor__add_code">Koda mifteyê zêde bike</string>
+    <string name="settings__theme_editor__edit_code">Koda mifteyê biguherîne</string>
     <string name="settings__theme_editor__code_already_exists">Ev koda mifteyan jixwe hatîye pênasekirin.</string>
+    <string name="settings__theme_editor__code_placeholder">Kod</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} pêdivî ye ku klavyeya xwerû be ku kodek mifteyê tomar bike</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Tomarkirin…</string>
+    <string name="settings__theme_editor__add_property">Taybetmendiyê zêde bikin</string>
+    <string name="settings__theme_editor__edit_property">Taybetmendiyê biguherîne</string>
+    <string name="settings__theme_editor__property_already_exists">Taybetmendiyek bi vî navî jixwe di nav qaîdeya heyî de heye.</string>
+    <string name="settings__theme_editor__property_name">Navê milkê</string>
+    <string name="settings__theme_editor__property_value">Nirxa milkê</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Ji bo hemî kûçeyan bicîh bikin</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Rêza rengîn biguherîne</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Mijara şevê ye</string>
+    <string name="snygg__rule_element__defines">Têgûherr</string>
     <string name="snygg__rule_element__key">Kilîd</string>
+    <string name="snygg__rule_element__emoji_key">Mifteya emoji</string>
     <string name="snygg__rule_element__system_nav_bar">Darikê navîgasyonê yê pergalê</string>
     <string name="snygg__rule_selector__pressed">Çewisandî</string>
     <string name="snygg__rule_selector__focus">Bal kişand</string>
@@ -129,6 +146,7 @@
     <string name="snygg__property_value__dp_size">Mezinahî (dp)</string>
     <string name="snygg__property_value__sp_size">Mezinahî (sp)</string>
     <string name="snygg__property_value__percentage_size">Mezinahî (%)</string>
+    <string name="snygg__property_value__defined_var">Referans bû</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Deng &amp; Vibrasyon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>
@@ -171,6 +189,8 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Plansaziya rêzê</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Çalakiyên seretayî</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
@@ -317,11 +337,14 @@
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Şopênerê pirsgirêkê</string>
     <string name="ext__meta__keywords">Peyvên mifteyan</string>
+    <string name="ext__meta__label">Nav</string>
     <string name="ext__meta__license">Lîsans</string>
     <string name="ext__meta__maintainers">Mûxayenekaran</string>
     <string name="ext__meta__title">Sernav</string>
     <string name="ext__meta__version">Guherto</string>
+    <string name="ext__editor__create_component__title_theme">Mijarê çêbikin</string>
     <string name="ext__editor__create_component__from_empty">Vala</string>
+    <string name="ext__editor__create_component__from_existing">Ji heyî</string>
     <!-- Action strings -->
     <string name="action__add">Zêdekirin</string>
     <string name="action__apply">Pêkanîn</string>
@@ -356,6 +379,7 @@
     <!-- General strings -->
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">e.g. {example}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; bijartin &#45;</string>
+    <string name="general__unlimited">Bêsînor</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portre</string>
     <string name="screen_orientation__landscape">Dorhalî</string>
@@ -374,6 +398,14 @@
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Alfaya Kesk a Sor</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Qet nîşan nede</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Çermê navîn</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Çermê tarî yê navîn</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Çermê tarî</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Porê xwerû</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Porê sor</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Porê kulîlk</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Porê spî</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Rût</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Tu carî nîşan nede</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dînamîk nîşan bide</string>

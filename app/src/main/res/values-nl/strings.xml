@@ -445,8 +445,8 @@
     <string name="clipboard__group_pinned">vastgezet</string>
     <string name="clipboard__group_recent">recente</string>
     <string name="clipboard__group_other">Overige</string>
-    <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_email">E-mail</string>
+    <string name="clipboard__item_description_url">URL</string>
     <string name="clip__clear_history">Wis geschiedenis</string>
     <string name="clip__unpin_item">Item losmaken</string>
     <string name="clip__pin_item">Item vastmaken</string>

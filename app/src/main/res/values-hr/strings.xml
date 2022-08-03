@@ -1,12 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauziraj</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Pričekajte</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona s tri točke. Ako je vidljivo, moguće je unijeti više karaktera tako da dulje držite tipku.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Izlaz iz načina rada jednom rukom.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Premjestite tipkovnicu lijevo.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Premjestite tipkovnicu desno.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emotikoni</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emotikoni</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikoni</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaoemotikoni</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Prikazana povijest korištenih emotikona je maksimalna</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Željeni ton boje emotikona</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Željeni stil frizure emotikona</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smješkići &amp; Emocije</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Ljudi &amp; Tijelo</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Životinje &amp; Priroda</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Hrana &amp; Piće</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Putovanje &amp; Mjesta</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Aktivnosti</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Objekti</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Zastave</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nema nedavno korištenih emotikona. Čim ih počnete koristiti, oni će se pojaviti ovdje.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro savjet: Dugo držite nedavno korištene emotikone kako bi ste ih uklonili sa popisa nedavno korištenih emotikona!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} je ukonjen iz nedavno korištenih emotikona</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Brza promjena radnje. Pritisnite tipku kako biste odabrali između prijedloga riječi i tipki brze radnje.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Izlaz iz uređivanja rasporeda.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Uključite način za tipkanje jednom rukom.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otvori postavke.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Premjesti se na uređivač teksta.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Prebaci se na pregled unosa media.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Poništi posljednju radnju</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Vratite posljednje poništeno</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ako je ikona vidljiva, privatni način rada je aktivan. Na klik gumba vidite više o privatnom načinu rada.</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Postavke</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testirajte svoju postavu</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Pomoć</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Zadano</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Zadana postavka sustava</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Dobrodošli u {app_name}</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nije sistemski omogućen, te tako neće biti dostupan u izborniku za unos. Kliknite ovdje kako biste riješili ovaj problem.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nije odabran kao zadani način unosa. Kliknite ovdje kako biste riješili ovaj problem.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Jezici &amp; Raspored</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Prikaži nazive jezika u</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtipovi</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj podtip</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Uredi podtip</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Materinji jezik</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapiranje iskočnih prozora</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Raspored karaktera</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Raspored primarnih simbola</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Raspored sekundarnih simbola</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Kompozitor</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Set valuta</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerički poredak</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Numerički poredak (napredno)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Poredak brojčanog niza</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primarni raspored telefonskog brojčanika</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundarni raspored telefonskog brojčanika</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Odaberite jezik</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Pretražite jezik</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Traženi jezik \"{search_term}\" nije moguće pronaći.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; odaberi &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Preporučeni predlošci podtipova</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Preporučeni predlošci podtipova nisu dostupni. Kliknite gumb ispod kako biste vidjeli sve predloške podtipova.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Predlošci podtipova</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Prikaži sve</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Izgleda da niste postavili podtip. Program će zato koristiti Engleski/QWERTY podtip!</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ovaj podtip već postoji!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Barem jednom polju niste odredili vrijednost. Molimo vas odaberite vrijednost za to/a polje/a.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nije instaliran)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rasporedi</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Način teme</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Vrijeme izlaska Sunca</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Vrijeme zalaska Sunca</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Svjetla tema</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tamna tema</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Odabrana tema</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prilagodite boje aplikaciji</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Boja teme prilagođena je onoj trenutnoj aplikaciji, ako ciljana aplikacija podržava ovu funkciju.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Zbirka Aplikacije</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Unutarnja Pohrana</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Vanjski Dobavitelj</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Odaberite svjetlu temu</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Odaberite tamnu temu</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Upravljajte instaliranim temama</string>
+    <string name="settings__theme_editor__fine_tune__title">Uređivač</string>
+    <string name="settings__theme_editor__fine_tune__level">Razina uređivanja</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Prikaži boje kao</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Prikaži tipkovnicu nakon dijaloga</string>
+    <string name="settings__theme_editor__add_rule">Dodajte pravilo</string>
+    <string name="settings__theme_editor__edit_rule">Uredite pravilo</string>
+    <string name="settings__theme_editor__no_rules_defined">Nema definiranih pravila za ovaj stilski obrazac. Dodajte pravilo ili započnite prilagođavati ovaj stilski obrazac.</string>
+    <string name="settings__theme_editor__rule_already_exists">Ovo pravilo stilskog obrasca je već definirano.</string>
+    <string name="settings__theme_editor__rule_element">Ciljani element</string>
+    <string name="settings__theme_editor__rule_codes">Ciljani kod pločice</string>
+    <string name="settings__theme_editor__rule_groups">Grupe</string>
+    <string name="settings__theme_editor__rule_shift_states">Promijenite stanja</string>
+    <string name="settings__theme_editor__rule_selectors">Odrednice</string>
+    <string name="settings__theme_editor__add_code">Dodaj pločice</string>
+    <string name="settings__theme_editor__edit_code">Uredi pločice</string>
+    <string name="settings__theme_editor__no_codes_defined">Primjeni pravilo na sve ciljane elemente.</string>
+    <string name="settings__theme_editor__codes_defined">Primjeni pravilo na ciljane elemente koji sadrže sljedeće pločice:</string>
+    <string name="settings__theme_editor__code_already_exists">Ova pločica je već definirana.</string>
+    <string name="settings__theme_editor__code_invalid">Ova pločica nije valjana. Pobrinite se da je pločica u rangu od {c_min} to {c_max} za karaktere ili {i_min} do {i_max} za posebne nutarnje pločice.</string>
+    <string name="settings__theme_editor__code_help_text">Ovi linkovi će vam pomoći da pronađete važeći kod za pločicu:</string>
+    <string name="settings__theme_editor__code_placeholder">Kod</string>
+    <string name="settings__theme_editor__code_recording_help_text">Kako biste našli kod pločice, koristite gumb pored terminala za unos koda. Jednom aktiviran, zabilježit će sljedeću pritisnutu pločicu i unijet će kod u terminal.</string>
+    <string name="settings__theme_editor__code_recording_started">Bilježenje koda pločice započeto</string>
+    <string name="settings__theme_editor__code_recording_stopped">Bilježenje koda pločice zaustavljeno</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} mora biti zadana tipkovnica kako bi bilježila kod pločice</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Bilježim…</string>
+    <string name="settings__theme_editor__add_property">Dodaj svojstvo</string>
+    <string name="settings__theme_editor__edit_property">Uredi svojstvo</string>
+    <string name="settings__theme_editor__property_already_exists">Svojstvo s ovim imenom unutar trenutnog pravila već postoji.</string>
+    <string name="settings__theme_editor__property_name">Naziv svojstva</string>
+    <string name="settings__theme_editor__property_value">Vrijednost svojstva</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Primjeni za sve rubove</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Uredi vrijednost boje</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Je tamna tema</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Nema rubova</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Put stilskog obrasca</string>
+    <string name="snygg__rule_element__defines">Varijable</string>
+    <string name="snygg__rule_element__defines_description">Definirajte varijable unutar ovog pravila kako biste ponovno koristili učestale boje ili veličine u svom stilskom obrascu.</string>
+    <string name="snygg__rule_element__keyboard">Prozor tipkovnice</string>
+    <string name="snygg__rule_element__key">Pločica</string>
+    <string name="snygg__rule_element__key_hint">Naglasak pločice</string>
+    <string name="snygg__rule_element__key_popup">Skočni prozor pločice</string>
+    <string name="snygg__rule_element__clipboard_header">Zaglavlje međuspremnika</string>
+    <string name="snygg__rule_element__clipboard_item">Predmet međuspremnika</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Skočni prozor predmeta međuspremnika</string>
+    <string name="snygg__rule_element__emoji_key">Pločica emotikona</string>
+    <string name="snygg__rule_element__emoji_key_popup">Skočni prozor pločice emotikona</string>
+    <string name="snygg__rule_element__emoji_key_tab">Kategorija emotikona</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Raspored unosa u horizontalnom položaju</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Prostor unosa u horizontalnom položaju</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Radnja unosa u horizontalnom položaju</string>
+    <string name="snygg__rule_element__glide_trail">Klizni trag</string>
+    <string name="snygg__rule_element__one_handed_panel">Traka jednoručnog načina rada</string>
+    <string name="snygg__rule_element__smartbar_primary_row">Primarni red Smartbara</string>
+    <string name="snygg__rule_element__smartbar_secondary_row">Sekundarni red Smartbara</string>
+    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Uključivanje primarnih radnji Smartbara</string>
+    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Uključivanje sekundarnih radnji Smartbara</string>
+    <string name="snygg__rule_element__smartbar_quick_action">Brza radnja Smartbara</string>
+    <string name="snygg__rule_element__smartbar_key">Pločica Smartbara</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Preddložena riječ Smartbara</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Predloženi predmet međuspremnika u Smartbaru</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Predloženi predmet razmaka Smartbara</string>
+    <string name="snygg__rule_element__system_nav_bar">Navigacijska traka sistema</string>
+    <string name="snygg__rule_selector__pressed">Pritisnuto</string>
+    <string name="snygg__rule_selector__focus">Fokusirano</string>
+    <string name="snygg__rule_selector__disabled">Onemogućeno</string>
+    <string name="snygg__property_name__width">Širina</string>
+    <string name="snygg__property_name__height">Visina</string>
+    <string name="snygg__property_name__background">Pozadina</string>
+    <string name="snygg__property_name__foreground">Prednji plan</string>
+    <string name="snygg__property_name__border_color">Boja obruba</string>
+    <string name="snygg__property_name__border_style">Stil obruba</string>
+    <string name="snygg__property_name__border_width">Širina obruba</string>
+    <string name="snygg__property_name__font_family">Skupina fontova</string>
+    <string name="snygg__property_name__font_size">Veličina fonta</string>
+    <string name="snygg__property_name__font_style">Stil fonta</string>
+    <string name="snygg__property_name__font_variant">Varijanta fonta</string>
+    <string name="snygg__property_name__font_weight">Debljina fonta</string>
+    <string name="snygg__property_name__shadow_elevation">Visina sjene</string>
+    <string name="snygg__property_name__shape">Oblik</string>
+    <string name="snygg__property_name__var_primary">Primarna boja</string>
+    <string name="snygg__property_name__var_primary_variant">Primarna boja (varijanta)</string>
+    <string name="snygg__property_name__var_secondary">Sekundarna boja</string>
+    <string name="snygg__property_name__var_secondary_variant">Sekundarna boja (varijanta)</string>
+    <string name="snygg__property_name__var_background">Zajednička pozadina</string>
+    <string name="snygg__property_name__var_surface">Zajednička ploha</string>
+    <string name="snygg__property_name__var_surface_variant">Zajednička ploha (varijanta)</string>
+    <string name="snygg__property_name__var_on_primary">Prednji plan primara</string>
+    <string name="snygg__property_name__var_on_secondary">Prednji plan sekundara</string>
+    <string name="snygg__property_name__var_on_background">Prednji plan pozadine</string>
+    <string name="snygg__property_name__var_on_surface">Prednji plan plohe</string>
+    <string name="snygg__property_name__var_on_surface_variant">Prednji plan plohe (varijanta)</string>
+    <string name="snygg__property_name__var_shape">Zajednički oblik</string>
+    <string name="snygg__property_name__var_shape_variant">Zajednički oblik (varijanta)</string>
+    <string name="snygg__property_value__explicit_inherit">Naslijedi svojstvo</string>
+    <string name="snygg__property_value__solid_color">Jednolično</string>
+    <string name="snygg__property_value__image_ref">Referenca slike</string>
+    <string name="snygg__property_value__rectangle_shape">Oblik pravokutnika</string>
+    <string name="snygg__property_value__circle_shape">Oblik kruga</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Odreži oblik kuta (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Ukloni oblik ugla (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Zaobljen oblik ugla (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Zaobljeni oblik ugla (%)</string>
+    <string name="snygg__property_value__dp_size">Veličina (dp)</string>
+    <string name="snygg__property_value__sp_size">Veličina (sp)</string>
+    <string name="snygg__property_value__percentage_size">Veličina (%)</string>
+    <string name="snygg__property_value__defined_var">Var referenca</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuk &amp; Vibracija</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Povratna informacija zvukom / Zvukovi</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Omogući zvučnu povratnu informaciju</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Reproduciraj zvuk prilikom događaja unosa koji ovise o sistemskim postavkama</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Zanemari sistemske postavke zvuka</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Koristite dolje predložene postavke, iako je zvuk sistemski onemogućen. Ne radi kada je zvono sistema isključen</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Razina glasnoće tijekom unosa</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvukovi na pritisak pločice</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Zvukovi na dugi pritisak pločice</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Zvukovi ponovljene radnje pločice</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Zvukovi prilikom kliznog pokreta</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Zvukovi prilikom kliznog pokreta</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Povratna vibracija na dodir / Vibracija</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Omogući povratnu vibraciju na dodir</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibriraj prilikom događaja unosa koji su ovisno o sistemskim postavkama</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Zanemari postavke povratne vibracije na dodir</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Koristite dolje predložene postavke, iako je povratna informacija na dodir sistemski onemogućena</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Direktno pokreni vibraciju</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Koristi direktno pokrenutu vibraciju mjesto Androidovog paketa povratne vibracije na dodir</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trajanje vibracije</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Jačina vibracije</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja nedostaje na ovom uređaju</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja je dostuna samo na uređajima inačice Androida 8.0 ili novije</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibriraj na tipku</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibriraj na produljen pritisak tipke</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibriraj na ponovljenu radnju tipke</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibriraj na kliznu gestu</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibriraj na pokret klizne geste</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">npr. tipke, gumbi, pločica emotikona</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">npr. skočni izbornik</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">npr. tipka za brisanje</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nije implementirano</string>
     <!-- Smartbar strings -->
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Omogući Smartbar</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Prikazivat će se na vrhu tipkovnice</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Obrni raspored gumba</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Obrni redoslijed trake radnje</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Raspored trake</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primarne radnje</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatski otvori/zatvori</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatski otvori/zatvori primarni red radnji ovisno o trenutnom stanju</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundarne radnje</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Prikaži sekundaru traku radnje</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Piše</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Prijedlozi</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Prikaži prijedloge</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Daje prijedoge dok tipkate</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Način prikazivanja prijedloga</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokiraj potencijalno neprimjerene riječi</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Prijedlog sadržaja međuspremnika</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Predloži prethodno kopiran sadržaj</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ograniči prijedloge međuspremnika za</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Predmeti kopirani unutar zadnjih {v} s</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Prikaži prijedloge unutar retka pomoću automatskog popunjavanja</string>
+    <string name="pref__correction__title" comment="Preference group title">Ispravci</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. veliko poč. sl</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Stavi veliko početno slovo riječima s obzirom na trenutni unos</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatski napravi razmak nakon točke</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatski unesi razmak nakon točke</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Zapamti stanje tipke za velika slova</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Tipka za velika slova će ostati upaljena kada se pomaknete u drugi prostor za pisanje</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Dvaput stisnuti razmak stvara točku</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvaput stisnuti razmak stvara točku koju slijedi razmak</string>
+    <string name="pref__spelling__title" comment="Preference group title">Pravopis</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Sistemski onemogućeno. Crvene linije se neće prikazivati u slučaju pogrešno napisanih riječi. Kliknite kako biste to promijenili.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Usluga provjere pravopisa nije postavljena. Kliknite kako biste to promijenili.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jezici</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Koristi imena iz kontakata</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pregledajte imena iz vašeg popisa kontakata</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
     <!-- Back up & Restore -->

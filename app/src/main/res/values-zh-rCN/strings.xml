@@ -273,21 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">次要操作</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">显示次要操作行</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">键入</string>
     <string name="pref__suggestion__title" comment="Preference group title">建议</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">显示建议</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">在您键入时提供建议</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">建议显示模式</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">屏蔽可能有冒犯性的词语</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">剪贴板内容建议</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">建议中使用以前复制的剪贴板内容</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">将剪贴板建议限制在</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">在过去 {v} 秒内复制的条目</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">显示由自动填充服务提供的内嵌式建议</string>
     <string name="pref__correction__title" comment="Preference group title">更正</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">自动大写</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">根据当前输入上下文将单词首字母大写</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">标点后自动空格</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">在标点符号后自动插入一个空格</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">记住大写锁定状态</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">移动到另一个文本框时，大写锁定将保持原状态</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">双空格句号</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">在空格键上点击两次会插入一个句号加一个空格</string>
+    <string name="pref__spelling__title" comment="Preference group title">拼写</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">已在系统范围内禁用。对于不正确的单词，文本框中不会出现红线。点击进行更改。</string>
     <string name="pref__spelling__active_spellchecker__summary_none">未设置内嵌式文本拼写检查服务。点击进行更改。</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">语言</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">使用通讯录姓名</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">从您的通讯录中查找姓名</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">使用用户词典条目</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">从用户词典中查找条目</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">用户词典</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">启用系统用户词典</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">建议中使用存储在系统用户词典中的词条</string>
@@ -445,8 +458,9 @@
     <string name="clipboard__group_pinned">置顶</string>
     <string name="clipboard__group_recent">最新</string>
     <string name="clipboard__group_other">其他</string>
-    <string name="clipboard__item_description_url">链接地址</string>
     <string name="clipboard__item_description_email">电子邮箱</string>
+    <string name="clipboard__item_description_url">链接地址</string>
+    <string name="clipboard__item_description_phone">电话号码</string>
     <string name="clip__clear_history">清除历史记录</string>
     <string name="clip__unpin_item">取消置顶本条</string>
     <string name="clip__pin_item">置顶本条</string>

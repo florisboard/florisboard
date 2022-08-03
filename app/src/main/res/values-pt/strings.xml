@@ -101,10 +101,18 @@
     <string name="settings__theme_editor__add_rule">Adicionar regra</string>
     <string name="settings__theme_editor__edit_rule">Editar regra</string>
     <string name="settings__theme_editor__no_rules_defined">Esta folha de estilo não tem regras definidas. Adicione uma regra para começar a editar.</string>
+    <string name="settings__theme_editor__rule_already_exists">Esta regra de folha de estilos já está definida.</string>
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
+    <string name="settings__theme_editor__rule_codes">Códigos-chave alvo</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
+    <string name="settings__theme_editor__rule_shift_states">Estados de troca</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
+    <string name="settings__theme_editor__add_code">Adicionar código-chave</string>
+    <string name="settings__theme_editor__edit_code">Editar código-chave</string>
+    <string name="settings__theme_editor__no_codes_defined">Aplicar regra a todos os elementos alvo.</string>
+    <string name="settings__theme_editor__codes_defined">Aplicar regra apenas a elementos alvo com os seguintes códigos-chave:</string>
     <string name="settings__theme_editor__code_already_exists">Este código já está definido.</string>
+    <string name="settings__theme_editor__code_invalid">Este código-chave não é válido. Assegure-se que o código-chave está entre o alcance de {c_min} a {c_max} para carateres ou {i_min} a {i_max} para teclas internas especiais.</string>
     <string name="settings__theme_editor__code_placeholder">Código</string>
     <string name="settings__theme_editor__code_recording_placeholder">A gravar…</string>
     <string name="settings__theme_editor__add_property">Adicionar propriedade</string>
@@ -123,6 +131,12 @@
     <string name="snygg__rule_element__key_hint">Dica de tecla</string>
     <string name="snygg__rule_element__key_popup">Popup de tecla</string>
     <string name="snygg__rule_element__clipboard_item">Item da área de transferência</string>
+    <string name="snygg__rule_element__emoji_key">Tecla emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Pop-up da tecla emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Separador emoji</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Esquema de introdução horizontal</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Campo de introdução horizontal</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Ação de introdução horizontal</string>
     <string name="snygg__rule_element__glide_trail">Rasto de gestos</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
     <string name="snygg__rule_element__system_nav_bar">Barra de navegação do sistema</string>
@@ -140,6 +154,13 @@
     <string name="snygg__property_name__font_size">Tamanho do tipo de letra</string>
     <string name="snygg__property_name__font_style">Estilo do tipo de letra</string>
     <string name="snygg__property_name__shape">Forma</string>
+    <string name="snygg__property_name__var_primary">Cor primária</string>
+    <string name="snygg__property_name__var_primary_variant">Cor primária (variante)</string>
+    <string name="snygg__property_name__var_secondary">Cor secundária</string>
+    <string name="snygg__property_name__var_secondary_variant">Cor secundária (variante)</string>
+    <string name="snygg__property_name__var_background">Plano de fundo comum</string>
+    <string name="snygg__property_name__var_surface">Superfície comum</string>
+    <string name="snygg__property_name__var_surface_variant">Superfície comum (variante)</string>
     <string name="snygg__property_name__var_shape">Froma comum</string>
     <string name="snygg__property_name__var_shape_variant">Forma comun (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Herdar</string>
@@ -147,6 +168,10 @@
     <string name="snygg__property_value__image_ref">Referência da imagem</string>
     <string name="snygg__property_value__rectangle_shape">Forma de retângulo</string>
     <string name="snygg__property_value__circle_shape">Forma de círculo</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Forma de canto cortado (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Forma de canto cortado (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Forma de canto arredondado (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Forma de canto arredondado (%)</string>
     <string name="snygg__property_value__dp_size">Tamanho (dp)</string>
     <string name="snygg__property_value__sp_size">Tamanho (sp)</string>
     <string name="snygg__property_value__percentage_size">Tamanho (%)</string>
@@ -247,8 +272,13 @@
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Adicionar palavra</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Editar palavra</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Palavra</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, introduza uma palavra</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Por favor, introduza uma palavra correspondente a {regex}</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequência (entre {f_min} e {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, introduza um valor de frequência</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Por favor, introduza um número válido entre os limites especificados</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Atalho (opcional)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Por favor, introduza um atalho correspondente a {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Código do idioma (opcional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">O código de idioma indicado não é coincidente com a sintaxe esperada. O código deve um idioma (pt), um idioma e um país (pt_PT) ou um idioma, um país e um script (pt_PT-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gestos e deslize</string>
@@ -260,6 +290,8 @@
     <string name="pref__glide_trail_fade_duration">Tempo para mostrar o rasto</string>
     <string name="pref__glide_preview_refresh_delay">Atraso de pré-visualização</string>
     <string name="pref__glide__show_preview">Mostrar pré-visualização ao escrever com gestos</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Eliminar palavra sempre</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Pressionar \"eliminar\" de seguida ao deslizar, apaga a palavra inteira</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos genéricos</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos na barra de espaço</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Outros gestos / Limitação de gestos</string>
@@ -375,6 +407,8 @@
     <string name="clipboard__group_pinned">Fixado</string>
     <string name="clipboard__group_recent">Recente</string>
     <string name="clipboard__group_other">Outro</string>
+    <string name="clipboard__item_description_email">Email</string>
+    <string name="clipboard__item_description_url">URL</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desafixar item</string>
     <string name="clip__pin_item">Fixar item</string>
@@ -385,6 +419,7 @@
     <string name="clipboard__cleared_primary_clip">Item principal limpo</string>
     <string name="clipboard__cleared_history">Histórico limpo</string>
     <string name="clipboard__cleared_full_history">Todo o histórico foi limpo</string>
+    <string name="clipboard__confirm_clear_history__message">Tem a certeza que quer limpar o seu histórico de pesquisas?</string>
     <string name="settings__clipboard__title">Área de transferência</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Utilizar área de transferência interna e não a do sistema</string>
@@ -409,6 +444,7 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Mostra o consumo da memória e o seu tamanho no canto superior direito</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostrar item principal</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Substitui o item principal existente na área de transferência</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Mostrar a interface do estado de introdução</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Mostrar limite das teclas</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Destacar a vermelho os limites das teclas</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Limpar dicionário do utilizador</string>
@@ -449,6 +485,7 @@
     <string name="ext__editor__metadata__title">Gerir meta-dados</string>
     <string name="ext__editor__metadata__title_invalid">Meta-dados inválidos</string>
     <string name="ext__editor__dependencies__title">Gerir dependências</string>
+    <string name="ext__editor__files__title">Gerir ficheiros de arquivo</string>
     <string name="ext__editor__create_component__title">Criar componente</string>
     <string name="ext__editor__create_component__title_theme">Criar tema</string>
     <string name="ext__editor__create_component__from_empty">Vazio</string>
@@ -518,17 +555,33 @@
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largura dinâmica</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largura dinâmica e deslocável</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nunca mostrar</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Lembrar último estado</string>
     <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Idiomas do sistema</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Idioma nativo</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Tom de pele padrão</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Tom de pele claro</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Tom de pele médio claro</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Tom de pele médio</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Tom de pele médio escuro</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Tom de pele escuro</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Cabelo padrão</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Cabelo vermelho</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cabelo encaracolado</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cabelo branco</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Careca</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Prioridade aos acentos</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo será sempre o acento principal ou o símbolo caso não exista um acento</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Prioridade aos símbolos</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo será sempre o símbolo ou o acento principal caso não exista um símbolo</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioridade inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">O carácter inicialmente selecionado após um toque longo é decidido por ser o acento principal ou o símbolo, tendo por base o idioma e a disposição atual</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Não tabulado</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Tabulado (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Tabulado (automático)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Não mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinamicamente</string>
@@ -541,7 +594,12 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Coloca a linha secundária entre a linha principal e o teclado</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Sobrepor interface</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição à interface da aplicação mas sem afetar a altura do teclado. Tenha em conta de que esta opção pode implicar uma sobreposição do campo de introdução de dados</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Início do topo</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Fim do topo</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fim do fundo</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Inicio do fundo</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ações rápidas</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Ferramentas da área de transferência do cursor</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Programador</string>
@@ -550,7 +608,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Sem ação</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Mudar para o anterior modo de teclado</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Mudar para o próximo modo de teclado</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Eliminar carater antes do cursor</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Eliminar caracteres com precisão</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Eliminar palavra antes do cursor</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Eliminar palavras com precisão</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ocultar teclado</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Inserir espaço</string>
@@ -566,6 +626,7 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Deslocar</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Refazer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Desfazer</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Selecionar carateres com precisão</string>
     <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Selecionar palavras com precisão</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Mostrar seletor do método de introdução</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Mudar para o teclado anterior</string>

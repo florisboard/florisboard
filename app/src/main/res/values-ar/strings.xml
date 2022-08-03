@@ -458,8 +458,9 @@
     <string name="clipboard__group_pinned">مثبّت</string>
     <string name="clipboard__group_recent">حديث</string>
     <string name="clipboard__group_other">أخرى</string>
-    <string name="clipboard__item_description_url">الرابط</string>
     <string name="clipboard__item_description_email">البريد الإلكتروني</string>
+    <string name="clipboard__item_description_url">الرابط</string>
+    <string name="clipboard__item_description_phone">الهاتف</string>
     <string name="clip__clear_history">مسح السجل</string>
     <string name="clip__unpin_item">إلغاء تثبيت العنصر</string>
     <string name="clip__pin_item">تثبيت العنصر</string>

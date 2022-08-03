@@ -154,7 +154,7 @@
     <string name="snygg__rule_element__smartbar_quick_action">Rychlá akce chytré lišty</string>
     <string name="snygg__rule_element__smartbar_key">Klíč chytré lišty</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
-    <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutý klip v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutá položka v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
     <string name="snygg__rule_element__system_nav_bar">Systémová navigační lišta</string>
     <string name="snygg__rule_selector__pressed">Stisknuto</string>
@@ -255,6 +255,8 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Přízvuky zahrnují vyskakovací symboly</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Přidá vyskakovací symboly k výchozím přízvukům rozložení</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne na znaky</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automaticky se vrátí z nabídky čísel/symbolů ke klasické klávesnici</string>
@@ -271,21 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundární akce</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Psaní</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Zobrazovat návrhy</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Poskytuje návrhy, zatímco píšete</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Režim zobrazování návrhů</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokovat možná urážlivá slova</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Návrhy obsahu schránky</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Navrhnout obsah dříve zkopírovaný do schránky</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Omezit návrhy ze schránky na</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Položky zkopírované v posledních {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zobrazit návrhy na řádku poskytnuté službami automatického doplnění</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalizovat slova na základě aktuálního vstupního kontextu</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatická mezera za interpunkcí</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automaticky vložit mezeru za interpunkcí</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat stav CapsLocku</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dvojitou mezerou</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojité poklepání na mezerník vloží tečku a mezeru</string>
+    <string name="pref__spelling__title" comment="Preference group title">Pravopis</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systémově zakázáno. V textových polích se nebudou objevovat červené pruhy u nesprávných slov. Klepněte pro změnu.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Není nastavena žádná služba kontroly pravopisu v textu. Klepnutím na tlačítko to změníte.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jazyky</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Používat jména z kontaktů</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Hledat jména z vašeho seznamu kontaktů</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Hledat položky z uživatelských slovníků</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Uživatelské slovníky</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Použít vlastní systémový slovník</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Nabízet slova uložená ve vlastním systémovém slovníku</string>
@@ -362,24 +377,68 @@
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
     <string name="about__version__title" comment="Preference title">Verze</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Něco se pokazilo: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">Změny</string>
     <string name="about__changelog__summary" comment="Preference summary">Co je nového</string>
     <string name="about__repository__title" comment="Preference title">Repozitář (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskuze, problémy a informace</string>
     <string name="about__privacy_policy__title" comment="Preference title">Soukromí</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany soukromí tohoto projektu</string>
     <string name="about__project_license__title" comment="Preference title">Licence projektu</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard je licencován pod {license_name}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodařilo se načíst text licence.\n-&gt; Důvod: {error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Reference správce podkladů je null</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Licence třetích stran</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Licence knihoven třetích stran zahrnutých v této aplikaci</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Vítejte!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Děkujeme za používání aplikace {app_name}! Toto rychlé nastavení vás provede kroky vyžadovanými k používání {app_name} na vašem zařízení.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Soukromí</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Repozitář</string>
+    <string name="setup__enable_ime__title">Povolit {app_name}</string>
+    <string name="setup__enable_ime__description">Android vyžaduje, aby každá vlastní klávesnice byla ručně povolena, než ji budete moci použít. Otevřete systémové nastavení <i>Jazyk a vstup</i> a v něm povolte „{app_name}“.</string>
+    <string name="setup__enable_ime__open_settings_btn">Otevřít systémová nastavení</string>
+    <string name="setup__select_ime__title">Vyberte {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} je nyní povolena ve vašem systému. Pro její aktivní používání přepněte na {app_name} jejím vybráním v dialogu výběru vstupu!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Přepnout klávesnici</string>
+    <string name="setup__finish_up__title">Dokončit</string>
+    <string name="setup__finish_up__description_p1">{app_name} je nyní povolena ve vašem systému a je připravena na přizpůsobení.</string>
+    <string name="setup__finish_up__description_p2">Pokud objevíte jakékoli problémy, chyby, pády nebo prostě jen budete chtít podat návrh, podívejte se na repozitář projektu na obrazovce O aplikaci!</string>
+    <string name="setup__finish_up__finish_btn">Začít přizpůsobovat</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Záloha a obnovení</string>
+    <string name="backup_and_restore__back_up__title">Zálohovat data</string>
+    <string name="backup_and_restore__back_up__summary">Vygenerovat archiv zálohy předvoleb a přizpůsobení</string>
+    <string name="backup_and_restore__back_up__destination">Vyberte umístění zálohy</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Místní souborový systém</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Aplikace třetí strany pomocí nabídky sdílení</string>
+    <string name="backup_and_restore__back_up__files">Vyberte, co chcete zálohovat</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Předvolby</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšíření klávesnice</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Rozšíření kontroly pravopisu / slovníky</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Rozšíření témat</string>
+    <string name="backup_and_restore__back_up__success">Archiv zálohy byl úspěšně exportován!</string>
+    <string name="backup_and_restore__back_up__failure">Nepodařilo se exportovat archiv zálohy: {error_message}</string>
     <string name="backup_and_restore__restore__title">Obnovit data</string>
+    <string name="backup_and_restore__restore__summary">Obnovit předvolby a přizpůsobení z archivu zálohy</string>
     <string name="backup_and_restore__restore__files">Vyberte, co obnovit</string>
+    <string name="backup_and_restore__restore__metadata">Vybraný archiv zálohy</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Tento archiv zálohy byl vygenerován v jiné verzi, než jakou aktuálně používáte, což je většinou podporováno. Mějte ale prosím na vědomí, že se mohou vyskytnout menší problémy nebo se některé předvolby nemusí správně převést kvůli rozdílům ve funkcích.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Tento archiv zálohy byl vygenerován v aplikaci třetí strany, což většinou není podporováno. Mohou se vyskytnout ztráty dat, obnovte na vlastní nebezpečí!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Tento archiv zálohy obsahuje neplatná metadata. Buď byl poškozen, nebo nesprávně upraven. Obnovení zálohy z tohoto archivu není možné, zvolte prosím jiný.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Tento archiv zálohy neobsahuje žádné soubory k obnovení, vyberte prosím jiný.</string>
     <string name="backup_and_restore__restore__mode">Obnovovací reřim</string>
+    <string name="backup_and_restore__restore__mode_merge">Sloučit s aktuálními daty</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Vymazat a přepsat aktuální data</string>
+    <string name="backup_and_restore__restore__success">Data úspěšně obnovena!</string>
+    <string name="backup_and_restore__restore__failure">Nepodařilo se obnovit data: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Omlouváme se za potíže, ale aplikace FlorisBoard spadla kvůli neočekávané chybě.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Pokud chcete tuto chybu nahlásit, podívejte se nejprve do nástroje pro sledování problémů na GitHubu, pokud již nebyla chyba nahlášena.\nPokud tomu tak není, zkopírujte vygenerovaný záznam o chybě a otevřete nový problém. Použijte šablonu „%s“ a vyplňte popis, kroky k reprodukci a na konec vložte vygenerovaný záznam o pádu. Pomůžete tak k tomu, aby byl FlorisBoard lepší a stabilnější pro všechny. Děkujeme!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Zkopírováno do schránky</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nepodařilo se zkopírovat do systémové schránky: Instance správce schránky nenalezena</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Nahlásit problém (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavřít</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybová hlášení</string>
@@ -389,9 +448,18 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Schránka</string>
+    <string name="clipboard__disabled__title">Historie schránky je momentálně zakázána</string>
+    <string name="clipboard__disabled__message">Historie schránky {app_name} vám umoňuje rychle ukládat a přistupovat k textu a obrázkům které zkopírujete, s možností připínat položky, nastavovat automatická čištění a nastavit maximální limit položek.</string>
     <string name="clipboard__disabled__enable_button">Zapnout historii schránky</string>
+    <string name="clipboard__empty__title">Vaše schránka je prázdná</string>
+    <string name="clipboard__empty__message">Jakmile zkopírujete text nebo obrázky, zobrazí se tady.</string>
+    <string name="clipboard__locked__title">Vaše schránka je uzamčena</string>
+    <string name="clipboard__locked__message">Pro přístup k historii schránky nejprve prosím odemkněte své zařízení.</string>
     <string name="clipboard__group_pinned">Připnuto</string>
+    <string name="clipboard__group_recent">Nedávné</string>
     <string name="clipboard__group_other">Ostatní</string>
+    <string name="clipboard__item_description_email">E-mail</string>
+    <string name="clipboard__item_description_url">URL</string>
     <string name="clip__clear_history">Smazat historii</string>
     <string name="clip__unpin_item">Odepnout položku</string>
     <string name="clip__pin_item">Připnout položku</string>
@@ -399,38 +467,222 @@
     <string name="clip__paste_item">Vložit</string>
     <string name="clip__back_to_text_input">Zpět na zadávání textu</string>
     <string name="clip__cant_paste">Tato aplikace neumožňuje vkládání daného obsahu.</string>
+    <string name="clipboard__cleared_primary_clip">Primární zkopírovaná položka vymazána</string>
+    <string name="clipboard__cleared_history">Historie vymazána</string>
+    <string name="clipboard__cleared_full_history">Celá historie vymazána</string>
+    <string name="clipboard__confirm_clear_history__message">Opravdu chcete vymazat historii své schránky?</string>
     <string name="settings__clipboard__title">Schránka</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Synchronizovat ze systémovou schránkou</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Aktualizace systémové schránky také zahrnují schránku Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizovat do systémové schránky</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualizace schránky Floris také zahrnují systémovou schránku</string>
     <string name="pref__clipboard__group_clipboard_history__label">Historie schránky</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Ponechat obsah schránky pro rychlý přístup</string>
     <string name="pref__clipboard__clean_up_old__label">Mazat staré položky</string>
     <string name="pref__clipboard__clean_up_after__label">Mazat staré položky po</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Vymazání primární položky ovlivní historii</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Vymazání primární položky také vymaže poslední zápis v historii</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Vývojářské nástroje</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Zapnout vývojářské nástroje</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Nástroje pro debugování a řešení problémů</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Zobrazit statistiky paměťové haldy</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">V pravém horním rohu zobrazí nejvyšší využití a maximální velikost paměti</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Zobrazit primární položku</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Zobrazí aktuální primární položku ze schránky</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Zobrazit překrytí se stavem vstupu</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Zobrazí aktuální stav vstupu pro ladění</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Zobrazit překrytí s pravopisem</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Zobrazí aktuální výsledky pravopisu pro ladění</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Zobrazit hranice dotyku kláves</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Zobrazit červené ohraničení hranic dotyku kláves</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Vymazat interní databázi uživatelského slovníku</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Vymaže všechna slova z tabulky databáze slovníku</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Resetovat vlajku \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Akce ladění pro opětovné ukázání obrazovky prvního nastavení</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Testovací obrazovka hlášení pádu</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Akce ladění pro záměrné vytvoření pádu</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Systémové nástroje Androidu</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globální nastavení Androidu</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Bezpečná nastavení Androidu</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Systémová nastavení Androidu</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systémové jazyky</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Autoři</string>
+    <string name="ext__meta__components">Zabalené komponenty</string>
+    <string name="ext__meta__components_theme">Zabalená témata</string>
+    <string name="ext__meta__components_none_found">Tento archiv rozšíření neobsahuje žádné zabalené komponenty.</string>
+    <string name="ext__meta__description">Popis</string>
+    <string name="ext__meta__homepage">Domovská stránka</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Sledování problémů</string>
+    <string name="ext__meta__keywords">Klíčová slova</string>
+    <string name="ext__meta__label">Štítek</string>
+    <string name="ext__meta__license">Licence</string>
+    <string name="ext__meta__maintainers">Správci</string>
+    <string name="ext__meta__maintainers_by">Od: {maintainers}</string>
+    <string name="ext__meta__title">Název</string>
+    <string name="ext__meta__version">Verze</string>
+    <string name="ext__error__not_found_title">Rozšíření nenalezeno</string>
+    <string name="ext__error__not_found_description">Nepodařilo se nalézt rozšíření s ID \"{id}\".</string>
+    <string name="ext__editor__title_create_any">Vytvořit rozšíření</string>
+    <string name="ext__editor__title_create_keyboard">Vytvořit rozšíření klávesnice</string>
+    <string name="ext__editor__title_create_theme">Vytvořit rozšíření témat</string>
+    <string name="ext__editor__title_edit_any">Upravit rozšíření</string>
+    <string name="ext__editor__title_edit_keyboard">Upravit rozšíření klávesnice</string>
+    <string name="ext__editor__title_edit_theme">Upravit rozšíření témat</string>
+    <string name="ext__editor__metadata__title">Spravovat metadata</string>
+    <string name="ext__editor__metadata__title_invalid">Neplatná metadata</string>
+    <string name="ext__editor__metadata__message_invalid">Metadata tohoto rozšíření nejsou platná, zkontrolujte prosím editor metadat pro podrobnosti!</string>
+    <string name="ext__editor__dependencies__title">Spravovat závislosti</string>
+    <string name="ext__editor__files__title">Spravovat soubory archivu</string>
+    <string name="ext__editor__create_component__title">Vytvořit komponentu</string>
+    <string name="ext__editor__create_component__title_theme">Vytvořit téma</string>
+    <string name="ext__editor__create_component__from_empty">Prázdné</string>
+    <string name="ext__editor__create_component__from_existing">Z existujících</string>
+    <string name="ext__editor__create_component__from_empty_warning">Vytváření a konfigurace prázdné komponenty může být těžká, pokud jste novým uživatelem {app_name} nebo nejste obeznámeni se specifickými věcmi. Pokud tomu tak je, zkuste zkopírovat existující komponentu a upravit ji podle vašich představ.</string>
+    <string name="ext__editor__edit_component__title">Upravit komponentu</string>
+    <string name="ext__editor__edit_component__title_theme">Upravit komponentu tématu</string>
+    <string name="ext__export__success">Rozšíření úspěšně exportováno!</string>
+    <string name="ext__export__failure">Nepodařilo se exportovat rozšíření: {error_message}</string>
+    <string name="ext__import__success">Rozšíření úspěšně importováno!</string>
+    <string name="ext__import__failure">Nepodařilo se importovat rozšíření: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importovat rozšíření</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importovat rozšíření klávesnice</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importovat rozšíření témat</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Soubor nelze importovat. Důvod:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Nepodporovaný nebo nerozeznaný typ souboru.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Nepodařilo se nahradit nebo aktualizovat výchozí balíčky rozšíření poskytované v základních zdrojích aplikace. Zvažte aktualizaci samotné aplikace, pokud chcete použít novější verzi základního balíčku rozšíření.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Vypadá to, že soubor je archiv rozšíření, ale zpracování dat z archivu se nezdařilo. Buď je archiv poškozen, nebo tento soubor vůbec není rozšíření.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Byl očekáván archiv rozšíření sériového typu \"{expected_serial_type}\", ale byl obdržen \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Byl očekáván soubor médií (obrázek, zvuk, písmo atd.), ale byl nalezen archiv rozšíření.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Byl očekáván archiv rozšíření, ale byl nalezen soubor médií (obrázek, zvuk, písmo atd.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Při importování se vyskytla chyba. Byly poskytnuty následující podrobnosti:</string>
     <!-- Action strings -->
+    <string name="action__add">Přidat</string>
+    <string name="action__apply">Použít</string>
+    <string name="action__back_up">Zálohovat</string>
+    <string name="action__cancel">Zrušit</string>
+    <string name="action__create">Vytořit</string>
+    <string name="action__default">Výchozí</string>
+    <string name="action__delete">Odstranit</string>
+    <string name="action__delete_confirm_title">Potvrdit odstranění</string>
+    <string name="action__delete_confirm_message">Opravdu chcete odstranit \"{name}\"? Tuto operaci nelze po provedení vrátit zpět.</string>
+    <string name="action__discard">Zrušit</string>
+    <string name="action__discard_confirm_title">Neuložené změny</string>
+    <string name="action__discard_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>
+    <string name="action__edit">Upravit</string>
+    <string name="action__export">Exportovat</string>
+    <string name="action__import">Importovat</string>
+    <string name="action__no">Ne</string>
+    <string name="action__ok">OK</string>
+    <string name="action__restore">Obnovit</string>
+    <string name="action__save">Uložit</string>
+    <string name="action__select">Vybrat</string>
+    <string name="action__select_dir">Vybrat složku</string>
+    <string name="action__select_dirs">Vybrat složky</string>
+    <string name="action__select_file">Vybrat soubor</string>
+    <string name="action__select_files">Vybrat soubory</string>
+    <string name="action__yes">Ano</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Chyba</string>
+    <string name="error__details">Podrobnosti</string>
+    <string name="error__invalid">Neplatné</string>
+    <string name="error__snackbar_message">Něco se pokazilo</string>
+    <string name="error__snackbar_message_template">Něco se pokazilo: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">např. {example}</string>
+    <string name="general__no_browser_app_found_for_url">Nenalezen žádný prohlížeč pro zobrazení URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; vybrat &#45;</string>
+    <string name="general__unlimited">Neomezené</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Na výšku</string>
+    <string name="screen_orientation__landscape">Na šířku</string>
+    <string name="screen_orientation__vertical">Vertikálně</string>
+    <string name="screen_orientation__horizontal">Horizontálně</string>
     <!-- State strings -->
     <string name="state__disabled">Vypnuto</string>
+    <string name="state__enabled">Povoleno</string>
+    <string name="state__no_dir_selected">Nebyla vybrána žádná složka</string>
+    <string name="state__no_dirs_selected">Nebyly vybrány žádné složky</string>
+    <string name="state__no_file_selected">Nebyl vybrán žádný soubor</string>
+    <string name="state__no_files_selected">Nebyly vybrány žádné soubory</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasická (3 sloupce)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamická šířka</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamická šířka a skrolovatelné</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimální</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Červená Zelená Modrá Alpha</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Vždy zobrazit</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Vždy zobrazit klávesnici po zavření jakéhokoli dialogu editoru</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nikdy nezobrazovat</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Nikdy nezobrazovat klávesnici po zavření jakéhokoli dialogu editoru</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Pamatovat si poslední stav</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Zobrazit klávesnici pouze po zavření jakéhokoli dialogu editoru, pokud byla předtím viditelná</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Systémový jazyk</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Názvy jazyků napříč aplikací a rozhraním klávesnice jsou zobrazeny v jazyce, který je nastaven pro celé zařízení</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Nativní jazyk</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Názvy jazyků napříč aplikací a rozhraním klávesnice jsou zobrazeny ve svém vlastním jazyce</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Výchozí barva pleti</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Světlá barva pleti</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Středně světlá barva pleti</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Střední barva pleti</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Středně tmavá barva pleti</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Tmavá barva pleti</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Výchozí vlasy</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Červené vlasy</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Kurdnaté vlasy</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Bílé vlasy</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Pleš</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Prioritu má přízvuk</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku má vždy primární přízvuk, nebo znak nápovědy, když není dostupný primární přízvuk</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Prioritu má nápověda</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku je vždy znak nápovědy, nebo primární přízvuk, když není dostupný symbol nápovědy</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Chytrá prioritizace</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku je dynamicky vybrán, zda bude primárním přízvukem, nebo o symbolem nápovědy, a to na základě aktuálního jazyka a rozložení</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Bez shiftu</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Se shiftem (manuální)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Se shiftem (automatické)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Vypnuto</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Nad primárním řádkem</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Umístí sekundární řádek mezi rozhraní aplikace a primární řádek</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Pod primárním řádkem</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Umístí sekundární řádek mezi primární řádek a textovou klávesnici</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Překrýt zozhraní aplikace</string>
+    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Umístí sekundární řádek jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Vpravo nahoře</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Vpravo dole</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Vlevo dole</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Rychlé akce</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Uspořádatelné rychlé akce ve formátu řádku s nabídkou</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Nástroje kurzoru schránky</string>
+    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Řádek s nejpoužívanějšími nástroji na schránku a pohyb v textu</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Základní</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Jsou zobrazeny pouze vlastnosti barev, vlastnosti a pravidla jsou přeloženy.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Pokročilé</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Jsou zobrazeny všechny vlastnosti, vlastnosti a pravidla jsou přeloženy.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Vývojář</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Jsou zobrazeny všechny vlastnosti, vlastnosti a pravidla jsou zobrazeny tak, jak jsou napsány v samotné tabulce stylů.</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Použít systémové jazyky</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Použít klávesnicové podtypy</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Žádná akce</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Mód přechodu k předchozí klávesnici</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Mód přechodu k další klávesnici</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Odstranit znak před kurzorem</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Smazat znaky přesně</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Odstranit slovo před kurzorem</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Smazat slova přesně</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skrýt klávesnici</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Vložit mezeru</string>
@@ -446,10 +698,13 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Přepnout shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Vpřed</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Zpět</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Precizně vybrat znaky</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Precizně vybrat slova</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Zobrazit výběr metody zadávání</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Přepnout na předchozí klávesnici</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Přepnout na předchozí podtyp</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Přepnout na další podtyp</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Přepnout viditelnost chytré lišty</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Vždy denní</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Vždy noční</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Podle systému</string>
@@ -460,4 +715,28 @@
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamicky: Přepnout na emoji / Přepnout jazyk</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} hodina</item>
+        <item quantity="few">{v} hodiny</item>
+        <item quantity="many">{v} hodin</item>
+        <item quantity="other">{v} hodin</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minuta</item>
+        <item quantity="few">{v} minuty</item>
+        <item quantity="many">{v} minut</item>
+        <item quantity="other">{v} minut</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} sekunda</item>
+        <item quantity="few">{v} sekundy</item>
+        <item quantity="many">{v} sekund</item>
+        <item quantity="other">{v} sekund</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} položka</item>
+        <item quantity="few">{v} položky</item>
+        <item quantity="many">{v} položek</item>
+        <item quantity="other">{v} položek</item>
+    </plurals>
 </resources>

@@ -51,6 +51,7 @@
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Налаштування рядка з цифрами</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Основна телефонна розкладка</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Додаткова телефонна розкладка</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Показати все</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Здається, ви не налаштували ні один підтип. Як запасний варіант буде використано підтип English/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Цей підтип вже існує!</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>

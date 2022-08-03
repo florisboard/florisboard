@@ -205,7 +205,7 @@
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">کاریگەری دەنگ / دەستلێدان</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">چالاککردنی کاریگەری دەنگی</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">لێدانی دەنگ بۆ فرمانەکان بەپێی ڕێکخستنی سیستەم</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">پستگوێخستنی ڕێکخستنی دەنگیی سیستەم</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">پشتگوێخستنی ڕێکخستنی دەنگیی سیستەم</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">بەکارهێنانی ئەم ڕێکخستنانە تەنانەت ئەگەر دەنگ ناچالاکیش کرابوو لە ڕێکخستنەکانی سیستەمدا</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">دەنگی کاتی نووسینی هێماکان</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">دەنگی لەکاتی نووسین</string>
@@ -216,7 +216,7 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">کاریگەری لەرزین / دەستلێدان</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">چالاککردنی کاریگەری لەرزین</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">لەرزین لەکاتی دەستلێدانی دوگمەکان بەپێی ڕێکخستنی سیستەم</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">پستگوێخستنی ڕێکخستنی لەرزینی سیستەم</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">پشتگوێخستنی ڕێکخستنی لەرزینی سیستەم</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">بەکارهێنانی ئەم ڕێکخستنانە تەنانەت ئەگەر لەرزین ناچالاکیش کرابوو لە ڕێکخستنەکانی سیستەمدا</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">لەرزینەوەی ڕاستەوخۆ</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">لەرزینەوەی ڕاستەوخۆ لەجیاتی لەرینەوەی بنەڕەتی سیستەم</string>
@@ -273,21 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">خانەی دووەم</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">تەختەکلیل</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">پێشنیارکردنی ووشە</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">پیشاندانی ووشە پێشنیارکراوەکان لەکاتی نووسیندا</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">ڕێگریکردن لە ووشەی نابەجێ</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">شاردنەوە و ڕێگریکردن لە ووشەکانی جنێودان وتەی ناشرین و نابەجێ</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">ماوەی پیشاندانی لەبەرگیراوەکان</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">ماوەی پیشاندان {v} چرکە</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">پیشاندانی پێشنیاری تەواوکەری خۆکاری </string>
     <string name="pref__correction__title" comment="Preference group title">ڕاستکردنەوە</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">گەورەکردنی خۆکاری</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">گەورەکردنی پیتەکان بە خۆکاری تەنها بۆ زمانە لاتینییەکان</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">خاڵبەندی و بۆشایی</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">دانانی خاڵبەندی و بۆشایی بەخۆکاری لەکۆتایی ڕستەدا</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">گەورەکردنی هەمیشەیی</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">سەرجەم پیتەکان هەمیشە بە گەورەیی(کاپیتاڵ) دەمێننەوە تەنها بۆ ئینگلیزی و زمانە لاتینییەکان</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">دانانی خاڵ بە دوگمەی بۆشایی</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">دووجار دەست بنێیت بە دوگمەی بۆشاییدا خاڵ یان هێمای کۆتایی ڕستە دەنوسێت</string>
+    <string name="pref__spelling__title" comment="Preference group title">ڕاستکردنەوەی هەڵەی ڕێنووس</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">ناچالاککردنی ڕاستکەرەوەی سیستەم، هێڵی سوور پیشان نادرێت لەکاتی نووسینی ووشە هەڵەکاندا، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">هیچ ڕاستکەرەوەیەکی هەڵەی ڕێنووس دیارینەکراوە، پەنجە لێرە بدە بۆ ڕێکخستن.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زمان</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">بەکارهێنانی ناوەکانی ناو مۆبایل</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">راستکردنەوە و پیشاندانی ناوەکان</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">زیادکراوەکانی فەرهەنگی تایبەت</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">پیشاندان و راستکردنەوە لەڕێی فەرهەنگی بەکارهێنەرەوە</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">فەرهەنگی بەکارهێنەر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">پێشنیارکردنی ئەو ووشانەی لەفەرهەنگی تایبەتی بەکارهێنەردا پاشەکەوتکراون</string>
@@ -446,8 +459,9 @@
     <string name="clipboard__group_pinned">جێگیرکراو</string>
     <string name="clipboard__group_recent">دوایین لەبەرگیراوە</string>
     <string name="clipboard__group_other">جۆری تر</string>
-    <string name="clipboard__item_description_url">URL بەستەر</string>
     <string name="clipboard__item_description_email">ئیمەیڵ</string>
+    <string name="clipboard__item_description_url">URL بەستەر</string>
+    <string name="clipboard__item_description_phone">تەلەفۆن</string>
     <string name="clip__clear_history">سڕینەوەی مێژوو</string>
     <string name="clip__unpin_item">جێگیر نەکردن</string>
     <string name="clip__pin_item">جێگیر کردن</string>

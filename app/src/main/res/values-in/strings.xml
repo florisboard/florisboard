@@ -274,21 +274,34 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Tindakan sekunder</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Tampilkan baris tindakan sekunder</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Mengetik</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Tampilkan saran</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Menyediakan saran saat Anda mengetik</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode penampilan saran</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokir kata-kata yang mungkin menyinggungkan</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Saran konten papan klip</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Sarankan konten papan klip yang sebelumnya disalin</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Batasi saran papan klip sampai</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Item yang disalin {v} d sebelumnya</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Tampilkan saran dalam baris yang disediakan oleh layanan pengisian otomatis</string>
     <string name="pref__correction__title" comment="Preference group title">Koreksi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Kapitalisasi otomatis</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalisasi kata berdasarkan konteks input saat ini</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Spasi otomatis setelah tanda baca</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Tambahkan spasi secara otomatis setelah tanda baca</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Ingat status caps lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock akan tetap aktif saat pindah ke bidang teks lain</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Titik spasi ganda</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Mengetuk batang spasi dua kali memasukkan titik yang diikuti oleh sebuah spasi</string>
+    <string name="pref__spelling__title" comment="Preference group title">Ejaan</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Dinonaktifkan di sistem. Tidak ada lagi garis merah di kolom teks atau kata-kata yang tidak benar. Ketuk untuk mengubahnya.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Tidak ada pemeriksa ejaan teks inline yang diatur. Ketuk untuk mengubahnya.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Bahasa</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Gunakan nama dari kontak</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Lihat nama dari daftar kontak Anda</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Gunakan entri kamus pengguna</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Lihat entri dari kamus pengguna</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Kamus pengguna</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktifkan kamus pengguna sistem</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sarankan kata-kata tersimpan di kamus pengguna sistem</string>
@@ -446,8 +459,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clipboard__group_pinned">Disematkan</string>
     <string name="clipboard__group_recent">Terkini</string>
     <string name="clipboard__group_other">Lainnya</string>
-    <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_email">Email</string>
+    <string name="clipboard__item_description_url">URL</string>
     <string name="clip__clear_history">Hapus riwayat</string>
     <string name="clip__unpin_item">Lepas pin item</string>
     <string name="clip__pin_item">Pin item</string>

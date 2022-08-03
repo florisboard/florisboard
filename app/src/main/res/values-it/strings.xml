@@ -458,8 +458,9 @@
     <string name="clipboard__group_pinned">Fissati</string>
     <string name="clipboard__group_recent">Recenti</string>
     <string name="clipboard__group_other">Altro</string>
-    <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_email">Email</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Telefono</string>
     <string name="clip__clear_history">Cancella la cronologia</string>
     <string name="clip__unpin_item">Sblocca oggetto</string>
     <string name="clip__pin_item">Blocca oggetto</string>

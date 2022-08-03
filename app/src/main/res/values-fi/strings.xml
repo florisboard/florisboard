@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Siirrä näppäimistö vasemmalle.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Siirrä näppäimistö oikealle.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojit</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojit</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Hymiöt</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomojit</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Emojihistorian maksimikoko</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Emojien oletusihonväri</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Emojien oletushiustyyli</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Hymiöt &amp; tunteet</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Ihmiset &amp; keho</string>
@@ -22,6 +26,9 @@
     <string name="emoji__category__objects" comment="Emoji category name">Esineet</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbolit</string>
     <string name="emoji__category__flags" comment="Emoji category name">Liput</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Viimeaikaisia emojeja ei löytynyt. Kun käytät emojeja, ne näytetään automaattisesti täällä.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Paina emojia pitkään poistaaksesi sen tästä näkymästä!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Poistettu {emoji} viimeaikaisista emojeista</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Toimintojen pikavaihto. Painettaessa vaihtaa sanaehdotusten ja pikatoimintopainikkeiden välillä.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Poistu tekstinmuokkauspaneelista.</string>
@@ -34,6 +41,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Yksityistila on aktiivinen, jos tämä on näkyvillä. Klikatessa näytetään tietoa yksityistilasta.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Asetukset</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testaa asetuksiasi</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ohje</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Oletus</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Järjestelmän oletus</string>
@@ -41,17 +49,34 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardia ei ole otettu järjestelmäasetuksissa käyttöön eikä sen vuoksi ole valittavissa syöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Kielet &amp; ulkoasut</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Kieli, jolla kielten nimet näytetään</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Alityypit</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Lisää asettelu</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Muokkaa asettelua</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ensisijainen kieli</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Kirjainten asettelu</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Symbolien ensisijainen asettelu</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Symbolien toissijainen asettelu</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Valuutta</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numeroasettelu</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Numeerinen (kehittynyt) asettelu</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Numerorivin asettelu</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Puhelimen valitanäppäimistön ensisijainen asettelu</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Puhelimen valitanäppäimistön toissijainen asettelu</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Valitse kieli</string>
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Etsi kieltä</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Kieltä ei löytynyt hakusanalla \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; valitse &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Ehdotetut esiasetukset</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Ei ehdotettuja esiasetuksia. Käytä alla olevaa painiketta nähdäksesi kaikki esiasetukset.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Esiasetukset</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Näytä kaikki</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Näyttää siltä, ettet ole määritellyt yhtään asetteluita. Sen vuoksi käytetään toistaiseksi Englanti/QWERTY-asettelua!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tämä asettelu on jo lisätty!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Ainakin yksi kenttä on tyhjä. Tee valinta kaikkiin kenttiin.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ei asennettuna)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Asettelut</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Teema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Teema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Aurinko nousee</string>
@@ -64,34 +89,186 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard-sovellus</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Sisäinen tallennustila</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ulkoinen lähde</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Valitse päiväteema</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Valitse yöteema</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Hallitse asennettuja teemoja</string>
+    <string name="settings__theme_editor__fine_tune__title">Hienosäätö</string>
+    <string name="settings__theme_editor__fine_tune__level">Muokkauksen taso</string>
+    <string name="settings__theme_editor__add_rule">Lisää sääntö</string>
+    <string name="settings__theme_editor__edit_rule">Muokkaa sääntöä</string>
+    <string name="settings__theme_editor__no_rules_defined">Tässä tyylisäännöstössä ei ole määritelty sääntöjä. Lisää sääntö aloittaaksesi tyylisäännöstön mukauttamisen.</string>
+    <string name="settings__theme_editor__rule_already_exists">Tämä tyylisäännöstön sääntö on jo määritelty.</string>
+    <string name="settings__theme_editor__rule_element">Kohde-elementti</string>
+    <string name="settings__theme_editor__rule_groups">Sääntöryhmät</string>
+    <string name="settings__theme_editor__rule_selectors">Valitsimet</string>
+    <string name="settings__theme_editor__no_codes_defined">Käytä sääntöä kaikissa kohde-elementeissä.</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Tallennetaan…</string>
+    <string name="settings__theme_editor__add_property">Lisää ominaisuus</string>
+    <string name="settings__theme_editor__edit_property">Muokkaa ominaisuutta</string>
+    <string name="settings__theme_editor__property_already_exists">Säännöllä on jo ominaisuus tällä nimellä.</string>
+    <string name="settings__theme_editor__property_name">Ominaisuuden nimi</string>
+    <string name="settings__theme_editor__property_value">Ominaisuuden arvo</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Käytä kaikissa kulmissa</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Muokkaa väriä merkkijonona</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">On yöteema</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">On reunaton</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Tyylisäännöstön polku</string>
+    <string name="snygg__rule_element__defines">Muuttujat</string>
+    <string name="snygg__rule_element__defines_description">Määrittele yleisiä värejä ja mittoja muuttujina tyylisäännöstössä käytettäväksi.</string>
+    <string name="snygg__rule_element__clipboard_header">Leikepöydän otsake</string>
+    <string name="snygg__rule_element__clipboard_item">Leikepöydän kohde</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Leikepöydän kohteen ponnahdusikkuna</string>
+    <string name="snygg__rule_element__emoji_key">Emojipainike</string>
+    <string name="snygg__rule_element__emoji_key_popup">Emojipainikkeen ponnahdusikkuna</string>
+    <string name="snygg__rule_element__emoji_key_tab">Emojivälilehti</string>
+    <string name="snygg__rule_element__glide_trail">Pyyhkäisyn jälki</string>
+    <string name="snygg__rule_element__one_handed_panel">Yksikätinen paneeli</string>
+    <string name="snygg__rule_element__system_nav_bar">Järjestelmän navigointipalkki</string>
+    <string name="snygg__rule_selector__pressed">Painettu</string>
+    <string name="snygg__rule_selector__focus">Kohdistettu</string>
+    <string name="snygg__rule_selector__disabled">Pois käytöstä</string>
+    <string name="snygg__property_name__width">Leveys</string>
+    <string name="snygg__property_name__height">Korkeus</string>
+    <string name="snygg__property_name__background">Tausta</string>
+    <string name="snygg__property_name__foreground">Etuala</string>
+    <string name="snygg__property_name__border_color">Reunuksen väri</string>
+    <string name="snygg__property_name__border_style">Reunuksen tyyli</string>
+    <string name="snygg__property_name__border_width">Reunuksen leveys</string>
+    <string name="snygg__property_name__font_family">Kirjasinperhe</string>
+    <string name="snygg__property_name__font_size">Kirjasimen koko</string>
+    <string name="snygg__property_name__font_style">Kirjasintyyli</string>
+    <string name="snygg__property_name__font_variant">Kirjasimen variantti</string>
+    <string name="snygg__property_name__font_weight">Fontin vahvuus</string>
+    <string name="snygg__property_name__shadow_elevation">Varjon korostus</string>
+    <string name="snygg__property_name__shape">Muoto</string>
+    <string name="snygg__property_name__var_primary">Ensisijainen väri</string>
+    <string name="snygg__property_name__var_primary_variant">Ensisijainen väri (variantti)</string>
+    <string name="snygg__property_name__var_secondary">Toissijainen väri</string>
+    <string name="snygg__property_name__var_secondary_variant">Toissijainen väri (variantti)</string>
+    <string name="snygg__property_name__var_background">Yleinen tausta</string>
+    <string name="snygg__property_value__explicit_inherit">Peri</string>
+    <string name="snygg__property_value__solid_color">Tasainen väri</string>
+    <string name="snygg__property_value__dp_size">Koko (dp)</string>
+    <string name="snygg__property_value__sp_size">Koko (sp)</string>
+    <string name="snygg__property_value__percentage_size">Koko (%)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Äänet &amp; värinä</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Äänipalaute / äänet</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ota ääänipalaute käyttöön</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Toista ääniä syöttötoiminnoille riippuen järjestelmän asetuksista</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ohita järjestelmän ääniasetukset</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Käytä allaolevia asetuksia, vaikka järjestelmän äänet olisivat poissa käytöstä. Ei toimi, jos järjestelmän soittoään on mykistetty.</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Syöttötoimintojen äänenvoimakkuus</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Painallusäänet</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Pitkään painalluksen ääni</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Toistetun painalluksen äänet</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Pyyhkäisyeleen äänet</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Pyyhkäisysiirtoeleen äänet</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptinen palaute / värinä</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ota haptinen palaute käyttöön</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Värise syöttötoiminnoille riippuen järjestelmän asetuksista</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ohita järjestelmän haptiset asetukset</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Käytä allaolevia asetuksia, vaikka järjestelmän haptiikka olisi poissa käytöstä</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Värinän kesto</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Värinän voimakkuus</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tämä ominaisuus vaatii tuen laitteiston värinänvoimakkuudensäätöön, jota laitteellasi ei ole</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Tämä ominaisuus vaatii tuen värinänvoimakkuudensäätöön, joka on saatavilla Android 8.0 tai uudemmassa versiossa</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Painalluksen värinä</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Pitkän painalluksen värinä</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Toistetun painalluksen värinä</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Pyyhkäisyeleen värinä</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Pyyhkäisysiirtoeleen värinä</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">esim. näppäin, -painike ja emojivälilehdet</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">esim. ponnahdusvalikko</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">esim. poistonäppäin</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ei toteutettuna</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Näppäimistö</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Numerorivi</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Näytä numerorivi merkkiasettelun yläpuolella</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Korostettu numerorivi</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Korostetut symbolit</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Näytä toimintopainike</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Näyttää muokattavan toimintopainikkeen välilyönnin vieressä</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Toimintopainikkeen toiminto</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Näytä kieli välilyönnissä</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Näyttää aktiivisen kielen nimen välilyöntinäppäimessä</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Kirjasinkoon kerroin</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Ulkoasu</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Yksikätinen tila</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Yksikätisen tilan näppäimistön leveys</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vaakatason kokonäytön syöttö</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Näppäimistön korkeus</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Näppäinten välitys</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alareunan siirto</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Ponnahdusikkunan näkyvyys</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Älypalkki</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ota älypalkki käyttöön</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Näkyy näppäimistön yläpuolella</string>
+    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Riviasetus</string>
+    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ensisijaiset toiminnot</string>
+    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automaattinen laajennus/tiivistäminen</string>
+    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Toissijaiset toiminnot</string>
+    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Näyt toissijaisten toimintojen rivi</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Syöttäminen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Näytä ehdotuksia</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Näyttää ehdotuksia kirjoittaessa</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Ehdotusten näkymä</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Estä mahdollisesti loukkaavat sanat</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Leikepöydän sisällön ehdotukset</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Ehdota leikepöydän sisältöjä</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Rajoita leikepöytäehdotuksia ajalle</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Kohteet, joita on koipioitu viimeisen {v}s aikana</string>
     <string name="pref__correction__title" comment="Preference group title">Korjaukset</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automaattiset isot kirjaimet</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automaattinen iso kirjain syöttökontekstin perusteella</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automaattinen välilyönti välimerkkien jälkeen</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Syötä välilyönti automaattisesti välimerkkien jälkeen</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Muista caps lockin tila</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pysyy päällä, kun siirrytään seuraavaan tekstikenttään</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Piste tuplavälilyönnillä</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Kun välilyöntiä napautetaan kahdesti, lisätään piste ja välilyönti</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Poissa käytössä koko järjestelmässä. Punaisia viivoja ei näytetä tekstikentässä ilmaisemaan virheellisiä sanoja. Napauta muuttaaksesi.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Tekstin oikeinkirjoituksen tarkistusta ei ole asetettu. Napauta muuttaaksesi.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Kielet</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Käytä nimiä yhteystiedoista</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Hae nimiä laitteen yhteystiedoista</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Käytä käyttäjän sanakirjan kohteita</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Hae kohteita sanakirjoista</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Käyttäjän sanakirjat</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ota käyttöön järjestelmän käyttäjän sanakirja</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ehdota sanoja, jotka ovat järjestelmän käyttäjän sanakirjassa</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Hallinnoi järjestelmän käyttäjän sanakirjaa</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Lisää, näytä ja poista kohteita järjestelmän käyttäjän sanakirjasta</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ota käyttöön sisäinen käyttäjän sanakirja</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Ehdota sanoja, jotka ovat sisäisestä käyttäjän sanakirjassa</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Hallinnoi sisäistä käyttäjän sanakirjaa</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Lisää, näytä ja poista kohteita sisäisestä käyttäjän sanakirjasta</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Sisäinen käyttäjän sanakirja</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Järjestelmän käyttäjän sanakirja</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Tämä käyttäjän sanakirja ei sisällä kohteita.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Esiintymistiheys: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Esiintymistiheys: {freq} | Pikasyöttö: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Kaikille kielille</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Avaa järjestelmän sanakirjan hallinta</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Käyttäjän sanakirjan tuonti onnistui!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Käyttäjän sanakirjan vienti onnistui!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Lisää sana</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Muokkaa sanaa</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sana</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Syötä sana</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Syötä sana, joka vastaa \"{regex}\"</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Esiintymistiheys ({f_min} ja {f_max} välillä)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Syötä esiintymistiheyden arvo</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Syötä kelvollinen numero määritellyissä rajoissa</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Pikavalinta (vapaavalintainen)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Syötä pikavalinta, joka vastaa \"{regex}\"</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kielen koodi (valinnainen)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Kielen koodi ei ole kelvollinen. Koodin tulee vastata joko pelkkää kieltä (kuten en), kieltä ja maata (kuten en_US) tai kieltä, maata ja scriptiä (kuten en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Eleet &amp; liukukirjoitus</string>
     <string name="pref__glide__title" comment="Preference group title">Liukukirjoitus</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Ota liukukirjoitus käyttöön</string>
@@ -99,8 +276,11 @@
     <string name="pref__glide__show_trail__label" comment="Preference title">Näytä liu\'un jälki</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Häviää joka sanan jälkeen</string>
     <string name="pref__glide_trail_fade_duration">Liu\'un jäljen häivytysaika</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Poista sana aina</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Poistopainikkeen painaminen heti pyyhkäisyn jälkeen poistaa koko sanan</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Yleiset eleet</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Välilyönnin eleet</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Muut eleet / eleiden kynnysarvot</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Pyyhkäisy ylös</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Pyyhkäisy alas</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Pyyhkäisy vasemmalle</string>
@@ -110,14 +290,20 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Pyyhkäisy oikealle välilyöntinäppäimessä</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pitkä painallus välilyöntinäppäimessä</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Pyyhkäisy vasemmalle delete-painikkeessa</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Poistopainikkeen pitkä painallus</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Pyyhkäisynopeuden kynnys</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Pyyhkäisyn pituuden kynnys</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Lisäasetukset</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Asetusten teema</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Järjestelmän oletus (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Vaalea</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumma</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Tumma</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Asetusten kieli</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Näytä sovellus sovellusvalikossa</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Aina käytössä Android 10+ järjestelmän rajoituksien vuoksi</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Pakota yksityinen tila</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Poista käytöstä toiminnot, jotka käyttävät syöttämiäsi tietoja</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Tietoa</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoardin kuvake</string>
@@ -125,10 +311,30 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Tietosuojakäytäntö</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Lähdekoodi</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Avoimen lähdekoodin lisenssit</string>
+    <string name="about__version__title" comment="Preference title">Versio</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versio kopioitu leikepöydälle</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Tapahtui virhe: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Muutosloki</string>
+    <string name="about__changelog__summary" comment="Preference summary">Mitä uutta</string>
+    <string name="about__repository__title" comment="Preference title">Tietovarasto (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Lähdekoodi, keskustelut, virheraportit sekä tietoa</string>
     <string name="about__privacy_policy__title" comment="Preference title">Tietosuojakäytäntö</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Projektin tietosuojakäytäntö</string>
+    <string name="about__project_license__title" comment="Preference title">Projektin lisenssi</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoardin on lisensoitu lisenssillä {license_name}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Virhe: Lisenssitekstin lataus epäonnistui.\n-&gt; Syy: {error_message}</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Kolmannen osapuolen lisenssit</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Sovelluksen käyttämien kolmannen osapuolen kirjastojen lisenssit</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Tervetuloa!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Kiitos kun käytät sovellusta {app_name}! Tämä pika-asennus ohjaa sinut ottamaan sovelluksen {app_name} käyttöön laitteellasi.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Tietosuojakäytäntö</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Tietovarasto</string>
+    <string name="setup__enable_ime__title">Ota käyttöön {app_name}</string>
+    <string name="setup__enable_ime__description">Android vaatii, että jokainen näppäimistö on otettu erikseen käyttöön järjestelmäasetuksissa. Avaa Järjestelmän <i>Kielet ja syöttötapa</i>-asetukset ja ota käyttöön \"{app_name}\".</string>
+    <string name="setup__enable_ime__open_settings_btn">Avaa järjestelmän asetukset</string>
+    <string name="setup__select_ime__title">Valitse {app_name}</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Vaihda näppäimistöä</string>
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>
@@ -145,7 +351,15 @@
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Leikepöytä</string>
     <string name="clipboard__disabled__enable_button">Ota leikepöydän historia käyttöön</string>
+    <string name="clipboard__empty__title">Leikepöytäsi on tyhjä</string>
+    <string name="clipboard__empty__message">Kun kopioit tekstiä tai kuvia, ne näytetään täällä.</string>
+    <string name="clipboard__locked__title">Leikepöytäsi on lukittu</string>
+    <string name="clipboard__locked__message">Avaa laitteesi lukitus käyttääksesi leikepöydän historiaa.</string>
+    <string name="clipboard__group_pinned">Kiinnitetty</string>
+    <string name="clipboard__group_recent">Viimeisimmät</string>
     <string name="clipboard__group_other">Muu</string>
+    <string name="clipboard__item_description_email">Sähköposti</string>
+    <string name="clipboard__item_description_url">URL</string>
     <string name="clip__clear_history">Tyhjennä historia</string>
     <string name="clip__unpin_item">Poista kohteen kiinnitys</string>
     <string name="clip__pin_item">Kiinnitä kohde</string>
@@ -153,6 +367,9 @@
     <string name="clip__paste_item">Liitä</string>
     <string name="clip__back_to_text_input">Takaisin tekstinsyöttöön</string>
     <string name="clip__cant_paste">Sovellus ei hyväksy tämän sisällön liittämistä.</string>
+    <string name="clipboard__cleared_history">Historia tyhjennetty</string>
+    <string name="clipboard__cleared_full_history">Koko historia tyhjennetty</string>
+    <string name="clipboard__confirm_clear_history__message">Tyhjennetäänkö koko leikepöydän historia?</string>
     <string name="settings__clipboard__title">Leikepöytä</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Käytä sisäistä leikepöytää</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Käytä järjestelmän leikepöydän sijasta sisäistä leikepöytää</string>
@@ -162,29 +379,133 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floriksen leikepöytä päivittää myös järjestelmän leikepöydän</string>
     <string name="pref__clipboard__group_clipboard_history__label">Leikepöydän historia</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ota leikepöydän historia käyttöön</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Säästä leikepöydän kohteita käyttääksesi niitä pikaisesti uudelleen</string>
     <string name="pref__clipboard__clean_up_old__label">Poista vanhat kohteet</string>
     <string name="pref__clipboard__clean_up_after__label">Poista vanhat kohteet, kun on kulunut</string>
     <string name="pref__clipboard__limit_history_size__label">Rajoita historian kokoa</string>
     <string name="pref__clipboard__max_history_size__label">Historian maksimikoko</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Kehittäjätyökalut</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ota kehittäjätyökalut käyttöön</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Vianmääritykseen ja ongelmien ratkaisemiseen erityisesti kehitetyt työkalut</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Näytä muistin tila</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Yleiset Androidin asetukset</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Tekijät</string>
+    <string name="ext__meta__description">Kuvaus</string>
+    <string name="ext__meta__homepage">Kotisivu</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__keywords">Avainsanat</string>
+    <string name="ext__meta__label">Nimike</string>
+    <string name="ext__meta__license">Lisenssi</string>
+    <string name="ext__meta__maintainers">Ylläpitäjät</string>
+    <string name="ext__meta__title">Otsikko</string>
+    <string name="ext__meta__version">Versio</string>
+    <string name="ext__error__not_found_title">Laajennusta ei löytynyt</string>
+    <string name="ext__error__not_found_description">Laajennusta ID:llä \"{id}\" ei löytynyt.</string>
+    <string name="ext__editor__title_create_any">Luo laajennus</string>
+    <string name="ext__editor__title_create_keyboard">Luo näppäimistölaajennus</string>
+    <string name="ext__editor__title_create_theme">Luo teemalaajennus</string>
+    <string name="ext__editor__title_edit_any">Muokkaa laajennusta</string>
+    <string name="ext__editor__title_edit_keyboard">Muokkaa näppäimistölaajennusta</string>
+    <string name="ext__editor__title_edit_theme">Muokkaa teemalaajennusta</string>
+    <string name="ext__editor__metadata__title">Hallinnoi metatietoja</string>
+    <string name="ext__editor__metadata__title_invalid">Virheellinen metatieto</string>
+    <string name="ext__editor__metadata__message_invalid">Laajennuksen metatiedot eivät ole kelvollisia, tarkista tiedot metadataeditorissa!</string>
+    <string name="ext__editor__dependencies__title">Hallinnoi riippuvaisuuksia</string>
+    <string name="ext__editor__files__title">Hallinnoi arkistotiedostoja</string>
+    <string name="ext__editor__create_component__title">Luo komponentti</string>
+    <string name="ext__editor__create_component__title_theme">Luo teema</string>
+    <string name="ext__editor__create_component__from_empty">Tyhjä</string>
+    <string name="ext__editor__create_component__from_existing">Perustuen olemassa olevaan</string>
+    <string name="ext__editor__edit_component__title">Muokkaa komponenttia</string>
+    <string name="ext__editor__edit_component__title_theme">Muokkaa teeman komponenttia</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Tiedosto näyttäisi olevan laajennusarkisto, mutta sen käsittely ei onnistunut. Joko arkisto on korruptoitunut tai se ei ole laajennus lainkaan.</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Odotettiin mediatiedostoa (kuva, ääni, kirjasin ym.) mutta löydettiin laajennusarkisto.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Odotettiin laajennusarkistoa, mutta löydettiin mediatiedosto (kuva, ääni, kirjasin ym.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Tuonnissa tapahtui odottamaton virhe. Alla lisätietoja:</string>
     <!-- Action strings -->
+    <string name="action__add">Lisää</string>
+    <string name="action__apply">Käytä</string>
+    <string name="action__back_up">Varmuuskopioi</string>
+    <string name="action__cancel">Peruuta</string>
+    <string name="action__create">Luo</string>
+    <string name="action__default">Oletus</string>
+    <string name="action__delete">Poista</string>
+    <string name="action__delete_confirm_title">Vahvista poistaminen</string>
+    <string name="action__delete_confirm_message">Haluatko varmasti poistaa \"{name}\"? Tätä toimintoa ei voi perua.</string>
+    <string name="action__discard">Hylkää</string>
+    <string name="action__discard_confirm_title">Tallentamattomat muutokset</string>
+    <string name="action__discard_confirm_message">Haluatko hylätä tallentamattomat muutokset? Toimintoa ei voida perua.</string>
+    <string name="action__edit">Muokkaa</string>
+    <string name="action__export">Vie</string>
+    <string name="action__import">Tuo</string>
+    <string name="action__no">Ei</string>
+    <string name="action__ok">OK</string>
+    <string name="action__restore">Palauta</string>
+    <string name="action__save">Tallenna</string>
+    <string name="action__select">Valitse</string>
+    <string name="action__select_dir">Valitse hakemisto</string>
+    <string name="action__select_dirs">Valitse hakemistoja</string>
+    <string name="action__select_file">Valitse tiedosto</string>
+    <string name="action__select_files">Valitse tiedostoja</string>
+    <string name="action__yes">Kyllä</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Virhe</string>
+    <string name="error__details">Lisätiedot</string>
+    <string name="error__invalid">Virheellinen</string>
+    <string name="error__snackbar_message">Jokin meni vikaan</string>
+    <string name="error__snackbar_message_template">Tapahtui virhe: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">esim. {example}</string>
+    <string name="general__no_browser_app_found_for_url">Selainsovellusta ei löytynyt avaamaan osoitetta {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; valitse &#45;</string>
+    <string name="general__unlimited">Rajoittamaton</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Pystyasento</string>
+    <string name="screen_orientation__landscape">Vaakataso</string>
+    <string name="screen_orientation__vertical">Pystysuunta</string>
+    <string name="screen_orientation__horizontal">Vaakasuunta</string>
     <!-- State strings -->
     <string name="state__disabled">Poissa käytöstä</string>
+    <string name="state__enabled">Käytössä</string>
+    <string name="state__no_dir_selected">Hakemistoa ei valittuna</string>
+    <string name="state__no_dirs_selected">Hakemistoja ei valittuna</string>
+    <string name="state__no_file_selected">Tiedostoa ei valittuna</string>
+    <string name="state__no_files_selected">Tiedostoja ei valittuna</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klassinen (3 saraketta)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynaaminen leveys</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Natiivi</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Kielien nimet sovelluksessa ja näppäimistössä näytetään siten, mieten kielellä itsessään nimet sanotaan</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Oletusihonväri</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Oletushiukset</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Punainen tukka</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Kihara</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Vaalea tukka</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Kalju</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Älä näytä koskaan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Näytä aina</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Näytä dynaamisesti</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Pois päältä</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Vasemman käden tila</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Oikean käden tila</string>
+    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Ensisijaisen rivin yläpuolella</string>
+    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja sovelluksen väliin</string>
+    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Ensisijaisen rivin alapuolella</string>
+    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja näppäimistön väliin</string>
+    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Pikatoiminnot</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Lisäasetukset</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Kehittäjä</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Kaikki ominaisuudet näytetään; ominaisuudet ja säännöt näytetään niinkuin tyylisäännöstötiedostoon on tallennettuna.</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Käytä järjestelmän kieliä</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ei toimintoa</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Siirry edelliseen näppäimistötilaan</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Siirry seuraavaan näppäimistötilaan</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Poista osoitinta edeltävä merkki</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Tarkka merkkien poisto</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Poista osoitinta edeltävä sana</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Poista sanat tarkasti</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Piilota näppäimistö</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Lisää välilyönti</string>
@@ -200,6 +521,8 @@
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Tee uudelleen</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Kumoa</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Valitse merkit tarkasti</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Valitse sanat tarkasti</string>
     <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Näytä syöttötavan valinta</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Vaihda edelliseen näppäimistöön</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Vaihda edelliseen asetelmaan</string>
@@ -214,4 +537,20 @@
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynaaminen: Vaihda emojeihin / vaihda kieltä</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} tunti</item>
+        <item quantity="other">{v} tuntia</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minuutti</item>
+        <item quantity="other">{v} minuuttia</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} sekunti</item>
+        <item quantity="other">{v} sekuntia</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} kohde</item>
+        <item quantity="other">{v} kohdetta</item>
+    </plurals>
 </resources>

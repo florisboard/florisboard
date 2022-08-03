@@ -281,6 +281,7 @@
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Möglicherweise unangebrachte Wörter blockieren</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Inhalt der Zwischenablage</string>
     <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Beschränkung für die Vorschläge der Zwischenablage</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
@@ -456,8 +457,8 @@
     <string name="clipboard__group_pinned">Angeheftet</string>
     <string name="clipboard__group_recent">Aktuell</string>
     <string name="clipboard__group_other">Andere</string>
-    <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_email">E-Mail</string>
+    <string name="clipboard__item_description_url">URL</string>
     <string name="clip__clear_history">Verlauf leeren</string>
     <string name="clip__unpin_item">Element lösen</string>
     <string name="clip__pin_item">Element anheften</string>

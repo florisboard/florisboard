@@ -107,6 +107,8 @@
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
     <string name="settings__theme_editor__code_invalid">Ten kod jest nieprawidłowy. Upewnij się, że kod mieści się w zakresie od {c_min} do {c_max} dla znaków lub od {i_min} do {i_max} dla wewnętrznych kluczy specjalnych.</string>
+    <string name="settings__theme_editor__code_placeholder">Kod</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Nagrywam…</string>
     <string name="settings__theme_editor__add_property">Dodaj właściwość</string>
     <string name="settings__theme_editor__edit_property">Edytuj właściwość</string>
     <string name="settings__theme_editor__property_already_exists">Właściwość o tej nazwie już istnieje w obecnej regule.</string>
@@ -256,9 +258,11 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pozostanie włączony po przejściu do innego pola tekstowego</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Kropka z podwójną spacją</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dwukrotne naciśnięcie klawisza spacji powoduje wstawienie kropki, po której następuje spacja</string>
+    <string name="pref__spelling__title" comment="Preference group title">Pisownia</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Wyłączone w całym systemie. W przypadku nieprawidłowych słów w polach tekstowych nie pojawią się czerwone linie. Dotknij, aby zmienić.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nie ustawiono usługi sprawdzania pisowni w tekście. Dotknij, aby zmienić.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Języki</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Użyj nazw kontaktów</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Użyj wpisów słownika użytkownika</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Słowniki użytkownika</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Włącz systemowy słownik użytkownika</string>
@@ -299,6 +303,7 @@
     <string name="pref__glide_trail_fade_duration">Czas zaniku śladów gestów pisania</string>
     <string name="pref__glide_preview_refresh_delay">Opóźnienie odświeżania podglądu</string>
     <string name="pref__glide__show_preview">Pokaż podgląd podczas wykonywania gestów pisania</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Zawsze usuwaj słowo</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gesty ogólne</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesty klawisza spacji</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Inne gesty / Progi gestów</string>
@@ -414,6 +419,8 @@
     <string name="clipboard__group_pinned">Przypięte</string>
     <string name="clipboard__group_recent">Ostatnie</string>
     <string name="clipboard__group_other">Inny</string>
+    <string name="clipboard__item_description_email">E-mail</string>
+    <string name="clipboard__item_description_url">Adres URL</string>
     <string name="clip__clear_history">Wyczyść historię</string>
     <string name="clip__unpin_item">Odepnij element</string>
     <string name="clip__pin_item">Przypnij element</string>
@@ -621,7 +628,9 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">Brak działań</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Przejdź do poprzedniego trybu klawiatury</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Przejdź do następnego trybu klawiatury</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Usuń znak przed kursorem</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Precyzyjne usuwanie słów</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Usuń słowo przed kursorem</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Precyzyjne usuwanie słów</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ukryj klawiaturę</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Wstaw spację</string>
@@ -643,6 +652,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Przełącz na poprzednią klawiaturę</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Przełącz na poprzedni podtyp</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Przełącz na następny podtyp</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Przełącz widoczność inteligentnego paska</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Zawsze motyw dzienny</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Zawsze motyw nocny</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Zgodnie z motywem systemu</string>

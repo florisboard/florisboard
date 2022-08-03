@@ -273,21 +273,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Otrējās darbības</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Rādīt otrējo darbību rindu</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Rakstīšana</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Attēlot ieteikumus</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Rakstot tiek piedāvāti ieteikumi</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Ieteikumu attēlošanas veids</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Neļaut iespējami aizskarošus vārdus</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ierobežot starpliktuves ieteikumus līdz</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Vienumi ievietoti starpliktuvē pēdējās {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Attēlot iekļautus ieteikumus, kurus nodrošina pašaizpildīšanas pakalpojumi</string>
     <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pārveidot vārdu sākumburtus par lielajiem, balstoties uz pašreizējo ievades kopumu</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automātiska atstarpe pēc pieturzīmes</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automātiski ievietot atstarpi pēc pieturzīmes</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Atcerēties burtslēga stāvokli</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
+    <string name="pref__spelling__title" comment="Preference group title">Pareizrakstība</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Atspējots sistēmā. Nepareizi vārdi netiks pasvītroti ar sarkanu līniju. Piesist, lai mainītu.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Nav norādīta iekļauta teksta lauka pareizrakstības pārbaudīšanas pakalpe. Piesist, lai mainītu.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Valodas</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Izmantot kontaktpersonu vārdus</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Meklēt vārdus kontaktpersonu sarakstā</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Izmantot lietotāja vārdnīcas ierakstus</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Meklēt ierakstus lietotāja vārdnīcās</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Lietotāja vārdnīcas</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Iespējot sistēmas lietotāja vārdnīcu</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti sistēmas lietotāja vārdnīcā</string>
@@ -445,8 +458,9 @@
     <string name="clipboard__group_pinned">Piesprausts</string>
     <string name="clipboard__group_recent">Nesenie</string>
     <string name="clipboard__group_other">Cits</string>
-    <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_email">E-pasta adrese</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Tālrunis</string>
     <string name="clip__clear_history">Notīrīt vēsturi</string>
     <string name="clip__unpin_item">Atspraust vienumu</string>
     <string name="clip__pin_item">Piespraust vienumu</string>

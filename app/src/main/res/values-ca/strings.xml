@@ -155,8 +155,8 @@
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tanca</string>
     <!-- Clipboard strings -->
     <string name="clipboard__group_other">Altres</string>
-    <string name="clipboard__item_description_url">Enllaç</string>
     <string name="clipboard__item_description_email">Correu</string>
+    <string name="clipboard__item_description_url">Enllaç</string>
     <string name="clip__delete_item">Eliminar</string>
     <string name="clip__paste_item">Enganxa</string>
     <!-- Devtools strings -->

@@ -114,6 +114,7 @@
     <string name="settings__theme_editor__code_invalid">Este código clave no es válido. Asegúrese de que el código clave esté dentro del rango de {c_min} a {c_max} para los caracteres o {i_min} a {i_max} para las teclas especiales internas.</string>
     <string name="settings__theme_editor__code_help_text">Alternativamente, los siguientes enlaces lo ayudarán a encontrar el código clave correspondiente:</string>
     <string name="settings__theme_editor__code_placeholder">Código</string>
+    <string name="settings__theme_editor__code_recording_help_text">Para encontrar el código de una tecla, utilice el botón situado junto al campo de entrada de códigos. Una vez activado, registrará la siguiente pulsación de la tecla e insertará el código en el campo de entrada.</string>
     <string name="settings__theme_editor__code_recording_placeholder">Grabando…</string>
     <string name="settings__theme_editor__add_property">Añadir propiedad</string>
     <string name="settings__theme_editor__edit_property">Editar propiedad</string>
@@ -124,7 +125,9 @@
     <string name="settings__theme_editor__property_value_color_dialog_title">Editar cadena de colores</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Es tema oscuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Es sin borde</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Ruta de la hoja de estilo</string>
     <string name="snygg__rule_element__defines">Variables</string>
+    <string name="snygg__rule_element__defines_description">Defina variables dentro de esta regla para reutilizar colores o tamaños comunes en su hoja de estilos.</string>
     <string name="snygg__rule_element__keyboard">Ventana de teclado</string>
     <string name="snygg__rule_element__key">Tecla</string>
     <string name="snygg__rule_element__key_hint">Tecla sugerida</string>
@@ -132,6 +135,10 @@
     <string name="snygg__rule_element__clipboard_header">Encabezado del portapapeles</string>
     <string name="snygg__rule_element__clipboard_item">Ítem de portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_popup">Ítem de portapapeles emergente</string>
+    <string name="snygg__rule_element__emoji_key">Tecla de emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Ventana emergente de la tecla Emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Pestaña de emojis</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Disposición de la entrada del paisaje</string>
     <string name="snygg__rule_element__glide_trail">Rastro del gesto</string>
     <string name="snygg__rule_element__one_handed_panel">Panel a una mano</string>
     <string name="snygg__rule_element__smartbar_primary_row">Fila principal de barra inteligente</string>
@@ -258,21 +265,34 @@
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Acciones secundarias</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar fila de acciones secundarias</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Escritura</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Mostrar sugerencias</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Muestra sugerencias mientras escribe</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de visualización de sugerencias</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloquear posibles palabras ofensivas</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugerencias del contenido del portapapeles</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Sugerir el contenido del portapapeles copiado anteriormente</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limitar sugerencias del portapapeles a</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Elementos copiados dentro de los últimos {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Muestra sugerencias inline ofrecidas por servicios de autocompletado</string>
     <string name="pref__correction__title" comment="Preference group title">Correcciones</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Poner en mayúsculas las palabras según el contexto de entrada actual</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Espacio automático en puntuación</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Insertar automáticamente un espacio después de un punto</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Recordar bloqueo de mayúsculas</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">El bloqueo de las mayúsculas se mantendrá cuando se pase a otro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punto y doble espacio</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Pulsar espacio dos veces para insertar un punto seguido de un espacio</string>
+    <string name="pref__spelling__title" comment="Preference group title">Ortografía</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Deshabilitado a nivel sistema. No se mostrarán líneas rojas en campos de texto con palabras incorrectas. Toque para cambiar.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">No se ha establecido ningún servicio de corrección ortográfica inline. Toque para cambiar.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usar nombres de contactos</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Usar nombres desde su lista de contactos</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas del diccionario de usuario</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Usar entradas desde los diccionarios del usuario</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Diccionarios del usuario</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilitar diccionario personal del sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palabras almacenadas en el diccionario personal del sistema</string>
@@ -312,6 +332,8 @@
     <string name="pref__glide_trail_fade_duration">Tiempo de desvanecimiento del gesto</string>
     <string name="pref__glide_preview_refresh_delay">Retraso de actualización de la vista previa</string>
     <string name="pref__glide__show_preview">Mostrar recorrido del gesto</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Siempre borrar palabra</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Al pulsar suprimir justo después de un deslizamiento, se borra toda la palabra</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos generales</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos en la barra espaciadora</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Otros gestos / umbrales de gestos</string>
@@ -324,6 +346,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar a la derecha en la barra espaciadora</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Presionar por mucho tiempo la barra espaciadora</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar a la izquierda desde la tecla de borrar</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pulsación larga de la tecla de borrado</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidad del deslizamiento</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Distancia del deslizamiento</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzado</string>
@@ -427,6 +450,9 @@
     <string name="clipboard__group_pinned">Anclado</string>
     <string name="clipboard__group_recent">Reciente</string>
     <string name="clipboard__group_other">Otro</string>
+    <string name="clipboard__item_description_email">Correo electrónico</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Teléfono</string>
     <string name="clip__clear_history">Borrar historial</string>
     <string name="clip__unpin_item">Desanclar</string>
     <string name="clip__pin_item">Anclar</string>
@@ -462,8 +488,12 @@
     <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Sobreponer el uso de la memoria heap y el tamaño máximo en la esquina superior derecha</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostrar clip principal</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Superpone el clip principal actual del portapapeles</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Mostrar la superposición del estado de la entrada</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Superpone el estado actual de la entrada para la depuración</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Mostrar superposición ortográfica</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Superpone los resultados ortográficos actuales para depuración</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Mostrar límites de toque de teclas</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Resalte en rojo los límites de los toques clave</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Borrar base de datos del diccionario interno</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Borrar todas las palabras de la tabla de base de datos del diccionario</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Restablecer flag \"{flag_name}\"</string>
@@ -508,6 +538,7 @@
     <string name="ext__editor__create_component__title_theme">Crear tema</string>
     <string name="ext__editor__create_component__from_empty">Vacío</string>
     <string name="ext__editor__create_component__from_existing">De existente</string>
+    <string name="ext__editor__create_component__from_empty_warning">Crear y configurar un componente vacío puede ser difícil si eres nuevo en {app_name} o si no estás familiarizado con los detalles. Considere la posibilidad de copiar un componente existente y modificarlo a su gusto si ese es el caso.</string>
     <string name="ext__editor__edit_component__title">Editar componente</string>
     <string name="ext__editor__edit_component__title_theme">Editar componente de tema</string>
     <string name="ext__export__success">¡Extensión exportada exitosamente!</string>
@@ -587,7 +618,9 @@
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Recordar último estado</string>
     <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Mostrar el teclado al cerrar un editor de diálogo si había sido mostrado anteriormente</string>
     <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Región de sistema</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Los nombres de los idiomas en la aplicación y el teclado se muestran en la configuración regional establecida para todo el dispositivo</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Región nativa</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Los nombres de los idiomas en la aplicación y la interfaz de usuario del teclado se muestran en la configuración regional a la que se refieren</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Tono de piel predeterminado</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Piel clara</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Piel clara intermedia</string>
@@ -605,6 +638,10 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el símbolo, o el acento principal si no hay símbolo disponible</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorización inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será decidido dinámicamente entre el símbolo o el acento principal, de acuerdo al idioma y distribución del teclado actual</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Sin desplazar</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Cambio (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Cambio (automático)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Bloq Mayús</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar nunca</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar siempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinámicamente</string>
@@ -617,18 +654,25 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Ubica la fila secundaria entre la fila principal y el texto del teclado</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superponer la interfaz de usuario de la aplicación</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Inicio superior</string>
     <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Acciones rápidas</string>
+    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Acciones rápidas organizables en formato de fila con un menú de desbordamiento</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Herramientas del cursor de portapapeles</string>
     <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Fila con las herramientas de cursor y portapapeles comúnmente utilizadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Sólo se muestran las propiedades del color, las propiedades y las reglas se traducen.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avanzado</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Se muestran todas las propiedades, se traducen las propiedades y las reglas.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Desarrollador</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Se muestran todas las propiedades, las propiedades y las reglas se muestran tal y como están escritas en el propio archivo de la hoja de estilos.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Usar idiomas del sistema</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Usar subtipos de teclado</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Sin acción</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Alternar con el modo de teclado anterior</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Alternar con el modo de teclado siguiente</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Borrar caracter antes del cursor</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Eliminar caracteres con precisión</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Borrar palabra antes del cursor</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Eliminar palabras con precisión</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Ocultar teclado</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Insertar espacio</string>
