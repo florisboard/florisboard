@@ -17,8 +17,11 @@
 package dev.patrickgold.florisboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
+import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
+import dev.patrickgold.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -31,6 +34,9 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 fun InputFeedbackScreen() = FlorisScreen {
     title = stringRes(R.string.settings__input_feedback__title)
     previewFieldVisible = true
+
+    val context = LocalContext.current
+    val vibrator = context.systemVibratorOrNull()
 
     content {
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_audio__label)) {
@@ -111,6 +117,10 @@ fun InputFeedbackScreen() = FlorisScreen {
                 min = 1,
                 max = 100,
                 stepIncrement = 1,
+                onPreviewSelectedValue = { duration ->
+                    val strength = prefs.inputFeedback.hapticVibrationStrength.get()
+                    vibrator?.vibrate(duration, strength)
+                },
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true && prefs.inputFeedback.hapticUseVibrator isEqualTo true },
             )
             DialogSliderPreference(
@@ -124,6 +134,10 @@ fun InputFeedbackScreen() = FlorisScreen {
                 min = 1,
                 max = 100,
                 stepIncrement = 1,
+                onPreviewSelectedValue = { strength ->
+                    val duration = prefs.inputFeedback.hapticVibrationDuration.get()
+                    vibrator?.vibrate(duration, strength)
+                },
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true && prefs.inputFeedback.hapticUseVibrator isEqualTo true && InputFeedbackController.hasAmplitudeControl() },
             )
             SwitchPreference(
