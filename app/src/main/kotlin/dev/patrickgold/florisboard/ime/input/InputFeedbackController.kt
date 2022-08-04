@@ -18,13 +18,9 @@ package dev.patrickgold.florisboard.ime.input
 
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
-import android.os.VibrationEffect
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -33,7 +29,6 @@ import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
 import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
 import dev.patrickgold.florisboard.lib.android.vibrate
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,31 +44,6 @@ val LocalInputFeedbackController = staticCompositionLocalOf<InputFeedbackControl
 class InputFeedbackController private constructor(private val ims: InputMethodService) {
     companion object {
         fun new(ims: InputMethodService) = InputFeedbackController(ims)
-
-        @Composable
-        fun hasAmplitudeControl(): Boolean {
-            val vibrator = LocalContext.current.systemVibratorOrNull()
-            return when {
-                AndroidVersion.ATLEAST_API26_O -> vibrator != null && vibrator.hasAmplitudeControl()
-                else -> false
-            }
-        }
-
-        @Composable
-        fun generateVibrationStrengthErrorSummary(): String? {
-            val vibrator = LocalContext.current.systemVibratorOrNull()
-            return when {
-                AndroidVersion.ATLEAST_API26_O -> when {
-                    vibrator == null || !vibrator.hasAmplitudeControl() -> {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
-                    }
-                    else -> null
-                }
-                else -> {
-                    stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
-                }
-            }
-        }
     }
 
     private val prefs by florisPreferenceModel()

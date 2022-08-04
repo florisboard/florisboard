@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.app.settings.keyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.input.InputFeedbackController
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
 import dev.patrickgold.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -114,6 +114,13 @@ fun InputFeedbackScreen() = FlorisScreen {
                 prefs.inputFeedback.hapticVibrationDuration,
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_duration__label),
                 valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
+                summary = {
+                    if (vibrator == null || !vibrator.hasVibrator()) {
+                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_vibrator)
+                    } else {
+                        stringRes(R.string.unit__milliseconds__symbol, "v" to it)
+                    }
+                },
                 min = 1,
                 max = 100,
                 stepIncrement = 1,
@@ -121,15 +128,26 @@ fun InputFeedbackScreen() = FlorisScreen {
                     val strength = prefs.inputFeedback.hapticVibrationStrength.get()
                     vibrator?.vibrate(duration, strength)
                 },
-                enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true && prefs.inputFeedback.hapticUseVibrator isEqualTo true },
+                enabledIf = {
+                    prefs.inputFeedback.hapticEnabled isEqualTo true &&
+                        prefs.inputFeedback.hapticUseVibrator isEqualTo true &&
+                        vibrator != null && vibrator.hasVibrator()
+                },
             )
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationStrength,
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_strength__label),
                 valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
                 summary = { strength ->
-                    InputFeedbackController.generateVibrationStrengthErrorSummary()
-                        ?: stringRes(R.string.unit__percent__symbol, "v" to strength)
+                    if (vibrator == null || !vibrator.hasVibrator()) {
+                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_vibrator)
+                    } else if (AndroidVersion.ATMOST_API25_N_MR1) {
+                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
+                    } else if (!vibrator.hasAmplitudeControl()) {
+                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
+                    } else {
+                        stringRes(R.string.unit__percent__symbol, "v" to strength)
+                    }
                 },
                 min = 1,
                 max = 100,
@@ -138,7 +156,12 @@ fun InputFeedbackScreen() = FlorisScreen {
                     val duration = prefs.inputFeedback.hapticVibrationDuration.get()
                     vibrator?.vibrate(duration, strength)
                 },
-                enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true && prefs.inputFeedback.hapticUseVibrator isEqualTo true && InputFeedbackController.hasAmplitudeControl() },
+                enabledIf = {
+                    prefs.inputFeedback.hapticEnabled isEqualTo true &&
+                        prefs.inputFeedback.hapticUseVibrator isEqualTo true &&
+                        vibrator != null && vibrator.hasVibrator() &&
+                        AndroidVersion.ATLEAST_API26_O && vibrator.hasAmplitudeControl()
+                },
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatKeyPress,

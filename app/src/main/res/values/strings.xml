@@ -234,6 +234,7 @@
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger vibration directly instead of using Android\'s haptic feedback feature set</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibration duration</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibration strength</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">This feature requires a hardware vibrator, which seems to be missing on this device</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">This feature requires hardware amplitude control support, which is missing on your device</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">This feature requires amplitude control support, which is only available on Android 8.0 or newer</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Key press vibration</string>
