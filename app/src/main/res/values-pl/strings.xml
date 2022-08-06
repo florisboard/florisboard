@@ -188,8 +188,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback dotyku / Wibracje</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Włącz feedback dotyku</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Wibracje dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Bezpośrednie wyzwalanie wibracji</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Bezpośrednio wyzwalaj wibrację zamiast korzystania z zestawu funkcji informacji zwrotnych w systemie Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Czas trwania wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Siła wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ta funkcja wymaga obsługi sprzętowej kontroli amplitudy, której brakuje na Twoim urządzeniu</string>

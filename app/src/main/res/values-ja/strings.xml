@@ -195,8 +195,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触覚フィードバック/バイブレーション</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">触覚フィードバックを有効</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">システム設定に応じて、入力イベントを振動させる</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">バイブレーションを直接トリガー</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Androidの触覚フィードバック機能セットを使用する代わりに、バイブレーションを直接トリガーします</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">バイブレーション持続時間</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">バイブレーションの強さ</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">この機能にはハードウェア振幅制御のサポートが必要ですが、これはこのデバイスにはありません</string>

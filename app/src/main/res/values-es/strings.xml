@@ -208,8 +208,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Respuesta táctil / Vibración</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Habilitar respuesta táctil</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrar para eventos de entrada, dependiendo de los ajustes del sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Activar vibración directamente</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Activar vibración directamente en lugar de usar la función de respuesta táctil de Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte de control de amplitud de hardware, el cual falta en su dispositivo</string>

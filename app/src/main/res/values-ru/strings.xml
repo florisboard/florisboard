@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Виброотклик / вибрация</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Использовать виброотклик</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Вибрирация при вводе в зависимости от системных настроек</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Использовать вибрацию напрямую</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Использовать функцию вибрации напрямую вместо использования набора функций виброотклика Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продолжительность вибрации</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила вибрации</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Эта функция требует аппаратной поддержки управления амплитудой, которая отсутствует на вашем устройстве</string>

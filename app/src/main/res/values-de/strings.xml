@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Rückmeldung / vibrieren</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptische Rückmeldung aktivieren</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Bei Eingaben vibrieren, abhängig von Systemeinstellungen</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibration direkt auslösen</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Vibrationen direkt auslösen anstatt Feature von Android zu verwenden</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsdauer</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstärke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Diese Funktion erfordert hardwareseitige Unterstützung zur Festlegung der Stärke von Vibrationsimpulsen, die auf diesem Gerät fehlt</string>

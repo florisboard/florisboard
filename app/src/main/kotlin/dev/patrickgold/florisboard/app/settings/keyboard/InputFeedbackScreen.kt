@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
 import dev.patrickgold.florisboard.lib.android.vibrate
@@ -99,11 +100,11 @@ fun InputFeedbackScreen() = FlorisScreen {
                 summarySwitchDisabled = stringRes(R.string.pref__input_feedback__haptic_enabled__summary_disabled),
                 entries = InputFeedbackActivationMode.hapticListEntries(),
             )
-            SwitchPreference(
-                prefs.inputFeedback.hapticUseVibrator,
-                title = stringRes(R.string.pref__input_feedback__haptic_use_vibrator__label),
-                summary = stringRes(R.string.pref__input_feedback__haptic_use_vibrator__summary),
+            ListPreference(
+                prefs.inputFeedback.hapticVibrationMode,
+                title = stringRes(R.string.pref__input_feedback__haptic_vibration_mode__label),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
+                entries = HapticVibrationMode.listEntries(),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationDuration,
@@ -125,7 +126,7 @@ fun InputFeedbackScreen() = FlorisScreen {
                 },
                 enabledIf = {
                     prefs.inputFeedback.hapticEnabled isEqualTo true &&
-                        prefs.inputFeedback.hapticUseVibrator isEqualTo true &&
+                        prefs.inputFeedback.hapticVibrationMode isEqualTo HapticVibrationMode.USE_VIBRATOR_DIRECTLY &&
                         vibrator != null && vibrator.hasVibrator()
                 },
             )
@@ -153,7 +154,7 @@ fun InputFeedbackScreen() = FlorisScreen {
                 },
                 enabledIf = {
                     prefs.inputFeedback.hapticEnabled isEqualTo true &&
-                        prefs.inputFeedback.hapticUseVibrator isEqualTo true &&
+                        prefs.inputFeedback.hapticVibrationMode isEqualTo HapticVibrationMode.USE_VIBRATOR_DIRECTLY &&
                         vibrator != null && vibrator.hasVibrator() &&
                         AndroidVersion.ATLEAST_API26_O && vibrator.hasAmplitudeControl()
                 },

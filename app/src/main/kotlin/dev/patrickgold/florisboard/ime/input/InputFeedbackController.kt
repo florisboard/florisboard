@@ -119,7 +119,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
             InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS && !systemHapticEnabled) return
 
         scope.launch {
-            if (!prefs.inputFeedback.hapticUseVibrator.get()) {
+            if (prefs.inputFeedback.hapticVibrationMode.get() == HapticVibrationMode.USE_HAPTIC_FEEDBACK_INTERFACE) {
                 val view = ims.window?.window?.decorView ?: return@launch
                 val hfc = if (factor < 1.0 && AndroidVersion.ATLEAST_API27_O_MR1) {
                     HapticFeedbackConstants.TEXT_HANDLE_MOVE

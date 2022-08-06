@@ -210,8 +210,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Retour haptique / Vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activer le retour haptique</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrer pour les événements d\'entrée, en fonction des paramètres du système</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Déclenchement direct des vibrations</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Déclenchez directement les vibrations au lieu d\'utiliser les fonctions de retour haptique d\'Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durée des vibrations</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensité de la vibration</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude du matériel, qui n\'est pas disponible sur votre appareil</string>

@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Обратна връзка при докосване / вибрация</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Обратна връзка при докосване</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Директно предизвикване на вибриране</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Вибрациите се предизвикват без използване на способността на Android за обратна връзка при докосване</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продължителност на вибрацията</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила на вибрацията</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Тази възможност изисква поддръжка на хардуерен контрол на амплитудата, каквато липсва на устройството</string>

@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Povratna vibracija na dodir / Vibracija</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Omogući povratnu vibraciju na dodir</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibriraj prilikom događaja unosa koji su ovisno o sistemskim postavkama</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Direktno pokreni vibraciju</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Koristi direktno pokrenutu vibraciju mjesto Androidovog paketa povratne vibracije na dodir</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trajanje vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Jačina vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja nedostaje na ovom uređaju</string>

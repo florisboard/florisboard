@@ -226,8 +226,7 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptic feedback / Vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Enable haptic feedback</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Never vibrate for input events, regardless of system settings</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Trigger vibration directly</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger vibration directly instead of using Android\'s haptic feedback feature set</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibration mode</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibration duration</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibration strength</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">This feature requires a hardware vibrator, which seems to be missing on this device</string>
@@ -688,6 +687,11 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Curly hair</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
+
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Use vibrator directly</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} directly interacts with the default hardware vibrator. This gives more control over duration and strength of a vibration, but the vibration may not be as smooth and optimized as using the haptic feedback interface</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Use haptic feedback interface</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} uses the haptic feedback interface to trigger a predefined vibration sequence for key presses. This may work exceptionally well on some devices, but completely fail or perform very poorly on others</string>
 
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>

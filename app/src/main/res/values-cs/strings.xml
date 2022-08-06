@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Hmatová odezva / vibrace</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Povolit hmatovou odezvu</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Přímé spuštění vibrací</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Spustit vibrace přímo namísto použití sady pro hmatovou odezvu systému Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trvání vibrací</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Síla vibrací</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tato funkce vyžaduje hardwarovou podporu řízení amplitudy, která ve vašem zařízení chybí</string>

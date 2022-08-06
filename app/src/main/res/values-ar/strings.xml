@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">ردود الفعل اللمسية / الاهتزاز</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">تشغيل الاهتزاز عند اللمس</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">تشفيل الاهتزاز بشكل مباشر</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">تشغيل الاهتزاز مباشرة بدلاً من استخدام مجموعة ميزات ردود الفعل اللمسية في اندرويد</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">مدة الإهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">قوة الاهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في مدى الأجهزة ، وهو مفقود على جهازك</string>

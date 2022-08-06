@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Resposta Tátil / Vibração</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ativar resposta tátil</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrar para eventos de entrada, dependendo das configurações do sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Ativar vibração diretamente</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Ativar vibração diretamente em vez de utilizar as definições de resposta tátil do sistema</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duração da vibração</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidade da vibração</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Este recurso requer suporte de controle de amplitude de hardware, que está faltando em seu dispositivo</string>

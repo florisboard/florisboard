@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">کاریگەری لەرزین / دەستلێدان</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">چالاککردنی کاریگەری لەرزین</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">لەرزین لەکاتی دەستلێدانی دوگمەکان بەپێی ڕێکخستنی سیستەم</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">لەرزینەوەی ڕاستەوخۆ</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">لەرزینەوەی ڕاستەوخۆ لەجیاتی لەرینەوەی بنەڕەتی سیستەم</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">ماوەی لەرزین</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">هێزی لەرزین</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">مۆبایلەکەت پشتگری ئەم تایبەتمەندییە ناکات</string>

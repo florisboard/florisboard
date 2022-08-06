@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
@@ -295,9 +296,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "input_feedback__haptic_activation_mode",
             default = InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS,
         )
-        val hapticUseVibrator = boolean(
-            key = "input_feedback__haptic_use_vibrator",
-            default = true,
+        val hapticVibrationMode = enum(
+            key = "input_feedback__haptic_vibration_mode",
+            default = HapticVibrationMode.USE_VIBRATOR_DIRECTLY,
         )
         val hapticVibrationDuration = int(
             key = "input_feedback__haptic_vibration_duration",

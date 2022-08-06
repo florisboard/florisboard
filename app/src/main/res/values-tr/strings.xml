@@ -141,8 +141,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Dokunsal Geri bildirim / Titreşim</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Dokunsal geri bildirimi etkinleştir</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için titreştir</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Titreşimi doğrudan tetikle</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Android\'in geri bildirim özelliği yerine titreşimi doğrudan tetikle</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Titreşim süresi</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Titreşim şiddeti</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Bu özellik, cihazınızda eksik olan donanım genlik kontrol desteği gerektirir</string>

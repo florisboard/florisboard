@@ -169,7 +169,6 @@
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Ismételt billentyűművelet hangja</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptikus visszajelzés / vibráció</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptikus visszajelzés engedélyezése</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Rezgés közvetlen kiváltása</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Rezgés időtartama</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Gombnyomás rezgése</string>

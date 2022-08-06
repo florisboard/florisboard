@@ -215,8 +215,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback haptic / Getaran</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktifkan feedback haptic</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Getar untuk peristiwa masukan, tergantung pada pengaturan sistem</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Memicu getaran secara langsung</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Memicu getaran secara langsung daripada menggunakan set fitur feedback haptic Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durasi getaran</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Kekuatan getaran</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Fitur ini memerlukan dukungan kontrol amplitude perangkat keras, yang tidak ada di perangkat Anda</string>

@@ -214,8 +214,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback aptico / vibrazione</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Abilita il feedback aptico</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrare per eventi di ingresso, a seconda delle impostazioni del sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Attiva direttamente la vibrazione</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Attiva direttamente la vibrazione invece di usare il set di funzioni di feedback aptico di Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durata della vibrazione</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Resistenza alle vibrazioni</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Questa funzione richiede il supporto del controllo dell\'ampiezza dell\'hardware, che manca sul tuo dispositivo</string>

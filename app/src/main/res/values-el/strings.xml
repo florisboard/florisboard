@@ -106,8 +106,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Απτική ανάδραση / Δόνηση</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ενεργοποίηση απτικής ανάδρασης</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Δόνηση για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Εκκίνηση δόνησης άμεσα</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Εκκίνηση δόνησης άμεσα αντί για χρήση του συνόλου χαρακτηριστικών απτικής ανάδρασης του Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Διάρκεια δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Ένταση δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους στο υλισμικό, η οποία απουσιάζει από τη συσκευή σας</string>

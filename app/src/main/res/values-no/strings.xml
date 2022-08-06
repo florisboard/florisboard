@@ -85,8 +85,6 @@
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptisk tilbakemelding / Vibrasjon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktiver haptisk tilbakemelding</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrer for input-hendelser, avhengig av systeminnstillinger</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Utløs vibrasjoner direkte</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Utløs vibrasjoner direkte i stedet for å bruke Androids haptiske tilbakemeldingsfunksjonssett</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>
