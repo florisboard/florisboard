@@ -131,9 +131,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ses &amp; Titreşim</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için sesleri çal</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Sistem ses ayarlarını yok say</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Sistemde ses devre dışı bırakılmış olsa bile aşağıdaki tercihleri kullanın. Sistem zil sesi kapatıldığında çalışmaz</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için sesleri çal</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Giriş olayları için ses seviyesi</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tuş dokunma sesleri</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tuş uzun dokunma sesleri</string>
@@ -142,9 +140,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Kaydırma jestleri hareket sesleri</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Dokunsal Geri bildirim / Titreşim</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Dokunsal geri bildirimi etkinleştir</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için titreştir</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Sistem dokunsal geri bildirim ayarlarını yok say</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Sistemde dokunsal geri bildirim etkin olmasa bile aşağıdaki ayarları kullan</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için titreştir</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Titreşimi doğrudan tetikle</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Android\'in geri bildirim özelliği yerine titreşimi doğrudan tetikle</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Titreşim süresi</string>

@@ -178,9 +178,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons e vibração</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sons e resposta táctil</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ativar respostas de áudio</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Reproduzir sons para eventos, de acordo com as definições de sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorar definições de áudio do sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Utilizar as preferências abaixo mesmo que o áudio esteja desativado no sistema. Não funciona se o som de toque estiver silenciado.</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Reproduzir sons para eventos, de acordo com as definições de sistema</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume para os eventos de introdução</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Som ao premir as teclas</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Som na pressão longa das teclas</string>
@@ -189,9 +187,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Som para gestos de deslize</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Resposta táctil/Vibração</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ativar resposta táctil</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar nos eventos de introdução, de acordo com as definições do sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar definições de resposta táctil do sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Utilizar as preferências abaixo mesmo que a resposta táctil esteja desativada no sistema</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrar nos eventos de introdução, de acordo com as definições do sistema</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Ativar vibração diretamente</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Ativar vibração diretamente em vez de utilizar as definições de resposta táctil do sistema</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duração da vibração</string>

@@ -96,9 +96,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ήχος &amp; Δόνηση</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ηχητική ανάδραση / Ήχοι</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ενεργοποίηση ηχητικής ανάδρασης</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Αναπαραγωγή ήχων για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Αγνόηση ρυθμίσεων ήχου συστήματος</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Χρήση των παρακάτω προτιμήσεων, ακόμα κι αν ο ήχος είναι απενεργοποιημένος στο σύστημα. Δε λειτουργεί όταν ο ήχος κλήσης συστήματος είναι σιγασμένος</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Αναπαραγωγή ήχων για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Ένταση ήχου για ενέργειες εισαγωγής</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Ήχοι πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ήχοι παρατεταμένου πατήματος πλήκτρου</string>
@@ -107,9 +105,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Ήχοι χειρονομιών ολίσθησης μετακίνησης</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Απτική ανάδραση / Δόνηση</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ενεργοποίηση απτικής ανάδρασης</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Δόνηση για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Αγνόηση ρυθμίσεων απτικής ανάδρασης συστήματος</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Χρήση των παρακάτω προτιμήσεων, ακόμα κι αν η απτική ανάδραση είναι απενεργοποιημένη στο σύστημα</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Δόνηση για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Εκκίνηση δόνησης άμεσα</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Εκκίνηση δόνησης άμεσα αντί για χρήση του συνόλου χαρακτηριστικών απτικής ανάδρασης του Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Διάρκεια δόνησης</string>

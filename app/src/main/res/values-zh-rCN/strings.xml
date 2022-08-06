@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">声音 &amp; 振动</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">声音反馈 / 声音</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">启用声音反馈</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">输入事件时播放声音，视系统设置而定</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">忽略系统声音设置</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">即使系统中禁用了音频，也使用以下偏好设置。系统铃声静音时不起作用</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">输入事件时播放声音，视系统设置而定</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">输入事件音量</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">按键声音</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">长按键声音</string>
@@ -215,9 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">手势移动滑动声音</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触感反馈 / 振动</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">使用触感反馈</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">输入事件时振动，视系统设置而定</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">忽略系统触感设置</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">即使系统中禁用了触感，也使用以下偏好设置</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">输入事件时振动，视系统设置而定</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">直接触发振动</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">直接触发振动，而不是使用安卓的触感反馈功能设置</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">振动持续时间</string>

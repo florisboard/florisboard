@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ton &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ton Rückmeldung / Klänge</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ton Rückmeldung aktivieren</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Töne für Eingabe Ereignisse aktivieren, abhängig von Systemeinstellungen</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Systemeinstellungen für Ton ignorieren</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Untenstehende Einstellungen nutzen, auch wenn Töne im System deaktiviert sind. Funktioniert nicht, wenn der Klingelton stumm ist</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Töne für Eingabe Ereignisse aktivieren, abhängig von Systemeinstellungen</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lautstärke für Eingabeereignisse</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastentöne</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ton bei langem Tastendruck</string>
@@ -215,9 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Swipe Bewegungston</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Rückmeldung / vibrieren</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptische Rückmeldung aktivieren</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Bei Eingaben vibrieren, abhängig von Systemeinstellungen</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Systemeinstellungen für Vibration deaktivieren</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Untenstehende Einstellungen nutzen, auch wenn haptisches Feedback im System deaktiviert ist</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Bei Eingaben vibrieren, abhängig von Systemeinstellungen</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibration direkt auslösen</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Vibrationen direkt auslösen anstatt Feature von Android zu verwenden</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsdauer</string>

@@ -164,15 +164,11 @@
     <string name="snygg__property_value__defined_var">Változóhivatkozás</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Hangok és rezgés</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Hangvisszajelzés engedélyezése</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainak figyelmen kívül hagyása</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Az alábbi beállítások használata, akkor is ha a hang le van tiltva a rendszerben. Nem működik, ha a rendszer csengőhang le van némítva</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Gombnyomáshangok</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Hosszú gombnyomás hangja</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Ismételt billentyűművelet hangja</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptikus visszajelzés / vibráció</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptikus visszajelzés engedélyezése</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">A rendszer hangbeállításainak figyelmen kívül hagyása</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Az alábbi beállítások használata, akkor is ha a haptika le van tiltva a rendszerben</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Rezgés közvetlen kiváltása</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Rezgés időtartama</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>

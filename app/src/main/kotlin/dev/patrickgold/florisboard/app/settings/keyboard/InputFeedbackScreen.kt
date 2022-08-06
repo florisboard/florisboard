@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.settings.keyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
 import dev.patrickgold.florisboard.lib.android.vibrate
@@ -26,6 +27,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
@@ -34,22 +36,19 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 fun InputFeedbackScreen() = FlorisScreen {
     title = stringRes(R.string.settings__input_feedback__title)
     previewFieldVisible = true
+    iconSpaceReserved = false
 
     val context = LocalContext.current
     val vibrator = context.systemVibratorOrNull()
 
     content {
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_audio__label)) {
-            SwitchPreference(
-                prefs.inputFeedback.audioEnabled,
+            ListPreference(
+                listPref = prefs.inputFeedback.audioActivationMode,
+                switchPref = prefs.inputFeedback.audioEnabled,
                 title = stringRes(R.string.pref__input_feedback__audio_enabled__label),
-                summary = stringRes(R.string.pref__input_feedback__audio_enabled__summary),
-            )
-            SwitchPreference(
-                prefs.inputFeedback.audioIgnoreSystemSettings,
-                title = stringRes(R.string.pref__input_feedback__audio_ignore_system_settings__label),
-                summary = stringRes(R.string.pref__input_feedback__audio_ignore_system_settings__summary),
-                enabledIf = { prefs.inputFeedback.audioEnabled isEqualTo true },
+                summarySwitchDisabled = stringRes(R.string.pref__input_feedback__audio_enabled__summary_disabled),
+                entries = InputFeedbackActivationMode.audioListEntries(),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.audioVolume,
@@ -93,16 +92,12 @@ fun InputFeedbackScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_haptic__label)) {
-            SwitchPreference(
-                prefs.inputFeedback.hapticEnabled,
+            ListPreference(
+                listPref = prefs.inputFeedback.hapticActivationMode,
+                switchPref = prefs.inputFeedback.hapticEnabled,
                 title = stringRes(R.string.pref__input_feedback__haptic_enabled__label),
-                summary = stringRes(R.string.pref__input_feedback__haptic_enabled__summary),
-            )
-            SwitchPreference(
-                prefs.inputFeedback.hapticIgnoreSystemSettings,
-                title = stringRes(R.string.pref__input_feedback__haptic_ignore_system_settings__label),
-                summary = stringRes(R.string.pref__input_feedback__haptic_ignore_system_settings__summary),
-                enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
+                summarySwitchDisabled = stringRes(R.string.pref__input_feedback__haptic_enabled__summary_disabled),
+                entries = InputFeedbackActivationMode.hapticListEntries(),
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticUseVibrator,

@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Skaņas un trīcēšana</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Atskaņot ievades notikumu skaņas atbilstoši sistēmas uzstādījumiem</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Neņemt vērā sistēmas skaņas uzstādījumus</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Izmantot zemāk esošos uzstādījumus, pat ja sistēmas skaņa ir atspējota. Nedarbojas, kad sistēmas zvanu skaņa ir apklusināta</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Atskaņot ievades notikumu skaņas atbilstoši sistēmas uzstādījumiem</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Ievades notikumu skaņu skaļums</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Taustiņu nospiešanas skaņas</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ilgas taustiņu nospiešanas skaņas</string>
@@ -215,9 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības skaņas</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Sajūtu atgriezeniskā saite / Trīcēšana</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Iespējot sajūtu atgriezenisko saiti</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Trīcēšana ievades notikumiem atbilstoši sistēmas uzstādījumiem</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Neņemt vērā sistēmas sajūtu uzstādījumus</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Izmantot zemāk esošos uzstādījumus, pat ja sajūtu atgriezeniskā saite sistēmā ir atspējota</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Trīcēšana ievades notikumiem atbilstoši sistēmas uzstādījumiem</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Tieši izsaukt trīcēšanu</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Tieši izsaukt trīcēšanu, nevis izmantot Android sajūtu atgriezeniskās saites iespēju kopu</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trīcēšanas ilgums</string>

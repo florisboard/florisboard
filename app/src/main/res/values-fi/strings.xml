@@ -154,9 +154,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Äänet &amp; värinä</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Äänipalaute / äänet</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ota ääänipalaute käyttöön</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Toista ääniä syöttötoiminnoille riippuen järjestelmän asetuksista</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ohita järjestelmän ääniasetukset</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Käytä allaolevia asetuksia, vaikka järjestelmän äänet olisivat poissa käytöstä. Ei toimi, jos järjestelmän soittoään on mykistetty.</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Toista ääniä syöttötoiminnoille riippuen järjestelmän asetuksista</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Syöttötoimintojen äänenvoimakkuus</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Painallusäänet</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Pitkään painalluksen ääni</string>
@@ -165,9 +163,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Pyyhkäisysiirtoeleen äänet</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptinen palaute / värinä</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ota haptinen palaute käyttöön</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Värise syöttötoiminnoille riippuen järjestelmän asetuksista</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ohita järjestelmän haptiset asetukset</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Käytä allaolevia asetuksia, vaikka järjestelmän haptiikka olisi poissa käytöstä</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Värise syöttötoiminnoille riippuen järjestelmän asetuksista</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Värinän kesto</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Värinän voimakkuus</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tämä ominaisuus vaatii tuen laitteiston värinänvoimakkuudensäätöön, jota laitteellasi ei ole</string>

@@ -94,7 +94,8 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     private fun performAudioFeedback(data: KeyData, factor: Double) {
         if (audioManager == null) return
         if (!prefs.inputFeedback.audioEnabled.get()) return
-        if (!prefs.inputFeedback.audioIgnoreSystemSettings.get() && !systemAudioEnabled) return
+        if (prefs.inputFeedback.audioActivationMode.get() ==
+            InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS && !systemAudioEnabled) return
 
         scope.launch {
             val volume = (prefs.inputFeedback.audioVolume.get() * factor) / 100.0
@@ -114,7 +115,8 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     private fun performHapticFeedback(data: KeyData, factor: Double) {
         if (vibrator == null) return
         if (!prefs.inputFeedback.hapticEnabled.get()) return
-        if (!prefs.inputFeedback.hapticIgnoreSystemSettings.get() && !systemHapticEnabled) return
+        if (prefs.inputFeedback.hapticActivationMode.get() ==
+            InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS && !systemHapticEnabled) return
 
         scope.launch {
             if (!prefs.inputFeedback.hapticUseVibrator.get()) {

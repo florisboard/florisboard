@@ -216,9 +216,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Enable audio feedback</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Play sounds for input events, dependent on system settings</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignore system audio settings</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Use below preferences, even if audio is disabled in the system. Does not work when system ringtone is muted</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Never play sounds for input events, regardless of system settings</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Sound volume for input events</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Key press sounds</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Key long press sounds</string>
@@ -227,9 +225,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Gesture moving swipe sounds</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptic feedback / Vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Enable haptic feedback</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrate for input events, dependent on system settings</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignore system haptic settings</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Use below preferences, even if haptic is disabled in the system</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Never vibrate for input events, regardless of system settings</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Trigger vibration directly</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger vibration directly instead of using Android\'s haptic feedback feature set</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibration duration</string>
@@ -699,6 +695,11 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
+
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamically play sounds for input events, depending on system settings</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Always play sounds for input events, regardless of system settings</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dynamically vibrate for input events, depending on system settings</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Always vibrate for input events, regardless of system settings</string>
 
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Unshifted</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shifted (manual)</string>

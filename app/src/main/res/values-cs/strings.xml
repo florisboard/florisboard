@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky &amp; Vibrace</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Zvuková odezva / zvuky</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Povolit zvukovou odezvu</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Přehrávat zvuky při vstupních událostech, záleží na nastavení systému</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorovat zvuková nastavení systému</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Použít přednastavení níže, i když je zvuk v systému zakázán. Nefunguje, když je ztlumeno systémové vyzvánění</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Přehrávat zvuky při vstupních událostech, záleží na nastavení systému</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Hlasitost zvuku pro vstupní události</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvuky stisku klávesy</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Zvuky dlouhého stisku klávesy</string>
@@ -215,9 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Zvuky přejíždění gestem</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Hmatová odezva / vibrace</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Povolit hmatovou odezvu</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorovat hmatová nastavení systému</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Použít předvolby níže, i při vypnutých vybracích v systému</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Přímé spuštění vibrací</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Spustit vibrace přímo namísto použití sady pro hmatovou odezvu systému Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trvání vibrací</string>

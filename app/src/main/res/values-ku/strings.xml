@@ -150,9 +150,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Deng &amp; Vibrasyon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Ji bo bûyerên têketinê dengan lê bide, girêdayî eyarên pergalê ye</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Eyarên denga system îhmal bike</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Di pergalê de deng neçalak be jî, li jêr tercîhan bi kar bînin. Dema ku gustîlka pergalê tê bêdengkirin naxebite</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Ji bo bûyerên têketinê dengan lê bide, girêdayî eyarên pergalê ye</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Deng ji bo bûyerên têketinê</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Dengên kilîta çapê</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Dengê kilîta dirêj ya çapameniyê</string>
@@ -161,8 +159,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Dengên bilez ên tevgerê nîşan dide</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Bersivdana haptîkî / Vibrasyon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Paşvegerên bextewar çalak bike</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrate ji bo bûyerên têketinê, girêdayî mîhengên pergalê</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Eyarên denga system îhmal bike</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrate ji bo bûyerên têketinê, girêdayî mîhengên pergalê</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Maweya tewrîbûnê</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Hêza tewrîbûnê</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrasyona çapemeniyê ya sereke</string>

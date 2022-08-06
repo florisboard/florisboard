@@ -205,9 +205,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suara &amp; Getaran</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suara</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktifkan feedback audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Putar suara untuk peristiwa masukan, tergantung pada pengaturan sistem</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Abaikan pengaturan audio sistem</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Gunakan preferensi di bawah ini, meskipun audio dinonaktifkan di sistem. Tidak berfungsi saat nada dering sistem dimatikan</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Putar suara untuk peristiwa masukan, tergantung pada pengaturan sistem</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume suara untuk peristiwa masukan</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Suara tekanan tombol</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Suara tekanan lama tombol</string>
@@ -216,9 +214,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Suara gestur geser bergerak</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback haptic / Getaran</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktifkan feedback haptic</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Getar untuk peristiwa masukan, tergantung pada pengaturan sistem</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Abaikan pengaturan haptic sistem</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Gunakan preferensi di bawah ini, bahkan jika haptic dinonaktifkan di sistem</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Getar untuk peristiwa masukan, tergantung pada pengaturan sistem</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Memicu getaran secara langsung</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Memicu getaran secara langsung daripada menggunakan set fitur feedback haptic Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durasi getaran</string>

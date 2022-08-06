@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
@@ -257,9 +258,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "input_feedback__audio_enabled",
             default = true,
         )
-        val audioIgnoreSystemSettings = boolean(
-            key = "input_feedback__audio_ignore_system_settings",
-            default = false,
+        val audioActivationMode = enum(
+            key = "input_feedback__audio_activation_mode",
+            default = InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS,
         )
         val audioVolume = int(
             key = "input_feedback__audio_volume",
@@ -290,9 +291,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "input_feedback__haptic_enabled",
             default = true,
         )
-        val hapticIgnoreSystemSettings = boolean(
-            key = "input_feedback__haptic_ignore_system_settings",
-            default = false,
+        val hapticActivationMode = enum(
+            key = "input_feedback__haptic_activation_mode",
+            default = InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS,
         )
         val hapticUseVibrator = boolean(
             key = "input_feedback__haptic_use_vibrator",

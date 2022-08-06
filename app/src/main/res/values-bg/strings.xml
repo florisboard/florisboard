@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за звук</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключен звук. Не работи при изключен звук на звънене</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Сила на звука при събития на въвеждане</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук при докосване на клавиш</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук при задържане на клавиш</string>
@@ -215,9 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Звук при движение на жест</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Обратна връзка при докосване / вибрация</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Обратна връзка при докосване</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за обратна връзка при докосване</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключена обратна връзка при докосване от системата</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Директно предизвикване на вибриране</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Вибрациите се предизвикват без използване на способността на Android за обратна връзка при докосване</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продължителност на вибрацията</string>
