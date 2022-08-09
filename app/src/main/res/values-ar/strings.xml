@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">الصوت والاهتزاز</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ردود الفعل الصوتية / الأصوات</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">تمكين التاثيرات الصوتية</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">تجاهل إعدادات صوت النظام</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">استخدم التفضيلات أدناه ، حتى إذا تم تعطيل الصوت في النظام. لا يعمل عند كتم صوت نغمة رنين النظام</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">مستوى الصوت لأحداث الإدخال</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">أصوات الضغط على المفاتيح</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">أصوات الضغط المطول على المفاتيح</string>
@@ -215,11 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">صوت تحريك ايماءة السحب</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">ردود الفعل اللمسية / الاهتزاز</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">تشغيل الاهتزاز عند اللمس</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">تجاهل إعدادات اهتزاز النظام</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">استخدم التفضيلات أدناه ، حتى إذا تم تعطيل الاهتزاز في النظام. لا يعمل عند كتم صوت نغمة رنين النظام</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">تشفيل الاهتزاز بشكل مباشر</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">تشغيل الاهتزاز مباشرة بدلاً من استخدام مجموعة ميزات ردود الفعل اللمسية في اندرويد</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">مدة الإهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">قوة الاهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في مدى الأجهزة ، وهو مفقود على جهازك</string>

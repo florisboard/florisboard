@@ -75,9 +75,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Spill av lyder for input-hendelser, avhengig av systeminnstillinger</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorer systemlydinnstillinger</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Bruk innstillingene nedenfor, selv om lyd er deaktivert i systemet. Fungerer ikke når system-ringetone er dempet</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Spill av lyder for input-hendelser, avhengig av systeminnstillinger</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lydvolum for input-hendelser</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastetrykk-lyder</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tastetrykklyder ved langt trykk</string>
@@ -86,11 +84,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sveipe-lyder</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptisk tilbakemelding / Vibrasjon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktiver haptisk tilbakemelding</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrer for input-hendelser, avhengig av systeminnstillinger</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorer haptiske innstillinger for systemet</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Bruk innstillingene under, selv om haptisk er deaktivert i systemet</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Utløs vibrasjoner direkte</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Utløs vibrasjoner direkte i stedet for å bruke Androids haptiske tilbakemeldingsfunksjonssett</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrer for input-hendelser, avhengig av systeminnstillinger</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>

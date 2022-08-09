@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback /Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Geluid afspelen bij invoer, afhankelijk van systeeminstellingen</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Systeemgeluidsinstellingen negeren</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Gebruik onderstaande voorkeuren ook al is het systeemgeluid uitgeschakeld. Werkt niet als de systeemringtone is gemutet</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Geluid afspelen bij invoer, afhankelijk van systeeminstellingen</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Geluidsvolume bij invoer</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Geluidje bij lang indrukken toets</string>
@@ -215,11 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Geluiden voor veegbewegingen</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Feedback /Vibratie</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Schakel haptische feedback in</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibreer bij invoer, afhankelijk van systeeminstellingen</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Systeeminstellingen negeren</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Gebruik onderstaande voorkeuren, zelfs als haptiek is uitgeschakeld in het systeem</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibratie rechtstreeks activeren</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger trillingen rechtstreeks in plaats van Android\'s haptische feedback functieset</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibreer bij invoer, afhankelijk van systeeminstellingen</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trillingsduur</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Deze functie vereist hardwarematige besturing van de trillingssterkte, en wordt niet ondersteund door uw apparaat</string>

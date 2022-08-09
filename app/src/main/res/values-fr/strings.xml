@@ -200,9 +200,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retour audio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activer le retour audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Jouer des sons pour les événements de saisie, dépend des réglages système</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorer les réglages audio du système</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Utiliser les préférences ci-dessous même si l\'audio du système est désactivé. Ne fonctionne pas quand le volume de sonnerie est désactivé</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Jouer des sons pour les événements de saisie, dépend des réglages système</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume pour les événements de saisie</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sons d\'appui court</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons d\'appui long</string>
@@ -211,11 +209,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sons de balayage mobile par gestes</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Retour haptique / Vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activer le retour haptique</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrer pour les événements d\'entrée, en fonction des paramètres du système</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorer les réglages haptiques système</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Utilisez les préférences ci-dessous, même si l\'haptique est désactivé dans le système</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Déclenchement direct des vibrations</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Déclenchez directement les vibrations au lieu d\'utiliser les fonctions de retour haptique d\'Android</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrer pour les événements d\'entrée, en fonction des paramètres du système</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durée des vibrations</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensité de la vibration</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude du matériel, qui n\'est pas disponible sur votre appareil</string>

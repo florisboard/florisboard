@@ -198,9 +198,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sonidos &amp; Vibración</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Respuesta de audio / Sonidos</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilitar respuesta de audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Reproducir sonidos para eventos de entrada, dependiendo de los ajustes del sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorar ajustes de sonido del sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Usa las preferencias de abajo, incluso si el audio está deshabilitado por sistema. No funciona cuando el tono de llamada está en silencio</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Reproducir sonidos para eventos de entrada, dependiendo de los ajustes del sistema</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volumen de sonido para eventos de entrada</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sonidos al presionar una tecla</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sonidos al presionar prolongadamente</string>
@@ -209,11 +207,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sonidos de gestos deslizantes con movimiento</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Respuesta táctil / Vibración</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Habilitar respuesta táctil</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar para eventos de entrada, dependiendo de los ajustes del sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar ajustes táctiles del sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Usa las preferencias de abajo, incluso si la respuesta táctil está deshabilitada por sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Activar vibración directamente</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Activar vibración directamente en lugar de usar la función de respuesta táctil de Android</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrar para eventos de entrada, dependiendo de los ajustes del sistema</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte de control de amplitud de hardware, el cual falta en su dispositivo</string>

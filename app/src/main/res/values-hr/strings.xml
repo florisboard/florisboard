@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuk &amp; Vibracija</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Povratna informacija zvukom / Zvukovi</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Omogući zvučnu povratnu informaciju</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Reproduciraj zvuk prilikom događaja unosa koji ovise o sistemskim postavkama</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Zanemari sistemske postavke zvuka</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Koristite dolje predložene postavke, iako je zvuk sistemski onemogućen. Ne radi kada je zvono sistema isključen</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Reproduciraj zvuk prilikom događaja unosa koji ovise o sistemskim postavkama</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Razina glasnoće tijekom unosa</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvukovi na pritisak pločice</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Zvukovi na dugi pritisak pločice</string>
@@ -215,11 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Zvukovi prilikom kliznog pokreta</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Povratna vibracija na dodir / Vibracija</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Omogući povratnu vibraciju na dodir</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibriraj prilikom događaja unosa koji su ovisno o sistemskim postavkama</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Zanemari postavke povratne vibracije na dodir</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Koristite dolje predložene postavke, iako je povratna informacija na dodir sistemski onemogućena</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Direktno pokreni vibraciju</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Koristi direktno pokrenutu vibraciju mjesto Androidovog paketa povratne vibracije na dodir</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibriraj prilikom događaja unosa koji su ovisno o sistemskim postavkama</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trajanje vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Jačina vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja nedostaje na ovom uređaju</string>

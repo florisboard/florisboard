@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suoni &amp; Vibrazione</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suoni</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Attiva feedback audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Riproduci dei suoni durante l\'immissione, dipende dalle impostazioni di sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignora le impostazioni audio di sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Usa le preferenze in basso, anche se l\'audio è disabilitato nel sistema. Non funziona se la suoneria di sistema è mutata</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Riproduci dei suoni durante l\'immissione, dipende dalle impostazioni di sistema</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume dei suoni di immissione</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Suoni pressione tasti</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Suoni pressione prolungata tasti</string>
@@ -215,11 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Suoni di swipe in movimento a gesti</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback aptico / vibrazione</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Abilita il feedback aptico</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrare per eventi di ingresso, a seconda delle impostazioni del sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorare le impostazioni aptiche del sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Usare le seguenti preferenze, anche se haptic è disabilitato nel sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Attiva direttamente la vibrazione</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Attiva direttamente la vibrazione invece di usare il set di funzioni di feedback aptico di Android</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrare per eventi di ingresso, a seconda delle impostazioni del sistema</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durata della vibrazione</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Resistenza alle vibrazioni</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Questa funzione richiede il supporto del controllo dell\'ampiezza dell\'hardware, che manca sul tuo dispositivo</string>

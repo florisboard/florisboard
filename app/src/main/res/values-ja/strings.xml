@@ -185,9 +185,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">音とバイブレーション</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ハウリング</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">ハウリングを有効にする</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">システム設定に応じて、入力イベントのサウンドを再生します</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">システムオーディオ設定を無効</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">システムでオーディオが無効になっている場合でも、以下の設定を使用してください。 システムの着信音がミュートされている場合は機能しません</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">システム設定に応じて、入力イベントのサウンドを再生します</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">入力イベントの音量</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">キーを押したときのサウンド</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">キーを長く押した時のサウンド</string>
@@ -196,11 +194,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャーを移動した時のスワイプサウンド</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触覚フィードバック/バイブレーション</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">触覚フィードバックを有効</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">システム設定に応じて、入力イベントを振動させる</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">システムの触覚設定を無視</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">システムでハプティックが無効になっている場合でも、以下の設定を使用してください</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">バイブレーションを直接トリガー</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Androidの触覚フィードバック機能セットを使用する代わりに、バイブレーションを直接トリガーします</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">システム設定に応じて、入力イベントを振動させる</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">バイブレーション持続時間</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">バイブレーションの強さ</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">この機能にはハードウェア振幅制御のサポートが必要ですが、これはこのデバイスにはありません</string>

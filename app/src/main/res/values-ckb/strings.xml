@@ -204,9 +204,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">ڕێکخستنی دەنگ و لەرزین</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">کاریگەری دەنگ / دەستلێدان</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">چالاککردنی کاریگەری دەنگی</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">لێدانی دەنگ بۆ فرمانەکان بەپێی ڕێکخستنی سیستەم</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">پشتگوێخستنی ڕێکخستنی دەنگیی سیستەم</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">بەکارهێنانی ئەم ڕێکخستنانە تەنانەت ئەگەر دەنگ ناچالاکیش کرابوو لە ڕێکخستنەکانی سیستەمدا</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">لێدانی دەنگ بۆ فرمانەکان بەپێی ڕێکخستنی سیستەم</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">دەنگی کاتی نووسینی هێماکان</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">دەنگی لەکاتی نووسین</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">دەنگ لەکاتی دەست ڕاگرتن</string>
@@ -215,11 +213,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">دەنگ لەکاتی جوڵانی ئاماژەکان</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">کاریگەری لەرزین / دەستلێدان</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">چالاککردنی کاریگەری لەرزین</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">لەرزین لەکاتی دەستلێدانی دوگمەکان بەپێی ڕێکخستنی سیستەم</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">پشتگوێخستنی ڕێکخستنی لەرزینی سیستەم</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">بەکارهێنانی ئەم ڕێکخستنانە تەنانەت ئەگەر لەرزین ناچالاکیش کرابوو لە ڕێکخستنەکانی سیستەمدا</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">لەرزینەوەی ڕاستەوخۆ</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">لەرزینەوەی ڕاستەوخۆ لەجیاتی لەرینەوەی بنەڕەتی سیستەم</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">لەرزین لەکاتی دەستلێدانی دوگمەکان بەپێی ڕێکخستنی سیستەم</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">ماوەی لەرزین</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">هێزی لەرزین</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">مۆبایلەکەت پشتگری ئەم تایبەتمەندییە ناکات</string>

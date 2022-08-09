@@ -124,9 +124,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">صداها &amp; لرزش</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">صدای بازخورد / صداها</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">فعالسازی صدای بازخورد</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">پخش صداهایی بخاطر رویداد های ورودی، وابسته به تنظیمات سیستم</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">چشم پوشی از تنظیمات صدای سیستم</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">استفاده از ترجیحات زیر، حتی اگر صدای سیستم غیرفعال شده باشد. وقتی که زنگ آهنگ سیستم قطع شده باشد کار نمی کند</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">پخش صداهایی بخاطر رویداد های ورودی، وابسته به تنظیمات سیستم</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">میزان صدا برای رویداد های ورودی</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">صدا های فشردن کلید</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">صدا های نگه داشتن طولانی کلید</string>
