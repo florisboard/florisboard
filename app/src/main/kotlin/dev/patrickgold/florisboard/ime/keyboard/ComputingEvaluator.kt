@@ -28,11 +28,15 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
 
 interface ComputingEvaluator {
-    fun activeEditorInfo(): FlorisEditorInfo
+    val version: Int
 
-    fun activeState(): KeyboardState
+    val keyboard: Keyboard
 
-    fun activeSubtype(): Subtype
+    val editorInfo: FlorisEditorInfo
+
+    val state: KeyboardState
+
+    val subtype: Subtype
 
     fun context(): Context?
 
@@ -42,19 +46,21 @@ interface ComputingEvaluator {
 
     fun evaluateVisible(data: KeyData): Boolean
 
-    fun keyboard(): Keyboard
-
     fun isSlot(data: KeyData): Boolean
 
     fun slotData(data: KeyData): KeyData?
 }
 
 object DefaultComputingEvaluator : ComputingEvaluator {
-    override fun activeEditorInfo(): FlorisEditorInfo = FlorisEditorInfo.Unspecified
+    override val version = -1
 
-    override fun activeState(): KeyboardState = KeyboardState.new()
+    override val keyboard = PlaceholderLoadingKeyboard
 
-    override fun activeSubtype(): Subtype = Subtype.DEFAULT
+    override val editorInfo = FlorisEditorInfo.Unspecified
+
+    override val state = KeyboardState.new()
+
+    override val subtype = Subtype.DEFAULT
 
     override fun context(): Context? = null
 
@@ -63,8 +69,6 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun evaluateEnabled(data: KeyData): Boolean = true
 
     override fun evaluateVisible(data: KeyData): Boolean = true
-
-    override fun keyboard(): Keyboard = PlaceholderLoadingKeyboard
 
     override fun isSlot(data: KeyData): Boolean = false
 
@@ -103,8 +107,8 @@ fun ComputingEvaluator.computeLabel(data: KeyData): String? {
             KeyCode.PHONE_PAUSE -> evaluator.context()?.getString(R.string.key__phone_pause)
             KeyCode.PHONE_WAIT -> evaluator.context()?.getString(R.string.key__phone_wait)
             KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                when (evaluator.keyboard().mode) {
-                    KeyboardMode.CHARACTERS -> evaluator.activeSubtype().primaryLocale.let { locale ->
+                when (evaluator.keyboard.mode) {
+                    KeyboardMode.CHARACTERS -> evaluator.subtype.primaryLocale.let { locale ->
                         computeLanguageDisplayName(locale, evaluator.displayLanguageNamesIn())
                     }
                     else -> null
@@ -183,8 +187,8 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_backspace
         }
         KeyCode.ENTER -> {
-            val imeOptions = evaluator.activeEditorInfo().imeOptions
-            val inputAttributes = evaluator.activeEditorInfo().inputAttributes
+            val imeOptions = evaluator.editorInfo.imeOptions
+            val inputAttributes = evaluator.editorInfo.inputAttributes
             if (imeOptions.flagNoEnterAction || inputAttributes.flagTextMultiLine) {
                 R.drawable.ic_keyboard_return
             } else {
@@ -213,13 +217,13 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_settings
         }
         KeyCode.SHIFT -> {
-            when (evaluator.activeState().inputShiftState != InputShiftState.UNSHIFTED) {
+            when (evaluator.state.inputShiftState != InputShiftState.UNSHIFTED) {
                 true -> R.drawable.ic_keyboard_capslock
                 else -> R.drawable.ic_keyboard_arrow_up
             }
         }
         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-            when (evaluator.keyboard().mode) {
+            when (evaluator.keyboard.mode) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.NUMERIC_ADVANCED,
                 KeyboardMode.PHONE,
@@ -236,14 +240,14 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_redo
         }
         KeyCode.KANA_SWITCHER -> {
-            if (evaluator.activeState().isKanaKata) {
+            if (evaluator.state.isKanaKata) {
                 R.drawable.ic_keyboard_kana_switcher_kata
             } else {
                 R.drawable.ic_keyboard_kana_switcher_hira
             }
         }
         KeyCode.CHAR_WIDTH_SWITCHER -> {
-            if (evaluator.activeState().isCharHalfWidth) {
+            if (evaluator.state.isCharHalfWidth) {
                 R.drawable.ic_keyboard_char_width_switcher_full
             } else {
                 R.drawable.ic_keyboard_char_width_switcher_half

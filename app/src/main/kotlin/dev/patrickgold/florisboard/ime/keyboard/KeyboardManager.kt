@@ -22,7 +22,6 @@ import android.view.KeyEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.neverEqualPolicy
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -53,7 +52,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -70,18 +68,12 @@ import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-data class RenderInfo(
-    val version: Int = 0,
-    val keyboard: TextKeyboard = PlaceholderLoadingKeyboard,
-    val state: KeyboardState = KeyboardState.new(),
-    val evaluator: ComputingEvaluator = DefaultComputingEvaluator,
-)
-
-private val DefaultRenderInfo = RenderInfo()
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
@@ -101,12 +93,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val smartbarActions = SmartbarActions()
     val activeState = KeyboardState.new()
 
-    private val renderInfoGuard = Mutex(locked = false)
-    private var renderInfoVersion: Int = 1
-    private val _renderInfo = MutableLiveData(DefaultRenderInfo)
-    val renderInfo: LiveData<RenderInfo> get() = _renderInfo
-    private val _smartbarRenderInfo = MutableLiveData(DefaultRenderInfo)
-    val smartbarRenderInfo: LiveData<RenderInfo> get() = _smartbarRenderInfo
+    private val activeEvaluatorGuard = Mutex(locked = false)
+    private var activeEvaluatorVersion: Int = 1
+    private val _activeEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
+    val activeEvaluator get() = _activeEvaluator.asStateFlow()
+    private val _activeSmartbarEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
+    val activeSmartbarEvaluator get() = _activeSmartbarEvaluator.asStateFlow()
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -121,33 +113,33 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     init {
         resources.anyChanged.observeForever {
-            updateRenderInfo {
+            updateActiveEvaluators {
                 keyboardCache.clear()
             }
         }
         prefs.keyboard.numberRow.observeForever {
-            updateRenderInfo {
+            updateActiveEvaluators {
                 keyboardCache.clear(KeyboardMode.CHARACTERS)
             }
         }
         prefs.keyboard.hintedNumberRowEnabled.observeForever {
-            updateRenderInfo()
+            updateActiveEvaluators()
         }
         prefs.keyboard.hintedSymbolsEnabled.observeForever {
-            updateRenderInfo()
+            updateActiveEvaluators()
         }
         prefs.keyboard.utilityKeyEnabled.observeForever {
-            updateRenderInfo()
+            updateActiveEvaluators()
         }
         activeState.observeForever {
-            updateRenderInfo()
+            updateActiveEvaluators()
         }
         subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
             reevaluateInputShiftState()
-            updateRenderInfo()
+            updateActiveEvaluators()
         }
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
-            updateRenderInfo()
+            updateActiveEvaluators()
         }
         editorInstance.activeContentFlow.collectIn(scope) { content ->
             if (!activeState.isComposingEnabled) {
@@ -158,8 +150,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    private fun updateRenderInfo(action: () -> Unit = { }) = scope.launch {
-        renderInfoGuard.withLock {
+    private fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
+        activeEvaluatorGuard.withLock {
             action()
             val editorInfo = editorInstance.activeInfo
             val state = activeState.snapshot()
@@ -176,7 +168,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     subtype = subtype,
                 ).await()
             }.await()
-            val computingEvaluator = KeyboardComputingEvaluator(
+            val computingEvaluator = ComputingEvaluatorImpl(
+                version = activeEvaluatorVersion++,
                 keyboard = computedKeyboard,
                 editorInfo = editorInfo,
                 state = state,
@@ -186,40 +179,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 key.compute(computingEvaluator)
                 key.computeLabelsAndDrawables(computingEvaluator)
             }
-            _renderInfo.postValue(RenderInfo(
-                version = renderInfoVersion++,
-                keyboard = computedKeyboard,
-                state = state,
-                evaluator = computingEvaluator,
-            ))
-            smartbarClipboardCursorRenderInfo(editorInfo, state)
+            _activeEvaluator.value = computingEvaluator
+            _activeSmartbarEvaluator.value = computingEvaluator.asSmartbarQuickActionsEvaluator()
         }
-    }
-
-    private suspend fun smartbarClipboardCursorRenderInfo(editorInfo: FlorisEditorInfo, state: KeyboardState) {
-        val mode = KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW
-        val subtype = Subtype.DEFAULT
-        val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
-            layoutManager.computeKeyboardAsync(
-                keyboardMode = mode,
-                subtype = subtype,
-            ).await()
-        }.await()
-        val computingEvaluator = KeyboardComputingEvaluator(
-            keyboard = computedKeyboard,
-            editorInfo = editorInfo,
-            state = state,
-            subtype = subtype,
-        )
-        for (key in computedKeyboard.keys()) {
-            key.compute(computingEvaluator)
-            key.computeLabelsAndDrawables(computingEvaluator)
-        }
-        _smartbarRenderInfo.postValue(RenderInfo(
-            keyboard = computedKeyboard,
-            state = state,
-            evaluator = computingEvaluator,
-        ))
     }
 
     @Composable
@@ -834,18 +796,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    private inner class KeyboardComputingEvaluator(
-        val keyboard: Keyboard,
-        val editorInfo: FlorisEditorInfo,
-        val state: KeyboardState,
-        val subtype: Subtype,
+    private inner class ComputingEvaluatorImpl(
+        override val version: Int,
+        override val keyboard: Keyboard,
+        override val editorInfo: FlorisEditorInfo,
+        override val state: KeyboardState,
+        override val subtype: Subtype,
     ) : ComputingEvaluator {
-
-        override fun activeEditorInfo(): FlorisEditorInfo = editorInfo
-
-        override fun activeState(): KeyboardState = state
-
-        override fun activeSubtype(): Subtype = subtype
 
         override fun context(): Context = appContext
 
@@ -903,14 +860,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
         }
 
-        override fun keyboard(): Keyboard = keyboard
-
         override fun isSlot(data: KeyData): Boolean {
             return CurrencySet.isCurrencySlot(data.code)
         }
 
         override fun slotData(data: KeyData): KeyData? {
-            return subtypeManager.getCurrencySet(activeSubtype()).getSlot(data.code)
+            return subtypeManager.getCurrencySet(subtype).getSlot(data.code)
+        }
+
+        fun asSmartbarQuickActionsEvaluator(): ComputingEvaluatorImpl {
+            return ComputingEvaluatorImpl(
+                version = activeEvaluatorVersion,
+                keyboard = SmartbarQuickActionsKeyboard,
+                editorInfo = editorInfo,
+                state = state,
+                subtype = Subtype.DEFAULT,
+            )
         }
     }
 }

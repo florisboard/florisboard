@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,7 +30,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 
 @Composable
 fun TextInputLayout(
@@ -38,7 +38,7 @@ fun TextInputLayout(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
+    val evaluator by keyboardManager.activeEvaluator.collectAsState()
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Column(
@@ -47,9 +47,7 @@ fun TextInputLayout(
                 .wrapContentHeight(),
         ) {
             Smartbar()
-            TextKeyboardLayout(
-                renderInfo = renderInfo,
-            )
+            TextKeyboardLayout(evaluator = evaluator)
         }
     }
 }

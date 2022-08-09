@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +58,7 @@ fun QuickActionsRow(modifier: Modifier = Modifier) = with(LocalDensity.current) 
     val keyboardManager by context.keyboardManager()
 
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
-    val renderInfo by keyboardManager.renderInfo.observeAsNonNullState()
+    val evaluator by keyboardManager.activeEvaluator.collectAsState()
     val smartbarActions by keyboardManager.smartbarActions.observeAsNonNullState()
 
     val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarQuickAction)
@@ -79,7 +80,7 @@ fun QuickActionsRow(modifier: Modifier = Modifier) = with(LocalDensity.current) 
                 MoreButton()
             }
             for (smartbarAction in visibleSmartbarActions) {
-                val icon = renderInfo.evaluator.computeIconResId(smartbarAction.data)
+                val icon = evaluator.computeIconResId(smartbarAction.data)
                 IconButton(
                     modifier = Modifier
                         .padding(SmartbarActionPadding)

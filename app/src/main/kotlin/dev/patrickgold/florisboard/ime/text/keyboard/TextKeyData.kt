@@ -504,8 +504,8 @@ class AutoTextKeyData(
                 TextKeyData(type, data.code, data.label, groupId, popup)
             }
         } else {
-            state.recomputeIfNecessary(evaluator.activeSubtype().primaryLocale)
-            if (evaluator.activeState().isUppercase) { state.upper } else { state.lower }
+            state.recomputeIfNecessary(evaluator.subtype.primaryLocale)
+            if (evaluator.state.isUppercase) { state.upper } else { state.lower }
         }
     }
 

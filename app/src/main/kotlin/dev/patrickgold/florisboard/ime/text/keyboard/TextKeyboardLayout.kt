@@ -65,9 +65,9 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.RenderInfo
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
 import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
@@ -105,7 +105,7 @@ import kotlin.math.sqrt
 @Composable
 fun TextKeyboardLayout(
     modifier: Modifier = Modifier,
-    renderInfo: RenderInfo,
+    evaluator: ComputingEvaluator,
     isPreview: Boolean = false,
     isSmartbarKeyboard: Boolean = false,
 ): Unit = with(LocalDensity.current) {
@@ -114,7 +114,7 @@ fun TextKeyboardLayout(
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
 
-    val keyboard = renderInfo.keyboard
+    val keyboard = evaluator.keyboard as TextKeyboard
     val numberRowEnabled by prefs.keyboard.numberRow.observeAsTransformingState { numberRowEnabled ->
         when (keyboard.mode) {
             KeyboardMode.CHARACTERS,
@@ -125,8 +125,8 @@ fun TextKeyboardLayout(
         }
     }
     val glideEnabledInternal by prefs.glide.enabled.observeAsState()
-    val glideEnabled = glideEnabledInternal && renderInfo.evaluator.activeEditorInfo().isRichInputEditor &&
-        renderInfo.evaluator.activeState().keyVariation != KeyVariation.PASSWORD
+    val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
+        evaluator.state.keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
         .foreground.solidColor(default = Color.Green)
@@ -302,14 +302,14 @@ fun TextKeyboardLayout(
                 }
             },
         )
-        popupUiController.evaluator = renderInfo.evaluator
+        popupUiController.evaluator = evaluator
         popupUiController.fontSizeMultiplier = fontSizeMultiplier
         popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, renderInfo, fontSizeMultiplier, isSmartbarKeyboard,
+                textKey, evaluator, fontSizeMultiplier, isSmartbarKeyboard,
                 debugShowTouchBoundaries,
             )
         }
@@ -329,7 +329,7 @@ fun TextKeyboardLayout(
 @Composable
 private fun TextKeyButton(
     key: TextKey,
-    renderInfo: RenderInfo,
+    evaluator: ComputingEvaluator,
     fontSizeMultiplier: Float,
     isSmartbarKey: Boolean,
     debugShowTouchBoundaries: Boolean,
@@ -337,7 +337,7 @@ private fun TextKeyButton(
     val keyStyle = FlorisImeTheme.style.get(
         element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
         code = key.computedData.code,
-        mode = renderInfo.state.inputShiftState.value,
+        mode = evaluator.state.inputShiftState.value,
         isPressed = key.isPressed && key.isEnabled,
         isDisabled = !key.isEnabled,
     )
@@ -371,7 +371,7 @@ private fun TextKeyButton(
             style = keyStyle,
             clip = false,
         ) { }
-        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && renderInfo.keyboard.mode == KeyboardMode.PHONE
+        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
@@ -399,7 +399,7 @@ private fun TextKeyButton(
             val keyHintStyle = FlorisImeTheme.style.get(
                 element = FlorisImeUi.KeyHint,
                 code = key.computedHintData.code,
-                mode = renderInfo.state.inputShiftState.value,
+                mode = evaluator.state.inputShiftState.value,
                 isPressed = key.isPressed,
             )
             val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
