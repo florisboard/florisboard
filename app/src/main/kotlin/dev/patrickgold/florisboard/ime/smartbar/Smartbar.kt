@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionRow
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
@@ -277,7 +278,7 @@ private fun SmartbarActionRowContent(
 ) {
     when (rowType) {
         SmartbarRowType.QUICK_ACTIONS -> {
-            QuickActionsRow(
+            QuickActionRow(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(FlorisImeSizing.smartbarHeight),

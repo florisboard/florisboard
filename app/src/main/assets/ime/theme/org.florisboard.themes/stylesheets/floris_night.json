@@ -78,19 +78,14 @@
   "smartbar-quick-action": {
     "background": "transparent",
     "foreground": "var(--on-background)",
-    "shape": "circle()"
-  },
-  "smartbar-key": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
     "font-size": "18sp",
     "shape": "var(--shape)"
   },
-  "smartbar-key:pressed": {
+  "smartbar-quick-action:pressed": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)"
   },
-  "smartbar-key:disabled": {
+  "smartbar-quick-action:disabled": {
     "background": "transparent",
     "foreground": "#dcdcdc48"
   },

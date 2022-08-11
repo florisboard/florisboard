@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarActions
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -90,7 +89,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val keyboardCache = TextKeyboardCache()
 
     val resources = KeyboardManagerResources()
-    val smartbarActions = SmartbarActions()
     val activeState = KeyboardState.new()
 
     private val activeEvaluatorGuard = Mutex(locked = false)
@@ -107,7 +105,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.ARROW_RIGHT,
             KeyCode.ARROW_UP,
             KeyCode.DELETE,
-            KeyCode.FORWARD_DELETE
+            KeyCode.FORWARD_DELETE,
         )
     ).also { it.keyEventReceiver = this }
 

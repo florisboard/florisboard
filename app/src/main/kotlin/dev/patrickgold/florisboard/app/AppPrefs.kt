@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
@@ -524,6 +525,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val enabled = boolean(
             key = "smartbar__enabled",
             default = true,
+        )
+        val actionArrangement = custom(
+            key = "smartbar__action_arrangement",
+            default = QuickActionArrangement.Default,
+            serializer = QuickActionArrangement.Serializer,
         )
         val flipToggles = boolean(
             key = "smartbar__flip_toggles",
