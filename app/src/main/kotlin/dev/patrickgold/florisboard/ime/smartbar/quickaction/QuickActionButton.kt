@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +59,16 @@ fun QuickActionButton(
 
     var isPressed by remember { mutableStateOf(false) }
     val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarQuickAction, isPressed = isPressed)
+
+    // Need to manually cancel an action if this composable suddenly leaves the composition to prevent the key from
+    // being stuck in the pressed state
+    DisposableEffect(action) {
+        onDispose {
+            if (action is QuickAction.InsertKey) {
+                action.onPointerCancel(context)
+            }
+        }
+    }
 
     Box(
         modifier = modifier

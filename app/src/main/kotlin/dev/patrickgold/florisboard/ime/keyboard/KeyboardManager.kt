@@ -106,6 +106,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.ARROW_UP,
             KeyCode.DELETE,
             KeyCode.FORWARD_DELETE,
+            KeyCode.UNDO,
+            KeyCode.REDO,
         )
     ).also { it.keyEventReceiver = this }
 
