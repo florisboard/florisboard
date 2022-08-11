@@ -1,0 +1,14 @@
+{
+  "uniqueId": "pictogrammers-material-icons",
+  "name": "Pictogrammers Material Icons",
+  "developers": [
+    {
+      "name": "Pictogrammers Icon Group",
+      "organisationUrl": "https://pictogrammers.com"
+    }
+  ],
+  "website": "https://github.com/Templarian/MaterialDesign",
+  "licenses": [
+    "Apache-2.0"
+  ]
+}

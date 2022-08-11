@@ -239,6 +239,12 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         KeyCode.REDO -> {
             R.drawable.ic_redo
         }
+        KeyCode.TOGGLE_INCOGNITO_MODE -> {
+            R.drawable.ic_incognito
+        }
+        KeyCode.TOGGLE_AUTOCORRECT -> {
+            R.drawable.ic_font_download
+        }
         KeyCode.KANA_SWITCHER -> {
             if (evaluator.state.isKanaKata) {
                 R.drawable.ic_keyboard_kana_switcher_kata

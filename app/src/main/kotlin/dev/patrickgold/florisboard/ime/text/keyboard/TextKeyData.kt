@@ -151,6 +151,9 @@ class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
+                VOICE_INPUT,
+                TOGGLE_INCOGNITO_MODE,
+                TOGGLE_AUTOCORRECT,
             )
         }
 
@@ -483,6 +486,19 @@ class TextKeyData(
             type = KeyType.UNSPECIFIED,
             code = KeyCode.VOICE_INPUT,
             label = "voice_input",
+        )
+
+        /** Predefined key data for [KeyCode.TOGGLE_INCOGNITO_MODE] */
+        val TOGGLE_INCOGNITO_MODE = TextKeyData(
+            type = KeyType.UNSPECIFIED,
+            code = KeyCode.TOGGLE_INCOGNITO_MODE,
+            label = "toggle_incognito_mode",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_AUTOCORRECT] */
+        val TOGGLE_AUTOCORRECT = TextKeyData(
+            type = KeyType.UNSPECIFIED,
+            code = KeyCode.TOGGLE_AUTOCORRECT,
+            label = "toggle_autocorrect",
         )
     }
 }

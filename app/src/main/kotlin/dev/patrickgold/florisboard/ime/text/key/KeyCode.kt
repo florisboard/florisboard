@@ -101,6 +101,9 @@ object KeyCode {
     const val IME_HIDE_UI =                 -232
     const val VOICE_INPUT =                 -233
 
+    const val TOGGLE_INCOGNITO_MODE =       -241
+    const val TOGGLE_AUTOCORRECT =          -242
+
     const val URI_COMPONENT_TLD =           -255
 
     const val SETTINGS =                    -301
