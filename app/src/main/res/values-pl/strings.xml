@@ -234,7 +234,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Odwróć przyciski przełączania</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Odwraca wiersze akcji</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Układ wierszy</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Podstawowe akcje</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatycznie rozwiń/zwiń</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatycznie rozwiń/zwiń podstawowy wiersz akcji w oparciu o bieżący stan</string>
@@ -608,9 +607,6 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Umieszcza drugą linię między linią główną a klawiaturą</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Nakładka interfejsu aplikacji</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Umieszcza drugą linię jako nakładkę nad klawiaturą bez zmieniani rozmiaru interfejsu klawiatury. Pamiętaj, że to miejsce może spowodować częściowe zakrycie pola do wpisywania tekstu w innej aplikacji</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Szybkie akcje</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Narzędzia kursora schowka</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Wiersz z najczęściej używanymi narzędziami do schowka i przesuwania kursora</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Podstawowy</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Tylko właściwości kolorów są wyświetlane, właściwości i reguły są tłumaczone.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Zaawansowane</string>

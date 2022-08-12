@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.app.settings.smartbar
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -51,12 +50,6 @@ fun SmartbarScreen() = FlorisScreen {
                 summary = stringRes(R.string.pref__smartbar__primary_actions_auto_expand_collapse__summary),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
             )
-            ListPreference(
-                prefs.smartbar.primaryActionsRowType,
-                title = stringRes(R.string.pref__smartbar__any_row_type__label),
-                entries = SmartbarRowType.listEntries(),
-                enabledIf = { prefs.smartbar.enabled isEqualTo true },
-            )
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_secondary_actions__label)) {
@@ -66,12 +59,6 @@ fun SmartbarScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__smartbar__secondary_actions_enabled__label),
                 entries = SecondaryRowPlacement.listEntries(),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
-            )
-            ListPreference(
-                prefs.smartbar.secondaryActionsRowType,
-                title = stringRes(R.string.pref__smartbar__any_row_type__label),
-                entries = SmartbarRowType.listEntries(),
-                enabledIf = { prefs.smartbar.enabled isEqualTo true && prefs.smartbar.secondaryActionsEnabled isEqualTo true },
             )
         }
     }

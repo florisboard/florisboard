@@ -260,7 +260,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">پیچەوانەکردنەوەی دوگمەکان</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">پێچەوانەکردنەوەی دوگمەکانی ئامرازەکان</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">ئامرازە سەرەکیەکان</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">خانەی یەکەم</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
@@ -661,10 +660,6 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">سەرەتای خوارەوە</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">ئامرازەکانی ڕێکخستن</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">پیشاندانی ئامرازەکانی رێکخستن بەشێوەی سەرەکی</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">ئامرازەکانی دەستکاریکردن</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">پیشاندانی ئامرازەکانی دەستکاریکردن بەشێوەی سەرەکی</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">بنچینەیی</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">تەنیا زانیاری ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">ڕێکخستنی زیاتر</string>

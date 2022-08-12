@@ -186,7 +186,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Plansaziya rêzê</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Çalakiyên seretayî</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>

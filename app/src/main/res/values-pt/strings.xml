@@ -227,7 +227,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Disposição de linhas</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ações primárias</string>
     <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
     <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ações secundárias</string>
@@ -592,8 +591,6 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Fim do topo</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fim do fundo</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Inicio do fundo</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ações rápidas</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Ferramentas da área de transferência do cursor</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Programador</string>

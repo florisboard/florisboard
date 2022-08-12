@@ -260,7 +260,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Tausche Schalter für Zugriffsleisten</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Vertauscht die Schnellzugriffs-Leisten</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Reihenlayout</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primäre Aktion</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatisch aus-/einklappen</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Klappt die primäre Aktionsleiste abhängig vom aktuellen Status automatisch ein/aus</string>
@@ -658,10 +657,6 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Ende oben</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Ende unten</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Anfang unten</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Schnellzugriffe</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Sortierbare Schnellaktionen im Zeilenformat mit Überlaufmenu</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Werkzeuge für die Zwischenablage</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Zeile mit am meisten genutzen Zwischenablage und Cursor-bewegungs Werkzeugen</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Einfach</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Nur Farbeigenschaften werden angezeigt. Eigenschaften und Regeln werden übersetzt.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Erweitert</string>

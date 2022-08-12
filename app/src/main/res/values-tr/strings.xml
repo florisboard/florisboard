@@ -181,7 +181,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Geçiş düğmelerini ters çevir</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Eylem satır geçişlerini ters çevirir</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Satır dizilimi</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Birincil eylemler</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Birincil eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
@@ -405,10 +404,6 @@
     <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">İkincil sırayı, yazı klavyesi ve birincil sıranın arasına yerleştirir</string>
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Uygulama arayüzünün üstünü kapla</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ortaya çıkan klavye kullanıcı arabirimi yüksekliğini etkilemeden ikincil satırı uygulama kullanıcı arabiriminin üzerine bir kaplama olarak yerleştirir. Bu yerleşimin, uygulama giriş alanının kısmen fazla çizilmesine neden olabileceğini unutmayın</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Hızlı eylemler</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Taşma menüsüyle bir satır biçiminde düzenlenebilir hızlı eylemler</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Pano imleç araçları</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">En sık kullanılan pano ve imleç hareket araçlar satırı</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Sistem dillerini kullan</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Klavye alt türlerini kullan</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Eylem yok</string>

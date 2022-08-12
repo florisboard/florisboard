@@ -261,7 +261,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas keyboard</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan tombol alih</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris tindakan</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Tata letak baris</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Tindakan utama</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan status saat ini</string>
@@ -660,10 +659,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Akhiran atas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Akhiran bawah</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Awalan bawah</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Tindakan cepat</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Tindakan cepat yang dapat diubah dalam format baris dengan menu luapan</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Alat papan klip kursor</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Barisan dengan alat-alat papan klip dan penggerakan kursor yang sering digunakan</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Dasar</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Hanya properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Tingkat lanjut</string>

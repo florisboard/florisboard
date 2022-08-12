@@ -149,7 +149,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Αντιστροφή των πλήκτρων εναλλαγής</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Αντιστρέφει τα πλήκτρα εναλλαγής της σειράς ενεργειών</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Διάταξη σειράς</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Κύριες ενέργειες</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>

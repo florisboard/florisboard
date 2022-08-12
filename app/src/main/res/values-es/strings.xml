@@ -252,7 +252,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Diseño de filas</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Acciones principales</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción principal según el estado actual</string>
@@ -649,10 +648,6 @@
     <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superponer la interfaz de usuario de la aplicación</string>
     <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inicio superior</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Acciones rápidas</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Acciones rápidas organizables en formato de fila con un menú de desbordamiento</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Herramientas del cursor de portapapeles</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Fila con las herramientas de cursor y portapapeles comúnmente utilizadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Sólo se muestran las propiedades del color, las propiedades y las reglas se traducen.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avanzado</string>

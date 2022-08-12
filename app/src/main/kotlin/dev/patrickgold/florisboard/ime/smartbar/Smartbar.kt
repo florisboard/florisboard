@@ -175,7 +175,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun RowScope.CenterContent() {
-        val primaryActionsRowType by prefs.smartbar.primaryActionsRowType.observeAsState()
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -195,7 +194,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 enter = enterTransition,
                 exit = exitTransition,
             ) {
-                SmartbarActionRowContent(rowType = primaryActionsRowType)
+                QuickActionRow(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(FlorisImeSizing.smartbarHeight),
+                )
             }
         }
     }
@@ -272,35 +275,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SmartbarActionRowContent(
-    rowType: SmartbarRowType,
-    modifier: Modifier = Modifier,
-) {
-    when (rowType) {
-        SmartbarRowType.QUICK_ACTIONS -> {
-            QuickActionRow(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.smartbarHeight),
-            )
-        }
-        SmartbarRowType.CLIPBOARD_CURSOR_TOOLS -> {
-            SmartbarClipboardCursorRow(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.smartbarHeight),
-            )
-        }
-    }
-}
-
-@Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryRow)
     val secondaryActionsEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
     val secondaryActionsExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-    val secondaryActionsRowType by prefs.smartbar.secondaryActionsRowType.observeAsState()
     val secondaryActionsPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
     val background = secondaryRowStyle.background.solidColor().let { color ->
         if (secondaryActionsPlacement == SecondaryRowPlacement.OVERLAY_APP_UI) {
@@ -319,9 +298,11 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
         enter = VerticalEnterTransition,
         exit = VerticalExitTransition,
     ) {
-        SmartbarActionRowContent(
-            modifier = modifier.background(background),
-            rowType = secondaryActionsRowType,
+        QuickActionRow(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(FlorisImeSizing.smartbarHeight)
+                .background(background),
         )
     }
 }

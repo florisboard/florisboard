@@ -256,7 +256,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Boutons à bascule</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">La rangée d\'action bascule</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Disposition des rangs</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Actions principales</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Extension/réduction automatique de la ligne d\'action primaire en fonction de l\'état actuel</string>
@@ -654,10 +653,6 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top fin</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Extrémité inférieure</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Extrémité supérieure</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Actions rapides</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Actions rapides pouvant être organisées sous forme de rangées avec un menu de débordement</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Outils du curseur du presse-papiers</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Rame avec les outils les plus couramment utilisés pour le presse-papiers et le déplacement du curseur</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Standard</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Seules les propriétés de couleur sont affichées, les propriétés et les règles sont traduites.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avancé</string>

@@ -260,7 +260,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Поменять местами кнопки переключения</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Поменять местами переключатели строки действий</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Расположение строки</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основные действия</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое разворачивание/сворачивание основной строки действия в зависимости от текущего состояния</string>
@@ -660,10 +659,6 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Низ начало</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Быстрые действия</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Настраиваемые быстрые действия в формате строки с накладывающимся меню</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменты курсора и буфера обмена</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Строка с наиболее часто используемыми инструментами буфера обмена и перемещения курсора</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Ещё</string>

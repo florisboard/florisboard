@@ -241,7 +241,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">キーボードの上に表示されます</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">トグルボタンを切り替える</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">アクション行の切り替えを反転します</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">行レイアウト</string>
     <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">プライマリーアクション</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">自動的に拡張/折りたたみ</string>
     <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">現在の状態に基づいてプライマリーアクション行を自動的に展開/折りたたみます</string>

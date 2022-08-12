@@ -33,7 +33,6 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
@@ -539,10 +538,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__primary_actions_expanded",
             default = false,
         )
-        val primaryActionsRowType = enum(
-            key = "smartbar__primary_actions_row_type",
-            default = SmartbarRowType.QUICK_ACTIONS,
-        )
         val primaryActionsAutoExpandCollapse = boolean(
             key = "smartbar__primary_actions_auto_expand_collapse",
             default = true,
@@ -562,10 +557,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val secondaryActionsPlacement = enum(
             key = "smartbar__secondary_actions_placement",
             default = SecondaryRowPlacement.ABOVE_PRIMARY,
-        )
-        val secondaryActionsRowType = enum(
-            key = "smartbar__secondary_actions_row_type",
-            default = SmartbarRowType.CLIPBOARD_CURSOR_TOOLS,
         )
         val quickActions = string(
             key = "smartbar__quick_actions",
