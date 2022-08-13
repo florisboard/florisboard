@@ -203,10 +203,8 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Älypalkki</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ota älypalkki käyttöön</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Näkyy näppäimistön yläpuolella</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ensisijaiset toiminnot</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automaattinen laajennus/tiivistäminen</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Toissijaiset toiminnot</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Näyt toissijaisten toimintojen rivi</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automaattinen laajennus/tiivistäminen</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Näyt toissijaisten toimintojen rivi</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Syöttäminen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
@@ -486,10 +484,10 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Pois päältä</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Vasemman käden tila</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Oikean käden tila</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Ensisijaisen rivin yläpuolella</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja sovelluksen väliin</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Ensisijaisen rivin alapuolella</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja näppäimistön väliin</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Ensisijaisen rivin yläpuolella</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja sovelluksen väliin</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Ensisijaisen rivin alapuolella</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja näppäimistön väliin</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Lisäasetukset</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Kehittäjä</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Kaikki ominaisuudet näytetään; ominaisuudet ja säännöt näytetään niinkuin tyylisäännöstötiedostoon on tallennettuna.</string>

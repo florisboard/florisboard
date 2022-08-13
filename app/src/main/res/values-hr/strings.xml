@@ -232,11 +232,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Prikazivat će se na vrhu tipkovnice</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Obrni raspored gumba</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Obrni redoslijed trake radnje</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primarne radnje</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatski otvori/zatvori</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatski otvori/zatvori primarni red radnji ovisno o trenutnom stanju</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundarne radnje</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Prikaži sekundaru traku radnje</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatski otvori/zatvori</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automatski otvori/zatvori primarni red radnji ovisno o trenutnom stanju</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Prikaži sekundaru traku radnje</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Piše</string>
     <string name="pref__suggestion__title" comment="Preference group title">Prijedlozi</string>

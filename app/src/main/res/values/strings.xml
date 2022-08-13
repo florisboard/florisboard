@@ -274,15 +274,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Layout</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Layout-specific options</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Flip toggle buttons</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Flips action row toggles</string>
-
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primary actions</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
-
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secondary actions</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Show secondary action row</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Action row placement</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>
@@ -687,6 +685,13 @@
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
 
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Above candidates</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Places the extended actions row between the app UI and the candidate row</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Below candidates</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Places the extended actions row between the candidate row and the text keyboard</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Places the extended actions row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
+
     <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Use vibrator directly</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} directly interacts with the default hardware vibrator. This gives more control over duration and strength of a vibration, but the vibration may not be as smooth and optimized as using the haptic feedback interface</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Use haptic feedback interface</string>
@@ -717,17 +722,19 @@
     <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
 
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Above primary row</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Places the secondary row between the app UI and the primary row</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Below primary row</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Places the secondary row between the primary row and the text keyboard</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Places the secondary row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
-
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
+
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Suggestions only</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Shows only the candidate row, without any action row/toggle or sticky action</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions only</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Shows only the actions row, without the candidate row or an explicit sticky action</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions &amp; Actions shared</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Shared toggleable candidate and actions row, with sticky action</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions &amp; Actions extended</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Static candidate row and additional toggleable action row, with sticky action</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Only color properties are shown, properties and rules are translated.</string>

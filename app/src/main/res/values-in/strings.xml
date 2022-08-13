@@ -261,11 +261,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas keyboard</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan tombol alih</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris tindakan</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Tindakan utama</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan status saat ini</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Tindakan sekunder</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Tampilkan baris tindakan sekunder</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan status saat ini</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Tampilkan baris tindakan sekunder</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Mengetik</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
@@ -649,12 +647,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Mati</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode tangan kiri</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode tangan kanan</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Di atas baris utama</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara UI aplikasi dan baris utama</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Di bawah baris utama</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara baris utama dan keyboard teks</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Tampilkan UI aplikasi</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Menempatkan baris sekunder sebagai overlay di atas UI aplikasi, tanpa mempengaruhi ketinggian UI keyboard. Dicatat bahwa penempatannya mungkin membuat kolom input aplikasi sebagian digambar terlalu banyak</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Di atas baris utama</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Menempatkan baris sekunder di antara UI aplikasi dan baris utama</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Di bawah baris utama</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Menempatkan baris sekunder di antara baris utama dan keyboard teks</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Tampilkan UI aplikasi</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Menempatkan baris sekunder sebagai overlay di atas UI aplikasi, tanpa mempengaruhi ketinggian UI keyboard. Dicatat bahwa penempatannya mungkin membuat kolom input aplikasi sebagian digambar terlalu banyak</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Awalan atas</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Akhiran atas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Akhiran bawah</string>

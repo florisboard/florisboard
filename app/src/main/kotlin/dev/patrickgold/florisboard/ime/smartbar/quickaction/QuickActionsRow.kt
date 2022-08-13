@@ -49,7 +49,7 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 private val SmartbarActionPadding = 4.dp
 
 @Composable
-fun QuickActionRow(modifier: Modifier = Modifier) = with(LocalDensity.current) {
+fun QuickActionsRow(modifier: Modifier = Modifier) = with(LocalDensity.current) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()

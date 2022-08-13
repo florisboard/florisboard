@@ -149,7 +149,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Αντιστροφή των πλήκτρων εναλλαγής</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Αντιστρέφει τα πλήκτρα εναλλαγής της σειράς ενεργειών</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Κύριες ενέργειες</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Λειτουργία προβολής προτάσεων</string>
@@ -414,12 +413,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ανενεργό</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Λειτουργία για αριστερόχειρες</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Λειτουργία για δεξιόχειρες</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Πάνω από την πρωτεύουσα σειρά</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ του περιβάλλοντος της εφαρμογής και της πρωτεύουσας σειράς</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Κάτω από την πρωτεύουσα σειρά</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ της πρωτεύουσας σειράς και του πληκτρολογίου κειμένου</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Επικάλυψη περιβάλλοντος εφαρμογής</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά ως επικάλυμμα πάνω από το περιβάλλον της εφαρμογής, χωρίς να επηρεάζει το προκύπτον ύψος του περιβάλλοντος της εφαρμογής. Να σημειωθεί ότι αυτή η τοποθέτηση ίσως προκαλέσει μερική κάλυψη του πεδίου κειμένου της εφαρμογής</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Πάνω από την πρωτεύουσα σειρά</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ του περιβάλλοντος της εφαρμογής και της πρωτεύουσας σειράς</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Κάτω από την πρωτεύουσα σειρά</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ της πρωτεύουσας σειράς και του πληκτρολογίου κειμένου</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Επικάλυψη περιβάλλοντος εφαρμογής</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά ως επικάλυμμα πάνω από το περιβάλλον της εφαρμογής, χωρίς να επηρεάζει το προκύπτον ύψος του περιβάλλοντος της εφαρμογής. Να σημειωθεί ότι αυτή η τοποθέτηση ίσως προκαλέσει μερική κάλυψη του πεδίου κειμένου της εφαρμογής</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Χρήση γλωσσών συστήματος</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Καμία ενέργεια</string>

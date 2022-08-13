@@ -181,11 +181,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Geçiş düğmelerini ters çevir</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Eylem satır geçişlerini ters çevirir</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Birincil eylemler</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Birincil eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">İkincil eylemler</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">İkincil eylem satırını göster</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Birincil eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">İkincil eylem satırını göster</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Öneri gösterim modu</string>
@@ -398,12 +396,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Kapalı</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Sol el modu</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Sağ el modu</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Birincil satırın üstünde</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">İkincil sırayı, uygulama arayüzü ve birincil sıranın arasına yerleştirir</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Birincil satırın altında</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">İkincil sırayı, yazı klavyesi ve birincil sıranın arasına yerleştirir</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Uygulama arayüzünün üstünü kapla</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ortaya çıkan klavye kullanıcı arabirimi yüksekliğini etkilemeden ikincil satırı uygulama kullanıcı arabiriminin üzerine bir kaplama olarak yerleştirir. Bu yerleşimin, uygulama giriş alanının kısmen fazla çizilmesine neden olabileceğini unutmayın</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Birincil satırın üstünde</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">İkincil sırayı, uygulama arayüzü ve birincil sıranın arasına yerleştirir</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Birincil satırın altında</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">İkincil sırayı, yazı klavyesi ve birincil sıranın arasına yerleştirir</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Uygulama arayüzünün üstünü kapla</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Ortaya çıkan klavye kullanıcı arabirimi yüksekliğini etkilemeden ikincil satırı uygulama kullanıcı arabiriminin üzerine bir kaplama olarak yerleştirir. Bu yerleşimin, uygulama giriş alanının kısmen fazla çizilmesine neden olabileceğini unutmayın</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Sistem dillerini kullan</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Klavye alt türlerini kullan</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Eylem yok</string>

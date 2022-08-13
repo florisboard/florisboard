@@ -22,32 +22,32 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 
 /**
- * Enum class defining the possible placements for the Smartbar secondary row.
+ * Enum class defining the possible placements for the Smartbar extended actions.
  */
-enum class SecondaryRowPlacement {
-    ABOVE_PRIMARY,
-    BELOW_PRIMARY,
+enum class ExtendedActionsPlacement {
+    ABOVE_CANDIDATES,
+    BELOW_CANDIDATES,
     OVERLAY_APP_UI;
 
     companion object {
         @Composable
         fun listEntries() = listPrefEntries {
             entry(
-                key = ABOVE_PRIMARY,
-                label = stringRes(R.string.enum__secondary_row_placement__above_primary),
-                description = stringRes(R.string.enum__secondary_row_placement__above_primary__description),
+                key = ABOVE_CANDIDATES,
+                label = stringRes(R.string.enum__extended_actions_placement__above_candidates),
+                description = stringRes(R.string.enum__extended_actions_placement__above_candidates__description),
                 showDescriptionOnlyIfSelected = true,
             )
             entry(
-                key = BELOW_PRIMARY,
-                label = stringRes(R.string.enum__secondary_row_placement__below_primary),
-                description = stringRes(R.string.enum__secondary_row_placement__below_primary__description),
+                key = BELOW_CANDIDATES,
+                label = stringRes(R.string.enum__extended_actions_placement__below_candidates),
+                description = stringRes(R.string.enum__extended_actions_placement__below_candidates__description),
                 showDescriptionOnlyIfSelected = true,
             )
             entry(
                 key = OVERLAY_APP_UI,
-                label = stringRes(R.string.enum__secondary_row_placement__overlay_app_ui),
-                description = stringRes(R.string.enum__secondary_row_placement__overlay_app_ui__description),
+                label = stringRes(R.string.enum__extended_actions_placement__overlay_app_ui),
+                description = stringRes(R.string.enum__extended_actions_placement__overlay_app_ui__description),
                 showDescriptionOnlyIfSelected = true,
             )
         }

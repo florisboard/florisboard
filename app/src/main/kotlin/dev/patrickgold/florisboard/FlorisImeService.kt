@@ -88,7 +88,8 @@ import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidInternalR
@@ -464,9 +465,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         val visibleTopY = inputWindowView.height - inputViewSize.height
         val needAdditionalOverlay =
             prefs.smartbar.enabled.get() &&
-                prefs.smartbar.secondaryActionsEnabled.get() &&
-                prefs.smartbar.secondaryActionsExpanded.get() &&
-                prefs.smartbar.secondaryActionsPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI &&
+                prefs.smartbar.layout.get() == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED &&
+                prefs.smartbar.extendedActionsExpanded.get() &&
+                prefs.smartbar.extendedActionsPlacement.get() == ExtendedActionsPlacement.OVERLAY_APP_UI &&
                 keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
 
         outInsets.contentTopInsets = visibleTopY

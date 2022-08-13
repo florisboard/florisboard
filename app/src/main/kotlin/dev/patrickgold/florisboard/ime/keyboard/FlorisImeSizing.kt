@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.ViewUtils
@@ -56,13 +57,13 @@ object FlorisImeSizing {
         val prefs by florisPreferenceModel()
         val numberRowEnabled by prefs.keyboard.numberRow.observeAsState()
         val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-        val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-        val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-        val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
+        val smartbarLayout by prefs.smartbar.layout.observeAsState()
+        val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
+        val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
         val height =
             if (smartbarEnabled) {
-                if (secondaryRowEnabled && secondaryRowExpanded &&
-                    secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI) {
+                if (smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED && extendedActionsExpanded &&
+                    extendedActionsPlacement != ExtendedActionsPlacement.OVERLAY_APP_UI) {
                     smartbarHeight * 2
                 } else {
                     smartbarHeight

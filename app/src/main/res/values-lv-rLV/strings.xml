@@ -260,11 +260,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Apvērst pārslēgšanas pogas</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Apvērš darbību rindas slēdžus</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Galvenās darbības</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj galveno darbību rindu atbilstoši pašreizējam stāvoklim</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Otrējās darbības</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Rādīt otrējo darbību rindu</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj galveno darbību rindu atbilstoši pašreizējam stāvoklim</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Rādīt otrējo darbību rindu</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Rakstīšana</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
@@ -649,12 +647,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Izslēgts</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Ievade ar kreiso roku</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Ievade ar labo roku</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Virs galvenās rindas</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Novieto otrējo rindu starp lietotnes saskarni un galveno rindu</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Zem galvenās rindas</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Novieto otrējo rindu starp galveno rindu un burtu taustiņiem</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Pārklāt lietotnes saskarni</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Novieto otrējo rindu kā pārklājumu virs lietotnes saskarnes, neietekmējot izrietošo tastatūras saskarnes augstumu. Jāņem vērā, ka šis novietojums var izraisīt lietotnes ievades lauka daļēju pārklāšanu</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Virs galvenās rindas</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Novieto otrējo rindu starp lietotnes saskarni un galveno rindu</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Zem galvenās rindas</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Novieto otrējo rindu starp galveno rindu un burtu taustiņiem</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Pārklāt lietotnes saskarni</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Novieto otrējo rindu kā pārklājumu virs lietotnes saskarnes, neietekmējot izrietošo tastatūras saskarnes augstumu. Jāņem vērā, ka šis novietojums var izraisīt lietotnes ievades lauka daļēju pārklāšanu</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Augšas sākums</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Augšas beigas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Apakšas sākums</string>

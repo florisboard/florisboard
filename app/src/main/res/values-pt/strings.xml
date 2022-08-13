@@ -227,9 +227,7 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ações primárias</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ações secundárias</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Mostrar linha de ações secundárias</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de exibição das sugestões</string>
@@ -581,12 +579,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Desligado</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modo esquerdino</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modo destro</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Acima da linha principal</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Coloca a linha secundária entre a interface da aplicação e a linha principal</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Abaixo da linha principal</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Coloca a linha secundária entre a linha principal e o teclado</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Sobrepor interface</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição à interface da aplicação mas sem afetar a altura do teclado. Tenha em conta de que esta opção pode implicar uma sobreposição do campo de introdução de dados</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Acima da linha principal</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Coloca a linha secundária entre a interface da aplicação e a linha principal</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Abaixo da linha principal</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Coloca a linha secundária entre a linha principal e o teclado</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Sobrepor interface</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição à interface da aplicação mas sem afetar a altura do teclado. Tenha em conta de que esta opção pode implicar uma sobreposição do campo de introdução de dados</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Início do topo</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Fim do topo</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fim do fundo</string>

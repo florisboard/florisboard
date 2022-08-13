@@ -260,11 +260,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Поменять местами кнопки переключения</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Поменять местами переключатели строки действий</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основные действия</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое разворачивание/сворачивание основной строки действия в зависимости от текущего состояния</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Дополнительные действия</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Показывать строку дополнительных действий</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое разворачивание/сворачивание основной строки действия в зависимости от текущего состояния</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Показывать строку дополнительных действий</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Набор текста</string>
     <string name="pref__suggestion__title" comment="Preference group title">Подсказки</string>
@@ -649,12 +647,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Отключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Для левши</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Для правши</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Над основным рядом</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Дополнительный ряд размещается между пользовательским интерфейсом приложения и основным рядом</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под основным рядом</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Дополнительный ряд размещается между основным рядом и текстовой клавиатурой</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Наложение над приложением</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Дополнительный ряд отображается в виде наложения над пользовательским интерфейсом приложения, не влияя на результирующую высоту интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к частичному переполнению поля ввода приложения.</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Над основным рядом</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Дополнительный ряд размещается между пользовательским интерфейсом приложения и основным рядом</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Под основным рядом</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Дополнительный ряд размещается между основным рядом и текстовой клавиатурой</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Наложение над приложением</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Дополнительный ряд отображается в виде наложения над пользовательским интерфейсом приложения, не влияя на результирующую высоту интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к частичному переполнению поля ввода приложения.</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Верх начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>

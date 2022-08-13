@@ -256,11 +256,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Boutons à bascule</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">La rangée d\'action bascule</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Actions principales</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Extension/réduction automatique de la ligne d\'action primaire en fonction de l\'état actuel</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Actions secondaires</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Afficher la ligne d\'actions secondaires</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Extension/réduction automatique de la ligne d\'action primaire en fonction de l\'état actuel</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Afficher la ligne d\'actions secondaires</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Saisie</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
@@ -643,12 +641,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Arrêt</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode gaucher</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode droitier</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Au-dessus de la ligne principale</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Placer la ligne secondaire entre l\'interface utilisateur de l\'application et la ligne principale</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Sous la ligne principale</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Placer la ligne secondaire entre la ligne principale et le clavier de texte</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superposer l\'interface utilisateur de l\'application</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Place la ligne secondaire en superposition au-dessus de l\'interface utilisateur de l\'application, sans affecter la hauteur résultante de l\'interface utilisateur du clavier. Notez que ce placement peut entraîner un dépassement partiel du champ de saisie de l\'application</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Au-dessus de la ligne principale</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Placer la ligne secondaire entre l\'interface utilisateur de l\'application et la ligne principale</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Sous la ligne principale</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Placer la ligne secondaire entre la ligne principale et le clavier de texte</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Superposer l\'interface utilisateur de l\'application</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Place la ligne secondaire en superposition au-dessus de l\'interface utilisateur de l\'application, sans affecter la hauteur résultante de l\'interface utilisateur du clavier. Notez que ce placement peut entraîner un dépassement partiel du champ de saisie de l\'application</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top départ</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top fin</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Extrémité inférieure</string>

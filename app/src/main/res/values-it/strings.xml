@@ -260,11 +260,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverti pulsanti di attivazione</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte i pulsanti di attivazione nella riga di azione</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Azioni primarie</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Espandi/riduci automaticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Espande/riduce automaticamente la riga dell\'azione primaria in base allo stato corrente</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Azioni secondarie</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostra riga di azione secondaria</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Espandi/riduci automaticamente</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Espande/riduce automaticamente la riga dell\'azione primaria in base allo stato corrente</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Mostra riga di azione secondaria</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
@@ -649,12 +647,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Spento</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modalità per mancini</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modalità per destri</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Sopra la riga principale</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Posiziona la riga secondaria tra l\'UI dell\'app e la riga principale</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Sotto la riga principale</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Posiziona la riga secondaria tra la riga principale e la tastiera del testo</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay UI dell\'app</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Posiziona la riga secondaria come sovrapposizione sopra l\'UI dell\'app, senza influire sull\'altezza dell\'UI della tastiera risultante. Tieni presente che questo posizionamento potrebbe causare la parziale sovrascrittura del campo di input dell\'app</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Sopra la riga principale</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Posiziona la riga secondaria tra l\'UI dell\'app e la riga principale</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Sotto la riga principale</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Posiziona la riga secondaria tra la riga principale e la tastiera del testo</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Overlay UI dell\'app</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Posiziona la riga secondaria come sovrapposizione sopra l\'UI dell\'app, senza influire sull\'altezza dell\'UI della tastiera risultante. Tieni presente che questo posizionamento potrebbe causare la parziale sovrascrittura del campo di input dell\'app</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inizio parte superiore</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Fine parte superiore</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fine parte inferiore</string>

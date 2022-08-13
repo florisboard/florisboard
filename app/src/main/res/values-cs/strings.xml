@@ -260,11 +260,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Přehodit přepínací tlačítka</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Prohodí přepínače řádku akcí</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primární akce</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozšíření/sbalení</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí primární řádek akcí v závislosti na současném stavu</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundární akce</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozšíření/sbalení</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí primární řádek akcí v závislosti na současném stavu</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Psaní</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
@@ -648,12 +646,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Vypnuto</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Nad primárním řádkem</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Umístí sekundární řádek mezi rozhraní aplikace a primární řádek</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Pod primárním řádkem</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Umístí sekundární řádek mezi primární řádek a textovou klávesnici</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Překrýt zozhraní aplikace</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Umístí sekundární řádek jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Nad primárním řádkem</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Umístí sekundární řádek mezi rozhraní aplikace a primární řádek</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Pod primárním řádkem</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Umístí sekundární řádek mezi primární řádek a textovou klávesnici</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Překrýt zozhraní aplikace</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Umístí sekundární řádek jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Vpravo nahoře</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Vpravo dole</string>

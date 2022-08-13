@@ -252,11 +252,9 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Acciones principales</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción principal según el estado actual</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Acciones secundarias</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar fila de acciones secundarias</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción principal según el estado actual</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Mostrar fila de acciones secundarias</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Escritura</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
@@ -641,12 +639,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Apagado</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modo para zurdos</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modo para diestros</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Sobre la fila principal</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Ubica la fila secundaria entre la interfaz de usuario de la aplicación y la fila principal</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Bajo la fila principal</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Ubica la fila secundaria entre la fila principal y el texto del teclado</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Superponer la interfaz de usuario de la aplicación</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Sobre la fila principal</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Ubica la fila secundaria entre la interfaz de usuario de la aplicación y la fila principal</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Bajo la fila principal</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Ubica la fila secundaria entre la fila principal y el texto del teclado</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Superponer la interfaz de usuario de la aplicación</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inicio superior</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Sólo se muestran las propiedades del color, las propiedades y las reglas se traducen.</string>

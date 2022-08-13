@@ -77,7 +77,7 @@
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한 손 조작 모드</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한 손 조작 모드 키보드 너비</string>
     <!-- Smartbar strings -->
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">자동 확장/축소</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">자동 확장/축소</string>
     <!-- Typing strings -->
     <!-- About UI strings -->
     <string name="about__view_source_code" comment="Label of View source code button in About">소스 코드</string>

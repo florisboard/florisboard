@@ -32,7 +32,8 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
@@ -525,6 +526,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__enabled",
             default = true,
         )
+        val layout = enum(
+            key = "smartbar__layout",
+            default = SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED,
+        )
         val actionArrangement = custom(
             key = "smartbar__action_arrangement",
             default = QuickActionArrangement.Default,
@@ -534,33 +539,25 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__flip_toggles",
             default = false,
         )
-        val primaryActionsExpanded = boolean(
-            key = "smartbar__primary_actions_expanded",
+        val sharedActionsExpanded = boolean(
+            key = "smartbar__shared_actions_expanded",
             default = false,
         )
-        val primaryActionsAutoExpandCollapse = boolean(
-            key = "smartbar__primary_actions_auto_expand_collapse",
+        val sharedActionsAutoExpandCollapse = boolean(
+            key = "smartbar__shared_actions_auto_expand_collapse",
             default = true,
         )
-        val primaryActionsExpandWithAnimation = boolean(
-            key = "smartbar__primary_actions_expand_with_animation",
+        val sharedActionsExpandWithAnimation = boolean(
+            key = "smartbar__shared_actions_expand_with_animation",
             default = true,
         )
-        val secondaryActionsEnabled = boolean(
-            key = "smartbar__secondary_actions_enabled",
-            default = true,
-        )
-        val secondaryActionsExpanded = boolean(
-            key = "smartbar__secondary_actions_expanded",
+        val extendedActionsExpanded = boolean(
+            key = "smartbar__extended_actions_expanded",
             default = false,
         )
-        val secondaryActionsPlacement = enum(
-            key = "smartbar__secondary_actions_placement",
-            default = SecondaryRowPlacement.ABOVE_PRIMARY,
-        )
-        val quickActions = string(
-            key = "smartbar__quick_actions",
-            default = "[]",
+        val extendedActionsPlacement = enum(
+            key = "smartbar__extended_actions_placement",
+            default = ExtendedActionsPlacement.ABOVE_CANDIDATES,
         )
     }
 

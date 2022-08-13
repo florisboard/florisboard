@@ -321,7 +321,7 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Under primærrad</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Under primærrad</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Bruk systemspråk</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Bruk tastatur-undertyper</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>

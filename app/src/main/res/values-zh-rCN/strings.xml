@@ -260,11 +260,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">将显示在键盘顶部</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">翻转开关按钮位置</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">翻转操作栏开关按钮位置</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">主要操作</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠主要操作行</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">次要操作</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">显示次要操作行</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠主要操作行</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">显示次要操作行</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">键入</string>
     <string name="pref__suggestion__title" comment="Preference group title">建议</string>
@@ -649,12 +647,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">关闭</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">左手模式</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">右手模式</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">主要行上方</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">将次要行放置在应用界面和主要行之间</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">主要行下方</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">将次要行放置在主要行和键盘文本之间</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">将次要行作为应用界面上的叠加层显示，而不影响键盘 UI 高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">主要行上方</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">将次要行放置在应用界面和主要行之间</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">主要行下方</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">将次要行放置在主要行和键盘文本之间</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">将次要行作为应用界面上的叠加层显示，而不影响键盘 UI 高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">顶部起始</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">顶部末尾</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">底部末尾</string>

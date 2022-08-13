@@ -202,11 +202,9 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Elsődleges műveletek</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatikus kinyitás/becsukás</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatkusan kinyitja becsukja az elsődleges műveletsávot a jelenlegi állapotnak megfelelően</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Másodlagos műveletek</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatikus kinyitás/becsukás</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automatkusan kinyitja becsukja az elsődleges műveletsávot a jelenlegi állapotnak megfelelően</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Javaslatok megjelenítési módja</string>
@@ -520,10 +518,10 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ki</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Balkezes mód</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Jobbkezes mód</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Elsődleges sor felett</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Elsődleges sor alatt</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Másodlagos sor elhelyezése az elsődleges sor és a billentyűzet között</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Elsődleges sor felett</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Elsődleges sor alatt</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Másodlagos sor elhelyezése az elsődleges sor és a billentyűzet között</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Felső kezdet</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Felső vég</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Alsó vég</string>
