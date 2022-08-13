@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.settings.smartbar
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -45,6 +46,13 @@ fun SmartbarScreen() = FlorisScreen {
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_layout_specific__label)) {
+            ListPreference(
+                prefs.suggestion.displayMode,
+                title = stringRes(R.string.pref__suggestion__display_mode__label),
+                entries = CandidatesDisplayMode.listEntries(),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                visibleIf = { prefs.smartbar.layout isNotEqualTo SmartbarLayout.ACTIONS_ONLY },
+            )
             SwitchPreference(
                 prefs.smartbar.flipToggles,
                 title = stringRes(R.string.pref__smartbar__flip_toggles__label),

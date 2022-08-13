@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
@@ -62,12 +61,6 @@ fun TypingScreen() = FlorisScreen {
                 prefs.suggestion.enabled,
                 title = stringRes(R.string.pref__suggestion__enabled__label),
                 summary = stringRes(R.string.pref__suggestion__enabled__summary),
-            )
-            ListPreference(
-                prefs.suggestion.displayMode,
-                title = stringRes(R.string.pref__suggestion__display_mode__label),
-                entries = CandidatesDisplayMode.listEntries(),
-                enabledIf = { prefs.suggestion.enabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.suggestion.blockPossiblyOffensive,
