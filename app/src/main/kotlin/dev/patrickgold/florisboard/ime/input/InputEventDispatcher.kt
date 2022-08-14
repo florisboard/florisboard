@@ -207,6 +207,10 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         return lastKeyEventDown.data.code == data.code
     }
 
+    fun isRepeatable(data: KeyData): Boolean {
+        return repeatableKeyCodes.contains(data.code)
+    }
+
     fun isRepeatableCodeLastDown(): Boolean {
         val event = lastKeyEventDown
         return repeatableKeyCodes.contains(event.data.code)

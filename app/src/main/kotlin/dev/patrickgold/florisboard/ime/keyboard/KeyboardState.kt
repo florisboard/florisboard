@@ -50,9 +50,9 @@ import kotlin.properties.Delegates
  *          |          |    1     |          | Is manual selection mode (start)
  *          |          |   1      |          | Is manual selection mode (end)
  *          |          | 1        |          | Is private mode
- *          |        1 |          |          | Is Smartbar quick actions visible
- *          |       1  |          |          | Is Smartbar showing inline suggestions
- *          |      1   |          |          | Is composing enabled
+ *          |        1 |          |          | Is quick actions overflow visible
+ *          |       1  |          |          | Is quick actions editor visible
+ *          |    1     |          |          | Is composing enabled
  *          |   1      |          |          | Is character half-width enabled
  *          |  1       |          |          | Is Kana Kata enabled
  *          | 1        |          |          | Is Kana small
@@ -81,9 +81,9 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         const val F_IS_MANUAL_SELECTION_MODE_START: ULong = 0x00001000u
         const val F_IS_MANUAL_SELECTION_MODE_END: ULong =   0x00002000u
         const val F_IS_PRIVATE_MODE: ULong =                0x00008000u
-        const val F_IS_QUICK_ACTIONS_VISIBLE: ULong =       0x00010000u
-        const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
-        const val F_IS_COMPOSING_ENABLED: ULong =           0x00040000u
+        const val F_IS_ACTIONS_OVERFLOW_VISIBLE: ULong =    0x00010000u
+        const val F_IS_ACTIONS_EDITOR_VISIBLE: ULong =      0x00020000u
+        const val F_IS_COMPOSING_ENABLED: ULong =           0x00100000u
 
         const val F_IS_CHAR_HALF_WIDTH: ULong =             0x00200000u
         const val F_IS_KANA_KATA: ULong =                   0x00400000u
@@ -275,13 +275,13 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         get() = getFlag(F_IS_PRIVATE_MODE)
         set(v) { setFlag(F_IS_PRIVATE_MODE, v) }
 
-    var isQuickActionsVisible: Boolean
-        get() = getFlag(F_IS_QUICK_ACTIONS_VISIBLE)
-        set(v) { setFlag(F_IS_QUICK_ACTIONS_VISIBLE, v) }
+    var isActionsOverflowVisible: Boolean
+        get() = getFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE)
+        set(v) { setFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE, v) }
 
-    var isShowingInlineSuggestions: Boolean
-        get() = getFlag(F_IS_SHOWING_INLINE_SUGGESTIONS)
-        set(v) { setFlag(F_IS_SHOWING_INLINE_SUGGESTIONS, v) }
+    var isActionsEditorVisible: Boolean
+        get() = getFlag(F_IS_ACTIONS_EDITOR_VISIBLE)
+        set(v) { setFlag(F_IS_ACTIONS_EDITOR_VISIBLE, v) }
 
     var isComposingEnabled: Boolean
         get() = getFlag(F_IS_COMPOSING_ENABLED)

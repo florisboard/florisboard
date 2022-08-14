@@ -95,14 +95,16 @@ object KeyCode {
     const val IME_PREV_SUBTYPE =            -225
     const val IME_NEXT_SUBTYPE =            -226
     const val LANGUAGE_SWITCH =             -227
-    const val TOGGLE_SMARTBAR_VISIBILITY =  -228
 
     const val IME_SHOW_UI =                 -231
     const val IME_HIDE_UI =                 -232
     const val VOICE_INPUT =                 -233
 
-    const val TOGGLE_INCOGNITO_MODE =       -241
-    const val TOGGLE_AUTOCORRECT =          -242
+    const val TOGGLE_SMARTBAR_VISIBILITY =  -241
+    const val TOGGLE_ACTIONS_OVERFLOW =     -242
+    const val TOGGLE_ACTIONS_EDITOR =       -243
+    const val TOGGLE_INCOGNITO_MODE =       -244
+    const val TOGGLE_AUTOCORRECT =          -245
 
     const val URI_COMPONENT_TLD =           -255
 

@@ -66,6 +66,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
+        activeState.isActionsOverflowVisible = false
+        activeState.isActionsEditorVisible = false
         super.handleStartInputView(editorInfo, isRestart)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {

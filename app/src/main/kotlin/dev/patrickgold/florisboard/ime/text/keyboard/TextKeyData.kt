@@ -152,6 +152,9 @@ class TextKeyData(
                 IME_HIDE_UI,
                 SETTINGS,
                 VOICE_INPUT,
+                TOGGLE_SMARTBAR_VISIBILITY,
+                TOGGLE_ACTIONS_OVERFLOW,
+                TOGGLE_ACTIONS_EDITOR,
                 TOGGLE_INCOGNITO_MODE,
                 TOGGLE_AUTOCORRECT,
             )
@@ -454,12 +457,6 @@ class TextKeyData(
             code = KeyCode.LANGUAGE_SWITCH,
             label = "language_switch",
         )
-        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
-        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
-            type = KeyType.SYSTEM_GUI,
-            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
-            label = "toggle_smartbar_visibility",
-        )
 
         /** Predefined key data for [KeyCode.IME_SHOW_UI] */
         val IME_SHOW_UI = TextKeyData(
@@ -488,6 +485,24 @@ class TextKeyData(
             label = "voice_input",
         )
 
+        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
+        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
+            label = "toggle_smartbar_visibility",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_ACTIONS_OVERFLOW] */
+        val TOGGLE_ACTIONS_OVERFLOW = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_ACTIONS_OVERFLOW,
+            label = "toggle_actions_overflow",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_ACTIONS_EDITOR] */
+        val TOGGLE_ACTIONS_EDITOR = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_ACTIONS_EDITOR,
+            label = "toggle_actions_editor",
+        )
         /** Predefined key data for [KeyCode.TOGGLE_INCOGNITO_MODE] */
         val TOGGLE_INCOGNITO_MODE = TextKeyData(
             type = KeyType.UNSPECIFIED,

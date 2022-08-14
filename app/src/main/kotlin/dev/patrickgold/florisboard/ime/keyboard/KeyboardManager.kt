@@ -21,7 +21,10 @@ import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -90,6 +93,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     val resources = KeyboardManagerResources()
     val activeState = KeyboardState.new()
+    var smartbarVisibleDynamicActionsCount by mutableStateOf(0)
 
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion: Int = 1
@@ -649,6 +653,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
             KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
                 prefs.smartbar.enabled.let { it.set(!it.get()) }
+            }
+            KeyCode.TOGGLE_ACTIONS_OVERFLOW -> {
+                activeState.isActionsOverflowVisible = !activeState.isActionsOverflowVisible
+            }
+            KeyCode.TOGGLE_ACTIONS_EDITOR -> {
+                activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
             KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS

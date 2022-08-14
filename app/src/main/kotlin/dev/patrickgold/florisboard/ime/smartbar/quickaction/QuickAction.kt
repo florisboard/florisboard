@@ -41,6 +41,9 @@ sealed class QuickAction {
         override fun onPointerUp(context: Context) {
             val keyboardManager by context.keyboardManager()
             keyboardManager.inputEventDispatcher.sendUp(data)
+            if (!keyboardManager.inputEventDispatcher.isRepeatable(data)) {
+                keyboardManager.activeState.isActionsOverflowVisible = false
+            }
         }
 
         override fun onPointerCancel(context: Context) {

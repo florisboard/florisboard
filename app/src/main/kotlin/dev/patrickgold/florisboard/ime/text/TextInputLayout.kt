@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowMenu
 import dev.patrickgold.florisboard.keyboardManager
 
 @Composable
@@ -38,6 +39,7 @@ fun TextInputLayout(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
+    val activeState by keyboardManager.observeActiveState()
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -47,7 +49,11 @@ fun TextInputLayout(
                 .wrapContentHeight(),
         ) {
             Smartbar()
-            TextKeyboardLayout(evaluator = evaluator)
+            if (activeState.isActionsOverflowVisible) {
+                QuickActionsOverflowMenu()
+            } else {
+                TextKeyboardLayout(evaluator = evaluator)
+            }
         }
     }
 }

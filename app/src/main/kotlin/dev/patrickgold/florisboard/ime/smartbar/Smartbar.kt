@@ -130,6 +130,9 @@ fun Smartbar() {
 @Composable
 private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
     val sharedActionsExpanded by prefs.smartbar.sharedActionsExpanded.observeAsState()
@@ -144,7 +147,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun SharedActionsToggle() {
         IconButton(
-            onClick = { prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded) },
+            onClick = {
+                if (/* was */ sharedActionsExpanded) {
+                    keyboardManager.activeState.isActionsOverflowVisible = false
+                }
+                prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
+            },
         ) {
             Box(
                 modifier = Modifier

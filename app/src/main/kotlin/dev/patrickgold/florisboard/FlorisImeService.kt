@@ -386,6 +386,10 @@ class FlorisImeService : LifecycleInputMethodService() {
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = false
+        activeState.batchEdit {
+            activeState.isActionsOverflowVisible = false
+            activeState.isActionsEditorVisible = false
+        }
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
@@ -551,7 +555,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {
-            keyboardManager.activeState.layoutDirection = layoutDirection
+            if (keyboardManager.activeState.layoutDirection != layoutDirection) {
+                keyboardManager.activeState.layoutDirection = layoutDirection
+            }
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggSurface(

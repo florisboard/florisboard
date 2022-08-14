@@ -294,8 +294,11 @@ class NlpManager(context: Context) {
 
     private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
         if (prefs.smartbar.enabled.get() && prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
-            if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()) {
-                return // We do not auto switch if a repeatable action key was last pressed
+            if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()
+                || keyboardManager.activeState.isActionsOverflowVisible
+            ) {
+                return // We do not auto switch if a repeatable action key was last pressed or if the actions overflow
+                       // menu is visible to prevent annoying UI changes
             }
             val isSelection = editorInstance.activeContent.selection.isSelectionMode
             val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
