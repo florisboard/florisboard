@@ -33,7 +33,7 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
 
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Exit text editing panel.</string>
     <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Toggle the state of the one-handed mode.</string>
@@ -43,6 +43,44 @@
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo button to reverse the last action</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo button to reverse the last Undo</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">If visible, indicates that private mode is active. When clicked, shows info about the private mode.</string>
+    <string name="quick_action__arrow_up">Arrow up</string>
+    <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
+    <string name="quick_action__arrow_down">Arrow down</string>
+    <string name="quick_action__arrow_down__tooltip">Perform arrow down</string>
+    <string name="quick_action__arrow_left">Arrow left</string>
+    <string name="quick_action__arrow_left__tooltip">Perform arrow left</string>
+    <string name="quick_action__arrow_right">Arrow right</string>
+    <string name="quick_action__arrow_right__tooltip">Perform arrow right</string>
+    <string name="quick_action__clipboard_clear_primary_clip">Clear primary clipboard clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Perform clear primary clipboard clip</string>
+    <string name="quick_action__clipboard_copy">Clipboard copy</string>
+    <string name="quick_action__clipboard_copy__tooltip">Perform clipboard copy</string>
+    <string name="quick_action__clipboard_cut">Clipboard cut</string>
+    <string name="quick_action__clipboard_cut__tooltip">Perform clipboard cut</string>
+    <string name="quick_action__clipboard_paste">Clipboard paste</string>
+    <string name="quick_action__clipboard_paste__tooltip">Perform clipboard paste</string>
+    <string name="quick_action__clipboard_select_all">Clipboard select all</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Perform clipboard select all</string>
+    <string name="quick_action__ime_ui_mode_clipboard">Clipboard</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Open clipboard history</string>
+    <string name="quick_action__ime_ui_mode_media">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
+    <string name="quick_action__settings">Settings</string>
+    <string name="quick_action__settings__tooltip">Open settings</string>
+    <string name="quick_action__undo">Undo</string>
+    <string name="quick_action__undo__tooltip">Undo the last input</string>
+    <string name="quick_action__redo">Redo</string>
+    <string name="quick_action__redo__tooltip">Redo the last input</string>
+    <string name="quick_action__toggle_actions_overflow">More actions</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Show or hide the more </string>
+    <string name="quick_action__toggle_incognito_mode">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Toggle incognito mode</string>
+    <string name="quick_action__toggle_autocorrect">Autocorrect</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Toggle autocorrect</string>
+    <string name="quick_action__voice_input">Voice input</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Open voice input provider</string>
+    <string name="quick_action__one_handed_mode">One-handed</string>
+    <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
 
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Settings</string>
