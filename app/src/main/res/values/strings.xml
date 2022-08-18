@@ -72,7 +72,7 @@
     <string name="quick_action__redo">Redo</string>
     <string name="quick_action__redo__tooltip">Redo the last input</string>
     <string name="quick_action__toggle_actions_overflow">More actions</string>
-    <string name="quick_action__toggle_actions_overflow__tooltip">Show or hide the more </string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Show or hide additional actions</string>
     <string name="quick_action__toggle_incognito_mode">Incognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Toggle incognito mode</string>
     <string name="quick_action__toggle_autocorrect">Autocorrect</string>

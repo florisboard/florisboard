@@ -76,15 +76,15 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
             FlorisImeUi.ExtractedLandscapeInputAction -> R.string.snygg__rule_element__extracted_landscape_input_action
             FlorisImeUi.GlideTrail -> R.string.snygg__rule_element__glide_trail
             FlorisImeUi.OneHandedPanel -> R.string.snygg__rule_element__one_handed_panel
-            FlorisImeUi.SmartbarPrimaryRow -> R.string.snygg__rule_element__smartbar_primary_row
-            FlorisImeUi.SmartbarSecondaryRow -> R.string.snygg__rule_element__smartbar_secondary_row
-            FlorisImeUi.SmartbarPrimaryActionsToggle -> R.string.snygg__rule_element__smartbar_primary_actions_toggle
-            FlorisImeUi.SmartbarSecondaryActionsToggle -> R.string.snygg__rule_element__smartbar_secondary_actions_toggle
-            FlorisImeUi.SmartbarQuickAction -> R.string.snygg__rule_element__smartbar_quick_action
-            FlorisImeUi.SmartbarKey -> R.string.snygg__rule_element__smartbar_key
-            FlorisImeUi.SmartbarCandidateWord -> R.string.snygg__rule_element__smartbar_candidate_word
-            FlorisImeUi.SmartbarCandidateClip -> R.string.snygg__rule_element__smartbar_candidate_clip
-            FlorisImeUi.SmartbarCandidateSpacer -> R.string.snygg__rule_element__smartbar_candidate_spacer
+            //FlorisImeUi.SmartbarPrimaryRow -> R.string.snygg__rule_element__smartbar_primary_row
+            //FlorisImeUi.SmartbarSecondaryRow -> R.string.snygg__rule_element__smartbar_secondary_row
+            //FlorisImeUi.SmartbarSharedActionsToggle -> R.string.snygg__rule_element__smartbar_primary_actions_toggle
+            //FlorisImeUi.SmartbarExtendedActionsToggle -> R.string.snygg__rule_element__smartbar_secondary_actions_toggle
+            //FlorisImeUi.SmartbarAction -> R.string.snygg__rule_element__smartbar_quick_action
+            //FlorisImeUi.SmartbarKey -> R.string.snygg__rule_element__smartbar_key
+            //FlorisImeUi.SmartbarCandidateWord -> R.string.snygg__rule_element__smartbar_candidate_word
+            //FlorisImeUi.SmartbarCandidateClip -> R.string.snygg__rule_element__smartbar_candidate_clip
+            //FlorisImeUi.SmartbarCandidateSpacer -> R.string.snygg__rule_element__smartbar_candidate_spacer
             FlorisImeUi.SystemNavBar -> R.string.snygg__rule_element__system_nav_bar
             else -> null
         }

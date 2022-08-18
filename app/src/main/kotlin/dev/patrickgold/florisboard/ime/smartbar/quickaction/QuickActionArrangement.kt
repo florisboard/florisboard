@@ -45,8 +45,6 @@ data class QuickActionArrangement(
             dynamicActions = listOf(
                 QuickAction.InsertKey(TextKeyData.UNDO),
                 QuickAction.InsertKey(TextKeyData.REDO),
-                QuickAction.InsertKey(TextKeyData.ARROW_LEFT),
-                QuickAction.InsertKey(TextKeyData.ARROW_RIGHT),
                 QuickAction.InsertKey(TextKeyData.SETTINGS),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_CLIPBOARD),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_MEDIA),
@@ -55,13 +53,15 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.TOGGLE_AUTOCORRECT),
             ),
             hiddenActions = listOf(
+                QuickAction.InsertKey(TextKeyData.ARROW_UP),
+                QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
+                QuickAction.InsertKey(TextKeyData.ARROW_LEFT),
+                QuickAction.InsertKey(TextKeyData.ARROW_RIGHT),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CLEAR_PRIMARY_CLIP),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_COPY),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CUT),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_PASTE),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT_ALL),
-                QuickAction.InsertKey(TextKeyData.ARROW_UP),
-                QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
             ),
         )
     }

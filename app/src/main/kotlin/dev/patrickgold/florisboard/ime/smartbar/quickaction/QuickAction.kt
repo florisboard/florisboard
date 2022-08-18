@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.smartbar.quickaction
 import android.content.Context
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -41,7 +42,7 @@ sealed class QuickAction {
         override fun onPointerUp(context: Context) {
             val keyboardManager by context.keyboardManager()
             keyboardManager.inputEventDispatcher.sendUp(data)
-            if (!keyboardManager.inputEventDispatcher.isRepeatable(data)) {
+            if (!keyboardManager.inputEventDispatcher.isRepeatable(data) && data.code != KeyCode.TOGGLE_ACTIONS_OVERFLOW) {
                 keyboardManager.activeState.isActionsOverflowVisible = false
             }
         }

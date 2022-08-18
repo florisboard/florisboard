@@ -239,6 +239,9 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         KeyCode.REDO -> {
             R.drawable.ic_redo
         }
+        KeyCode.TOGGLE_ACTIONS_OVERFLOW -> {
+            R.drawable.ic_more_horiz
+        }
         KeyCode.TOGGLE_INCOGNITO_MODE -> {
             R.drawable.ic_incognito
         }

@@ -64,30 +64,33 @@
     "foreground": "var(--on-surface)"
   },
 
-  "smartbar-primary-actions-toggle": {
+  "smartbar-shared-actions-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "shape": "circle()",
     "shadow-elevation": "2dp"
   },
-  "smartbar-secondary-actions-toggle": {
+  "smartbar-extended-actions-toggle": {
     "background": "transparent",
     "foreground": "var(--on-surface-variant)",
     "shape": "circle()"
   },
-  "smartbar-quick-action": {
+  "smartbar-action-key": {
     "background": "transparent",
     "foreground": "var(--on-background)",
     "font-size": "18sp",
     "shape": "var(--shape)"
   },
-  "smartbar-quick-action:pressed": {
+  "smartbar-action-key:pressed": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)"
   },
-  "smartbar-quick-action:disabled": {
+  "smartbar-action-key:disabled": {
     "background": "transparent",
     "foreground": "#dcdcdc48"
+  },
+  "smartbar-action-key[code=-242]": {
+    "foreground": "var(--surface-variant)"
   },
   "smartbar-candidate-word": {
     "background": "transparent",

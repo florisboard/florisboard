@@ -335,7 +335,7 @@ private fun TextKeyButton(
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
     val keyStyle = FlorisImeTheme.style.get(
-        element = if (isSmartbarKey) FlorisImeUi.SmartbarKey else FlorisImeUi.Key,
+        element = if (isSmartbarKey) FlorisImeUi.SmartbarActionKey else FlorisImeUi.Key,
         code = key.computedData.code,
         mode = evaluator.state.inputShiftState.value,
         isPressed = key.isPressed && key.isEnabled,

@@ -140,9 +140,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     val shouldAnimate by prefs.smartbar.sharedActionsExpandWithAnimation.observeAsState()
 
-    val primaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryRow)
-    val primaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryActionsToggle)
-    val secondaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryActionsToggle)
+    val smartbarStyle = FlorisImeTheme.style.get(FlorisImeUi.Smartbar)
+    val primaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSharedActionsToggle)
+    val secondaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarExtendedActionsToggle)
 
     @Composable
     fun SharedActionsToggle() {
@@ -212,6 +212,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     modifier = modifier
                         .fillMaxWidth()
                         .height(FlorisImeSizing.smartbarHeight),
+                    elementName = FlorisImeUi.SmartbarSharedActionsRow,
                 )
             }
         }
@@ -267,14 +268,14 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight)
-            .snyggBackground(primaryRowStyle),
+            .snyggBackground(smartbarStyle),
     ) {
         when (smartbarLayout) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
                 CandidatesRow()
             }
             SmartbarLayout.ACTIONS_ONLY -> {
-                QuickActionsRow()
+                QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
             }
             SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED -> {
                 if (!flipToggles) {
@@ -330,7 +331,7 @@ private fun StickyAction() {
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
-    val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryRow)
+    val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarExtendedActionsRow)
     val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
     val background = secondaryRowStyle.background.solidColor().let { color ->
@@ -355,6 +356,7 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight)
                 .background(background),
+            elementName = FlorisImeUi.SmartbarExtendedActionsRow,
         )
     }
 }

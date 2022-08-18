@@ -56,6 +56,12 @@ object FlorisImeSizing {
     fun keyboardUiHeight(): Dp {
         val prefs by florisPreferenceModel()
         val numberRowEnabled by prefs.keyboard.numberRow.observeAsState()
+        return (keyboardRowBaseHeight * (if (numberRowEnabled) 5 else 4))
+    }
+
+    @Composable
+    fun smartbarUiHeight(): Dp {
+        val prefs by florisPreferenceModel()
         val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
         val smartbarLayout by prefs.smartbar.layout.observeAsState()
         val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
@@ -70,8 +76,13 @@ object FlorisImeSizing {
                 }
             } else {
                 0.dp
-            } + (keyboardRowBaseHeight * (if (numberRowEnabled) 5 else 4))
+            }
         return height
+    }
+
+    @Composable
+    fun imeUiHeight(): Dp {
+        return keyboardUiHeight() + smartbarUiHeight()
     }
 
     object Static {

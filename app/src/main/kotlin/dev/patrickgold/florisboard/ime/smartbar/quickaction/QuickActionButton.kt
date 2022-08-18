@@ -63,7 +63,7 @@ fun QuickActionButton(
 
     var isPressed by remember { mutableStateOf(false) }
     val actionStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.SmartbarQuickAction,
+        element = FlorisImeUi.SmartbarActionKey,
         code = action.keyCode(),
         isPressed = isPressed,
     )

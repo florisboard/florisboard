@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
-import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowMenu
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowPanel
 import dev.patrickgold.florisboard.keyboardManager
 
 @Composable
@@ -50,7 +50,7 @@ fun TextInputLayout(
         ) {
             Smartbar()
             if (activeState.isActionsOverflowVisible) {
-                QuickActionsOverflowMenu()
+                QuickActionsOverflowPanel()
             } else {
                 TextKeyboardLayout(evaluator = evaluator)
             }

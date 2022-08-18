@@ -112,40 +112,51 @@ object FlorisImeUiSpec : SnyggSpec({
         border()
     }
 
-    element(FlorisImeUi.SmartbarPrimaryRow) {
+    element(FlorisImeUi.Smartbar) {
         background()
     }
-    element(FlorisImeUi.SmartbarSecondaryRow) {
+    element(FlorisImeUi.SmartbarSharedActionsRow) {
         background()
     }
-    element(FlorisImeUi.SmartbarPrimaryActionsToggle) {
+    element(FlorisImeUi.SmartbarSharedActionsToggle) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarSecondaryActionsToggle) {
+    element(FlorisImeUi.SmartbarExtendedActionsRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarExtendedActionsToggle) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarQuickAction) {
+    element(FlorisImeUi.SmartbarActionKey) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarKey) {
+    element(FlorisImeUi.SmartbarActionTile) {
         background()
         foreground()
-        font()
         shape()
         shadow()
         border()
+    }
+    element(FlorisImeUi.SmartbarActionsOverflowPanel) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarActionsEditorPanel) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarCandidatesRow) {
+        background()
     }
     element(FlorisImeUi.SmartbarCandidateWord) {
         background()

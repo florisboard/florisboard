@@ -79,6 +79,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
 
+    val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
     if (AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()) {
@@ -95,6 +96,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
         Row(
             modifier = modifier
                 .fillMaxSize()
+                .snyggBackground(rowStyle)
                 .then(
                     if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
                         Modifier.florisHorizontalScroll()
