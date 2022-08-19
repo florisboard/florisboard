@@ -43,43 +43,43 @@
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo button to reverse the last action</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo button to reverse the last Undo</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">If visible, indicates that private mode is active. When clicked, shows info about the private mode.</string>
-    <string name="quick_action__arrow_up">Arrow up</string>
+    <string name="quick_action__arrow_up" maxLength="12">Arrow up</string>
     <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
-    <string name="quick_action__arrow_down">Arrow down</string>
+    <string name="quick_action__arrow_down" maxLength="12">Arrow down</string>
     <string name="quick_action__arrow_down__tooltip">Perform arrow down</string>
-    <string name="quick_action__arrow_left">Arrow left</string>
+    <string name="quick_action__arrow_left" maxLength="12">Arrow left</string>
     <string name="quick_action__arrow_left__tooltip">Perform arrow left</string>
-    <string name="quick_action__arrow_right">Arrow right</string>
+    <string name="quick_action__arrow_right" maxLength="12">Arrow right</string>
     <string name="quick_action__arrow_right__tooltip">Perform arrow right</string>
-    <string name="quick_action__clipboard_clear_primary_clip">Clear primary clipboard clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Clear primary clipboard clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Perform clear primary clipboard clip</string>
-    <string name="quick_action__clipboard_copy">Clipboard copy</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Copy</string>
     <string name="quick_action__clipboard_copy__tooltip">Perform clipboard copy</string>
-    <string name="quick_action__clipboard_cut">Clipboard cut</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Cut</string>
     <string name="quick_action__clipboard_cut__tooltip">Perform clipboard cut</string>
-    <string name="quick_action__clipboard_paste">Clipboard paste</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Paste</string>
     <string name="quick_action__clipboard_paste__tooltip">Perform clipboard paste</string>
-    <string name="quick_action__clipboard_select_all">Clipboard select all</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Select all</string>
     <string name="quick_action__clipboard_select_all__tooltip">Perform clipboard select all</string>
-    <string name="quick_action__ime_ui_mode_clipboard">Clipboard</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Clipboard</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Open clipboard history</string>
-    <string name="quick_action__ime_ui_mode_media">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
-    <string name="quick_action__settings">Settings</string>
+    <string name="quick_action__settings" maxLength="12">Settings</string>
     <string name="quick_action__settings__tooltip">Open settings</string>
-    <string name="quick_action__undo">Undo</string>
+    <string name="quick_action__undo" maxLength="12">Undo</string>
     <string name="quick_action__undo__tooltip">Undo the last input</string>
-    <string name="quick_action__redo">Redo</string>
+    <string name="quick_action__redo" maxLength="12">Redo</string>
     <string name="quick_action__redo__tooltip">Redo the last input</string>
-    <string name="quick_action__toggle_actions_overflow">More actions</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">More actions</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Show or hide additional actions</string>
-    <string name="quick_action__toggle_incognito_mode">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Toggle incognito mode</string>
-    <string name="quick_action__toggle_autocorrect">Autocorrect</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorrect</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Toggle autocorrect</string>
-    <string name="quick_action__voice_input">Voice input</string>
+    <string name="quick_action__voice_input" maxLength="12">Voice input</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Open voice input provider</string>
-    <string name="quick_action__one_handed_mode">One-handed</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">One-handed</string>
     <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
 
     <!-- Settings UI strings -->

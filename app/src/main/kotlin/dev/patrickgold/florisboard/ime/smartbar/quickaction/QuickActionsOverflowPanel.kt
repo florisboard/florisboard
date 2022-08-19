@@ -64,19 +64,22 @@ fun QuickActionsOverflowPanel() {
             .snyggBackground(panelStyle),
     ) {
         LazyVerticalGrid(
-            modifier = Modifier.fillMaxWidth(),
-            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight * 1.8f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight * 2.2f),
         ) {
             items(visibleActions) { action ->
                 QuickActionButton(
                     action = action,
                     evaluator = evaluator,
+                    displayAsTile = true,
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 FlorisButton(
                     onClick = { /*TODO*/ },
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp),
+                    modifier = Modifier.padding(vertical = 8.dp),
                     text = "customize_order_btn",
                 )
             }

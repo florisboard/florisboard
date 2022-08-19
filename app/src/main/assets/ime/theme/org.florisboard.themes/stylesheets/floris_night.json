@@ -92,6 +92,20 @@
   "smartbar-action-key[code=-242]": {
     "foreground": "var(--surface-variant)"
   },
+  "smartbar-action-tile": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "18sp",
+    "shape": "var(--shape)"
+  },
+  "smartbar-action-tile:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
+  "smartbar-action-tile:disabled": {
+    "background": "transparent",
+    "foreground": "#dcdcdc48"
+  },
   "smartbar-candidate-word": {
     "background": "transparent",
     "foreground": "var(--on-background)",
