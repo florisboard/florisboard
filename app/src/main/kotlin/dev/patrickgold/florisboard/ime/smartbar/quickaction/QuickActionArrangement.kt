@@ -51,8 +51,6 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
                 QuickAction.InsertKey(TextKeyData.TOGGLE_INCOGNITO_MODE),
                 QuickAction.InsertKey(TextKeyData.TOGGLE_AUTOCORRECT),
-            ),
-            hiddenActions = listOf(
                 QuickAction.InsertKey(TextKeyData.ARROW_UP),
                 QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
                 QuickAction.InsertKey(TextKeyData.ARROW_LEFT),
@@ -62,6 +60,8 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CUT),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_PASTE),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT_ALL),
+            ),
+            hiddenActions = listOf(
             ),
         )
     }

@@ -89,9 +89,6 @@
     "background": "transparent",
     "foreground": "#dcdcdc48"
   },
-  "smartbar-action-key[code=-242]": {
-    "foreground": "var(--surface-variant)"
-  },
   "smartbar-action-tile": {
     "background": "transparent",
     "foreground": "var(--on-background)",

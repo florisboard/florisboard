@@ -180,7 +180,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         }
                     ),
                     contentDescription = null,
-                    tint = primaryActionsToggleStyle.foreground.solidColor(),
+                    tint = primaryActionsToggleStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
                 )
             }
         }
