@@ -47,7 +47,8 @@ sealed class QuickAction {
         override fun onPointerUp(context: Context) {
             val keyboardManager by context.keyboardManager()
             keyboardManager.inputEventDispatcher.sendUp(data)
-            if (!keyboardManager.inputEventDispatcher.isRepeatable(data) && data.code != KeyCode.TOGGLE_ACTIONS_OVERFLOW) {
+            if (!keyboardManager.inputEventDispatcher.isRepeatable(data) &&
+                data.code != KeyCode.TOGGLE_ACTIONS_OVERFLOW && data.code != KeyCode.CLIPBOARD_SELECT_ALL) {
                 keyboardManager.activeState.isActionsOverflowVisible = false
             }
         }

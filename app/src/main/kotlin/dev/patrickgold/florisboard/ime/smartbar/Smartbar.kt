@@ -310,7 +310,7 @@ private fun StickyAction() {
     val keyboardManager by context.keyboardManager()
 
     val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
-    val evaluator by keyboardManager.activeEvaluator.collectAsState()
+    val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
 
     if (actionArrangement.stickyAction != null) {
         QuickActionButton(

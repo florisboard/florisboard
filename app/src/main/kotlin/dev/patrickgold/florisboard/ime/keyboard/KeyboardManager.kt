@@ -101,6 +101,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val activeEvaluator get() = _activeEvaluator.asStateFlow()
     private val _activeSmartbarEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
     val activeSmartbarEvaluator get() = _activeSmartbarEvaluator.asStateFlow()
+    private val _lastCharactersEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
+    val lastCharactersEvaluator get() = _lastCharactersEvaluator.asStateFlow()
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -185,6 +187,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
             _activeEvaluator.value = computingEvaluator
             _activeSmartbarEvaluator.value = computingEvaluator.asSmartbarQuickActionsEvaluator()
+            if (computingEvaluator.keyboard.mode == KeyboardMode.CHARACTERS) {
+                _lastCharactersEvaluator.value = computingEvaluator
+            }
         }
     }
 

@@ -115,15 +115,6 @@ fun TextKeyboardLayout(
     val glideTypingManager by context.glideTypingManager()
 
     val keyboard = evaluator.keyboard as TextKeyboard
-    val numberRowEnabled by prefs.keyboard.numberRow.observeAsTransformingState { numberRowEnabled ->
-        when (keyboard.mode) {
-            KeyboardMode.CHARACTERS,
-            KeyboardMode.NUMERIC_ADVANCED,
-            KeyboardMode.SYMBOLS,
-            KeyboardMode.SYMBOLS2 -> numberRowEnabled
-            else -> false
-        }
-    }
     val glideEnabledInternal by prefs.glide.enabled.observeAsState()
     val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
         evaluator.state.keyVariation != KeyVariation.PASSWORD
@@ -173,8 +164,7 @@ fun TextKeyboardLayout(
                 if (isSmartbarKeyboard) {
                     FlorisImeSizing.smartbarHeight
                 } else {
-                    FlorisImeSizing.keyboardRowBaseHeight *
-                        keyboard.rowCount.coerceAtLeast(if (numberRowEnabled) 5 else 4)
+                    FlorisImeSizing.keyboardUiHeight()
                 }
             )
             .onGloballyPositioned { coords ->
@@ -240,8 +230,16 @@ fun TextKeyboardLayout(
                 height = FlorisImeSizing.smartbarHeight.toPx()
             } else {
                 width = keyboardWidth / 10f
-                height = FlorisImeSizing.keyboardRowBaseHeight.toPx() *
-                    (if (numberRowEnabled && keyboard.mode != KeyboardMode.CHARACTERS) 1.12f else 1f)
+                height = when (keyboard.mode) {
+                    KeyboardMode.CHARACTERS,
+                    KeyboardMode.NUMERIC_ADVANCED,
+                    KeyboardMode.SYMBOLS,
+                    KeyboardMode.SYMBOLS2 -> {
+                        (FlorisImeSizing.keyboardUiHeight() / keyboard.rowCount)
+                            .coerceAtMost(FlorisImeSizing.keyboardRowBaseHeight * 1.12f).toPx()
+                    }
+                    else -> FlorisImeSizing.keyboardRowBaseHeight.toPx() * keyboard.rowCount
+                }
             }
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)

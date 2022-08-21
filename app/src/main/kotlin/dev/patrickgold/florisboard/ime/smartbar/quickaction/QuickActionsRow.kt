@@ -49,7 +49,7 @@ fun QuickActionsRow(
     val keyboardManager by context.keyboardManager()
 
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
-    val evaluator by keyboardManager.activeEvaluator.collectAsState()
+    val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
 

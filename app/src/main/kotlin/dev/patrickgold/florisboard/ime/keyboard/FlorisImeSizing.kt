@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -33,6 +34,8 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.ViewUtils
@@ -54,9 +57,11 @@ object FlorisImeSizing {
 
     @Composable
     fun keyboardUiHeight(): Dp {
-        val prefs by florisPreferenceModel()
-        val numberRowEnabled by prefs.keyboard.numberRow.observeAsState()
-        return (keyboardRowBaseHeight * (if (numberRowEnabled) 5 else 4))
+        val context = LocalContext.current
+        val keyboardManager by context.keyboardManager()
+        val evaluator by keyboardManager.lastCharactersEvaluator.collectAsState()
+        val rowCount = (evaluator.keyboard as TextKeyboard).rowCount.coerceAtLeast(4)
+        return (keyboardRowBaseHeight * rowCount)
     }
 
     @Composable
