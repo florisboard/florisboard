@@ -120,6 +120,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = `var`("primary")
     }
 
+    FlorisImeUi.IncognitoModeIndicator {
+        foreground = rgbaColor(255, 255, 255, 0.067f)
+    }
+
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)

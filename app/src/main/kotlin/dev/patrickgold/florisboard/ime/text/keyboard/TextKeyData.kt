@@ -505,13 +505,13 @@ class TextKeyData(
         )
         /** Predefined key data for [KeyCode.TOGGLE_INCOGNITO_MODE] */
         val TOGGLE_INCOGNITO_MODE = TextKeyData(
-            type = KeyType.UNSPECIFIED,
+            type = KeyType.FUNCTION,
             code = KeyCode.TOGGLE_INCOGNITO_MODE,
             label = "toggle_incognito_mode",
         )
         /** Predefined key data for [KeyCode.TOGGLE_AUTOCORRECT] */
         val TOGGLE_AUTOCORRECT = TextKeyData(
-            type = KeyType.UNSPECIFIED,
+            type = KeyType.FUNCTION,
             code = KeyCode.TOGGLE_AUTOCORRECT,
             label = "toggle_autocorrect",
         )

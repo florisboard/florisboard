@@ -344,8 +344,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Instellingen taal</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Altijd ingeschakeld op Android 10 vanwege systeembeperkingen</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forceer privémodus</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Schakelt functies uit die werken met uw invoergegevens</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>

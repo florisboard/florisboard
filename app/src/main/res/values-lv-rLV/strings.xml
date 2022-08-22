@@ -357,8 +357,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Iestatījumu valoda</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Atspējo iespēkas, kas darbojas ar ievades datiem</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>

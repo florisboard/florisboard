@@ -36,6 +36,8 @@ object FlorisImeUi {
 
     const val GlideTrail = "glide-trail"
 
+    const val IncognitoModeIndicator = "incognito-mode-indicator"
+
     const val OneHandedPanel = "one-handed-panel"
 
     const val Smartbar = "smartbar"

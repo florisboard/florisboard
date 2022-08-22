@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import android.icu.lang.UCharacter
 import android.view.KeyEvent
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -55,6 +56,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -75,6 +77,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.lang.ref.WeakReference
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
@@ -94,6 +97,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val resources = KeyboardManagerResources()
     val activeState = KeyboardState.new()
     var smartbarVisibleDynamicActionsCount by mutableStateOf(0)
+    private var lastToastReference = WeakReference<Toast>(null)
 
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion: Int = 1
@@ -524,6 +528,29 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * Handles a [KeyCode.TOGGLE_INCOGNITO_MODE] event.
+     */
+    private fun handleToggleIncognitoMode() {
+        prefs.advanced.forceIncognitoModeFromDynamic.set(!prefs.advanced.forceIncognitoModeFromDynamic.get())
+        val newState = !activeState.isIncognitoMode
+        activeState.isIncognitoMode = newState
+        lastToastReference.get()?.cancel()
+        lastToastReference = WeakReference(
+            if (newState) {
+                appContext.showLongToast(
+                    R.string.incognito_mode__toast_after_enabled,
+                    "app_name" to appContext.getString(R.string.floris_app_name),
+                )
+            } else {
+                appContext.showLongToast(
+                    R.string.incognito_mode__toast_after_disabled,
+                    "app_name" to appContext.getString(R.string.floris_app_name),
+                )
+            }
+        )
+    }
+
+    /**
      * Handles a [KeyCode.KANA_SWITCHER] event
      */
     private fun handleKanaSwitch() {
@@ -665,6 +692,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.TOGGLE_ACTIONS_EDITOR -> {
                 activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
+            KeyCode.TOGGLE_INCOGNITO_MODE -> handleToggleIncognitoMode()
             KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
@@ -837,6 +865,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     editorInfo.isRichInputEditor
+                }
+                KeyCode.TOGGLE_INCOGNITO_MODE -> when (prefs.advanced.incognitoMode.get()) {
+                    IncognitoMode.FORCE_OFF, IncognitoMode.FORCE_ON -> false
+                    IncognitoMode.DYNAMIC_ON_OFF -> !editorInfo.imeOptions.flagNoPersonalizedLearning
                 }
                 else -> true
             }

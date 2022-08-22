@@ -236,6 +236,10 @@ object FlorisImeUiSpec : SnyggSpec({
         foreground()
     }
 
+    element(FlorisImeUi.IncognitoModeIndicator) {
+        foreground()
+    }
+
     element(FlorisImeUi.OneHandedPanel) {
         background()
         foreground()

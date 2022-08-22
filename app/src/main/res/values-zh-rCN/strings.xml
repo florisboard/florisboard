@@ -357,8 +357,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">设置语言</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">在启动器中显示应用图标</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">由于系统限制，在安卓 10+ 上始终启用</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">强制隐私模式</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">禁用能够使用您的输入数据的功能</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">关于</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 的应用图标</string>

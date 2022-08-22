@@ -49,7 +49,7 @@ import kotlin.properties.Delegates
  *          |          |     1    |          | Is manual selection mode
  *          |          |    1     |          | Is manual selection mode (start)
  *          |          |   1      |          | Is manual selection mode (end)
- *          |          | 1        |          | Is private mode
+ *          |          | 1        |          | Is incognito mode
  *          |        1 |          |          | Is quick actions overflow visible
  *          |       1  |          |          | Is quick actions editor visible
  *          |    1     |          |          | Is composing enabled
@@ -80,7 +80,7 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         const val F_IS_MANUAL_SELECTION_MODE: ULong =       0x00000800u
         const val F_IS_MANUAL_SELECTION_MODE_START: ULong = 0x00001000u
         const val F_IS_MANUAL_SELECTION_MODE_END: ULong =   0x00002000u
-        const val F_IS_PRIVATE_MODE: ULong =                0x00008000u
+        const val F_IS_INCOGNITO_MODE: ULong =              0x00008000u
         const val F_IS_ACTIONS_OVERFLOW_VISIBLE: ULong =    0x00010000u
         const val F_IS_ACTIONS_EDITOR_VISIBLE: ULong =      0x00020000u
         const val F_IS_COMPOSING_ENABLED: ULong =           0x00100000u
@@ -271,9 +271,9 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         get() = !isSelectionMode
         set(v) { isSelectionMode = !v }
 
-    var isPrivateMode: Boolean
-        get() = getFlag(F_IS_PRIVATE_MODE)
-        set(v) { setFlag(F_IS_PRIVATE_MODE, v) }
+    var isIncognitoMode: Boolean
+        get() = getFlag(F_IS_INCOGNITO_MODE)
+        set(v) { setFlag(F_IS_INCOGNITO_MODE, v) }
 
     var isActionsOverflowVisible: Boolean
         get() = getFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE)

@@ -192,6 +192,10 @@
     "foreground": "var(--primary)"
   },
 
+  "incognito-mode-indicator": {
+    "foreground": "#ffffff11"
+  },
+
   "one-handed-panel": {
     "background": "#1b5e20",
     "foreground": "#eeeeee"

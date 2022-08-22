@@ -273,8 +273,6 @@
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sötét</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Beállítások nyelve</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Kikapcsolja azokat a funkciókat, amelyek a bevitt adataival dolgoznak</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>

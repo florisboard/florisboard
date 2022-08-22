@@ -79,7 +79,6 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ljust</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mörkt</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Visa appikonen i startprogrammet</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Tvinga privatläge</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard appikon</string>

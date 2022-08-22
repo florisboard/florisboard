@@ -358,8 +358,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Bahasa pengaturan</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Tampilkan ikon aplikasi pada peluncur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Selalu diaktifkan di Android 10+ karena pembatasan sistem</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Menonaktifkan fitur-fitur yang bekerja dengan data input Anda</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Tentang</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikon aplikasi FlorisBoard</string>

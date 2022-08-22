@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
@@ -49,6 +50,7 @@ import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
+import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
@@ -68,8 +70,13 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "advanced__show_app_icon",
             default = true,
         )
-        val forcePrivateMode = boolean(
-            key = "advanced__force_private_mode",
+        val incognitoMode = enum(
+            key = "advanced__incognito_mode",
+            default = IncognitoMode.DYNAMIC_ON_OFF,
+        )
+        // Internal pref
+        val forceIncognitoModeFromDynamic = boolean(
+            key = "advanced__force_incognito_mode_from_dynamic",
             default = false,
         )
     }
@@ -667,6 +674,20 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
             -> {
                 entry.transform(rawValue = entry.rawValue.uppercase())
+            }
+
+            // Migrate old private mode force flag as this is a sensitive preference
+            // Keep migration rule until: 0.5 dev cycle
+            "advanced__force_private_mode" -> {
+                if (entry.rawValue.toBoolean()) {
+                    entry.transform(
+                        type = PreferenceType.string(),
+                        key = "advanced__incognito_mode",
+                        rawValue = IncognitoMode.FORCE_ON.toString(),
+                    )
+                } else {
+                    entry.reset()
+                }
             }
 
             // Default: keep entry

@@ -318,8 +318,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Język ustawień</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Pokazuj aplikację w launcherze</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Zawsze włączone na Androidzie 10+ ze względu na ograniczenia systemu</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Wymuś tryb prywatny</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wyłącza funkcje, które działają z twoim danymi, które wpisujesz</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informacje o oprogramowaniu</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikacji FlorisBoard</string>

@@ -82,6 +82,10 @@
     <string name="quick_action__one_handed_mode" maxLength="12">One-handed</string>
     <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
 
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Incognito mode is now enabled\n\n{app_name} will not learn words from your input while this mode is active</string>
+    <string name="incognito_mode__toast_after_disabled">Incognito mode is now disabled by default</string>
+
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Settings</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Try out your setup</string>
@@ -419,8 +423,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Settings language</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Force private mode</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disables features which work with your input data</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Incognito mode</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>
@@ -741,6 +744,13 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
+
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Force off</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Incognito mode will always be disabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Force on</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Incognito mode will always be enabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamically on/off</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Recommended option. Incognito mode will be dynamically enabled or disabled either through the target app\'s passed options or by manually toggling it through the incognito quick action in the Smartbar.</string>
 
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamically play sounds for input events, depending on system settings</string>
     <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Always play sounds for input events, regardless of system settings</string>

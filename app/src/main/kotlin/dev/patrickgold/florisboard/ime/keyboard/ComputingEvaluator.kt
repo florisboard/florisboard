@@ -243,7 +243,11 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
             R.drawable.ic_more_horiz
         }
         KeyCode.TOGGLE_INCOGNITO_MODE -> {
-            R.drawable.ic_incognito
+            if (evaluator.state.isIncognitoMode) {
+                R.drawable.ic_incognito
+            } else {
+                R.drawable.ic_incognito_off
+            }
         }
         KeyCode.TOGGLE_AUTOCORRECT -> {
             R.drawable.ic_font_download
