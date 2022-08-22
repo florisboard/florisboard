@@ -551,6 +551,16 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * Handles a [KeyCode.TOGGLE_AUTOCORRECT] event.
+     */
+    private fun handleToggleAutocorrect() {
+        lastToastReference.get()?.cancel()
+        lastToastReference = WeakReference(
+            appContext.showLongToast("Autocorrect toggle is a placeholder and not yet implemented")
+        )
+    }
+
+    /**
      * Handles a [KeyCode.KANA_SWITCHER] event
      */
     private fun handleKanaSwitch() {
@@ -693,6 +703,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
             KeyCode.TOGGLE_INCOGNITO_MODE -> handleToggleIncognitoMode()
+            KeyCode.TOGGLE_AUTOCORRECT -> handleToggleAutocorrect()
             KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
