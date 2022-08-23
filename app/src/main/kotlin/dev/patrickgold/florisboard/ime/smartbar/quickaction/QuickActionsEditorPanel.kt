@@ -249,7 +249,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .snyggBackground(panelStyle)
+            .snyggBackground(panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
             .snyggClip(panelStyle),
     ) {
         Row(
@@ -263,12 +263,12 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
                 icon = painterResource(R.drawable.ic_keyboard_arrow_left),
-                iconColor = headerStyle.foreground.solidColor(),
+                iconColor = headerStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
             )
             Text(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
-                color = headerStyle.foreground.solidColor(),
+                color = headerStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
                 fontSize = headerStyle.fontSize.spSize(),
                 textAlign = TextAlign.Center,
             )
@@ -364,7 +364,7 @@ private fun Subheader(
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
         text = text,
-        color = style.foreground.solidColor(),
+        color = style.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
         fontWeight = FontWeight.Bold,
         fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )

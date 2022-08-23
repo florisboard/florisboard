@@ -63,34 +63,64 @@
     "foreground": "var(--on-surface)"
   },
 
-  "smartbar-primary-actions-toggle": {
+  "smartbar-shared-actions-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
-    "shape": "circle()"
+    "shape": "circle()",
+    "shadow-elevation": "2dp"
   },
-  "smartbar-secondary-actions-toggle": {
+  "smartbar-extended-actions-toggle": {
     "background": "transparent",
     "foreground": "var(--on-surface-variant)",
     "shape": "circle()"
   },
-  "smartbar-quick-action": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
-    "shape": "circle()"
-  },
-  "smartbar-key": {
+  "smartbar-action-key": {
     "background": "transparent",
     "foreground": "var(--on-background)",
     "font-size": "18sp",
     "shape": "var(--shape)"
   },
-  "smartbar-key:pressed": {
+  "smartbar-action-key:pressed": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)"
   },
-  "smartbar-key:disabled": {
+  "smartbar-action-key:disabled": {
     "background": "transparent",
     "foreground": "#dcdcdc48"
+  },
+  "smartbar-action-tile": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "18sp",
+    "shape": "var(--shape)"
+  },
+  "smartbar-action-tile:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
+  "smartbar-action-tile:disabled": {
+    "background": "transparent",
+    "foreground": "#dcdcdc48"
+  },
+  "smartbar-actions-overflow-customize-button": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "14sp",
+    "shape": "circle()",
+    "shadow-elevation": "2dp"
+  },
+  "smartbar-actions-editor": {
+    "background": "var(--background)",
+    "shape": "rounded-corner(24dp, 24dp, 0dp, 0dp)"
+  },
+  "smartbar-actions-editor-header": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "16sp"
+  },
+  "smartbar-actions-editor-subheader": {
+    "foreground": "var(--on-background)",
+    "font-size": "16sp"
   },
   "smartbar-candidate-word": {
     "background": "transparent",
