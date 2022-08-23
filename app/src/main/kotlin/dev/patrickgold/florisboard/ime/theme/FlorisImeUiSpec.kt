@@ -149,6 +149,14 @@ object FlorisImeUiSpec : SnyggSpec({
         shadow()
         border()
     }
+    element(FlorisImeUi.SmartbarActionsOverflowCustomizeButton) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
     element(FlorisImeUi.SmartbarActionsOverflow) {
         background()
     }

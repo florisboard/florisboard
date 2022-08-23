@@ -218,7 +218,7 @@ fun QuickActionButton(
                 Text(
                     text = action.computeDisplayName(evaluator = evaluator),
                     color = fgColor,
-                    fontSize = if (type == QabType.STATIC_TILE) 10.sp else 14.sp,
+                    fontSize = if (type == QabType.STATIC_TILE) 10.sp else 13.sp,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

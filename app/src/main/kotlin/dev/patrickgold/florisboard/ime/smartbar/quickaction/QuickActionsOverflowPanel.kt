@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -37,8 +38,8 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.snygg.ui.SnyggButton
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -58,6 +59,7 @@ fun QuickActionsOverflowPanel() {
     }
 
     val panelStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsOverflow)
+    val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsOverflowCustomizeButton)
 
     Box(
         modifier = Modifier
@@ -79,10 +81,13 @@ fun QuickActionsOverflowPanel() {
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
-                FlorisButton(
+                SnyggButton(
                     onClick = { keyboardManager.activeState.isActionsEditorVisible = true },
-                    modifier = Modifier.padding(vertical = 8.dp),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .padding(vertical = 8.dp),
                     text = stringRes(R.string.quick_actions_overflow__customize_actions_button),
+                    style = buttonStyle,
                 )
             }
         }

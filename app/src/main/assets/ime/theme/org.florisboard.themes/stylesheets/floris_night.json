@@ -103,6 +103,13 @@
     "background": "transparent",
     "foreground": "#dcdcdc48"
   },
+  "smartbar-actions-overflow-customize-button": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "14sp",
+    "shape": "circle()",
+    "shadow-elevation": "2dp"
+  },
   "smartbar-actions-editor": {
     "background": "var(--background)",
     "shape": "rounded-corner(24dp, 24dp, 0dp, 0dp)"
