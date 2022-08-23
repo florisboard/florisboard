@@ -163,7 +163,7 @@ class NlpManager(context: Context) {
             followingWords = followingWords,
             maxSuggestionCount = maxSuggestionCount,
             allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-            isPrivateSession = false,
+            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
         )
     }
 
@@ -175,7 +175,7 @@ class NlpManager(context: Context) {
                 content = content,
                 maxCandidateCount = 8,
                 allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                isPrivateSession = false,
+                isPrivateSession = keyboardManager.activeState.isIncognitoMode,
             )
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
@@ -232,8 +232,8 @@ class NlpManager(context: Context) {
                 subtype = Subtype.DEFAULT,
                 content = editorInstance.activeContent,
                 maxCandidateCount = 8,
-                allowPossiblyOffensive = false,
-                isPrivateSession = false,
+                allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                isPrivateSession = keyboardManager.activeState.isIncognitoMode,
             )
             val candidates = clipboardCandidates.ifEmpty {
                 buildList {
