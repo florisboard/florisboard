@@ -238,7 +238,7 @@ fun TextKeyboardLayout(
                         (FlorisImeSizing.keyboardUiHeight() / keyboard.rowCount)
                             .coerceAtMost(FlorisImeSizing.keyboardRowBaseHeight * 1.12f).toPx()
                     }
-                    else -> FlorisImeSizing.keyboardRowBaseHeight.toPx() * keyboard.rowCount
+                    else -> FlorisImeSizing.keyboardRowBaseHeight.toPx()
                 }
             }
         }

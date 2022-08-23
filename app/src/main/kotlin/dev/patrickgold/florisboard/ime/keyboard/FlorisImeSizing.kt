@@ -59,8 +59,15 @@ object FlorisImeSizing {
     fun keyboardUiHeight(): Dp {
         val context = LocalContext.current
         val keyboardManager by context.keyboardManager()
-        val evaluator by keyboardManager.lastCharactersEvaluator.collectAsState()
-        val rowCount = (evaluator.keyboard as TextKeyboard).rowCount.coerceAtLeast(4)
+        val evaluator by keyboardManager.activeEvaluator.collectAsState()
+        val lastCharactersEvaluator by keyboardManager.lastCharactersEvaluator.collectAsState()
+        val rowCount = when (evaluator.keyboard.mode) {
+            KeyboardMode.CHARACTERS,
+            KeyboardMode.NUMERIC_ADVANCED,
+            KeyboardMode.SYMBOLS,
+            KeyboardMode.SYMBOLS2 -> lastCharactersEvaluator.keyboard as TextKeyboard
+            else -> evaluator.keyboard as TextKeyboard
+        }.rowCount.coerceAtLeast(4)
         return (keyboardRowBaseHeight * rowCount)
     }
 
