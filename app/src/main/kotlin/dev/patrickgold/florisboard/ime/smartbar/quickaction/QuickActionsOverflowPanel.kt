@@ -31,12 +31,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisButton
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -55,7 +57,7 @@ fun QuickActionsOverflowPanel() {
         actionArrangement.dynamicActions.takeLast(dynamicActionsCountToShow)
     }
 
-    val panelStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsOverflowPanel)
+    val panelStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsOverflow)
 
     Box(
         modifier = Modifier
@@ -73,14 +75,14 @@ fun QuickActionsOverflowPanel() {
                 QuickActionButton(
                     action = action,
                     evaluator = evaluator,
-                    displayAsTile = true,
+                    type = QabType.INTERACTIVE_TILE,
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 FlorisButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { keyboardManager.activeState.isActionsEditorVisible = true },
                     modifier = Modifier.padding(vertical = 8.dp),
-                    text = "customize_order_btn",
+                    text = stringRes(R.string.quick_actions_overflow__customize_actions_button),
                 )
             }
         }

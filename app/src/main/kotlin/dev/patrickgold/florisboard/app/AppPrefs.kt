@@ -167,6 +167,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_touch_boundaries",
             default = false,
         )
+        val showDragAndDropHelpers = boolean(
+            key = "devtools__show_drag_and_drop_helpers",
+            default = false,
+        )
     }
 
     val dictionary = Dictionary()

@@ -59,6 +59,10 @@ import kotlin.properties.Delegates
  *      111 |          |          |          | Ime Ui Mode
  *     1    |          |          |          | Layout Direction (0=LTR, 1=RTL)
  *
+ * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
+ * ---------|----------|----------|----------|---------------------------------
+ *        1 |          |          |          | Devtools: Show drag&drop helpers
+ *
  * The resulting structure is only relevant during a runtime lifespan and
  * thus can easily be changed without worrying about destroying some saved state.
  *
@@ -90,6 +94,8 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
         const val F_IS_RTL_LAYOUT_DIRECTION: ULong =        0x08000000u
+
+        const val F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS =      0x01_00_00_00_00_00_00_00uL
 
         const val STATE_ALL_ZERO: ULong =                   0uL
 
@@ -298,4 +304,8 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     var isKanaSmall: Boolean
         get() = getFlag(F_IS_KANA_SMALL)
         set(v) { setFlag(F_IS_KANA_SMALL, v) }
+
+    var debugShowDragAndDropHelpers: Boolean
+        get() = getFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS)
+        set(v) { setFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS, v) }
 }

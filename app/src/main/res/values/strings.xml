@@ -81,6 +81,15 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Open voice input provider</string>
     <string name="quick_action__one_handed_mode" maxLength="12">One-handed</string>
     <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Drag marker</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">None</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">No operation</string>
+    <string name="quick_actions_overflow__customize_actions_button">Reorder actions</string>
+    <string name="quick_actions_editor__header">Customize action order</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Sticky action ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamic actions ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Hidden actions ({n})</string>
 
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Incognito mode is now enabled\n\n{app_name} will not learn words from your input while this mode is active</string>
@@ -572,6 +581,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Outline the key touch boundaries in red</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag&amp;drop helpers</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Render otherwise invisible helpers in drag&amp;drop screens for debugging</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Clear internal user dictionary database</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Clears all words from the dictionary database table</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset \"{flag_name}\" flag</string>

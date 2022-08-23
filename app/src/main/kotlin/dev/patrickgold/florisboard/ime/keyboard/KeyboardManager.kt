@@ -158,6 +158,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
             nlpManager.suggest(subtypeManager.activeSubtype, content)
         }
+        prefs.devtools.enabled.observeForever {
+            reevaluateDebugFlags()
+        }
+        prefs.devtools.showDragAndDropHelpers.observeForever {
+            reevaluateDebugFlags()
+        }
     }
 
     private fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
@@ -784,6 +790,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_START_OF_LINE,
             KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
             else -> onInputKeyUp(data)
+        }
+    }
+
+    private fun reevaluateDebugFlags() {
+        val devtoolsEnabled = prefs.devtools.enabled.get()
+        activeState.batchEdit {
+            activeState.debugShowDragAndDropHelpers = devtoolsEnabled && prefs.devtools.showDragAndDropHelpers.get()
         }
     }
 

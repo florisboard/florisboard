@@ -37,6 +37,7 @@ sealed class QuickAction {
 
     open fun onPointerCancel(context: Context) = Unit
 
+    @Serializable
     @SerialName("insert_key")
     data class InsertKey(val data: KeyData) : QuickAction() {
         override fun onPointerDown(context: Context) {
@@ -59,6 +60,7 @@ sealed class QuickAction {
         }
     }
 
+    @Serializable
     @SerialName("insert_text")
     data class InsertText(val data: String) : QuickAction() {
         override fun onPointerUp(context: Context) {
@@ -96,6 +98,12 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             KeyCode.VOICE_INPUT -> R.string.quick_action__voice_input
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> R.string.quick_action__one_handed_mode
+            KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
+                R.string.quick_action__drag_marker
+            } else {
+                R.string.general__empty_string
+            }
+            KeyCode.NOOP -> R.string.quick_action__noop
             else -> R.string.general__invalid_fatal
         })
         is QuickAction.InsertText -> data
@@ -126,6 +134,12 @@ fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
             KeyCode.VOICE_INPUT -> R.string.quick_action__voice_input__tooltip
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> R.string.quick_action__one_handed_mode__tooltip
+            KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
+                R.string.quick_action__drag_marker__tooltip
+            } else {
+                R.string.general__empty_string
+            }
+            KeyCode.NOOP -> R.string.quick_action__noop__tooltip
             else -> R.string.general__invalid_fatal
         })
         is QuickAction.InsertText -> "Insert text '$data'"

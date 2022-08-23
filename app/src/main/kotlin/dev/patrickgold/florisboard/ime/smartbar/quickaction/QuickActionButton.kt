@@ -17,12 +17,10 @@
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -38,17 +36,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -62,38 +57,49 @@ import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.snygg.ui.shape
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 
 private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
+private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)
+
+enum class QabType {
+    INTERACTIVE_BUTTON,
+    INTERACTIVE_TILE,
+    STATIC_TILE;
+}
 
 @Composable
 fun QuickActionButton(
     action: QuickAction,
     evaluator: ComputingEvaluator,
     modifier: Modifier = Modifier,
-    displayAsTile: Boolean = false,
+    type: QabType = QabType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isEnabled = evaluator.evaluateEnabled(action.keyData())
+    val isEnabled = type == QabType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
+    val element = when (type) {
+        QabType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
+        else -> FlorisImeUi.SmartbarActionTile
+    }
     // We always need to know both state's styles to animate smoothly
     val actionStyleNotPressed = FlorisImeTheme.style.get(
-        element = if (displayAsTile) FlorisImeUi.SmartbarActionTile else FlorisImeUi.SmartbarActionKey,
+        element = element,
         code = action.keyData().code,
         isPressed = false,
         isDisabled = !isEnabled,
     )
     val actionStylePressed = FlorisImeTheme.style.get(
-        element = if (displayAsTile) FlorisImeUi.SmartbarActionTile else FlorisImeUi.SmartbarActionKey,
+        element = element,
         code = action.keyData().code,
         isPressed = true,
         isDisabled = !isEnabled,
@@ -111,6 +117,15 @@ fun QuickActionButton(
         },
         animationSpec = BackgroundAnimationSpec,
     )
+    val fgColor = when (action.keyData().code) {
+        KeyCode.DRAG_MARKER -> {
+            DebugHelperColor
+        }
+        else -> {
+            actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+        }
+    }
+    val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f
 
     // Need to manually cancel an action if this composable suddenly leaves the composition to prevent the key from
     // being stuck in the pressed state
@@ -122,7 +137,7 @@ fun QuickActionButton(
         }
     }
 
-    val tooltipModifier = if (!displayAsTile) {
+    val tooltipModifier = if (type == QabType.INTERACTIVE_BUTTON) {
         Modifier.tooltip(action.computeTooltip(evaluator))
     } else {
         Modifier
@@ -131,6 +146,7 @@ fun QuickActionButton(
     Box(
         modifier = modifier
             .aspectRatio(1f)
+            .alpha(fgAlpha)
             .snyggShadow(actionStyle)
             .snyggBorder(actionStyle)
             .background(bgColor, actionStyle.shape.shape())
@@ -141,7 +157,7 @@ fun QuickActionButton(
                     awaitPointerEventScope {
                         val down = awaitFirstDown()
                         down.consume()
-                        if (isEnabled) {
+                        if (isEnabled && type != QabType.STATIC_TILE) {
                             val press = PressInteraction.Press(down.position)
                             interactionSource.tryEmit(press)
                             action.onPointerDown(context)
@@ -164,7 +180,10 @@ fun QuickActionButton(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             // Render foreground
-            Box(modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.5f)) {
+            Box(
+                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.5f),
+                contentAlignment = Alignment.Center,
+            ) {
                 when (action) {
                     is QuickAction.InsertKey -> {
                         val (iconResId, label) = remember(action, evaluator) {
@@ -174,30 +193,32 @@ fun QuickActionButton(
                             Icon(
                                 painter = painterResource(id = iconResId),
                                 contentDescription = null,
-                                tint = actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                                tint = fgColor,
                             )
                         } else if (label != null) {
                             Text(
                                 text = label,
-                                color = actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                                color = fgColor,
                             )
                         }
                     }
                     is QuickAction.InsertText -> {
                         Text(
                             text = action.data.firstOrNull().toString().ifBlank { "?" },
-                            color = actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                            color = fgColor,
+                            fontSize = 16.sp,
                         )
                     }
                 }
             }
 
             // Render additional info if this is a tile
-            if (displayAsTile) {
+            if (type != QabType.INTERACTIVE_BUTTON) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = action.computeDisplayName(evaluator = evaluator),
-                    color = actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                    color = fgColor,
+                    fontSize = if (type == QabType.STATIC_TILE) 10.sp else 14.sp,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

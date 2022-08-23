@@ -103,6 +103,19 @@
     "background": "transparent",
     "foreground": "#dcdcdc48"
   },
+  "smartbar-actions-editor": {
+    "background": "var(--background)",
+    "shape": "rounded-corner(24dp, 24dp, 0dp, 0dp)"
+  },
+  "smartbar-actions-editor-header": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "16sp"
+  },
+  "smartbar-actions-editor-subheader": {
+    "foreground": "var(--on-background)",
+    "font-size": "16sp"
+  },
   "smartbar-candidate-word": {
     "background": "transparent",
     "foreground": "var(--on-background)",

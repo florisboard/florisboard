@@ -149,11 +149,21 @@ object FlorisImeUiSpec : SnyggSpec({
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarActionsOverflowPanel) {
+    element(FlorisImeUi.SmartbarActionsOverflow) {
         background()
     }
-    element(FlorisImeUi.SmartbarActionsEditorPanel) {
+    element(FlorisImeUi.SmartbarActionsEditor) {
         background()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarActionsEditorHeader) {
+        background()
+        foreground()
+        font()
+    }
+    element(FlorisImeUi.SmartbarActionsEditorSubheader) {
+        foreground()
+        font()
     }
     element(FlorisImeUi.SmartbarCandidatesRow) {
         background()

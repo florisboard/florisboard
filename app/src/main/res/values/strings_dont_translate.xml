@@ -10,6 +10,7 @@
     <string name="florisboard__character_key_codes_url" translatable="false">https://unicode-table.com/en</string>
 
     <string name="general__system_string_placeholder" translatable="false">%s</string>
+    <string name="general__empty_string" translatable="false"/>
     <string name="general__invalid_fatal" translatable="false">!! invalid !!</string>
 
     <string name="key__view_characters" translatable="false">ABC</string>

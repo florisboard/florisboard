@@ -118,6 +118,8 @@ object KeyCode {
     const val CURRENCY_SLOT_6 =             -806
 
     const val MULTIPLE_CODE_POINTS =        -902
+    const val DRAG_MARKER =                 -991
+    const val NOOP =                        -999
 
     const val CHAR_WIDTH_SWITCHER =        -9701
     const val CHAR_WIDTH_FULL =            -9702

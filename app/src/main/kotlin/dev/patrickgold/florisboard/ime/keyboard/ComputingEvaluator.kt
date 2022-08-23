@@ -272,6 +272,12 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         KeyCode.CHAR_WIDTH_HALF -> {
             R.drawable.ic_keyboard_char_width_switcher_half
         }
+        KeyCode.DRAG_MARKER -> {
+            if (evaluator.state.debugShowDragAndDropHelpers) R.drawable.ic_close else null
+        }
+        KeyCode.NOOP -> {
+            R.drawable.ic_close
+        }
         else -> null
     }
 }
