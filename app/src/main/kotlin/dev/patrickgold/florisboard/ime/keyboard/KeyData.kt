@@ -130,7 +130,7 @@ class CaseSelector(
     val upper: AbstractKeyData,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return (if (evaluator.activeState().isUppercase) { upper } else { lower }).compute(evaluator)
+        return (if (evaluator.state.isUppercase) { upper } else { lower }).compute(evaluator)
     }
 
     override fun asString(isForDisplay: Boolean): String {
@@ -175,7 +175,7 @@ class ShiftStateSelector(
     val default: AbstractKeyData? = null,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return when (evaluator.activeState().inputShiftState) {
+        return when (evaluator.state.inputShiftState) {
             InputShiftState.UNSHIFTED -> unshifted ?: default
             InputShiftState.SHIFTED_MANUAL -> shiftedManual ?: shifted ?: default
             InputShiftState.SHIFTED_AUTOMATIC -> shiftedAutomatic ?: shifted ?: default
@@ -224,7 +224,7 @@ data class VariationSelector(
     val password: AbstractKeyData? = null,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return when (evaluator.activeState().keyVariation) {
+        return when (evaluator.state.keyVariation) {
             KeyVariation.ALL -> default
             KeyVariation.EMAIL_ADDRESS -> email ?: default
             KeyVariation.NORMAL -> normal ?: default
@@ -262,7 +262,7 @@ class LayoutDirectionSelector(
     val rtl: AbstractKeyData,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val isRtl = evaluator.activeState().layoutDirection == LayoutDirection.Rtl
+        val isRtl = evaluator.state.layoutDirection == LayoutDirection.Rtl
         return (if (isRtl) { rtl } else { ltr }).compute(evaluator)
     }
 
@@ -294,7 +294,7 @@ class CharWidthSelector(
     val half: AbstractKeyData?,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val data = if (evaluator.activeState().isCharHalfWidth) { half } else { full }
+        val data = if (evaluator.state.isCharHalfWidth) { half } else { full }
         return data?.compute(evaluator)
     }
 
@@ -326,7 +326,7 @@ class KanaSelector(
     val kata: AbstractKeyData,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val data = if (evaluator.activeState().isKanaKata) { kata } else { hira }
+        val data = if (evaluator.state.isKanaKata) { kata } else { hira }
         return data.compute(evaluator)
     }
 

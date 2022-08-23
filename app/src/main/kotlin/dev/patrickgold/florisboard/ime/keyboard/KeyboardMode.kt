@@ -27,7 +27,8 @@ enum class KeyboardMode(val value: Int) {
     PHONE(6),
     PHONE2(7),
     SMARTBAR_CLIPBOARD_CURSOR_ROW(8),
-    SMARTBAR_NUMBER_ROW(9);
+    SMARTBAR_NUMBER_ROW(9),
+    SMARTBAR_QUICK_ACTIONS(10);
 
     companion object {
         fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: CHARACTERS

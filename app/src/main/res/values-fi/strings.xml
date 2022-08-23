@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Paina emojia pitkään poistaaksesi sen tästä näkymästä!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Poistettu {emoji} viimeaikaisista emojeista</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Toimintojen pikavaihto. Painettaessa vaihtaa sanaehdotusten ja pikatoimintopainikkeiden välillä.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Poistu tekstinmuokkauspaneelista.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Ota käyttöön tai poista käytöstä yksikätinen tila.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Avaa asetukset.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Näytä tekstinmuokkauspaneeli.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Vaihda mediansyöttönäkymään.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Kumoa viimeisin toiminto</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Tee kumottu toiminto uudelleen</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Yksityistila on aktiivinen, jos tämä on näkyvillä. Klikatessa näytetään tietoa yksityistilasta.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Asetukset</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testaa asetuksiasi</string>
@@ -203,11 +194,8 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Älypalkki</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ota älypalkki käyttöön</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Näkyy näppäimistön yläpuolella</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Riviasetus</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ensisijaiset toiminnot</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automaattinen laajennus/tiivistäminen</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Toissijaiset toiminnot</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Näyt toissijaisten toimintojen rivi</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automaattinen laajennus/tiivistäminen</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Näyt toissijaisten toimintojen rivi</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Syöttäminen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
@@ -298,8 +286,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Asetusten kieli</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Näytä sovellus sovellusvalikossa</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Aina käytössä Android 10+ järjestelmän rajoituksien vuoksi</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Pakota yksityinen tila</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Poista käytöstä toiminnot, jotka käyttävät syöttämiäsi tietoja</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Tietoa</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoardin kuvake</string>
@@ -487,11 +473,10 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Pois päältä</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Vasemman käden tila</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Oikean käden tila</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Ensisijaisen rivin yläpuolella</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja sovelluksen väliin</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Ensisijaisen rivin alapuolella</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja näppäimistön väliin</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Pikatoiminnot</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Ensisijaisen rivin yläpuolella</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja sovelluksen väliin</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Ensisijaisen rivin alapuolella</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Asettaa toissijaisen rivin ensisijaisen rivin ja näppäimistön väliin</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Lisäasetukset</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Kehittäjä</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Kaikki ominaisuudet näytetään; ominaisuudet ja säännöt näytetään niinkuin tyylisäännöstötiedostoon on tallennettuna.</string>

@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Profi tipp: nyomjon hosszan a mostanában használt emojikra, hogy eltávolítsa őket ebből a nézetből!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} eltávolítva a mostanában használt emojik közül</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Gyors műveletváltás. Ha le van nyomva, vált a szójavaslatok és a gyors műveletgombok között.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Kilépés a szövegszerkesztő panelből.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Bekapcsolja az egykezes módot.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Beállítások megnyitása.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Váltás szövegszerkesztő panelre.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Váltás média bemeneti nézetre.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Visszavonás gomb visszavonja az előző műveletet</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Mégis gomb újra megteszi a visszavont műveletet</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ha látható, azt mutatja, hogy aktív a privát mód. Ha rákattint, információt jelenít meg a privát módról.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Beállítások</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Próbálja ki a beállításait</string>
@@ -121,10 +112,6 @@
     <string name="snygg__rule_element__clipboard_item">Vágólap elem</string>
     <string name="snygg__rule_element__glide_trail">Csúszási nyomvonal</string>
     <string name="snygg__rule_element__one_handed_panel">Egykezes panel</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Okossáv elsődleges sor</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Okossáv másodlagos sor</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Okossáv gyors művelet</string>
-    <string name="snygg__rule_element__smartbar_key">Okossáv gomb</string>
     <string name="snygg__rule_selector__pressed">Lenyomott</string>
     <string name="snygg__rule_selector__focus">Fókuszált</string>
     <string name="snygg__rule_selector__disabled">Letiltott</string>
@@ -202,12 +189,9 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Sorelrendezés</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Elsődleges műveletek</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatikus kinyitás/becsukás</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automatkusan kinyitja becsukja az elsődleges műveletsávot a jelenlegi állapotnak megfelelően</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Másodlagos műveletek</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatikus kinyitás/becsukás</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automatkusan kinyitja becsukja az elsődleges műveletsávot a jelenlegi állapotnak megfelelően</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Javaslatok megjelenítési módja</string>
@@ -276,8 +260,6 @@
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sötét</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Beállítások nyelve</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Kikapcsolja azokat a funkciókat, amelyek a bevitt adataival dolgoznak</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>
@@ -521,16 +503,13 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ki</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Balkezes mód</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Jobbkezes mód</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Elsődleges sor felett</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Elsődleges sor alatt</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Másodlagos sor elhelyezése az elsődleges sor és a billentyűzet között</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Elsődleges sor felett</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Elsődleges sor alatt</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Másodlagos sor elhelyezése az elsődleges sor és a billentyűzet között</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Felső kezdet</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Felső vég</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Alsó vég</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Gyors műveletek</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Vágólap kurzor eszközök</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Sor a leggyakrabban használt vágólap és kurzormozgató eszközökkel</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Alap</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Haladó</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Fejlesztő</string>

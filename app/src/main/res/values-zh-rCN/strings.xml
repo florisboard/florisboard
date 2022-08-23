@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">提示：长按最近使用的表情符号可以将它从这里移除。</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">已将 {emoji} 从最近使用的表情符号中移除</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">快捷操作切换。按下后，将在字词建议和快捷操作之间切换。</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">退出文字编辑面板。</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">切换单手模式状态。</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">打开设置。</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">切换到文字编辑面板。</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">切换到媒体输入界面。</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">撤销键，取消上一操作</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">恢复键，复原上一撤销</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">如果可见，表明隐私模式已开启。点击后，显示隐私模式的相关信息 。</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">设置</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">试用您的配置</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">横向输入框操作</string>
     <string name="snygg__rule_element__glide_trail">滑动轨迹</string>
     <string name="snygg__rule_element__one_handed_panel">单手面板</string>
-    <string name="snygg__rule_element__smartbar_primary_row">智能栏主要行</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">智能栏次要行</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">智能栏主要操作开关按钮</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">智能栏次要操作开关按钮</string>
-    <string name="snygg__rule_element__smartbar_quick_action">智能栏快捷操作</string>
-    <string name="snygg__rule_element__smartbar_key">智能栏按键</string>
     <string name="snygg__rule_element__smartbar_candidate_word">智能栏候选词</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">将显示在键盘顶部</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">翻转开关按钮位置</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">翻转操作栏开关按钮位置</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">行布局</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">主要操作</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠主要操作行</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">次要操作</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">显示次要操作行</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠主要操作行</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">显示次要操作行</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">键入</string>
     <string name="pref__suggestion__title" comment="Preference group title">建议</string>
@@ -360,8 +342,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">设置语言</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">在启动器中显示应用图标</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">由于系统限制，在安卓 10+ 上始终启用</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">强制隐私模式</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">禁用能够使用您的输入数据的功能</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">关于</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 的应用图标</string>
@@ -650,20 +630,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">关闭</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">左手模式</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">右手模式</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">主要行上方</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">将次要行放置在应用界面和主要行之间</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">主要行下方</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">将次要行放置在主要行和键盘文本之间</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">将次要行作为应用界面上的叠加层显示，而不影响键盘 UI 高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">主要行上方</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">将次要行放置在应用界面和主要行之间</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">主要行下方</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">将次要行放置在主要行和键盘文本之间</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">将次要行作为应用界面上的叠加层显示，而不影响键盘 UI 高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">顶部起始</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">顶部末尾</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">底部末尾</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">底部起始</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">快捷操作</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">一行快捷操作按钮，可重新排列，带有溢出菜单</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">剪贴板光标工具</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">一行最常用的剪贴板和光标移动工具</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">基本</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">仅显示颜色属性，属性和规则显示翻译。</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">高级</string>

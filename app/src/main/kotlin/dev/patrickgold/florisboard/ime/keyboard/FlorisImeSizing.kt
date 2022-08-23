@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -31,7 +32,10 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.ViewUtils
@@ -53,24 +57,44 @@ object FlorisImeSizing {
 
     @Composable
     fun keyboardUiHeight(): Dp {
+        val context = LocalContext.current
+        val keyboardManager by context.keyboardManager()
+        val evaluator by keyboardManager.activeEvaluator.collectAsState()
+        val lastCharactersEvaluator by keyboardManager.lastCharactersEvaluator.collectAsState()
+        val rowCount = when (evaluator.keyboard.mode) {
+            KeyboardMode.CHARACTERS,
+            KeyboardMode.NUMERIC_ADVANCED,
+            KeyboardMode.SYMBOLS,
+            KeyboardMode.SYMBOLS2 -> lastCharactersEvaluator.keyboard as TextKeyboard
+            else -> evaluator.keyboard as TextKeyboard
+        }.rowCount.coerceAtLeast(4)
+        return (keyboardRowBaseHeight * rowCount)
+    }
+
+    @Composable
+    fun smartbarUiHeight(): Dp {
         val prefs by florisPreferenceModel()
-        val numberRowEnabled by prefs.keyboard.numberRow.observeAsState()
         val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-        val secondaryRowEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-        val secondaryRowExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-        val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
+        val smartbarLayout by prefs.smartbar.layout.observeAsState()
+        val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
+        val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
         val height =
             if (smartbarEnabled) {
-                if (secondaryRowEnabled && secondaryRowExpanded &&
-                    secondaryRowPlacement != SecondaryRowPlacement.OVERLAY_APP_UI) {
+                if (smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED && extendedActionsExpanded &&
+                    extendedActionsPlacement != ExtendedActionsPlacement.OVERLAY_APP_UI) {
                     smartbarHeight * 2
                 } else {
                     smartbarHeight
                 }
             } else {
                 0.dp
-            } + (keyboardRowBaseHeight * (if (numberRowEnabled) 5 else 4))
+            }
         return height
+    }
+
+    @Composable
+    fun imeUiHeight(): Dp {
+        return keyboardUiHeight() + smartbarUiHeight()
     }
 
     object Static {

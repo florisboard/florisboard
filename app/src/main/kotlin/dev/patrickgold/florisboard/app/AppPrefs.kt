@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
@@ -32,8 +33,9 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
@@ -48,6 +50,7 @@ import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
+import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
@@ -67,8 +70,13 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "advanced__show_app_icon",
             default = true,
         )
-        val forcePrivateMode = boolean(
-            key = "advanced__force_private_mode",
+        val incognitoMode = enum(
+            key = "advanced__incognito_mode",
+            default = IncognitoMode.DYNAMIC_ON_OFF,
+        )
+        // Internal pref
+        val forceIncognitoModeFromDynamic = boolean(
+            key = "advanced__force_incognito_mode_from_dynamic",
             default = false,
         )
     }
@@ -157,6 +165,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val showKeyTouchBoundaries = boolean(
             key = "devtools__show_touch_boundaries",
+            default = false,
+        )
+        val showDragAndDropHelpers = boolean(
+            key = "devtools__show_drag_and_drop_helpers",
             default = false,
         )
     }
@@ -525,45 +537,38 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__enabled",
             default = true,
         )
+        val layout = enum(
+            key = "smartbar__layout",
+            default = SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED,
+        )
+        val actionArrangement = custom(
+            key = "smartbar__action_arrangement",
+            default = QuickActionArrangement.Default,
+            serializer = QuickActionArrangement.Serializer,
+        )
         val flipToggles = boolean(
             key = "smartbar__flip_toggles",
             default = false,
         )
-        val primaryActionsExpanded = boolean(
-            key = "smartbar__primary_actions_expanded",
+        val sharedActionsExpanded = boolean(
+            key = "smartbar__shared_actions_expanded",
             default = false,
         )
-        val primaryActionsRowType = enum(
-            key = "smartbar__primary_actions_row_type",
-            default = SmartbarRowType.QUICK_ACTIONS,
-        )
-        val primaryActionsAutoExpandCollapse = boolean(
-            key = "smartbar__primary_actions_auto_expand_collapse",
+        val sharedActionsAutoExpandCollapse = boolean(
+            key = "smartbar__shared_actions_auto_expand_collapse",
             default = true,
         )
-        val primaryActionsExpandWithAnimation = boolean(
-            key = "smartbar__primary_actions_expand_with_animation",
+        val sharedActionsExpandWithAnimation = boolean(
+            key = "smartbar__shared_actions_expand_with_animation",
             default = true,
         )
-        val secondaryActionsEnabled = boolean(
-            key = "smartbar__secondary_actions_enabled",
-            default = true,
-        )
-        val secondaryActionsExpanded = boolean(
-            key = "smartbar__secondary_actions_expanded",
+        val extendedActionsExpanded = boolean(
+            key = "smartbar__extended_actions_expanded",
             default = false,
         )
-        val secondaryActionsPlacement = enum(
-            key = "smartbar__secondary_actions_placement",
-            default = SecondaryRowPlacement.ABOVE_PRIMARY,
-        )
-        val secondaryActionsRowType = enum(
-            key = "smartbar__secondary_actions_row_type",
-            default = SmartbarRowType.CLIPBOARD_CURSOR_TOOLS,
-        )
-        val quickActions = string(
-            key = "smartbar__quick_actions",
-            default = "[]",
+        val extendedActionsPlacement = enum(
+            key = "smartbar__extended_actions_placement",
+            default = ExtendedActionsPlacement.ABOVE_CANDIDATES,
         )
     }
 
@@ -673,6 +678,20 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
             -> {
                 entry.transform(rawValue = entry.rawValue.uppercase())
+            }
+
+            // Migrate old private mode force flag as this is a sensitive preference
+            // Keep migration rule until: 0.5 dev cycle
+            "advanced__force_private_mode" -> {
+                if (entry.rawValue.toBoolean()) {
+                    entry.transform(
+                        type = PreferenceType.string(),
+                        key = "advanced__incognito_mode",
+                        rawValue = IncognitoMode.FORCE_ON.toString(),
+                    )
+                } else {
+                    entry.reset()
+                }
             }
 
             // Default: keep entry

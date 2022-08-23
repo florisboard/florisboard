@@ -67,6 +67,8 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
+private val CandidatesRowScrollbarHeight = 2.dp
+
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
@@ -79,13 +81,14 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
 
+    val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
     if (AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()) {
         Row(
             modifier = modifier
                 .fillMaxSize()
-                .florisHorizontalScroll(),
+                .florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight),
         ) {
             for (inlineSuggestion in inlineSuggestions) {
                 InlineSuggestionView(inlineSuggestion = inlineSuggestion)
@@ -95,9 +98,10 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
         Row(
             modifier = modifier
                 .fillMaxSize()
+                .snyggBackground(rowStyle)
                 .then(
                     if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
-                        Modifier.florisHorizontalScroll()
+                        Modifier.florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
                     } else {
                         Modifier
                     }

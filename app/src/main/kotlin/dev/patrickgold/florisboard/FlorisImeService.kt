@@ -76,6 +76,8 @@ import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
+import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
+import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
@@ -87,8 +89,9 @@ import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidInternalR
@@ -385,6 +388,10 @@ class FlorisImeService : LifecycleInputMethodService() {
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = false
+        activeState.batchEdit {
+            activeState.isActionsOverflowVisible = false
+            activeState.isActionsEditorVisible = false
+        }
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
@@ -464,16 +471,18 @@ class FlorisImeService : LifecycleInputMethodService() {
         val visibleTopY = inputWindowView.height - inputViewSize.height
         val needAdditionalOverlay =
             prefs.smartbar.enabled.get() &&
-                prefs.smartbar.secondaryActionsEnabled.get() &&
-                prefs.smartbar.secondaryActionsExpanded.get() &&
-                prefs.smartbar.secondaryActionsPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI &&
+                prefs.smartbar.layout.get() == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED &&
+                prefs.smartbar.extendedActionsExpanded.get() &&
+                prefs.smartbar.extendedActionsPlacement.get() == ExtendedActionsPlacement.OVERLAY_APP_UI &&
                 keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
 
         outInsets.contentTopInsets = visibleTopY
         outInsets.visibleTopInsets = visibleTopY
         outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
         val left = 0
-        val top = visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
+        val top = if (keyboardManager.activeState.isBottomSheetShowing()) { 0 } else {
+            visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
+        }
         val right = inputViewSize.width
         val bottom = inputWindowView.height
         outInsets.touchableRegion.set(left, top, right, bottom)
@@ -533,6 +542,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                             }
                             ImeUi()
                         }
+                        BottomSheetHostUi()
                         SystemUiIme()
                     }
                 }
@@ -550,7 +560,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {
-            keyboardManager.activeState.layoutDirection = layoutDirection
+            if (keyboardManager.activeState.layoutDirection != layoutDirection) {
+                keyboardManager.activeState.layoutDirection = layoutDirection
+            }
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggSurface(

@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica profissional: pressione e segure os emojis usados ​​recentemente para removê-los desta visualização novamente!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Removido dos emojis usados ​​recentemente</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alternar ação rápida. Se pressionado, alterna entre as sugestões de palavra e os botões de ação rápida.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Sair do painel de edição de texto.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Alternar estado do modo uma mão.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Abrir configurações.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Mudar para painel de edição de texto.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para visualização de entrada de mídia.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botão de desfazer para reverter a última ação</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botão de refazer para reverter a última ação desfeita</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Se visível, indica que o modo privado está ativo. Quando clicado, mostra informações sobre o modo privado.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Configurações</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Experimente sua configuração</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Ação de entrada do modo paisagem</string>
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternar ações primárias da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternar ações secundárias da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Ação rápida da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte a linha de ação de alternância</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Layout de linha</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ações primárias</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/recolher automaticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/recolhe automaticamente a linha de ação primária com base no estado atual</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ação secundária</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Expandir/recolher automaticamente</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/recolhe automaticamente a linha de ação primária com base no estado atual</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Mostrar linha de ação secundária</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Digitação</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
@@ -360,8 +342,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Idioma das configurações</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone do aplicativo no launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre ativado no Android 10+ devido a restrições do sistema</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forçar o modo privado</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa recursos que funcionam com seus dados de entrada</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do aplicativo FlorisBoard</string>
@@ -650,20 +630,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Desligado</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modo canhoto</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modo destro</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Acima da linha primária</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Coloca a linha secundária entre a UI do aplicativo e a linha primária</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Abaixo da linha primária</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Coloca a linha secundária entre a linha primária e o teclado de texto</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Sobreposição da UI do aplicativo</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição acima da UI do aplicativo, sem afetar a altura da UI do teclado resultante. Observe que este posicionamento pode fazer com que o campo de entrada do aplicativo fique parcialmente coberto</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Acima da linha primária</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Coloca a linha secundária entre a UI do aplicativo e a linha primária</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Abaixo da linha primária</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Coloca a linha secundária entre a linha primária e o teclado de texto</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Sobreposição da UI do aplicativo</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição acima da UI do aplicativo, sem afetar a altura da UI do teclado resultante. Observe que este posicionamento pode fazer com que o campo de entrada do aplicativo fique parcialmente coberto</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Início da parte superior</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Final da parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Final da parte inferior</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Início da parte inferior</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ações rápidas</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Ações rápidas organizáveis ​​em formato de linha com um menu flutuante</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Ferramentas do cursor da área de transferência</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Linha com a área de transferência e as ferramentas de movimento do cursor mais usadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Apenas propriedades de cor são mostradas, propriedades e regras são traduzidas.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>

@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: За да премахнете еможди от този списък задръжте върху него!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Премахнато е {emoji} от последно използваните</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързите действия. При докосване превключва между предложения за въвеждане и бутони за бързи действия.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от режима за промяна на текст.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режим за работа с една ръка.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваря настройките.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Влиза в режим за промяна на текст.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Влиза в режим за въвеждане на медия.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Бутон за отменяне, който връща последното действие</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последното отменено действие</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава че е включен поверителния режим. При докосване показва информация за този режим.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Изпробвайте настройките тук</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие на пейзажно поле за въвеждане</string>
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Интелигентна лента, основен ред</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Интелигентна лента, допълнителен ред</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Интелигентна лента, клавиш за превкл. на основната лента</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Интелигентна лента, клавиш за превкл. на допълнителната лента</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Интелигентна лента, бързи действия</string>
-    <string name="snygg__rule_element__smartbar_key">Клавиш за интелигентната лента</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Интелигентна лента, кандидат за дума</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер на кандидата</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидата</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните, превключващи редовете</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Съдържание на реда</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основни действия</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматично се разтваря/събира основния ред, на базата на състоянието</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Допълнителни действия</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ред с допълнителни действия</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматично се разтваря/събира основния ред, на базата на състоянието</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Ред с допълнителни действия</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
@@ -347,8 +329,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Език на настройките</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Икона на приложението в стартовия панел</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключва обработката на въвежданите от вас данни</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението FlorisBoard</string>
@@ -636,20 +616,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Над първия ред</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Добавя се втори ред между приложението и първия ред</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под първия ред</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Добавя се втори ред между първия ред и клавиатурата</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Слой върху приложението</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Добавя се втори ред като плаващ слой над клавиатурата без да се увеличава височината ѝ. Имайте предвид, че по този начин полето за въвеждане може частично да бъде закрито</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Над първия ред</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Добавя се втори ред между приложението и първия ред</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Под първия ред</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Добавя се втори ред между първия ред и клавиатурата</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Слой върху приложението</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Добавя се втори ред като плаващ слой над клавиатурата без да се увеличава височината ѝ. Имайте предвид, че по този начин полето за въвеждане може частично да бъде закрито</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Долу, начало</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Бързи действия</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Бързите действия, подредени в един ред с допълнително меню</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменти за междинната памет и каретката</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Най-използваните действия с междинната памет и придвижване на каретката</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Основен</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Само цветове, свойствата и правилата са преведени.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Разширен</string>

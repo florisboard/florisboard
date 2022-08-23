@@ -217,6 +217,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
+    implementation(libs.patrickgold.compose.tooltip)
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

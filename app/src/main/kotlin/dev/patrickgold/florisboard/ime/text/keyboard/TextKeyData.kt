@@ -151,6 +151,12 @@ class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
+                VOICE_INPUT,
+                TOGGLE_SMARTBAR_VISIBILITY,
+                TOGGLE_ACTIONS_OVERFLOW,
+                TOGGLE_ACTIONS_EDITOR,
+                TOGGLE_INCOGNITO_MODE,
+                TOGGLE_AUTOCORRECT,
             )
         }
 
@@ -451,12 +457,6 @@ class TextKeyData(
             code = KeyCode.LANGUAGE_SWITCH,
             label = "language_switch",
         )
-        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
-        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
-            type = KeyType.SYSTEM_GUI,
-            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
-            label = "toggle_smartbar_visibility",
-        )
 
         /** Predefined key data for [KeyCode.IME_SHOW_UI] */
         val IME_SHOW_UI = TextKeyData(
@@ -484,6 +484,37 @@ class TextKeyData(
             code = KeyCode.VOICE_INPUT,
             label = "voice_input",
         )
+
+        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
+        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
+            label = "toggle_smartbar_visibility",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_ACTIONS_OVERFLOW] */
+        val TOGGLE_ACTIONS_OVERFLOW = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_ACTIONS_OVERFLOW,
+            label = "toggle_actions_overflow",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_ACTIONS_EDITOR] */
+        val TOGGLE_ACTIONS_EDITOR = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_ACTIONS_EDITOR,
+            label = "toggle_actions_editor",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_INCOGNITO_MODE] */
+        val TOGGLE_INCOGNITO_MODE = TextKeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.TOGGLE_INCOGNITO_MODE,
+            label = "toggle_incognito_mode",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_AUTOCORRECT] */
+        val TOGGLE_AUTOCORRECT = TextKeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.TOGGLE_AUTOCORRECT,
+            label = "toggle_autocorrect",
+        )
     }
 }
 
@@ -504,8 +535,8 @@ class AutoTextKeyData(
                 TextKeyData(type, data.code, data.label, groupId, popup)
             }
         } else {
-            state.recomputeIfNecessary(evaluator.activeSubtype().primaryLocale)
-            if (evaluator.activeState().isUppercase) { state.upper } else { state.lower }
+            state.recomputeIfNecessary(evaluator.subtype.primaryLocale)
+            if (evaluator.state.isUppercase) { state.upper } else { state.lower }
         }
     }
 

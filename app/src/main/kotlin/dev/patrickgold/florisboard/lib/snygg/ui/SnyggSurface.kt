@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalAbsoluteElevation
 import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
@@ -33,7 +32,6 @@ import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
 
 val NoContentPadding = PaddingValues(all = 0.dp)
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SnyggSurface(
     modifier: Modifier = Modifier,

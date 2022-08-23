@@ -120,43 +120,45 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = `var`("primary")
     }
 
+    FlorisImeUi.IncognitoModeIndicator {
+        foreground = rgbaColor(255, 255, 255, 0.067f)
+    }
+
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)
     }
 
-    FlorisImeUi.SmartbarPrimaryRow {
+    FlorisImeUi.Smartbar {
         background = rgbaColor(0, 0, 0, 0f)
     }
-    FlorisImeUi.SmartbarSecondaryRow {
+    FlorisImeUi.SmartbarSharedActionsRow {
         background = rgbaColor(0, 0, 0, 0f)
     }
-    FlorisImeUi.SmartbarPrimaryActionsToggle {
+    FlorisImeUi.SmartbarSharedActionsToggle {
         background = `var`("surface")
         foreground = `var`("onSurface")
         shape = circleShape()
     }
-    FlorisImeUi.SmartbarSecondaryActionsToggle {
+    FlorisImeUi.SmartbarExtendedActionsRow {
+        background = rgbaColor(0, 0, 0, 0f)
+    }
+    FlorisImeUi.SmartbarExtendedActionsToggle {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(144, 144, 144)
         shape = circleShape()
     }
-    FlorisImeUi.SmartbarQuickAction {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(220, 220, 220)
-        shape = circleShape()
-    }
-    FlorisImeUi.SmartbarKey {
+    FlorisImeUi.SmartbarActionKey {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
         fontSize = size(18.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.SmartbarKey(pressedSelector = true) {
+    FlorisImeUi.SmartbarActionKey(pressedSelector = true) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
-    FlorisImeUi.SmartbarKey(disabledSelector = true) {
+    FlorisImeUi.SmartbarActionKey(disabledSelector = true) {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("surface")
     }

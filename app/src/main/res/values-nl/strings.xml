@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Druk lang op recent gebruikte emoji\'s om ze weer uit deze weergave te verwijderen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Snelle actie aan /uit. Schakelt tussen woordsuggesties en de snelle actieknoppen bij het indrukken.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Tekstbewerkingspaneel afsluiten.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Wisselt de toestand van de eenhandige modus.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Open instellingen.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Wissel naar tekstbewerkingspaneel.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Wissel naar media input view.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Knop om de laatste actie ongedaan te maken</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Knop om de vorige \"Ongedaan maken\"-actie terug te zetten</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Geeft aan dat de privémodus actief is wanneer zichtbaar. Toont informatie over de privémodus bij het aanklikken.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Probeer je nieuwe instellingen</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Landschap invoeractie</string>
     <string name="snygg__rule_element__glide_trail">Glijpad</string>
     <string name="snygg__rule_element__one_handed_panel">Paneel met één hand</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Smartbar primaire rij</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secundaire rij</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primaire acties wisselen</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar secundaire acties schakelen</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Smartbar snelle actie</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbar-toets</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar kandidaat woord</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar kandidaat clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar kandidaat spacer</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Schakelknoppen omdraaien</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Wisselt actierij schakelt</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Rij-indeling</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primaire acties</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatisch uitvouwen/samenvouwen</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">De primaire actierij automatisch uitvouwen/samenvouwen op basis van de huidige status</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secundaire acties</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Secundaire actierij weergeven</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatisch uitvouwen/samenvouwen</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">De primaire actierij automatisch uitvouwen/samenvouwen op basis van de huidige status</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Secundaire actierij weergeven</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggesties weergavemodus:</string>
@@ -347,8 +329,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Instellingen taal</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Altijd ingeschakeld op Android 10 vanwege systeembeperkingen</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forceer privémodus</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Schakelt functies uit die werken met uw invoergegevens</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>
@@ -636,20 +616,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Uit</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Linkshandige modus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Rechtshandige modus</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Boven primaire rij</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Plaatst de secundaire rij tussen de app-gebruikersinterface en de primaire rij</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Onder primaire rij</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Plaatst de secundaire rij tussen de primaire rij en het teksttoetsenbord</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">UI van overlay-app</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Plaatst de secundaire rij als een overlay boven de app-UI, zonder de resulterende toetsenbord-UI-hoogte te beïnvloeden. Houd er rekening mee dat deze plaatsing ertoe kan leiden dat het invoerveld van de app gedeeltelijk overtekend is</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Boven primaire rij</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Plaatst de secundaire rij tussen de app-gebruikersinterface en de primaire rij</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Onder primaire rij</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Plaatst de secundaire rij tussen de primaire rij en het teksttoetsenbord</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">UI van overlay-app</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Plaatst de secundaire rij als een overlay boven de app-UI, zonder de resulterende toetsenbord-UI-hoogte te beïnvloeden. Houd er rekening mee dat deze plaatsing ertoe kan leiden dat het invoerveld van de app gedeeltelijk overtekend is</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">De beste</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Onderkant</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Begin onderaan</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Snelle acties</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Instelbare snelle acties in een rij-indeling met een overloopmenu</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Cursorhulpmiddelen voor klembord</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Rij met de meest gebruikte hulpmiddelen voor klembord en cursorbeweging</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Basis</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Alleen kleureigenschappen worden getoond, eigenschappen en regels worden vertaald.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Geavanceerd</string>

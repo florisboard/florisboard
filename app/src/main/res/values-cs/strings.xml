@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tip: Stiskněte a držte prst na naposledy použitých emoji pro jejich odebrání z daného seznamu!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Emoji {emoji} bylo odebráno z nedávno použitých</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Přepínač rychlé akce. Pokud ho podržíte, přepne mezi návrhy na slova a tlačítky rychlé akce.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Opustit editor textu.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Přepnout režim jedné ruky.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otevřít nastavení.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Přepnout na editor textu.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Přepnout na vkládaní médií.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Tlačítko pro vrácení poslední akce</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Tlačítko pro obnovení poslední akce</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Pokud se zobrazuje, je aktivní soukromý režim. Kliknutím zobrazí informace o soukromém režimu.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Nastavení</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Vyzkoušejte své nastavení</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Akce vstupu na šířku</string>
     <string name="snygg__rule_element__glide_trail">Stopa tahu</string>
     <string name="snygg__rule_element__one_handed_panel">Režim jedné ruky</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Primární řádek chytré lišty</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Sekundární řádek chytré lišty</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Primární přepínač akcí chytré lišty</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Sekundární přepínač akcí rychlé lišty</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Rychlá akce chytré lišty</string>
-    <string name="snygg__rule_element__smartbar_key">Klíč chytré lišty</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutá položka v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Přehodit přepínací tlačítka</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Prohodí přepínače řádku akcí</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Rozložení řádku</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primární akce</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozšíření/sbalení</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí primární řádek akcí v závislosti na současném stavu</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Sekundární akce</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozšíření/sbalení</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí primární řádek akcí v závislosti na současném stavu</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Psaní</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
@@ -360,8 +342,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Zakáže funkce, které pracují s vašimi vstupními daty</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>
@@ -649,20 +629,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Vypnuto</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Nad primárním řádkem</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Umístí sekundární řádek mezi rozhraní aplikace a primární řádek</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Pod primárním řádkem</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Umístí sekundární řádek mezi primární řádek a textovou klávesnici</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Překrýt zozhraní aplikace</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Umístí sekundární řádek jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Nad primárním řádkem</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Umístí sekundární řádek mezi rozhraní aplikace a primární řádek</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Pod primárním řádkem</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Umístí sekundární řádek mezi primární řádek a textovou klávesnici</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Překrýt zozhraní aplikace</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Umístí sekundární řádek jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Vpravo nahoře</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Vpravo dole</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Vlevo dole</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Rychlé akce</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Uspořádatelné rychlé akce ve formátu řádku s nabídkou</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Nástroje kurzoru schránky</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Řádek s nejpoužívanějšími nástroji na schránku a pohyb v textu</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Základní</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Jsou zobrazeny pouze vlastnosti barev, vlastnosti a pravidla jsou přeloženy.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Pokročilé</string>

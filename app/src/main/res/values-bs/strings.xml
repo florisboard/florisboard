@@ -23,8 +23,6 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
     <string name="emoji__category__flags" comment="Emoji category name">Zastave</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Izađi iz panela za uređenje teksta.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otvori podešavanja.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Podešavanja</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Pomoć</string>

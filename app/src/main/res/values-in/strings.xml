@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Tekan lama emoji terkini untuk menghapusnya dari tampilan ini!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} terhapus dari emoji terkini</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alihan tindakan cepat. Jika ditekan, akan beralih antara saran-saran kata dan tombol-tombol alihan tindakan cepat.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Keluar dari panel pengeditan teks.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Beralih status dari mode satu tangan.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Buka pengaturan.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Beralih ke panel pengeditan teks.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Beralih ke tampilan masukan media.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Tombol undo untuk membalikkan tindakan terakhir</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Tombol redo untuk membalikkan Undo terakhir</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Jika terlihat, menandakan bahwa mode pribadi aktif. Jika diklik, menampilkan informasi tentang mode pribadi.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Pengaturan</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Coba pengaturan Anda</string>
@@ -148,12 +139,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Tindakan masukan lanskap</string>
     <string name="snygg__rule_element__glide_trail">Jejak geser</string>
     <string name="snygg__rule_element__one_handed_panel">Panel satu-tangan</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Barisan utama smartbar</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Barisan sekunder smartbar</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alih tindakan utama smartbar</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alih tindakan sekunder smartbar</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Tindakan cepat smartbar</string>
-    <string name="snygg__rule_element__smartbar_key">Tombol smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Calon kata smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Calon klip smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Calon pembelah smartbar</string>
@@ -261,12 +246,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas keyboard</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Balikkan tombol alih</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Membalikkan alih baris tindakan</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Tata letak baris</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Tindakan utama</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan status saat ini</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Tindakan sekunder</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Tampilkan baris tindakan sekunder</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Otomatis buka/tutup</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Membuka/menutup baris tindakan utama secara otomatis berdasarkan status saat ini</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Tampilkan baris tindakan sekunder</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Mengetik</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
@@ -361,8 +343,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Bahasa pengaturan</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Tampilkan ikon aplikasi pada peluncur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Selalu diaktifkan di Android 10+ karena pembatasan sistem</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Menonaktifkan fitur-fitur yang bekerja dengan data input Anda</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Tentang</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikon aplikasi FlorisBoard</string>
@@ -650,20 +630,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Mati</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode tangan kiri</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode tangan kanan</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Di atas baris utama</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara UI aplikasi dan baris utama</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Di bawah baris utama</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Menempatkan baris sekunder di antara baris utama dan keyboard teks</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Tampilkan UI aplikasi</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Menempatkan baris sekunder sebagai overlay di atas UI aplikasi, tanpa mempengaruhi ketinggian UI keyboard. Dicatat bahwa penempatannya mungkin membuat kolom input aplikasi sebagian digambar terlalu banyak</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Di atas baris utama</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Menempatkan baris sekunder di antara UI aplikasi dan baris utama</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Di bawah baris utama</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Menempatkan baris sekunder di antara baris utama dan keyboard teks</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Tampilkan UI aplikasi</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Menempatkan baris sekunder sebagai overlay di atas UI aplikasi, tanpa mempengaruhi ketinggian UI keyboard. Dicatat bahwa penempatannya mungkin membuat kolom input aplikasi sebagian digambar terlalu banyak</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Awalan atas</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Akhiran atas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Akhiran bawah</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Awalan bawah</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Tindakan cepat</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Tindakan cepat yang dapat diubah dalam format baris dengan menu luapan</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Alat papan klip kursor</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Barisan dengan alat-alat papan klip dan penggerakan kursor yang sering digunakan</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Dasar</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Hanya properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Tingkat lanjut</string>

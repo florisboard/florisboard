@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Çapemeniya dirêj di demên dawî de emojî bikar anîn da ku wan ji vê nêrînê dîsa rakin!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Rakirin {emoji} ji emojiyên ku di demên dawî de hatine bikaranîn</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Vebijêrka lez. Heke were pêxistin, di navbera pêşniyazên peyvan û bişkojka çalakiya bilez de vedigere.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Ji panela guherîna nivîsan derkeve.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Rewşa moda yek destî veke.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Mîhengan veke.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Berê xwe bide panela guherandina nivîsan.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Biguhere li dîmena têveka medyayê.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Ji bo berevajîkirina çalakiya dawîn bişkojkê veke</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Bişkojka dubare bike ji bo paşvevegerîna Paşîn</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Heke xuya be, nîşan dide ku moda taybet çalak e. Dema hat tikandin, agahdariya der barê moda taybet de nîşan dide.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Mîhengan</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Sazkirina xwe biceribîne</string>
@@ -186,8 +177,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Plansaziya rêzê</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Çalakiyên seretayî</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
@@ -240,7 +229,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Ziman</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Ji ber sînordarkirina pergalê her dem di Android 10+ de çalak e</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya FlorisBoard</string>
@@ -409,12 +397,12 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Girtî</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Moda destê-çepê</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Moda destê-rastê</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">سەرەوە</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕووکەشی بەرنامەکەو ڕیزی یەکەم</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">خوارەوە</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">لەسەروی تەختەکلیل</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">پیشادانی ڕیزی دووەم لەسەروی تەختەکلیلەکە، بەبێ گەورەکردنی قەبارەی تەختەکلیل، لەوانەیە ھەندێ بەش بەباشی دەرنەکەون</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">سەرەوە</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕووکەشی بەرنامەکەو ڕیزی یەکەم</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">خوارەوە</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">لەسەروی تەختەکلیل</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">پیشادانی ڕیزی دووەم لەسەروی تەختەکلیلەکە، بەبێ گەورەکردنی قەبارەی تەختەکلیل، لەوانەیە ھەندێ بەش بەباشی دەرنەکەون</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Bingehîn</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Pêşketî</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Pêşdebir</string>

@@ -11,7 +11,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">ⵜⵉⵖⴰⵡⵙⵉⵡⵉⵏ</string>
     <string name="emoji__category__flags" comment="Emoji category name">ⵉⵛⵏⵢⴰⵍⵏ</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">ⵕⵥⵎ ⵜⵉⵙⵖⴰⵍ.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ⵜⵉⵙⵖⴰⵍ</string>
     <string name="settings__home__title" comment="Title of the Home screen">ⴱⵔⵔⴽ ⴳ {app_name}</string>

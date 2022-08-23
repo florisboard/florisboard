@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -38,6 +39,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,13 +47,17 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.horizontalTween
 import dev.patrickgold.florisboard.lib.compose.verticalTween
@@ -79,27 +85,27 @@ private val NoAnimationTween = tween<Float>(0)
 fun Smartbar() {
     val prefs by florisPreferenceModel()
     val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
-    val secondaryRowPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
+    val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
 
     AnimatedVisibility(
         visible = smartbarEnabled,
         enter = VerticalEnterTransition,
         exit = VerticalExitTransition,
     ) {
-        when (secondaryRowPlacement) {
-            SecondaryRowPlacement.ABOVE_PRIMARY -> {
+        when (extendedActionsPlacement) {
+            ExtendedActionsPlacement.ABOVE_CANDIDATES -> {
                 Column {
                     SmartbarSecondaryRow()
                     SmartbarMainRow()
                 }
             }
-            SecondaryRowPlacement.BELOW_PRIMARY -> {
+            ExtendedActionsPlacement.BELOW_CANDIDATES -> {
                 Column {
                     SmartbarMainRow()
                     SmartbarSecondaryRow()
                 }
             }
-            SecondaryRowPlacement.OVERLAY_APP_UI -> {
+            ExtendedActionsPlacement.OVERLAY_APP_UI -> {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -124,21 +130,29 @@ fun Smartbar() {
 @Composable
 private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
+    val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
-    val primaryActionsExpanded by prefs.smartbar.primaryActionsExpanded.observeAsState()
-    val secondaryActionsEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-    val secondaryActionsExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
+    val sharedActionsExpanded by prefs.smartbar.sharedActionsExpanded.observeAsState()
+    val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
 
-    val shouldAnimate by prefs.smartbar.primaryActionsExpandWithAnimation.observeAsState()
+    val shouldAnimate by prefs.smartbar.sharedActionsExpandWithAnimation.observeAsState()
 
-    val primaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryRow)
-    val primaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarPrimaryActionsToggle)
-    val secondaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryActionsToggle)
+    val smartbarStyle = FlorisImeTheme.style.get(FlorisImeUi.Smartbar)
+    val primaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSharedActionsToggle)
+    val secondaryActionsToggleStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarExtendedActionsToggle)
 
     @Composable
-    fun PrimaryActionsToggle() {
+    fun SharedActionsToggle() {
         IconButton(
-            onClick = { prefs.smartbar.primaryActionsExpanded.set(!primaryActionsExpanded) },
+            onClick = {
+                if (/* was */ sharedActionsExpanded) {
+                    keyboardManager.activeState.isActionsOverflowVisible = false
+                }
+                prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
+            },
         ) {
             Box(
                 modifier = Modifier
@@ -152,7 +166,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             ) {
                 val rotation by animateFloatAsState(
                     animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
-                    targetValue = if (primaryActionsExpanded) 180f else 0f,
+                    targetValue = if (sharedActionsExpanded) 180f else 0f,
                 )
                 Icon(
                     modifier = Modifier
@@ -166,7 +180,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         }
                     ),
                     contentDescription = null,
-                    tint = primaryActionsToggleStyle.foreground.solidColor(),
+                    tint = primaryActionsToggleStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
                 )
             }
         }
@@ -174,7 +188,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun RowScope.CenterContent() {
-        val primaryActionsRowType by prefs.smartbar.primaryActionsRowType.observeAsState()
+        val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -183,27 +197,31 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             val enterTransition = if (shouldAnimate) HorizontalEnterTransition else NoEnterTransition
             val exitTransition = if (shouldAnimate) HorizontalExitTransition else NoExitTransition
             androidx.compose.animation.AnimatedVisibility(
-                visible = !primaryActionsExpanded,
+                visible = !expanded,
                 enter = enterTransition,
                 exit = exitTransition,
             ) {
                 CandidatesRow()
             }
             androidx.compose.animation.AnimatedVisibility(
-                visible = primaryActionsExpanded,
+                visible = expanded,
                 enter = enterTransition,
                 exit = exitTransition,
             ) {
-                SmartbarActionRowContent(rowType = primaryActionsRowType)
+                QuickActionsRow(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(FlorisImeSizing.smartbarHeight),
+                    elementName = FlorisImeUi.SmartbarSharedActionsRow,
+                )
             }
         }
     }
 
     @Composable
-    fun SecondaryActionsToggle() {
+    fun ExtendedActionsToggle() {
         IconButton(
-            onClick = { prefs.smartbar.secondaryActionsExpanded.set(!secondaryActionsExpanded) },
-            enabled = secondaryActionsEnabled,
+            onClick = { prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded) },
         ) {
             Box(
                 modifier = Modifier
@@ -215,40 +233,34 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .snyggBackground(secondaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
-                AnimatedVisibility(
-                    visible = secondaryActionsEnabled,
-                    enter = VerticalEnterTransition,
-                    exit = VerticalExitTransition,
-                ) {
-                    val transition = updateTransition(secondaryActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
-                    val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
-                    val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
-                    // Expanded icon
-                    Icon(
-                        modifier = Modifier
-                            .alpha(alpha)
-                            .rotate(rotation),
-                        painter = painterResource(R.drawable.ic_unfold_less),
-                        contentDescription = null,
-                        tint = secondaryActionsToggleStyle.foreground.solidColor(),
-                    )
-                    // Not expanded icon
-                    Icon(
-                        modifier = Modifier
-                            .alpha(1f - alpha)
-                            .rotate(rotation - 180f),
-                        painter = painterResource(R.drawable.ic_unfold_more),
-                        contentDescription = null,
-                        tint = secondaryActionsToggleStyle.foreground.solidColor(),
-                    )
-                }
+                val transition = updateTransition(extendedActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
+                val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
+                val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
+                // Expanded icon
+                Icon(
+                    modifier = Modifier
+                        .alpha(alpha)
+                        .rotate(rotation),
+                    painter = painterResource(R.drawable.ic_unfold_less),
+                    contentDescription = null,
+                    tint = secondaryActionsToggleStyle.foreground.solidColor(),
+                )
+                // Not expanded icon
+                Icon(
+                    modifier = Modifier
+                        .alpha(1f - alpha)
+                        .rotate(rotation - 180f),
+                    painter = painterResource(R.drawable.ic_unfold_more),
+                    contentDescription = null,
+                    tint = secondaryActionsToggleStyle.foreground.solidColor(),
+                )
             }
         }
     }
 
     SideEffect {
         if (!shouldAnimate) {
-            prefs.smartbar.primaryActionsExpandWithAnimation.set(true)
+            prefs.smartbar.sharedActionsExpandWithAnimation.set(true)
         }
     }
 
@@ -256,53 +268,74 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight)
-            .snyggBackground(primaryRowStyle),
+            .snyggBackground(smartbarStyle),
     ) {
-        if (flipToggles) {
-            SecondaryActionsToggle()
-            CenterContent()
-            PrimaryActionsToggle()
-        } else {
-            PrimaryActionsToggle()
-            CenterContent()
-            SecondaryActionsToggle()
+        when (smartbarLayout) {
+            SmartbarLayout.SUGGESTIONS_ONLY -> {
+                CandidatesRow()
+            }
+            SmartbarLayout.ACTIONS_ONLY -> {
+                QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
+            }
+            SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED -> {
+                if (!flipToggles) {
+                    SharedActionsToggle()
+                    CenterContent()
+                    StickyAction()
+                } else {
+                    StickyAction()
+                    CenterContent()
+                    SharedActionsToggle()
+                }
+            }
+            SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED -> {
+                if (!flipToggles) {
+                    ExtendedActionsToggle()
+                    CenterContent()
+                    StickyAction()
+                } else {
+                    StickyAction()
+                    CenterContent()
+                    ExtendedActionsToggle()
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun SmartbarActionRowContent(
-    rowType: SmartbarRowType,
-    modifier: Modifier = Modifier,
-) {
-    when (rowType) {
-        SmartbarRowType.QUICK_ACTIONS -> {
-            QuickActionsRow(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.smartbarHeight),
-            )
-        }
-        SmartbarRowType.CLIPBOARD_CURSOR_TOOLS -> {
-            SmartbarClipboardCursorRow(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.smartbarHeight),
-            )
-        }
+private fun StickyAction() {
+    val prefs by florisPreferenceModel()
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
+    val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
+    val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
+
+    if (actionArrangement.stickyAction != null) {
+        QuickActionButton(
+            modifier = Modifier.padding(horizontal = 4.dp),
+            action = actionArrangement.stickyAction!!,
+            evaluator = evaluator,
+        )
+    } else {
+        Spacer(
+            modifier = Modifier
+                .padding(horizontal = 4.dp)
+                .aspectRatio(1f),
+        )
     }
 }
 
 @Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
-    val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarSecondaryRow)
-    val secondaryActionsEnabled by prefs.smartbar.secondaryActionsEnabled.observeAsState()
-    val secondaryActionsExpanded by prefs.smartbar.secondaryActionsExpanded.observeAsState()
-    val secondaryActionsRowType by prefs.smartbar.secondaryActionsRowType.observeAsState()
-    val secondaryActionsPlacement by prefs.smartbar.secondaryActionsPlacement.observeAsState()
+    val smartbarLayout by prefs.smartbar.layout.observeAsState()
+    val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarExtendedActionsRow)
+    val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
+    val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
     val background = secondaryRowStyle.background.solidColor().let { color ->
-        if (secondaryActionsPlacement == SecondaryRowPlacement.OVERLAY_APP_UI) {
+        if (extendedActionsPlacement == ExtendedActionsPlacement.OVERLAY_APP_UI) {
             if (color.isUnspecified || color.alpha == 0f) {
                 FlorisImeTheme.style.get(FlorisImeUi.Keyboard).background.solidColor(default = Color.Black)
             } else {
@@ -314,13 +347,16 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     }
 
     AnimatedVisibility(
-        visible = secondaryActionsEnabled && secondaryActionsExpanded,
+        visible = smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED && extendedActionsExpanded,
         enter = VerticalEnterTransition,
         exit = VerticalExitTransition,
     ) {
-        SmartbarActionRowContent(
-            modifier = modifier.background(background),
-            rowType = secondaryActionsRowType,
+        QuickActionsRow(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(FlorisImeSizing.smartbarHeight)
+                .background(background),
+            elementName = FlorisImeUi.SmartbarExtendedActionsRow,
         )
     }
 }

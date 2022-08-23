@@ -23,15 +23,6 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flag</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Hurtighandling skifter. Når trykket på, skiftes der imellem ordforslag og hurtighandlingsknapperne.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Luk tekstændringspanelet.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Skift imellem en-håndstilstand.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Åben indstillinger.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Skift til tekstredigeringspanelet.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Skift til medie-inputstilstand.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Fortrydknap til at gøre den seneste handling om</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Genskabknap til at gøre den seneste fortrydelse om</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Hvis synlig, betyder det privattilstand er aktiveret. Når trykket på, vises info om privattilstand.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Indstillinger</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Hjælp</string>

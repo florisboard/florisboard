@@ -33,16 +33,58 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
 
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Exit text editing panel.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Toggle the state of the one-handed mode.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Open settings.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Switch to text editing panel.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Switch to media input view.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo button to reverse the last action</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo button to reverse the last Undo</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">If visible, indicates that private mode is active. When clicked, shows info about the private mode.</string>
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Arrow up</string>
+    <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
+    <string name="quick_action__arrow_down" maxLength="12">Arrow down</string>
+    <string name="quick_action__arrow_down__tooltip">Perform arrow down</string>
+    <string name="quick_action__arrow_left" maxLength="12">Arrow left</string>
+    <string name="quick_action__arrow_left__tooltip">Perform arrow left</string>
+    <string name="quick_action__arrow_right" maxLength="12">Arrow right</string>
+    <string name="quick_action__arrow_right__tooltip">Perform arrow right</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Clear primary clipboard clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Perform clear primary clipboard clip</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Copy</string>
+    <string name="quick_action__clipboard_copy__tooltip">Perform clipboard copy</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Cut</string>
+    <string name="quick_action__clipboard_cut__tooltip">Perform clipboard cut</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Paste</string>
+    <string name="quick_action__clipboard_paste__tooltip">Perform clipboard paste</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Select all</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Perform clipboard select all</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Clipboard</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Open clipboard history</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
+    <string name="quick_action__settings" maxLength="12">Settings</string>
+    <string name="quick_action__settings__tooltip">Open settings</string>
+    <string name="quick_action__undo" maxLength="12">Undo</string>
+    <string name="quick_action__undo__tooltip">Undo the last input</string>
+    <string name="quick_action__redo" maxLength="12">Redo</string>
+    <string name="quick_action__redo__tooltip">Redo the last input</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">More actions</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Show or hide additional actions</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Toggle incognito mode</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorrect</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Toggle autocorrect</string>
+    <string name="quick_action__voice_input" maxLength="12">Voice input</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Open voice input provider</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">One-handed</string>
+    <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Drag marker</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">None</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">No operation</string>
+    <string name="quick_actions_overflow__customize_actions_button">Reorder actions</string>
+    <string name="quick_actions_editor__header">Customize action order</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Sticky action ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamic actions ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Hidden actions ({n})</string>
+
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Incognito mode is now enabled\n\n{app_name} will not learn words from your input while this mode is active</string>
+    <string name="incognito_mode__toast_after_disabled">Incognito mode is now disabled by default</string>
 
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Settings</string>
@@ -157,13 +199,21 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">Landscape input field</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Landscape input action</string>
     <string name="snygg__rule_element__glide_trail">Glide trail</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Incognito mode indicator</string>
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secondary row</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primary actions toggle</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar secondary actions toggle</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Smartbar quick action</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
+    <string name="snygg__rule_element__smartbar">Smartbar</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Smartbar shared actions row</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Smartbar shared actions toggle</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Smartbar extended actions row</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Smartbar extended actions toggle</string>
+    <string name="snygg__rule_element__smartbar_action_key">Smartbar action key</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Smartbar action tile</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Smartbar actions overflow</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Smartbar actions overflow customize button</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Smartbar actions editor</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Smartbar actions editor header</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Smartbar actions editor subheader</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Smartbar candidates row</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
@@ -274,16 +324,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Layout</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Layout-specific options</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Flip toggle buttons</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Flips action row toggles</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Row layout</string>
-
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Primary actions</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
-
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Secondary actions</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Show secondary action row</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the primary action row based on current state</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Action row placement</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>
@@ -384,8 +431,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Settings language</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Force private mode</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disables features which work with your input data</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Incognito mode</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>
@@ -534,6 +580,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Outline the key touch boundaries in red</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag&amp;drop helpers</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Render otherwise invisible helpers in drag&amp;drop screens for debugging</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Clear internal user dictionary database</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Clears all words from the dictionary database table</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset \"{flag_name}\" flag</string>
@@ -688,6 +736,13 @@
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
 
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Above candidates</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Places the extended actions row between the app UI and the candidate row</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Below candidates</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Places the extended actions row between the candidate row and the text keyboard</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Places the extended actions row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
+
     <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Use vibrator directly</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} directly interacts with the default hardware vibrator. This gives more control over duration and strength of a vibration, but the vibration may not be as smooth and optimized as using the haptic feedback interface</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Use haptic feedback interface</string>
@@ -699,6 +754,13 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
+
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Force off</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Incognito mode will always be disabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Force on</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Incognito mode will always be enabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamically on/off</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Recommended option. Incognito mode will be dynamically enabled or disabled either through the target app\'s passed options or by manually toggling it through the incognito quick action in the Smartbar.</string>
 
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamically play sounds for input events, depending on system settings</string>
     <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Always play sounds for input events, regardless of system settings</string>
@@ -718,22 +780,19 @@
     <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
 
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Above primary row</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Places the secondary row between the app UI and the primary row</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Below primary row</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Places the secondary row between the primary row and the text keyboard</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Places the secondary row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
-
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Bottom end</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Bottom start</string>
 
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Quick actions</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Arrangeable quick actions in a row format with an overflow menu</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Clipboard cursor tools</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Row with most commonly used clipboard and cursor movement tools</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Suggestions only</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Shows only the candidate row, without any action row/toggle or sticky action</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions only</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Shows only the actions row, without the candidate row or an explicit sticky action</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions &amp; Actions shared</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Shared toggleable candidate and actions row, with sticky action</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions &amp; Actions extended</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Static candidate row and additional toggleable action row, with sticky action</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Only color properties are shown, properties and rules are translated.</string>

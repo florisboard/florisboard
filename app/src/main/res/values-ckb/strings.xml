@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">زانیاری: بۆ سڕینەوەی ئیمۆجیەکان لەم بەشەدا کەمێک دەستی لەسەر ڕابگرە.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ئیمۆجی {emoji} لابرا لەلیستی دوایین بەکارهاتووەکان</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">گۆڕینی خێرای کردار. ئەگەر فشارکرا، لە نێوان پێشنیارەکانی ووشە و دوگمەکانی کاری خێرا دا دەگۆڕێت.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">داخستنی بەشی دەستکاریکردنی نووسین</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">شێوازی دۆخی بەکارهێنان بە یەک دەست.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">کردنەوەی ڕێکخستنەکان</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">گۆڕین بۆ ئامرازەکانی دەستکاریکردنی نووسین</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">گۆڕین بۆ دیمەنی دانانی میدیا</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">دوگمە بکەوە بۆ پێچەوانەکردنەوەی دوایین کردار</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">دوگمە دووبارە بکەوە بۆ پێچەوانەکردنەوەی دوایین کردار</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">ئەگەر بینراو بێت، ئەوە نیشان دەدات کە مۆدی تایبەت چالاکە. کاتێک کرتە کرا، زانیاری دەربارەی دۆخی تایبەت پیشان بدە.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ڕێکخستنەکان</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">پیشاندانی تەختەکلیل</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">فرمانی دۆخی ئاسۆیی</string>
     <string name="snygg__rule_element__glide_trail">هێڵی نووسین بەسەریەکەوە</string>
     <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
-    <string name="snygg__rule_element__smartbar_primary_row">ڕەنگی سەرەکی بەشی سەرەوە</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">ڕەنگی دووەمی بەشی سەرەوە</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">فرمانی سەرەکی ئامراز</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">فرمانی دووەمی ئامراز</string>
-    <string name="snygg__rule_element__smartbar_quick_action">فرمانی ئامرەزاکان</string>
-    <string name="snygg__rule_element__smartbar_key">دوگمەی ئامرازەکان</string>
     <string name="snygg__rule_element__smartbar_candidate_word">ڕەنگی نووسینەکانی بەشی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">ڕەنگی ئایکۆنەکانی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">ماوەی نێوان ئامرازەکان</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">پیچەوانەکردنەوەی دوگمەکان</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">پێچەوانەکردنەوەی دوگمەکانی ئامرازەکان</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">ئامرازە سەرەکیەکان</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">خانەی یەکەم</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">خانەی دووەم</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">تەختەکلیل</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
@@ -360,8 +342,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">زمانی بەرنامە</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">پیشاندانی ئایکۆنی بەرنامەکە</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">هەمیشە پیشان ئەدرێ لە ئەندرۆیدی 10 بەرەوسەر</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">چالاککردنی دۆخی تایبەت</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">ناچالاککردنی ئەو تایبەتمەندیانەی پەیوەستن بە پارێزگارییەوە</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">دەربارە</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">پیشاندانی ئایکۆنی بەرنامەکە</string>
@@ -651,20 +631,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">نا چالاک</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">بەکارهێنان بۆ دەستی چەپ</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">بەکارهێنان بۆ دەستی ڕاست</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">لەسەروی ڕیزی یەکەم</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان بەرنامەکە و ڕیزی یەکەم</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">لەخواروی ڕیزی یەکەم</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">لەسەروی بەرنامەکە</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان لەبەشی سەرەوەی بەرنامەکە، بەبێ گۆڕینی قیاسی تەختەکلیل</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">لەسەروی ڕیزی یەکەم</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان بەرنامەکە و ڕیزی یەکەم</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">لەخواروی ڕیزی یەکەم</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">لەسەروی بەرنامەکە</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان لەبەشی سەرەوەی بەرنامەکە، بەبێ گۆڕینی قیاسی تەختەکلیل</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">سەرەتای سەرەوە</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">سەرەتای خوارەوە</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">ئامرازەکانی ڕێکخستن</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">پیشاندانی ئامرازەکانی رێکخستن بەشێوەی سەرەکی</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">ئامرازەکانی دەستکاریکردن</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">پیشاندانی ئامرازەکانی دەستکاریکردن بەشێوەی سەرەکی</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">بنچینەیی</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">تەنیا زانیاری ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">ڕێکخستنی زیاتر</string>

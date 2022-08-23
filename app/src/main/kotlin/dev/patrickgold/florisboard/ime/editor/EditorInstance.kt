@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
@@ -66,6 +67,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
+        activeState.isActionsOverflowVisible = false
+        activeState.isActionsEditorVisible = false
         super.handleStartInputView(editorInfo, isRestart)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
@@ -113,6 +116,13 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 prefs.suggestion.enabled.get()// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
+        }
+        activeState.isIncognitoMode = when (prefs.advanced.incognitoMode.get()) {
+            IncognitoMode.FORCE_OFF -> false
+            IncognitoMode.FORCE_ON -> true
+            IncognitoMode.DYNAMIC_ON_OFF -> {
+                editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.advanced.forceIncognitoModeFromDynamic.get()
+            }
         }
     }
 

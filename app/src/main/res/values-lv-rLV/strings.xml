@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Lietderīgs padoms: ilgs piespiediens uz nesen izmantotajām sajūtu rakstzīmēm noņems tās no šī skata.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} tika noņemta no nesen izmantotajām sajūtu rakstzīmēm</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Ātro darbību pārslēgs. Kad nospiests, pārslēdzas starp vārdu ieteikumiem un ātro darbību pogām.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Iziet no teksta labošanas.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Pārslēgt vienrocīgās ievades stāvokli.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Atvērt iestatījumus.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Pārslēgties uz teksta labošanu.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Pārslēgties uz informācijas nesēju ievades skatu.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Atsaukšanas poga, lai atceltu pēdējo darbību</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Atatsaukšanas poga, lai atcelto pēdējo atsaukšanu</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ja redzams, norāda, ka slepenais stāvoklis ir iespējots. Uzspiežot var aplūkot informāciju par slepeno stāvokli.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Iestatījumi</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Izmēģināt iestatni</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Līmeniskās ievades darbība</string>
     <string name="snygg__rule_element__glide_trail">Slīdēšanas pēdas</string>
     <string name="snygg__rule_element__one_handed_panel">Vienrocīgs panelis</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Viedjoslas galvenā rinda</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Viedjoslas otrējā rinda</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Viedjoslas galveno darbību pārslēgs</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Viedjoslas otrējo darbību pārslēgs</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Viedjoslas ātrā darbība</string>
-    <string name="snygg__rule_element__smartbar_key">Viedjoslas taustiņš</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Viedjoslas ieteikumu vārds</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>
@@ -260,12 +245,9 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Apvērst pārslēgšanas pogas</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Apvērš darbību rindas slēdžus</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Rindas izkārtojums</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Galvenās darbības</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj galveno darbību rindu atbilstoši pašreizējam stāvoklim</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Otrējās darbības</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Rādīt otrējo darbību rindu</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Pašizpildoša izvēršanās/sakļaušana</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Pašizpildoši izvērš/sakļauj galveno darbību rindu atbilstoši pašreizējam stāvoklim</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Rādīt otrējo darbību rindu</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Rakstīšana</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
@@ -360,8 +342,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Iestatījumu valoda</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Atspējo iespēkas, kas darbojas ar ievades datiem</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>
@@ -650,20 +630,16 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Izslēgts</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Ievade ar kreiso roku</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Ievade ar labo roku</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Virs galvenās rindas</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Novieto otrējo rindu starp lietotnes saskarni un galveno rindu</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Zem galvenās rindas</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Novieto otrējo rindu starp galveno rindu un burtu taustiņiem</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Pārklāt lietotnes saskarni</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Novieto otrējo rindu kā pārklājumu virs lietotnes saskarnes, neietekmējot izrietošo tastatūras saskarnes augstumu. Jāņem vērā, ka šis novietojums var izraisīt lietotnes ievades lauka daļēju pārklāšanu</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Virs galvenās rindas</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Novieto otrējo rindu starp lietotnes saskarni un galveno rindu</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Zem galvenās rindas</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Novieto otrējo rindu starp galveno rindu un burtu taustiņiem</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Pārklāt lietotnes saskarni</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Novieto otrējo rindu kā pārklājumu virs lietotnes saskarnes, neietekmējot izrietošo tastatūras saskarnes augstumu. Jāņem vērā, ka šis novietojums var izraisīt lietotnes ievades lauka daļēju pārklāšanu</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Augšas sākums</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Augšas beigas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Apakšas sākums</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Apakšas sākums</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ātrās darbības</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Kārtojamas ātrās darbības rindas veidolā ar uzpeldošu izvēlni</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Starpliktuves rādītāja rīki</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Rinda ar visvairāk izmantotajām starpliktuves un rādītāja kustības rīkiem</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Pamata</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Tiek parādītas tikai krāsu īpašības, īpašības un nosacījumi tiek tulkoti.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Papildus</string>
