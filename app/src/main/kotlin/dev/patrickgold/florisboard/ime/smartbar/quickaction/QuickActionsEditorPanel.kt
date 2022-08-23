@@ -241,6 +241,9 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 hiddenActions.filter { it != NoopAction && it != DragMarkerAction },
             )
             prefs.smartbar.actionArrangement.set(newActionArrangement)
+            if (keyboardManager.activeState.isActionsEditorVisible) {
+                keyboardManager.activeState.isActionsEditorVisible = false
+            }
         }
     }
 
