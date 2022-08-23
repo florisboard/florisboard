@@ -178,6 +178,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     }
 
     fun handleDragGestureChange(posChange: IntOffset) {
+        if (activeDragAction == null) return
         val pos = activeDragPosition + posChange
         activeDragPosition = pos
         val item = findItemForOffset(pos) ?: return
@@ -210,17 +211,19 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     }
 
     fun completeDragGestureAndCleanUp() {
-        val action = activeDragAction ?: return
-        if (stickyAction == DragMarkerAction) {
-            stickyAction = action
-        } else {
-            val i = dynamicActions.indexOf(DragMarkerAction)
-            if (i >= 0) {
-                dynamicActions[i] = action
+        val action = activeDragAction
+        if (action != null) {
+            if (stickyAction == DragMarkerAction) {
+                stickyAction = action
             } else {
-                val j = hiddenActions.indexOf(DragMarkerAction)
-                if (j >= 0) {
-                    hiddenActions[j] = action
+                val i = dynamicActions.indexOf(DragMarkerAction)
+                if (i >= 0) {
+                    dynamicActions[i] = action
+                } else {
+                    val j = hiddenActions.indexOf(DragMarkerAction)
+                    if (j >= 0) {
+                        hiddenActions[j] = action
+                    }
                 }
             }
         }
@@ -233,9 +236,9 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
         onDispose {
             completeDragGestureAndCleanUp()
             val newActionArrangement = QuickActionArrangement(
-                if (stickyAction != NoopAction) stickyAction else null,
-                dynamicActions.filter { it != NoopAction },
-                hiddenActions.filter { it != NoopAction },
+                if (stickyAction != NoopAction && stickyAction != DragMarkerAction) stickyAction else null,
+                dynamicActions.filter { it != NoopAction && it != DragMarkerAction },
+                hiddenActions.filter { it != NoopAction && it != DragMarkerAction },
             )
             prefs.smartbar.actionArrangement.set(newActionArrangement)
         }
