@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica: Um clique longo num emoji utilizado recentemente remove-lo desta lista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} removido da lista de emojis recentes</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alternar ação rápida. Se premida, alterna entre a sugestão de palavras e os botões de ação rápida.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Sair do painel de edição de texto.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Alterna o estado do modo de uma mão.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Abrir definições.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Mudar para o painel de edição de texto.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para a introdução multimédia.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botão para reverter a última ação</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botão para refazer a última ação</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Se visível, indica que o modo privado está ativo. Quando clicado, mostra as informações acerca deste modo.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Definições</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testar configuração</string>

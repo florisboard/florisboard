@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: За да премахнете еможди от този списък задръжте върху него!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Премахнато е {emoji} от последно използваните</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързите действия. При докосване превключва между предложения за въвеждане и бутони за бързи действия.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от режима за промяна на текст.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режим за работа с една ръка.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваря настройките.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Влиза в режим за промяна на текст.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Влиза в режим за въвеждане на медия.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Бутон за отменяне, който връща последното действие</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последното отменено действие</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава че е включен поверителния режим. При докосване показва информация за този режим.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Изпробвайте настройките тук</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие на пейзажно поле за въвеждане</string>
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Интелигентна лента, основен ред</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Интелигентна лента, допълнителен ред</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Интелигентна лента, клавиш за превкл. на основната лента</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Интелигентна лента, клавиш за превкл. на допълнителната лента</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Интелигентна лента, бързи действия</string>
-    <string name="snygg__rule_element__smartbar_key">Клавиш за интелигентната лента</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Интелигентна лента, кандидат за дума</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер на кандидата</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидата</string>

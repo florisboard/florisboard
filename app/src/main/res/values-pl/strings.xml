@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Przytrzymaj ostatnio użyte emoji, aby usunąć je z tego widoku!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Usunięto {emoji} z ostatnio używanych emoji</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Przełącznik szybkich skrótów. Po naciśnięciu przełącza między podpowiedziami słów a przyciskami szybkich skrótów.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Wyjście z panelu edycji tekstu.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Przełącznik trybu jednoręcznego.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otwórz ustawienia.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Przejdź do panelu edycji tekstu.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Przełącz na widok wprowadzania multimediów.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Cofnij ostatnią akcję</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Ponów ostatnio cofniętą akcję</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Jeśli jest widoczny, wskazuje, że tryb prywatny jest aktywny. Po kliknięciu pokazuje informacje o trybie prywatnym.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ustawienia</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Wypróbuj swoją konfigurację</string>
@@ -130,12 +121,6 @@
     <string name="snygg__rule_element__clipboard_item_popup">Popup elementu schowka</string>
     <string name="snygg__rule_element__glide_trail">Ślad ślizgu</string>
     <string name="snygg__rule_element__one_handed_panel">Panel jednoręczny</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Wiersz inteligentnego paska</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Wiersz inteligentnego paska</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Przełącznik podstawowych działań na inteligentnym pasku</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Przełącznik dodatkowych działań na inteligentnym pasku</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Szybkie działanie w inteligentnym pasku</string>
-    <string name="snygg__rule_element__smartbar_key">Klawisz inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Sugestia słowa inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Sugestia schowka inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Sugestia odstępu inteligentnego paska</string>

@@ -29,10 +29,6 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">최근에 사용한 이모지가 없습니다. 이모지를 입력하기 시작하면 여기에 자동으로 표시됩니다.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji}가 최근 사용 기록에서 삭제되었습니다</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">텍스트 수정 패널에서 나갑니다.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">설정을 엽니다.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">텍스트 수정 패널로 전환</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">미디어 입력 보기로 전환</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">설정</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">설정을 사용해 보세요.</string>

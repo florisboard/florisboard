@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">İpucu: Son kullanılan emojileri, geçmişten kaldırmak için emojilerin üstüne uzun bir süre tıklayın!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} son kullanılan emojilerden kaldırıldı</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Hızlı erişim tuşu. Basılı tutarak, kelime önerileri ve hızlı erişim tuşları arasında geçin yapar.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Yazı düzenleme panelinden çık.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Tek el modunu aç-kapa.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Ayarları aç.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Yazı düzenleme paneline dön.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Ortam giriş görünümüne geç.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Son eylemi geri almak için geri al tuşu</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Son eylemi tekrarlamak için</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Gizlilik modu aktif ise görünür. Dokunulduğunda, gizlilk modu hakkında bilgileri gösterir.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ayarlar</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Düzeninizi deneyin</string>
@@ -112,7 +103,6 @@
     <string name="snygg__rule_element__clipboard_item">Pano öğesi</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pano öğesi için açılan pencere</string>
     <string name="snygg__rule_element__emoji_key_tab">Emoji sekmesi</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Smartbar için kısayol</string>
     <string name="snygg__rule_selector__disabled">Kapalı</string>
     <string name="snygg__property_name__width">Genişlik</string>
     <string name="snygg__property_name__height">Yükseklik</string>

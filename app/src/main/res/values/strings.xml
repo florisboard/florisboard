@@ -34,15 +34,6 @@
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
 
     <!-- Quick action strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Exit text editing panel.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Toggle the state of the one-handed mode.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Open settings.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Switch to text editing panel.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Switch to media input view.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo button to reverse the last action</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo button to reverse the last Undo</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">If visible, indicates that private mode is active. When clicked, shows info about the private mode.</string>
     <string name="quick_action__arrow_up" maxLength="12">Arrow up</string>
     <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
     <string name="quick_action__arrow_down" maxLength="12">Arrow down</string>
@@ -208,13 +199,21 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">Landscape input field</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Landscape input action</string>
     <string name="snygg__rule_element__glide_trail">Glide trail</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Incognito mode indicator</string>
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Smartbar primary row</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secondary row</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primary actions toggle</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar secondary actions toggle</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Smartbar quick action</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbar key</string>
+    <string name="snygg__rule_element__smartbar">Smartbar</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Smartbar shared actions row</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Smartbar shared actions toggle</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Smartbar extended actions row</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Smartbar extended actions toggle</string>
+    <string name="snygg__rule_element__smartbar_action_key">Smartbar action key</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Smartbar action tile</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Smartbar actions overflow</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Smartbar actions overflow customize button</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Smartbar actions editor</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Smartbar actions editor header</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Smartbar actions editor subheader</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Smartbar candidates row</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>

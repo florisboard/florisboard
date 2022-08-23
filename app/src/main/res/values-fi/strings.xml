@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Paina emojia pitkään poistaaksesi sen tästä näkymästä!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Poistettu {emoji} viimeaikaisista emojeista</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Toimintojen pikavaihto. Painettaessa vaihtaa sanaehdotusten ja pikatoimintopainikkeiden välillä.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Poistu tekstinmuokkauspaneelista.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Ota käyttöön tai poista käytöstä yksikätinen tila.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Avaa asetukset.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Näytä tekstinmuokkauspaneeli.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Vaihda mediansyöttönäkymään.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Kumoa viimeisin toiminto</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Tee kumottu toiminto uudelleen</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Yksityistila on aktiivinen, jos tämä on näkyvillä. Klikatessa näytetään tietoa yksityistilasta.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Asetukset</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testaa asetuksiasi</string>

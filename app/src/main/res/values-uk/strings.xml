@@ -23,15 +23,6 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Символи</string>
     <string name="emoji__category__flags" comment="Emoji category name">Прапори</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Перемикач швидкої дії. При натисканні перемикає між пропозиціями слів та кнопками швидких дій.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Закрити панель редагування тексту.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Перемикнути режим однієї руки.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Відкрити налаштування.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Перемикнути на панель редагування тексту.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Перемикнути в режим перегляду введення інформації.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Кнопка Назад для відміни останньої дії</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Кнопка Вперед для відміни останнього Назад</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Якщо видно, показує, що приватний режим активний. Коли натиснуто, показує інформацію про приватний режим.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Налаштування</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Довідка</string>

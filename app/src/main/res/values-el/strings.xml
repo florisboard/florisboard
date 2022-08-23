@@ -26,15 +26,6 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Σύμβολα</string>
     <string name="emoji__category__flags" comment="Emoji category name">Σημαίες</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Διακόπτης γρήγορης ενέργειας. Εάν πατηθεί, προκαλεί εναλλαγή μεταξύ των προτάσεων λέξεων και των πλήκτρων γρήγορης ενέργειας.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Έξοδος από την επιφάνεια επεξεργασίας κειμένου.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Εναλλαγή κατάστασης της λειτουργίας ενός χεριού.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Άνοιγμα ρυθμίσεων.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Εναλλαγή στην επιφάνεια επεξεργασίας κειμένου.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Εναλλαγή στην όψη εισαγωγής μέσων.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Πλήκτρο αναίρεσης για αναίρεση της τελευταίας ενέργειας</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Πλήκτρο επαναφοράς για αναίρεση της τελευταίας Αναίρεσης</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Εάν είναι ορατό, υποδεικνύει ότι η ιδιωτική λειτουργία είναι ενεργή. Όταν πατηθεί, εμφανίζει πληροφορίες σχετικά με την ιδιωτική λειτουργία.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ρυθμίσεις</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Δοκιμάστε τις ρυθμίσεις σας</string>

@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseil de pro : appuyez longuement sur les émojis récemment utilisés pour les supprimer à nouveau de cette vue !</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Suppression de {emoji} des emojis récemment utilisés</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Commutateur d\'action rapide. Si vous appuyez dessus, vous basculez entre les suggestions de mots et les boutons d\'action rapide.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Quitter le panneau d\'édition de texte.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Basculer l\'état du mode à une main.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Ouvrir les paramètres.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Passer au panneau d\'édition de texte.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Passez à la fenêtre de saisie des médias.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Bouton pour annuler la dernière action</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Bouton \"Refaire\" pour annuler la dernière annulation</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si visible, indique que le mode privé est actif. Lorsqu\'on clique dessus, affiche des informations à propos du mode privé.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Paramètres</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Essayez votre nouvelle configuration</string>
@@ -145,12 +136,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Action d\'entrée en mode paysage</string>
     <string name="snygg__rule_element__glide_trail">Indicateur de glissement</string>
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Rangée principale de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Rangée secondaire de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Activation des actions primaires de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Activation des actions secondaires de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Action rapides de la barre intelligente</string>
-    <string name="snygg__rule_element__smartbar_key">Touche de barre intelligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
     <string name="snygg__rule_element__system_nav_bar">Barre de navigation du système</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>

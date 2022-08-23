@@ -138,6 +138,7 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarActionKey) {
         background()
         foreground()
+        font()
         shape()
         shadow()
         border()
@@ -145,6 +146,7 @@ object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.SmartbarActionTile) {
         background()
         foreground()
+        font()
         shape()
         shadow()
         border()

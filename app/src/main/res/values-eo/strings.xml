@@ -18,7 +18,6 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Simboloj</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagoj</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Malfermi agordojn.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Agordoj</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Helpo</string>

@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Druk lang op recent gebruikte emoji\'s om ze weer uit deze weergave te verwijderen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Snelle actie aan /uit. Schakelt tussen woordsuggesties en de snelle actieknoppen bij het indrukken.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Tekstbewerkingspaneel afsluiten.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Wisselt de toestand van de eenhandige modus.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Open instellingen.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Wissel naar tekstbewerkingspaneel.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Wissel naar media input view.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Knop om de laatste actie ongedaan te maken</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Knop om de vorige \"Ongedaan maken\"-actie terug te zetten</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Geeft aan dat de privémodus actief is wanneer zichtbaar. Toont informatie over de privémodus bij het aanklikken.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Probeer je nieuwe instellingen</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Landschap invoeractie</string>
     <string name="snygg__rule_element__glide_trail">Glijpad</string>
     <string name="snygg__rule_element__one_handed_panel">Paneel met één hand</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Smartbar primaire rij</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar secundaire rij</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primaire acties wisselen</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar secundaire acties schakelen</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Smartbar snelle actie</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbar-toets</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar kandidaat woord</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar kandidaat clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar kandidaat spacer</string>

@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">提示：长按最近使用的表情符号可以将它从这里移除。</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">已将 {emoji} 从最近使用的表情符号中移除</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">快捷操作切换。按下后，将在字词建议和快捷操作之间切换。</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">退出文字编辑面板。</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">切换单手模式状态。</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">打开设置。</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">切换到文字编辑面板。</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">切换到媒体输入界面。</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">撤销键，取消上一操作</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">恢复键，复原上一撤销</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">如果可见，表明隐私模式已开启。点击后，显示隐私模式的相关信息 。</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">设置</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">试用您的配置</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">横向输入框操作</string>
     <string name="snygg__rule_element__glide_trail">滑动轨迹</string>
     <string name="snygg__rule_element__one_handed_panel">单手面板</string>
-    <string name="snygg__rule_element__smartbar_primary_row">智能栏主要行</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">智能栏次要行</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">智能栏主要操作开关按钮</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">智能栏次要操作开关按钮</string>
-    <string name="snygg__rule_element__smartbar_quick_action">智能栏快捷操作</string>
-    <string name="snygg__rule_element__smartbar_key">智能栏按键</string>
     <string name="snygg__rule_element__smartbar_candidate_word">智能栏候选词</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>

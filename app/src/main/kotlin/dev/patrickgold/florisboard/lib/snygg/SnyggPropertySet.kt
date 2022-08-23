@@ -87,7 +87,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         }
     }
 
-    fun build() = SnyggPropertySet(properties)
+    fun build() = SnyggPropertySet(properties.toMap())
 
     infix fun String.to(v: SnyggValue) {
         properties[this] = v

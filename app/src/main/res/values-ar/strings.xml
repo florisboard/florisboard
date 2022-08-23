@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">نصيحة للمحترفين: الضغط لفترة طويلة على الرموز التعبيرية المستخدمة مؤخرًا لإزالتها من هذا العرض مرة أخرى!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">تمت إزالة {emoji} من الرموز التعبيرية المستخدمة مؤخرًا</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">زر اﻹجراءات السريعة. عند الضغط عليه ، يمكنك التبديل بين اقتراحات الكلمات و أزرار الإجراءات السريعة.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">الخروج من لوحة التعديل النصي.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">تغيير حالة وضع اليد الواحدة.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">فتح الإعدادات.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">الإنتقال إلى لوحة التعديل النصي.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">الإنتقال إلى لوحة إدخال الوسائط.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">زر الإلغاء للرجوع إلى آخر عمل</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">زر الإعادة لعكس آخر إلغاء</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">إذا كان مرئيًا، يشير إلى أن الوضع الخاص نشط. عند النقر فوقه، يظهر معلومات حول الوضع الخاص.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">الإعدادات</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">قم بتجربة اعداداتك</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">مهام الإدخال الأفقي</string>
     <string name="snygg__rule_element__glide_trail">مسار الإنزلاق</string>
     <string name="snygg__rule_element__one_handed_panel">لوحة مفاتيح بيد واحدة</string>
-    <string name="snygg__rule_element__smartbar_primary_row">صف الشريط الذكي الأساسي</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">صف الشريط الذكي الثانوي</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">تبديل الإجراءات الأولية في الشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">تبديل الإجراءات الثانوية في الشريط الذكي</string>
-    <string name="snygg__rule_element__smartbar_quick_action">المهمة السريعة شريط ذكي</string>
-    <string name="snygg__rule_element__smartbar_key">مفتاح الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_word">مرشح كلمة الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">مرشح مقطع الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">مرشح فاصل الشريط الذكي</string>

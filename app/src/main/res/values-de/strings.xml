@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt um diese wieder aus der Ansicht zu entfernen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} wurde aus \"kürzlich verwendeten Emojis\" entfernt</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Schaltet mit einem Klick zwischen Wortvorschlägen und Schnellzugriffsleiste um.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Textbearbeitung verlassen.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Einhandmodus umschalten.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Einstellungen öffnen.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Zur Textbearbeitung wechseln.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Zur Medieneingabe wechseln.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Letzte Aktion rückgängig machen</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Rückgängig gemachte Aktion wiederholen</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Wenn sichtbar, ist der Private Modus aktiv. Wenn angeklickt, werden Informationen über den Privaten Modus angezeigt.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Einstellungen</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Tastaturkonfiguration ausprobieren</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Eingabeaktion im Querformat</string>
     <string name="snygg__rule_element__glide_trail">Bewegungsspur</string>
     <string name="snygg__rule_element__one_handed_panel">Einhändiges Feld</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Smartbar Primärleiste</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Smartbar Sekundärleiste</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Smartbar primäre Aktionszeile Schalter</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Smartbar sekundäre Aktionen umschalten</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Smartbar Schnellzugriff</string>
-    <string name="snygg__rule_element__smartbar_key">Smartbartaste</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar Wortkandidat</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar Kandidatenclip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar Kandidaten-Abstandshalter</string>

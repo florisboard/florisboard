@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro savjet: Dugo držite nedavno korištene emotikone kako bi ste ih uklonili sa popisa nedavno korištenih emotikona!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} je ukonjen iz nedavno korištenih emotikona</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Brza promjena radnje. Pritisnite tipku kako biste odabrali između prijedloga riječi i tipki brze radnje.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Izlaz iz uređivanja rasporeda.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Uključite način za tipkanje jednom rukom.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otvori postavke.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Premjesti se na uređivač teksta.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Prebaci se na pregled unosa media.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Poništi posljednju radnju</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Vratite posljednje poništeno</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ako je ikona vidljiva, privatni način rada je aktivan. Na klik gumba vidite više o privatnom načinu rada.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Postavke</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testirajte svoju postavu</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Radnja unosa u horizontalnom položaju</string>
     <string name="snygg__rule_element__glide_trail">Klizni trag</string>
     <string name="snygg__rule_element__one_handed_panel">Traka jednoručnog načina rada</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Primarni red Smartbara</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Sekundarni red Smartbara</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Uključivanje primarnih radnji Smartbara</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Uključivanje sekundarnih radnji Smartbara</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Brza radnja Smartbara</string>
-    <string name="snygg__rule_element__smartbar_key">Pločica Smartbara</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Preddložena riječ Smartbara</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Predloženi predmet međuspremnika u Smartbaru</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Predloženi predmet razmaka Smartbara</string>

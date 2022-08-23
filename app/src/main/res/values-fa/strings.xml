@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">توصیه کاربردی: روی ایموجی های استفاده شده نگهدارید تا آن ها را از اینجا حذف کنید!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ایموجی {emoji} از ایموجی های اخیرا استفاده شده حذف شد</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">ضامن اقدام سریع. در صورت فشار ، بین پیشنهادات کلمه و دکمه های اقدام سریع جابجا می شود.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">خروج از صفحه ویرایش متن.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">ضامن تغییر حالت یک دستی.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">باز کردن تنظیمات.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">تغییر به صفحه ویرایش متن.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">تغییر به حالت ورودی رسانه.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">دکمه برگرداندن برای برگشتن به انجام آخرین عمل</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">دکمه بازگردانی برای بازگشت به آخرین عمل برگشت داده شده</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">در ضورت قابل مشاهده بودن، نشان میـدهد که حالت خصوصی فعال است. در صورت ضربه روی ان، اطلاعاتی درباره حالت خصوصی نشان می‌دهد.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">کیبوردتان را امتحان کنید</string>

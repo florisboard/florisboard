@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">زانیاری: بۆ سڕینەوەی ئیمۆجیەکان لەم بەشەدا کەمێک دەستی لەسەر ڕابگرە.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ئیمۆجی {emoji} لابرا لەلیستی دوایین بەکارهاتووەکان</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">گۆڕینی خێرای کردار. ئەگەر فشارکرا، لە نێوان پێشنیارەکانی ووشە و دوگمەکانی کاری خێرا دا دەگۆڕێت.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">داخستنی بەشی دەستکاریکردنی نووسین</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">شێوازی دۆخی بەکارهێنان بە یەک دەست.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">کردنەوەی ڕێکخستنەکان</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">گۆڕین بۆ ئامرازەکانی دەستکاریکردنی نووسین</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">گۆڕین بۆ دیمەنی دانانی میدیا</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">دوگمە بکەوە بۆ پێچەوانەکردنەوەی دوایین کردار</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">دوگمە دووبارە بکەوە بۆ پێچەوانەکردنەوەی دوایین کردار</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">ئەگەر بینراو بێت، ئەوە نیشان دەدات کە مۆدی تایبەت چالاکە. کاتێک کرتە کرا، زانیاری دەربارەی دۆخی تایبەت پیشان بدە.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ڕێکخستنەکان</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">پیشاندانی تەختەکلیل</string>
@@ -147,12 +138,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">فرمانی دۆخی ئاسۆیی</string>
     <string name="snygg__rule_element__glide_trail">هێڵی نووسین بەسەریەکەوە</string>
     <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
-    <string name="snygg__rule_element__smartbar_primary_row">ڕەنگی سەرەکی بەشی سەرەوە</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">ڕەنگی دووەمی بەشی سەرەوە</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">فرمانی سەرەکی ئامراز</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">فرمانی دووەمی ئامراز</string>
-    <string name="snygg__rule_element__smartbar_quick_action">فرمانی ئامرەزاکان</string>
-    <string name="snygg__rule_element__smartbar_key">دوگمەی ئامرازەکان</string>
     <string name="snygg__rule_element__smartbar_candidate_word">ڕەنگی نووسینەکانی بەشی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">ڕەنگی ئایکۆنەکانی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">ماوەی نێوان ئامرازەکان</string>

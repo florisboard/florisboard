@@ -30,15 +30,6 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Profi tipp: nyomjon hosszan a mostanában használt emojikra, hogy eltávolítsa őket ebből a nézetből!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} eltávolítva a mostanában használt emojik közül</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Gyors műveletváltás. Ha le van nyomva, vált a szójavaslatok és a gyors műveletgombok között.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Kilépés a szövegszerkesztő panelből.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Bekapcsolja az egykezes módot.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Beállítások megnyitása.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Váltás szövegszerkesztő panelre.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Váltás média bemeneti nézetre.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Visszavonás gomb visszavonja az előző műveletet</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Mégis gomb újra megteszi a visszavont műveletet</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ha látható, azt mutatja, hogy aktív a privát mód. Ha rákattint, információt jelenít meg a privát módról.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Beállítások</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Próbálja ki a beállításait</string>
@@ -121,10 +112,6 @@
     <string name="snygg__rule_element__clipboard_item">Vágólap elem</string>
     <string name="snygg__rule_element__glide_trail">Csúszási nyomvonal</string>
     <string name="snygg__rule_element__one_handed_panel">Egykezes panel</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Okossáv elsődleges sor</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Okossáv másodlagos sor</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Okossáv gyors művelet</string>
-    <string name="snygg__rule_element__smartbar_key">Okossáv gomb</string>
     <string name="snygg__rule_selector__pressed">Lenyomott</string>
     <string name="snygg__rule_selector__focus">Fókuszált</string>
     <string name="snygg__rule_selector__disabled">Letiltott</string>
