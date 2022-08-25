@@ -1,7 +1,7 @@
 <resources>
     <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/florisboard/florisboard/issues</string>
-    <string name="florisboard__privacy_policy_url" translatable="false">https://gist.github.com/patrickgold/a18f1e47468d72f0868afc69d6faaf0b</string>
+    <string name="florisboard__privacy_policy_url" translatable="false">https://florisboard.org/legal/privacy/</string>
     <string name="florisboard__changelog_url" translatable="false">https://github.com/florisboard/florisboard/releases/v{version}</string>
     <string name="florisboard__commit_by_hash_url" translatable="false">https://github.com/florisboard/florisboard/commit/{hash}</string>
     <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/System-spell-checker-service</string>
