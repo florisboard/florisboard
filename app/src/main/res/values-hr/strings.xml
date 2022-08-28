@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nema nedavno korištenih emotikona. Čim ih počnete koristiti, oni će se pojaviti ovdje.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro savjet: Dugo držite nedavno korištene emotikone kako bi ste ih uklonili sa popisa nedavno korištenih emotikona!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} je ukonjen iz nedavno korištenih emotikona</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Postavke</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Testirajte svoju postavu</string>
@@ -189,7 +190,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuk &amp; Vibracija</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Povratna informacija zvukom / Zvukovi</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Omogući zvučnu povratnu informaciju</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Reproduciraj zvuk prilikom događaja unosa koji ovise o sistemskim postavkama</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Razina glasnoće tijekom unosa</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvukovi na pritisak pločice</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Zvukovi na dugi pritisak pločice</string>
@@ -198,7 +198,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Zvukovi prilikom kliznog pokreta</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Povratna vibracija na dodir / Vibracija</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Omogući povratnu vibraciju na dodir</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibriraj prilikom događaja unosa koji su ovisno o sistemskim postavkama</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trajanje vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Jačina vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja nedostaje na ovom uređaju</string>
@@ -217,9 +216,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Prikazivat će se na vrhu tipkovnice</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Obrni raspored gumba</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Obrni redoslijed trake radnje</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatski otvori/zatvori</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automatski otvori/zatvori primarni red radnji ovisno o trenutnom stanju</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Prikaži sekundaru traku radnje</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Piše</string>
     <string name="pref__suggestion__title" comment="Preference group title">Prijedlozi</string>

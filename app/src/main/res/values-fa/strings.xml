@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">ایموجی استفاده شده ای یافت نشد. زمانی که شروع به نوشتن ایموجی ها بکنید به صورت خودکار اینجا ظاهر خواهند شد.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">توصیه کاربردی: روی ایموجی های استفاده شده نگهدارید تا آن ها را از اینجا حذف کنید!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ایموجی {emoji} از ایموجی های اخیرا استفاده شده حذف شد</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">کیبوردتان را امتحان کنید</string>
@@ -61,6 +62,9 @@
     <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">نمی توان زبانی مشابه با \"{search_term}\" یافت.</string>
     <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; انتخاب &#8210;</string>
     <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">زیرنوع های پیش تنظیم شده پیشنهادی</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">هیچ چیز از پیش تنظیم پیشنهادیی وجود ندارد. از دکمه های زیر برای دیدن همه زیرنوع های پیش تنظیم شده استفاده کنید.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">زیرنوع های پیش تنظیم شده</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">نمایش همه</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">به نظر میرسد که هیچگونه زیرگروه دیگری را انتخاب نکرده اید. به همین علت زیرگروه English/QWERTY استفاده خواهد شد!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
@@ -82,6 +86,7 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">انتخاب تم روز</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">انتخاب تم شب</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">مدیریت تم های نصب شده</string>
+    <string name="settings__theme_editor__fine_tune__title">ویرایشگر دقیق</string>
     <string name="settings__theme_editor__fine_tune__level">سطح ویرایشگر</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">رنگ را مانند ... نشان بده</string>
     <string name="settings__theme_editor__add_rule">افزودن قانون</string>
@@ -112,10 +117,17 @@
     <string name="settings__theme_editor__property_value">مقدار ویژگی</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">برای تمام گوشه ها اعمال کن</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">ویرایش متن رنگ</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">پس زمینه شب</string>
+    <string name="snygg__rule_element__defines">متغیرها</string>
+    <string name="snygg__rule_element__key">کلید</string>
+    <string name="snygg__rule_element__key_popup">کلید خود بازشونده</string>
+    <string name="snygg__rule_element__emoji_key">کلید ایموجی</string>
+    <string name="snygg__property_name__font_size">اندازه نوشته</string>
+    <string name="snygg__property_name__font_style">شکل نوشته</string>
+    <string name="snygg__property_name__font_variant">نوع نوشته</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">صداها &amp; لرزش</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">صدای بازخورد / صداها</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">فعالسازی صدای بازخورد</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">پخش صداهایی بخاطر رویداد های ورودی، وابسته به تنظیمات سیستم</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">میزان صدا برای رویداد های ورودی</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">صدا های فشردن کلید</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">صدا های نگه داشتن طولانی کلید</string>

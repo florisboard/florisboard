@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">最近使用した絵文字は見つかりませんでした。 絵文字を使用すると、絵文字が自動的にここに表示されます</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">ヒント：最近使用した絵文字を長押しして、このビューから再び削除します。</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">最近使用した絵文字から {emoji} を削除しました</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">設定</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">セットアップを試す</string>
@@ -170,7 +171,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">音とバイブレーション</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ハウリング</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">ハウリングを有効にする</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">システム設定に応じて、入力イベントのサウンドを再生します</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">入力イベントの音量</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">キーを押したときのサウンド</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">キーを長く押した時のサウンド</string>
@@ -179,7 +179,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャーを移動した時のスワイプサウンド</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触覚フィードバック/バイブレーション</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">触覚フィードバックを有効</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">システム設定に応じて、入力イベントを振動させる</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">バイブレーション持続時間</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">バイブレーションの強さ</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">この機能にはハードウェア振幅制御のサポートが必要ですが、これはこのデバイスにはありません</string>
@@ -226,9 +225,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">キーボードの上に表示されます</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">トグルボタンを切り替える</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">アクション行の切り替えを反転します</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">自動的に拡張/折りたたみ</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">現在の状態に基づいてプライマリーアクション行を自動的に展開/折りたたみます</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">二次アクション行を表示</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">提案</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">提案表示モード</string>

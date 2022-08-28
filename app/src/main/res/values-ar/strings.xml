@@ -29,7 +29,57 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">لم يتم العثور على رموز تعبيرية مستخدمة مؤخرًا. بمجرد أن تبدأ في استخدامها الرموز التعبيرية فإنها ستظهر تلقائيًا هنا.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">نصيحة للمحترفين: الضغط لفترة طويلة على الرموز التعبيرية المستخدمة مؤخرًا لإزالتها من هذا العرض مرة أخرى!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">تمت إزالة {emoji} من الرموز التعبيرية المستخدمة مؤخرًا</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">سهم للأعلى</string>
+    <string name="quick_action__arrow_up__tooltip">تنفيذ السهم للأعلى</string>
+    <string name="quick_action__arrow_down" maxLength="12">سهم للاسفل</string>
+    <string name="quick_action__arrow_down__tooltip">تنفيذ السهم للأسفل</string>
+    <string name="quick_action__arrow_left" maxLength="12">سهم لليسار</string>
+    <string name="quick_action__arrow_left__tooltip">تنفيذ السهم لليسار</string>
+    <string name="quick_action__arrow_right" maxLength="12">سهم لليمين</string>
+    <string name="quick_action__arrow_right__tooltip">تنفيذ السهم لليمين</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">مسح الحافظة</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">تنفيذ مسح للحافظة الأساسية</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">نسخ</string>
+    <string name="quick_action__clipboard_copy__tooltip">تنفيذ نسخ للحافظة</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">قص</string>
+    <string name="quick_action__clipboard_cut__tooltip">تنفيذ قص للحافظة</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">لصق</string>
+    <string name="quick_action__clipboard_paste__tooltip">تنفيذ لصق للحافظة</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">تحديد الكل</string>
+    <string name="quick_action__clipboard_select_all__tooltip">تنفيذ تحديد الكل للحافظة</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">الحافظة</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">فتح سجل الحافظة</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">رمز تعبيري</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">فتح نافذة الرموز التعبيرية</string>
+    <string name="quick_action__settings" maxLength="12">الإعدادات</string>
+    <string name="quick_action__settings__tooltip">فتح الإعدادات</string>
+    <string name="quick_action__undo" maxLength="12">تراجع</string>
+    <string name="quick_action__undo__tooltip">التراجع عن الإدخال الأخير</string>
+    <string name="quick_action__redo" maxLength="12">إعادة</string>
+    <string name="quick_action__redo__tooltip">إعادة الإدخال الأخير</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">خيارات أخرى</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">عرض او إخفاء إجراءات إضافية</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">متخفي</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">تشغيل وضع التخفي</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">تصحيح تلقائي</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">تمكين التصحيح التلقائي</string>
+    <string name="quick_action__voice_input" maxLength="12">إدخال الصوت</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">افتح موفر خدمة الإدخال الصوتي</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">اليد الواحدة</string>
+    <string name="quick_action__one_handed_mode__tooltip">تفعيل وضع بيد واحدة</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">سحب التمييز</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">موضع علامة السحب الحالي</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">لا شَيْء</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">لا توجد عمليات</string>
+    <string name="quick_actions_overflow__customize_actions_button">إعادة ترتيب المهام</string>
+    <string name="quick_actions_editor__header">تخصيص ترتيب المهام</string>
+    <string name="quick_actions_editor__subheader_sticky_action">المهام المثبتة ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">مهام متكيفة ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">مهام مخفية ({n})</string>
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">وضع التصفح المتخفي ممكن الآن\n\n{app_name} لن يتعلم الكلمات من مدخلاتك أثناء تنشيط هذا الوضع</string>
+    <string name="incognito_mode__toast_after_disabled">الوضع الخاص هو الان معطل افتراضيا</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">الإعدادات</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">قم بتجربة اعداداتك</string>
@@ -137,7 +187,21 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">حقل الإدخال الأفقي</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">مهام الإدخال الأفقي</string>
     <string name="snygg__rule_element__glide_trail">مسار الإنزلاق</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">علامة وضع التخفي</string>
     <string name="snygg__rule_element__one_handed_panel">لوحة مفاتيح بيد واحدة</string>
+    <string name="snygg__rule_element__smartbar">الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">مهام صف إجراءات الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">مهام زر إجراءات الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">الصف الموسع لمهام الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">زر توسيع المهام للشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_action_key">زر مهام الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_action_tile">عنوان إجراء الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">تجاوز إجراءات الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">الزر \"تخصيص تجاوز سعة إجراءات الشريط الذكي\"</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">محرر إجراءات الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">رأس محرر إجراءات شريط ذكي</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">الرأس الفرعي لمحرر إجراءات الشريط الذكي</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">صف المرشحين لشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_word">مرشح كلمة الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">مرشح مقطع الشريط الذكي</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">مرشح فاصل الشريط الذكي</string>
@@ -189,7 +253,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">الصوت والاهتزاز</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ردود الفعل الصوتية / الأصوات</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">تمكين التاثيرات الصوتية</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">لا تقم مطلقًا بتشغيل أصوات لأحداث الإدخال ، بغض النظر عن إعدادات النظام</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">مستوى الصوت لأحداث الإدخال</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">أصوات الضغط على المفاتيح</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">أصوات الضغط المطول على المفاتيح</string>
@@ -198,9 +262,11 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">صوت تحريك ايماءة السحب</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">ردود الفعل اللمسية / الاهتزاز</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">تشغيل الاهتزاز عند اللمس</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">لا تقم مطلقًا بتشغيل الاهتزاز لأحداث الإدخال ، بغض النظر عن إعدادات النظام</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">وضع الاهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">مدة الإهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">قوة الاهتزاز</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">تتطلب هذه الميزة عتاد الهزاز في جهازك ، والذي يبدو أنه مفقود</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في مدى الأجهزة ، وهو مفقود على جهازك</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في المدى ، والذي لا يتوفر إلا على نظام اندرويد 8.0 أو أحدث</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">اهتزاز الضغط على المفتاح</string>
@@ -243,11 +309,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">التخطيط</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">خيارات التخطيط المخصص</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">تبديل ازرار التنقل</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">زر تبديل صف المهام</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">توسيع وطي تلقائي</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">يقوم تلقائيًا بتوسيع / طي صف الإجراء الأساسي بناءً على الحالة الحالية</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">توسيع صف المهام الثانوي</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">توسيع/طي تلقائي</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">توسيع/طي صف الإجراء المشترك تلقائيا استنادا إلى الحالة الحالية</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">مبدل إجراءات المهام</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">الكتابة</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
@@ -342,6 +410,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">إعدادات اللغة</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">إظهار أيقونة البرنامج في درج التطبيقات</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">الوضع المخفي</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق FlorisBoard</string>
@@ -476,6 +545,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">إظهار نتائج تراكب التهجئة لأغراض التطوير</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">عرض حدود لمس الازرار</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">رسم حد خارجي للمس الازرار باللون الاحمر</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">إظهار مساعد السحب والإفلات</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">تقديم مساعدين غير مرئيين بخلاف ذلك في شاشات السحب والإفلات لتصحيح الأخطاء</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">إعادة تعيين إشارة \"{flag_name}\"</string>
@@ -614,12 +685,32 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} شعر مجعد</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} شعر ابيض</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} اصلع</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">تجاهل المرشح</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">يضع صف الإجراءات الموسعة بين واجهة مستخدم التطبيق والصف المرشح</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">تحت المرشحون</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">يضع صف الإجراءات الموسعة بين صف المرشح ولوحة المفاتيح النصية</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">تراكب واجهة التطبيق</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">يضع صف الإجراءات الموسعة كتراكب أعلى واجهة مستخدم التطبيق، دون التأثير على ارتفاع واجهة مستخدم لوحة المفاتيح الناتجة. لاحظ أن هذا الموضع قد يتسبب في سحب حقل إدخال التطبيق بشكل مفرط جزئيا</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">استخدام الهزاز مباشرة</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">يتفاعل {app_name} مباشرة مع هزاز الجهاز الافتراضي. يمنح هذا مزيدًا من التحكم في مدة وقوة الاهتزاز ، ولكن قد لا يكون الاهتزاز سلسًا ومُحسَّنًا مثل استخدام واجهة ردود الفعل اللمسية</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">استخدم واجهة ردود الفعل اللمسية</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">يستخدم {app_name} واجهة ردود الفعل اللمسية لتشغيل تسلسل اهتزاز محدد مسبقًا لضغطات المفاتيح. قد يعمل هذا بشكل جيد للغاية على بعض الأجهزة ، لكنه يفشل تمامًا أو يعمل بشكل سيئ للغاية على الأجهزة الأخرى</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">الاولوية للون الثانوي</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">دائمًا ما يكون الحرف الأولي المحدد بعد الضغط لفترة طويلة هو العلامة الأساسية لرمز البحث في حالة عدم توفر تمييز أساسي</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">الاولوية للتلميحات</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">دائمًا ما يكون الحرف الأولي المحدد بعد الضغط لفترة طويلة هو رمز التلميح ، أو العلامة الأساسية في حالة عدم توفر رمز تلميح</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">تحديد الاولويات الذكي</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">يتم تحديد الحرف الأولي المحدد بعد الضغط لفترة طويلة ديناميكيًا ليكون إما العلامة الأساسية أو رمز التلميح ، بناءً على اللغة والتخطيط الحاليين</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">إيقاف قسري</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">سيتم دائما تعطيل وضع التصفح المتخفي، بغض النظر عن الخيارات التي تم تمريرها في التطبيق المستهدف. لن يتوفر الإجراء السريع للتصفح المتخفي في الشريط الذكي مع هذا الخِيار.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">تفعيل قسري</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">سيتم دائما تفعيل وضع التصفح المتخفي، بغض النظر عن الخيارات التي تم تمريرها في التطبيق المستهدف. لن يتوفر الإجراء السريع للتصفح المتخفي في الشريط الذكي مع هذا الخِيار.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">يفعل/ يعطل بشكل ديناميكي</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">الخِيار الموصى به. سيتم تمكين وضع التصفح المتخفي أو تعطيله ديناميكيا إما بواسطة الخيارات التي تم تمريرها في التطبيق المستهدف أو عن طريق تبديله يدويا بواسطة الإجراء السريع للتصفح المتخفي في الشريط الذكي.</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">تشغيل الأصوات ديناميكيًا لأحداث الإدخال ، اعتمادًا على إعدادات النظام</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">قم دائمًا بتشغيل الأصوات لأحداث الإدخال ، بغض النظر عن إعدادات النظام</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">يهتز ديناميكيًا لأحداث الإدخال ، اعتمادًا على إعدادات النظام</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">يهتز دائمًا مع أحداث الإدخال ، بغض النظر عن إعدادات النظام</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">غير متحول</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">متحول(يدوي)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">متحول(ألي)</string>
@@ -630,16 +721,18 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">إيقاف</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">وضع اليد اليسرى</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">وضع اليد اليمنى</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">فوق الصف الرئيسي</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">يضع الصف الثانوي بين التطبيق واجهة المستخدم والصف الرئيسي</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">تحت الصف الرئيسي</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">يضع الصف الثانوي بين الصف الأساسي ولوحة المفاتيح النصية</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">تراكب واجهة التطبيق</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">يضع الصف الثانوي كتراكب فوق وجهة التطبيق، دون التأثير على ارتفاع واجهة لوحة المفاتيح الناتجة. لاحظ أن هذا الموضع قد يتسبب في أن يكون حقل إدخال التطبيقات مرسوم جزئيا</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">بداية علوية</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">نهاية علوية</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">نهاية سفلية</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">بداية سفلية</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">الاقتراحات فقط</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">يعرض صف المرشح فقط، بدون أي صف/تبديل إجراء أو إجراء لزج</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">الإجراءات فقط</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">إظهار صف الإجراءات فقط، بدون صف المرشح أو إجراء لزج صريح</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">الاقتراحات والإجراءات المشتركة</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">مرشح مشترك قابل للتبديل وصف إجراءات، مع إجراء لزج</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">الاقتراحات والإجراءات الموسعة</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">صف مرشح ثابت وصف إجراء إضافي قابل للتبديل، مع إجراء لزج</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">بسيط</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">يتم عرض خصائص اللون فقط ، ويتم ترجمة الخصائص والقواعد.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">إعدادات متقدمة</string>

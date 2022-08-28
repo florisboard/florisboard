@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Нису пронађени недавно кориштени емоџији. Када почнете куцати емоџије појавиће се овде.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Про тип: Задржи недавно кориштене емоџије да би их уклонили одавде опет!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Уклоњен {emoji} из недавно кориштених емоџија</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Подешавања</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Испробајте своје подешавање</string>

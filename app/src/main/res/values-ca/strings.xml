@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No s\'han trobat emojis recents. En començar a escriure emojis, apareixeran automàticament aquí.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consell: Manteniu premut els emojis recents per a suprimir-los d\'aquesta llista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">S\'ha eliminat {emoji} dels emojis recents</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Preferències</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prova la configuració</string>

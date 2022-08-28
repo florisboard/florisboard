@@ -25,7 +25,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Αντικείμενα</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Σύμβολα</string>
     <string name="emoji__category__flags" comment="Emoji category name">Σημαίες</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ρυθμίσεις</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Δοκιμάστε τις ρυθμίσεις σας</string>
@@ -87,7 +88,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ήχος &amp; Δόνηση</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ηχητική ανάδραση / Ήχοι</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ενεργοποίηση ηχητικής ανάδρασης</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Αναπαραγωγή ήχων για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Ένταση ήχου για ενέργειες εισαγωγής</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Ήχοι πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ήχοι παρατεταμένου πατήματος πλήκτρου</string>
@@ -96,7 +96,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Ήχοι χειρονομιών ολίσθησης μετακίνησης</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Απτική ανάδραση / Δόνηση</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ενεργοποίηση απτικής ανάδρασης</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Δόνηση για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Διάρκεια δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Ένταση δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους στο υλισμικό, η οποία απουσιάζει από τη συσκευή σας</string>
@@ -403,12 +402,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ανενεργό</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Λειτουργία για αριστερόχειρες</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Λειτουργία για δεξιόχειρες</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Πάνω από την πρωτεύουσα σειρά</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ του περιβάλλοντος της εφαρμογής και της πρωτεύουσας σειράς</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Κάτω από την πρωτεύουσα σειρά</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ της πρωτεύουσας σειράς και του πληκτρολογίου κειμένου</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Επικάλυψη περιβάλλοντος εφαρμογής</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά ως επικάλυμμα πάνω από το περιβάλλον της εφαρμογής, χωρίς να επηρεάζει το προκύπτον ύψος του περιβάλλοντος της εφαρμογής. Να σημειωθεί ότι αυτή η τοποθέτηση ίσως προκαλέσει μερική κάλυψη του πεδίου κειμένου της εφαρμογής</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Χρήση γλωσσών συστήματος</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Καμία ενέργεια</string>

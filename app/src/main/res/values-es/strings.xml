@@ -29,7 +29,21 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No se han encontrado emojis que se hayan usado recientemente. Una vez empieces a usar emojis, aparecerán automáticamente aquí.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consejo: ¡Pulse sostenidamente los emojis usados recientemente para poder removerlos de esta vista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Se ha removido {emoji} de los emojis recientes</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Pegar</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__settings" maxLength="12">Ajustes</string>
+    <string name="quick_action__settings__tooltip">Abrir ajustes</string>
+    <string name="quick_action__undo" maxLength="12">Deshacer</string>
+    <string name="quick_action__redo" maxLength="12">Rehacer</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Más acciones</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incógnito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Activar modo incognito</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorregir</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Activar autocorregir</string>
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ajustes</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Pruebe su configuración</string>
@@ -183,7 +197,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sonidos &amp; Vibración</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Respuesta de audio / Sonidos</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilitar respuesta de audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Reproducir sonidos para eventos de entrada, dependiendo de los ajustes del sistema</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volumen de sonido para eventos de entrada</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sonidos al presionar una tecla</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sonidos al presionar prolongadamente</string>
@@ -192,7 +205,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sonidos de gestos deslizantes con movimiento</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Respuesta táctil / Vibración</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Habilitar respuesta táctil</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrar para eventos de entrada, dependiendo de los ajustes del sistema</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte de control de amplitud de hardware, el cual falta en su dispositivo</string>
@@ -237,9 +249,6 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Expandir/contraer automáticamente</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/contrae automáticamente la fila de acción principal según el estado actual</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Mostrar fila de acciones secundarias</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Escritura</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
@@ -622,12 +631,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Apagado</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modo para zurdos</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modo para diestros</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Sobre la fila principal</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Ubica la fila secundaria entre la interfaz de usuario de la aplicación y la fila principal</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Bajo la fila principal</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Ubica la fila secundaria entre la fila principal y el texto del teclado</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Superponer la interfaz de usuario de la aplicación</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Ubica la fila secundaria como una superposición sobre la interfaz de la aplicación, sin afectar la altura final de la interfaz del teclado. Tenga en cuenta que este tipo de ubicación podría hacer que el campo de entrada de la aplicación se vea parcialmente sobredimensionado</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inicio superior</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Sólo se muestran las propiedades del color, las propiedades y las reglas se traducen.</string>

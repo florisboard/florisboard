@@ -29,7 +29,55 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Aucun émoji récemment utilisé n\'a été trouvé. Une fois que vous aurez commencé à taper des émojis, ils apparaîtront automatiquement ici.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseil de pro : appuyez longuement sur les émojis récemment utilisés pour les supprimer à nouveau de cette vue !</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Suppression de {emoji} des emojis récemment utilisés</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Flèche haut</string>
+    <string name="quick_action__arrow_up__tooltip">Appui sur la flèche haut</string>
+    <string name="quick_action__arrow_down" maxLength="12">Flèche bas</string>
+    <string name="quick_action__arrow_down__tooltip">Appui sur la flèche bas</string>
+    <string name="quick_action__arrow_left" maxLength="12">Gauche</string>
+    <string name="quick_action__arrow_left__tooltip">Appui sur la flèche gauche</string>
+    <string name="quick_action__arrow_right" maxLength="12">Droite</string>
+    <string name="quick_action__arrow_right__tooltip">Appui sur la flèche droite</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Copier</string>
+    <string name="quick_action__clipboard_copy__tooltip">Copie vers le presse-papier</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Couper</string>
+    <string name="quick_action__clipboard_cut__tooltip">Coupe vers le presse-papier</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Coller</string>
+    <string name="quick_action__clipboard_paste__tooltip">Colle depuis le presse-papier</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Sélec. tout</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Tout sélectionner dans le presse-papiers</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Pressepapier</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Ouvrir l\'historique du presse-papier</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Émoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Ouvrir le panneau Émoji</string>
+    <string name="quick_action__settings" maxLength="12">Paramètres</string>
+    <string name="quick_action__settings__tooltip">Accède aux paramètres</string>
+    <string name="quick_action__undo" maxLength="12">Annuler</string>
+    <string name="quick_action__undo__tooltip">Annule l\'action précédente</string>
+    <string name="quick_action__redo" maxLength="12">Rétablir</string>
+    <string name="quick_action__redo__tooltip">Rétablit l\'action précédente</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Additionnel</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Affiche ou cache les actions supplémentaires</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Active ou désactive le mode incognito</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">AutoCorrect.</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Active ou désactive la correction automatique</string>
+    <string name="quick_action__voice_input" maxLength="12">Saisie voc.</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Ouvre le fournisseur de saisie vocale</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">1 seule main</string>
+    <string name="quick_action__one_handed_mode__tooltip">Active ou désactive le mode une seule main</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Curseur</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Position actuelle du curseur</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Aucun</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Aucune opération</string>
+    <string name="quick_actions_overflow__customize_actions_button">Réorganiser les actions</string>
+    <string name="quick_actions_editor__header">Personnaliser l\'ordre des actions</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Action collante ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Actions dynamiques ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Actions cachées ({n})</string>
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Le mode \"Incognito\" est désormais activé\n\n{app_name} n\'apprendra pas de mots à partir de votre saisie tant que ce mode sera actif</string>
+    <string name="incognito_mode__toast_after_disabled">Le mode \"Incognito\" est désormais désactivé par défaut</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Paramètres</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Essayez votre nouvelle configuration</string>
@@ -131,12 +179,29 @@
     <string name="snygg__rule_element__clipboard_item">Élément du Presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up d\'élément du presse-papiers</string>
     <string name="snygg__rule_element__emoji_key">Touche Emoji</string>
+    <string name="snygg__rule_element__emoji_key_popup">Fenêtre popup de la touche Emoji</string>
+    <string name="snygg__rule_element__emoji_key_tab">Onglet Emoji</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposition en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Champ d\'entrée en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Action d\'entrée en mode paysage</string>
     <string name="snygg__rule_element__glide_trail">Indicateur de glissement</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Indicateur du mode \"Incognito</string>
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
+    <string name="snygg__rule_element__smartbar">Smartbar</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Rangée d\'actions partagées de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Actions partagées de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Rangée d\'actions étendues de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Actions étendues de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_key">Touche d\'action de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Tuile d\'action de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Débordement des actions de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Bouton de personnalisation du débordement des actions de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Éditeur d\'actions de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">En-tête de l\'éditeur d\'actions de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Sous-titre de l\'éditeur d\'actions de la Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Rangée de suggestions à la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la barre intelligente</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Suggestion du presse-papier dans la Smartbar</string>
     <string name="snygg__rule_element__system_nav_bar">Barre de navigation du système</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>
     <string name="snygg__rule_selector__focus">Focalisé</string>
@@ -185,7 +250,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retour audio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activer le retour audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Jouer des sons pour les événements de saisie, dépend des réglages système</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Ne jamais lire de sons lors de la frappe, insensible aux paramètres système</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume pour les événements de saisie</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sons d\'appui court</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons d\'appui long</string>
@@ -194,9 +259,11 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sons de balayage mobile par gestes</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Retour haptique / Vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activer le retour haptique</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrer pour les événements d\'entrée, en fonction des paramètres du système</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Ne jamais lire de sons lors de la frappe, insensible aux paramètres système</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Mode vibreur</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durée des vibrations</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensité de la vibration</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Cette fonctionnalité nécessite un vibreur matériel, qui semble manquer dans cet appareil</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude du matériel, qui n\'est pas disponible sur votre appareil</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude, qui n\'est disponible que sur Android 8.0 ou plus récent</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibration des touches</string>
@@ -239,11 +306,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barre intelligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Barre Intelligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Disposition</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Options spécifiques de la mise en page</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Boutons à bascule</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">La rangée d\'action bascule</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Agrandir/réduire automatiquement</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Extension/réduction automatique de la ligne d\'action primaire en fonction de l\'état actuel</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Afficher la ligne d\'actions secondaires</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Extension/réduction automatique de la rangée d\'actions partagées en fonction de l\'état actuel</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Placement des lignes d\'action</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Saisie</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
@@ -338,6 +407,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Paramètre de langue</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Mode incognito</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">À propos</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icône de l\'application FlorisBoard</string>
@@ -610,12 +680,32 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cheveux frisés</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cheveux blanc</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Chauve</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Suggestions ci-dessus</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Place la rangée des actions étendues entre l\'interface utilisateur de l\'application et la rangée des suggestions</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Les suggestions ci-dessous</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Place la rangée d\'actions étendues entre la rangée de suggestion et le clavier</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Superposer l\'interface utilisateur de l\'application</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Place la rangée d\'actions étendues en tant que superposition au-dessus de l\'interface utilisateur de l\'application, sans affecter la hauteur de l\'interface utilisateur du clavier. Notez que ce placement peut entraîner une surcharge partielle du champ de saisie de l\'application</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Utiliser le vibreur directement</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} interagit directement avec le vibreur matériel par défaut. Cela contrôle mieux la durée et la force d\'une vibration, mais la vibration peut ne pas être aussi douce et optimisée qu\'avec l\'interface de retour haptique</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Utiliser l\'interface de retour haptique</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} utilise l\'interface de retour haptique pour déclencher une séquence de vibrations prédéfinie pour les pressions sur les touches. Cela peut fonctionner exceptionnellement bien sur certains appareils, mais échouer complètement ou avoir des performances très faibles sur d\'autres</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Activé priorité à l\'accent</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Activé priorité à l\'accent</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorité intelligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est décidé de manière dynamique pour être soit l\'accent principal, soit le symbole de l\'indice, en fonction de la langue et de la disposition actuelles.</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Forcer la désactivation</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Le mode incognito sera toujours désactivé, quelles que soient les options de l\'application cible. L\'action rapide incognito dans la Smartbar ne sera pas disponible avec cette option.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Forcer l\'activation</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Le mode incognito sera toujours activé, quelles que soient les options de l\'application cible. L\'action rapide incognito dans la Smartbar ne sera pas disponible avec cette option.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Activation/désactivation dynamique</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Option recommandée. Le mode Incognito sera activé ou désactivé dynamiquement via les options passées de l\'application cible ou en la basculant manuellement via l\'action rapide incognito dans la Smartbar.</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Jouez dynamiquement des sons pour les événements d\'entrée, en fonction des paramètres système</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Toujours jouer des sons pour les événements d\'entrée, quels que soient les paramètres système</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Vibrer dynamiquement pour les événements d\'entrée, en fonction des paramètres du système</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Toujours vibrer pour les événements d\'entrée, indépendamment des paramètres du système</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Non décalé</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Verrouillage des majuscules</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ne jamais afficher</string>
@@ -624,16 +714,18 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Arrêt</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode gaucher</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode droitier</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Au-dessus de la ligne principale</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Placer la ligne secondaire entre l\'interface utilisateur de l\'application et la ligne principale</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Sous la ligne principale</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Placer la ligne secondaire entre la ligne principale et le clavier de texte</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Superposer l\'interface utilisateur de l\'application</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Place la ligne secondaire en superposition au-dessus de l\'interface utilisateur de l\'application, sans affecter la hauteur résultante de l\'interface utilisateur du clavier. Notez que ce placement peut entraîner un dépassement partiel du champ de saisie de l\'application</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top départ</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top fin</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Extrémité inférieure</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Extrémité supérieure</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Suggestions uniquement</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Affiche uniquement la rangée des candidats, sans action de rangée/de basculement ou action collante</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions uniquement</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Affiche uniquement la rangée des actions, sans la rangée des suggestions ou le presse-papier explicite</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions &amp; Actions partagées</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Rangée partagée de suggestions et d\'actions basculables, avec presse-papier</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions &amp; Actions prolongées</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Ligne de candidats statique et ligne d\'action supplémentaire basculable, avec action collante</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Standard</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Seules les propriétés de couleur sont affichées, les propriétés et les règles sont traduites.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avancé</string>

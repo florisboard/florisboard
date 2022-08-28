@@ -22,7 +22,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekter</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flag</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Indstillinger</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Hjælp</string>

@@ -17,7 +17,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objektoj</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simboloj</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagoj</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Agordoj</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Helpo</string>

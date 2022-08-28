@@ -29,7 +29,57 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">هیچ ئیمۆجیەک بەکارنەهاتووە، هەرکاتێ ئیمۆجیەکانت بەکارهێنا بەشێوەیەکی خۆکاری لێرەدا دەردەکەون.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">زانیاری: بۆ سڕینەوەی ئیمۆجیەکان لەم بەشەدا کەمێک دەستی لەسەر ڕابگرە.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ئیمۆجی {emoji} لابرا لەلیستی دوایین بەکارهاتووەکان</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">چونە سەرەوە</string>
+    <string name="quick_action__arrow_up__tooltip">چوونە سەرەتای دێڕ</string>
+    <string name="quick_action__arrow_down" maxLength="12">چونە خوارەوە</string>
+    <string name="quick_action__arrow_down__tooltip">چوونە کۆتایی دێڕ</string>
+    <string name="quick_action__arrow_left" maxLength="12">چونە لای چەپ</string>
+    <string name="quick_action__arrow_left__tooltip">چوونە لای چەپی نووسین</string>
+    <string name="quick_action__arrow_right" maxLength="12">چونەلای ڕاست</string>
+    <string name="quick_action__arrow_right__tooltip">چوونە لای ڕاستی نووسین</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">لابردنی گشتی</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">سڕینەوەی سەرجەم لەبەرگیراوەکان</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">لەبەرگرتنەوە</string>
+    <string name="quick_action__clipboard_copy__tooltip">لەبەرگرتنەوەی شتەکان</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">بڕین</string>
+    <string name="quick_action__clipboard_cut__tooltip">برینی شتەکان</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">دانان</string>
+    <string name="quick_action__clipboard_paste__tooltip">دانانی لەبەرگیراوە</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">دیاریکردن</string>
+    <string name="quick_action__clipboard_select_all__tooltip">دیاریکردنی تەواوی نووسین</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">کۆپیکراوەکان</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">پیشاندانی لەبەرگیراوەکان</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">ئیمۆجی</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">کردنەوەی لیستی ئیمۆجیەکان</string>
+    <string name="quick_action__settings" maxLength="12">ڕێکخستنەکان</string>
+    <string name="quick_action__settings__tooltip">کردنەوەی ڕێکخستنەکان</string>
+    <string name="quick_action__undo" maxLength="12">دواتر</string>
+    <string name="quick_action__undo__tooltip">گێڕانەوەی دوایین هەنگاو</string>
+    <string name="quick_action__redo" maxLength="12">پێشتر</string>
+    <string name="quick_action__redo__tooltip">هێنانەوەی هەنگاوی پێشتر</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">فرمانی زیاتر</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">پیشاندانی ئامرازی زیاتر</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">دۆخی نادیار</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">چالاککردنی دۆخی نادیار</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">ڕاستکردنەوە</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">چالاککردنی ڕاستکردنەوەی نووسین</string>
+    <string name="quick_action__voice_input" maxLength="12">گەڕانی دەنگی</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">کردنەوەی تایبەتمەندی گەڕانی دەنگی</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">دۆخی یەکدەست</string>
+    <string name="quick_action__one_handed_mode__tooltip">چالاککردنی بەکارهێنان بەیەکدەست</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامراز</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامرازەکانی ئێستا</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ نییە</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ فرمانێک</string>
+    <string name="quick_actions_overflow__customize_actions_button">گۆڕینی شوێن</string>
+    <string name="quick_actions_editor__header">دەستکاریکردنی شوێنی دوگمەکان</string>
+    <string name="quick_actions_editor__subheader_sticky_action">دوگمەی جێگیر ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">دوگمە سەرەکییەکان ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">دوگمە شاراوەکان ({n})</string>
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">دۆخی نادیار چالاککرا\n\n{app_name} چیتر ووشەی نوێ پاشەکەوت ناکات لە فەرهەنگدا</string>
+    <string name="incognito_mode__toast_after_disabled">دۆخی نادیار نا چالاککرا</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ڕێکخستنەکان</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">پیشاندانی تەختەکلیل</string>
@@ -137,7 +187,9 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">دۆخی ئاسۆیی</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">فرمانی دۆخی ئاسۆیی</string>
     <string name="snygg__rule_element__glide_trail">هێڵی نووسین بەسەریەکەوە</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">دۆخی نادیار</string>
     <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
+    <string name="snygg__rule_element__smartbar">بەشی سەرەوە</string>
     <string name="snygg__rule_element__smartbar_candidate_word">ڕەنگی نووسینەکانی بەشی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">ڕەنگی ئایکۆنەکانی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">ماوەی نێوان ئامرازەکان</string>
@@ -189,7 +241,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">ڕێکخستنی دەنگ و لەرزین</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">کاریگەری دەنگ / دەستلێدان</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">چالاککردنی کاریگەری دەنگی</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">لێدانی دەنگ بۆ فرمانەکان بەپێی ڕێکخستنی سیستەم</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">نا چالاککردنی دەنگ لەکاتی نووسین</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">دەنگی کاتی نووسینی هێماکان</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">دەنگی لەکاتی نووسین</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">دەنگ لەکاتی دەست ڕاگرتن</string>
@@ -198,9 +250,11 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">دەنگ لەکاتی جوڵانی ئاماژەکان</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">کاریگەری لەرزین / دەستلێدان</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">چالاککردنی کاریگەری لەرزین</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">لەرزین لەکاتی دەستلێدانی دوگمەکان بەپێی ڕێکخستنی سیستەم</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">نا چالاککردنی لەرزین لەکاتی نووسین</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">دۆخی لەرینەوە</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">ماوەی لەرزین</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">هێزی لەرزین</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">ئەم تایبەتمەندییە پێویستی بە هاردوێری لەرینەوەیە کە لە ئامێرەکەتدا بوونی نییە</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">مۆبایلەکەت پشتگری ئەم تایبەتمەندییە ناکات</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">ئەم تایبەتمەندییە تەنها لە ئەندرۆیدی ٨. ٠ و بەرەو سەر کاردەکات</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">لەرزین لەکاتی نووسین</string>
@@ -245,9 +299,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">پیچەوانەکردنەوەی دوگمەکان</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">پێچەوانەکردنەوەی دوگمەکانی ئامرازەکان</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">کردنەوە/داخستنی خۆکاری</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">کردنەوە یان داخستنی دوگمەی فرمان بۆ پیشاندانی دوگمەکان</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">پیشاندانی ڕیزی دووەم</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">تەختەکلیل</string>
     <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
@@ -342,6 +393,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">زمانی بەرنامە</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">پیشاندانی ئایکۆنی بەرنامەکە</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">هەمیشە پیشان ئەدرێ لە ئەندرۆیدی 10 بەرەوسەر</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">دۆخی نادیار</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">دەربارە</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">پیشاندانی ئایکۆنی بەرنامەکە</string>
@@ -477,6 +529,7 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">پیشاندانی ڕاستکردنەوەی هەڵەی ڕێنووس لەسەروی تەختەکلیل</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">پیشاندانی سنوورەکانی کلیل</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">هێڵکاریکردنی سنوورەکانی کلیل دەسلێدان بە سوور</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">پیشاندانی فێرکاری ڕاکێشان و دانان</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">لابردنی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">سڕینەوەی ووشە زیادکراوەکانی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\" ڕێکخستنەوەی</string>
@@ -615,12 +668,20 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} لوول</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} سپی</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} کەچەڵ</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">لەرینەوەی ڕاستەوخۆ</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} ڕاستەوخۆ هەستەوەری لەرینەوەی ئامێر بەکاردێت لەکاتی نووسین، بەڵام لەوانەیە لە هەندێ مۆبایلدا بەردەست نەبێت</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">لەرینەوەی ئاسایی</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} لەرینەوەی ئاسایی ڕێکخراو بەکاردێت لەکاتی نووسین، ئەم هەڵبژاردنە لە زۆربەی مۆبایلەکاندا بەباشی کاردەکات و لەوانەیە لەهەندێکیشیان کار نەکات</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">پیتەکان لەپێشدا</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">پیشاندانی یەکەم پیتی خانەی دووەم لەکاتی دەست راگرتن</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">هێماکان لەپێشدا</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">پیشاندانی یەکەم هێمای خانەی دووەم لەکاتی دەست راگرتن</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">هەڵبژاردنی زیرەک</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">پیشاندانی یەکەم پیت یان هێمای خانەی دووەم لەکاتی دەست راگرتن بەخۆکاری بەپێی زمانی هەڵبژێردراو</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">کاریگەری دەنگی ئاسایی بەپێی ڕێکخستنی سیستەم</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">دەنگی هەمیشەیی بەپێی ڕێکخستنی بەرنامەکە</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">لەرینەوەی ئاسایی بەپێی ڕێکخستنی سیستەم</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">لەرینەوەی هەمیشەیی بەپێی ڕێکخستنی بەرنامەکە</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">ئاسایی</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">شێفت (دەستی)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">شێفت (خۆکاری)</string>
@@ -631,16 +692,11 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">نا چالاک</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">بەکارهێنان بۆ دەستی چەپ</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">بەکارهێنان بۆ دەستی ڕاست</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">لەسەروی ڕیزی یەکەم</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان بەرنامەکە و ڕیزی یەکەم</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">لەخواروی ڕیزی یەکەم</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">لەسەروی بەرنامەکە</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان لەبەشی سەرەوەی بەرنامەکە، بەبێ گۆڕینی قیاسی تەختەکلیل</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">سەرەتای سەرەوە</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">سەرەتای خوارەوە</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">تەنیا ئامرازەکان</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">بنچینەیی</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">تەنیا زانیاری ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">ڕێکخستنی زیاتر</string>

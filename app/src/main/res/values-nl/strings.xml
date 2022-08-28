@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Geen recent gebruikte emoji\'s gevonden. Zodra je emoji\'s begint te typen, verschijnen ze automatisch hier.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Druk lang op recent gebruikte emoji\'s om ze weer uit deze weergave te verwijderen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Probeer je nieuwe instellingen</string>
@@ -189,7 +190,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Geluid</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback /Geluiden</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Geluid afspelen bij invoer, afhankelijk van systeeminstellingen</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Geluidsvolume bij invoer</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Geluidje bij lang indrukken toets</string>
@@ -198,7 +198,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Geluiden voor veegbewegingen</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Feedback /Vibratie</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Schakel haptische feedback in</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibreer bij invoer, afhankelijk van systeeminstellingen</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trillingsduur</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Deze functie vereist hardwarematige besturing van de trillingssterkte, en wordt niet ondersteund door uw apparaat</string>
@@ -245,9 +244,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Schakelknoppen omdraaien</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Wisselt actierij schakelt</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatisch uitvouwen/samenvouwen</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">De primaire actierij automatisch uitvouwen/samenvouwen op basis van de huidige status</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Secundaire actierij weergeven</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggesties weergavemodus:</string>
@@ -616,12 +612,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Uit</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Linkshandige modus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Rechtshandige modus</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Boven primaire rij</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Plaatst de secundaire rij tussen de app-gebruikersinterface en de primaire rij</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Onder primaire rij</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Plaatst de secundaire rij tussen de primaire rij en het teksttoetsenbord</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">UI van overlay-app</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Plaatst de secundaire rij als een overlay boven de app-UI, zonder de resulterende toetsenbord-UI-hoogte te beïnvloeden. Houd er rekening mee dat deze plaatsing ertoe kan leiden dat het invoerveld van de app gedeeltelijk overtekend is</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">De beste</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Onderkant</string>

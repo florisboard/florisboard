@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Скоро не сте ползвали еможи. Като започнете да използвате ще се показват тук.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: За да премахнете еможди от този списък задръжте върху него!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Премахнато е {emoji} от последно използваните</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Изпробвайте настройките тук</string>
@@ -189,20 +190,22 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Не се изпълняват звуци при събития на въвеждане, независимо от системните настройки</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Сила на звука при събития на въвеждане</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук при докосване на клавиш</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук при задържане на клавиш</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Звук при продължително задържане на клавиш</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Звук при жестове</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Звук при движение на жест</string>
-    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Обратна връзка при докосване / вибрация</string>
-    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Обратна връзка при докосване</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Тактилна обратна връзка / вибрация</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Тактилна обратна връзка</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Без вибриране при събития на въвеждане, независимо от системните настройки</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Режим на вибриране</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продължителност на вибрацията</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила на вибрацията</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Тази възможност изисква поддръжка на хардуерен контрол на амплитудата, каквато липсва на устройството</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Тази възможност изисква поддръжка на хардуерен контрол на амплитудата, каквато е налична от Android 8.0 и по-нов</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Тази възможност изисква модул за вибрации, какъвто изглежда липсва на устройството</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Тази възможност изисква поддръжка на апаратен контрол на амплитудата, каквато липсва на устройството</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Тази възможност изисква поддръжка на апаратен контрол на амплитудата, каквато е налична от Android 8.0 и по-нов</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация при докосване на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация при задържане на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация при продължително задържане на клавиш</string>
@@ -245,25 +248,35 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните, превключващи редовете</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматично се разтваря/събира основния ред, на базата на състоянието</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Ред с допълнителни действия</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Въвеждане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Показване на предложения</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Показва предложения докато въвеждате</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Спиране на предполагаемо обидни думи</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ограничаване на предложенията от временната памет до</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Елементите, копирани последните {v} сек.</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично въвеждане на главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Използват се главни букви въз основа на контекста на въвеждане</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Автом. поставяне на интервал след пунктуац. знак</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматично се поставят интервали след пунктуационните знаци</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на клавиш Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
+    <string name="pref__spelling__title" comment="Preference group title">Поверка на правописа</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Правописмите грешки няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа в текстови полета. Докоснете, за да промените.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Използване на имената от контактите</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Търси в имената от списъка с контакти</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Търси в потребителските речници</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Потребителски речници</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Системен потребителски речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
@@ -421,6 +434,7 @@
     <string name="clipboard__group_other">Друго</string>
     <string name="clipboard__item_description_email">Електронна поща</string>
     <string name="clipboard__item_description_url">Адрес</string>
+    <string name="clipboard__item_description_phone">Телефон</string>
     <string name="clip__clear_history">Изчистване на историята</string>
     <string name="clip__unpin_item">Освобождаване</string>
     <string name="clip__pin_item">Закачане</string>
@@ -600,12 +614,20 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Къдрава коса</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Бял цвят на косата</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Без коса</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Директно управление на вибрация</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} директно управлява модула за вибрация. Това дава по-голям контрол върху продължителността и силата, но вибрацията може да не е толкова плавна и оптимизирана, колкото при използването на интерфейс за тактилна обратна връзка</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Интерфейс за тактилна обратна връзка</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} използва интерфейса за тактилна обратна връзка, за да задейства предварително зададени последователности от вибрации за натискане на клавиши. Може да работи изключително добре на някои устройства, но да е напълно неприемливо или да работи много лошо на други</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Акцентът е с приоритет</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е основния акцент или знака от подсказката ако няма акцент</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Посдсазката е с приоритет</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е знака от подсказката или основния акцент ако в подсказката няма знак</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Интелигентен приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Първоначално избраният знак при задържане на клавиш се определя между основния акцент или знака от подсказката на базата на текущия език и подредба</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Динамично се изпълняват звуци при събития на въвеждане, зависи от системните настройки</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Изпълняват се звуци при събития на въвеждане, независимо от системните настройки</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Динамична вибрация при събития на въвеждане, зависи от системните натройки</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Вибриране при събития на въвеждане, независимо от системните настройки</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Без Shift</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift (ръчно)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shift (автоматично)</string>
@@ -616,12 +638,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Над първия ред</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Добавя се втори ред между приложението и първия ред</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Под първия ред</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Добавя се втори ред между първия ред и клавиатурата</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Слой върху приложението</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Добавя се втори ред като плаващ слой над клавиатурата без да се увеличава височината ѝ. Имайте предвид, че по този начин полето за въвеждане може частично да бъде закрито</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>

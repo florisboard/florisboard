@@ -22,7 +22,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Gjenstander</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Innstillinger</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prøv oppsettet ditt</string>
@@ -66,7 +67,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Spill av lyder for input-hendelser, avhengig av systeminnstillinger</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lydvolum for input-hendelser</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastetrykk-lyder</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tastetrykklyder ved langt trykk</string>
@@ -75,7 +75,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sveipe-lyder</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptisk tilbakemelding / Vibrasjon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktiver haptisk tilbakemelding</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrer for input-hendelser, avhengig av systeminnstillinger</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>
@@ -311,7 +310,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Under primærrad</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Bruk systemspråk</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Bruk tastatur-undertyper</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>

@@ -22,7 +22,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Об\'єкти</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Символи</string>
     <string name="emoji__category__flags" comment="Emoji category name">Прапори</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Налаштування</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Довідка</string>

@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Emojîyên ku di demên dawî da hatine bikarînan nehatine dîtin. Piştî ku te dest bi tîpkirina emojîyan kir, dê li vir bi awayekî otomatîk xuya bibin.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Çapemeniya dirêj di demên dawî de emojî bikar anîn da ku wan ji vê nêrînê dîsa rakin!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Rakirin {emoji} ji emojiyên ku di demên dawî de hatine bikaranîn</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Mîhengan</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Sazkirina xwe biceribîne</string>
@@ -141,7 +142,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Deng &amp; Vibrasyon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Ji bo bûyerên têketinê dengan lê bide, girêdayî eyarên pergalê ye</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Deng ji bo bûyerên têketinê</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Dengên kilîta çapê</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Dengê kilîta dirêj ya çapameniyê</string>
@@ -150,7 +150,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Dengên bilez ên tevgerê nîşan dide</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Bersivdana haptîkî / Vibrasyon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Paşvegerên bextewar çalak bike</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrate ji bo bûyerên têketinê, girêdayî mîhengên pergalê</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Maweya tewrîbûnê</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Hêza tewrîbûnê</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrasyona çapemeniyê ya sereke</string>
@@ -397,12 +396,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Girtî</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Moda destê-çepê</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Moda destê-rastê</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">سەرەوە</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕووکەشی بەرنامەکەو ڕیزی یەکەم</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">خوارەوە</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">پیشاندانی ڕیزی دووەم لەنێوان ڕیزی یەکەم و تەختەکلیل</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">لەسەروی تەختەکلیل</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">پیشادانی ڕیزی دووەم لەسەروی تەختەکلیلەکە، بەبێ گەورەکردنی قەبارەی تەختەکلیل، لەوانەیە ھەندێ بەش بەباشی دەرنەکەون</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Bingehîn</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Pêşketî</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Pêşdebir</string>

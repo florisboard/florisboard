@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nie znaleziono ostatnio używanych emoji. Gdy zaczniesz wstawiać emoji, pojawią się one automatycznie tutaj.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Przytrzymaj ostatnio użyte emoji, aby usunąć je z tego widoku!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Usunięto {emoji} z ostatnio używanych emoji</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ustawienia</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Wypróbuj swoją konfigurację</string>
@@ -163,7 +164,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Dźwięki &amp; Wibracje</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Dźwięki</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Włącz feedback audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Odtwarzaj dźwięki dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Nigdy nie odtwarzaj dźwięku dla zdarzeń wejściowych, niezależnie od ustawień systemowych</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Głośność dźwięku dla zdarzeń wejściowych</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Dźwięki naciskania klawiszy</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Dźwięki długiego naciśnięcia klawisza</string>
@@ -172,9 +173,11 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Dźwięk przesuwania gestami</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback dotyku / Wibracje</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Włącz feedback dotyku</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Wibracje dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Nigdy nie wibruj dla zdarzeń wejściowych, niezależnie od ustawień systemowych</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Tryb Wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Czas trwania wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Siła wibracji</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Ta funkcja wymaga fizycznego wibratora, którego to urządzenie nie posiada</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ta funkcja wymaga obsługi sprzętowej kontroli amplitudy, której brakuje na Twoim urządzeniu</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Ta funkcja wymaga obsługi kontroli amplitudy, która jest dostępna tylko w systemie Android 8.0 lub nowszym</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Wibracja po naciśnięciu klawisza</string>
@@ -219,9 +222,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Odwróć przyciski przełączania</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Odwraca wiersze akcji</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatycznie rozwiń/zwiń</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automatycznie rozwiń/zwiń podstawowy wiersz akcji w oparciu o bieżący stan</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Pokaż dodatkowy pasek akcji</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Tryb wyświetlania sugestii</string>
@@ -570,24 +570,26 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Kręcone włosy</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Białe włosy</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Łysy</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Użyj wibratora bezpośrednio</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} bezpośrednio kontroluje domyślny fizyczny wibrator. Daje to możliwość większej kontroli nad długością i siłą wibracji, ale wibracje mogą nie być tak samo gładkie i zoptymalizowane pod to fizyczne urządzenie</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Użyj interfejsu z haptycznym sprzężeniem zwrotnym</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} używa interfejsu z haptycznym sprzężeniem zwrotnym, aby wyzwolić predefiniowaną sekwencję wibracji na naciśnięcie klawisza. To może działać bardzo dobrze na niektórych urządzeniach, a na innych bardzo źle</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Akcent ma priorytet</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest zawsze głównym akcentem lub symbolem podpowiedzi, jeśli nie ma akcentu</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Podpowiedź ma priorytet</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest zawsze symbolem podpowiedzi lub głównym akcentem, jeśli nie jest dostępny symbol podpowiedzi</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Inteligentna priorytetyzacja</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest dynamicznie określany jako główny akcent lub symbol podpowiedzi, w oparciu o bieżący język i układ</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamicznie odtwarzaj dźwięki dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Zawsze odtwarzaj dźwięk dla zdarzeń wejściowych, niezależnie od ustawień systemowych</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dynamicznie wibruj dla zdarzeń wejściowych, w zależności od ustawień systemu</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Zawsze wibruj dla zdarzeń wejściowych, niezależnie od ustawień systemowych</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nigdy nie pokazuj</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Zawsze pokazuj</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Pokazuj dynamicznie</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Wyłącz</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Tryb lewej ręki</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Tryb prawej ręki</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Nad główną linią</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Umieszcza drugą linię między interfejsem aplikacji a linią główną</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Pod główną linią</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Umieszcza drugą linię między linią główną a klawiaturą</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Nakładka interfejsu aplikacji</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Umieszcza drugą linię jako nakładkę nad klawiaturą bez zmieniani rozmiaru interfejsu klawiatury. Pamiętaj, że to miejsce może spowodować częściowe zakrycie pola do wpisywania tekstu w innej aplikacji</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Podstawowy</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Tylko właściwości kolorów są wyświetlane, właściwości i reguły są tłumaczone.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Zaawansowane</string>

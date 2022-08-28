@@ -28,7 +28,8 @@
     <string name="emoji__category__flags" comment="Emoji category name">깃발</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">최근에 사용한 이모지가 없습니다. 이모지를 입력하기 시작하면 여기에 자동으로 표시됩니다.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji}가 최근 사용 기록에서 삭제되었습니다</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">설정</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">설정을 사용해 보세요.</string>
@@ -73,7 +74,6 @@
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한 손 조작 모드</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한 손 조작 모드 키보드 너비</string>
     <!-- Smartbar strings -->
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">자동 확장/축소</string>
     <!-- Typing strings -->
     <!-- About UI strings -->
     <string name="about__view_source_code" comment="Label of View source code button in About">소스 코드</string>

@@ -18,7 +18,8 @@
     <string name="emoji__category__animals_nature" comment="Emoji category name">Zvieratá &amp; Príroda</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Potraviny a nápoje</string>
     <string name="emoji__category__travel_places" comment="Emoji category name">Cestovanie &amp; Miesta</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie je v systéme povolený, a preto nebude k dispozícii, ako metóda zadávania v ponuke na výber vstupov. Kliknutím sem tento problém vyriešite.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie je vybraný, ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešite.</string>

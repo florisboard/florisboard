@@ -29,7 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nem található mostanában használt emoji. Az emojik automatikusan megjelennek itt, amint elkezdi őket beírni.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Profi tipp: nyomjon hosszan a mostanában használt emojikra, hogy eltávolítsa őket ebből a nézetből!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} eltávolítva a mostanában használt emojik közül</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Beállítások</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Próbálja ki a beállításait</string>
@@ -110,6 +111,7 @@
     <string name="snygg__rule_element__key_popup">Felugró billentyű</string>
     <string name="snygg__rule_element__clipboard_header">Vágólap fejléc</string>
     <string name="snygg__rule_element__clipboard_item">Vágólap elem</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Felugró vágólapelem</string>
     <string name="snygg__rule_element__glide_trail">Csúszási nyomvonal</string>
     <string name="snygg__rule_element__one_handed_panel">Egykezes panel</string>
     <string name="snygg__rule_selector__pressed">Lenyomott</string>
@@ -156,6 +158,7 @@
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Ismételt billentyűművelet hangja</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptikus visszajelzés / vibráció</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptikus visszajelzés engedélyezése</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Rezgés mód</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Rezgés időtartama</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Gombnyomás rezgése</string>
@@ -165,6 +168,7 @@
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">pl. felugró menü</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">pl. törlés gomb</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nincs implementálva</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">pl. kurzor húzás</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Billentyűzet</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Számsor megjelenítése a karakterelrendezés felett</string>
@@ -183,28 +187,36 @@
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Gomb térköz</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alsó eltolás</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
-    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Nagyobb gomb megjelenítése gombnyomáskor</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Felugró gomb megjelenítése</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Felugró gomb megjelenítése gombnyomáskor</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz karaktert vált</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatikus kinyitás/becsukás</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automatkusan kinyitja becsukja az elsődleges műveletsávot a jelenlegi állapotnak megfelelően</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Másodlagos műveletsor megjelenítése</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Gépelés</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Javaslatok megjelenítése</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Javaslatokat szolgáltat, miközben gépel</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Javaslatok megjelenítési módja</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Esetlegesen sértő szavak blokkolása</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Vágólap tartalom javaslatok</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Vágólap korábban másolt tarttalmának javaslata</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Vágólapjavaslatok korlátozása ennyire:</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatikus szóköz pont után</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock állapot megjegyzése</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha mozog egy másik szövegmezőbe</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
+    <string name="pref__spelling__title" comment="Preference group title">Helyesírás</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Rendszerszintű kikapcsolás. Nem fognak piros vonalak megjelenni a szövegmezőkben a hibás szavak alatt. Érintse meg a változtatáshoz.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Nyelvek</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Nevek használata a névjegyek közül</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Felhasználói szótárbejegyzések használata</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Felhasználói szótárak</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Rendszer felhasználói szótárának engedélyezése</string>
@@ -219,6 +231,7 @@
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Rendszer felhasználói szótár</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Ez a felhasználói szótár egyetlen szót sem tartalmaz.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Gyakoriság: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Gyakoriság: {freq} | Rövidítés: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Az összes nyelvhez</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Rendszerkezelő felület megnyitása</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Felhasználói szótár sikeresen importálva!</string>
@@ -227,6 +240,8 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Szó szerkesztése</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Szó</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Adjon meg egy szót</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Gyakoriság ({f_min} és {f_max} között)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Adjon meg egy gyakoriság értéket</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Adjon meg egy egyező szót: {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Nyelvkód (opcionális)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesztusok és csúsztatott gépelés</string>
@@ -238,6 +253,7 @@
     <string name="pref__glide_trail_fade_duration">Nyomvonal elhalványulási ideje</string>
     <string name="pref__glide_preview_refresh_delay">Frissítési késleltetés megtekintése</string>
     <string name="pref__glide__show_preview">Előnézet megjelenítése csúsztatott gépelés közben</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Mindig szót töröljön</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Általános gesztusok</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Szóköz gesztusok</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Egyéb gesztusok / gesztusküszöb</string>
@@ -342,6 +358,9 @@
     <string name="clipboard__group_pinned">Kitűzött</string>
     <string name="clipboard__group_recent">Legutóbbi</string>
     <string name="clipboard__group_other">Egyéb</string>
+    <string name="clipboard__item_description_email">Email</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Telefon</string>
     <string name="clip__clear_history">Előzmények törlése</string>
     <string name="clip__unpin_item">Elem levétele</string>
     <string name="clip__pin_item">Elem kitűzése</string>
@@ -373,6 +392,7 @@
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Eszközök kifejezetten hibakereséshez és hibaelhárításhoz</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Heap memória statisztika megjelenítése</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Elsődleges vágólap megjelenítése</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Helyesírási átfedés megjelenítése</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Billentyűérintési határok megjelenítése</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Billentyű érintési határok körvonalának vörös kiemelése</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">{flag_name} zászló visszaállítása</string>
@@ -476,6 +496,7 @@
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasszikus (3 oszlopos)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dinamikus szélesség</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamikus szélesség és görgethető</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimális</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Vörös zöld kék alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Megjelenítés mindig</string>
@@ -497,28 +518,30 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Göndör haj</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Ősz haj</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Kopasz</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Soha ne jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mindig jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamikus megjelenítés</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ki</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Balkezes mód</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Jobbkezes mód</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Elsődleges sor felett</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Elsődleges sor alatt</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Másodlagos sor elhelyezése az elsődleges sor és a billentyűzet között</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Felső kezdet</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Felső vég</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Alsó vég</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Alap</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Csak a színtulajdonságok jelennek meg, a tulajdonságok és szabályok le vannak fordítva.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Haladó</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Minden tulajdonság megjelenik, a tulajdonságok és szabályok le vannak fordítva.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Fejlesztő</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Minden tulajdonság megjelenik, a tulajdonságok és szabályok úgy jelennek meg, ahogyan a stíluslap fájlban szerepelnek.</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Rendszernyelvek használata</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Billentyűzet altípusok használata</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nincs művelet</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Váltás az előző billentyűzetmódra</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Váltás a következő billentyűzetmódra</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Karakter törlése a kurzor előtt</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Karakterek pontos törlése</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Szó törlése a kurzor előtt</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Szavak pontos törlése</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Billentyűzet elrejtése</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Szóköz beszúrása</string>

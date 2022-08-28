@@ -29,7 +29,57 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">没有最近使用的表情符号。开始使用表情符号后，它们会自动在这里出现。</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">提示：长按最近使用的表情符号可以将它从这里移除。</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">已将 {emoji} 从最近使用的表情符号中移除</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">向上键</string>
+    <string name="quick_action__arrow_up__tooltip">执行向上方向键</string>
+    <string name="quick_action__arrow_down" maxLength="12">向下键</string>
+    <string name="quick_action__arrow_down__tooltip">执行向下方向键</string>
+    <string name="quick_action__arrow_left" maxLength="12">向左键</string>
+    <string name="quick_action__arrow_left__tooltip">执行向左方向键</string>
+    <string name="quick_action__arrow_right" maxLength="12">向右键</string>
+    <string name="quick_action__arrow_right__tooltip">执行向右方向键</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">清除主要剪贴板条目</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">执行清除主要剪贴板条目</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">复制</string>
+    <string name="quick_action__clipboard_copy__tooltip">执行剪贴板复制</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">剪切</string>
+    <string name="quick_action__clipboard_cut__tooltip">执行剪贴板剪切</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">粘贴</string>
+    <string name="quick_action__clipboard_paste__tooltip">执行剪贴板粘贴</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">全选</string>
+    <string name="quick_action__clipboard_select_all__tooltip">执行剪贴板全选</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">剪贴板</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">打开剪贴板历史</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">表情符号</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">打开表情符号面板</string>
+    <string name="quick_action__settings" maxLength="12">设置</string>
+    <string name="quick_action__settings__tooltip">打开设置</string>
+    <string name="quick_action__undo" maxLength="12">撤销</string>
+    <string name="quick_action__undo__tooltip">撤销上次输入</string>
+    <string name="quick_action__redo" maxLength="12">恢复</string>
+    <string name="quick_action__redo__tooltip">恢复上次输入</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">更多操作</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">显示或隐藏其他操作</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">无痕模式</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">无痕模式开关</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">自动更正</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">自动更正开关</string>
+    <string name="quick_action__voice_input" maxLength="12">语音输入</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">打开语音输入提供者</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">单手模式</string>
+    <string name="quick_action__one_handed_mode__tooltip">单手模式开关</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">拖动标记</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">当前拖动标记位置</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无操作</string>
+    <string name="quick_actions_overflow__customize_actions_button">重新排列操作</string>
+    <string name="quick_actions_editor__header">自定义操作顺序</string>
+    <string name="quick_actions_editor__subheader_sticky_action">置顶操作 ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">动态操作 ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">隐藏操作 ({n})</string>
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">无痕模式现已启用\n\n{app_name} 在此模式处于启用状态时不会从您的输入中学习词条</string>
+    <string name="incognito_mode__toast_after_disabled">无痕模式现已默认禁用</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">设置</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">试用您的配置</string>
@@ -127,7 +177,7 @@
     <string name="snygg__rule_element__key">键</string>
     <string name="snygg__rule_element__key_hint">键提示</string>
     <string name="snygg__rule_element__key_popup">键弹出</string>
-    <string name="snygg__rule_element__clipboard_header">剪贴板顶栏</string>
+    <string name="snygg__rule_element__clipboard_header">剪贴板标题</string>
     <string name="snygg__rule_element__clipboard_item">剪贴板条目</string>
     <string name="snygg__rule_element__clipboard_item_popup">剪贴板条目弹出</string>
     <string name="snygg__rule_element__emoji_key">表情符号键</string>
@@ -137,7 +187,20 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">横向输入框</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">横向输入框操作</string>
     <string name="snygg__rule_element__glide_trail">滑动轨迹</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">无痕模式指示器</string>
     <string name="snygg__rule_element__one_handed_panel">单手面板</string>
+    <string name="snygg__rule_element__smartbar">智能栏</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">智能栏共用操作行</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">智能栏共用操作开关按钮</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">智能栏扩展操作行</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">智能栏扩展操作开关按钮</string>
+    <string name="snygg__rule_element__smartbar_action_key">智能栏操作键</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">智能栏更多操作</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">智能栏更多操作自定义按钮</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">智能栏操作编辑器</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">智能栏操作编辑器标题</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">智能栏操作编辑器副标题</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">智能栏候选行</string>
     <string name="snygg__rule_element__smartbar_candidate_word">智能栏候选词</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>
@@ -189,7 +252,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">声音 &amp; 振动</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">声音反馈 / 声音</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">启用声音反馈</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">输入事件时播放声音，视系统设置而定</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">输入事件时从不播放声音，忽略系统设置</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">输入事件音量</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">按键声音</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">长按键声音</string>
@@ -198,10 +261,12 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">手势移动滑动声音</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触感反馈 / 振动</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">使用触感反馈</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">输入事件时振动，视系统设置而定</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">输入事件时从不振动，忽略系统设置</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">振动模式</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">振动持续时间</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">振动强度</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">此功能需要硬件振幅控制支持，您的设备上缺少此功能</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">此功能需要硬件振动器，此设备上似乎缺少此部件</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">此功能需要硬件振幅控制支持，您的设备上缺少该支持</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">此功能需要振幅控制支持，仅适用于安卓8.0或更高版本</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">按键振动</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">长按键振动</string>
@@ -243,11 +308,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">智能栏</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">启用智能栏</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">将显示在键盘顶部</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">布局</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">特定布局的选项</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">翻转开关按钮位置</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">翻转操作栏开关按钮位置</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">自动展开 / 折叠</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠主要操作行</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">显示次要操作行</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">根据当前状态自动展开 / 折叠共用操作行</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">操作行位置</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">键入</string>
     <string name="pref__suggestion__title" comment="Preference group title">建议</string>
@@ -316,7 +383,7 @@
     <string name="pref__glide_trail_fade_duration">滑动轨迹淡出时间</string>
     <string name="pref__glide_preview_refresh_delay">预览更新延迟</string>
     <string name="pref__glide__show_preview">滑动输入时显示预览</string>
-    <string name="pref__glide__immediate_backspace_deletes_word__label">总是删除单词</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">始终删除单词</string>
     <string name="pref__glide__immediate_backspace_deletes_word__summary">手势滑动后紧接着按删除键删除整个单词</string>
     <string name="pref__gestures__general_title" comment="Preference group title">通用手势</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">空格键手势</string>
@@ -342,6 +409,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">设置语言</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">在启动器中显示应用图标</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">由于系统限制，在安卓 10+ 上始终启用</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">无痕模式</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">关于</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 的应用图标</string>
@@ -476,6 +544,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">叠加显示当前拼写结果，调试用</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">显示按键触摸边界</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">用红色线显示出按键触摸边界</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">显示拖放辅助项</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">在拖放界面中显示本来不可见的辅助项以进行调试</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">清空内部用户词典数据库</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">从词典数据库表中清除所有词语</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">重置“{flag_name}”标志</string>
@@ -614,12 +684,32 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} 卷发</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} 白发</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} 光头</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">候选行上方</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">将扩展操作行放置在应用界面和候选行之间</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">候选行下方</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">将扩展操作行放置在候选行和键盘文本之间</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">将扩展操作行作为应用界面上的叠加层显示，而不影响键盘界面高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">直接使用振动器</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} 直接与默认的硬件振动器交互。 这可以更好地控制振动的持续时间和强度，但振动可能不像使用触觉反馈接口那样平滑和精良</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">使用触觉反馈接口</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} 使用触觉反馈接口触发预定义的按键振动序列。这可能在某些设备上运行得非常好，但在其他设备上完全失败或表现很差</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">重音优先</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">长按后自动选择的字符始终是主重音，如果没有主重音可用，则为提示符号</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">提示优先</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">长按后自动选择的字符始终是提示符号，如果没有提示符号可用，则为主重音</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">智能优先</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">长按后自动选择的字符根据当前语言和布局，动态决定是主重音还是提示符号</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">强制关闭</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">无论目标应用传递什么选项，无痕模式将始终被禁用。 使用此选项时，智能栏中的无痕模式快捷操作将无法使用。</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">强制开启</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">无论目标应用传递什么选项，无痕模式将始终被启用。 使用此选项时，智能栏中的无痕模式快捷操作将无法使用。</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">动态开 / 关</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">推荐的选项。 根据目标应用传递的选项，或根据手动开关智能栏中的无痕模式快捷操作，来动态切换启用或禁用。</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">输入事件时动态判断是否播放声音，视系统设置而定</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">输入事件时始终播放声音，忽略系统设置</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">输入事件时动态判断是否振动，视系统设置而定</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">输入事件时始终振动，忽略系统设置</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">未 Shift</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">已 Shift（手动）</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">已 Shift（自动）</string>
@@ -630,16 +720,18 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">关闭</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">左手模式</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">右手模式</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">主要行上方</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">将次要行放置在应用界面和主要行之间</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">主要行下方</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">将次要行放置在主要行和键盘文本之间</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">应用界面上叠加显示</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">将次要行作为应用界面上的叠加层显示，而不影响键盘 UI 高度。请注意，这个显示位置可能会导致应用输入框被部分覆盖</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">顶部起始</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">顶部末尾</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">底部末尾</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">底部起始</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">只有建议</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">仅显示候选行，没有任何操作行、操作行开关或置顶操作</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">只有操作</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">仅显示操作行，没有候选行或置顶操作</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">建议和操作共用一行</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">建议和操作可切换，共用一行，含置顶操作</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">建议和操作扩展两行</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">静态候选行外加可开关的操作行，含置顶操作</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">基本</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">仅显示颜色属性，属性和规则显示翻译。</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">高级</string>
@@ -675,7 +767,7 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">切换到上一个键盘</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">切换到上一个键盘子类型</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">切换到下一个键盘子类型</string>
-    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">切换智能栏是否可见</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">智能栏显示开关</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">始终日间模式</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">始终夜间模式</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">跟随系统设置</string>

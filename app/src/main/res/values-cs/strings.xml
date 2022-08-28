@@ -29,7 +29,57 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenalezeny žádné nedávno použité emoji. Jakmile je začnete psát, objeví se automaticky zde.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tip: Stiskněte a držte prst na naposledy použitých emoji pro jejich odebrání z daného seznamu!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Emoji {emoji} bylo odebráno z nedávno použitých</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Šipka nahoru</string>
+    <string name="quick_action__arrow_up__tooltip">Vykonat šipku nahoru</string>
+    <string name="quick_action__arrow_down" maxLength="12">Šipka dolů</string>
+    <string name="quick_action__arrow_down__tooltip">Vykonat šipku dolů</string>
+    <string name="quick_action__arrow_left" maxLength="12">Šipka vlevo</string>
+    <string name="quick_action__arrow_left__tooltip">Vykonat šipku vlevo</string>
+    <string name="quick_action__arrow_right" maxLength="12">Šipka vpravo</string>
+    <string name="quick_action__arrow_right__tooltip">Vykonat šipku vpravo</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Vy. p. k. s.</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vykonat vymazání primárního klipu schránky</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopírovat</string>
+    <string name="quick_action__clipboard_copy__tooltip">Vykonat kopírování do schránky</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Vyjmout</string>
+    <string name="quick_action__clipboard_cut__tooltip">Vykonat vyjmutí do schránky</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Vložit</string>
+    <string name="quick_action__clipboard_paste__tooltip">Vykonat vložení schránky</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Vybrat vše</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Vykonat vybrání všeho do schránky</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schránka</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otevřít historii schránky</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Otevřít panel emoji</string>
+    <string name="quick_action__settings" maxLength="12">Nastavení</string>
+    <string name="quick_action__settings__tooltip">Otevřít nastavení</string>
+    <string name="quick_action__undo" maxLength="12">Vrátit zpět</string>
+    <string name="quick_action__undo__tooltip">Vrátit zpět poslední vstup</string>
+    <string name="quick_action__redo" maxLength="12">Znovu</string>
+    <string name="quick_action__redo__tooltip">Provést znovu poslední vstup</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Další akce</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Zobrazit nebo skrýt další akce</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Anonymní</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Přepnout anonymní režim</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Auto-oprava</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Přepnout automatickou opravu</string>
+    <string name="quick_action__voice_input" maxLength="12">Hlas. vstup</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Otevřít poskytovatele hlasového zadávání</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Jedna ruka</string>
+    <string name="quick_action__one_handed_mode__tooltip">Přepnout režim jedné ruky</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Značka přes.</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Aktuální pozice značky přesouvání</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Žádné</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Žádná operace</string>
+    <string name="quick_actions_overflow__customize_actions_button">Změnit pořadí akcí</string>
+    <string name="quick_actions_editor__header">Přizpůsobit pořadí akcí</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Připnutá akce ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamické akce ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Skrýt akce ({n})</string>
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Anonymní režim je nyní povolen\n\nV tomto režimu se {app_name} nebude učit slova z vašeho zadávání</string>
+    <string name="incognito_mode__toast_after_disabled">Anonymní režim je nyní ve výchozím nastavení zakázán</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Nastavení</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Vyzkoušejte své nastavení</string>
@@ -137,7 +187,21 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">Pole vstupu na šířku</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Akce vstupu na šířku</string>
     <string name="snygg__rule_element__glide_trail">Stopa tahu</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Indikátor anonymního režimu</string>
     <string name="snygg__rule_element__one_handed_panel">Režim jedné ruky</string>
+    <string name="snygg__rule_element__smartbar">Chytrá lišta</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Řádek sdílených akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Přepínač sdílených akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Řádek rozšířených akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Přepínač rozšířených akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_action_key">Akční klávesa chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Akční dlaždice chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Přetečení akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Tlačítko přizpůsobení přetečení akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Editor akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Záhlaví editoru akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Podzáhlaví editoru akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Řádek navrhnutých slov chytré lišty</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutá položka v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
@@ -189,7 +253,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky &amp; Vibrace</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Zvuková odezva / zvuky</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Povolit zvukovou odezvu</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Přehrávat zvuky při vstupních událostech, záleží na nastavení systému</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Nikdy nepřehrávat zvuky při vstupních událostech, nezávisle na nastavení systému</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Hlasitost zvuku pro vstupní události</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvuky stisku klávesy</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Zvuky dlouhého stisku klávesy</string>
@@ -198,9 +262,11 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Zvuky přejíždění gestem</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Hmatová odezva / vibrace</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Povolit hmatovou odezvu</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Vibrovat při vstupních událostech, záleží na nastavení systému</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Nikdy nevibrovat při vstupních událostech, nezávisle na nastavení systému</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Režim vibrací</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trvání vibrací</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Síla vibrací</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Tato funkce vyžaduje hardwarové vibrační zařízení, které na tomto zařízení nejspíše chybí</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tato funkce vyžaduje hardwarovou podporu řízení amplitudy, která ve vašem zařízení chybí</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Tato funkce vyžaduje podporu řízení amplitudy, která je dostupná pouze na systému Android 8.0 nebo vyšším</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrace při stisku klávesy</string>
@@ -243,11 +309,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Rozložení</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Předvolby pro konkrétní rozložení</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Přehodit přepínací tlačítka</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Prohodí přepínače řádku akcí</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozšíření/sbalení</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí primární řádek akcí v závislosti na současném stavu</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Zobrazit sekundární řádek akcí</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozšíří/sbalí řádek sdílených akcí v závislosti na současném stavu</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Umístění akčního řádku</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Psaní</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
@@ -342,6 +410,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Anonymní režim</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>
@@ -434,6 +503,7 @@
     <string name="clipboard__group_other">Ostatní</string>
     <string name="clipboard__item_description_email">E-mail</string>
     <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Telefon</string>
     <string name="clip__clear_history">Smazat historii</string>
     <string name="clip__unpin_item">Odepnout položku</string>
     <string name="clip__pin_item">Připnout položku</string>
@@ -475,6 +545,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Zobrazí aktuální výsledky pravopisu pro ladění</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Zobrazit hranice dotyku kláves</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Zobrazit červené ohraničení hranic dotyku kláves</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Zobrazit pomocníky drag&amp;drop</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Vykreslit jinak neviditelné pomocíky v obrazovkách se systémem drag&amp;drop pro ladění</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Vymazat interní databázi uživatelského slovníku</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Vymaže všechna slova z tabulky databáze slovníku</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Resetovat vlajku \"{flag_name}\"</string>
@@ -613,12 +685,32 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Kurdnaté vlasy</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Bílé vlasy</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Pleš</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Nad navrženými slovy</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Umístí řádek rozšířených akcí mezi UI aplikace a řádek navrhnutých slov</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Pod navrhnutými slovy</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Umístí řádek rozšířených akcí mezi řádek s navrhnutými slovy a textovou klávesnici</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Překrýt rozhraní aplikace</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Umístí řádek rozšířených akcí jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Použít přímo vibrační zařízení</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} přímo interaguje s výchozím hardwarovým vibračním zařízením. Díky tomu má aplikace větší kontrolu nad délkou a sílou vibrace, ale kvůli tomu nemusí být vibrace tak hladká a optimalizovaná jako při použití rozhraní haptické odezvy</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Použít rozhraní haptické odezvy</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} používá rozhraní haptické odezvy pro spuštění přednastavené sekvence vibrací při stisku kláves. Toto může na některých zařízeních fungovat naprosto bez problémů, ale také naprosto selhat na jiných</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Prioritu má přízvuk</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku má vždy primární přízvuk, nebo znak nápovědy, když není dostupný primární přízvuk</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Prioritu má nápověda</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku je vždy znak nápovědy, nebo primární přízvuk, když není dostupný symbol nápovědy</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Chytrá prioritizace</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku je dynamicky vybrán, zda bude primárním přízvukem, nebo o symbolem nápovědy, a to na základě aktuálního jazyka a rozložení</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Vynutit vypnutí</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Anonymní režim bude vždy zakázán, nehledě na požadavky cílové aplikace. S touto možností nebude v chytré liště zobrazena rychlá akce anonymního režimu.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Vynutit zapnutí</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Anonymní režim bude vždy povolen, nehledě na požadavky cílové aplikace. S touto možností nebude v chytré liště zobrazena rychlá akce anonymního režimu.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamicky zap/vyp</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Doporučená možnost. Anonymní režim bude dynamicky povolen nebo zakázán podle požadavků aplikace nebo při ručním přepnutí přes akci anonymního režimu v chytré liště.</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamicky přehrávat zvuky při vstupních událostech, záleží na nastavení systému</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Vždy přehrávat zvuky při vstupních událostech, nezávisle na nastavení systému</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dynamicky vibrovat při vstupních událostech, záleží na nastavení systému</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Vždy vibrovat při vstupních událostech, nezávisle na nastavení systému</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Bez shiftu</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Se shiftem (manuální)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Se shiftem (automatické)</string>
@@ -629,16 +721,18 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Vypnuto</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Nad primárním řádkem</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Umístí sekundární řádek mezi rozhraní aplikace a primární řádek</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Pod primárním řádkem</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Umístí sekundární řádek mezi primární řádek a textovou klávesnici</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Překrýt zozhraní aplikace</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Umístí sekundární řádek jako překrytí nad UI aplikace, bez ovlivnění výšky rozhraní klávesnice. Vezměte prosím na vědomí, že toto umístění může způsobit částečné překreslení vstupního pole aplikace</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Vpravo nahoře</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Vpravo dole</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Vlevo dole</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Pouze návrhy</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Zobrazí pouze řádek navržených slov, bez žádného akčního řádku/přepínače nebo připnuté akce</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Pouze akce</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Zobrazí pouze řádek akcí, bez řádku navržených slov nebo explicitní připnuté akce</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Sdílené návrhy a akce</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Řádek sdílených přepínatelných navržených slov a akcí, s připnutou akcí</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Rozšířené návrhy a akce</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Statický řádek navržených slov s dodatečným přepínatelným řádkem akcí, s připnutou akcí</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Základní</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Jsou zobrazeny pouze vlastnosti barev, vlastnosti a pravidla jsou přeloženy.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Pokročilé</string>

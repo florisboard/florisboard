@@ -29,7 +29,15 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Список недавних эмодзи пуст. Как только вы начнете их использовать, они автоматически появятся здесь.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: удержите палец на недавнем эмодзи, чтобы скрыть его!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} скрыт из недавних эмодзи</string>
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_down" maxLength="12">Стрелка вниз</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Копировать</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Вырезать</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Вставить</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер обмена</string>
+    <string name="quick_action__settings" maxLength="12">Настройки</string>
+    <string name="quick_action__undo" maxLength="12">Отменить</string>
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Протестируйте свои настройки</string>
@@ -189,7 +197,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Не воспроизводить звуки при вводе вне зависимости от системных настроек</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Громкость звука при вводе</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук нажатия кнопки</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук долгого нажатия кнопки</string>
@@ -198,9 +206,11 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Звук жестов перетаскивания</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Виброотклик / вибрация</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Использовать виброотклик</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Вибрирация при вводе в зависимости от системных настроек</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Не использовать вибрацию при вводе вне зависимости от системных настроек</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Режим вибрации</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продолжительность вибрации</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила вибрации</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Для этой функции требуется вибромотор, который, по-видимому, отсутствует на данном устройстве</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Эта функция требует аппаратной поддержки управления амплитудой, которая отсутствует на вашем устройстве</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Эта функция требует поддержки управления амплитудой, которая доступна только на Android 8.0 или новее</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация нажатия кнопки</string>
@@ -245,9 +255,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Поменять местами кнопки переключения</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Поменять местами переключатели строки действий</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
-    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое разворачивание/сворачивание основной строки действия в зависимости от текущего состояния</string>
-    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Показывать строку дополнительных действий</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Набор текста</string>
     <string name="pref__suggestion__title" comment="Preference group title">Подсказки</string>
@@ -614,12 +621,20 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Вьющиеся волосы</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Светлые волосы</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Без волос</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Использовать вибромотор напрямую</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} будет напрямую взаимодействовать с аппаратным вибромотором. Это даёт больший контроль над продолжительностью и силой вибрации, но вибрация может быть не такой плавной и оптимизированной, как при использовании интерфейса тактильной обратной связи.</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Использовать интерфейс тактильной обратной связи</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} будет использовать системный интерфейс тактильной обратной связи для запуска заданной вибраций при нажатии кнопок. Может работать исключительно хорошо на одних устройствах, но не работать или работать очень плохо на других.</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является основным акцентом или символом подсказки, если основной акцент недоступен</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Приоритет подсказке</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является символом подсказки или основным акцентом, если символ подсказки недоступен</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Умный приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, динамически определяется как основной акцент или символ подсказки, основываясь на текущем языке и раскладке</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Воспроизводить звуки при вводе вне зависимости от системных настроек</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Использовать вибрацию при вводе в зависимости от системных настроек</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Использовать вибрацию при вводе вне зависимости от системных настроек</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Без сдвига</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Сдвиг (вручную)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Сдвиг (авто)</string>
@@ -630,12 +645,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Отключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Для левши</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Для правши</string>
-    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Над основным рядом</string>
-    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Дополнительный ряд размещается между пользовательским интерфейсом приложения и основным рядом</string>
-    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Под основным рядом</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Дополнительный ряд размещается между основным рядом и текстовой клавиатурой</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Наложение над приложением</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Дополнительный ряд отображается в виде наложения над пользовательским интерфейсом приложения, не влияя на результирующую высоту интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к частичному переполнению поля ввода приложения.</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Верх начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
