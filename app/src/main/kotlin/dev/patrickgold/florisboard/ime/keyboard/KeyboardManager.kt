@@ -122,47 +122,49 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     ).also { it.keyEventReceiver = this }
 
     init {
-        resources.anyChanged.observeForever {
-            updateActiveEvaluators {
-                keyboardCache.clear()
+        scope.launch(Dispatchers.Main.immediate) {
+            resources.anyChanged.observeForever {
+                updateActiveEvaluators {
+                    keyboardCache.clear()
+                }
             }
-        }
-        prefs.keyboard.numberRow.observeForever {
-            updateActiveEvaluators {
-                keyboardCache.clear(KeyboardMode.CHARACTERS)
+            prefs.keyboard.numberRow.observeForever {
+                updateActiveEvaluators {
+                    keyboardCache.clear(KeyboardMode.CHARACTERS)
+                }
             }
-        }
-        prefs.keyboard.hintedNumberRowEnabled.observeForever {
-            updateActiveEvaluators()
-        }
-        prefs.keyboard.hintedSymbolsEnabled.observeForever {
-            updateActiveEvaluators()
-        }
-        prefs.keyboard.utilityKeyEnabled.observeForever {
-            updateActiveEvaluators()
-        }
-        activeState.observeForever {
-            updateActiveEvaluators()
-        }
-        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
-            reevaluateInputShiftState()
-            updateActiveEvaluators()
-        }
-        clipboardManager.primaryClipFlow.collectLatestIn(scope) {
-            updateActiveEvaluators()
-        }
-        editorInstance.activeContentFlow.collectIn(scope) { content ->
-            if (!activeState.isComposingEnabled) {
-                nlpManager.clearSuggestions()
-                return@collectIn
+            prefs.keyboard.hintedNumberRowEnabled.observeForever {
+                updateActiveEvaluators()
             }
-            nlpManager.suggest(subtypeManager.activeSubtype, content)
-        }
-        prefs.devtools.enabled.observeForever {
-            reevaluateDebugFlags()
-        }
-        prefs.devtools.showDragAndDropHelpers.observeForever {
-            reevaluateDebugFlags()
+            prefs.keyboard.hintedSymbolsEnabled.observeForever {
+                updateActiveEvaluators()
+            }
+            prefs.keyboard.utilityKeyEnabled.observeForever {
+                updateActiveEvaluators()
+            }
+            activeState.observeForever {
+                updateActiveEvaluators()
+            }
+            subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
+                reevaluateInputShiftState()
+                updateActiveEvaluators()
+            }
+            clipboardManager.primaryClipFlow.collectLatestIn(scope) {
+                updateActiveEvaluators()
+            }
+            editorInstance.activeContentFlow.collectIn(scope) { content ->
+                if (!activeState.isComposingEnabled) {
+                    nlpManager.clearSuggestions()
+                    return@collectIn
+                }
+                nlpManager.suggest(subtypeManager.activeSubtype, content)
+            }
+            prefs.devtools.enabled.observeForever {
+                reevaluateDebugFlags()
+            }
+            prefs.devtools.showDragAndDropHelpers.observeForever {
+                reevaluateDebugFlags()
+            }
         }
     }
 
@@ -811,8 +813,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         val anyChanged = MutableLiveData(Unit)
 
         init {
-            extensionManager.keyboardExtensions.observeForever { keyboardExtensions ->
-                parseKeyboardExtensions(keyboardExtensions)
+            scope.launch(Dispatchers.Main.immediate) {
+                extensionManager.keyboardExtensions.observeForever { keyboardExtensions ->
+                    parseKeyboardExtensions(keyboardExtensions)
+                }
             }
         }
 
