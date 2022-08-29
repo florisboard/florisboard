@@ -52,8 +52,13 @@ fun QuickActionsOverflowPanel() {
     val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
     val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
 
-    val dynamicActionsCountToShow = (actionArrangement.dynamicActions.size -
-        keyboardManager.smartbarVisibleDynamicActionsCount).coerceIn(actionArrangement.dynamicActions.indices)
+    val dynamicActions = actionArrangement.dynamicActions
+    val dynamicActionsCountToShow = when {
+        dynamicActions.isEmpty() -> 0
+        else -> {
+            (dynamicActions.size - keyboardManager.smartbarVisibleDynamicActionsCount).coerceIn(dynamicActions.indices)
+        }
+    }
     val visibleActions = remember(actionArrangement, dynamicActionsCountToShow) {
         actionArrangement.dynamicActions.takeLast(dynamicActionsCountToShow)
     }
