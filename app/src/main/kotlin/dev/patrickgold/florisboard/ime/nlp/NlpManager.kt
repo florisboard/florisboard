@@ -93,6 +93,9 @@ class NlpManager(context: Context) {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
+        prefs.suggestion.enabled.observeForever {
+            assembleCandidates()
+        }
         prefs.suggestion.clipboardContentEnabled.observeForever {
             assembleCandidates()
         }
@@ -228,19 +231,23 @@ class NlpManager(context: Context) {
 
     private fun assembleCandidates() {
         runBlocking {
-            val clipboardCandidates = clipboardSuggestionProvider.suggest(
-                subtype = Subtype.DEFAULT,
-                content = editorInstance.activeContent,
-                maxCandidateCount = 8,
-                allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-            )
-            val candidates = clipboardCandidates.ifEmpty {
-                buildList {
-                    internalSuggestionsGuard.withLock {
-                        addAll(internalSuggestions.second)
+            val candidates = when {
+                prefs.suggestion.enabled.get() -> {
+                    clipboardSuggestionProvider.suggest(
+                        subtype = Subtype.DEFAULT,
+                        content = editorInstance.activeContent,
+                        maxCandidateCount = 8,
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                    ).ifEmpty {
+                        buildList {
+                            internalSuggestionsGuard.withLock {
+                                addAll(internalSuggestions.second)
+                            }
+                        }
                     }
                 }
+                else -> emptyList()
             }
             activeCandidates = candidates
             autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
