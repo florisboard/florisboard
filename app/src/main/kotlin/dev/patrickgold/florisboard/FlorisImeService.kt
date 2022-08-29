@@ -553,10 +553,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun ImeUi() {
-        val activeState by keyboardManager.observeActiveState()
+        val state by keyboardManager.activeState.collectAsState()
         val keyboardStyle = FlorisImeTheme.style.get(
             element = FlorisImeUi.Keyboard,
-            mode = activeState.inputShiftState.value,
+            mode = state.inputShiftState.value,
         )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {
@@ -606,7 +606,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                 .weight(keyboardWeight)
                                 .wrapContentHeight(),
                         ) {
-                            when (activeState.imeUiMode) {
+                            when (state.imeUiMode) {
                                 ImeUiMode.TEXT -> TextInputLayout()
                                 ImeUiMode.MEDIA -> MediaInputLayout()
                                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()

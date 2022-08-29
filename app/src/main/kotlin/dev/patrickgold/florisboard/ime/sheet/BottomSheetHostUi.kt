@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,9 +49,9 @@ private val DialogContentExitTransition = slideOutVertically { it }
 fun BottomSheetHostUi() {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
-    val activeState by keyboardManager.observeActiveState()
+    val state by keyboardManager.activeState.collectAsState()
 
-    val isBottomSheetShowing = activeState.isBottomSheetShowing()
+    val isBottomSheetShowing = state.isBottomSheetShowing()
     val bgColorOutOfBounds by animateColorAsState(
         if (isBottomSheetShowing) SheetOutOfBoundsBgColorActive else SheetOutOfBoundsBgColorInactive
     )
@@ -64,7 +65,7 @@ fun BottomSheetHostUi() {
                     .then(if (isBottomSheetShowing) {
                         Modifier.pointerInput(Unit) {
                             detectTapGestures {
-                                activeState.isActionsEditorVisible = false
+                                keyboardManager.activeState.isActionsEditorVisible = false
                             }
                         }
                     } else {
@@ -72,7 +73,7 @@ fun BottomSheetHostUi() {
                     }),
             )
             AnimatedVisibility(
-                visible = activeState.isActionsEditorVisible,
+                visible = state.isActionsEditorVisible,
                 enter = DialogContentEnterTransition,
                 exit = DialogContentExitTransition,
                 content = { QuickActionsEditorPanel() },
