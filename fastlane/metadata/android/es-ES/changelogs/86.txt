@@ -1,0 +1,3 @@
+Este lanzamiento arregla un montón de errores, mejora la lógica de conexión de entrada y mejora el rendimiento levemente.
+
+Conjunto de cambios detallado: https://github.com/florisboard/florisboard/releases/tag/v0.3.16
