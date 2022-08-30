@@ -26,15 +26,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
 import dev.patrickgold.florisboard.keyboardManager
@@ -56,29 +53,27 @@ fun BottomSheetHostUi() {
         if (isBottomSheetShowing) SheetOutOfBoundsBgColorActive else SheetOutOfBoundsBgColorInactive
     )
 
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-        Column(Modifier.background(bgColorOutOfBounds)) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .then(if (isBottomSheetShowing) {
-                        Modifier.pointerInput(Unit) {
-                            detectTapGestures {
-                                keyboardManager.activeState.isActionsEditorVisible = false
-                            }
+    Column(Modifier.background(bgColorOutOfBounds)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .then(if (isBottomSheetShowing) {
+                    Modifier.pointerInput(Unit) {
+                        detectTapGestures {
+                            keyboardManager.activeState.isActionsEditorVisible = false
                         }
-                    } else {
-                        Modifier
-                    }),
-            )
-            AnimatedVisibility(
-                visible = state.isActionsEditorVisible,
-                enter = DialogContentEnterTransition,
-                exit = DialogContentExitTransition,
-                content = { QuickActionsEditorPanel() },
-            )
-        }
+                    }
+                } else {
+                    Modifier
+                }),
+        )
+        AnimatedVisibility(
+            visible = state.isActionsEditorVisible,
+            enter = DialogContentEnterTransition,
+            exit = DialogContentExitTransition,
+            content = { QuickActionsEditorPanel() },
+        )
     }
 }
 
