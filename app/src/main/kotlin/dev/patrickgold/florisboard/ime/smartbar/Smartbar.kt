@@ -222,7 +222,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun ExtendedActionsToggle() {
         IconButton(
-            onClick = { prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded) },
+            onClick = {
+                if (/* was */ extendedActionsExpanded) {
+                    keyboardManager.activeState.isActionsOverflowVisible = false
+                }
+                prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
+            },
         ) {
             Box(
                 modifier = Modifier
