@@ -55,6 +55,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -221,7 +222,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun ExtendedActionsToggle() {
         IconButton(
-            onClick = { prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded) },
+            onClick = {
+                if (/* was */ extendedActionsExpanded) {
+                    keyboardManager.activeState.isActionsOverflowVisible = false
+                }
+                prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
+            },
         ) {
             Box(
                 modifier = Modifier
@@ -255,6 +261,36 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     tint = secondaryActionsToggleStyle.foreground.solidColor(),
                 )
             }
+        }
+    }
+
+    @Composable
+    fun StickyAction() {
+        val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
+        val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
+
+        val action = when {
+            actionArrangement.stickyAction != null -> {
+                actionArrangement.stickyAction
+            }
+            smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED && sharedActionsExpanded -> {
+                ToggleOverflowPanelAction
+            }
+            else -> null
+        }
+
+        if (action != null) {
+            QuickActionButton(
+                modifier = Modifier.padding(horizontal = 4.dp),
+                action = action,
+                evaluator = evaluator,
+            )
+        } else {
+            Spacer(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp)
+                    .aspectRatio(1f),
+            )
         }
     }
 
@@ -300,30 +336,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun StickyAction() {
-    val prefs by florisPreferenceModel()
-    val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
-
-    val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
-    val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
-
-    if (actionArrangement.stickyAction != null) {
-        QuickActionButton(
-            modifier = Modifier.padding(horizontal = 4.dp),
-            action = actionArrangement.stickyAction!!,
-            evaluator = evaluator,
-        )
-    } else {
-        Spacer(
-            modifier = Modifier
-                .padding(horizontal = 4.dp)
-                .aspectRatio(1f),
-        )
     }
 }
 

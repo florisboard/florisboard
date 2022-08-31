@@ -49,7 +49,7 @@ fun TextInputLayout(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val activeState by keyboardManager.observeActiveState()
+    val state by keyboardManager.activeState.collectAsState()
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -59,7 +59,7 @@ fun TextInputLayout(
                 .wrapContentHeight(),
         ) {
             Smartbar()
-            if (activeState.isActionsOverflowVisible) {
+            if (state.isActionsOverflowVisible) {
                 QuickActionsOverflowPanel()
             } else {
                 Box {

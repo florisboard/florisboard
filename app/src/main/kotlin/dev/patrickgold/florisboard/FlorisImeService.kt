@@ -279,6 +279,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onCreateInputView(): View {
         super.installViewTreeOwners()
+        // Instantiate and install bottom sheet host UI view
+        val bottomSheetView = FlorisBottomSheetHostUiView()
+        window.window!!.findViewById<ViewGroup>(android.R.id.content).addView(bottomSheetView)
+        // Instantiate and return input view
         val composeView = ComposeInputView()
         inputWindowView = composeView
         return composeView
@@ -542,7 +546,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                             }
                             ImeUi()
                         }
-                        BottomSheetHostUi()
                         SystemUiIme()
                     }
                 }
@@ -553,10 +556,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun ImeUi() {
-        val activeState by keyboardManager.observeActiveState()
+        val state by keyboardManager.activeState.collectAsState()
         val keyboardStyle = FlorisImeTheme.style.get(
             element = FlorisImeUi.Keyboard,
-            mode = activeState.inputShiftState.value,
+            mode = state.inputShiftState.value,
         )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {
@@ -606,7 +609,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                 .weight(keyboardWeight)
                                 .wrapContentHeight(),
                         ) {
-                            when (activeState.imeUiMode) {
+                            when (state.imeUiMode) {
                                 ImeUiMode.TEXT -> TextInputLayout()
                                 ImeUiMode.MEDIA -> MediaInputLayout()
                                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
@@ -650,6 +653,26 @@ class FlorisImeService : LifecycleInputMethodService() {
         override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             updateSoftInputWindowLayoutParameters()
+        }
+    }
+
+    private inner class FlorisBottomSheetHostUiView : AbstractComposeView(this) {
+        init {
+            isHapticFeedbackEnabled = true
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        }
+
+        @Composable
+        override fun Content() {
+            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+                FlorisImeTheme {
+                    BottomSheetHostUi()
+                }
+            }
+        }
+
+        override fun getAccessibilityClassName(): CharSequence {
+            return javaClass.name
         }
     }
 

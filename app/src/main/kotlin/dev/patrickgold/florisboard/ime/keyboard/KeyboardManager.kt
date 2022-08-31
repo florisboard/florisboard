@@ -20,11 +20,8 @@ import android.content.Context
 import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
@@ -65,7 +62,6 @@ import dev.patrickgold.florisboard.lib.kotlin.collectIn
 import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.kotlin.titlecase
 import dev.patrickgold.florisboard.lib.kotlin.uppercase
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -95,7 +91,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val keyboardCache = TextKeyboardCache()
 
     val resources = KeyboardManagerResources()
-    val activeState = KeyboardState.new()
+    val activeState = ObservableKeyboardState.new()
     var smartbarVisibleDynamicActionsCount by mutableStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
 
@@ -142,7 +138,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             prefs.keyboard.utilityKeyEnabled.observeForever {
                 updateActiveEvaluators()
             }
-            activeState.observeForever {
+            activeState.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
@@ -174,7 +170,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val editorInfo = editorInstance.activeInfo
             val state = activeState.snapshot()
             val subtype = subtypeManager.activeSubtype
-            val mode = activeState.keyboardMode
+            val mode = state.keyboardMode
             // We need to reset the snapshot input shift state for non-character layouts, because the shift mechanic
             // only makes sense for the character layouts.
             if (mode != KeyboardMode.CHARACTERS) {
@@ -199,15 +195,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
             _activeEvaluator.value = computingEvaluator
             _activeSmartbarEvaluator.value = computingEvaluator.asSmartbarQuickActionsEvaluator()
-            if (computingEvaluator.keyboard.mode == KeyboardMode.CHARACTERS) {
+            if (computedKeyboard.mode == KeyboardMode.CHARACTERS) {
                 _lastCharactersEvaluator.value = computingEvaluator
             }
         }
-    }
-
-    @Composable
-    fun observeActiveState(): State<KeyboardState> {
-        return activeState.observeAsNonNullState(neverEqualPolicy())
     }
 
     fun reevaluateInputShiftState() {

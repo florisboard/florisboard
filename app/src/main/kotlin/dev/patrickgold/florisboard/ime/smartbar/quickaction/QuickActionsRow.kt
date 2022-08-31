@@ -37,7 +37,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
-private val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
+internal val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
 
 @Composable
 fun QuickActionsRow(
@@ -52,6 +52,7 @@ fun QuickActionsRow(
     val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
+    val sharedActionsExpanded by prefs.smartbar.sharedActionsExpanded.observeAsState()
 
     val dynamicActions = remember(smartbarLayout, actionArrangement) {
         if (smartbarLayout == SmartbarLayout.ACTIONS_ONLY && actionArrangement.stickyAction != null) {
@@ -63,13 +64,15 @@ fun QuickActionsRow(
             actionArrangement.dynamicActions
         }
     }
+    val showOverflowAction = actionArrangement.stickyAction != null ||
+        smartbarLayout != SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED || !sharedActionsExpanded
 
     val rowStyle = FlorisImeTheme.style.get(elementName)
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val width = constraints.maxWidth.toDp()
         val height = constraints.maxHeight.toDp()
-        val numActionsToShow = ((width / height).toInt() - 1).coerceAtLeast(0)
+        val numActionsToShow = ((width / height).toInt() - (if (showOverflowAction) 1 else 0)).coerceAtLeast(0)
         val visibleActions = dynamicActions
             .subList(0, numActionsToShow.coerceAtMost(dynamicActions.size))
 
@@ -89,13 +92,13 @@ fun QuickActionsRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            if (flipToggles) {
+            if (showOverflowAction && flipToggles) {
                 QuickActionButton(ToggleOverflowPanelAction, evaluator)
             }
             for (action in visibleActions) {
                 QuickActionButton(action, evaluator)
             }
-            if (!flipToggles) {
+            if (showOverflowAction && !flipToggles) {
                 QuickActionButton(ToggleOverflowPanelAction, evaluator)
             }
         }

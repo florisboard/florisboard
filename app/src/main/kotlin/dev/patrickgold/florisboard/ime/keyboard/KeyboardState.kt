@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-@file:Suppress("MemberVisibilityCanBePrivate")
-
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.annotation.SuppressLint
-import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.lib.devtools.flogError
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -69,7 +65,7 @@ import kotlin.properties.Delegates
  * @property rawValue The internal register used to store the flags and region ints that
  *  this keyboard state represents.
  */
-class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardState>() {
+open class KeyboardState protected constructor(open var rawValue: ULong) {
     companion object {
         const val M_KEYBOARD_MODE: ULong =                  0x0Fu
         const val O_KEYBOARD_MODE: Int =                    0
@@ -99,116 +95,26 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
 
         const val STATE_ALL_ZERO: ULong =                   0uL
 
-        const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
-        const val INTEREST_NONE: ULong =                    0uL
-
-        const val BATCH_ZERO: Int =                         0
-
         fun new(value: ULong = STATE_ALL_ZERO) = KeyboardState(value)
-    }
-
-    private var rawValue by Delegates.observable(initValue) { _, old, new -> if (old != new) dispatchState() }
-    private val batchEditCount = AtomicInteger(BATCH_ZERO)
-
-    init {
-        dispatchState()
-    }
-
-    override fun setValue(value: KeyboardState?) {
-        flogError { "Do not use setValue() directly" }
-    }
-
-    override fun postValue(value: KeyboardState?) {
-        flogError { "Do not use postValue() directly" }
-    }
-
-    /**
-     * Dispatches the new state to all observers if [batchEditCount] is [BATCH_ZERO] (= no active batch edits).
-     */
-    @SuppressLint("RestrictedApi")
-    private fun dispatchState() {
-        if (batchEditCount.get() == BATCH_ZERO) {
-            if (ArchTaskExecutor.getInstance().isMainThread) {
-                super.setValue(this)
-            } else {
-                super.postValue(this)
-            }
-        }
-    }
-
-    /**
-     * Begins a batch edit. Any modifications done during an active batch edit will not be dispatched to observers
-     * until [endBatchEdit] is called. At any time given there can be multiple active batch edits at once. This
-     * method is thread-safe and can be called from any thread.
-     */
-    fun beginBatchEdit() {
-        batchEditCount.incrementAndGet()
-    }
-
-    /**
-     * Ends a batch edit. Will dispatch the current state if there are no more other batch edits active. This method is
-     * thread-safe and can be called from any thread.
-     */
-    fun endBatchEdit() {
-        batchEditCount.decrementAndGet()
-        dispatchState()
-    }
-
-    /**
-     * Performs a batch edit by executing the modifier [block]. Any exception that [block] throws will be caught and
-     * re-thrown after correctly ending the batch edit.
-     */
-    inline fun batchEdit(block: (KeyboardState) -> Unit) {
-        contract {
-            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-        }
-        beginBatchEdit()
-        try {
-            block(this)
-        } catch (e: Throwable) {
-            throw e
-        } finally {
-            endBatchEdit()
-        }
-    }
-
-    /**
-     * Resets this state register.
-     *
-     * @param newValue Optional, used to initialize the register value after the reset.
-     *  Defaults to [STATE_ALL_ZERO].
-     */
-    fun reset(newValue: ULong = STATE_ALL_ZERO) {
-        rawValue = newValue
-    }
-
-    /**
-     * Resets this state register.
-     *
-     * @param newState A reference to a state which register value should be copied after
-     *  the reset.
-     */
-    fun reset(newState: KeyboardState) {
-        rawValue = newState.rawValue
     }
 
     fun snapshot(): KeyboardState {
         return new(rawValue)
     }
 
-    internal fun getFlag(f: ULong): Boolean {
+    private fun getFlag(f: ULong): Boolean {
         return (rawValue and f) != STATE_ALL_ZERO
     }
 
-    internal fun setFlag(f: ULong, v: Boolean) {
+    private fun setFlag(f: ULong, v: Boolean) {
         rawValue = if (v) { rawValue or f } else { rawValue and f.inv() }
     }
 
-    internal fun getRegion(m: ULong, o: Int): Int {
+    private fun getRegion(m: ULong, o: Int): Int {
         return ((rawValue shr o) and m).toInt()
     }
 
-    internal fun setRegion(m: ULong, o: Int, v: Int) {
+    private fun setRegion(m: ULong, o: Int, v: Int) {
         rawValue = (rawValue and (m shl o).inv()) or ((v.toULong() and m) shl o)
     }
 
@@ -217,14 +123,7 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as KeyboardState
-
-        if (rawValue != other.rawValue) return false
-
-        return true
+        return other is KeyboardState && other.rawValue == rawValue
     }
 
     override fun toString(): String {
@@ -308,4 +207,68 @@ class KeyboardState private constructor(initValue: ULong) : LiveData<KeyboardSta
     var debugShowDragAndDropHelpers: Boolean
         get() = getFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS)
         set(v) { setFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS, v) }
+}
+
+class ObservableKeyboardState private constructor(
+    initValue: ULong,
+    private val dispatchFlow: MutableStateFlow<KeyboardState> = MutableStateFlow(KeyboardState.new(initValue)),
+) : KeyboardState(initValue), StateFlow<KeyboardState> by dispatchFlow {
+
+    companion object {
+        const val BATCH_ZERO: Int = 0
+
+        fun new(value: ULong = STATE_ALL_ZERO) = ObservableKeyboardState(value)
+    }
+
+    override var rawValue by Delegates.observable(initValue) { _, old, new -> if (old != new) dispatchState() }
+    private val batchEditCount = AtomicInteger(BATCH_ZERO)
+
+    init {
+        dispatchState()
+    }
+
+    /**
+     * Dispatches the new state to all observers if [batchEditCount] is [BATCH_ZERO] (= no active batch edits).
+     */
+    private fun dispatchState() {
+        if (batchEditCount.get() == BATCH_ZERO) {
+            dispatchFlow.value = this.snapshot()
+        }
+    }
+
+    /**
+     * Begins a batch edit. Any modifications done during an active batch edit will not be dispatched to observers
+     * until [endBatchEdit] is called. At any time given there can be multiple active batch edits at once. This
+     * method is thread-safe and can be called from any thread.
+     */
+    fun beginBatchEdit() {
+        batchEditCount.incrementAndGet()
+    }
+
+    /**
+     * Ends a batch edit. Will dispatch the current state if there are no more other batch edits active. This method is
+     * thread-safe and can be called from any thread.
+     */
+    fun endBatchEdit() {
+        batchEditCount.decrementAndGet()
+        dispatchState()
+    }
+
+    /**
+     * Performs a batch edit by executing the modifier [block]. Any exception that [block] throws will be caught and
+     * re-thrown after correctly ending the batch edit.
+     */
+    inline fun batchEdit(block: (ObservableKeyboardState) -> Unit) {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
+        beginBatchEdit()
+        try {
+            block(this)
+        } catch (e: Throwable) {
+            throw e
+        } finally {
+            endBatchEdit()
+        }
+    }
 }
