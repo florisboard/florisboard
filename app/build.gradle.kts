@@ -53,7 +53,7 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 24
         targetSdk = 31
-        versionCode = 89
+        versionCode = 90
         versionName = "0.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -137,7 +137,7 @@ android {
 
         create("beta") {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-alpha03"
+            versionNameSuffix = "-alpha04"
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
