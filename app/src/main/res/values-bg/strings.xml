@@ -30,6 +30,14 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: За да премахнете еможди от този списък задръжте върху него!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Премахнато е {emoji} от последно използваните</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Нагоре</string>
+    <string name="quick_action__arrow_up__tooltip">Изпълнява стрелка нагоре</string>
+    <string name="quick_action__arrow_down" maxLength="12">Надолу</string>
+    <string name="quick_action__arrow_down__tooltip">Изпълнява стрелка надолу</string>
+    <string name="quick_action__arrow_left" maxLength="12">Наляво</string>
+    <string name="quick_action__arrow_left__tooltip">Изпълнява стрелка наляво</string>
+    <string name="quick_action__arrow_right" maxLength="12">Надясно</string>
+    <string name="quick_action__arrow_right__tooltip">Изпълнява стрелка надясно</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>

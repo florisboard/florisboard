@@ -34,6 +34,7 @@
     <string name="quick_action__arrow_down" maxLength="12">Aşağı ok</string>
     <string name="quick_action__arrow_left" maxLength="12">Sol ok</string>
     <string name="quick_action__arrow_right" maxLength="12">Sağ ok</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopyala</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Kes</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Yapıştır</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Tümünü seç</string>
@@ -45,7 +46,20 @@
     <string name="quick_action__settings__tooltip">Ayarları aç</string>
     <string name="quick_action__undo" maxLength="12">Geri al</string>
     <string name="quick_action__undo__tooltip">Son değişikliği geri al</string>
+    <string name="quick_action__redo" maxLength="12">Yinele</string>
+    <string name="quick_action__redo__tooltip">Son girişi yinele</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Ek eylemleri göster veya gizle</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Gizli mod</string>
+    <string name="quick_action__voice_input" maxLength="12">Sesli giriş</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Ses girişi sağlayıcısını aç</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Tek el</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Hiçbiri</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">İşlem Yok</string>
+    <string name="quick_actions_overflow__customize_actions_button">Eylemleri yeniden sırala</string>
+    <string name="quick_actions_editor__header">Eylem sırasını özelleştir</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Sabit eylem ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dinamik eylemler ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Gizlenmiş eylemler ({n})</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ayarlar</string>
@@ -396,6 +410,9 @@
     <string name="action__default">Varsayılan</string>
     <string name="action__delete">Sil</string>
     <string name="action__delete_confirm_title">Silmeyi onayla</string>
+    <string name="action__discard">Vazgeç</string>
+    <string name="action__discard_confirm_title">Kaydedilmemiş değişiklikler</string>
+    <string name="action__discard_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>
     <string name="action__edit">Düzenle</string>
     <string name="action__export">Dışa aktar</string>
     <string name="action__import">İçe aktar</string>
@@ -412,8 +429,11 @@
     <string name="error__title">Hata</string>
     <string name="error__details">Detaylar</string>
     <string name="error__invalid">Geçersiz</string>
+    <string name="error__snackbar_message">Bir şeyler ters gitti</string>
+    <string name="error__snackbar_message_template">Bir şeyler ters gitti: {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">{url} adresini açmak için tarayıcı uygulaması bulunamadı</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; seç &#45;</string>
     <string name="general__unlimited">Sınırsız</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Dikey</string>
@@ -426,7 +446,13 @@
     <string name="state__no_file_selected">Dosya seçilmedi</string>
     <string name="state__no_files_selected">Dosyalar Seçilmedi</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dinamik genişlik</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamik genişlik &amp; kaydırılabilir</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Onaltılık</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Kırmızı Yeşil Mavi (Rgb)</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Her zaman göster</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Asla gösterme</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Varsayılan cilt tonu</string>
     <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Kırmızı Saç</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Beyaz Saç</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksan öncelikli</string>

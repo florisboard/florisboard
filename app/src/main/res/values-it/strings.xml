@@ -32,6 +32,15 @@
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Freccia su</string>
     <string name="quick_action__arrow_down" maxLength="12">Freccia giù</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Taglia</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Incolla</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Selez. tutto</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Appunti</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Apri cronologia degli appunti</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Apri pannello degli emoji</string>
+    <string name="quick_action__settings" maxLength="12">Impostazioni</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Impostazioni</string>
