@@ -502,15 +502,17 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
-        val content = activeContent
-        val selection = content.selection
-        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
-        val textBefore = content.getTextBeforeCursor(1)
-        val punctuationRule = nlpManager.getActivePunctuationRule()
-        return textBefore.isNotEmpty() &&
-            (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
-                textBefore[textBefore.length - 1].isLetterOrDigit()) &&
-            (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
+        // TODO: Properly handle not adding a space when commiting suggestions in CJK subtypes
+        return false;
+        // val content = activeContent
+        // val selection = content.selection
+        // if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
+        // val textBefore = content.getTextBeforeCursor(1)
+        // val punctuationRule = nlpManager.getActivePunctuationRule()
+        // return textBefore.isNotEmpty() &&
+        //     (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
+        //         textBefore[textBefore.length - 1].isLetterOrDigit()) &&
+        //     (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
     }
 
     class AutoSpaceState {

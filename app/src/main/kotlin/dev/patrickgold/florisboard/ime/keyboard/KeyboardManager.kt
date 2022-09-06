@@ -549,7 +549,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
             }
         }
-        editorInstance.commitText(KeyCode.SPACE.toChar().toString())
+        // TODO: Properly handle not adding a space when commiting suggestions in CJK subtypes
+        // editorInstance.commitText(KeyCode.SPACE.toChar().toString())
     }
 
     /**
