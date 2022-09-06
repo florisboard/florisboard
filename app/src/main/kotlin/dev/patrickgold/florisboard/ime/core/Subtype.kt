@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
@@ -207,8 +208,8 @@ data class SubtypeLayoutMap(
 
 @Serializable
 data class SubtypeNlpProviderMap(
-    val spelling: String = LatinLanguageProvider.ProviderId,
-    val suggestion: String = LatinLanguageProvider.ProviderId,
+    val spelling: String = HanShapeBasedLanguageProvider.ProviderId,
+    val suggestion: String = HanShapeBasedLanguageProvider.ProviderId,
 ) {
     inline fun forEach(action: (String, String) -> Unit) {
         action("spelling", spelling)
