@@ -106,6 +106,9 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
+        if (content.composingText.isEmpty()) {
+            return emptyList();
+        }
         // HACK: handle query param binding in a proper way to avoid SQL injections.
         // See, https://xkcd.com/327/
         val cur = database.query("zhengma", arrayOf ( "code", "text" ), "code LIKE '${content.composingText}%'", arrayOf(), "", "", "code ASC, weight DESC", "$maxCandidateCount");
