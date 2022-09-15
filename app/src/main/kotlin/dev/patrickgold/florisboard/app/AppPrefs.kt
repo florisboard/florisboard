@@ -498,7 +498,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     inner class Localization {
         val displayLanguageNamesIn = enum(
             key = "localization__display_language_names_in",
-            default = DisplayLanguageNamesIn.NATIVE_LOCALE,
+            default = DisplayLanguageNamesIn.SYSTEM_LOCALE,
         )
         val activeSubtypeId = long(
             key = "localization__active_subtype_id",
