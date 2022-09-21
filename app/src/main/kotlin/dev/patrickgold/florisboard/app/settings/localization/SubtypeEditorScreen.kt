@@ -63,6 +63,9 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
@@ -201,6 +204,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     var currencySet by subtypeEditor.currencySet
     var popupMapping by subtypeEditor.popupMapping
     var layoutMap by subtypeEditor.layoutMap
+    var nlpProviders by subtypeEditor.nlpProviders
 
     var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(false) }
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
@@ -366,6 +370,38 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
                     selectListValues = selectListValues,
+                )
+            }
+
+            SubtypeGroupSpacer()
+
+            SubtypeProperty("nlpProvider.suggestion") {
+                // TODO: Put this map somewhere more formal (another KeyboardExtension field?)
+                //  and use a string resource above and below
+                val nlpProviderMappings = mapOf(
+                    LatinLanguageProvider.ProviderId to "Latin",
+                    HanShapeBasedLanguageProvider.ProviderId to "HanShapeBased"
+                )
+
+                val nlpProviderMappingIds = remember(nlpProviderMappings) {
+                    SelectListKeys + nlpProviderMappings.keys
+                }
+                val nlpProviderMappingLabels = remember(nlpProviderMappings) {
+                    selectListValues + nlpProviderMappings.values.map { it }
+                }
+                var expanded by remember { mutableStateOf(false) }
+                val selectedIndex = nlpProviderMappingIds.indexOf(nlpProviders.suggestion).coerceAtLeast(0)
+                FlorisDropdownMenu(
+                    items = nlpProviderMappingLabels,
+                    expanded = expanded,
+                    selectedIndex = selectedIndex,
+                    isError = showSelectAsError && selectedIndex == 0,
+                    onSelectItem = { nlpProviders = SubtypeNlpProviderMap(
+                        suggestion = nlpProviderMappingIds[it] as String,
+                        spelling = nlpProviderMappingIds[it] as String
+                    ) },
+                    onExpandRequest = { expanded = true },
+                    onDismissRequest = { expanded = false },
                 )
             }
 

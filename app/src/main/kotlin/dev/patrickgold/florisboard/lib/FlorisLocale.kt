@@ -125,6 +125,36 @@ class FlorisLocale private constructor(val base: Locale) {
          * @see java.util.Locale.getAvailableLocales
          */
         fun installedSystemLocales(): List<FlorisLocale> = Locale.getAvailableLocales().map { from(it) }
+
+        /**
+         * Returns a list of all installed locales and custom locales.
+         *
+         * TODO: put this map somewhere more formal (another KeyboardExtension field?)
+         */
+        fun extendedAvailableLocales(): List<FlorisLocale> {
+            val systemLocales = installedSystemLocales()
+            val extensions = mapOf(
+                "zh_CN" to listOf(
+                    "t9", "wubilarge", "wubi98pinyin", "wubi98single", "wubi98", "zhengmalarge", "zhengmapinyin"
+                ),
+                "zh_TW" to listOf("cangjielarge", "quick5", "scj6"),
+                "zh_HK" to listOf("easylarge", "jyutpingtable", "quickclassic", "quick3", "stroke5", "wu"),
+                "de_DE" to listOf("neobone"),
+                "ja_JP" to listOf("jis"),
+            )
+            val added = mutableSetOf<String>()
+            return buildList {
+                for (locale in systemLocales) {
+                    add(locale)
+                    val localeTag = locale.localeTag()
+                    if (localeTag !in added && localeTag in extensions) { // only add variants if language-country exists in system
+                        for (variant in extensions[localeTag]!!)
+                            add(from(locale.language, locale.country, variant))
+                        added.add(localeTag)
+                    }
+                }
+            }.toList()
+        }
     }
 
     /**

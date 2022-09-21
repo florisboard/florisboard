@@ -208,8 +208,8 @@ data class SubtypeLayoutMap(
 
 @Serializable
 data class SubtypeNlpProviderMap(
-    val spelling: String = HanShapeBasedLanguageProvider.ProviderId,
-    val suggestion: String = HanShapeBasedLanguageProvider.ProviderId,
+    val spelling: String = LatinLanguageProvider.ProviderId,
+    val suggestion: String = LatinLanguageProvider.ProviderId,
 ) {
     inline fun forEach(action: (String, String) -> Unit) {
         action("spelling", spelling)

@@ -65,7 +65,7 @@ fun SelectLocaleScreen() = FlorisScreen {
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
     var searchTermValue by remember { mutableStateOf(TextFieldValue()) }
     val systemLocales = remember(displayLanguageNamesIn) {
-        FlorisLocale.installedSystemLocales().sortedBy { locale ->
+        FlorisLocale.extendedAvailableLocales().sortedBy { locale ->
             when (displayLanguageNamesIn) {
                 DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
                 DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
