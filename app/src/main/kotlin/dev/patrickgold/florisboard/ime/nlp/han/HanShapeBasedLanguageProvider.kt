@@ -112,9 +112,7 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         }
         val layout = subtype.primaryLocale.variant;
         try {
-            // HACK: handle query param binding in a proper way to avoid SQL injections.
-            // See, https://xkcd.com/327/
-            val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE '${content.composingText}%'", arrayOf(), "", "", "code ASC, weight DESC", "$maxCandidateCount");
+            val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");
             cur.moveToFirst();
             val rowCount = cur.getCount();
             flogDebug { "Query was '${content.composingText}'" }
