@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.android.readText
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.android.copy
@@ -109,28 +110,34 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         if (content.composingText.isEmpty()) {
             return emptyList();
         }
-        // HACK: handle query param binding in a proper way to avoid SQL injections.
-        // See, https://xkcd.com/327/
-        val cur = database.query("zhengma", arrayOf ( "code", "text" ), "code LIKE '${content.composingText}%'", arrayOf(), "", "", "code ASC, weight DESC", "$maxCandidateCount");
-        cur.moveToFirst();
-        val rowCount = cur.getCount();
-        flogDebug { "Query was '${content.composingText}'" }
-        val suggestions = buildList {
-            for (n in 0 until rowCount) {
-                val code = cur.getString(0);
-                val word = cur.getString(1);
-                cur.moveToNext();
-                add(WordSuggestionCandidate(
-                    text = "$word",
-                    secondaryText = code,
-                    confidence = 0.5,
-                    isEligibleForAutoCommit = n == 0,
-                    // We set ourselves as the source provider so we can get notify events for our candidate
-                    sourceProvider = this@HanShapeBasedLanguageProvider,
-                ))
+        val layout = subtype.primaryLocale.variant;
+        try {
+            // HACK: handle query param binding in a proper way to avoid SQL injections.
+            // See, https://xkcd.com/327/
+            val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE '${content.composingText}%'", arrayOf(), "", "", "code ASC, weight DESC", "$maxCandidateCount");
+            cur.moveToFirst();
+            val rowCount = cur.getCount();
+            flogDebug { "Query was '${content.composingText}'" }
+            val suggestions = buildList {
+                for (n in 0 until rowCount) {
+                    val code = cur.getString(0);
+                    val word = cur.getString(1);
+                    cur.moveToNext();
+                    add(WordSuggestionCandidate(
+                        text = "$word",
+                        secondaryText = code,
+                        confidence = 0.5,
+                        isEligibleForAutoCommit = n == 0,
+                        // We set ourselves as the source provider so we can get notify events for our candidate
+                        sourceProvider = this@HanShapeBasedLanguageProvider,
+                    ))
+                }
             }
+            return suggestions
+        } catch (e: IllegalStateException) {
+            flogError { "Invalid layout '${layout}' not found" }
+            return emptyList();
         }
-        return suggestions
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

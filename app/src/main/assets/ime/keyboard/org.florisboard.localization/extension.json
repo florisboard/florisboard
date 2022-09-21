@@ -644,6 +644,15 @@
       "preferred": {
         "characters": "org.florisboard.layouts:urdu_phonetic"
       }
+    },
+    {
+      "languageTag": "zh-RC-zhengma",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:dollar",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
     }
   ]
 }
