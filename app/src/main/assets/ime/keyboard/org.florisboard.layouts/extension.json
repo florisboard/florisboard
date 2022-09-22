@@ -43,6 +43,12 @@
         "authors": [ "patrickgold" ],
         "direction": "ltr"
       },
+	  {
+        "id": "bengali_bd",
+        "label": "বাংলা",
+        "authors": [ "iamrasel" ],
+        "direction": "ltr"
+      },
       {
         "id": "bepo",
         "label": "BÉPO",
@@ -499,6 +505,12 @@
         "id": "western_arabic_pc",
         "label": "Western Arabic (PC)",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+	  {
+        "id": "bengali",
+        "label": "Bengali",
+        "authors": [ "iamrasel" ],
         "direction": "ltr"
       }
     ],
