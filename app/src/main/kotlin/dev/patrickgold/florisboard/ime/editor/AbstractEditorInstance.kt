@@ -403,8 +403,7 @@ abstract class AbstractEditorInstance(context: Context) {
             val newContent = content.generateCopy(
                 selection = newSelection,
                 textBeforeSelection = buildString {
-                    append(content.textBeforeSelection)
-                    removeSuffix(content.composingText)
+                    append(content.textBeforeSelection.removeSuffix(content.composingText))
                     append(text)
                 },
                 selectedText = "",
