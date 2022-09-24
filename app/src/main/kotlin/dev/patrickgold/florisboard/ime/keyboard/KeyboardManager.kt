@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
@@ -144,16 +145,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
                 reevaluateInputShiftState()
                 updateActiveEvaluators()
+                resetSuggestions(editorInstance.activeContent)
             }
             clipboardManager.primaryClipFlow.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             editorInstance.activeContentFlow.collectIn(scope) { content ->
-                if (!activeState.isComposingEnabled) {
-                    nlpManager.clearSuggestions()
-                    return@collectIn
-                }
-                nlpManager.suggest(subtypeManager.activeSubtype, content)
+                resetSuggestions(content)
             }
             prefs.devtools.enabled.observeForever {
                 reevaluateDebugFlags()
@@ -211,6 +209,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 else -> InputShiftState.UNSHIFTED
             }
         }
+    }
+
+    fun resetSuggestions(content: EditorContent) {
+        if (!activeState.isComposingEnabled) {
+            nlpManager.clearSuggestions()
+            return
+        }
+        nlpManager.suggest(subtypeManager.activeSubtype, content)
     }
 
     /**
