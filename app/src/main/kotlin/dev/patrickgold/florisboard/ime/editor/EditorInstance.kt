@@ -477,6 +477,16 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
     }
 
+    fun tryPerformEnterCommitRaw(): Boolean {
+        return if (subtypeManager.activeSubtype.primaryLocale.language.startsWith("zh") && activeContent.composing.length > 0) {
+            flogDebug { "ENTER: FINALIZECOMPOSINGTEXT ${activeContent.composingText}" }
+            finalizeComposingText(activeContent.composingText)
+        } else {
+            flogDebug { "ENTER: NOTHING" }
+            false
+        }
+    }
+
     /**
      * Performs a given [action] on the current input editor.
      *

@@ -435,6 +435,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun handleEnter() {
         val info = editorInstance.activeInfo
         val isShiftPressed = inputEventDispatcher.isPressed(KeyCode.SHIFT)
+        if (editorInstance.tryPerformEnterCommitRaw()) {
+            return
+        }
         if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && isShiftPressed) {
             editorInstance.performEnter()
         } else {
