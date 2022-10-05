@@ -223,6 +223,12 @@
         "direction": "ltr"
       },
       {
+        "id": "korean2",
+        "label": "South Korean (단모음+)",
+        "authors": [ "agw76638" ],
+        "direction": "ltr"
+      },
+      {
         "id": "kurdish",
         "label": "کوردی (قوەرتی نوێ)",
         "authors": [ "GoRaN" ],

@@ -53,6 +53,7 @@
     { "id": "iw", "authors": [ "Antony" ] },
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
     { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
+    { "id": "ko2", "authors": [ "agw76638" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
     { "id": "lt", "authors": [ "patrickgold" ] },
     { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
@@ -578,6 +579,15 @@
       "popupMapping": "org.florisboard.localization:ko",
       "preferred": {
         "characters": "org.florisboard.layouts:korean"
+      }
+    },
+    {
+      "languageTag": "ko",
+      "composer": "org.florisboard.composers:hangul-unicode",
+      "currencySet": "org.florisboard.currencysets:south_korean_won",
+      "popupMapping": "org.florisboard.localization:ko2",
+      "preferred": {
+        "characters": "org.florisboard.layouts:korean2"
       }
     },
     {
