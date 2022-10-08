@@ -19,6 +19,8 @@ package dev.patrickgold.florisboard.ime.clipboard
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.database.CursorWindow
+import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -46,7 +48,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import java.io.Closeable
+import java.io.ObjectOutputStream
+import java.lang.AssertionError
 
 /**
  * [ClipboardManager] manages the clipboard and clipboard history.
@@ -264,7 +269,24 @@ class ClipboardManager(
         }
     }
 
-    fun insertClip(item: ClipboardItem) {
+    private fun insertClip(item: ClipboardItem) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                val objectOutputStream = ObjectOutputStream(byteArrayOutputStream)
+                objectOutputStream.writeObject(item)
+                objectOutputStream.close()
+                val itemSize = byteArrayOutputStream.size().toLong()
+                val window = CursorWindow("Verify size", itemSize)
+                window.close()
+            } catch (e: AssertionError) {
+                // Do not store the clipboard item in database if the size exceeds the permitted CursorWindow size
+                // permitted on the device. This value is device dependent on Version P and later. If a larger size
+                // item is stored in the database (e.g. large enough image) then it causes a crash at initialization
+                // stage for the Database. Ref: https://github.com/florisboard/florisboard/issues/2080
+                return
+            }
+        }
         ioScope.launch {
             val id = clipHistoryDao?.insert(item)
             item.id = id ?: 0
