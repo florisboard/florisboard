@@ -528,7 +528,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * enabled by the user.
      */
     private fun handleSpace(data: KeyData) {
-        nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
+        val candidate = nlpManager.getAutoCommitCandidate()
+        candidate?.let { commitCandidate(it) }
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get()) {
             when (activeState.keyboardMode) {
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -549,8 +550,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
             }
         }
-        // TODO: Properly handle not adding a space when commiting suggestions in CJK subtypes
-        // editorInstance.commitText(KeyCode.SPACE.toChar().toString())
+        if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
+                candidate != null) { /* Do nothing */ } else {
+            editorInstance.commitText(KeyCode.SPACE.toChar().toString())
+        }
     }
 
     /**

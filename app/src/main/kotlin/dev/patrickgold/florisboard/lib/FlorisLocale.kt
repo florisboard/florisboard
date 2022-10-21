@@ -196,6 +196,16 @@ class FlorisLocale private constructor(val base: Locale) {
         }
 
     /**
+     * Returns true if suggestions in this language should have spaces added after, false otherwise.
+     * TODO: this is absolutely not exhaustive and hard-coded, find solution based on ICU or system
+     */
+    val supportsAutoSpace: Boolean
+        get() = when (language) {
+            "zh", "ko", "jp", "th" -> false
+            else -> true
+        }
+
+    /**
      * Generates the language tag for this locale in the format `xx`,
      * `xx-YY` or `xx-YY-zzz` and returns it as a string.
      *
