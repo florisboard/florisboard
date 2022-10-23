@@ -57,6 +57,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.collectIn
@@ -507,6 +508,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
+     * Handles a hardware [KeyEvent.KEYCODE_SPACE] event. Same as [handleSpace],
+     * but skips handling changing to characters keyboard and double space periods.
+     */
+    fun handleHardwareKeyboardSpace() {
+        val candidate = nlpManager.getAutoCommitCandidate()
+        candidate?.let { commitCandidate(it) }
+        // Skip handling changing to characters keyboard and double space periods
+        // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
+        if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
+                candidate != null) { /* Do nothing */ } else {
+            editorInstance.commitText(KeyCode.SPACE.toChar().toString())
+        }
+    }
+
+    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -533,6 +549,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
             }
         }
+        // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
                 candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
@@ -803,6 +820,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         val devtoolsEnabled = prefs.devtools.enabled.get()
         activeState.batchEdit {
             activeState.debugShowDragAndDropHelpers = devtoolsEnabled && prefs.devtools.showDragAndDropHelpers.get()
+        }
+    }
+
+    fun onHardwareKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        flogDebug { "Calling from FlorisImeService.onKeyDown with $keyCode" }
+        when (keyCode) {
+            KeyEvent.KEYCODE_SPACE -> {
+                handleHardwareKeyboardSpace()
+                return true
+            }
+            KeyEvent.KEYCODE_ENTER -> {
+                handleEnter()
+                return true
+            }
+            else -> return false
         }
     }
 
