@@ -135,10 +135,12 @@ private class SubtypeEditorState(init: Subtype?) {
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
     fun applySubtype(subtype: Subtype) {
+        // TODO: this
         id.value = subtype.id
         primaryLocale.value = subtype.primaryLocale
         secondaryLocales.value = subtype.secondaryLocales
         composer.value = subtype.composer
+        nlpProviders.value = subtype.nlpProviders
         currencySet.value = subtype.currencySet
         punctuationRule.value = subtype.punctuationRule
         popupMapping.value = subtype.popupMapping
