@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,6 +54,7 @@ abstract class AbstractEditorInstance(context: Context) {
 
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
+    private val nlpManager by context.nlpManager()
     private val scope = MainScope()
     protected val breakIterators = BreakIteratorGroup()
 
@@ -274,17 +276,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     private suspend fun determineLocalComposing(textBeforeSelection: CharSequence): EditorRange {
-        return breakIterators.word(subtypeManager.activeSubtype.primaryLocale) {
-            it.setText(textBeforeSelection.toString())
-            val end = it.last()
-            val isWord = it.ruleStatus != BreakIterator.WORD_NONE
-            if (isWord) {
-                val start = it.previous()
-                EditorRange(start, end)
-            } else {
-                EditorRange.Unspecified
-            }
-        }
+        return nlpManager.determineLocalComposing(textBeforeSelection, breakIterators)
     }
 
     private fun InputConnection.setComposingRegion(composing: EditorRange) {

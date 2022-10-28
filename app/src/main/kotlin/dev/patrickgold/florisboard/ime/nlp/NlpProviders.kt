@@ -16,8 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.editor.EditorRange
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -193,6 +195,33 @@ interface SuggestionProvider : NlpProvider {
      *  exist, 0.0 should be returned.
      */
     suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double
+
+    /**
+     * When initializing composing text given a new context, the suggestion engine determines the composing range.
+     * The default behavior gets the last word according to the current subtype's primaryLocale.
+     * @param subtype The current subtype used to determine word or character boundary.
+     * @param textBeforeSelection The text whose end we want to compose.
+     * @param breakIterators cache of BreakIterator(s) to determine boundary.
+     *
+     * @return EditorRange indicating composing range.
+     */
+    suspend fun determineLocalComposing(
+        subtype: Subtype,
+        textBeforeSelection: CharSequence,
+        breakIterators: BreakIteratorGroup
+    ): EditorRange {
+        return breakIterators.word(subtype.primaryLocale) {
+            it.setText(textBeforeSelection.toString())
+            val end = it.last()
+            val isWord = it.ruleStatus != BreakIterator.WORD_NONE
+            if (isWord) {
+                val start = it.previous()
+                EditorRange(start, end)
+            } else {
+                EditorRange.Unspecified
+            }
+        }
+    }
 }
 
 /**
