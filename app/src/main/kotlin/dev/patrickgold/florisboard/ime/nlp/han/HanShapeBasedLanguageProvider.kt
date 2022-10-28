@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp.han
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -165,6 +166,9 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         } catch (e: IllegalStateException) {
             flogError { "Invalid layout '${layout}' not found" }
             return emptyList();
+        } catch (e: SQLiteException) {
+            flogError { "SQLiteException: layout=$layout, composing=${content.composingText}, error='${e}'" }
+            return emptyList();
         }
     }
 
@@ -204,7 +208,6 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
             val keyCodeLocale = keyCode.getOrDefault(subtype.primaryLocale.variant, emptySet())
             while (next != BreakIterator.DONE) {
                 val sub = textBeforeSelection.substring(next, start)
-                flogDebug { "Inspecting if $sub is lower case letter" }
                 if (! sub.all { char -> char in keyCodeLocale })
                     break
                 start = next
