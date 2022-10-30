@@ -80,6 +80,7 @@ fun SelectLocaleScreen() = FlorisScreen {
             systemLocales.filter { locale ->
                 locale.displayName().lowercase().contains(term) ||
                     locale.displayName(locale).lowercase().contains(term) ||
+                    locale.displayName(FlorisLocale.ENGLISH).lowercase().contains(term) ||
                     locale.languageTag().lowercase().startsWith(term) ||
                     locale.localeTag().lowercase().startsWith(term)
             }
