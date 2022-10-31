@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.editor
 
 import android.content.Context
-import android.icu.text.BreakIterator
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
 import android.text.TextUtils
@@ -33,6 +32,8 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
+import kotlin.math.max
+import kotlin.math.min
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -82,6 +83,9 @@ abstract class AbstractEditorInstance(context: Context) {
             _activeContentFlow.value = v
         }
     private val expectedContentQueue = ExpectedContentQueue()
+    private val _lastCommitPosition = LastCommitPosition()
+    val lastCommitPosition
+        get() = LastCommitPosition(_lastCommitPosition)
 
     fun expectedContent(): EditorContent? {
         return runBlocking { expectedContentQueue.peekNewestOrNull() }
@@ -145,6 +149,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (composing.isValid) {
             currentInputConnection()?.setComposingRegion(EditorRange.Unspecified)
         }
+        _lastCommitPosition.handleUpdateSelection(newSelection)
     }
 
     open fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
@@ -157,6 +162,7 @@ abstract class AbstractEditorInstance(context: Context) {
             return
         }
 
+        _lastCommitPosition.handleUpdateSelection(newSelection)
         val expected = runBlocking {
             expectedContentQueue.popUntilOrNull {
                 it.selection == newSelection && it.composing == composing &&
@@ -207,6 +213,7 @@ abstract class AbstractEditorInstance(context: Context) {
         activeCursorCapsMode = InputAttributes.CapsMode.NONE
         activeContent = EditorContent.Unspecified
         runBlocking { expectedContentQueue.clear() }
+        _lastCommitPosition.reset()
     }
 
     private suspend fun generateContent(
@@ -253,7 +260,9 @@ abstract class AbstractEditorInstance(context: Context) {
         textAfterSelection: CharSequence = this.textAfterSelection,
         selectedText: CharSequence = this.selectedText,
     ): EditorContent {
-        return generateContent(editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText)
+        return generateContent(
+            editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText
+        )
     }
 
     private fun EditorContent.cursorCapsMode(): InputAttributes.CapsMode {
@@ -411,6 +420,7 @@ abstract class AbstractEditorInstance(context: Context) {
             expectedContentQueue.push(newContent)
             ic.setComposingText(text, 1)
             ic.finishComposingText()
+            _lastCommitPosition.handleCommit(newContent.selection)
         }
         ic.endBatchEdit()
         return true
@@ -437,7 +447,8 @@ abstract class AbstractEditorInstance(context: Context) {
                     TextType.CHARACTERS -> breakIterators.measureLastUChars(oldTextBeforeSelection, n, locale)
                     TextType.WORDS -> breakIterators.measureLastUWords(oldTextBeforeSelection, n, locale)
                 }
-                val newSelection = content.selection.translatedBy(-length)
+                val selection = content.selection
+                val newSelection = selection.translatedBy(-length)
                 val newContent = content.generateCopy(
                     selection = newSelection,
                     textBeforeSelection = oldTextBeforeSelection.dropLast(length),
@@ -628,6 +639,35 @@ abstract class AbstractEditorInstance(context: Context) {
         suspend fun clear() {
             list.withLock { list ->
                 list.clear()
+            }
+        }
+    }
+
+    fun updateLastCommitPosition() = _lastCommitPosition.handleCommit(activeContent.selection)
+
+    /**
+     * Class for handling history of last commit position.
+     */
+    data class LastCommitPosition(var pos: Int = -1) {
+
+        constructor(other: LastCommitPosition): this(other.pos)
+
+        fun reset() {
+            pos = -1
+        }
+
+        fun handleCommit(selection: EditorRange) {
+            if (selection.isValid) {
+                pos = max(selection.start, selection.end)
+            } else {
+                reset()
+            }
+        }
+
+        fun handleUpdateSelection(selection: EditorRange) {
+            val start = min(selection.start, selection.end)
+            if (start < pos) {
+                reset()
             }
         }
     }
