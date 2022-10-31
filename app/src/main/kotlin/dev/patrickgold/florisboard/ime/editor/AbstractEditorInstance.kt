@@ -238,7 +238,7 @@ abstract class AbstractEditorInstance(context: Context) {
         // Determine local composing word range, if any
         val localCurrentWord =
             if (shouldDetermineComposingRegion(editorInfo) && localSelection.isCursorMode && textBeforeSelection.isNotEmpty()) {
-                determineLocalComposing(textBeforeSelection)
+                determineLocalComposing(textBeforeSelection, _lastCommitPosition.pos - offset)
             } else {
                 EditorRange.Unspecified
             }
@@ -284,8 +284,10 @@ abstract class AbstractEditorInstance(context: Context) {
         return editorInfo.isRichInputEditor
     }
 
-    private suspend fun determineLocalComposing(textBeforeSelection: CharSequence): EditorRange {
-        return nlpManager.determineLocalComposing(textBeforeSelection, breakIterators)
+    private suspend fun determineLocalComposing(
+        textBeforeSelection: CharSequence, localLastCommitPosition: Int
+    ): EditorRange {
+        return nlpManager.determineLocalComposing(textBeforeSelection, breakIterators, localLastCommitPosition)
     }
 
     private fun InputConnection.setComposingRegion(composing: EditorRange) {

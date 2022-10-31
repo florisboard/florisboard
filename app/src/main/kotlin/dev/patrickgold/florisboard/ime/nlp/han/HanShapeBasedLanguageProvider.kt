@@ -270,14 +270,19 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         // the app process is killed (which will most likely always be the case).
     }
 
-    override suspend fun determineLocalComposing(subtype: Subtype, textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup): EditorRange {
+    override suspend fun determineLocalComposing(
+        subtype: Subtype,
+        textBeforeSelection: CharSequence,
+        breakIterators: BreakIteratorGroup,
+        localLastCommitPosition: Int
+    ): EditorRange {
         return breakIterators.character(subtype.primaryLocale) {
             it.setText(textBeforeSelection.toString())
             val end = it.last()
             var start = end
             var next = it.previous()
             val keyCodeLocale = keyCode[subtype.primaryLocale.localeTag()]?: keyCode["default"]?: emptySet()
-            while (next != BreakIterator.DONE) {
+            while (next != BreakIterator.DONE && start > localLastCommitPosition) {
                 val sub = textBeforeSelection.substring(next, start)
                 if (! sub.all { char -> char in keyCodeLocale })
                     break

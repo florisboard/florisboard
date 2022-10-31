@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
-import android.icu.text.BreakIterator
 import android.os.Build
 import android.os.SystemClock
 import android.util.LruCache
@@ -174,9 +173,11 @@ class NlpManager(context: Context) {
         )
     }
 
-    suspend fun determineLocalComposing(textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup): EditorRange {
+    suspend fun determineLocalComposing(
+        textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup, localLastCommitPosition: Int
+    ): EditorRange {
         return getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
-            subtypeManager.activeSubtype, textBeforeSelection, breakIterators
+            subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
         )
     }
 
