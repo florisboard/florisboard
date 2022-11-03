@@ -59,6 +59,10 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Add subtype</string>
+    <string name="settings__localization__language_pack_import_label" comment="Label of preference item for adding a new language pack">Import language pack</string>
+    <string name="settings__localization__language_pack_import_summary" comment="Summary of preference item for adding a new language pack">Experimental: imports language-specific files (shape-based Chinese input for now)</string>
+    <string name="settings__localization__language_pack_import_success" comment="Message for language pack import success">Language pack imported successfully!</string>
+    <string name="settings__localization__language_pack_import_failure" comment="Message for language pack import failure">Language pack imported failed: {error_message}</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtype</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primary language</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup mapping</string>

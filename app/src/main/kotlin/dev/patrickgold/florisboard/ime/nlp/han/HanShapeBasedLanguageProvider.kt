@@ -20,6 +20,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.icu.text.BreakIterator
+import android.net.Uri
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
@@ -36,6 +37,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.android.copy
+import dev.patrickgold.florisboard.lib.android.readToFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.MapSerializer
@@ -88,8 +90,10 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
 
     override suspend fun create() {
         // Here we initialize our provider, set up all things which are not language dependent.
-        appContext.filesDir.subFile("ime/dict").mkdirs()
-        appContext.assets.copy(DB_PATH, appContext.filesDir.subFile(DB_PATH))
+        appContext.filesDir.subFile("ime/dict").mkdirs()  // TODO: should this be .subFile(DB_PATH).parentDir?
+        if (!appContext.filesDir.subFile(DB_PATH).exists()) {
+            appContext.assets.copy(DB_PATH, appContext.filesDir.subFile(DB_PATH))
+        }
         database = SQLiteDatabase.openDatabase(appContext.filesDir.subFile(DB_PATH).path, null, SQLiteDatabase.OPEN_READONLY);
     }
 

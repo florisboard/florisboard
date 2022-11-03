@@ -135,7 +135,7 @@ class FlorisLocale private constructor(val base: Locale) {
             val systemLocales = installedSystemLocales()
             val extensions = mapOf(
                 "zh_CN" to listOf(
-                    "t9", "wubilarge", "wubi98pinyin", "wubi98single", "wubi98", "zhengmalarge", "zhengmapinyin"
+                    "t9", "wubilarge", "wubi98pinyin", "wubi98single", "wubi98", "zhengma", "zhengmalarge", "zhengmapinyin"
                 ),
                 "zh_TW" to listOf("cangjielarge", "quick5", "scj6"),
                 "zh_HK" to listOf("easylarge", "jyutpingtable", "quickclassic", "quick3", "stroke5", "wu"),
