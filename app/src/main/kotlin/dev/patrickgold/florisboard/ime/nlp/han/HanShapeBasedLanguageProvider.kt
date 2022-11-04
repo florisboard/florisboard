@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
+import dev.patrickgold.florisboard.ime.nlp.LanguagePack
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
@@ -58,33 +59,17 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
 
     private val maxFreqBySubType = mutableMapOf<String, Int>();
     private var database = SQLiteDatabase.create(null);
-    // TODO: put this somewhere more formal, e.g. in the sqlite3 db.
-    private val keyCode = mapOf(
-        "array30" to "abcdefghijklmnopqrstuvwxyz./;,&".toSet(),
-        "array30large" to "abcdefghijklmnopqrstuvwxyz./;,&".toSet(),
-        "boshiamy" to ",.'abcdefghijklmnopqrstuvwxyz[]".toSet(),
-        "cangjie3" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "cangjie5" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "cantonese" to "abcdefghijklmnopqrstuvwxyz".toSet(),
-        "cantonhk" to "abcdefghijklmnopqrstuvwxyz".toSet(),
-        "cangjielarge" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "easylarge" to "!',-./0123456789;=[\\]`abcdefghijklmnopqrstuvwxyz~+<>():;&$^*?{}|\"".toSet(),
-        "jyutpingtable" to "abcdefghijklmnopqrstuvwxyz".toSet(),
-        "quick3" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "quick5" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "quickclassic" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "scj6" to "abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "stroke5" to "nm,./&".toSet(),
-        "t9" to "hpszn".toSet(),
-        "wu" to "'abcdefghijklmnopqrstuvwxyz&".toSet(),
-        "wubi98" to "abcdefghijklmnopqrstuvwxy".toSet(),
-        "wubi98pinyin" to "abcdefghijklmnopqrstuvwxy@".toSet(),
-        "wubi98single" to "abcdefghijklmnopqrstuvwxy".toSet(),
-        "wubilarge" to "abcdefghijklmnopqrstuvwxy".toSet(),
-        "zhengma" to "abcdefghijklmnopqrstuvwxyz".toSet(),
-        "zhengmalarge" to "abcdefghijklmnopqrstuvwxyz".toSet(),
-        "zhengmapinyin" to "abcdefghijklmnopqrstuvwxyz@".toSet(),
-    )
+    private var languagePack = buildMap {
+        for (languagePackData in LanguagePack.load(context).items) {
+            put(languagePackData.locale.localeTag(), languagePackData)
+        }
+    }.toMap()
+    private val keyCode = buildMap {
+        languagePack.forEach { (tag, languagePackData) ->
+            put(tag, languagePackData.hanShapeBasedKeyCode.toSet())
+        }
+        put("default", "abcdefghijklmnopqrstuvwxyz".toSet())
+    }.toMap()
 
     override val providerId = ProviderId
 
@@ -145,7 +130,8 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         if (content.composingText.isEmpty()) {
             return emptyList();
         }
-        val layout = subtype.primaryLocale.variant;
+        val layout: String = languagePack[subtype.primaryLocale.localeTag()]?.hanShapeBasedTable
+            ?: subtype.primaryLocale.variant
         try {
             val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");
             cur.moveToFirst();
@@ -209,7 +195,7 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
             val end = it.last()
             var start = end
             var next = it.previous()
-            val keyCodeLocale = keyCode.getOrDefault(subtype.primaryLocale.variant, emptySet())
+            val keyCodeLocale = keyCode[subtype.primaryLocale.localeTag()]?: keyCode["default"]?: emptySet()
             while (next != BreakIterator.DONE) {
                 val sub = textBeforeSelection.substring(next, start)
                 if (! sub.all { char -> char in keyCodeLocale })

@@ -4,6 +4,9 @@
 # https://github.com/fcitx/fcitx5-table-extra/tree/master/tables
 # The tables are in public domain per their README.
 
+import os
+import re
+import json
 import glob
 import sqlite3
 import collections
@@ -11,7 +14,7 @@ import collections
 
 def put_table(database, schema, table):
     length, table = table['LengthReal'], table['Data']
-    assert all('a' <= x <= 'z' or '0' <= x <= '9' or x == '_' for x in schema)
+    assert re.fullmatch('[a-zA-Z0-9_]+', schema) is not None
     columns = len(table[0])
     assert all(len(x) == columns for x in table)
     with sqlite3.connect(database) as con:
@@ -73,11 +76,12 @@ def parse_fcitx_table(table):
                         line = None
                     else:
                         line = (line[:split], line[split+1:])
-                elif field_now == 'Rule':
+                # elif field_now == 'Rule':
+                else:
                     line = line.split('=')
                     assert len(line) == 2
-                else:
-                    raise ValueError(f'Table field {field_now} not recognized')
+                # else:
+                #     raise ValueError(f'Table field {field_now} not recognized')
                 if line is not None:
                     table_now.append(line)
             else:
@@ -146,6 +150,10 @@ for x in glob.glob('[a-z]*.txt'):
     print(f'Processing {x}...')
     schema = x[:-4].replace('-', '').replace('_', '')
     tables[schema] = parse_fcitx_table(x)
+    conf = parse_fcitx_table(x[:-4] + '.conf.in')
+    conf = {k: {x[0]: x[1] for x in v} for k, v in conf.items()}
+    tables[schema]['.conf.in'] = conf
+    tables[schema]['FlorisLocale'] = f"{conf['InputMethod']['LangCode']}_{schema}"
 
 # Fixing
 if 'wubi98_pinyin' in tables:
@@ -183,13 +191,20 @@ if True:
             print(f'Exists unclaimed: ' + ''.join(sorted(keycode_real - keycode)))
 
 if True:
+    language_pack = [dict(locale=table['FlorisLocale'], hanShapeBasedKeyCode=table['KeyCode']) for schema, table in tables.items()]
+    with open('./languagepack.json', 'wt') as f:
+        json.dump({'$': 'ime.extension.languagepack', 'items': sorted(language_pack, key=lambda x: x['locale'])}, f, indent=2)
     database = './han.sqlite3'
+    if os.path.exists(database):
+        os.remove(database)
     for schema, table in tables.items():
         put_table(database, schema, table)
+        # put_table(database, table['FlorisLocale'], table)
     print({schema: table['KeyCode'] for schema, table in tables.items()})
 
     with sqlite3.connect(database) as con:
         cur = con.cursor()
+        # for schema in ['zh_CN_zhengmapinyin', 'zh_CN_zhengmalarge', 'zh_CN_wubilarge', 'zh_CN_wubi98', 'zh_TW_cangjie5', 'zh_HK_stroke5']:
         for schema in ['zhengmapinyin', 'zhengmalarge', 'wubilarge', 'wubi98', 'cangjie5', 'stroke5']:
             cur.execute(f'select * from {schema} order by length(code) desc')
             print(cur.fetchmany(10))

@@ -376,12 +376,12 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeGroupSpacer()
 
-            SubtypeProperty("nlpProvider.suggestion") {
+            SubtypeProperty(stringRes(R.string.settings__localization__subtype_suggestion_provider)) {
                 // TODO: Put this map somewhere more formal (another KeyboardExtension field?)
-                //  and use a string resource above and below
+                //  optionally use a string resource below
                 val nlpProviderMappings = mapOf(
                     LatinLanguageProvider.ProviderId to "Latin",
-                    HanShapeBasedLanguageProvider.ProviderId to "HanShapeBased"
+                    HanShapeBasedLanguageProvider.ProviderId to "Chinese shape-based"
                 )
 
                 val nlpProviderMappingIds = remember(nlpProviderMappings) {

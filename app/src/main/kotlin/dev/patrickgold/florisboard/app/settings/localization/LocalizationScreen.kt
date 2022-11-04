@@ -36,8 +36,10 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.settings.advanced.Backup
 import dev.patrickgold.florisboard.app.settings.advanced.Restore
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
+import dev.patrickgold.florisboard.ime.nlp.LanguagePack
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.readToFile
@@ -68,6 +70,7 @@ fun LocalizationScreen() = FlorisScreen {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
+    val cacheManager by context.cacheManager()
 
     floatingActionButton {
         ExtendedFloatingActionButton(
@@ -89,10 +92,27 @@ fun LocalizationScreen() = FlorisScreen {
             runCatching {
                 // TODO: quick and dirty. Replaces internal one, if any.
                 //  Should be replaced by other mechanisms, e.g. per-addon zip files.
+                val workspace = cacheManager.importer.new()
+                val zipFile = workspace.inputDir.subFile(Restore.BACKUP_ARCHIVE_FILE_NAME)
+                context.contentResolver.readToFile(uri, zipFile)
+                ZipUtils.unzip(zipFile, workspace.outputDir)
+
                 val dbPath = context.filesDir.subFile(HanShapeBasedLanguageProvider.DB_PATH)
-                dbPath.parentDir?.mkdirs()
-                context.contentResolver.readToFile(uri, dbPath)
-                context.showLongToast(R.string.settings__localization__language_pack_import_success)
+                val dbPathSrc = workspace.outputDir.subFile(dbPath.name)
+                val jsonPath = context.filesDir.subFile(LanguagePack.SERIAL_PATH)
+                val jsonPathSrc = workspace.outputDir.subFile(jsonPath.name)
+                if (dbPathSrc.exists() && jsonPathSrc.exists()) {
+                    dbPath.parentDir?.mkdirs()
+                    dbPathSrc.copyTo(dbPath, overwrite = true)
+                    jsonPath.parentDir?.mkdirs()
+                    jsonPathSrc.copyTo(jsonPath, overwrite = true)
+                    context.showLongToast(R.string.settings__localization__language_pack_import_success)
+                } else {
+                    context.showLongToast(
+                        R.string.settings__localization__language_pack_import_failure,
+                        "error_message" to "db or json not found in zip"
+                    )
+                }
             }.onFailure { error ->
                 context.showLongToast(R.string.settings__localization__language_pack_import_failure, "error_message" to error.localizedMessage)
             }
