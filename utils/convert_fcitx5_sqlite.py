@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
 # Execute in this folder to convert to sqlite:
+#     python3 convert_fcitx5_sqlite.py
+# Or for a subset of tables only:
+#     python3 convert_fcitx5_sqlite.py cangjie-large.txt quick-classic.txt wubi-large.txt zhengma.txt
 # https://github.com/fcitx/fcitx5-table-extra/tree/master/tables
 # The tables are in public domain per their README.
 
 import os
+import sys
 import re
 import json
 import glob
@@ -146,7 +150,9 @@ def clean_fcitx_table(table):
 
 # Loading
 tables = dict()
-for x in glob.glob('[a-z]*.txt'):
+file_list = sys.argv[1:] if len(sys.argv) > 1 else glob.glob('[a-z]*.txt')
+assert all(x.endswith('.txt') for x in file_list)
+for x in file_list:
     print(f'Processing {x}...')
     schema = x[:-4].replace('-', '').replace('_', '')
     tables[schema] = parse_fcitx_table(x)
@@ -190,22 +196,24 @@ if True:
             print(f'Claimed not used: ' + ''.join(sorted(keycode - keycode_real)))
             print(f'Exists unclaimed: ' + ''.join(sorted(keycode_real - keycode)))
 
-if True:
-    language_pack = [dict(locale=table['FlorisLocale'], hanShapeBasedKeyCode=table['KeyCode']) for schema, table in tables.items()]
-    with open('./languagepack.json', 'wt') as f:
-        json.dump({'$': 'ime.extension.languagepack', 'items': sorted(language_pack, key=lambda x: x['locale'])}, f, indent=2)
-    database = './han.sqlite3'
-    if os.path.exists(database):
-        os.remove(database)
-    for schema, table in tables.items():
-        put_table(database, schema, table)
-        # put_table(database, table['FlorisLocale'], table)
-    print({schema: table['KeyCode'] for schema, table in tables.items()})
+# Writing
+language_pack = [dict(id=table['FlorisLocale'], hanShapeBasedKeyCode=table['KeyCode']) for schema, table in tables.items()]
+with open('./extension-draft.json', 'wt') as f:
+    json.dump({'$': 'ime.extension.languagepack', 'items': sorted(language_pack, key=lambda x: x['id'])}, f, indent=2)
+database = './han.sqlite3'
+if os.path.exists(database):
+    os.remove(database)
+for schema, table in tables.items():
+    put_table(database, schema, table)
+    # put_table(database, table['FlorisLocale'], table)
+print({schema: table['KeyCode'] for schema, table in tables.items()})
 
-    with sqlite3.connect(database) as con:
-        cur = con.cursor()
-        # for schema in ['zh_CN_zhengmapinyin', 'zh_CN_zhengmalarge', 'zh_CN_wubilarge', 'zh_CN_wubi98', 'zh_TW_cangjie5', 'zh_HK_stroke5']:
-        for schema in ['zhengmapinyin', 'zhengmalarge', 'wubilarge', 'wubi98', 'cangjie5', 'stroke5']:
-            cur.execute(f'select * from {schema} order by length(code) desc')
-            print(cur.fetchmany(10))
+# Final display
+with sqlite3.connect(database) as con:
+    cur = con.cursor()
+    # for schema in ['zh_CN_zhengmapinyin', 'zh_CN_zhengmalarge', 'zh_CN_wubilarge', 'zh_CN_wubi98', 'zh_TW_cangjie5', 'zh_HK_stroke5']:
+    for schema in ['zhengmapinyin', 'zhengmalarge', 'wubilarge', 'wubi98', 'cangjie5', 'stroke5']:
+        if schema not in tables: continue
+        cur.execute(f'select * from {schema} order by length(code) desc')
+        print(cur.fetchmany(10))
 

@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
@@ -62,6 +63,7 @@ val ExtensionJsonConfig = Json {
         polymorphic(Extension::class) {
             subclass(KeyboardExtension::class, KeyboardExtension.serializer())
             subclass(ThemeExtension::class, ThemeExtension.serializer())
+            subclass(LanguagePackExtension::class, LanguagePackExtension.serializer())
         }
         polymorphic(Composer::class) {
             subclass(Appender::class, Appender.serializer())
@@ -77,6 +79,7 @@ class ExtensionManager(context: Context) {
     companion object {
         const val IME_KEYBOARD_PATH = "ime/keyboard"
         const val IME_THEME_PATH = "ime/theme"
+        const val IME_LANGUAGEPACK_PATH = "ime/languagepack"
 
         private const val FILE_OBSERVER_MASK =
             FileObserver.CLOSE_WRITE or FileObserver.DELETE or FileObserver.MOVED_FROM or FileObserver.MOVED_TO
@@ -88,10 +91,12 @@ class ExtensionManager(context: Context) {
 
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
+    val languagePacks = ExtensionIndex(LanguagePackExtension.serializer(), IME_LANGUAGEPACK_PATH)
 
     fun init() {
         keyboardExtensions.init()
         themes.init()
+        languagePacks.init()
     }
 
     fun import(ext: Extension) {
@@ -100,6 +105,7 @@ class ExtensionManager(context: Context) {
         val relGroupPath = when (ext) {
             is KeyboardExtension -> IME_KEYBOARD_PATH
             is ThemeExtension -> IME_THEME_PATH
+            is LanguagePackExtension -> IME_LANGUAGEPACK_PATH
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
@@ -125,6 +131,7 @@ class ExtensionManager(context: Context) {
     fun getExtensionById(id: String): Extension? {
         keyboardExtensions.value?.find { it.meta.id == id }?.let { return it }
         themes.value?.find { it.meta.id == id }?.let { return it }
+        languagePacks.value?.find { it.meta.id == id }?.let { return it }
         return null
     }
 

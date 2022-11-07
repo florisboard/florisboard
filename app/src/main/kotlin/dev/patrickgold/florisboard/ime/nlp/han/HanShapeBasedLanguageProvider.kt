@@ -20,38 +20,36 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.icu.text.BreakIterator
-import android.net.Uri
+import androidx.annotation.MainThread
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
-import dev.patrickgold.florisboard.ime.nlp.LanguagePack
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.lib.android.readText
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.lib.io.subFile
-import dev.patrickgold.florisboard.lib.android.copy
-import dev.patrickgold.florisboard.lib.android.readToFile
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.json.Json
 
-class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
+class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
         // Default user ID used for all subtypes, unless otherwise specified.
         // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.han.shape"
 
-        const val DB_PATH = "ime/dict/han.sqlite3";
+        const val DB_PATH = "han.sqlite3";
     }
 
 
@@ -59,27 +57,73 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
 
     private val maxFreqBySubType = mutableMapOf<String, Int>();
     private var database = SQLiteDatabase.create(null);
-    private var languagePack = buildMap {
-        for (languagePackData in LanguagePack.load(context).items) {
-            put(languagePackData.locale.localeTag(), languagePackData)
-        }
-    }.toMap()
-    private val keyCode = buildMap {
-        languagePack.forEach { (tag, languagePackData) ->
-            put(tag, languagePackData.hanShapeBasedKeyCode.toSet())
-        }
-        put("default", "abcdefghijklmnopqrstuvwxyz".toSet())
-    }.toMap()
+    private val extensionManager by context.extensionManager()
+    private val staticLanguagePack
+        get() = extensionManager.getExtensionById(
+            LanguagePackExtension.STATIC_HAN_SHAPE_BASED
+        ) as? LanguagePackExtension
+    private val extendedLanguagePack
+        get() = extensionManager.getExtensionById(
+            LanguagePackExtension.EXTENDED_HAN_SHAPE_BASED
+        ) as? LanguagePackExtension
+    private val activeLanguagePack
+        get() = extendedLanguagePack ?: staticLanguagePack
+    private var __connectedActiveLanguagePack: LanguagePackExtension? = null // FIXME: hack for not able to observe extensionManager.languagePacks
+    private var languagePackItems: Map<String, LanguagePackComponent> = mapOf() // init in parseLanguagePacks()
+    private var keyCode: Map<String, Set<Char>> = mapOf() // init in parseLanguagePacks()
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())  // same as NlpManager's preload()
 
     override val providerId = ProviderId
 
+    init {
+//        // FIXME: observeForever only callable on the main thread.
+//        extensionManager.languagePacks.observeForever { refreshLanguagePacks() }
+    }
+
+    private fun refreshLanguagePacks() {
+        scope.launch { create() }
+    }
+
     override suspend fun create() {
         // Here we initialize our provider, set up all things which are not language dependent.
-        appContext.filesDir.subFile("ime/dict").mkdirs()  // TODO: should this be .subFile(DB_PATH).parentDir?
-        if (!appContext.filesDir.subFile(DB_PATH).exists()) {
-            appContext.assets.copy(DB_PATH, appContext.filesDir.subFile(DB_PATH))
+        // Refresh language pack parsing
+        languagePackItems = buildMap {
+            for (languagePackItem in staticLanguagePack?.items ?: listOf()) {
+                put(languagePackItem.locale.localeTag(), languagePackItem)
+            }
+            for (languagePackItem in extendedLanguagePack?.items ?: listOf()) {
+                put(languagePackItem.locale.localeTag(), languagePackItem)
+            }
+        }.toMap()
+        keyCode = buildMap {
+            languagePackItems.forEach { (tag, languagePackItem) ->
+                put(tag, languagePackItem.hanShapeBasedKeyCode.toSet())
+            }
+            put("default", "abcdefghijklmnopqrstuvwxyz".toSet())
+        }.toMap()
+
+        // FIXME: this is having the imported extension (fixed ID) overriding the internal one.
+        //  Should be additive and support multiple extensions.
+        val activeLanguagePack = activeLanguagePack
+        val databasePath = activeLanguagePack?.let { activeLanguagePack ->
+            flogDebug { "Using active language pack: $activeLanguagePack" }
+            if (!activeLanguagePack.isLoaded()) {
+                activeLanguagePack.load(context)  // FIXME: every time this is copied over to cache.
+            }
+            activeLanguagePack.workingDir?.subFile(activeLanguagePack.hanShapeBasedSQLite)?.path
         }
-        database = SQLiteDatabase.openDatabase(appContext.filesDir.subFile(DB_PATH).path, null, SQLiteDatabase.OPEN_READONLY);
+        if (databasePath == null) {
+            flogError { "Han shape-based language pack not found or loaded" }
+        } else try {
+            // TODO: use lock on database?
+            if (database.isOpen) {
+                database.close()
+            }
+            database = SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READONLY);
+            __connectedActiveLanguagePack = activeLanguagePack
+        } catch (e: SQLiteException) {
+            flogError { "SQLiteException in openDatabase: path=$databasePath, error='${e}'" }
+        }
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
@@ -127,10 +171,14 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
+        if (__connectedActiveLanguagePack != activeLanguagePack) {
+            // FIXME: hack for not able to observe extensionManager.languagePacks
+            refreshLanguagePacks()
+        }
         if (content.composingText.isEmpty()) {
             return emptyList();
         }
-        val layout: String = languagePack[subtype.primaryLocale.localeTag()]?.hanShapeBasedTable
+        val layout: String = languagePackItems[subtype.primaryLocale.localeTag()]?.hanShapeBasedTable
             ?: subtype.primaryLocale.variant
         try {
             val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");

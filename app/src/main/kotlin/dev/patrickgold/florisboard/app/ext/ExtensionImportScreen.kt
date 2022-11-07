@@ -48,6 +48,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.android.showLongToast
@@ -60,6 +61,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.kotlin.resultOk
 
@@ -81,6 +83,11 @@ enum class ExtensionImportScreenType(
     EXT_THEME(
         id = "ext-theme",
         titleResId = R.string.ext__import__ext_theme,
+        supportedFiles = listOf(FileRegistry.FlexExtension),
+    ),
+    EXT_LANGUAGEPACK(
+        id = "ext-languagepack",
+        titleResId = R.string.ext__import__ext_languagepack,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     );
 }
@@ -173,6 +180,9 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             }
                             ExtensionImportScreenType.EXT_THEME -> {
                                 ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
+                            }
+                            ExtensionImportScreenType.EXT_LANGUAGEPACK -> {
+                                ext.takeIf { it is LanguagePackExtension }?.let { extensionManager.import(it) }
                             }
                         }
                     }
