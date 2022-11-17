@@ -435,7 +435,7 @@ abstract class AbstractEditorInstance(context: Context) {
         // Cannot perform below check due to editors which lie about their correct selection
         //if (content.selection.isValid && content.selection.start == 0) return true
         val oldTextBeforeSelection = content.textBeforeSelection
-        return if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
+        return (if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
             // If editor is rich and text before selection is empty we seem to have an invalid state here, so we fall
             // back to emulating a hardware backspace.
             when (type) {
@@ -463,6 +463,8 @@ abstract class AbstractEditorInstance(context: Context) {
                 ic.endBatchEdit()
                 true
             }
+        }).also {
+            deleteMoveLastCommitPosition()
         }
     }
 
@@ -646,6 +648,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     fun updateLastCommitPosition() = _lastCommitPosition.handleCommit(activeContent.selection)
+    fun deleteMoveLastCommitPosition() = _lastCommitPosition.handleDelete(activeContent.selection)
 
     /**
      * Class for handling history of last commit position.
@@ -670,6 +673,13 @@ abstract class AbstractEditorInstance(context: Context) {
             val start = min(selection.start, selection.end)
             if (start < pos) {
                 reset()
+            }
+        }
+
+        fun handleDelete(selection: EditorRange) {
+            val start = min(selection.start, selection.end)
+            if (start < pos) {
+                pos = start
             }
         }
     }
