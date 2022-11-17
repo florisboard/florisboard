@@ -70,6 +70,8 @@ class NlpManager(context: Context) {
             HanShapeBasedLanguageProvider.ProviderId to ProviderInstanceWrapper(HanShapeBasedLanguageProvider(context)),
         )
     }
+    // lock unnecessary because values constant
+    private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
 
     private val internalSuggestionsGuard = Mutex()
     private var internalSuggestions by Delegates.observable(SystemClock.uptimeMillis() to listOf<SuggestionCandidate>()) { _, _, _ ->
@@ -179,6 +181,15 @@ class NlpManager(context: Context) {
         return getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
             subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
         )
+    }
+
+    fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
+        // Using a cache because I have no idea how fast the runBlocking is
+        return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
+            runBlocking {
+                getSuggestionProvider(subtype).forcesSuggestionOn
+            }
+        }
     }
 
     fun suggest(subtype: Subtype, content: EditorContent) {

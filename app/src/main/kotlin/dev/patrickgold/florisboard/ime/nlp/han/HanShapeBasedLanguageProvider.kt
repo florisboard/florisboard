@@ -299,4 +299,6 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         }
     }
 
+    override val forcesSuggestionOn
+        get() = true
 }

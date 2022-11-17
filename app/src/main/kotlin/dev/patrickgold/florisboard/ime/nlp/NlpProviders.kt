@@ -223,6 +223,9 @@ interface SuggestionProvider : NlpProvider {
             }
         }
     }
+
+    val forcesSuggestionOn
+        get() = false
 }
 
 /**
