@@ -825,7 +825,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun onHardwareKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        flogDebug { "Calling from FlorisImeService.onKeyDown with $keyCode" }
         when (keyCode) {
             KeyEvent.KEYCODE_SPACE -> {
                 handleHardwareKeyboardSpace()
