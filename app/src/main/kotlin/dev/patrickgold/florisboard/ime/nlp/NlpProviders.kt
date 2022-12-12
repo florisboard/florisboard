@@ -18,8 +18,10 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
+import dev.patrickgold.florisboard.lib.FlorisLocale
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -110,6 +112,8 @@ interface SpellingProvider : NlpProvider {
  * Interface for an NLP provider specializing in next/current-word suggestion and autocorrect services.
  */
 interface SuggestionProvider : NlpProvider {
+    private val dictionaryManager get() = DictionaryManager.default()
+
     /**
      * Callback from the editor logic that the editor content has changed and that new suggestions should be generated
      * for the new user input. There is no guarantee that candidates returned are actually used, as there may be sudden
@@ -140,6 +144,77 @@ interface SuggestionProvider : NlpProvider {
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate>
+
+    suspend fun suggestFromUserDictionary(
+        subtype: Subtype,
+        content: EditorContent,
+        maxCandidateCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean,
+    ): List<SuggestionCandidate> {
+        return if (! isPrivateSession) {
+            // load user dictionary. Should this be put here, or in the preload() for every SuggestionProvider?
+            dictionaryManager.loadUserDictionariesIfNecessary()
+            // assuming no offensive ones in the dictionary?
+            val subtypeLocale = subtype.primaryLocale
+            // Use locale and parent locales. TODO: control this by a pref?
+            val queryLocales = buildList {
+                add(subtypeLocale)
+                if (subtypeLocale.variant.isNotBlank()) {
+                    add(FlorisLocale.from(subtypeLocale.language, subtypeLocale.country))
+                }
+                if (subtypeLocale.country.isNotBlank()) {
+                    add(FlorisLocale.from(subtypeLocale.language))
+                }
+            }
+            // For all locales, add queries sorted by confidence then alphabetical.
+            val totalCandidates = buildList {
+                for (locale in queryLocales) {
+                    val candidates = dictionaryManager.queryUserDictionary(content.composingText, locale)
+                    addAll(candidates.sortedWith(
+                        compareByDescending<SuggestionCandidate> { it.confidence }.thenBy { it.text.toString() }
+                    ))
+                    // Stop when max reached
+                    if (size >= maxCandidateCount) {
+                        break
+                    }
+                }
+            }.toMutableList()
+            // Make the first candidate
+            val first = totalCandidates.getOrNull(0) as? WordSuggestionCandidate
+            if (first != null) {
+                totalCandidates[0] = WordSuggestionCandidate(
+                    text = first.text,
+                    secondaryText = first.secondaryText,
+                    confidence = first.confidence,
+                    isEligibleForAutoCommit = true,
+                    isEligibleForUserRemoval = first.isEligibleForUserRemoval,
+                    sourceProvider = first.sourceProvider,
+                )
+            }
+            return totalCandidates.toList().subList(0, maxCandidateCount.coerceAtMost(totalCandidates.size))
+        } else {
+            emptyList()
+        }
+    }
+
+    suspend fun mergeFromSuggestionsSources(
+        fromDictionary: List<SuggestionCandidate>,
+        fromNlp: List<SuggestionCandidate>,
+        maxCandidateCount: Int,
+    ): List<SuggestionCandidate> {
+        // TODO: currently user dictionary supersedes other suggestions (except 1st one). Maybe use a pref to control this.
+        val maxFromDictionary = (maxCandidateCount - fromNlp.size.coerceAtMost(1)).coerceAtLeast(0)
+        return buildList {
+            addAll(fromDictionary.subList(
+                0, maxFromDictionary.coerceAtMost(fromDictionary.size)
+            ))
+            val remaining = (maxCandidateCount - size).coerceAtLeast(0)
+            addAll(fromNlp.subList(
+                0, remaining.coerceAtMost(fromNlp.size)
+            ))
+        }
+    }
 
     /**
      * Is called when a suggestion has been accepted, either manually by the user or automatically through auto-commit.
@@ -261,7 +336,14 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
-        return emptyList()
+//        return emptyList()
+        return suggestFromUserDictionary(
+            subtype=subtype,
+            content=content,
+            maxCandidateCount=maxCandidateCount,
+            allowPossiblyOffensive=allowPossiblyOffensive,
+            isPrivateSession=isPrivateSession,
+        )
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

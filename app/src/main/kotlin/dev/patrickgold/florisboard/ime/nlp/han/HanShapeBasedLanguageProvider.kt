@@ -174,7 +174,15 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         }
         val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return emptyList();
         val layout: String = languagePackItem.hanShapeBasedTable
-        try {
+        val userDictionarySuggestions = suggestFromUserDictionary(
+            subtype=subtype,
+            content=content,
+            maxCandidateCount=maxCandidateCount,  // get maxCandidateCount first, then maybe trim to maxUserDictionaryCandidateCount
+            allowPossiblyOffensive=allowPossiblyOffensive,
+            isPrivateSession=isPrivateSession,
+        )
+
+        val suggestions = try {
             val database = languagePackExtension.hanShapeBasedSQLiteDatabase
             val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");
             cur.moveToFirst();
@@ -189,20 +197,25 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
                         text = "$word",
                         secondaryText = code,
                         confidence = 0.5,
-                        isEligibleForAutoCommit = n == 0,
+                        isEligibleForAutoCommit = userDictionarySuggestions.isEmpty() && (n == 0),
                         // We set ourselves as the source provider so we can get notify events for our candidate
                         sourceProvider = this@HanShapeBasedLanguageProvider,
                     ))
                 }
             }
-            return suggestions
+            suggestions
         } catch (e: IllegalStateException) {
             flogError { "Invalid layout '${layout}' not found" }
-            return emptyList();
+            emptyList()
         } catch (e: SQLiteException) {
             flogError { "SQLiteException: layout=$layout, composing=${content.composingText}, error='${e}'" }
-            return emptyList();
+            emptyList()
         }
+        return mergeFromSuggestionsSources(
+            userDictionarySuggestions,
+            suggestions,
+            maxCandidateCount
+        )
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

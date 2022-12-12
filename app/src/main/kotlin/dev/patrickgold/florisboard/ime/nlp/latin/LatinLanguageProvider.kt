@@ -106,6 +106,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
+        val userDictionarySuggestions = suggestFromUserDictionary(
+            subtype = subtype,
+            content = content,
+            maxCandidateCount = maxCandidateCount,
+            allowPossiblyOffensive = allowPossiblyOffensive,
+            isPrivateSession = isPrivateSession,
+        )
         val word = content.composingText.ifBlank { "next" }
         val suggestions = buildList {
             for (n in 0 until maxCandidateCount) {
@@ -119,7 +126,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 ))
             }
         }
-        return suggestions
+        return mergeFromSuggestionsSources(
+            userDictionarySuggestions,
+            suggestions,
+            maxCandidateCount
+        )
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
