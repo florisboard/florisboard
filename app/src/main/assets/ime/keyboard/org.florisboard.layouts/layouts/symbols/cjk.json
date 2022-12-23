@@ -8,15 +8,13 @@
       },
       "half": { "code": 64, "label": "@" }
     },
-    { "code": 12306, "label": "〒", "popup": {
-        "main": { "code": 12320, "label": "〠" }
-      }
-    },
     {
       "$": "char_width_selector",
       "full": { "code": 65283, "label": "＃", "popup": {
           "main": { "code": 35, "label": "#" },
           "relevant": [
+            { "code": 12306, "label": "〒"},
+            { "code": 12320, "label": "〠" },
             { "code": 8470, "label": "№" }
           ]
         }
@@ -24,6 +22,8 @@
       "half": { "code": 35, "label": "#", "popup": {
           "main": { "code": 65283, "label": "＃" },
           "relevant": [
+            { "code": 12306, "label": "〒"},
+            { "code": 12320, "label": "〠" },
             { "code": 8470, "label": "№" }
           ]
         }
@@ -99,14 +99,18 @@
       "full": { "code": 65291, "label": "＋", "popup": {
           "main": { "code": 43, "label": "+" },
           "relevant": [
-            { "code": 177, "label": "±" }
+            { "code":   177, "label": "±" },
+            { "code":    61, "label": "=" },
+            { "code": 65309, "label": "＝" }
           ]
         }
       },
       "half": { "code": 43, "label": "+", "popup": {
           "main": { "code": 65291, "label": "＋" },
           "relevant": [
-            { "code": 177, "label": "±" }
+            { "code":   177, "label": "±" },
+            { "code":    61, "label": "=" },
+            { "code": 65309, "label": "＝" }
           ]
         }
       }
@@ -117,7 +121,8 @@
           "main": { "code": 12302, "label": "『" },
           "relevant": [
             { "code": 12304, "label": "【" },
-            { "code": 12310, "label": "〖" }
+            { "code": 12310, "label": "〖" },
+            { "code": 65288, "label": "（" }
           ]
         }
       },
@@ -126,7 +131,9 @@
           "relevant": [
             { "code": 12303, "label": "』" },
             { "code": 12304, "label": "【" },
-            { "code": 12310, "label": "〖" }
+            { "code": 12310, "label": "〖" },
+            { "code":    40, "label": "(" },
+            { "code":    91, "label": "[" }
           ]
         }
       }
@@ -137,7 +144,8 @@
           "main": { "code": 12303, "label": "』" },
           "relevant": [
             { "code": 12305, "label": "】" },
-            { "code": 12311, "label": "〗" }
+            { "code": 12311, "label": "〗" },
+            { "code": 65289, "label": "）" }
           ]
         }
       },
@@ -146,7 +154,9 @@
           "relevant": [
             { "code": 12303, "label": "』" },
             { "code": 12305, "label": "】" },
-            { "code": 12311, "label": "〗" }
+            { "code": 12311, "label": "〗" },
+            { "code":    41, "label": ")" },
+            { "code":    93, "label": "]" }
           ]
         }
       }
