@@ -28,6 +28,7 @@
     { "id": "default", "authors": [ "patrickgold" ] },
     { "id": "ar", "authors": [ "HeiWiper" ] },
     { "id": "bg", "authors": [ "iorvethe" ] },
+	{ "id": "bn-BD", "authors": [ "iamrasel" ] },
     { "id": "ca", "authors": [ "mikelloc" ] },
     { "id": "ckb", "authors": [ "GoRaN" ] },
     { "id": "cs", "authors": [ "stefan-misik" ] },
@@ -643,6 +644,17 @@
       "popupMapping": "org.florisboard.localization:ur-PK",
       "preferred": {
         "characters": "org.florisboard.layouts:urdu_phonetic"
+      }
+    },
+	{
+      "languageTag": "bn-BD",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:bangladeshi_taka",
+      "popupMapping": "org.florisboard.localization:bn-BD",
+      "preferred": {
+        "characters": "org.florisboard.layouts:bengali_bd",
+        "numericRow": "org.florisboard.layouts:bengali",
+        "numericAdvanced": "org.florisboard.layouts:bengali"
       }
     }
   ]

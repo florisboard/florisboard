@@ -1,0 +1,48 @@
+[
+  [
+    { "code":   43, "label": "+", "popup": {
+      "relevant": [
+        { "code":   45, "label": "-" },
+        { "code":   215, "label": "×" },
+        { "code":   247, "label": "÷" }
+      ]
+    } },
+    { "code":   2535, "label": "১", "type": "numeric" },
+    { "code":   2536, "label": "২", "type": "numeric" },
+    { "code":   2537, "label": "৩", "type": "numeric" },
+    { "code":   37, "label": "%" }
+  ],
+  [
+    { "code":   40, "label": "(", "popup": {
+      "relevant": [
+        { "code":   91, "label": "[" },
+        { "code":  123, "label": "{" }
+      ]
+    } },
+    { "code":   2538, "label": "৪", "type": "numeric" },
+    { "code":   2539, "label": "৫", "type": "numeric" },
+    { "code":   2540, "label": "৬", "type": "numeric" },
+    { "code":   32, "label": "space" }
+  ],
+  [
+    { "code":   41, "label": ")", "popup": {
+      "relevant": [
+        { "code":   93, "label": "]" },
+        { "code":  125, "label": "}" }
+      ]
+    } },
+    { "code":   2541, "label": "৭", "type": "numeric" },
+    { "code":   2542, "label": "৮", "type": "numeric" },
+    { "code":   2543, "label": "৯", "type": "numeric" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code": -201, "label": "view_characters", "type": "system_gui" },
+    { "code":   44, "label": "," },
+    { "code": -202, "label": "view_symbols", "type": "system_gui" },
+    { "code":   2534, "label": "০", "type": "numeric" },
+    { "code":   61, "label": "=" },
+    { "code":   46, "label": "." },
+    { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+  ]
+]

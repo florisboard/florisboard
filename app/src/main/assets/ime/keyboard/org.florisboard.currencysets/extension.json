@@ -33,6 +33,18 @@
         { "code":  165, "label": "¥" }
       ]
     },
+	{
+      "id": "bangladeshi_taka",
+      "label": "Bangladeshi taka (৳)",
+      "slots": [
+        { "code": 2547, "label": "৳" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
     {
       "id": "bitcoin",
       "label": "Bitcoin (₿)",
