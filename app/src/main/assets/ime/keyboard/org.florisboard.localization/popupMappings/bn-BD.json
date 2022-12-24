@@ -79,7 +79,7 @@
 	"র": {
       "main": { "$": "auto_text_key", "code":  2482, "label": "ল" },
 	  "relevant": [
-        { "$": "multi_text_key", "codePoints":  [2480, 2509, 2479], "label": "র‌্য" }
+        { "code": -255, "label": "র‌্য" }
       ]
     },
 	"ন": {
@@ -145,8 +145,8 @@
       "main": { "code": -255, "label": ".com" },
       "relevant": [
         { "code": -255, "label": ".org" },
-        { "code": -255, "label": ".com.es" },
-        { "code": -255, "label": ".es" },
+        { "code": -255, "label": ".com.bd" },
+        { "code": -255, "label": ".bd" },
         { "code": -255, "label": ".net" }
       ]
     }
