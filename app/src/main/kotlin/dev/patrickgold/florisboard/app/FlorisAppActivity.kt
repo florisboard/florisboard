@@ -162,5 +162,8 @@ class FlorisAppActivity : ComponentActivity() {
         SideEffect {
             navController.setOnBackPressedDispatcher(this.onBackPressedDispatcher)
         }
+        // FIXME: does this have security implications?
+        val launchRoute = intent.extras?.getString("launchRoute")
+        launchRoute?.let { navController.navigate(it) }
     }
 }

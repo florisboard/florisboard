@@ -151,6 +151,7 @@ class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
+                ADD_USER_DICTIONARY,
                 VOICE_INPUT,
                 TOGGLE_SMARTBAR_VISIBILITY,
                 TOGGLE_ACTIONS_OVERFLOW,
@@ -476,6 +477,13 @@ class TextKeyData(
             type = KeyType.CHARACTER,
             code = KeyCode.SETTINGS,
             label = "settings",
+        )
+
+        /** Predefined key data for [KeyCode.ADD_USER_DICTIONARY] */
+        val ADD_USER_DICTIONARY = TextKeyData(
+            type = KeyType.CHARACTER,
+            code = KeyCode.ADD_USER_DICTIONARY,
+            label = "add_user_dictionary",
         )
 
         /** Predefined key data for [KeyCode.VOICE_INPUT] */

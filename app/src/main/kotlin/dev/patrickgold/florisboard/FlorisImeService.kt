@@ -153,13 +153,16 @@ class FlorisImeService : LifecycleInputMethodService() {
         /**
          * Hides the IME and launches [FlorisAppActivity].
          */
-        fun launchSettings() {
+        fun launchSettings(route: String? = null) {
             val ims = FlorisImeServiceReference.get() ?: return
             ims.requestHideSelf(0)
             ims.launchActivity(FlorisAppActivity::class) {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                     Intent.FLAG_ACTIVITY_CLEAR_TOP
+                if (route != null) {
+                    it.putExtra("launchRoute", route)
+                }
             }
         }
 

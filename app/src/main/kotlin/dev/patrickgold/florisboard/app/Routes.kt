@@ -89,7 +89,15 @@ object Routes {
 
         const val Dictionary = "settings/dictionary"
         const val UserDictionary = "settings/dictionary/user-dictionary/{type}"
+        const val UserDictionaryAdd = "settings/dictionary/user-dictionary/{type}/{locale}"
         fun UserDictionary(type: UserDictionaryType) = UserDictionary.curlyFormat("type" to type.id)
+        fun UserDictionaryAdd(type: UserDictionaryType, locale: String?): String {
+            val localeSafe = locale?.replace("/", "")
+            if (localeSafe == null || localeSafe.isEmpty())
+                return UserDictionary(type)
+            return UserDictionaryAdd.curlyFormat("type" to type.id, "locale" to localeSafe)
+        }
+
 
         const val Gestures = "settings/gestures"
 
@@ -184,7 +192,14 @@ object Routes {
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
                     UserDictionaryType.values().firstOrNull { it.id == typeId }
                 }
-                UserDictionaryScreen(type!!)
+                UserDictionaryScreen(type!!, adding = false, addLocale = "")
+            }
+            composable(Settings.UserDictionaryAdd) { navBackStack ->
+                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
+                    UserDictionaryType.values().firstOrNull { it.id == typeId }
+                }
+                val locale = navBackStack.arguments?.getString("locale") ?: ""
+                UserDictionaryScreen(type!!, adding = true, addLocale = locale)
             }
 
             composable(Settings.Gestures) { GesturesScreen() }

@@ -108,6 +108,8 @@ object KeyCode {
 
     const val URI_COMPONENT_TLD =           -255
 
+    const val ADD_USER_DICTIONARY =         -260
+
     const val SETTINGS =                    -301
 
     const val CURRENCY_SLOT_1 =             -801
