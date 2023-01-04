@@ -11,6 +11,7 @@ files:
     languages_mapping:
       android_code:
         ar: "ar"
+        ast-ES: "ast"
         bg: "bg"
         bs: "bs"
         ca: "ca"
