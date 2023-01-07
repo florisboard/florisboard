@@ -17,49 +17,107 @@
 package dev.patrickgold.florisboard.ime.nlp.han
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
+import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.editor.EditorRange
+import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.lib.android.readText
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
-import dev.patrickgold.florisboard.lib.io.subFile
-import dev.patrickgold.florisboard.lib.android.copy
+import dev.patrickgold.florisboard.subtypeManager
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.json.Json
 
-class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
+class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
         // Default user ID used for all subtypes, unless otherwise specified.
         // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.han.shape"
 
-        const val DB_PATH = "ime/dict/han.sqlite3";
+        const val DB_PATH = "han.sqlite3";
     }
 
 
     private val appContext by context.appContext()
 
     private val maxFreqBySubType = mutableMapOf<String, Int>();
-    private var database = SQLiteDatabase.create(null);
+    private val extensionManager by context.extensionManager()
+    private val subtypeManager by context.subtypeManager()
+    private val allLanguagePacks: List<LanguagePackExtension>
+        // Assume other types of extensions do not extend LanguagePackExtension
+        get() = extensionManager.languagePacks.value ?: listOf()
+    private var __connectedActiveLanguagePacks: Set<LanguagePackExtension> = setOf() // FIXME: hack for not able to observe extensionManager.languagePacks and subtypeManager.subtypes
+    private var languagePackItems: Map<String, LanguagePackComponent> = mapOf() // init in refreshLanguagePacks()
+    private var keyCode: Map<String, Set<Char>> = mapOf() // init in refreshLanguagePacks()
+    private val activeLanguagePacks  // language packs referenced in subtypes
+        get() = buildSet {
+            val locales = subtypeManager.subtypes.map { it.primaryLocale.localeTag() }.toSet()
+            for (languagePack in allLanguagePacks) {
+                // FIXME: skip checking language pack type because it always is for now
+                if (languagePack.items.any { it.locale.localeTag() in locales }) {
+                    add(languagePack)
+                }
+            }
+        }
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())  // same as NlpManager's preload()
 
     override val providerId = ProviderId
 
+    init {
+//        // FIXME: observeForever only callable on the main thread.
+//        extensionManager.languagePacks.observeForever { refreshLanguagePacks() }
+    }
+
+    private fun refreshLanguagePacks() {
+        scope.launch { create() }
+    }
+
     override suspend fun create() {
         // Here we initialize our provider, set up all things which are not language dependent.
-        appContext.filesDir.subFile("ime/dict").mkdirs()
-        appContext.assets.copy(DB_PATH, appContext.filesDir.subFile(DB_PATH))
-        database = SQLiteDatabase.openDatabase(appContext.filesDir.subFile(DB_PATH).path, null, SQLiteDatabase.OPEN_READONLY);
+        // Refresh language pack parsing
+
+        // build index of available language packs
+        languagePackItems = buildMap {
+            for (languagePack in allLanguagePacks) {
+                // FIXME: skip checking language pack type because it always is for now
+//                if (languagePack is HanShapeBasedLanguagePackExtensionImpl)
+                for (languagePackItem in languagePack.items) {
+                    put(languagePackItem.locale.localeTag(), languagePackItem)
+                    // FIXME: how to put this in deserialization?
+                    languagePackItem.parent = languagePack
+                }
+            }
+        }.toMap()
+        keyCode = buildMap {
+            languagePackItems.forEach { (tag, languagePackItem) ->
+                put(tag, languagePackItem.hanShapeBasedKeyCode.toSet())
+            }
+            put("default", "abcdefghijklmnopqrstuvwxyz".toSet())
+        }.toMap()
+
+        // Load all actively used language packs.
+        val activeLanguagePacks = activeLanguagePacks
+        for (activeLanguagePack in activeLanguagePacks) {
+            if (!activeLanguagePack.isLoaded()) {
+                // populates activeLanguagePack.hanShapeBasedSQLiteDatabase
+                // FIXME: every time this is copied over to cache.
+                activeLanguagePack.load(context)
+            }
+        }
+        __connectedActiveLanguagePacks = activeLanguagePacks
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
@@ -107,11 +165,21 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
+        if (__connectedActiveLanguagePacks != activeLanguagePacks) {
+            // FIXME: hack for not able to observe extensionManager.languagePacks
+            refreshLanguagePacks()
+        }
         if (content.composingText.isEmpty()) {
             return emptyList();
         }
-        val layout = subtype.primaryLocale.variant;
+        val languagePackItem = languagePackItems[subtype.primaryLocale.localeTag()]
+        val languagePackExtension = languagePackItem?.parent
+        if (languagePackItem == null || languagePackExtension == null) {
+            return emptyList()
+        }
+        val layout: String = languagePackItem.hanShapeBasedTable
         try {
+            val database = languagePackExtension.hanShapeBasedSQLiteDatabase
             val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");
             cur.moveToFirst();
             val rowCount = cur.getCount();
@@ -134,6 +202,9 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
             return suggestions
         } catch (e: IllegalStateException) {
             flogError { "Invalid layout '${layout}' not found" }
+            return emptyList();
+        } catch (e: SQLiteException) {
+            flogError { "SQLiteException: layout=$layout, composing=${content.composingText}, error='${e}'" }
             return emptyList();
         }
     }
@@ -164,4 +235,29 @@ class HanShapeBasedLanguageProvider(context: Context) : SpellingProvider, Sugges
         // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
         // the app process is killed (which will most likely always be the case).
     }
+
+    override suspend fun determineLocalComposing(subtype: Subtype, textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup): EditorRange {
+        return breakIterators.character(subtype.primaryLocale) {
+            it.setText(textBeforeSelection.toString())
+            val end = it.last()
+            var start = end
+            var next = it.previous()
+            val keyCodeLocale = keyCode[subtype.primaryLocale.localeTag()]?: keyCode["default"]?: emptySet()
+            while (next != BreakIterator.DONE) {
+                val sub = textBeforeSelection.substring(next, start)
+                if (! sub.all { char -> char in keyCodeLocale })
+                    break
+                start = next
+                next = it.previous()
+            }
+            if (start != end) {
+                flogDebug { "Determined $start - $end as composing: ${textBeforeSelection.substring(start, end)}" }
+                EditorRange(start, end)
+            } else {
+                flogDebug { "Determined Unspecified as composing" }
+                EditorRange.Unspecified
+            }
+        }
+    }
+
 }
