@@ -21,7 +21,6 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.lib.FlorisLocale
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -152,47 +151,20 @@ interface SuggestionProvider : NlpProvider {
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
-        return if (! isPrivateSession) {
+        return if (!isPrivateSession && content.composingText.isNotEmpty()) {
             // load user dictionary. Should this be put here, or in the preload() for every SuggestionProvider?
             dictionaryManager.loadUserDictionariesIfNecessary()
             // assuming no offensive ones in the dictionary?
             val subtypeLocale = subtype.primaryLocale
             // Use locale and parent locales. TODO: control this by a pref?
-            val queryLocales = buildList {
-                add(subtypeLocale)
-                if (subtypeLocale.variant.isNotBlank()) {
-                    add(FlorisLocale.from(subtypeLocale.language, subtypeLocale.country))
-                }
-                if (subtypeLocale.country.isNotBlank()) {
-                    add(FlorisLocale.from(subtypeLocale.language))
-                }
-            }
-            // For all locales, add queries sorted by confidence then alphabetical.
-            val totalCandidates = buildList {
-                for (locale in queryLocales) {
-                    val candidates = dictionaryManager.queryUserDictionary(content.composingText, locale)
-                    addAll(candidates.sortedWith(
-                        compareByDescending<SuggestionCandidate> { it.confidence }.thenBy { it.text.toString() }
-                    ))
-                    // Stop when max reached
-                    if (size >= maxCandidateCount) {
-                        break
-                    }
-                }
-            }.toMutableList()
-            // Make the first candidate
-            val first = totalCandidates.getOrNull(0) as? WordSuggestionCandidate
-            if (first != null) {
-                totalCandidates[0] = WordSuggestionCandidate(
-                    text = first.text,
-                    secondaryText = first.secondaryText,
-                    confidence = first.confidence,
-                    isEligibleForAutoCommit = true,
-                    isEligibleForUserRemoval = first.isEligibleForUserRemoval,
-                    sourceProvider = first.sourceProvider,
-                )
-            }
-            return totalCandidates.toList().subList(0, maxCandidateCount.coerceAtMost(totalCandidates.size))
+            val totalCandidates = dictionaryManager.queryUserDictionary(
+                content.composingText, subtypeLocale
+            ).sortedWith(
+                // sorted by auto commit, confidence, then alphabetical.
+                compareByDescending<SuggestionCandidate> { it.isEligibleForAutoCommit }.thenBy { it.confidence }.thenBy { it.text.toString() }
+            )
+            // Delegates to user dictionary query system (whether match is exact) for isEligibleForAutoCommit
+            return totalCandidates.subList(0, maxCandidateCount.coerceAtMost(totalCandidates.size))
         } else {
             emptyList()
         }
@@ -205,6 +177,7 @@ interface SuggestionProvider : NlpProvider {
     ): List<SuggestionCandidate> {
         // TODO: currently user dictionary supersedes other suggestions (except 1st one). Maybe use a pref to control this.
         val maxFromDictionary = (maxCandidateCount - fromNlp.size.coerceAtMost(1)).coerceAtLeast(0)
+        var existsEligibleForAutoCommit = false
         return buildList {
             addAll(fromDictionary.subList(
                 0, maxFromDictionary.coerceAtMost(fromDictionary.size)
@@ -213,6 +186,20 @@ interface SuggestionProvider : NlpProvider {
             addAll(fromNlp.subList(
                 0, remaining.coerceAtMost(fromNlp.size)
             ))
+        }.map { suggestionCandidate ->
+            // Only keep 1st isEligibleForAutoCommit true, set others to false
+            when (suggestionCandidate) {
+                is WordSuggestionCandidate -> {
+                    suggestionCandidate.copy(
+                        isEligibleForAutoCommit = if (existsEligibleForAutoCommit) false
+                        else suggestionCandidate.isEligibleForAutoCommit
+                    )
+                }
+                is ClipboardSuggestionCandidate -> suggestionCandidate
+                else -> suggestionCandidate
+            }.also {
+                existsEligibleForAutoCommit = existsEligibleForAutoCommit || suggestionCandidate.isEligibleForAutoCommit
+            }
         }
     }
 

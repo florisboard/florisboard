@@ -86,23 +86,29 @@ interface UserDictionaryDao {
             "SELECT * FROM $WORDS_TABLE"
         private const val LOCALE_MATCHES =
             "(${UserDictionary.Words.LOCALE} = :locale OR ${UserDictionary.Words.LOCALE} IS NULL)"
+        // match locale prefix too, instead of strict match
+        private const val LOCALE_MATCHES_PREFIX =
+            "(${UserDictionary.Words.LOCALE} = :locale OR :locale LIKE ${UserDictionary.Words.LOCALE} || '/_%' ESCAPE '/'  OR ${UserDictionary.Words.LOCALE} IS NULL)"
     }
 
-    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%'")
+    // only match prefix.
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE :word || '%'")
     fun query(word: String): List<UserDictionaryEntry>
 
-    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%' AND $LOCALE_MATCHES")
+    // only match prefix.
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE :word || '%' AND $LOCALE_MATCHES_PREFIX")
     fun query(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut")
     fun queryShortcut(shortcut: String): List<UserDictionaryEntry>
 
-    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut AND $LOCALE_MATCHES")
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut AND $LOCALE_MATCHES_PREFIX")
     fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query(SELECT_ALL_FROM_WORDS)
     fun queryAll(): List<UserDictionaryEntry>
 
+    // strict match, do not match locale prefix
     @Query("$SELECT_ALL_FROM_WORDS WHERE (${UserDictionary.Words.LOCALE} = :locale AND :locale IS NOT NULL) OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL)")
     fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry>
 
@@ -112,7 +118,7 @@ interface UserDictionaryDao {
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND (${UserDictionary.Words.LOCALE} = :locale OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL))")
     fun queryExact(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
-    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES_PREFIX")
     fun queryExactFuzzyLocale(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("SELECT DISTINCT ${UserDictionary.Words.LOCALE} FROM $WORDS_TABLE")
@@ -257,7 +263,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         override fun query(word: String): List<UserDictionaryEntry> {
             return queryResolver(
                 selection = "${UserDictionary.Words.WORD} LIKE ?",
-                selectionArgs = arrayOf("%$word%"),
+                selectionArgs = arrayOf("$word%"),
                 sortOrder = SORT_BY_FREQ_DESC,
             )
         }
@@ -266,13 +272,13 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} IS NULL",
-                    selectionArgs = arrayOf("%$word%"),
+                    selectionArgs = arrayOf("$word%"),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             } else {
                 queryResolver(
-                    selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                    selectionArgs = arrayOf("%$word%", locale.localeTag(), locale.language),
+                    selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ? LIKE ${UserDictionary.Words.LOCALE} || '/_%' ESCAPE '/' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                    selectionArgs = arrayOf("$word%", locale.localeTag(), locale.localeTag()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
@@ -295,8 +301,8 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 )
             } else {
                 queryResolver(
-                    selection = "${UserDictionary.Words.SHORTCUT} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                    selectionArgs = arrayOf(shortcut, locale.localeTag(), locale.language),
+                    selection = "${UserDictionary.Words.SHORTCUT} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ? LIKE ${UserDictionary.Words.LOCALE} || '/_%' ESCAPE '/' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                    selectionArgs = arrayOf(shortcut, locale.localeTag(), locale.localeTag()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
@@ -311,6 +317,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         }
 
         override fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry> {
+            // strict match, do not match locale prefix
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.LOCALE} IS NULL",
@@ -359,8 +366,8 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 )
             } else {
                 queryResolver(
-                    selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                    selectionArgs = arrayOf(word, locale.localeTag()),
+                    selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ? LIKE ${UserDictionary.Words.LOCALE} || '/_%' ESCAPE '/' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                    selectionArgs = arrayOf(word, locale.localeTag(), locale.localeTag()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }

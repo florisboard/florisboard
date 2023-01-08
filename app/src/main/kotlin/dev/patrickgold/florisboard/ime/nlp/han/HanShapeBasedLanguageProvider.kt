@@ -197,7 +197,7 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
                         text = "$word",
                         secondaryText = code,
                         confidence = 0.5,
-                        isEligibleForAutoCommit = userDictionarySuggestions.isEmpty() && (n == 0),
+                        isEligibleForAutoCommit = n == 0,
                         // We set ourselves as the source provider so we can get notify events for our candidate
                         sourceProvider = this@HanShapeBasedLanguageProvider,
                     ))
