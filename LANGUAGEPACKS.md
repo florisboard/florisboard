@@ -3,7 +3,7 @@
 ## Languages
 
 - [Summary](#summary)
-- [Chinese / 中文](#chinese--)
+- [Chinese / 中文](#chinese--中文)
 
 ## Summary
 

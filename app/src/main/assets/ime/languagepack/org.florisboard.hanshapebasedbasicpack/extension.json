@@ -17,10 +17,10 @@
       "hanShapeBasedKeyCode": "abcdefghijklmnopqrstuvwxyz"
     },
     {
-      "id": "zh_HK_quickclassic",
-      "label": "中文 (香港) [速成古典版] / Chinese (Hong Kong) [QUICKCLASSIC]",
+      "id": "zh_TW_boshiamy",
+      "label": "中文 (台灣) [嘸蝦米] / Chinese (Taiwan) [BOSHIAMY]",
       "authors": [ "waelwindows", "moonbeamcelery" ],
-      "hanShapeBasedKeyCode": "abcdefghijklmnopqrstuvwxyz&"
+      "hanShapeBasedKeyCode": ",.'abcdefghijklmnopqrstuvwxyz[]"
     },
     {
       "id": "zh_TW_cangjielarge",
