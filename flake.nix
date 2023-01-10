@@ -3,10 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = {
@@ -19,13 +16,13 @@
     android = {
       versions = {
         tools = "26.1.1";
-        platformTools = "33.0.2";
+        platformTools = "33.0.3";
         buildTools = "31.0.0";
         ndk = "22.1.7171670";
-        cmake = "3.22.1";
+        cmake = "3.18.1";
         emulator = "31.3.9";
       };
-      platforms = ["24" "25" "26" "27" "28" "29" "30" "31" "32"];
+      platforms = ["32"];
     };
   in
     flake-utils.lib.eachSystem supportedSystems
