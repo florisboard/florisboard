@@ -250,7 +250,16 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
     }
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return 0.0;
+        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return 0.0;
+        val layout: String = languagePackItem.hanShapeBasedTable
+        try {
+            val database = languagePackExtension.hanShapeBasedSQLiteDatabase
+            val cur = database.query(layout, arrayOf ( "weight" ), "code = ?", arrayOf(word), "", "", "", "");
+            cur.moveToFirst();
+            return try { cur.getDouble(0) } catch (e: Exception) { 0.0 };
+        } catch (e: SQLiteException) {
+            return 0.0;
+        }
     }
 
     override suspend fun destroy() {
