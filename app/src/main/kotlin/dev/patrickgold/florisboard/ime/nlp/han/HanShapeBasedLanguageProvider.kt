@@ -172,11 +172,7 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         if (content.composingText.isEmpty()) {
             return emptyList();
         }
-        val languagePackItem = languagePackItems[subtype.primaryLocale.localeTag()]
-        val languagePackExtension = languagePackItem?.parent
-        if (languagePackItem == null || languagePackExtension == null) {
-            return emptyList()
-        }
+        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return emptyList();
         val layout: String = languagePackItem.hanShapeBasedTable
         try {
             val database = languagePackExtension.hanShapeBasedSQLiteDatabase
@@ -221,6 +217,15 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
     override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
         flogDebug { candidate.toString() }
         return false
+    }
+
+    fun getLanguagePack(subtype: Subtype): Pair<LanguagePackComponent, LanguagePackExtension>? {
+        val languagePackItem = languagePackItems[subtype.primaryLocale.localeTag()]
+        val languagePackExtension = languagePackItem?.parent
+        if (languagePackItem == null || languagePackExtension == null) {
+            return null;
+        }
+        return Pair(languagePackItem, languagePackExtension)
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> {
