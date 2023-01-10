@@ -53,7 +53,7 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 24
         targetSdk = 31
-        versionCode = 88
+        versionCode = 90
         versionName = "0.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -137,7 +137,7 @@ android {
 
         create("beta") {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-alpha02"
+            versionNameSuffix = "-alpha04"
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
@@ -217,6 +217,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
+    implementation(libs.patrickgold.compose.tooltip)
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

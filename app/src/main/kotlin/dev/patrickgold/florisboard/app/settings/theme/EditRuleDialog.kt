@@ -559,7 +559,7 @@ private fun TextKeyDataPreviewBox(
     val context = LocalContext.current
     val evaluator = remember(context) {
         object : ComputingEvaluator by DefaultComputingEvaluator {
-            val keyboard = object : Keyboard() {
+            override val keyboard = object : Keyboard() {
                 override val mode = KeyboardMode.NUMERIC_ADVANCED
                 override fun getKeyForPos(pointerX: Float, pointerY: Float) = error("not implemented")
                 override fun keys() = error("not implemented")
@@ -567,7 +567,6 @@ private fun TextKeyDataPreviewBox(
                                     extendTouchBoundariesDownwards: Boolean) = error("not implemented")
             }
             override fun context() = context
-            override fun keyboard() = keyboard
         }
     }
 

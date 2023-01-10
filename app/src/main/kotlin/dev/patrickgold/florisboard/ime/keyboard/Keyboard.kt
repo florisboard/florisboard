@@ -22,6 +22,46 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 
+/**
+ * Abstract class describing a computed keyboard. The exact implementation is dependent on the subclass and the
+ * structure can vary quite much between different subclasses.
+ */
+abstract class Keyboard {
+    /**
+     * The mode of this keyboard, used to let computers and the layout process behave differently based on different
+     * modes.
+     */
+    abstract val mode: KeyboardMode
+
+    /**
+     * Returns the key for given [pointerX] and [pointerY] coords or null if no key touch hit box is defined at the
+     * given coords.
+     *
+     * @param pointerX The x-coordinate of the input event, absolute within the parent keyboard view.
+     * @param pointerY The y-coordinate of the input event, absolute within the parent keyboard view.
+     *
+     * @return The key for given coords or null if no key touch hit box is defined for this position.
+     */
+    abstract fun getKeyForPos(pointerX: Float, pointerY: Float): Key?
+
+    /**
+     * Returns an iterator which allows to loop through all keys within the layout, independent of the actual
+     * structure and layout.
+     */
+    abstract fun keys(): Iterator<Key>
+
+    /**
+     * Layouts the keys according the the dimensions and parameters provided by given arguments. This method's
+     * exact behavior is highly dependent aon the actual subclass.
+     */
+    abstract fun layout(
+        keyboardWidth: Float,
+        keyboardHeight: Float,
+        desiredKey: Key,
+        extendTouchBoundariesDownwards: Boolean,
+    )
+}
+
 val PlaceholderLoadingKeyboard = TextKeyboard(
     arrangement = arrayOf(
         arrayOf(
@@ -72,42 +112,9 @@ val PlaceholderLoadingKeyboard = TextKeyboard(
     extendedPopupMappingDefault = null,
 )
 
-/**
- * Abstract class describing a computed keyboard. The exact implementation is dependent on the subclass and the
- * structure can vary quite much between different subclasses.
- */
-abstract class Keyboard {
-    /**
-     * The mode of this keyboard, used to let computers and the layout process behave differently based on different
-     * modes.
-     */
-    abstract val mode: KeyboardMode
-
-    /**
-     * Returns the key for given [pointerX] and [pointerY] coords or null if no key touch hit box is defined at the
-     * given coords.
-     *
-     * @param pointerX The x-coordinate of the input event, absolute within the parent keyboard view.
-     * @param pointerY The y-coordinate of the input event, absolute within the parent keyboard view.
-     *
-     * @return The key for given coords or null if no key touch hit box is defined for this position.
-     */
-    abstract fun getKeyForPos(pointerX: Float, pointerY: Float): Key?
-
-    /**
-     * Returns an iterator which allows to loop through all keys within the layout, independent of the actual
-     * structure and layout.
-     */
-    abstract fun keys(): Iterator<Key>
-
-    /**
-     * Layouts the keys according the the dimensions and parameters provided by given arguments. This method's
-     * exact behavior is highly dependent aon the actual subclass.
-     */
-    abstract fun layout(
-        keyboardWidth: Float,
-        keyboardHeight: Float,
-        desiredKey: Key,
-        extendTouchBoundariesDownwards: Boolean,
-    )
-}
+val SmartbarQuickActionsKeyboard = TextKeyboard(
+    arrangement = emptyArray(),
+    mode = KeyboardMode.SMARTBAR_QUICK_ACTIONS,
+    extendedPopupMapping = null,
+    extendedPopupMappingDefault = null,
+)

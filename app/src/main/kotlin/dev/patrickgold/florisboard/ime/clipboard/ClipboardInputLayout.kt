@@ -126,12 +126,11 @@ fun ClipboardInputLayout(
     val keyboardManager by context.keyboardManager()
     val androidKeyguardManager = remember { context.systemService(AndroidKeyguardManager::class) }
 
-    val activeState by keyboardManager.observeActiveState()
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
-    val innerHeight = FlorisImeSizing.keyboardUiHeight() - FlorisImeSizing.smartbarHeight
+    val innerHeight = FlorisImeSizing.imeUiHeight() - FlorisImeSizing.smartbarHeight
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
@@ -151,7 +150,7 @@ fun ClipboardInputLayout(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButtonWithInnerPadding(
-                onClick = { activeState.imeUiMode = ImeUiMode.TEXT },
+                onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_arrow_back),
                 iconColor = headerStyle.foreground.solidColor(),

@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard
 import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
@@ -44,8 +45,16 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.AssetManager
 import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
 import dev.patrickgold.florisboard.lib.io.subFile
+import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.lib.toNativeStr
 import dev.patrickgold.jetpref.datastore.JetPref
+import java.lang.ref.WeakReference
+
+/**
+ * Global weak reference for the [FlorisApplication] class. This is needed as in certain scenarios an application
+ * reference is needed, but the Android framework hasn't finished setting up
+ */
+private var FlorisApplicationReference = WeakReference<FlorisApplication?>(null)
 
 @Suppress("unused")
 class FlorisApplication : Application() {
@@ -78,6 +87,7 @@ class FlorisApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        FlorisApplicationReference = WeakReference(this)
         try {
             JetPref.configure(saveIntervalMs = 500)
             Flog.install(
@@ -107,8 +117,8 @@ class FlorisApplication : Application() {
     fun init() {
         initICU(this)
         cacheDir?.deleteContentsRecursively()
-        extensionManager.value.init()
         prefs.initializeBlocking(this)
+        extensionManager.value.init()
         clipboardManager.value.initializeForContext(this)
         DictionaryManager.init(this)
     }
@@ -150,31 +160,35 @@ class FlorisApplication : Application() {
     }
 }
 
-private fun Context.florisApplication(): FlorisApplication {
+private tailrec fun Context.florisApplication(): FlorisApplication {
     return when (this) {
         is FlorisApplication -> this
-        else -> this.applicationContext as FlorisApplication
+        is ContextWrapper -> when {
+            this.baseContext != null -> this.baseContext.florisApplication()
+            else -> FlorisApplicationReference.get()!!
+        }
+        else -> tryOrNull { this.applicationContext as FlorisApplication } ?: FlorisApplicationReference.get()!!
     }
 }
 
-fun Context.appContext() = lazy { this.florisApplication() }
+fun Context.appContext() = lazyOf(this.florisApplication())
 
-fun Context.assetManager() = lazy { this.florisApplication().assetManager.value }
+fun Context.assetManager() = this.florisApplication().assetManager
 
-fun Context.cacheManager() = lazy { this.florisApplication().cacheManager.value }
+fun Context.cacheManager() = this.florisApplication().cacheManager
 
-fun Context.clipboardManager() = lazy { this.florisApplication().clipboardManager.value }
+fun Context.clipboardManager() = this.florisApplication().clipboardManager
 
-fun Context.editorInstance() = lazy { this.florisApplication().editorInstance.value }
+fun Context.editorInstance() = this.florisApplication().editorInstance
 
-fun Context.extensionManager() = lazy { this.florisApplication().extensionManager.value }
+fun Context.extensionManager() = this.florisApplication().extensionManager
 
-fun Context.glideTypingManager() = lazy { this.florisApplication().glideTypingManager.value }
+fun Context.glideTypingManager() = this.florisApplication().glideTypingManager
 
-fun Context.keyboardManager() = lazy { this.florisApplication().keyboardManager.value }
+fun Context.keyboardManager() = this.florisApplication().keyboardManager
 
-fun Context.nlpManager() = lazy { this.florisApplication().nlpManager.value }
+fun Context.nlpManager() = this.florisApplication().nlpManager
 
-fun Context.subtypeManager() = lazy { this.florisApplication().subtypeManager.value }
+fun Context.subtypeManager() = this.florisApplication().subtypeManager
 
-fun Context.themeManager() = lazy { this.florisApplication().themeManager.value }
+fun Context.themeManager() = this.florisApplication().themeManager

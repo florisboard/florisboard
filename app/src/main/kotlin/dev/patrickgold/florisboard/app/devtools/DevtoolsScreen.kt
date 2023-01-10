@@ -90,6 +90,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = stringRes(R.string.devtools__show_key_touch_boundaries__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            SwitchPreference(
+                prefs.devtools.showDragAndDropHelpers,
+                title = stringRes(R.string.devtools__show_drag_and_drop_helpers__label),
+                summary = stringRes(R.string.devtools__show_drag_and_drop_helpers__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
             Preference(
                 title = stringRes(R.string.devtools__clear_udm_internal_database__label),
                 summary = stringRes(R.string.devtools__clear_udm_internal_database__summary),

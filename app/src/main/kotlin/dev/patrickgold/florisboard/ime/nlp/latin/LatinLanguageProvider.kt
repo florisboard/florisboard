@@ -113,7 +113,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                     text = "$word$n",
                     secondaryText = if (n % 2 == 1) "secondary" else null,
                     confidence = 0.5,
-                    isEligibleForAutoCommit = n == 0 && word.startsWith("auto"),
+                    isEligibleForAutoCommit = false,//n == 0 && word.startsWith("auto"),
                     // We set ourselves as the source provider so we can get notify events for our candidate
                     sourceProvider = this@LatinLanguageProvider,
                 ))

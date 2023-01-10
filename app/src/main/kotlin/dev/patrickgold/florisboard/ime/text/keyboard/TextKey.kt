@@ -44,7 +44,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     var computedDataOnDown: KeyData = TextKeyData.UNSPECIFIED
 
     fun compute(evaluator: ComputingEvaluator) {
-        val keyboard = evaluator.keyboard() as? TextKeyboard ?: return
+        val keyboard = evaluator.keyboard as? TextKeyboard ?: return
         val keyboardMode = keyboard.mode
         val computed = data.compute(evaluator)
 
@@ -63,7 +63,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
-                val computedLabel = computed.label.lowercase(evaluator.activeSubtype().primaryLocale)
+                val computedLabel = computed.label.lowercase(evaluator.subtype.primaryLocale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
                         "~enter"
@@ -84,7 +84,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 val extendedPopupsDefault = keyboard.extendedPopupMappingDefault
                 val extendedPopups = keyboard.extendedPopupMapping
                 var popupSet: PopupSet<AbstractKeyData>? = null
-                val kv = evaluator.activeState().keyVariation
+                val kv = evaluator.state.keyVariation
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
                     popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
                         extendedPopupsDefault?.get(KeyVariation.PASSWORD)?.get(extLabel)
@@ -231,7 +231,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
         foregroundDrawableId = evaluator.computeIconResId(computedData)
 
         val data = computedData
-        if (data.type == KeyType.NUMERIC && evaluator.keyboard().mode == KeyboardMode.PHONE) {
+        if (data.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE) {
             hintedLabel = when (data.code) {
                 48 /* 0 */ -> "+"
                 49 /* 1 */ -> ""

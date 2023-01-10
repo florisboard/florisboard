@@ -4,7 +4,8 @@
     <!-- One-handed strings -->
     <!-- Media strings -->
     <!-- Emoji strings -->
-    <!-- Smartbar strings -->
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Sprachauswahl</string>
     <!-- Smartbar strings -->

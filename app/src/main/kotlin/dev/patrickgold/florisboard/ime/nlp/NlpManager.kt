@@ -97,6 +97,9 @@ class NlpManager(context: Context) {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
+        prefs.suggestion.enabled.observeForever {
+            assembleCandidates()
+        }
         prefs.suggestion.clipboardContentEnabled.observeForever {
             assembleCandidates()
         }
@@ -167,7 +170,7 @@ class NlpManager(context: Context) {
             followingWords = followingWords,
             maxSuggestionCount = maxSuggestionCount,
             allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-            isPrivateSession = false,
+            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
         )
     }
 
@@ -185,7 +188,7 @@ class NlpManager(context: Context) {
                 content = content,
                 maxCandidateCount = 8,
                 allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                isPrivateSession = false,
+                isPrivateSession = keyboardManager.activeState.isIncognitoMode,
             )
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
@@ -238,19 +241,23 @@ class NlpManager(context: Context) {
 
     private fun assembleCandidates() {
         runBlocking {
-            val clipboardCandidates = clipboardSuggestionProvider.suggest(
-                subtype = Subtype.DEFAULT,
-                content = editorInstance.activeContent,
-                maxCandidateCount = 8,
-                allowPossiblyOffensive = false,
-                isPrivateSession = false,
-            )
-            val candidates = clipboardCandidates.ifEmpty {
-                buildList {
-                    internalSuggestionsGuard.withLock {
-                        addAll(internalSuggestions.second)
+            val candidates = when {
+                prefs.suggestion.enabled.get() -> {
+                    clipboardSuggestionProvider.suggest(
+                        subtype = Subtype.DEFAULT,
+                        content = editorInstance.activeContent,
+                        maxCandidateCount = 8,
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                    ).ifEmpty {
+                        buildList {
+                            internalSuggestionsGuard.withLock {
+                                addAll(internalSuggestions.second)
+                            }
+                        }
                     }
                 }
+                else -> emptyList()
             }
             activeCandidates = candidates
             autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
@@ -303,11 +310,17 @@ class NlpManager(context: Context) {
     }
 
     private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
-        if (prefs.smartbar.enabled.get() && prefs.smartbar.primaryActionsAutoExpandCollapse.get()) {
+        if (prefs.smartbar.enabled.get() && prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
+            if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()
+                || keyboardManager.activeState.isActionsOverflowVisible
+            ) {
+                return // We do not auto switch if a repeatable action key was last pressed or if the actions overflow
+                       // menu is visible to prevent annoying UI changes
+            }
             val isSelection = editorInstance.activeContent.selection.isSelectionMode
             val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
-            prefs.smartbar.primaryActionsExpandWithAnimation.set(false)
-            prefs.smartbar.primaryActionsExpanded.set(isExpanded)
+            prefs.smartbar.sharedActionsExpandWithAnimation.set(false)
+            prefs.smartbar.sharedActionsExpanded.set(isExpanded)
         }
     }
 

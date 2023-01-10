@@ -18,8 +18,9 @@ package dev.patrickgold.florisboard.app.settings.smartbar
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.smartbar.SecondaryRowPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarRowType
+import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -37,41 +38,44 @@ fun SmartbarScreen() = FlorisScreen {
             title = stringRes(R.string.pref__smartbar__enabled__label),
             summary = stringRes(R.string.pref__smartbar__enabled__summary),
         )
-        SwitchPreference(
-            prefs.smartbar.flipToggles,
-            title = stringRes(R.string.pref__smartbar__flip_toggles__label),
-            summary = stringRes(R.string.pref__smartbar__flip_toggles__summary),
+        ListPreference(
+            listPref = prefs.smartbar.layout,
+            title = stringRes(R.string.pref__smartbar__layout__label),
+            entries = SmartbarLayout.listEntries(),
             enabledIf = { prefs.smartbar.enabled isEqualTo true },
         )
 
-        PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_primary_actions__label)) {
+        PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_layout_specific__label)) {
+            ListPreference(
+                prefs.suggestion.displayMode,
+                title = stringRes(R.string.pref__suggestion__display_mode__label),
+                entries = CandidatesDisplayMode.listEntries(),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                visibleIf = { prefs.smartbar.layout isNotEqualTo SmartbarLayout.ACTIONS_ONLY },
+            )
             SwitchPreference(
-                prefs.smartbar.primaryActionsAutoExpandCollapse,
-                title = stringRes(R.string.pref__smartbar__primary_actions_auto_expand_collapse__label),
-                summary = stringRes(R.string.pref__smartbar__primary_actions_auto_expand_collapse__summary),
+                prefs.smartbar.flipToggles,
+                title = stringRes(R.string.pref__smartbar__flip_toggles__label),
+                summary = stringRes(R.string.pref__smartbar__flip_toggles__summary),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                visibleIf = {
+                    prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED ||
+                        prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED
+                },
+            )
+            SwitchPreference(
+                prefs.smartbar.sharedActionsAutoExpandCollapse,
+                title = stringRes(R.string.pref__smartbar__shared_actions_auto_expand_collapse__label),
+                summary = stringRes(R.string.pref__smartbar__shared_actions_auto_expand_collapse__summary),
+                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                visibleIf = { prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED },
             )
             ListPreference(
-                prefs.smartbar.primaryActionsRowType,
-                title = stringRes(R.string.pref__smartbar__any_row_type__label),
-                entries = SmartbarRowType.listEntries(),
+                listPref = prefs.smartbar.extendedActionsPlacement,
+                title = stringRes(R.string.pref__smartbar__extended_actions_placement__label),
+                entries = ExtendedActionsPlacement.listEntries(),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
-            )
-        }
-
-        PreferenceGroup(title = stringRes(R.string.pref__smartbar__group_secondary_actions__label)) {
-            ListPreference(
-                listPref = prefs.smartbar.secondaryActionsPlacement,
-                switchPref = prefs.smartbar.secondaryActionsEnabled,
-                title = stringRes(R.string.pref__smartbar__secondary_actions_enabled__label),
-                entries = SecondaryRowPlacement.listEntries(),
-                enabledIf = { prefs.smartbar.enabled isEqualTo true },
-            )
-            ListPreference(
-                prefs.smartbar.secondaryActionsRowType,
-                title = stringRes(R.string.pref__smartbar__any_row_type__label),
-                entries = SmartbarRowType.listEntries(),
-                enabledIf = { prefs.smartbar.enabled isEqualTo true && prefs.smartbar.secondaryActionsEnabled isEqualTo true },
+                visibleIf = { prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED },
             )
         }
     }
