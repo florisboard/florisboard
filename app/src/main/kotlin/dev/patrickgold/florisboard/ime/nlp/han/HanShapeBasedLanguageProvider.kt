@@ -223,6 +223,7 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         val languagePackItem = languagePackItems[subtype.primaryLocale.localeTag()]
         val languagePackExtension = languagePackItem?.parent
         if (languagePackItem == null || languagePackExtension == null) {
+            flogError { "Could not read language pack item / extension" }
             return null;
         }
         return Pair(languagePackItem, languagePackExtension)
@@ -243,8 +244,10 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
                     add(word)
                 }
             }
+            flogDebug { "Read ${suggestions.size} words for ${subtype.primaryLocale.localeTag()}" }
             return suggestions;
         } catch (e: SQLiteException) {
+            flogError { "Encountered an SQL error: ${e}" }
             return emptyList();
         }
     }
