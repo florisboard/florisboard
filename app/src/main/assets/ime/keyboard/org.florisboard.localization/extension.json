@@ -660,7 +660,8 @@
         "characters": "org.florisboard.layouts:qwerty",
         "symbols": "org.florisboard.layouts:cjk",
         "symbols2": "org.florisboard.layouts:cjk"
-
+      }
+    },
 	  {
       "languageTag": "bn-BD",
       "composer": "org.florisboard.composers:appender",
