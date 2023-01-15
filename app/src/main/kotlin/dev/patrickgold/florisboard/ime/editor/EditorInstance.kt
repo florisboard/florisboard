@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
+import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -54,6 +55,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
+    private val subtypeManager by context.subtypeManager()
     private val nlpManager by context.nlpManager()
 
     private val activeState get() = keyboardManager.activeState
@@ -512,15 +514,16 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
-        val content = activeContent
-        val selection = content.selection
-        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
-        val textBefore = content.getTextBeforeCursor(1)
-        val punctuationRule = nlpManager.getActivePunctuationRule()
-        return textBefore.isNotEmpty() &&
-            (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
-                textBefore[textBefore.length - 1].isLetterOrDigit()) &&
-            (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
+         val content = activeContent
+         val selection = content.selection
+         if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
+         val textBefore = content.getTextBeforeCursor(1)
+         val punctuationRule = nlpManager.getActivePunctuationRule()
+         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace) return false;
+         return textBefore.isNotEmpty() &&
+             (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
+                 textBefore[textBefore.length - 1].isLetterOrDigit()) &&
+             (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
     }
 
     class AutoSpaceState {

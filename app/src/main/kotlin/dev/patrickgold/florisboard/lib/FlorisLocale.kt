@@ -16,6 +16,9 @@
 
 package dev.patrickgold.florisboard.lib
 
+import android.content.Context
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.lib.kotlin.titlecase
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -125,6 +128,31 @@ class FlorisLocale private constructor(val base: Locale) {
          * @see java.util.Locale.getAvailableLocales
          */
         fun installedSystemLocales(): List<FlorisLocale> = Locale.getAvailableLocales().map { from(it) }
+
+        /**
+         * Returns a list of all installed locales and custom locales.
+         *
+         */
+        fun extendedAvailableLocales(context: Context): List<FlorisLocale> {
+            val systemLocales = installedSystemLocales()
+            val extensionManager by context.extensionManager()
+            val systemLocalesSet = buildSet {
+                for (locale in systemLocales) {
+                    add(locale.localeTag())
+                }
+            }.toSet()
+            val extraLocales = buildList {
+                for (languagePackExtension in extensionManager.languagePacks.value ?: listOf()) {
+                    for (languagePackItem in languagePackExtension.items) {
+                        val locale = languagePackItem.locale
+                        if (from(locale.language, locale.country).localeTag() in systemLocalesSet) {
+                            add(locale.localeTag())
+                        }
+                    }
+                }
+            }.toSet()
+            return systemLocales + extraLocales.map { fromTag(it) }
+        }
     }
 
     /**
@@ -192,6 +220,16 @@ class FlorisLocale private constructor(val base: Locale) {
     val supportsCapitalization: Boolean
         get() = when (language) {
             "zh", "ko", "th" -> false
+            else -> true
+        }
+
+    /**
+     * Returns true if suggestions in this language should have spaces added after, false otherwise.
+     * TODO: this is absolutely not exhaustive and hard-coded, find solution based on ICU or system
+     */
+    val supportsAutoSpace: Boolean
+        get() = when (language) {
+            "zh", "ko", "jp", "th" -> false
             else -> true
         }
 

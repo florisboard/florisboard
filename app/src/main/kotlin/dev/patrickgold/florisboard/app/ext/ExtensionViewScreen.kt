@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.lib.android.showLongToast
@@ -166,6 +167,18 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                 ExtensionComponentListView(
                     title = stringRes(R.string.ext__meta__components_theme),
                     components = ext.themes,
+                ) { component ->
+                    ExtensionComponentView(
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
+                        meta = ext.meta,
+                        component = component,
+                    )
+                }
+            }
+            is LanguagePackExtension -> {
+                ExtensionComponentListView(
+                    title = stringRes(R.string.ext__meta__components_language_pack),
+                    components = ext.items,
                 ) { component ->
                     ExtensionComponentView(
                         modifier = Modifier.defaultFlorisOutlinedBox(),

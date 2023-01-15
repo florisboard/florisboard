@@ -44,6 +44,8 @@ import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
 import dev.patrickgold.florisboard.app.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreen
+import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.localization.LocalizationScreen
 import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
@@ -67,6 +69,9 @@ object Routes {
 
         const val Localization = "settings/localization"
         const val SelectLocale = "settings/localization/select-locale"
+        const val LanguagePackManager = "settings/localization/language-pack-manage/{action}"
+        fun LanguagePackManager(action: LanguagePackManagerScreenAction) =
+            LanguagePackManager.curlyFormat("action" to action.id)
         const val SubtypeAdd = "settings/localization/subtype/add"
         const val SubtypeEdit = "settings/localization/subtype/edit/{id}"
         fun SubtypeEdit(id: Long) = SubtypeEdit.curlyFormat("id" to id)
@@ -147,6 +152,12 @@ object Routes {
 
             composable(Settings.Localization) { LocalizationScreen() }
             composable(Settings.SelectLocale) { SelectLocaleScreen() }
+            composable(Settings.LanguagePackManager) { navBackStack ->
+                val action = navBackStack.arguments?.getString("action")?.let { actionId ->
+                    LanguagePackManagerScreenAction.values().firstOrNull { it.id == actionId }
+                }
+                LanguagePackManagerScreen(action)
+            }
             composable(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
             composable(Settings.SubtypeEdit) { navBackStack ->
                 val id = navBackStack.arguments?.getString("id")?.toLongOrNull()

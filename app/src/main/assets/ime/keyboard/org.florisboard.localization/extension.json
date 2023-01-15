@@ -647,6 +647,21 @@
         "characters": "org.florisboard.layouts:urdu_phonetic"
       }
     },
+    {
+      "languageTag": "zh-CN-zhengma",
+      "composer": "org.florisboard.composers:appender",
+      "nlpProviders": {
+        "spelling": "org.florisboard.nlp.providers.han.shape",
+        "suggestion": "org.florisboard.nlp.providers.han.shape"
+      },
+      "currencySet": "org.florisboard.currencysets:yen",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty",
+        "symbols": "org.florisboard.layouts:cjk",
+        "symbols2": "org.florisboard.layouts:cjk"
+      }
+    },
 	  {
       "languageTag": "bn-BD",
       "composer": "org.florisboard.composers:appender",
