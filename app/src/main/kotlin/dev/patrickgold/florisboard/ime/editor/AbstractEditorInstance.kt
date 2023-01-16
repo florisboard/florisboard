@@ -468,6 +468,19 @@ abstract class AbstractEditorInstance(context: Context) {
         }
     }
 
+    fun refreshComposing() {
+        val content = activeContent
+        val ic = currentInputConnection()
+        if (activeInfo.isRawInputEditor || ic == null) return
+        runBlocking {
+            val newContent = content.generateCopy()
+            if (newContent.composing != content.composing) {
+                expectedContentQueue.push(newContent)
+                ic.setComposingRegion(newContent.composing)
+            }
+        }
+    }
+
     /**
      * Gets [n] characters before the cursor's current position. The resulting string may be any
      * length ranging from 0 to n.

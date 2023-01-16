@@ -146,6 +146,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
                 reevaluateInputShiftState()
                 updateActiveEvaluators()
+                editorInstance.refreshComposing()
                 resetSuggestions(editorInstance.activeContent)
             }
             clipboardManager.primaryClipFlow.collectLatestIn(scope) {
