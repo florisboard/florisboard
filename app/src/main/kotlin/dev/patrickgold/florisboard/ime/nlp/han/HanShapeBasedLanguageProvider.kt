@@ -230,39 +230,41 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> {
-        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return emptyList();
-        val layout: String = languagePackItem.hanShapeBasedTable
-        try {
-            val database = languagePackExtension.hanShapeBasedSQLiteDatabase
-            val cur = database.query(layout, arrayOf ( "text" ), "", arrayOf(), "", "", "weight DESC, code ASC", "");
-            cur.moveToFirst();
-            val rowCount = cur.getCount();
-            val suggestions = buildList {
-                for (n in 0 until rowCount) {
-                    val word = cur.getString(0);
-                    cur.moveToNext();
-                    add(word)
-                }
-            }
-            flogDebug { "Read ${suggestions.size} words for ${subtype.primaryLocale.localeTag()}" }
-            return suggestions;
-        } catch (e: SQLiteException) {
-            flogError { "Encountered an SQL error: ${e}" }
-            return emptyList();
-        }
+        return emptyList()
+//        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return emptyList();
+//        val layout: String = languagePackItem.hanShapeBasedTable
+//        try {
+//            val database = languagePackExtension.hanShapeBasedSQLiteDatabase
+//            val cur = database.query(layout, arrayOf ( "text" ), "", arrayOf(), "", "", "weight DESC, code ASC", "");
+//            cur.moveToFirst();
+//            val rowCount = cur.getCount();
+//            val suggestions = buildList {
+//                for (n in 0 until rowCount) {
+//                    val word = cur.getString(0);
+//                    cur.moveToNext();
+//                    add(word)
+//                }
+//            }
+//            flogDebug { "Read ${suggestions.size} words for ${subtype.primaryLocale.localeTag()}" }
+//            return suggestions;
+//        } catch (e: SQLiteException) {
+//            flogError { "Encountered an SQL error: ${e}" }
+//            return emptyList();
+//        }
     }
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return 0.0;
-        val layout: String = languagePackItem.hanShapeBasedTable
-        try {
-            val database = languagePackExtension.hanShapeBasedSQLiteDatabase
-            val cur = database.query(layout, arrayOf ( "weight" ), "code = ?", arrayOf(word), "", "", "", "");
-            cur.moveToFirst();
-            return try { cur.getDouble(0) } catch (e: Exception) { 0.0 };
-        } catch (e: SQLiteException) {
-            return 0.0;
-        }
+        return 0.0
+//        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return 0.0;
+//        val layout: String = languagePackItem.hanShapeBasedTable
+//        try {
+//            val database = languagePackExtension.hanShapeBasedSQLiteDatabase
+//            val cur = database.query(layout, arrayOf ( "weight" ), "code = ?", arrayOf(word), "", "", "", "");
+//            cur.moveToFirst();
+//            return try { cur.getDouble(0) } catch (e: Exception) { 0.0 };
+//        } catch (e: SQLiteException) {
+//            return 0.0;
+//        }
     }
 
     override suspend fun destroy() {
