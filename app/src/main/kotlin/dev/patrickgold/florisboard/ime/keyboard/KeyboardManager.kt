@@ -214,12 +214,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun resetSuggestions(content: EditorContent) {
-        val activeSubtype = subtypeManager.activeSubtype
-        if (!(activeState.isComposingEnabled || nlpManager.providerForcesSuggestionOn(activeSubtype))) {
+        if (!(activeState.isComposingEnabled || nlpManager.isSuggestionOn())) {
             nlpManager.clearSuggestions()
             return
         }
-        nlpManager.suggest(activeSubtype, content)
+        nlpManager.suggest(subtypeManager.activeSubtype, content)
     }
 
     /**

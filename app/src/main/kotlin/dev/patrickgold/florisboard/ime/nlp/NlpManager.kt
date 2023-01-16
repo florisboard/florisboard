@@ -192,6 +192,9 @@ class NlpManager(context: Context) {
         }
     }
 
+    fun isSuggestionOn(): Boolean =
+        prefs.suggestion.enabled.get() || providerForcesSuggestionOn(subtypeManager.activeSubtype)
+
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
         scope.launch {
@@ -254,7 +257,7 @@ class NlpManager(context: Context) {
     private fun assembleCandidates() {
         runBlocking {
             val candidates = when {
-                prefs.suggestion.enabled.get() -> {
+                isSuggestionOn() -> {
                     clipboardSuggestionProvider.suggest(
                         subtype = Subtype.DEFAULT,
                         content = editorInstance.activeContent,

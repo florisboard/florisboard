@@ -139,7 +139,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun determineComposingEnabled(): Boolean {
-        return prefs.suggestion.enabled.get() || nlpManager.providerForcesSuggestionOn(subtypeManager.activeSubtype)
+        return nlpManager.isSuggestionOn()
     }
 
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
