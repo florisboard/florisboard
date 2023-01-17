@@ -122,14 +122,15 @@
           "relevant": [
             { "code": 12304, "label": "【" },
             { "code": 12310, "label": "〖" },
-            { "code": 65288, "label": "（" }
+            { "code": 65288, "label": "（" },
+            { "code": 65339, "label": "［" }
           ]
         }
       },
       "half": { "code": 65378, "label": "｢", "popup": {
-          "main": { "code": 12301, "label": "」" },
+          "main": { "code": 12300, "label": "「" },
           "relevant": [
-            { "code": 12303, "label": "』" },
+            { "code": 12302, "label": "『" },
             { "code": 12304, "label": "【" },
             { "code": 12310, "label": "〖" },
             { "code":    40, "label": "(" },
@@ -145,7 +146,8 @@
           "relevant": [
             { "code": 12305, "label": "】" },
             { "code": 12311, "label": "〗" },
-            { "code": 65289, "label": "）" }
+            { "code": 65289, "label": "）" },
+            { "code": 65341, "label": "］" }
           ]
         }
       },

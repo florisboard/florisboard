@@ -69,7 +69,6 @@
         { "$": "auto_text_key", "code":  468, "label": "ǔ" },
         { "$": "auto_text_key", "code":  249, "label": "ù" },
         { "$": "auto_text_key", "code":  252, "label": "ü" },
-        { "$": "auto_text_key", "code":  252, "label": "ü" },
         { "$": "auto_text_key", "code":  470, "label": "ǖ" },
         { "$": "auto_text_key", "code":  472, "label": "ǘ" },
         { "$": "auto_text_key", "code":  474, "label": "ǚ" },
