@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
-import android.icu.text.BreakIterator
 import android.os.Build
 import android.os.SystemClock
 import android.util.LruCache
@@ -71,6 +70,8 @@ class NlpManager(context: Context) {
             HanShapeBasedLanguageProvider.ProviderId to ProviderInstanceWrapper(HanShapeBasedLanguageProvider(context)),
         )
     }
+    // lock unnecessary because values constant
+    private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
 
     private val internalSuggestionsGuard = Mutex()
     private var internalSuggestions by Delegates.observable(SystemClock.uptimeMillis() to listOf<SuggestionCandidate>()) { _, _, _ ->
@@ -174,11 +175,25 @@ class NlpManager(context: Context) {
         )
     }
 
-    suspend fun determineLocalComposing(textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup): EditorRange {
+    suspend fun determineLocalComposing(
+        textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup, localLastCommitPosition: Int
+    ): EditorRange {
         return getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
-            subtypeManager.activeSubtype, textBeforeSelection, breakIterators
+            subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
         )
     }
+
+    fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
+        // Using a cache because I have no idea how fast the runBlocking is
+        return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
+            runBlocking {
+                getSuggestionProvider(subtype).forcesSuggestionOn
+            }
+        }
+    }
+
+    fun isSuggestionOn(): Boolean =
+        prefs.suggestion.enabled.get() || providerForcesSuggestionOn(subtypeManager.activeSubtype)
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
@@ -242,7 +257,7 @@ class NlpManager(context: Context) {
     private fun assembleCandidates() {
         runBlocking {
             val candidates = when {
-                prefs.suggestion.enabled.get() -> {
+                isSuggestionOn() -> {
                     clipboardSuggestionProvider.suggest(
                         subtype = Subtype.DEFAULT,
                         content = editorInstance.activeContent,

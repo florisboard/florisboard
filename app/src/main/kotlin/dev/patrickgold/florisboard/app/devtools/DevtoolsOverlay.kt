@@ -112,6 +112,7 @@ private fun DevtoolsInputStateOverlay() {
             DevtoolsText(text = "After: \"${content.textAfterSelection}\"")
             DevtoolsText(text = "Composing: ${content.composing}")
             DevtoolsText(text = "CurrentWord: ${content.currentWord}")
+            DevtoolsText(text = "LastCommit: ${editorInstance.lastCommitPosition}")
         }
     }
 }

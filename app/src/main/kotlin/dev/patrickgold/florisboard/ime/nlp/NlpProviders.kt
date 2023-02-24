@@ -208,7 +208,8 @@ interface SuggestionProvider : NlpProvider {
     suspend fun determineLocalComposing(
         subtype: Subtype,
         textBeforeSelection: CharSequence,
-        breakIterators: BreakIteratorGroup
+        breakIterators: BreakIteratorGroup,
+        localLastCommitPosition: Int,
     ): EditorRange {
         return breakIterators.word(subtype.primaryLocale) {
             it.setText(textBeforeSelection.toString())
@@ -222,6 +223,9 @@ interface SuggestionProvider : NlpProvider {
             }
         }
     }
+
+    val forcesSuggestionOn
+        get() = false
 }
 
 /**

@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.util.Size
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -634,6 +635,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             DevtoolsOverlay(modifier = Modifier.fillMaxSize())
         }
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean =
+        if (keyboardManager.onHardwareKeyDown(keyCode, event)) true
+        else super.onKeyDown(keyCode, event)
+
 
     private inner class ComposeInputView : AbstractComposeView(this) {
         init {

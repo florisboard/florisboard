@@ -139,7 +139,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun determineComposingEnabled(): Boolean {
-        return prefs.suggestion.enabled.get()
+        return nlpManager.isSuggestionOn()
     }
 
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
@@ -264,6 +264,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 super.commitText("$SPACE$text")
             } else {
                 super.commitText(text)
+            }.also {
+                // handled in finalizeComposingText if content.composing.isValid
+                updateLastCommitPosition()
             }
         }
     }
@@ -286,6 +289,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             super.commitText("$SPACE$text")
         } else {
             super.commitText(text)
+        }.also {
+            updateLastCommitPosition()
         }
     }
 
@@ -303,7 +308,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.TEXT -> {
-                commitText(item.text.toString())
+                commitText(item.text.toString()).also {
+                    updateLastCommitPosition()
+                }
             }
             ItemType.IMAGE, ItemType.VIDEO -> {
                 item.uri ?: return false
@@ -467,6 +474,14 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
             commitText("\n")
+        }
+    }
+
+    fun tryPerformEnterCommitRaw(): Boolean {
+        return if (subtypeManager.activeSubtype.primaryLocale.language.startsWith("zh") && activeContent.composing.length > 0) {
+            finalizeComposingText(activeContent.composingText)
+        } else {
+            false
         }
     }
 
