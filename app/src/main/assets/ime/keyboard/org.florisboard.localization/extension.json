@@ -54,6 +54,7 @@
     { "id": "it", "authors": [ "patrickgold" ] },
     { "id": "iw", "authors": [ "Antony" ] },
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
+    { "id": "kab", "authors": [ "yanis867" ] },
     { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
     { "id": "lt", "authors": [ "patrickgold" ] },
@@ -678,6 +679,15 @@
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
       "popupMapping": "org.florisboard.localization:ast",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "kab",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:kab",
       "preferred": {
         "characters": "org.florisboard.layouts:qwerty"
       }
