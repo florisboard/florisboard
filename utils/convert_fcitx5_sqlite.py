@@ -148,6 +148,25 @@ def clean_fcitx_table(table):
     return out
 
 
+def zhengma_construct(word, rules, con_dict):
+    if len(word) == 2:
+        rule = rules['e2']
+    elif len(word) == 3:
+        rule = rules['e3']
+    elif len(word) == 4:
+        rule = rules['e4']
+    else:
+        rule = rules['a5']
+    rule = rule.split('+')
+    con = []
+    for r in rule:
+        if r == 'p00':
+            continue
+        ch = word[-int(r[1]) if r[0]=='n' else (int(r[1]) - 1)]
+        con.append(con_dict[ch][int(r[2]) - 1])
+    return ''.join(con)
+
+
 # Loading
 tables = dict()
 file_list = sys.argv[1:] if len(sys.argv) > 1 else glob.glob('[a-z]*.txt')
@@ -162,7 +181,7 @@ for x in file_list:
     tables[schema]['FlorisLocale'] = f"{conf['InputMethod']['LangCode']}_{schema}"
 
 # Fixing
-if 'wubi98_pinyin' in tables:
+if 'wubi98pinyin' in tables:
     tables['wubi98pinyin']['KeyCode'] += 'z'
     keycode = set(tables['wubi98pinyin']['KeyCode']) | set(tables['wubi98pinyin']['Pinyin'])
     for idx, x in enumerate(tables['wubi98pinyin']['Data']):
@@ -172,6 +191,36 @@ if 'wubi98_pinyin' in tables:
             tables['wubi98pinyin']['Data'][idx] = tuple(x)
 if 'easylarge' in tables:
     tables['easylarge']['KeyCode'] += '|'
+
+# enriching zhengma with pinyin word list?
+if 'zhengmalarge' in tables and 'zhengmapinyin' in tables:
+    zhengmalarge = tables['zhengmalarge']
+    zhengmapinyin = tables['zhengmapinyin']
+    wordlist_new = [x[1] for x in zhengmapinyin['Data'] if x[0].startswith(zhengmapinyin['Pinyin']) and len(x[1]) > 1]
+    con_list = [(x[0][1:], x[1]) for x in zhengmalarge['Data'] if x[0].startswith(zhengmalarge['ConstructPhrase'])]
+    con_dict = {x[1]: x[0] for x in con_list}
+    assert len(con_list) == len(con_dict), 'Duplicate entries with ConstructPhrase'
+    # Just use the 5-char rule
+    zhengmarules = dict(zhengmalarge['Rule'])
+    
+    zhengma_extradata = [
+        (zhengma_construct(word, zhengmarules, con_dict), word)
+        for word in wordlist_new
+    ]
+    # prioritize shorter words
+    zhengma_extradata = sorted(zhengma_extradata, key=lambda x: len(x[1]))
+    for schema, table in tables.items():
+        if schema.startswith('zhengma'):
+            table_data = tables[schema]['Data']
+            table_pinyin = tables[schema].get('Pinyin', None)
+            wordlist_old = set(x[1] for x in table_data
+                if table_pinyin is None or not x[0].startswith(table_pinyin)
+            )
+            print(f'From size {len(table_data)}... ', end='')
+            table_data.extend([x for x in zhengma_extradata if x[1] not in wordlist_old])
+            print(f'To size {len(table_data)}')
+else:
+    zhengma_extradata = []
 
 # Cleaning
 for schema, table in tables.items():
