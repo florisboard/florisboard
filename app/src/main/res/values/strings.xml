@@ -58,8 +58,8 @@
     <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
     <string name="quick_action__settings" maxLength="12">Settings</string>
     <string name="quick_action__settings__tooltip">Open settings</string>
-    <string name="quick_action__add_user_dictionary" maxLength="12">Add dictionary</string>
-    <string name="quick_action__add_user_dictionary__tooltip">Add a word to user dictionary</string>
+    <string name="quick_action__add_user_dictionary" maxLength="12">+ user dictionary</string>
+    <string name="quick_action__add_user_dictionary__tooltip">Add a word to internal user dictionary</string>
     <string name="quick_action__undo" maxLength="12">Undo</string>
     <string name="quick_action__undo__tooltip">Undo the last input</string>
     <string name="quick_action__redo" maxLength="12">Redo</string>

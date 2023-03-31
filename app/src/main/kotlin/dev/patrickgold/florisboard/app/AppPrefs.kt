@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.keyData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
@@ -678,6 +679,37 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
             -> {
                 entry.transform(rawValue = entry.rawValue.uppercase())
+            }
+            "smartbar__action_arrangement" -> {
+                val oldArrangement = QuickActionArrangement.Serializer.deserialize(entry.rawValue)
+                val newDefault = QuickActionArrangement.Default
+
+                val newStickyAction = oldArrangement.stickyAction?.takeIf { newDefault.contains(it) }
+                val newDynamicActions = oldArrangement.dynamicActions.filter { newDefault.contains(it) }.toMutableList()
+                val newHiddenActions = oldArrangement.hiddenActions.filter { newDefault.contains(it) }.toMutableList()
+                newDefault.stickyAction?.let {
+                    if (!oldArrangement.contains(it)) {
+                        newDynamicActions.add(it)
+                    }
+                }
+                for (it in newDefault.dynamicActions) {
+                    if (!oldArrangement.contains(it)) {
+                        newDynamicActions.add(it)
+                    }
+                }
+                for (it in newDefault.hiddenActions) {
+                    if (!oldArrangement.contains(it)) {
+                        newHiddenActions.add(it)
+                    }
+                }
+                val newArrangement = QuickActionArrangement(
+                    stickyAction = newStickyAction,
+                    dynamicActions = newDynamicActions.toList(),
+                    hiddenActions = newHiddenActions.toList()
+                )
+                entry.transform(
+                    rawValue = QuickActionArrangement.Serializer.serialize(newArrangement)
+                )
             }
 
             // Migrate old private mode force flag as this is a sensitive preference
