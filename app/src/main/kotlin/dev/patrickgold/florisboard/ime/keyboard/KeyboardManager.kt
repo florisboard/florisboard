@@ -214,7 +214,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun resetSuggestions(content: EditorContent) {
-        if (!(activeState.isComposingEnabled || nlpManager.isSuggestionOn())) {
+        if (!(activeState.isComposingEnabled && nlpManager.isSuggestionOn())) {
             nlpManager.clearSuggestions()
             return
         }
