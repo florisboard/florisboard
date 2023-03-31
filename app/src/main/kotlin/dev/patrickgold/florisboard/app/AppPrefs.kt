@@ -684,21 +684,32 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 val oldArrangement = QuickActionArrangement.Serializer.deserialize(entry.rawValue)
                 val newDefault = QuickActionArrangement.Default
 
-                val newStickyAction = oldArrangement.stickyAction?.takeIf { newDefault.contains(it) }
-                val newDynamicActions = oldArrangement.dynamicActions.filter { newDefault.contains(it) }.toMutableList()
-                val newHiddenActions = oldArrangement.hiddenActions.filter { newDefault.contains(it) }.toMutableList()
+                // FIXME: what is the canonical equality for two quick actions? Using .keyData().code for now.
+                val oldActionKeys = buildSet {
+                    oldArrangement.stickyAction?.let { add(it.keyData().code) }
+                    oldArrangement.dynamicActions.forEach { add(it.keyData().code) }
+                    oldArrangement.hiddenActions.forEach { add(it.keyData().code) }
+                }
+                val newActionKeys = buildSet {
+                    newDefault.stickyAction?.let { add(it.keyData().code) }
+                    newDefault.dynamicActions.forEach { add(it.keyData().code) }
+                    newDefault.hiddenActions.forEach { add(it.keyData().code) }
+                }
+                val newStickyAction = oldArrangement.stickyAction?.takeIf { it.keyData().code in newActionKeys }
+                val newDynamicActions = oldArrangement.dynamicActions.filter { it.keyData().code in newActionKeys }.toMutableList()
+                val newHiddenActions = oldArrangement.hiddenActions.filter { it.keyData().code in newActionKeys }.toMutableList()
                 newDefault.stickyAction?.let {
-                    if (!oldArrangement.contains(it)) {
+                    if (it.keyData().code !in oldActionKeys) {
                         newDynamicActions.add(it)
                     }
                 }
                 for (it in newDefault.dynamicActions) {
-                    if (!oldArrangement.contains(it)) {
+                    if (it.keyData().code !in oldActionKeys) {
                         newDynamicActions.add(it)
                     }
                 }
                 for (it in newDefault.hiddenActions) {
-                    if (!oldArrangement.contains(it)) {
+                    if (it.keyData().code !in oldActionKeys) {
                         newHiddenActions.add(it)
                     }
                 }
