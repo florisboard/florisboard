@@ -43,7 +43,14 @@
         "authors": [ "patrickgold" ],
         "direction": "ltr"
       },
-	  {
+      {
+        "id": "basti",
+        "label": "basti",
+        "authors": [ "Basti" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:basti"
+      },
+	    {
         "id": "bengali_bd",
         "label": "বাংলা",
         "authors": [ "iamrasel" ],

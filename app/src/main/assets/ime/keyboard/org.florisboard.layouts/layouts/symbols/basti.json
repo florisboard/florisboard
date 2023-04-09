@@ -1,0 +1,103 @@
+[
+  [
+    { "key": "a", "code":   64, "label": "@" },
+    { "key": "s", "code":   35, "label": "#", "popup": {
+      "main": { "code": 8470, "label": "№" }
+    } },
+    { "key": "d", "code": -801, "label": "currency_slot_1", "popup": {
+      "main": { "code": -802, "label": "currency_slot_2" },
+      "relevant": [
+        { "code": -806, "label": "currency_slot_6" },
+        { "code": -803, "label": "currency_slot_3" },
+        { "code": -804, "label": "currency_slot_4" },
+        { "code": -805, "label": "currency_slot_5" }
+      ]
+    } },
+    { "key": "f", "code":   37, "label": "%", "popup": {
+      "main": { "code": 8240, "label": "‰" },
+      "relevant": [
+        { "code": 8453, "label": "℅" }
+      ]
+    } },
+    { "key": "g", "code":   38, "label": "&" },
+    { "key": "h", "code":   43, "label": "+", "popup": {
+      "main": { "code":  177, "label": "±" }
+    } },
+    { "key": "j", "code":   45, "label": "-", "popup": {
+      "main": { "code":   95, "label": "_" },
+      "relevant": [
+        { "code": 8212, "label": "—" },
+        { "code": 8211, "label": "–" },
+        { "code":  183, "label": "·" }
+      ]
+    } },
+    { "key": "k", "code":   42, "label": "*", "popup": {
+      "main": { "code": 8224, "label": "†" },
+      "relevant": [
+        { "code": 9733, "label": "★" },
+        { "code": 8225, "label": "‡" }
+      ]
+    } },
+    { "key": "l", "code":   47, "label": "/" },
+    { "key": "ö", "code":   34, "label": "\"", "popup": {
+      "main": { "code": 8221, "label": "”" },
+      "relevant": [
+        { "code": 8222, "label": "„" },
+        { "code": 8220, "label": "“" },
+        { "code":  171, "label": "«" },
+        { "code":  187, "label": "»" }
+      ]
+    } },
+    { "key": "ä", "code":   39, "label": "'", "popup": {
+      "main": { "code": 8217, "label": "’" },
+      "relevant": [
+        { "code": 8218, "label": "‚" },
+        { "code": 8216, "label": "‘" },
+        { "code": 8249, "label": "‹" },
+        { "code": 8250, "label": "›" }
+      ]
+    } 
+   }
+  ],
+  [ 
+    { "key": "y"},
+    { "key": "x"},
+    { "key": "c"},
+    { "key": "v", "code":   58, "label": ":", "popup": {
+      "main": { "code":  8942, "label": "⋮" }
+    } },
+    { "key": "b", "code":   59, "label": ";" },
+    { "key": "n", "$": "layout_direction_selector",
+    "ltr": { "code":   40, "label": "(", "popup": {
+      "main": { "code":   60, "label": "<" },
+      "relevant": [
+        { "code":   91, "label": "[" },
+        { "code":  123, "label": "{" }
+      ]
+    } },
+    "rtl": { "code":   41, "label": "(", "popup": {
+      "main": { "code":   62, "label": "<" },
+      "relevant": [
+        { "code":   93, "label": "[" },
+        { "code":  125, "label": "{" }
+      ]
+    } }
+  },
+    { "key": "m", "$": "layout_direction_selector",
+    "ltr": { "code":   41, "label": ")", "popup": {
+      "main": { "code":   62, "label": ">" },
+      "relevant": [
+        { "code":   93, "label": "]" },
+        { "code":  125, "label": "}" }
+      ]
+    } },
+    "rtl": { "code":   40, "label": ")", "popup": {
+      "main": { "code":   60, "label": ">" },
+      "relevant": [
+        { "code":   91, "label": "]" },
+        { "code":  123, "label": "}" }
+      ]
+    } }
+  }
+  ]
+]

@@ -36,6 +36,7 @@
     { "id": "da", "authors": [ "patrickgold" ] },
     { "id": "de", "authors": [ "patrickgold" ] },
     { "id": "de-DE-neobone", "authors": [ "ostrya" ] },
+    { "id": "de-DE-basti", "authors": [ "Basti" ] },
     { "id": "el", "authors": [ "tsiflimagas" ] },
     { "id": "en", "authors": [ "patrickgold" ] },
     { "id": "eo", "authors": [ "jeremiah-miller" ] },
@@ -148,6 +149,17 @@
         "characters": "org.florisboard.layouts:neo2",
         "symbols": "org.florisboard.layouts:neo2",
         "numericRow": "org.florisboard.layouts:neo2"
+      }
+    },
+    {
+      "languageTag": "de-DE-basti",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:de-DE-basti",
+      "preferred": {
+        "characters": "org.florisboard.layouts:basti",
+        "symbols": "org.florisboard.layouts:basti",
+        "numericRow": "org.florisboard.layouts:basti"
       }
     },
     {

@@ -1,0 +1,67 @@
+[
+  [
+    { "key": "q", "code": 128513, "label": "😁" },
+    { "key": "w", "code": 128578, "label": "🙂" },
+    { "key": "e", "code": 128521, "label": "😉" },
+    { "key": "r", "code": 128517, "label": "😅" },
+    { "key": "t", "code": 128518, "label": "😆" },
+    { "key": "z", "code": 128540, "label": "😜" },
+    { "key": "u", "code": 128536, "label": "😘" },
+    { "key": "i", "code": 128525, "label": "😍" },
+    { "key": "o", "code": 128532, "label": "😔" },
+    { "key": "p", "code": 128544, "label": "😠" }
+  ],
+  [
+    { "key": "a", "code": -805, "label": "currency_slot_5" },
+    { "key": "s", "code": -804, "label": "currency_slot_4" },
+    { "key": "d", "code": -803, "label": "currency_slot_3" },
+    { "key": "f", "code": -802, "label": "currency_slot_2" },
+    { "key": "g", "code":   94, "label": "^", "popup": {
+      "main": { "code": 8593, "label": "↑" },
+      "relevant": [
+        { "code": 8592, "label": "←" },
+        { "code": 8595, "label": "↓" },
+        { "code": 8594, "label": "→" }
+      ]
+    } },
+    { "key": "h", "code":  176, "label": "°", "popup": {
+      "main": { "code": 8242, "label": "′" },
+      "relevant": [
+        { "code": 8243, "label": "″" }
+      ]
+    } },
+    { "key": "j", "code":   61, "label": "=", "popup": {
+      "main": { "code": 8800, "label": "≠" },
+      "relevant": [
+        { "code": 8734, "label": "∞" },
+        { "code": 8776, "label": "≈" }
+      ]
+    } },
+    { "key": "k", "$": "layout_direction_selector",
+      "ltr": { "code":  123, "label": "{", "popup": {
+        "main": { "code":   40, "label": "(" }
+      } },
+      "rtl": { "code":  125, "label": "{", "popup": {
+        "main": { "code":   41, "label": "(" }
+      } }
+    },
+    { "key": "l", "$": "layout_direction_selector",
+      "ltr": { "code":  125, "label": "}", "popup": {
+        "main": { "code":   41, "label": ")" }
+      } },
+      "rtl": { "code":  123, "label": "}", "popup": {
+        "main": { "code":   40, "label": ")" }
+      } }
+    },
+    { "key": "ö", "code":   92, "label": "\\" }
+  ],
+  [
+    { "key": "y", "code":   95, "label": "_" },
+    { "key": "x", "code":  169, "label": "©" },
+    { "key": "c", "code":  174, "label": "®" },
+    { "key": "v", "code": 8482, "label": "™" },
+    { "key": "b", "code": 10003, "label": "✓" },
+    { "key": "n", "code":  126, "label": "~" },
+    { "key": "m", "code":  124, "label": "|" }
+  ]
+]
