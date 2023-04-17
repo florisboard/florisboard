@@ -1,0 +1,98 @@
+[
+  [
+    { "$": "case_selector",
+      "lower": { "code": 2974, "label": "ஞ" },
+      "upper": { "code": 2998, "label": "ஶ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2993, "label": "ற" },
+      "upper": { "code": 2999, "label": "ஷ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2984, "label": "ந" },
+      "upper": { "code": 3000, "label": "ஸ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2970, "label": "ச" },
+      "upper": { "code": 3001, "label": "ஹ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2997, "label": "வ" },
+      "upper": { "code": 2972, "label": "ஜ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2992, "label": "ர" },
+      "upper": { "code": 2994, "label": "ல" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 3016, "label": "ை" },
+      "upper": { "code": 2960, "label": "ஐ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 3018, "label": "ொ"  },
+      "upper": { "code": 3019, "label": "ோ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 3007, "label": "ி" },
+      "upper": { "code": 3008, "label": "ீ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 3009, "label": "ு" },
+      "upper": { "code": 3010, "label": "ூ" }
+    }
+  ],
+  [
+    { "$": "auto_text_key", "code": 2991, "label": "ய" },
+    { "$": "auto_text_key", "code": 2995, "label": "ள" },
+    { "$": "auto_text_key", "code": 2985, "label": "ன" },
+    { "$": "auto_text_key", "code": 2965, "label": "க" },
+    { "$": "auto_text_key", "code": 2986, "label": "ப" },
+    { "$": "case_selector",
+      "lower": { "code": 3006, "label": "ா" },
+      "upper": { "code": 2996, "label": "ழ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2980, "label": "த" },
+      "upper": { "code": 2990, "label": "ம" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2975, "label": "ட" },
+      "upper": { "code": 2969, "label": "ங" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 3021, "label": "்" },
+      "upper": { "code": 2947, "label": "ஃ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2951, "label": "இ" },
+      "upper": { "code": 2952, "label": "ஈ" }
+    }
+  ],
+  [
+    { "$": "auto_text_key", "code": 2979, "label": "ண" },
+    { "$": "case_selector",
+      "lower": { "code": 2962, "label": "ஒ" },
+      "upper": { "code": 2963, "label": "ஓ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2953, "label": "உ" },
+      "upper": { "code": 2954, "label": "ஊ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2958, "label": "எ" },
+      "upper": { "code": 2959, "label": "ஏ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 3014, "label": "ெ" },
+      "upper": { "code": 3015, "label": "ே" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2964, "label": "ஔ" },
+      "upper": { "code": 3020, "label": "ௌ" }
+    },
+    { "$": "case_selector",
+      "lower": { "code": 2949, "label": "அ" },
+      "upper": { "code": 2950, "label": "ஆ" }
+    }
+  ]
+]

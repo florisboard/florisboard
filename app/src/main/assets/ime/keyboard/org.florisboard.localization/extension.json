@@ -681,6 +681,14 @@
       "preferred": {
         "characters": "org.florisboard.layouts:qwerty"
       }
+    },
+    {
+      "languageTag": "ta-lk",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "preferred": {
+        "characters": "org.florisboard.layouts:tamil"
+      }
     }
   ]
 }
