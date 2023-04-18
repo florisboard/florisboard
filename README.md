@@ -7,6 +7,9 @@ src=".github/repo_icon.png" alt="App icon">
 devices. It aims at being modern, user-friendly and customizable while
 fully respecting your privacy. Currently in early-beta state.
 
+**The current focus is on implementing next-word suggestions, which has become complicated/hit a snag and is taking more time than originally planned.**
+**Updates will come when this issue is resolved. Thank you for being patient.**
+
 <table>
 <tr>
 <th align="center" width="50%">
