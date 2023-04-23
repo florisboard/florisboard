@@ -33,7 +33,7 @@ android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = 32
     buildToolsVersion = "31.0.0"
-    ndkVersion = "22.1.7171670"
+    ndkVersion = "25.2.9519653"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -68,8 +68,9 @@ android {
 
         externalNativeBuild {
             cmake {
-                cFlags("-fvisibility=hidden", "-DU_STATIC_IMPLEMENTATION=1")
-                cppFlags("-fvisibility=hidden", "-std=c++17", "-fexceptions", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
+                targets("florisboard-native")
+                //cFlags("-fvisibility=hidden", "-DU_STATIC_IMPLEMENTATION=1")
+                //cppFlags("-fvisibility=hidden", "-std=c++17", "-fexceptions", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
                 arguments("-DANDROID_STL=c++_static")
             }
         }
