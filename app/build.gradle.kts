@@ -71,7 +71,6 @@ android {
                 targets("florisboard-native")
                 cppFlags("-std=c++20", "-stdlib=libc++")
                 arguments(
-                    "-DCMAKE_MAKE_PROGRAM=/usr/bin/ninja",
                     "-DCMAKE_ANDROID_API=" + minSdk.toString(),
                     "-DICU_ASSET_EXPORT_DIR=" + project.file("src/main/assets/icu4c").absolutePath,
                     "-DBUILD_SHARED_LIBS=false",
