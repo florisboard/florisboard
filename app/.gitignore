@@ -1,0 +1,2 @@
+# Exclude auto-generated icu4c assets
+src/main/assets/icu4c/

@@ -70,7 +70,13 @@ android {
             cmake {
                 targets("florisboard-native")
                 cppFlags("-std=c++20", "-stdlib=libc++")
-                arguments("-DCMAKE_MAKE_PROGRAM=/usr/bin/ninja", "-DCMAKE_ANDROID_API=" + minSdk.toString(), "-DANDROID_STL=c++_static")
+                arguments(
+                    "-DCMAKE_MAKE_PROGRAM=/usr/bin/ninja",
+                    "-DCMAKE_ANDROID_API=" + minSdk.toString(),
+                    "-DICU_ASSET_EXPORT_DIR=" + project.file("src/main/assets/icu4c").absolutePath,
+                    "-DBUILD_SHARED_LIBS=false",
+                    "-DANDROID_STL=c++_static",
+                )
             }
         }
 
@@ -81,10 +87,7 @@ android {
         sourceSets {
             maybeCreate("main").apply {
                 assets {
-                    srcDirs("src/main/assets", "src/main/icu4c/prebuilt/assets")
-                }
-                jniLibs {
-                    srcDirs("src/main/icu4c/prebuilt/jniLibs")
+                    srcDirs("src/main/assets")
                 }
                 java {
                     srcDirs("src/main/kotlin")
