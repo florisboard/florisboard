@@ -31,8 +31,8 @@ plugins {
 
 android {
     namespace = "dev.patrickgold.florisboard"
-    compileSdk = 32
-    buildToolsVersion = "31.0.0"
+    compileSdk = 33
+    buildToolsVersion = "33.0.2"
     ndkVersion = "25.2.9519653"
 
     compileOptions {
@@ -52,7 +52,7 @@ android {
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 24
-        targetSdk = 31
+        targetSdk = 33
         versionCode = 90
         versionName = "0.4.0"
 
