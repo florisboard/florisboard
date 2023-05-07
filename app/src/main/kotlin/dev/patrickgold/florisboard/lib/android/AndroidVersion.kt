@@ -47,4 +47,12 @@ object AndroidVersion {
     /** Android 12 **/
     inline val ATLEAST_API31_S get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     inline val ATMOST_API31_S get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.S
+
+    /** Android 12L **/
+    inline val ATLEAST_API32_S_V2 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S_V2
+    inline val ATMOST_API32_S_V2 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2
+
+    /** Android 13 **/
+    inline val ATLEAST_API33_T get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+    inline val ATMOST_API33_T get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU
 }
