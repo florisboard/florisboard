@@ -33,7 +33,8 @@ android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = 33
     buildToolsVersion = "33.0.2"
-    ndkVersion = "25.2.9519653"
+    //ndkVersion = "25.2.9519653"
+    ndkPath = "/home/patrick/Android/Sdk/ndk/android-ndk-r26-canary"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -218,14 +219,14 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.cache4k)
-    implementation(libs.jetpref.datastore.model)
-    implementation(libs.jetpref.datastore.ui)
-    implementation(libs.jetpref.material.ui)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
     implementation(libs.patrickgold.compose.tooltip)
+    implementation(libs.patrickgold.jetpref.datastore.model)
+    implementation(libs.patrickgold.jetpref.datastore.ui)
+    implementation(libs.patrickgold.jetpref.material.ui)
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

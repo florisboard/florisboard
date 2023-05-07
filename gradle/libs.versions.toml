@@ -14,7 +14,6 @@ androidx-navigation = "2.5.3"
 androidx-profileinstaller = "1.2.0"
 androidx-room = "2.4.3"
 cache4k = "0.7.0"
-jetpref = "8d9d5fc2c334c7e62b7aaeab1103ab681857d695"#"0.1.0-beta13"
 kotlin = "1.8.21"
 kotlinx-coroutines = "1.7.0"
 kotlinx-serialization-json = "1.5.0"
@@ -22,6 +21,7 @@ ksp = "1.8.21-1.0.11"
 mannodermaus-android-junit5 = "1.8.2.1"
 mikepenz-aboutlibraries = "10.2.0"
 patrickgold-compose-tooltip = "0.1.0"
+patrickgold-jetpref = "0.1.0-beta14"
 
 # Testing
 androidx-benchmark = "1.1.0"
@@ -53,14 +53,14 @@ androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstall
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "jetpref" }
-jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "jetpref" }
-jetpref-material-ui = { module = "dev.patrickgold.jetpref:jetpref-material-ui", version.ref = "jetpref" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }
 mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "mikepenz-aboutlibraries" }
 patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:tooltip", version.ref = "patrickgold-compose-tooltip" }
+patrickgold-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "patrickgold-jetpref" }
+patrickgold-jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "patrickgold-jetpref" }
+patrickgold-jetpref-material-ui = { module = "dev.patrickgold.jetpref:jetpref-material-ui", version.ref = "patrickgold-jetpref" }
 
 # Testing
 androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }
