@@ -33,8 +33,7 @@ android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = 33
     buildToolsVersion = "33.0.2"
-    //ndkVersion = "25.2.9519653"
-    ndkPath = "/home/patrick/Android/Sdk/ndk/android-ndk-r26-canary"
+    ndkVersion = "25.2.9519653"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
