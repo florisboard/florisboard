@@ -192,6 +192,12 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
 dependencies {
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.systemuicontroller)
