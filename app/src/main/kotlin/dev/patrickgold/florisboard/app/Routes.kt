@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.app.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreen
 import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.localization.LocalizationScreen
+import dev.patrickgold.florisboard.app.settings.localization.DictionaryManagerScreen
 import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
@@ -69,6 +70,7 @@ object Routes {
 
         const val Localization = "settings/localization"
         const val SelectLocale = "settings/localization/select-locale"
+        const val ManageDictionaries = "settings/localization/manage-dictionaries"
         const val LanguagePackManager = "settings/localization/language-pack-manage/{action}"
         fun LanguagePackManager(action: LanguagePackManagerScreenAction) =
             LanguagePackManager.curlyFormat("action" to action.id)
@@ -152,6 +154,7 @@ object Routes {
 
             composable(Settings.Localization) { LocalizationScreen() }
             composable(Settings.SelectLocale) { SelectLocaleScreen() }
+            composable(Settings.ManageDictionaries) { DictionaryManagerScreen() }
             composable(Settings.LanguagePackManager) { navBackStack ->
                 val action = navBackStack.arguments?.getString("action")?.let { actionId ->
                     LanguagePackManagerScreenAction.values().firstOrNull { it.id == actionId }

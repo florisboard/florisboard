@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +33,6 @@ import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ExtensionMaintainerChip(
     maintainer: ExtensionMaintainer,

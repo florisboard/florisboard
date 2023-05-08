@@ -58,7 +58,6 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
@@ -68,7 +67,6 @@ enum class ThemeManagerScreenAction(val id: String) {
     MANAGE("manage-installed-themes");
 }
 
-@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     title = stringRes(when (action) {

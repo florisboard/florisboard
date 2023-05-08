@@ -644,6 +644,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Import extension</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import keyboard extension</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Import theme extension</string>
+    <string name="ext__import__ext_dictionary" comment="Title of Importer screen for dictionary extension import">Import dictionary extension</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Import language pack extension</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File can not be imported. Reason:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Unsupported or unrecognized file type.</string>

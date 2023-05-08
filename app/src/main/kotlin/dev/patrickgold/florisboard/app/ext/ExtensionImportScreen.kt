@@ -23,7 +23,8 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,6 +48,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryExtension
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
@@ -61,7 +63,6 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.kotlin.resultOk
 
@@ -83,6 +84,11 @@ enum class ExtensionImportScreenType(
     EXT_THEME(
         id = "ext-theme",
         titleResId = R.string.ext__import__ext_theme,
+        supportedFiles = listOf(FileRegistry.FlexExtension),
+    ),
+    EXT_DICTIONARY(
+        id = "ext-dictionary",
+        titleResId = R.string.ext__import__ext_dictionary,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
     EXT_LANGUAGEPACK(
@@ -135,7 +141,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             // If uri is null it indicates that the selection activity
             //  was cancelled (mostly by pressing the back button), so
             //  we don't display an error message here.
-            if (uriList.isNullOrEmpty()) return@rememberLauncherForActivityResult
+            if (uriList.isEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
             importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.map { workspace ->
                 workspace.inputFileInfos.forEach { fileInfo ->
@@ -180,6 +186,9 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             }
                             ExtensionImportScreenType.EXT_THEME -> {
                                 ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
+                            }
+                            ExtensionImportScreenType.EXT_DICTIONARY -> {
+                                ext.takeIf { it is DictionaryExtension }?.let { extensionManager.import(it) }
                             }
                             ExtensionImportScreenType.EXT_LANGUAGEPACK -> {
                                 ext.takeIf { it is LanguagePackExtension }?.let { extensionManager.import(it) }
@@ -248,6 +257,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun FileInfoView(
     fileInfo: CacheManager.FileInfo,
@@ -264,7 +274,7 @@ private fun FileInfoView(
         ) {
             val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
             val ext = fileInfo.ext
-            Row {
+            FlowRow {
                 Text(
                     text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
                     style = MaterialTheme.typography.body2,

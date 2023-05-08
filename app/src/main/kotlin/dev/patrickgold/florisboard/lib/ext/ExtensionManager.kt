@@ -22,6 +22,7 @@ import android.os.FileObserver
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryExtension
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
@@ -63,6 +64,7 @@ val ExtensionJsonConfig = Json {
         polymorphic(Extension::class) {
             subclass(KeyboardExtension::class, KeyboardExtension.serializer())
             subclass(ThemeExtension::class, ThemeExtension.serializer())
+            subclass(DictionaryExtension::class, DictionaryExtension.serializer())
             subclass(LanguagePackExtension::class, LanguagePackExtension.serializer())
         }
         polymorphic(Composer::class) {
@@ -70,7 +72,7 @@ val ExtensionJsonConfig = Json {
             subclass(HangulUnicode::class, HangulUnicode.serializer())
             subclass(KanaUnicode::class, KanaUnicode.serializer())
             subclass(WithRules::class, WithRules.serializer())
-            default { Appender.serializer() }
+            defaultDeserializer { Appender.serializer() }
         }
     }
 }
@@ -79,6 +81,7 @@ class ExtensionManager(context: Context) {
     companion object {
         const val IME_KEYBOARD_PATH = "ime/keyboard"
         const val IME_THEME_PATH = "ime/theme"
+        const val IME_DICTIONARY_PATH = "ime/dictionary"
         const val IME_LANGUAGEPACK_PATH = "ime/languagepack"
 
         private const val FILE_OBSERVER_MASK =
@@ -91,11 +94,13 @@ class ExtensionManager(context: Context) {
 
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
+    val dictionaryExtensions = ExtensionIndex(DictionaryExtension.serializer(), IME_DICTIONARY_PATH)
     val languagePacks = ExtensionIndex(LanguagePackExtension.serializer(), IME_LANGUAGEPACK_PATH)
 
     fun init() {
         keyboardExtensions.init()
         themes.init()
+        dictionaryExtensions.init()
         languagePacks.init()
     }
 
@@ -105,6 +110,7 @@ class ExtensionManager(context: Context) {
         val relGroupPath = when (ext) {
             is KeyboardExtension -> IME_KEYBOARD_PATH
             is ThemeExtension -> IME_THEME_PATH
+            is DictionaryExtension -> IME_DICTIONARY_PATH
             is LanguagePackExtension -> IME_LANGUAGEPACK_PATH
             else -> error("Unknown extension type")
         }
@@ -131,6 +137,7 @@ class ExtensionManager(context: Context) {
     fun getExtensionById(id: String): Extension? {
         keyboardExtensions.value?.find { it.meta.id == id }?.let { return it }
         themes.value?.find { it.meta.id == id }?.let { return it }
+        dictionaryExtensions.value?.find { it.meta.id == id }?.let { return it }
         languagePacks.value?.find { it.meta.id == id }?.let { return it }
         return null
     }

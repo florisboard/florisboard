@@ -60,10 +60,10 @@ data class ExtensionMaintainer(
 
     override fun toString() = buildString {
         append(name)
-        if (email != null && email.isNotBlank()) {
+        if (!email.isNullOrBlank()) {
             append(" <$email>")
         }
-        if (url != null && url.isNotBlank()) {
+        if (!url.isNullOrBlank()) {
             append(" ($url)")
         }
     }

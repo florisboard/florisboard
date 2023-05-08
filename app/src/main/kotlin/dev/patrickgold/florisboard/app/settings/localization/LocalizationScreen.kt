@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.app.settings.localization
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
@@ -32,26 +30,16 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.settings.advanced.Restore
-import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.readToFile
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.parentDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 
@@ -59,7 +47,7 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 fun LocalizationScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__title)
     previewFieldVisible = true
-    iconSpaceReserved = false
+    iconSpaceReserved = true
 
     val navController = LocalNavController.current
     val context = LocalContext.current
@@ -82,13 +70,15 @@ fun LocalizationScreen() = FlorisScreen {
 
 
     content {
-        ListPreference(
-            prefs.localization.displayLanguageNamesIn,
-            title = stringRes(R.string.settings__localization__display_language_names_in__label),
-            entries = DisplayLanguageNamesIn.listEntries(),
+        Preference(
+            title = "Manage installed dictionaries",
+            summary = "for the new suggestion algorithm",
+            onClick = {
+                navController.navigate(Routes.Settings.ManageDictionaries)
+            },
         )
         Preference(
-//            iconId = R.drawable.ic_edit,
+            //iconId = R.drawable.ic_edit,
             title = stringRes(R.string.settings__localization__language_pack_title),
             summary = stringRes(R.string.settings__localization__language_pack_summary),
             onClick = {
