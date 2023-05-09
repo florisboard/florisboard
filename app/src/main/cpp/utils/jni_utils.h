@@ -20,11 +20,13 @@
 #include <jni.h>
 #include <string>
 
-namespace utils {
+namespace fl::jni {
 
-std::string j2std_string(JNIEnv *env, jobject jStr);
-jobject std2j_string(JNIEnv *env, const std::string& in);
+using NativeStr = jbyteArray;
 
-} // namespace utils
+std::string j2std_string(JNIEnv *env, NativeStr jStr);
+NativeStr std2j_string(JNIEnv *env, const std::string& stdStr);
+
+}
 
 #endif // FLORISBOARD_JNI_UTILS_H

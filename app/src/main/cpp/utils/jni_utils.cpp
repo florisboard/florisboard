@@ -17,18 +17,19 @@
 #include "jni_utils.h"
 #include "log.h"
 
-std::string utils::j2std_string(JNIEnv *env, jobject jStr) {
-    auto cStr = reinterpret_cast<const char *>(env->GetDirectBufferAddress(jStr));
-    auto size = env->GetDirectBufferCapacity(jStr);
-    std::string stdStr(cStr, size);
-    utils::log(ANDROID_LOG_DEBUG, "spell j2s", stdStr);
+std::string fl::jni::j2std_string(JNIEnv *env, NativeStr jStr) {
+    auto length = env->GetArrayLength(jStr);
+    jbyte* bytes = env->GetByteArrayElements(jStr, nullptr);
+    std::string stdStr(reinterpret_cast<char*>(bytes), length);
+    env->ReleaseByteArrayElements(jStr, bytes, JNI_ABORT);
+    //utils::log(ANDROID_LOG_DEBUG, "fl::jni::j2s", stdStr);
     return stdStr;
 }
 
-jobject utils::std2j_string(JNIEnv *env, const std::string& stdStr) {
-    utils::log(ANDROID_LOG_DEBUG, "spell s2j", stdStr);
-    size_t byteCount = stdStr.length();
-    auto cStr = stdStr.c_str();
-    auto buffer = env->NewDirectByteBuffer((void *) cStr, byteCount);
-    return buffer;
+fl::jni::NativeStr fl::jni::std2j_string(JNIEnv *env, const std::string& stdStr) {
+    //utils::log(ANDROID_LOG_DEBUG, "fl::jni::s2j", stdStr);
+    auto length = static_cast<jsize>(stdStr.size());
+    NativeStr jStr = env->NewByteArray(length);
+    env->SetByteArrayRegion(jStr, 0, length, reinterpret_cast<const jbyte*>(stdStr.c_str()));
+    return jStr;
 }
