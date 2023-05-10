@@ -199,8 +199,8 @@ class ThemeManager(context: Context) {
         style: SnyggStylesheet = activeThemeInfo.value?.stylesheet ?: FlorisImeThemeBaseStyle,
     ): Bundle {
         val chipStyle = style.getStatic(FlorisImeUi.SmartbarSharedActionsToggle)
-        val bgColor = chipStyle.background.solidColor()
-        val fgColor = chipStyle.foreground.solidColor()
+        val bgColor = chipStyle.background.solidColor(context)
+        val fgColor = chipStyle.foreground.solidColor(context)
         val bgDrawableId = R.drawable.autofill_inline_suggestion_chip_background
         val stylesBuilder = UiVersions.newStylesBuilder()
         val suggestionStyle = InlineSuggestionUi.newStyleBuilder()

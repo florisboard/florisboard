@@ -120,7 +120,7 @@ fun TextKeyboardLayout(
         evaluator.state.keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
     val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
-        .foreground.solidColor(default = Color.Green)
+        .foreground.solidColor(context, default = Color.Green)
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
@@ -332,6 +332,8 @@ private fun TextKeyButton(
     isSmartbarKey: Boolean,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
+    val context = LocalContext.current
+
     val keyStyle = FlorisImeTheme.style.get(
         element = if (isSmartbarKey) FlorisImeUi.SmartbarActionKey else FlorisImeUi.Key,
         code = key.computedData.code,
@@ -383,7 +385,7 @@ private fun TextKeyButton(
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = label,
-                color = keyStyle.foreground.solidColor(),
+                color = keyStyle.foreground.solidColor(context),
                 fontSize = fontSize,
                 maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
                 softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
@@ -405,10 +407,10 @@ private fun TextKeyButton(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-                    .snyggBackground(keyHintStyle)
+                    .snyggBackground(context, keyHintStyle)
                     .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
                 text = hintedLabel,
-                color = keyHintStyle.foreground.solidColor(),
+                color = keyHintStyle.foreground.solidColor(context),
                 fontFamily = FontFamily.Monospace,
                 fontSize = hintFontSize,
                 maxLines = 1,
@@ -423,7 +425,7 @@ private fun TextKeyButton(
                     .align(Alignment.Center),
                 painter = painterResource(drawableId),
                 contentDescription = null,
-                tint = keyStyle.foreground.solidColor(),
+                tint = keyStyle.foreground.solidColor(context),
             )
         }
     }

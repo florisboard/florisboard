@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
@@ -33,6 +35,9 @@ import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggExplicitInheritValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -155,33 +160,13 @@ internal fun translatePropertyValue(
     level: SnyggLevel,
     displayColorsAs: DisplayColorsAs,
 ): String {
+    val context = LocalContext.current
     return when (propertyValue) {
         is SnyggSolidColorValue -> remember(propertyValue.color, displayColorsAs) {
-            val color = propertyValue.color
-            when (displayColorsAs) {
-                DisplayColorsAs.HEX8 -> buildString {
-                    append(UnicodeCtrlChar.LeftToRightIsolate)
-                    append("#")
-                    append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
-                    append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
-                    append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
-                    append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
-                    append(UnicodeCtrlChar.PopDirectionalIsolate)
-                }
-                DisplayColorsAs.RGBA -> buildString {
-                    append(UnicodeCtrlChar.LeftToRightIsolate)
-                    append("rgba(")
-                    append((color.red * RgbaColor.RedMax).roundToInt())
-                    append(",")
-                    append((color.green * RgbaColor.GreenMax).roundToInt())
-                    append(",")
-                    append((color.blue * RgbaColor.BlueMax).roundToInt())
-                    append(",")
-                    append(color.alpha)
-                    append(")")
-                    append(UnicodeCtrlChar.PopDirectionalIsolate)
-                }
-            }
+            buildColorString(propertyValue.color, displayColorsAs)
+        }
+        is SnyggMaterialYouValue -> remember(propertyValue.colorName, displayColorsAs) {
+            buildColorString(propertyValue.loadColor(context), displayColorsAs)
         }
         else -> when (level) {
             SnyggLevel.DEVELOPER -> null
@@ -197,12 +182,41 @@ internal fun translatePropertyValue(
     }
 }
 
+internal fun buildColorString(color: Color, displayColorsAs: DisplayColorsAs): String {
+    return when (displayColorsAs) {
+        DisplayColorsAs.HEX8 -> buildString {
+            append(UnicodeCtrlChar.LeftToRightIsolate)
+            append("#")
+            append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
+            append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
+            append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
+            append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
+            append(UnicodeCtrlChar.PopDirectionalIsolate)
+        }
+        DisplayColorsAs.RGBA -> buildString {
+            append(UnicodeCtrlChar.LeftToRightIsolate)
+            append("rgba(")
+            append((color.red * RgbaColor.RedMax).roundToInt())
+            append(",")
+            append((color.green * RgbaColor.GreenMax).roundToInt())
+            append(",")
+            append((color.blue * RgbaColor.BlueMax).roundToInt())
+            append(",")
+            append(color.alpha)
+            append(")")
+            append(UnicodeCtrlChar.PopDirectionalIsolate)
+        }
+    }
+}
+
 @Composable
 internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): String {
     return when (encoder) {
         SnyggImplicitInheritValue -> R.string.general__select_dropdown_value_placeholder
         SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggSolidColorValue -> R.string.snygg__property_value__solid_color
+        SnyggMaterialYouLightColorValue -> R.string.snygg__property_value__material_you_light_color
+        SnyggMaterialYouDarkColorValue -> R.string.snygg__property_value__material_you_dark_color
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
         SnyggCircleShapeValue -> R.string.snygg__property_value__circle_shape
         SnyggCutCornerDpShapeValue -> R.string.snygg__property_value__cut_corner_shape_dp

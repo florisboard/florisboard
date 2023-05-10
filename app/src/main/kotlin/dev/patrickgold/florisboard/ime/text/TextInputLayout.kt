@@ -72,7 +72,7 @@ fun TextInputLayout(
                             painter = painterResource(R.drawable.ic_incognito),
                             contentDescription = null,
                             tint = indicatorStyle.foreground.solidColor(
-                                default = FlorisImeTheme.fallbackContentColor().copy(alpha = 0.067f),
+                                context, default = FlorisImeTheme.fallbackContentColor().copy(alpha = 0.067f),
                             ),
                         )
                     }

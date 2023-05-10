@@ -107,12 +107,12 @@ fun QuickActionButton(
     val actionStyle = if (isPressed) actionStylePressed else actionStyleNotPressed
     val bgColor by animateColorAsState(
         targetValue = if (isPressed) {
-            actionStylePressed.background.solidColor()
+            actionStylePressed.background.solidColor(context)
         } else {
-            if (actionStyleNotPressed.background.solidColor().alpha == 0f) {
-                actionStylePressed.background.solidColor().copy(0f)
+            if (actionStyleNotPressed.background.solidColor(context).alpha == 0f) {
+                actionStylePressed.background.solidColor(context).copy(0f)
             } else {
-                actionStyleNotPressed.background.solidColor()
+                actionStyleNotPressed.background.solidColor(context)
             }
         },
         animationSpec = BackgroundAnimationSpec,
@@ -122,7 +122,7 @@ fun QuickActionButton(
             DebugHelperColor
         }
         else -> {
-            actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+            actionStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
         }
     }
     val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f
@@ -148,7 +148,7 @@ fun QuickActionButton(
             .aspectRatio(1f)
             .alpha(fgAlpha)
             .snyggShadow(actionStyle)
-            .snyggBorder(actionStyle)
+            .snyggBorder(context, actionStyle)
             .background(bgColor, actionStyle.shape.shape())
             .snyggClip(actionStyle)
             .indication(interactionSource, LocalIndication.current)

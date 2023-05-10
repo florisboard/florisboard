@@ -254,6 +254,8 @@
     <string name="snygg__property_name__var_shape_variant">Common shape (variant)</string>
     <string name="snygg__property_value__explicit_inherit">Inherit</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
+    <string name="snygg__property_value__material_you_light_color">Material You color (Light)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You color (Dark)</string>
     <string name="snygg__property_value__image_ref">Image reference</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>

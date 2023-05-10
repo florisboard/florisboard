@@ -161,8 +161,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .snyggShadow(primaryActionsToggleStyle)
-                    .snyggBorder(primaryActionsToggleStyle)
-                    .snyggBackground(primaryActionsToggleStyle),
+                    .snyggBorder(context, primaryActionsToggleStyle)
+                    .snyggBackground(context, primaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
                 val rotation by animateFloatAsState(
@@ -181,7 +181,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         }
                     ),
                     contentDescription = null,
-                    tint = primaryActionsToggleStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                    tint = primaryActionsToggleStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
                 )
             }
         }
@@ -235,8 +235,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .snyggShadow(secondaryActionsToggleStyle)
-                    .snyggBorder(secondaryActionsToggleStyle)
-                    .snyggBackground(secondaryActionsToggleStyle),
+                    .snyggBorder(context, secondaryActionsToggleStyle)
+                    .snyggBackground(context, secondaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
                 val transition = updateTransition(extendedActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
@@ -249,7 +249,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         .rotate(rotation),
                     painter = painterResource(R.drawable.ic_unfold_less),
                     contentDescription = null,
-                    tint = secondaryActionsToggleStyle.foreground.solidColor(),
+                    tint = secondaryActionsToggleStyle.foreground.solidColor(context),
                 )
                 // Not expanded icon
                 Icon(
@@ -258,7 +258,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         .rotate(rotation - 180f),
                     painter = painterResource(R.drawable.ic_unfold_more),
                     contentDescription = null,
-                    tint = secondaryActionsToggleStyle.foreground.solidColor(),
+                    tint = secondaryActionsToggleStyle.foreground.solidColor(context),
                 )
             }
         }
@@ -304,7 +304,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight)
-            .snyggBackground(smartbarStyle),
+            .snyggBackground(context, smartbarStyle),
     ) {
         when (smartbarLayout) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
@@ -341,15 +341,16 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     val prefs by florisPreferenceModel()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarExtendedActionsRow)
     val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
-    val background = secondaryRowStyle.background.solidColor().let { color ->
+    val background = secondaryRowStyle.background.solidColor(context).let { color ->
         if (extendedActionsPlacement == ExtendedActionsPlacement.OVERLAY_APP_UI) {
             if (color.isUnspecified || color.alpha == 0f) {
-                FlorisImeTheme.style.get(FlorisImeUi.Keyboard).background.solidColor(default = Color.Black)
+                FlorisImeTheme.style.get(FlorisImeUi.Keyboard).background.solidColor(context, default = Color.Black)
             } else {
                 color
             }

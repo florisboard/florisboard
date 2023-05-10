@@ -70,7 +70,7 @@ fun QuickActionsOverflowPanel() {
         modifier = Modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.keyboardUiHeight())
-            .snyggBackground(panelStyle),
+            .snyggBackground(context, panelStyle),
     ) {
         LazyVerticalGrid(
             modifier = Modifier

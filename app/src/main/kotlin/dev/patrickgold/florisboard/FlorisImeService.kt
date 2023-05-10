@@ -64,6 +64,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -705,6 +706,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         fun Content() {
+            val context = LocalContext.current
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
@@ -713,21 +715,21 @@ class FlorisImeService : LifecycleInputMethodService() {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
                     Box(
                         modifier = Modifier
-                            .snyggBackground(layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
+                            .snyggBackground(context, layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
                     ) {
                         Row(
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            val fieldColor = fieldStyle.foreground.solidColor(FlorisImeTheme.fallbackContentColor())
+                            val fieldColor = fieldStyle.foreground.solidColor(context, FlorisImeTheme.fallbackContentColor())
                             AndroidView(
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .fillMaxHeight()
                                     .weight(1f)
                                     .snyggShadow(fieldStyle)
-                                    .snyggBorder(fieldStyle)
-                                    .snyggBackground(fieldStyle),
+                                    .snyggBorder(context, fieldStyle)
+                                    .snyggBackground(context, fieldStyle),
                                 factory = { extractEditText },
                                 update = { view ->
                                     view.background = null
@@ -755,8 +757,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                                     ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = actionStyle.background.solidColor(FlorisImeTheme.fallbackContentColor()),
-                                    contentColor = actionStyle.foreground.solidColor(FlorisImeTheme.fallbackSurfaceColor()),
+                                    backgroundColor = actionStyle.background.solidColor(context, FlorisImeTheme.fallbackContentColor()),
+                                    contentColor = actionStyle.foreground.solidColor(context, FlorisImeTheme.fallbackSurfaceColor()),
                                 ),
                             )
                         }
