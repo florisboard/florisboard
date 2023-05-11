@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.lib.NativeStr
+import dev.patrickgold.florisboard.native.NativeStr
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
@@ -46,7 +46,7 @@ import dev.patrickgold.florisboard.lib.io.AssetManager
 import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
 import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
-import dev.patrickgold.florisboard.lib.toNativeStr
+import dev.patrickgold.florisboard.native.toNativeStr
 import dev.patrickgold.jetpref.datastore.JetPref
 import java.lang.ref.WeakReference
 

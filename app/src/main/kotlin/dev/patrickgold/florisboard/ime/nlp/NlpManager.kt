@@ -143,7 +143,7 @@ class NlpManager(context: Context) {
     fun preload(subtype: Subtype) {
         scope.launch {
             providers.withLock { providers ->
-                subtype.nlpProviders.forEach { _, providerId ->
+                subtype.nlpProviders.forEach { providerId ->
                     providers[providerId]?.let { provider ->
                         provider.createIfNecessary()
                         provider.preload(subtype)

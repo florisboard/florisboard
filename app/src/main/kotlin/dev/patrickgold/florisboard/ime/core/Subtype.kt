@@ -209,11 +209,13 @@ data class SubtypeLayoutMap(
 @Serializable
 data class SubtypeNlpProviderMap(
     val spelling: String = LatinLanguageProvider.ProviderId,
+    val spellingDictionary: ExtensionComponentName? = null,
     val suggestion: String = LatinLanguageProvider.ProviderId,
+    val suggestionDictionary: ExtensionComponentName? = null,
 ) {
-    inline fun forEach(action: (String, String) -> Unit) {
-        action("spelling", spelling)
-        action("suggestion", suggestion)
+    inline fun forEach(action: (String) -> Unit) {
+        action(spelling)
+        action(suggestion)
     }
 }
 

@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.android.readText
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,15 +37,10 @@ import kotlinx.serialization.json.Json
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
-        // Default user ID used for all subtypes, unless otherwise specified.
-        // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.latin"
     }
 
     private val appContext by context.appContext()
-
-    private val wordData = guardedByLock { mutableMapOf<String, Int>() }
-    private val wordDataSerializer = MapSerializer(String.serializer(), Int.serializer())
 
     override val providerId = ProviderId
 
@@ -68,15 +64,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         // The subtype we get here contains a lot of data, however we are only interested in subtype.primaryLocale and
         // subtype.secondaryLocales.
-
-        wordData.withLock { wordData ->
-            if (wordData.isEmpty()) {
-                // Here we use readText() because the test dictionary is a json dictionary
-                val rawData = appContext.assets.readText("ime/dict/data.json")
-                val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
-                wordData.putAll(jsonData)
-            }
-        }
     }
 
     override suspend fun spell(
@@ -137,11 +124,11 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> {
-        return wordData.withLock { it.keys.toList() }
+        return listOf()
     }
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return wordData.withLock { it.getOrDefault(word, 0) / 255.0 }
+        return 0.0
     }
 
     override suspend fun destroy() {

@@ -52,7 +52,7 @@ import dev.patrickgold.florisboard.ime.dictionary.DictionaryExtension
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.native.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer

@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.latin.LatinNlpSession
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
@@ -57,7 +58,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.collectIn
@@ -214,6 +214,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     fun resetSuggestions(content: EditorContent) {
+        if (content.textBeforeSelection == "crash") {
+            LatinNlpSession.nativeInit()
+        }
         if (!(activeState.isComposingEnabled || nlpManager.isSuggestionOn())) {
             nlpManager.clearSuggestions()
             return

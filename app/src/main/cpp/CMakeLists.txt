@@ -14,6 +14,7 @@ add_library(
         florisboard-native
         SHARED
         dev_patrickgold_florisboard_FlorisApplication.cpp
+        dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession.cpp
 )
 
 target_compile_options(florisboard-native PRIVATE -ffunction-sections -fdata-sections -fexceptions)

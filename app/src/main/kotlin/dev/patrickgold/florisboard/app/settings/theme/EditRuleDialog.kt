@@ -77,7 +77,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
+import dev.patrickgold.florisboard.native.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
