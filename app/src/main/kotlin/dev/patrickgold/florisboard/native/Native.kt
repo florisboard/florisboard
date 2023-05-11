@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib
-
-import java.nio.ByteBuffer
+package dev.patrickgold.florisboard.native
 
 /**
  * Type alias for a native pointer.
@@ -31,31 +29,20 @@ const val NATIVE_NULLPTR: NativePtr = 0L
 /**
  * Type alias for a native string in standard UTF-8 encoding.
  */
-typealias NativeStr = ByteBuffer
+typealias NativeStr = ByteArray
 
 /**
  * Converts a native string to a Java string.
  */
 fun NativeStr.toJavaString(): String {
-    val bytes: ByteArray
-    if (this.hasArray()) {
-        bytes = this.array()
-    } else {
-        bytes = ByteArray(this.remaining())
-        this.get(bytes)
-    }
-    return String(bytes, Charsets.UTF_8)
+    return this.toString(Charsets.UTF_8)
 }
 
 /**
  * Converts a Java string to a native string.
  */
 fun String.toNativeStr(): NativeStr {
-    val bytes = this.toByteArray(Charsets.UTF_8)
-    val buffer = ByteBuffer.allocateDirect(bytes.size)
-    buffer.put(bytes)
-    buffer.rewind()
-    return buffer
+    return this.toByteArray(Charsets.UTF_8)
 }
 
 /**
