@@ -18,10 +18,14 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.io.FsDir
+import dev.patrickgold.florisboard.lib.io.subDir
+import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.decodeFromString
@@ -40,6 +44,7 @@ val SubtypeJsonConfig = Json {
  */
 class SubtypeManager(context: Context) {
     private val prefs by florisPreferenceModel()
+    private val appContext by context.appContext()
     private val keyboardManager by context.keyboardManager()
 
     private val _subtypesFlow = MutableStateFlow(listOf<Subtype>())
@@ -48,7 +53,7 @@ class SubtypeManager(context: Context) {
         get() = subtypesFlow.value
         private set(v) { _subtypesFlow.value = v }
 
-    private val _activeSubtypeFlow = MutableStateFlow(Subtype.DEFAULT)
+    private val _activeSubtypeFlow = MutableStateFlow(Subtype.FALLBACK)
     val activeSubtypeFlow = _activeSubtypeFlow.asStateFlow()
     inline var activeSubtype
         get() = activeSubtypeFlow.value
@@ -81,7 +86,7 @@ class SubtypeManager(context: Context) {
      */
     private fun evaluateActiveSubtype(list: List<Subtype>) {
         val activeSubtypeId = prefs.localization.activeSubtypeId.get()
-        val subtype = list.find { it.id == activeSubtypeId } ?: list.firstOrNull() ?: Subtype.DEFAULT
+        val subtype = list.find { it.id == activeSubtypeId } ?: list.firstOrNull() ?: Subtype.FALLBACK
         if (subtype.id != activeSubtypeId) {
             prefs.localization.activeSubtypeId.set(subtype.id)
         }
@@ -189,7 +194,7 @@ class SubtypeManager(context: Context) {
         val subtypeList = subtypes
         val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
-        var newActiveSubtype: Subtype = Subtype.DEFAULT
+        var newActiveSubtype: Subtype = Subtype.FALLBACK
         for (subtype in subtypeList.asReversed()) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
@@ -212,7 +217,7 @@ class SubtypeManager(context: Context) {
         val subtypeList = subtypes
         val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
-        var newActiveSubtype: Subtype = Subtype.DEFAULT
+        var newActiveSubtype: Subtype = Subtype.FALLBACK
         for (subtype in subtypeList) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
@@ -226,5 +231,21 @@ class SubtypeManager(context: Context) {
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
         activeSubtype = newActiveSubtype
+    }
+
+    fun cacheDirFor(subtype: Subtype): FsDir {
+        val cacheDir = appContext.cacheDir.subDir(SubtypeDirName.curlyFormat("id" to subtype.id))
+        cacheDir.mkdirs()
+        return cacheDir
+    }
+
+    fun filesDirFor(subtype: Subtype): FsDir {
+        val filesDir = appContext.filesDir.subDir(SubtypeDirName.curlyFormat("id" to subtype.id))
+        filesDir.mkdirs()
+        return filesDir
+    }
+
+    companion object {
+        private const val SubtypeDirName = "subtypes/{id}"
     }
 }

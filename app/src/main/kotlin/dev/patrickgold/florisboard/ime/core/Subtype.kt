@@ -24,7 +24,6 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
@@ -60,7 +59,7 @@ data class Subtype(
         /**
          * Subtype to use when prefs do not contain any valid subtypes.
          */
-        val DEFAULT = Subtype(
+        val FALLBACK = Subtype(
             id = -1,
             primaryLocale = FlorisLocale.from("en", "US"),
             secondaryLocales = emptyList(),
@@ -93,6 +92,10 @@ data class Subtype(
         if (other.layoutMap != layoutMap) return false
 
         return true
+    }
+
+    fun isFallback(): Boolean {
+        return id < 0
     }
 }
 

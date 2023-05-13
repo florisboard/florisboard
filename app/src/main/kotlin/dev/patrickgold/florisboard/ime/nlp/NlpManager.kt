@@ -29,17 +29,16 @@ import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
-import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
+import dev.patrickgold.florisboard.nlpProviderRegistry
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +50,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.*
-import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
 
@@ -59,17 +57,13 @@ class NlpManager(context: Context) {
     private val prefs by florisPreferenceModel()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
+    private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()
+    private val nlpProviderRegistry by context.nlpProviderRegistry()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider()
-    private val providers = guardedByLock {
-        mapOf(
-            LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
-            HanShapeBasedLanguageProvider.ProviderId to ProviderInstanceWrapper(HanShapeBasedLanguageProvider(context)),
-        )
-    }
     // lock unnecessary because values constant
     private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
 
@@ -130,24 +124,12 @@ class NlpManager(context: Context) {
             ?.get(subtype.punctuationRule) ?: PunctuationRule.Fallback
     }
 
-    private suspend fun getSpellingProvider(subtype: Subtype): SpellingProvider {
-        return providers.withLock { it[subtype.nlpProviders.spelling] }?.provider as? SpellingProvider
-            ?: FallbackNlpProvider
-    }
-
-    private suspend fun getSuggestionProvider(subtype: Subtype): SuggestionProvider {
-        return providers.withLock { it[subtype.nlpProviders.suggestion] }?.provider as? SuggestionProvider
-            ?: FallbackNlpProvider
-    }
-
     fun preload(subtype: Subtype) {
         scope.launch {
-            providers.withLock { providers ->
-                subtype.nlpProviders.forEach { providerId ->
-                    providers[providerId]?.let { provider ->
-                        provider.createIfNecessary()
-                        provider.preload(subtype)
-                    }
+            subtype.nlpProviders.forEach { providerId ->
+                nlpProviderRegistry.getWrapper(providerId)?.let { wrapper ->
+                    wrapper.createIfNecessary()
+                    wrapper.preload(subtype)
                 }
             }
         }
@@ -164,7 +146,7 @@ class NlpManager(context: Context) {
         followingWords: List<String>,
         maxSuggestionCount: Int,
     ): SpellingResult {
-        return getSpellingProvider(subtype).spell(
+        return nlpProviderRegistry.getSpellingProvider(subtype).spell(
             subtype = subtype,
             word = word,
             precedingWords = precedingWords,
@@ -178,7 +160,7 @@ class NlpManager(context: Context) {
     suspend fun determineLocalComposing(
         textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup, localLastCommitPosition: Int
     ): EditorRange {
-        return getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
+        return nlpProviderRegistry.getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
             subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
         )
     }
@@ -187,7 +169,7 @@ class NlpManager(context: Context) {
         // Using a cache because I have no idea how fast the runBlocking is
         return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
             runBlocking {
-                getSuggestionProvider(subtype).forcesSuggestionOn
+                nlpProviderRegistry.getSuggestionProvider(subtype).forcesSuggestionOn
             }
         }
     }
@@ -198,7 +180,7 @@ class NlpManager(context: Context) {
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
         scope.launch {
-            val suggestions = getSuggestionProvider(subtype).suggest(
+            val suggestions = nlpProviderRegistry.getSuggestionProvider(subtype).suggest(
                 subtype = subtype,
                 content = content,
                 maxCandidateCount = 8,
@@ -247,11 +229,11 @@ class NlpManager(context: Context) {
     }
 
     fun getListOfWords(subtype: Subtype): List<String> {
-        return runBlocking { getSuggestionProvider(subtype).getListOfWords(subtype) }
+        return runBlocking { nlpProviderRegistry.getSuggestionProvider(subtype).getListOfWords(subtype) }
     }
 
     fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return runBlocking { getSuggestionProvider(subtype).getFrequencyForWord(subtype, word) }
+        return runBlocking { nlpProviderRegistry.getSuggestionProvider(subtype).getFrequencyForWord(subtype, word) }
     }
 
     private fun assembleCandidates() {
@@ -259,7 +241,7 @@ class NlpManager(context: Context) {
             val candidates = when {
                 isSuggestionOn() -> {
                     clipboardSuggestionProvider.suggest(
-                        subtype = Subtype.DEFAULT,
+                        subtype = Subtype.FALLBACK,
                         content = editorInstance.activeContent,
                         maxCandidateCount = 8,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
@@ -349,22 +331,6 @@ class NlpManager(context: Context) {
         val version = debugOverlayVersionSource.incrementAndGet()
         debugOverlaySuggestionsInfos.evictAll()
         debugOverlayVersion.postValue(version)
-    }
-
-    private class ProviderInstanceWrapper(val provider: NlpProvider) {
-        private var isInstanceAlive = AtomicBoolean(false)
-
-        suspend fun createIfNecessary() {
-            if (!isInstanceAlive.getAndSet(true)) provider.create()
-        }
-
-        suspend fun preload(subtype: Subtype) {
-            provider.preload(subtype)
-        }
-
-        suspend fun destroyIfNecessary() {
-            if (isInstanceAlive.getAndSet(true)) provider.destroy()
-        }
     }
 
     inner class ClipboardSuggestionProvider internal constructor() : SuggestionProvider {

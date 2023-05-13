@@ -502,7 +502,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val activeSubtypeId = long(
             key = "localization__active_subtype_id",
-            default = Subtype.DEFAULT.id,
+            default = Subtype.FALLBACK.id,
         )
         val subtypes = string(
             key = "localization__subtypes",

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2023 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,53 +17,104 @@
 package dev.patrickgold.florisboard.ime.nlp.latin
 
 import android.content.Context
-import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.lib.android.readText
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.io.subFile
+import dev.patrickgold.florisboard.lib.io.writeJson
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.json.Json
+import dev.patrickgold.florisboard.native.NativeStr
+import dev.patrickgold.florisboard.native.toNativeStr
+import dev.patrickgold.florisboard.subtypeManager
+
+private val DEFAULT_PREDICTION_WEIGHTS = LatinPredictionWeights(
+    lookup = LatinPredictionLookupWeights(
+        maxCostSum = 1.5,
+        costIsEqual = 0.0,
+        costIsEqualIgnoringCase = 0.25,
+        costInsert = 0.5,
+        costInsertStartOfStr = 1.0,
+        costDelete = 0.5,
+        costDeleteStartOfStr = 1.0,
+        costSubstitute = 0.5,
+        costSubstituteInProximity = 0.25,
+        costSubstituteStartOfStr = 1.0,
+        costTranspose = 0.0,
+    ),
+    training = LatinPredictionTrainingWeights(
+        usageBonus = 128,
+        usageReductionOthers = 1,
+    ),
+)
+
+private val DEFAULT_KEY_PROXIMITY_CHECKER = KeyProximityChecker(
+    enabled = false,
+    mapping = mapOf(),
+)
+
+private data class LatinNlpSessionWrapper(
+    var subtype: Subtype,
+    var session: LatinNlpSession,
+)
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
         const val ProviderId = "org.florisboard.nlp.providers.latin"
+        const val NlpSessionConfigFileName = "nlp_session_config.json"
+        const val UserDictionaryFileName = "user_dict.fldic"
+
+        external fun nativeInitEmptyDictionary(dictPath: NativeStr)
     }
 
-    private val appContext by context.appContext()
-
-    override val providerId = ProviderId
+    private val subtypeManager by context.subtypeManager()
+    private val cachedSessionWrappers = guardedByLock {
+        mutableListOf<LatinNlpSessionWrapper>()
+    }
 
     override suspend fun create() {
-        // Here we initialize our provider, set up all things which are not language dependent.
+        // Do nothing
     }
 
-    override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
-        // Here we have the chance to preload dictionaries and prepare a neural network for a specific language.
-        // Is kept in sync with the active keyboard subtype of the user, however a new preload does not necessary mean
-        // the previous language is not needed anymore (e.g. if the user constantly switches between two subtypes)
-
-        // To read a file from the APK assets the following methods can be used:
-        // appContext.assets.open()
-        // appContext.assets.reader()
-        // appContext.assets.bufferedReader()
-        // appContext.assets.readText()
-        // To copy an APK file/dir to the file system cache (appContext.cacheDir), the following methods are available:
-        // appContext.assets.copy()
-        // appContext.assets.copyRecursively()
-
-        // The subtype we get here contains a lot of data, however we are only interested in subtype.primaryLocale and
-        // subtype.secondaryLocales.
+    override suspend fun preload(subtype: Subtype) {
+        if (subtype.isFallback()) return
+        cachedSessionWrappers.withLock { sessionWrappers ->
+            var sessionWrapper = sessionWrappers.find { it.subtype.id == subtype.id }
+            if (sessionWrapper == null || sessionWrapper.subtype != subtype) {
+                if (sessionWrapper == null) {
+                    sessionWrapper = LatinNlpSessionWrapper(
+                        subtype = subtype,
+                        session = LatinNlpSession(),
+                    )
+                    sessionWrappers.add(sessionWrapper)
+                } else {
+                    sessionWrapper.subtype = subtype
+                }
+                val cacheDir = subtypeManager.cacheDirFor(subtype)
+                val filesDir = subtypeManager.filesDirFor(subtype)
+                val configFile = cacheDir.subFile(NlpSessionConfigFileName)
+                val userDictFile = filesDir.subFile(UserDictionaryFileName)
+                if (!userDictFile.exists()) {
+                    nativeInitEmptyDictionary(userDictFile.absolutePath.toNativeStr())
+                }
+                val config = LatinNlpSessionConfig(
+                    primaryLocale = subtype.primaryLocale,
+                    secondaryLocales = subtype.secondaryLocales,
+                    // TODO: dynamically find base dictionaries
+                    baseDictionaryPaths = listOf(),
+                    userDictionaryPath = userDictFile.absolutePath,
+                    predictionWeights = DEFAULT_PREDICTION_WEIGHTS,
+                    keyProximityChecker = DEFAULT_KEY_PROXIMITY_CHECKER,
+                )
+                configFile.writeJson(config)
+                sessionWrapper.session.loadFromConfigFile(configFile)
+            }
+        }
     }
 
     override suspend fun spell(
@@ -135,4 +186,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
         // the app process is killed (which will most likely always be the case).
     }
+
+    override val providerId = ProviderId
 }

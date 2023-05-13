@@ -72,7 +72,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
                     subtypeManager.activeSubtype
                 }
                 else -> {
-                    Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())
+                    Subtype.FALLBACK.copy(primaryLocale = FlorisLocale.default())
                 }
             }
 

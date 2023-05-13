@@ -16,23 +16,40 @@
 
 package dev.patrickgold.florisboard.ime.nlp.latin
 
-import android.content.Context
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.native.NativeInstanceWrapper
 import dev.patrickgold.florisboard.native.NativePtr
 import dev.patrickgold.florisboard.native.NativeStr
+import dev.patrickgold.florisboard.native.toNativeStr
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-class LatinNlpSession(context: Context) : NativeInstanceWrapper {
-    private val nativePtr: NativePtr = nativeInit()
-    private val appContext by context.appContext()
+@Serializable
+data class LatinNlpSessionConfig(
+    val primaryLocale: FlorisLocale,
+    val secondaryLocales: List<FlorisLocale>,
+    @SerialName("baseDictionaries")
+    val baseDictionaryPaths: List<String>,
+    @SerialName("userDictionary")
+    val userDictionaryPath: String,
+    val predictionWeights: LatinPredictionWeights,
+    val keyProximityChecker: KeyProximityChecker,
+)
+
+@JvmInline
+value class LatinNlpSession(private val _nativePtr: NativePtr = nativeInit()) : NativeInstanceWrapper {
+    fun loadFromConfigFile(configFile: FsFile) {
+        nativeLoadFromConfigFile(_nativePtr, configFile.absolutePath.toNativeStr())
+    }
 
     override fun nativePtr(): NativePtr {
-        return nativePtr
+        return _nativePtr
     }
 
     override fun dispose() {
-        nativeDispose(nativePtr)
+        nativeDispose(_nativePtr)
     }
 
     companion object CXX {

@@ -988,7 +988,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 keyboard = SmartbarQuickActionsKeyboard,
                 editorInfo = editorInfo,
                 state = state,
-                subtype = Subtype.DEFAULT,
+                subtype = Subtype.FALLBACK,
             )
         }
     }

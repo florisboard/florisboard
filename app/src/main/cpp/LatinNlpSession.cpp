@@ -53,7 +53,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeLo
     JNIEnv* env,
     jobject,
     jlong native_ptr,
-    jbyteArray j_config_path
+    fl::jni::NativeStr j_config_path
 ) {
     return fl::jni::run_in_exception_container(env, [&] {
         auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
