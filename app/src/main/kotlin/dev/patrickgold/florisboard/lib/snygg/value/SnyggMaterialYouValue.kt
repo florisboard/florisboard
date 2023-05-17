@@ -23,6 +23,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.ui.graphics.Color
 import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.ColorName
 import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.ColorNameId
+import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.darkColorName
+import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.lightColorName
 import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.primary
 
 sealed interface SnyggMaterialYouValue : SnyggValue {
@@ -34,10 +36,11 @@ sealed interface SnyggMaterialYouValue : SnyggValue {
 
 sealed interface SnyggMaterialYouValueEncoder<T : SnyggMaterialYouValue> : SnyggValueEncoder {
     val clazz: Class<T>
+    val valueName: String
 
     override val spec: SnyggValueSpec
         get() = SnyggValueSpec {
-            function(name = "color-name") {
+            function(name = valueName) {
                 commaList {
                     +string(id = ColorNameId, regex = ColorName)
                 }
@@ -66,6 +69,9 @@ sealed interface SnyggMaterialYouValueEncoder<T : SnyggMaterialYouValue> : Snygg
 object MaterialYouColor {
     const val ColorNameId = "name"
     val ColorName = """^\w*$""".toRegex()
+
+    const val lightColorName = "dynamic-light-color"
+    const val darkColorName = "dynamic-dark-color"
 
     private lateinit var lightColorScheme: ColorScheme
     private lateinit var darkColorScheme: ColorScheme
@@ -190,6 +196,7 @@ data class SnyggMaterialYouLightColorValue(override val colorName: String, overr
 
     companion object : SnyggMaterialYouValueEncoder<SnyggMaterialYouLightColorValue> {
         override val clazz = SnyggMaterialYouLightColorValue::class.java
+        override val valueName = lightColorName
 
         override fun newInstance(colorName: String) = SnyggMaterialYouLightColorValue(colorName)
     }
@@ -201,6 +208,7 @@ data class SnyggMaterialYouDarkColorValue(override val colorName: String, overri
 
     companion object : SnyggMaterialYouValueEncoder<SnyggMaterialYouDarkColorValue> {
         override val clazz = SnyggMaterialYouDarkColorValue::class.java
+        override val valueName = darkColorName
 
         override fun newInstance(colorName: String) = SnyggMaterialYouDarkColorValue(colorName)
     }
