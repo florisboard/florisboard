@@ -73,23 +73,26 @@ object MaterialYouColor {
     const val lightColorName = "dynamic-light-color"
     const val darkColorName = "dynamic-dark-color"
 
-    private lateinit var lightColorScheme: ColorScheme
-    private lateinit var darkColorScheme: ColorScheme
+    private var lightColorScheme: ColorScheme? = null
+    private var darkColorScheme: ColorScheme? = null
 
     private fun getAndCacheColorScheme(context: Context, dark: Boolean): ColorScheme {
         return if (dark) {
-            if (!this::darkColorScheme.isInitialized) {
+            if (darkColorScheme == null) {
                 darkColorScheme = dynamicDarkColorScheme(context)
             }
-
-            darkColorScheme
+            darkColorScheme!!
         } else {
-            if (!this::lightColorScheme.isInitialized) {
+            if (lightColorScheme == null) {
                 lightColorScheme = dynamicLightColorScheme(context)
             }
-
-            lightColorScheme
+            lightColorScheme!!
         }
+    }
+
+    fun resetColorSchemeCache() {
+        lightColorScheme = null
+        darkColorScheme = null
     }
 
     const val primary = "primary"

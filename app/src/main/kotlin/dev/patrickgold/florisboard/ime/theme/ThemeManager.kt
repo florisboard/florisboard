@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlinx.coroutines.CoroutineScope
@@ -119,6 +120,7 @@ class ThemeManager(context: Context) {
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
+            MaterialYouColor.resetColorSchemeCache()
             action()
             previewThemeInfo?.let { previewThemeInfo ->
                 _activeThemeInfo.postValue(previewThemeInfo)
