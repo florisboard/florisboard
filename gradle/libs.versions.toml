@@ -78,6 +78,7 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 [plugins]
 # Main
 agp-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+agp-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 agp-test = { id = "com.android.test", version.ref = "android-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

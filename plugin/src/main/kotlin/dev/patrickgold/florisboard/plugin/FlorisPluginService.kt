@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2023 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,8 @@
  * limitations under the License.
  */
 
-rootProject.name = "FlorisBoard"
+package dev.patrickgold.florisboard.plugin
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+class FlorisPluginService {
+    // TODO
 }
-
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        // Uncomment the following if testing snapshots from Maven Central
-        // maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
-    }
-}
-
-include(":app")
-include(":benchmark")
-include(":plugin")
