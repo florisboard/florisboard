@@ -23,7 +23,6 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
@@ -94,8 +93,8 @@ data class Subtype(
         return true
     }
 
-    fun isFallback(): Boolean {
-        return id < 0
+    fun compute(): ComputedSubtype {
+        return ComputedSubtype(id, primaryLocale.languageTag(), secondaryLocales.map { it.languageTag() })
     }
 }
 
@@ -211,14 +210,14 @@ data class SubtypeLayoutMap(
 
 @Serializable
 data class SubtypeNlpProviderMap(
-    val spelling: String = LatinLanguageProvider.ProviderId,
+    val spelling: String? = null,
     val spellingDictionary: ExtensionComponentName? = null,
-    val suggestion: String = LatinLanguageProvider.ProviderId,
+    val suggestion: String? = null,
     val suggestionDictionary: ExtensionComponentName? = null,
 ) {
     inline fun forEach(action: (String) -> Unit) {
-        action(spelling)
-        action(suggestion)
+        if (spelling != null) action(spelling)
+        if (suggestion != null) action(suggestion)
     }
 }
 

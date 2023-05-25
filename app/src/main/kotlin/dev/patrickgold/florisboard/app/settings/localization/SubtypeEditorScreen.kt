@@ -63,8 +63,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
@@ -375,7 +373,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeGroupSpacer()
 
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_suggestion_provider)) {
+            /*SubtypeProperty(stringRes(R.string.settings__localization__subtype_suggestion_provider)) {
                 // TODO: Put this map somewhere more formal (another KeyboardExtension field?)
                 //  optionally use a string resource below
                 val nlpProviderMappings = mapOf(
@@ -403,7 +401,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     onExpandRequest = { expanded = true },
                     onDismissRequest = { expanded = false },
                 )
-            }
+            }*/
 
             SubtypeGroupSpacer()
 

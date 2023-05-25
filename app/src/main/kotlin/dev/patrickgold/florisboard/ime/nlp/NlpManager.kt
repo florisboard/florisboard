@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
+import android.icu.text.BreakIterator
 import android.os.Build
 import android.os.SystemClock
 import android.util.LruCache
@@ -30,15 +31,18 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
-import dev.patrickgold.florisboard.nlpProviderRegistry
+import dev.patrickgold.florisboard.plugin.FlorisPluginIndexer
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,13 +63,13 @@ class NlpManager(context: Context) {
     private val editorInstance by context.editorInstance()
     private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()
-    private val nlpProviderRegistry by context.nlpProviderRegistry()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider()
     // lock unnecessary because values constant
     private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
+    val plugins = FlorisPluginIndexer(context)
 
     private val internalSuggestionsGuard = Mutex()
     private var internalSuggestions by Delegates.observable(SystemClock.uptimeMillis() to listOf<SuggestionCandidate>()) { _, _, _ ->
@@ -89,6 +93,17 @@ class NlpManager(context: Context) {
     private val debugOverlayVersionSource = AtomicInteger(0)
 
     init {
+        scope.launch {
+            plugins.indexBoundServices()
+            plugins.pluginIndex.withLock { pluginIndex ->
+                flogDebug { "Indexed Plugins" }
+                for ((componentName, plugin) in pluginIndex) {
+                    val packageContext = context.createPackageContext(componentName.packageName, 0)
+                    flogDebug { plugin.toString(packageContext) }
+                }
+            }
+            plugins.observeServiceChanges()
+        }
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
@@ -127,10 +142,7 @@ class NlpManager(context: Context) {
     fun preload(subtype: Subtype) {
         scope.launch {
             subtype.nlpProviders.forEach { providerId ->
-                nlpProviderRegistry.getWrapper(providerId)?.let { wrapper ->
-                    wrapper.createIfNecessary()
-                    wrapper.preload(subtype)
-                }
+                //
             }
         }
     }
@@ -146,39 +158,52 @@ class NlpManager(context: Context) {
         followingWords: List<String>,
         maxSuggestionCount: Int,
     ): SpellingResult {
-        return nlpProviderRegistry.getSpellingProvider(subtype).spell(
-            subtype = subtype,
-            word = word,
-            precedingWords = precedingWords,
-            followingWords = followingWords,
-            maxSuggestionCount = maxSuggestionCount,
-            allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-        )
+        //return nlpProviderRegistry.getSpellingProvider(subtype).spell(
+        //    subtype = subtype,
+        //    word = word,
+        //    precedingWords = precedingWords,
+        //    followingWords = followingWords,
+        //    maxSuggestionCount = maxSuggestionCount,
+        //    allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+        //    isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+        //)
+        return SpellingResult.unspecified()
     }
 
     suspend fun determineLocalComposing(
         textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup, localLastCommitPosition: Int
     ): EditorRange {
-        return nlpProviderRegistry.getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
-            subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
-        )
+        //return nlpProviderRegistry.getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
+        //    subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
+        //)
+        return breakIterators.word(subtypeManager.activeSubtype.primaryLocale) {
+            it.setText(textBeforeSelection.toString())
+            val end = it.last()
+            val isWord = it.ruleStatus != BreakIterator.WORD_NONE
+            if (isWord) {
+                val start = it.previous()
+                EditorRange(start, end)
+            } else {
+                EditorRange.Unspecified
+            }
+        }
     }
 
     fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
         // Using a cache because I have no idea how fast the runBlocking is
-        return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
-            runBlocking {
-                nlpProviderRegistry.getSuggestionProvider(subtype).forcesSuggestionOn
-            }
-        }
+        //return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
+        //    runBlocking {
+        //        nlpProviderRegistry.getSuggestionProvider(subtype).forcesSuggestionOn
+        //    }
+        //}
+        return false
     }
 
     fun isSuggestionOn(): Boolean =
         prefs.suggestion.enabled.get() || providerForcesSuggestionOn(subtypeManager.activeSubtype)
 
     fun suggest(subtype: Subtype, content: EditorContent) {
-        val reqTime = SystemClock.uptimeMillis()
+        /*val reqTime = SystemClock.uptimeMillis()
         scope.launch {
             val suggestions = nlpProviderRegistry.getSuggestionProvider(subtype).suggest(
                 subtype = subtype,
@@ -192,7 +217,8 @@ class NlpManager(context: Context) {
                     internalSuggestions = reqTime to suggestions
                 }
             }
-        }
+        }*/
+        return
     }
 
     fun suggestDirectly(suggestions: List<SuggestionCandidate>) {
@@ -214,7 +240,7 @@ class NlpManager(context: Context) {
     }
 
     fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
-        return runBlocking { candidate.sourceProvider?.removeSuggestion(subtype, candidate) == true }.also { result ->
+        return runBlocking { candidate.sourceProvider?.removeSuggestion(subtype.id, candidate) == true }.also { result ->
             if (result) {
                 scope.launch {
                     // Need to re-trigger the suggestions algorithm
@@ -228,17 +254,9 @@ class NlpManager(context: Context) {
         }
     }
 
-    fun getListOfWords(subtype: Subtype): List<String> {
-        return runBlocking { nlpProviderRegistry.getSuggestionProvider(subtype).getListOfWords(subtype) }
-    }
-
-    fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return runBlocking { nlpProviderRegistry.getSuggestionProvider(subtype).getFrequencyForWord(subtype, word) }
-    }
-
     private fun assembleCandidates() {
         runBlocking {
-            val candidates = when {
+            /*val candidates = when {
                 isSuggestionOn() -> {
                     clipboardSuggestionProvider.suggest(
                         subtype = Subtype.FALLBACK,
@@ -257,7 +275,7 @@ class NlpManager(context: Context) {
                 else -> emptyList()
             }
             activeCandidates = candidates
-            autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
+            autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)*/
         }
     }
 
@@ -336,22 +354,20 @@ class NlpManager(context: Context) {
     inner class ClipboardSuggestionProvider internal constructor() : SuggestionProvider {
         private var lastClipboardItemId: Long = -1
 
-        override val providerId = "org.florisboard.nlp.providers.clipboard"
-
-        override suspend fun create() {
+        override fun create() {
             // Do nothing
         }
 
-        override suspend fun preload(subtype: Subtype) {
+        override fun preload(subtype: ComputedSubtype) {
             // Do nothing
         }
 
-        override suspend fun suggest(
-            subtype: Subtype,
-            content: EditorContent,
-            maxCandidateCount: Int,
-            allowPossiblyOffensive: Boolean,
-            isPrivateSession: Boolean,
+        override fun suggest(
+            subtypeId: Long,
+            flags: SuggestionRequestFlags,
+            word: String,
+            precedingWords: List<String>,
+            followingWords: List<String>
         ): List<SuggestionCandidate> {
             // Check if enabled
             if (!prefs.suggestion.clipboardContentEnabled.get()) return emptyList()
@@ -359,7 +375,7 @@ class NlpManager(context: Context) {
             // Check if already used
             val currentItem = clipboardManager.primaryClip
             val lastItemId = lastClipboardItemId
-            if (currentItem == null || currentItem.id == lastItemId || content.text.isNotBlank()) return emptyList()
+            if (currentItem == null || currentItem.id == lastItemId || word.isNotBlank()) return emptyList()
 
             return buildList {
                 val now = System.currentTimeMillis()
@@ -396,17 +412,17 @@ class NlpManager(context: Context) {
             }
         }
 
-        override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
+        override fun notifySuggestionAccepted(subtypeId: Long, candidate: SuggestionCandidate) {
             if (candidate is ClipboardSuggestionCandidate) {
                 lastClipboardItemId = candidate.clipboardItem.id
             }
         }
 
-        override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
+        override fun notifySuggestionReverted(subtypeId: Long, candidate: SuggestionCandidate) {
             // Do nothing
         }
 
-        override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
+        override fun removeSuggestion(subtypeId: Long, candidate: SuggestionCandidate): Boolean {
             if (candidate is ClipboardSuggestionCandidate) {
                 lastClipboardItemId = candidate.clipboardItem.id
                 return true
@@ -414,15 +430,7 @@ class NlpManager(context: Context) {
             return false
         }
 
-        override suspend fun getListOfWords(subtype: Subtype): List<String> {
-            return emptyList()
-        }
-
-        override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-            return 0.0
-        }
-
-        override suspend fun destroy() {
+        override fun destroy() {
             // Do nothing
         }
     }

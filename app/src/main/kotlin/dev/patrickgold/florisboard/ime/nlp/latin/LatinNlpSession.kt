@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.nlp.latin
 
 import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
-import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.native.NativeInstanceWrapper
 import dev.patrickgold.florisboard.native.NativePtr
@@ -28,8 +27,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LatinNlpSessionConfig(
-    val primaryLocale: FlorisLocale,
-    val secondaryLocales: List<FlorisLocale>,
+    val primaryLocale: String,
+    val secondaryLocales: List<String>,
     @SerialName("baseDictionaries")
     val baseDictionaryPaths: List<String>,
     @SerialName("userDictionary")

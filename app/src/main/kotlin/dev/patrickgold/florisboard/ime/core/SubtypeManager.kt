@@ -233,13 +233,13 @@ class SubtypeManager(context: Context) {
         activeSubtype = newActiveSubtype
     }
 
-    fun cacheDirFor(subtype: Subtype): FsDir {
+    fun cacheDirFor(subtype: ComputedSubtype): FsDir {
         val cacheDir = appContext.cacheDir.subDir(SubtypeDirName.curlyFormat("id" to subtype.id))
         cacheDir.mkdirs()
         return cacheDir
     }
 
-    fun filesDirFor(subtype: Subtype): FsDir {
+    fun filesDirFor(subtype: ComputedSubtype): FsDir {
         val filesDir = appContext.filesDir.subDir(SubtypeDirName.curlyFormat("id" to subtype.id))
         filesDir.mkdirs()
         return filesDir
