@@ -21,7 +21,7 @@
 #include <jni.h>
 
 extern "C" JNIEXPORT void JNICALL
-Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinLanguageProvider_00024Companion_nativeInitEmptyDictionary( //
+Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinLanguageProviderService_00024Companion_nativeInitEmptyDictionary( //
     JNIEnv* env,
     jobject,
     fl::jni::NativeStr j_dict_path

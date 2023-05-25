@@ -14,7 +14,7 @@ add_library(
         florisboard-native
         SHARED
         FlorisApplication.cpp
-        LatinLanguageProvider.cpp
+        LatinLanguageProviderService.cpp
         LatinNlpSession.cpp
 )
 

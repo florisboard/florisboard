@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns:fl="https://schemas.florisboard.org/plugin"
+    fl:id="org.florisboard.plugins.latin"
+    fl:version="0.4.0"
+    fl:title="@string/floris_app_name"
+    fl:description="@string/floris_app_name"
+    fl:maintainers="Patrick Goldinger &lt;patrick@patrickgold.dev&gt;"
+    fl:license="Apache-2.0"
+    fl:homepage="https://florisboard.org"
+    fl:issueTracker="https://github.com/florisboard/florisboard/issues"
+    fl:privacyPolicy="https://florisboard.org/legal/privacy">
+
+    <!-- Spelling config -->
+    <spelling/>
+
+    <!-- Suggestion config -->
+    <suggestion/>
+
+</plugin>
