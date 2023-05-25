@@ -35,4 +35,5 @@ dependencyResolutionManagement {
 
 include(":app")
 include(":benchmark")
+include(":ime-model")
 include(":plugin")

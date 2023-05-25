@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2023 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.input
 
 /**
  * Enum for the input shift states of a text keyboard.
+ *
+ * Note: This class MUST be kept in sync with the C++ implementation:
+ *  https://github.com/florisboard/nlp/blob/main/nlpcore/src/common/suggestion.cppm
  */
 enum class InputShiftState(val value: Int) {
     /**
