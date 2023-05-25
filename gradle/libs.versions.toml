@@ -3,6 +3,7 @@
 accompanist = "0.30.1"
 android-gradle-plugin = "8.1.1"
 androidx-activity = "1.5.1"
+androidx-annotation = "1.6.0"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.2.0"
 androidx-compose = "1.4.3"
@@ -39,6 +40,7 @@ accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayo
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
 androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidx-autofill" }
 androidx-collection-ktx = { module = "androidx.collection:collection-ktx", version.ref = "androidx-collection" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose" }

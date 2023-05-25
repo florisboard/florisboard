@@ -20,6 +20,7 @@
 plugins {
     alias(libs.plugins.agp.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val projectCompileSdk: String by project
@@ -51,7 +52,9 @@ android {
 }
 
 dependencies {
-    //
+    api(project(":ime-model"))
+    implementation(libs.androidx.annotation)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 tasks.withType<Test> {

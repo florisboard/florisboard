@@ -16,6 +16,28 @@
 
 package dev.patrickgold.florisboard.plugin
 
-class FlorisPluginService {
-    // TODO
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
+import dev.patrickgold.florisboard.ime.nlp.NlpProvider
+
+abstract class FlorisPluginService : Service(), NlpProvider {
+    companion object {
+        const val SERVICE_INTERFACE = "org.florisboard.plugin.FlorisPluginService"
+        const val SERVICE_METADATA = "org.florisboard.plugin.flp"
+    }
+
+    final override fun onCreate() {
+        super.onCreate()
+        create()
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        TODO("Not yet implemented")
+    }
+
+    final override fun onDestroy() {
+        destroy()
+        super.onDestroy()
+    }
 }
