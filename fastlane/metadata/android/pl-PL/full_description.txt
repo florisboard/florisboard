@@ -1,0 +1,19 @@
+<p><i>FlorisBoard</i> to klawiatura typu open source, której celem jest zapewnienie łatwego sposobu pisania przy jednoczesnym poszanowaniu Twojej prywatności.</p>
+<p><b>Uwaga:</b> ten projekt jest obecnie we wczesnej fazie beta. Jeśli chcesz zobaczyć implementację funkcji lub zgłosić błąd, odwiedź repozytorium tego projektu (link na końcu opisu) na GitHub i zgłoś problem. Dzięki temu FlorisBoard staje się jeszcze lepszy! Dziękuję!</p>
+<p><b>Aktualnie zaimplementowane i w pełni działające funkcje:</b></p>
+<ul>
+     <li>Ogromna różnorodność układów klawiatury łacińskiej</li>
+     <li>Ograniczona obsługa układów klawiatury innych niż łacińskie (obecnie arabski, perski i hebrajski, planowane są kolejne)</li>
+     <li>Łatwe przełączanie między językami/układami poprzez definiowanie podtypów w ustawieniach</li>
+     <li>Pełna personalizacja motywu + wstępne ustawienia motywu dla motywów dziennych/nocnych</li>
+     <li>Automatyczne przełączanie motywu dzień/noc</li>
+     <li>Układy klawiatury do wpisywania numeru (telefonu)</li>
+     <li>Wprowadzanie znaków specjalnych</li>
+     <li>Klawiatura z emotikonami/emotikonami</li>
+     <li>Tryb obsługi jedną ręką/kompaktowy dla łatwiejszego pisania na dużych urządzeniach</li>
+     <li>Dostosowanie dźwięku/wibracji klawiszy</li>
+     <li>Dostosowane działania dla gestów: przesuń w górę/w dół/w lewo/w prawo, spacja w lewo/w prawo, usuń przesunięcie klawisza)</li>
+     <li>Zintegrowano symbole specjalne z układami znaków</li>
+     <li>Pasek narzędzi Schowek/Kursor</li>
+     <li>Menedżer/historia schowka</li>
+</ul>
