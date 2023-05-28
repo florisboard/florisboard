@@ -36,7 +36,7 @@
       "main": { "code":  9733, "label": "★" }
     } },
     { "code": 9642, "label": "▪️" },
-    { "code":65039, "label": "¤" },
+    { "code":  164, "label": "¤" },
     { "code":12298, "label": "《" },
     { "code":12299, "label": "》" },
     { "code":  161, "label": "¡" },
