@@ -95,26 +95,31 @@ class NlpManager(context: Context) {
     init {
         scope.launch {
             plugins.indexBoundServices()
-            plugins.pluginIndex.withLock { pluginIndex ->
-                flogDebug { "Indexed Plugins" }
-                for ((componentName, plugin) in pluginIndex) {
-                    val packageContext = context.createPackageContext(componentName.packageName, 0)
-                    flogDebug { plugin.toString(packageContext) }
+            flogDebug {
+                buildString {
+                    plugins.pluginIndex.withLock { pluginIndex ->
+                        appendLine("Indexed Plugins")
+                        for (plugin in pluginIndex) {
+                            val packageContext = context.createPackageContext(plugin.serviceName.packageName, 0)
+                            appendLine(plugin.toString(packageContext))
+                        }
+                    }
                 }
             }
             plugins.observeServiceChanges()
-        }
-        clipboardManager.primaryClipFlow.collectLatestIn(scope) {
-            assembleCandidates()
-        }
-        prefs.suggestion.enabled.observeForever {
-            assembleCandidates()
-        }
-        prefs.suggestion.clipboardContentEnabled.observeForever {
-            assembleCandidates()
-        }
-        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
-            preload(subtype)
+
+            clipboardManager.primaryClipFlow.collectLatestIn(scope) {
+                assembleCandidates()
+            }
+            prefs.suggestion.enabled.observeForever {
+                assembleCandidates()
+            }
+            prefs.suggestion.clipboardContentEnabled.observeForever {
+                assembleCandidates()
+            }
+            subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
+                preload(subtype)
+            }
         }
     }
 
@@ -139,11 +144,9 @@ class NlpManager(context: Context) {
             ?.get(subtype.punctuationRule) ?: PunctuationRule.Fallback
     }
 
-    fun preload(subtype: Subtype) {
-        scope.launch {
-            subtype.nlpProviders.forEach { providerId ->
-                //
-            }
+    suspend fun preload(subtype: Subtype) {
+        subtype.nlpProviders.forEach { providerId ->
+            plugins.getOrNull(providerId)?.preload(subtype.compute())
         }
     }
 

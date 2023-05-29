@@ -210,9 +210,9 @@ data class SubtypeLayoutMap(
 
 @Serializable
 data class SubtypeNlpProviderMap(
-    val spelling: String? = null,
+    val spelling: String? = "org.florisboard.plugins.nlp.latin",
     val spellingDictionary: ExtensionComponentName? = null,
-    val suggestion: String? = null,
+    val suggestion: String? = "org.florisboard.plugins.nlp.latin",
     val suggestionDictionary: ExtensionComponentName? = null,
 ) {
     inline fun forEach(action: (String) -> Unit) {

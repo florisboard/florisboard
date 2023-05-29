@@ -66,7 +66,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             setupSpellingIfNecessary()
         }
 
-        private fun setupSpellingIfNecessary() {
+        private fun setupSpellingIfNecessary() = runBlocking {
             val evaluatedSubtype = when (prefs.spelling.languageMode.get()) {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
                     subtypeManager.activeSubtype
