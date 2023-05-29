@@ -100,8 +100,7 @@ class NlpManager(context: Context) {
                     plugins.pluginIndex.withLock { pluginIndex ->
                         appendLine("Indexed Plugins")
                         for (plugin in pluginIndex) {
-                            val packageContext = context.createPackageContext(plugin.serviceName.packageName, 0)
-                            appendLine(plugin.toString(packageContext))
+                            appendLine(plugin.toString())
                         }
                     }
                 }

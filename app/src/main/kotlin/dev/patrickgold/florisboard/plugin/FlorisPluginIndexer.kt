@@ -40,6 +40,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -48,6 +49,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 class FlorisPluginIndexer(private val context: Context) {
+    private val _pluginIndexFlow = MutableStateFlow(listOf<IndexedPlugin>())
+    val pluginIndexFlow = _pluginIndexFlow.asStateFlow()
     val pluginIndex = guardedByLock { mutableListOf<IndexedPlugin>() }
 
     suspend fun indexBoundServices() {
@@ -99,6 +102,7 @@ class FlorisPluginIndexer(private val context: Context) {
             }
             pluginIndex.clear()
             pluginIndex.addAll(newPluginIndex)
+            _pluginIndexFlow.value = pluginIndex.toList()
         }
     }
 
@@ -122,7 +126,7 @@ class FlorisPluginIndexer(private val context: Context) {
 }
 
 class IndexedPlugin(
-    context: Context,
+    val context: Context,
     val serviceName: ComponentName,
     var state: IndexedPluginState,
     var metadata: FlorisPluginMetadata = FlorisPluginMetadata(""),
@@ -159,11 +163,42 @@ class IndexedPlugin(
         connection.unbindService()
     }
 
-    fun isValidAndBound(): Boolean {
-        return state == IndexedPluginState.Ok && connection.isBound()
+    fun packageContext(): Context {
+        return context.createPackageContext(serviceName.packageName, 0)
     }
 
-    fun toString(packageContext: Context): String {
+    fun settingsActivityIntent(): Intent? {
+        if (!isValid()) return null
+        val settingsActivityName = metadata.settingsActivity ?: return null
+        val intent = Intent().also {
+            it.component = ComponentName(serviceName.packageName, settingsActivityName)
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        return if (intent.resolveActivityInfo(context.packageManager, 0) != null) {
+            intent
+        } else {
+            null
+        }
+    }
+
+    fun isValid(): Boolean {
+        return state == IndexedPluginState.Ok
+    }
+
+    fun isValidAndBound(): Boolean {
+        return isValid() && connection.isBound()
+    }
+
+    fun isInternalPlugin(): Boolean {
+        return serviceName.packageName == BuildConfig.APPLICATION_ID
+    }
+
+    fun isExternalPlugin(): Boolean {
+        return !isInternalPlugin()
+    }
+
+    override fun toString(): String {
+        val packageContext = packageContext()
         return """
             IndexedPlugin {
                 serviceName=$serviceName

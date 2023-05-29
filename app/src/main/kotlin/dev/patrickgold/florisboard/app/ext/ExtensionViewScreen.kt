@@ -215,7 +215,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
 }
 
 @Composable
-private fun ExtensionMetaRowSimpleText(
+internal fun ExtensionMetaRowSimpleText(
     label: String,
     modifier: Modifier = Modifier,
     showDividerAbove: Boolean = true,
@@ -237,7 +237,7 @@ private fun ExtensionMetaRowSimpleText(
 }
 
 @Composable
-private fun ExtensionMetaRowScrollableChips(
+internal fun ExtensionMetaRowScrollableChips(
     label: String,
     modifier: Modifier = Modifier,
     showDividerAbove: Boolean = true,

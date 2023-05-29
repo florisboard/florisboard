@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
 
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
@@ -99,7 +99,7 @@
 
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
-    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Your subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Add subtype</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Manage installed language packs</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimental: manage extensions that add support for specific languages (shape-based Chinese input for now)</string>
@@ -126,11 +126,14 @@
     <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">No suggested presets available. Use below button to view all subtype presets.</string>
     <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Subtype presets</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Show all</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">It seems that you haven\'t configured any language subtypes. As a fallback the language subtype English/QWERTY will be used!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">This subtype already exists!</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
+
+    <string name="latin_language_provider__title">Latin language provider</string>
+    <string name="latin_language_provider__short_description">Provides word prediction and spell check support for Latin-script based languages.</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
@@ -610,6 +613,7 @@
     <string name="ext__meta__homepage">Homepage</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__issue_tracker">Issue tracker</string>
+    <string name="ext__meta__privacy_policy">Privacy policy</string>
     <string name="ext__meta__keywords">Keywords</string>
     <string name="ext__meta__label">Label</string>
     <string name="ext__meta__license">License</string>
@@ -661,6 +665,7 @@
     <string name="action__apply">Apply</string>
     <string name="action__back_up">Back up</string>
     <string name="action__cancel">Cancel</string>
+    <string name="action__configure">Configure</string>
     <string name="action__create">Create</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Delete</string>
@@ -672,6 +677,8 @@
     <string name="action__edit">Edit</string>
     <string name="action__export">Export</string>
     <string name="action__import">Import</string>
+    <string name="action__install">Install</string>
+    <string name="action__info">Info</string>
     <string name="action__no">No</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Restore</string>
@@ -681,6 +688,8 @@
     <string name="action__select_dirs">Select directories</string>
     <string name="action__select_file">Select file</string>
     <string name="action__select_files">Select files</string>
+    <string name="action__share">Share</string>
+    <string name="action__uninstall">Uninstall</string>
     <string name="action__yes">Yes</string>
 
     <!-- Error strings (generic) -->

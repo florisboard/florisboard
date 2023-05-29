@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
+import dev.patrickgold.florisboard.app.ext.PluginViewScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
@@ -137,6 +138,11 @@ object Routes {
         fun View(id: String) = View.curlyFormat("id" to id)
     }
 
+    object Plugin {
+        const val View = "plugin/view/{id}"
+        fun View(id: String) = View.curlyFormat("id" to id)
+    }
+
     @Composable
     fun AppNavHost(
         modifier: Modifier,
@@ -217,7 +223,7 @@ object Routes {
                 val serialType = navBackStack.arguments?.getString("serial_type")
                 ExtensionEditScreen(
                     id = extensionId.toString(),
-                    createSerialType = serialType.takeIf { it != null && it.isNotBlank() },
+                    createSerialType = serialType.takeIf { !it.isNullOrBlank() },
                 )
             }
             composable(Ext.Export) { navBackStack ->
@@ -234,6 +240,11 @@ object Routes {
             composable(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionViewScreen(id = extensionId.toString())
+            }
+
+            composable(Plugin.View) { navBackStack ->
+                val pluginId = navBackStack.arguments?.getString("id")
+                PluginViewScreen(id = pluginId.toString())
             }
         }
     }
