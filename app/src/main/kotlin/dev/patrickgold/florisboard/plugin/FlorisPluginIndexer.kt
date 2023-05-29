@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionRequestFlags
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -165,6 +166,13 @@ class IndexedPlugin(
 
     fun packageContext(): Context {
         return context.createPackageContext(serviceName.packageName, 0)
+    }
+
+    fun configurationRoute(): String? {
+        if (!isValid()) return null
+        val configurationRoute = metadata.settingsActivity ?: return null
+        val ref = FlorisRef.from(configurationRoute)
+        return if (ref.isAppUi) ref.relativePath else null
     }
 
     fun settingsActivityIntent(): Intent? {

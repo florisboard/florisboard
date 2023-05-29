@@ -181,14 +181,6 @@ fun LocalizationScreen() = FlorisScreen {
         }
 
         Spacer(Modifier.height(VerticalGroupMargin))
-
-        /*Preference(
-            title = "Manage installed dictionaries",
-            summary = "for the new suggestion algorithm",
-            onClick = {
-                navController.navigate(Routes.Settings.ManageDictionaries)
-            },
-        )*/
     }
 }
 
@@ -197,6 +189,9 @@ private fun FlorisPluginBox(plugin: IndexedPlugin) {
     val navController = LocalNavController.current
     val packageContext = plugin.packageContext()
     val settingsActivityIntent = plugin.settingsActivityIntent()
+    val configurationRoute = if (plugin.isInternalPlugin()) plugin.configurationRoute()?.takeIf { route ->
+        navController.graph.findNode(route) != null
+    } else null
     FlorisOutlinedBox(
         modifier = Modifier.defaultFlorisOutlinedBox(),
         title = plugin.metadata.title.getOrNull(packageContext).toString(),
@@ -238,11 +233,15 @@ private fun FlorisPluginBox(plugin: IndexedPlugin) {
             Spacer(modifier = Modifier.weight(1f))
             FlorisTextButton(
                 onClick = {
-                    packageContext.startActivity(settingsActivityIntent)
+                    if (settingsActivityIntent != null) {
+                        packageContext.startActivity(settingsActivityIntent)
+                    } else if (configurationRoute != null) {
+                        navController.navigate(configurationRoute)
+                    }
                 },
                 icon = painterResource(R.drawable.ic_settings),
                 text = stringRes(R.string.action__configure),
-                enabled = settingsActivityIntent != null,
+                enabled = configurationRoute != null || settingsActivityIntent != null,
             )
         }
     }

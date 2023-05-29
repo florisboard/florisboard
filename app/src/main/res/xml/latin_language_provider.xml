@@ -9,7 +9,7 @@
     fl:issueTracker="@string/florisboard__issue_tracker_url"
     fl:privacyPolicy="@string/florisboard__privacy_policy_url"
     fl:license="Apache-2.0"
-    fl:settingsActivity="dev.patrickgold.florisboard.SettingsLauncherAlias">
+    fl:settingsActivity="florisboard://app-ui/settings/localization/manage-dictionaries">
 
     <!-- Spelling config -->
     <spelling/>
