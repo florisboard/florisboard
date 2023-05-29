@@ -208,7 +208,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-    implementation(project(":ime-model"))
+    implementation(project(":ime-lib"))
     implementation(project(":plugin"))
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.systemuicontroller)

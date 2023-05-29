@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    api(project(":ime-model"))
+    api(project(":ime-lib"))
     implementation(libs.androidx.annotation)
     implementation(libs.kotlinx.serialization.json)
 }
