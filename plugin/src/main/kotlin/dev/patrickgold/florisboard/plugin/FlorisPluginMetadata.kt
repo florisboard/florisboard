@@ -81,7 +81,8 @@ data class FlorisPluginMetadata(
             }
 
             fun attr(name: String): String {
-                return attrOrNull(name) ?: throw IllegalStateException("Missing required attribute 'fl:$name'")
+                return attrOrNull(name).takeIf { !it.isNullOrBlank() }
+                    ?: throw IllegalStateException("Missing required attribute 'fl:$name'")
             }
 
             var pluginMetadata: FlorisPluginMetadata? = null
