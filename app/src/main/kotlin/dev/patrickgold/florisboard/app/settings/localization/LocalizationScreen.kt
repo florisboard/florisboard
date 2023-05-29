@@ -29,6 +29,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -51,6 +52,7 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.plugin.FlorisPluginFeature
 import dev.patrickgold.florisboard.plugin.IndexedPlugin
+import dev.patrickgold.florisboard.plugin.IndexedPluginState
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -153,9 +155,14 @@ fun LocalizationScreen() = FlorisScreen {
             title = "Internal plugins",
         ) {
             val plugins by nlpManager.plugins.pluginIndexFlow.collectAsState()
-            for (plugin in plugins) {
-                if (!plugin.isInternalPlugin()) continue
+            val (validPlugins, invalidPlugins) = remember(plugins) {
+                plugins.filter { it.isInternalPlugin() }.partition { it.isValid() }
+            }
+            for (plugin in validPlugins) {
                 FlorisPluginBox(plugin)
+            }
+            for (plugin in invalidPlugins) {
+                FlorisInvalidPluginBox(plugin)
             }
         }
 
@@ -192,7 +199,7 @@ private fun FlorisPluginBox(plugin: IndexedPlugin) {
     val settingsActivityIntent = plugin.settingsActivityIntent()
     FlorisOutlinedBox(
         modifier = Modifier.defaultFlorisOutlinedBox(),
-        title = plugin.metadata.title?.getOrNull(packageContext).toString(),
+        title = plugin.metadata.title.getOrNull(packageContext).toString(),
         subtitle = plugin.metadata.id,
     ) {
         Text(
@@ -238,6 +245,20 @@ private fun FlorisPluginBox(plugin: IndexedPlugin) {
                 enabled = settingsActivityIntent != null,
             )
         }
+    }
+}
+
+@Composable
+private fun FlorisInvalidPluginBox(plugin: IndexedPlugin) {
+    val reason = (plugin.state as IndexedPluginState.Error).toString()
+    FlorisOutlinedBox(modifier = Modifier.defaultFlorisOutlinedBox()) {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            text = "Unrecognised plugin with service name ${plugin.serviceName}\n\nReason: $reason",
+            color = MaterialTheme.colors.error,
+            fontStyle = FontStyle.Italic,
+            style = MaterialTheme.typography.body2,
+        )
     }
 }
 
