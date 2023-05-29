@@ -2,13 +2,14 @@
 <plugin xmlns:fl="https://schemas.florisboard.org/plugin"
     fl:id="org.florisboard.plugins.nlp.latin"
     fl:version="0.4.0"
-    fl:title="@string/floris_app_name"
-    fl:description="@string/floris_app_name"
+    fl:title="@string/latin_language_provider__title"
+    fl:shortDescription="@string/latin_language_provider__short_description"
     fl:maintainers="Patrick Goldinger &lt;patrick@patrickgold.dev&gt;"
+    fl:homepage="@string/florisboard__repo_url"
+    fl:issueTracker="@string/florisboard__issue_tracker_url"
+    fl:privacyPolicy="@string/florisboard__privacy_policy_url"
     fl:license="Apache-2.0"
-    fl:homepage="https://florisboard.org"
-    fl:issueTracker="https://github.com/florisboard/florisboard/issues"
-    fl:privacyPolicy="https://florisboard.org/legal/privacy">
+    fl:settingsActivity="dev.patrickgold.florisboard.SettingsLauncherAlias">
 
     <!-- Spelling config -->
     <spelling/>

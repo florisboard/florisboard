@@ -20,22 +20,29 @@ import android.content.Context
 import androidx.annotation.XmlRes
 import org.xmlpull.v1.XmlPullParser
 
+private const val FallbackValue = "(unspecified)"
+
 data class FlorisPluginMetadata(
-    val id: String,
-    val version: String? = null,
-    val title: ValueOrRef<String>? = null,
-    val description: ValueOrRef<String>? = null,
+    val id: String = FallbackValue,
+    val version: String = FallbackValue,
+    val title: ValueOrRef<String> = ValueOrRef.value(FallbackValue),
+    val shortDescription: ValueOrRef<String>? = null,
+    val longDescription: ValueOrRef<String>? = null,
     val maintainers: ValueOrRef<List<String>>? = null,
-    val license: ValueOrRef<String>? = null,
     val homepage: ValueOrRef<String>? = null,
     val issueTracker: ValueOrRef<String>? = null,
     val privacyPolicy: ValueOrRef<String>? = null,
-    var spellingConfig: SpellingConfig? = null,
-    var suggestionConfig: SuggestionConfig? = null,
+    val license: ValueOrRef<String>? = null,
+    val settingsActivity: String? = null,
+    var spellingConfig: FlorisPluginFeature.SpellingConfig? = null,
+    var suggestionConfig: FlorisPluginFeature.SuggestionConfig? = null,
 ) {
-    class SpellingConfig
-
-    class SuggestionConfig
+    fun features(): List<FlorisPluginFeature> {
+        return buildList {
+            spellingConfig?.let { add(it) }
+            suggestionConfig?.let { add(it) }
+        }
+    }
 
     fun toString(packageContext: Context): String {
         if (id.isBlank()) return "FlorisPluginMetadata { invalid }"
@@ -43,13 +50,15 @@ data class FlorisPluginMetadata(
             FlorisPluginMetadata {
                 id=$id
                 version=$version
-                title=${title?.get(packageContext)}
-                description=${description?.get(packageContext)}
+                title=${title.get(packageContext)}
+                shortDescription=${shortDescription?.get(packageContext)}
+                longDescription=${longDescription?.get(packageContext)}
                 maintainers=${maintainers?.get(packageContext)}
-                license=${license?.get(packageContext)}
                 homepage=${homepage?.get(packageContext)}
                 issueTracker=${issueTracker?.get(packageContext)}
                 privacyPolicy=${privacyPolicy?.get(packageContext)}
+                license=${license?.get(packageContext)}
+                settingsActivity=$settingsActivity
                 spellingConfig=$spellingConfig
                 suggestionConfig=$suggestionConfig
             }
@@ -71,6 +80,10 @@ data class FlorisPluginMetadata(
                 }
             }
 
+            fun attr(name: String): String {
+                return attrOrNull(name) ?: throw IllegalStateException("Missing required attribute 'fl:$name'")
+            }
+
             var pluginMetadata: FlorisPluginMetadata? = null
             var eventType = parser.eventType
             while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -81,19 +94,21 @@ data class FlorisPluginMetadata(
                 when (parser.name) {
                     "plugin" -> {
                         pluginMetadata = FlorisPluginMetadata(
-                            id = attrOrNull("id") ?: throw IllegalStateException("Missing required attribute 'fl:id'"),
-                            version = attrOrNull("version"),
-                            title = strOrRefOf(attrOrNull("title")),
-                            description = strOrRefOf(attrOrNull("description")),
+                            id = attr("id"),
+                            version = attr("version"),
+                            title = strOrRefOf(attr("title"))!!,
+                            shortDescription = strOrRefOf(attrOrNull("shortDescription")),
+                            longDescription = strOrRefOf(attrOrNull("longDescription")),
                             maintainers = strListOrRefOf(attrOrNull("maintainers")),
-                            license = strOrRefOf(attrOrNull("license")),
                             homepage = strOrRefOf(attrOrNull("homepage")),
                             issueTracker = strOrRefOf(attrOrNull("issueTracker")),
                             privacyPolicy = strOrRefOf(attrOrNull("privacyPolicy")),
+                            license = strOrRefOf(attrOrNull("license")),
+                            settingsActivity = attrOrNull("settingsActivity"),
                         )
                     }
-                    "spelling" -> pluginMetadata?.spellingConfig = SpellingConfig()
-                    "suggestion" -> pluginMetadata?.suggestionConfig = SuggestionConfig()
+                    "spelling" -> pluginMetadata?.spellingConfig = FlorisPluginFeature.SpellingConfig
+                    "suggestion" -> pluginMetadata?.suggestionConfig = FlorisPluginFeature.SuggestionConfig
                 }
                 eventType = parser.next()
             }
@@ -101,4 +116,9 @@ data class FlorisPluginMetadata(
             return pluginMetadata ?: throw IllegalStateException("Invalid XML structure")
         }
     }
+}
+
+sealed interface FlorisPluginFeature {
+    object SpellingConfig : FlorisPluginFeature
+    object SuggestionConfig : FlorisPluginFeature
 }
