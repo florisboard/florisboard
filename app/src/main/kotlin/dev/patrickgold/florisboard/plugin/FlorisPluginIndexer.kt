@@ -78,6 +78,10 @@ class FlorisPluginIndexer(private val context: Context) {
 
             for (resolveInfo in resolveInfoList) {
                 val serviceName = ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name)
+                // TODO: hard-coding blocking third-party plugins for now
+                if (serviceName.packageName != BuildConfig.APPLICATION_ID) {
+                    continue
+                }
                 val metadataBundle = resolveInfo.serviceInfo.metaData
                 if (metadataBundle == null) {
                     registerPlugin(serviceName, stateError(IndexedPluginError.NoMetadata))
