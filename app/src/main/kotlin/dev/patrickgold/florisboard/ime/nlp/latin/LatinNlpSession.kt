@@ -22,6 +22,8 @@ import dev.patrickgold.florisboard.native.NativeInstanceWrapper
 import dev.patrickgold.florisboard.native.NativePtr
 import dev.patrickgold.florisboard.native.NativeStr
 import dev.patrickgold.florisboard.native.toNativeStr
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -39,8 +41,10 @@ data class LatinNlpSessionConfig(
 
 @JvmInline
 value class LatinNlpSession(private val _nativePtr: NativePtr = nativeInit()) : NativeInstanceWrapper {
-    fun loadFromConfigFile(configFile: FsFile) {
-        nativeLoadFromConfigFile(_nativePtr, configFile.absolutePath.toNativeStr())
+    suspend fun loadFromConfigFile(configFile: FsFile) {
+        withContext(Dispatchers.IO) {
+            nativeLoadFromConfigFile(_nativePtr, configFile.absolutePath.toNativeStr())
+        }
     }
 
     override fun nativePtr(): NativePtr {

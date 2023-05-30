@@ -65,7 +65,7 @@ class NlpManager(context: Context) {
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
 
-    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider()
     // lock unnecessary because values constant
     private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
@@ -118,6 +118,13 @@ class NlpManager(context: Context) {
             }
             subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
                 preload(subtype)
+            }
+            extensionManager.dictionaryExtensions.observeForever {
+                runBlocking {
+                    for (subtype in subtypeManager.subtypes) {
+                        preload(subtype)
+                    }
+                }
             }
         }
     }

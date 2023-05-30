@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.dictionary
 
-import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
@@ -34,7 +33,7 @@ data class DictionaryComponent(
     val locale: FlorisLocale,
     val dictionaryFile: String? = null,
 ) : ExtensionComponent {
-    fun dictionaryFile(type: LayoutType) = dictionaryFile ?: "dictionaries/$id.json"
+    fun dictionaryFile() = dictionaryFile ?: "dictionaries/${locale.languageTag()}.fldic"
 }
 
 @SerialName(DictionaryExtension.SERIAL_TYPE)

@@ -16,8 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.nlp.latin
 
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
+import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.io.writeJson
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
@@ -68,6 +70,7 @@ class LatinLanguageProviderService : FlorisPluginService() {
         external fun nativeInitEmptyDictionary(dictPath: NativeStr)
     }
 
+    private val extensionManager by extensionManager()
     private val subtypeManager by subtypeManager()
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val cachedSessionWrappers = guardedByLock {
@@ -103,8 +106,7 @@ class LatinLanguageProviderService : FlorisPluginService() {
                     val config = LatinNlpSessionConfig(
                         primaryLocale = subtype.primaryLocale,
                         secondaryLocales = subtype.secondaryLocales,
-                        // TODO: dynamically find base dictionaries
-                        baseDictionaryPaths = listOf(),
+                        baseDictionaryPaths = getBaseDictionaryPaths(subtype),
                         userDictionaryPath = userDictFile.absolutePath,
                         predictionWeights = DEFAULT_PREDICTION_WEIGHTS,
                         keyProximityChecker = DEFAULT_KEY_PROXIMITY_CHECKER,
@@ -118,5 +120,21 @@ class LatinLanguageProviderService : FlorisPluginService() {
 
     override fun destroy() {
         //
+    }
+
+    private fun getBaseDictionaryPaths(subtype: ComputedSubtype): List<String> {
+        val primaryLocale = FlorisLocale.fromTag(subtype.primaryLocale)
+        val dictionaries = mutableListOf<String>()
+        outer@ for (ext in extensionManager.dictionaryExtensions.value!!) {
+            for (dict in ext.dictionaries) {
+                if (dict.locale == primaryLocale) {
+                    ext.load(this).onSuccess {
+                        dictionaries.add(ext.workingDir!!.subFile(dict.dictionaryFile()).absolutePath)
+                    }
+                    break@outer
+                }
+            }
+        }
+        return dictionaries
     }
 }
