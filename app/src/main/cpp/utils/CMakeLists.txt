@@ -14,4 +14,4 @@ add_library(
         log.cpp
 )
 
-target_link_libraries(utils PUBLIC log)
+target_link_libraries(utils PUBLIC log nlohmann_json::nlohmann_json)

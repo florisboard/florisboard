@@ -16,6 +16,11 @@
 
 package dev.patrickgold.florisboard.native
 
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
+
 /**
  * Type alias for a native pointer.
  */
@@ -43,6 +48,30 @@ fun NativeStr.toJavaString(): String {
  */
 fun String.toNativeStr(): NativeStr {
     return this.toByteArray(Charsets.UTF_8)
+}
+
+/**
+ * Type alias for a serialized native list in standard UTF-8 encoding.
+ */
+typealias NativeList = ByteArray
+
+/**
+ * Converts a serialized native list to a Java list.
+ */
+inline fun <reified T> NativeList.toJavaList(): List<T> {
+    return Json.decodeFromString(getListSerializer(), this.toJavaString())
+}
+
+/**
+ * Converts a Java list to a serialized native list.
+ */
+inline fun <reified T> List<T>.toNativeList(): NativeList {
+    return Json.encodeToString(getListSerializer(), this).toNativeStr()
+}
+
+@PublishedApi
+internal inline fun <reified T> getListSerializer(): KSerializer<List<T>> {
+    return ListSerializer(serializer())
 }
 
 /**
