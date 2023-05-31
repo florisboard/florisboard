@@ -80,3 +80,25 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeSp
     json["suggestions"] = spelling_result.suggestions;
     return fl::jni::std2j_string(env, json.dump());
 }
+
+extern "C" JNIEXPORT fl::jni::NativeList JNICALL
+Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeSuggest( //
+    JNIEnv* env,
+    jobject,
+    jlong native_ptr,
+    fl::jni::NativeStr j_word,
+    fl::jni::NativeList j_prev_words,
+    jint flags
+) {
+    auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
+    auto word = fl::jni::j2std_string(env, j_word);
+    auto prev_words = fl::jni::j2std_list<std::string>(env, j_prev_words);
+    fl::nlp::SuggestionResults suggestion_results;
+    session->suggest(word, prev_words, flags, suggestion_results);
+    std::vector<fl::nlp::SuggestionCandidate> candidates;
+    candidates.reserve(suggestion_results.size());
+    for (auto& candidate_ptr : suggestion_results) {
+        candidates.push_back(std::move(*candidate_ptr));
+    }
+    return fl::jni::std2j_list(env, candidates);
+}

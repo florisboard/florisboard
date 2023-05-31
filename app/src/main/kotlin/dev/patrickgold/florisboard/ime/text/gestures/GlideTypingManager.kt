@@ -2,7 +2,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
@@ -86,7 +86,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
                         1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
                         maxSuggestionsToShow.coerceAtMost(suggestions.size)
                     ).map { keyboardManager.fixCase(it) }.forEach {
-                        add(WordSuggestionCandidate(it, confidence = 1.0))
+                        add(SuggestionCandidate(it, confidence = 1.0))
                     }
                 }
 

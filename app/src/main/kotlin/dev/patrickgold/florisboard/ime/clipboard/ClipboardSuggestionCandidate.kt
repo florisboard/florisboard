@@ -29,28 +29,24 @@ import dev.patrickgold.florisboard.lib.util.NetworkUtils
  *
  * @see SuggestionCandidate
  */
-data class ClipboardSuggestionCandidate(
+class ClipboardSuggestionCandidate(
     val clipboardItem: ClipboardItem,
-    override val sourceProvider: SuggestionProvider?,
-) : SuggestionCandidate {
-    override val text: CharSequence = clipboardItem.stringRepresentation()
-
-    override val secondaryText: CharSequence? = null
-
-    override val confidence: Double = 1.0
-
-    override val isEligibleForAutoCommit: Boolean = false
-
-    override val isEligibleForUserRemoval: Boolean = true
-
-    override val iconId: Int = when (clipboardItem.type) {
+    sourceProvider: SuggestionProvider?,
+) : SuggestionCandidate(
+    text = clipboardItem.stringRepresentation(),
+    secondaryText = null,
+    confidence = 1.0,
+    isEligibleForAutoCommit = false,
+    isEligibleForUserRemoval = true,
+    iconId = when (clipboardItem.type) {
         ItemType.TEXT -> when {
-            NetworkUtils.isEmailAddress(text) -> R.drawable.ic_email
-            NetworkUtils.isUrl(text) -> R.drawable.ic_link
-            NetworkUtils.isPhoneNumber(text) -> R.drawable.ic_phone
+            NetworkUtils.isEmailAddress(clipboardItem.stringRepresentation()) -> R.drawable.ic_email
+            NetworkUtils.isUrl(clipboardItem.stringRepresentation()) -> R.drawable.ic_link
+            NetworkUtils.isPhoneNumber(clipboardItem.stringRepresentation()) -> R.drawable.ic_phone
             else -> R.drawable.ic_assignment
         }
         ItemType.IMAGE -> R.drawable.ic_image
         ItemType.VIDEO -> R.drawable.ic_videocam
-    }
-}
+    },
+    sourceProvider = sourceProvider,
+)

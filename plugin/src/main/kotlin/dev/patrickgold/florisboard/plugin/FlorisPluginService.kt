@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.lang.ref.WeakReference
 
@@ -142,6 +143,25 @@ abstract class FlorisPluginService : Service(), NlpProvider {
                     FlorisPluginMessage.ACTION_SUGGEST -> processAction("SUGGEST") {
                         if (service !is SuggestionProvider) {
                             error("This action can only be executed by a SuggestionProvider")
+                        }
+                        val data = message.data ?: error("Request message contains no data")
+                        val id = message.id
+                        val replyToMessenger = message.replyTo ?: error("Request message contains no replyTo field")
+                        val suggestionRequest = Json.decodeFromString<SuggestionRequest>(data)
+                        service.scope.launch {
+                            flogDebug { "ACTION_SUGGEST: $suggestionRequest" }
+                            val candidatesList = service.suggest(
+                                suggestionRequest.subtypeId,
+                                suggestionRequest.word,
+                                suggestionRequest.prevWords,
+                                suggestionRequest.flags,
+                            )
+                            val responseMessage = FlorisPluginMessage.replyToConsumer(
+                                action = FlorisPluginMessage.ACTION_SUGGEST,
+                                id = id,
+                                data = Json.encodeToString(candidatesList),
+                            )
+                            replyToMessenger.send(responseMessage.toAndroidMessage())
                         }
                     }
                 }

@@ -17,12 +17,14 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * Interface for a candidate item, which is returned by a suggestion provider and used by the UI logic to render
  * the candidate row.
  */
-interface SuggestionCandidate {
+@Serializable
+open class SuggestionCandidate(
     /**
      * Required primary text of a candidate item, must be non-null and non-blank. The value of this property will
      * be committed to the target editor when the user clicks on this candidate item (either replacing the current
@@ -31,7 +33,7 @@ interface SuggestionCandidate {
      * In the UI it will be shown as the main label of a candidate item. Long texts that don't fit the maximum
      * candidate item width may be shortened and ellipsized.
      */
-    val text: CharSequence
+    val text: String,
 
     /**
      * Optional secondary text of a candidate item, can be used to provide additional context, e.g. for translation
@@ -41,14 +43,14 @@ interface SuggestionCandidate {
      * is a non-null and non-blank character sequence. Long texts that don't fit the maximum candidate item width
      * may be shortened and ellipsized.
      */
-    val secondaryText: CharSequence?
+    val secondaryText: String? = null,
 
     /**
      * The confidence of this suggestion to be what the user wanted to type. Must be a value between 0.0 and 1.0 (both
      * inclusive), where 0.0 means no confidence and 1.0 means highest confidence. The confidence rating may be used to
      * sort and filter candidates if multiple providers provide suggestions for a single input.
      */
-    val confidence: Double
+    val confidence: Double = 0.0,
 
     /**
      * If true, it indicates that this candidate item should be automatically committed to the target editor once the
@@ -60,14 +62,14 @@ interface SuggestionCandidate {
      * Only set this property to true if the algorithm has a high confidence that this suggestion is what the user
      * wanted to type.
      */
-    val isEligibleForAutoCommit: Boolean
+    val isEligibleForAutoCommit: Boolean = false,
 
     /**
      * If true, it indicates that this candidate item should be user removable (by long-pressing). This flag should
      * only be set if it actually makes sense for this type of candidate to be removable and if the linked source
      * provider supports this action.
      */
-    val isEligibleForUserRemoval: Boolean
+    val isEligibleForUserRemoval: Boolean = true,
 
     /**
      * Optional icon ID for showing an icon on the start of the candidate item. Mainly used for special suggestions
@@ -77,29 +79,14 @@ interface SuggestionCandidate {
      * In the UI, if the ID is non-null, it will be shown to the start of the main label and scaled accordingly.
      * The color of the icon is entirely decided by the theme of the user. Icons that are monochrome work best.
      */
-    val iconId: Int?
+    @Transient
+    val iconId: Int? = null,
 
     /**
      * The source provider of this candidate. Is used for several callbacks for training, blacklisting of candidates on
      * user-request, and so on. If null, it means that the source provider is unknown or does not want to receive
      * callbacks.
      */
-    val sourceProvider: SuggestionProvider?
-}
-
-/**
- * Default implementation for a word candidate (autocorrect and next/current word suggestion).
- *
- * @see SuggestionCandidate
- */
-@Serializable
-data class WordSuggestionCandidate(
-    override val text: CharSequence,
-    override val secondaryText: CharSequence? = null,
-    override val confidence: Double = 0.0,
-    override val isEligibleForAutoCommit: Boolean = false,
-    override val isEligibleForUserRemoval: Boolean = true,
-) : SuggestionCandidate {
-    override val iconId: Int? = null
-    override var sourceProvider: SuggestionProvider? = null
-}
+    @Transient
+    val sourceProvider: SuggestionProvider? = null,
+)

@@ -21,6 +21,8 @@ import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.SuggestionRequestFlags
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.io.subFile
@@ -61,7 +63,7 @@ private data class LatinNlpSessionWrapper(
     var session: LatinNlpSession,
 )
 
-class LatinLanguageProviderService : FlorisPluginService(), SpellingProvider {
+class LatinLanguageProviderService : FlorisPluginService(), SpellingProvider, SuggestionProvider {
     companion object {
         const val NlpSessionConfigFileName = "nlp_session_config.json"
         const val UserDictionaryFileName = "user_dict.fldic"
@@ -122,8 +124,32 @@ class LatinLanguageProviderService : FlorisPluginService(), SpellingProvider {
     ): SpellingResult {
         return cachedSessionWrappers.withLock { sessionWrappers ->
             val sessionWrapper = sessionWrappers.find { it.subtype.id == subtypeId }
-            return@withLock sessionWrapper?.session?.spell(word, prevWords, flags) ?: SpellingResult.unspecified()
+            sessionWrapper?.session?.spell(word, prevWords, flags) ?: SpellingResult.unspecified()
         }
+    }
+
+    override suspend fun suggest(
+        subtypeId: Long,
+        word: String,
+        prevWords: List<String>,
+        flags: SuggestionRequestFlags,
+    ): List<SuggestionCandidate> {
+        return cachedSessionWrappers.withLock { sessionWrappers ->
+            val sessionWrapper = sessionWrappers.find { it.subtype.id == subtypeId }
+            sessionWrapper?.session?.suggest(word, prevWords, flags) ?: emptyList()
+        }
+    }
+
+    override suspend fun notifySuggestionAccepted(subtypeId: Long, candidate: SuggestionCandidate) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun notifySuggestionReverted(subtypeId: Long, candidate: SuggestionCandidate) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeSuggestion(subtypeId: Long, candidate: SuggestionCandidate): Boolean {
+        TODO("Not yet implemented")
     }
 
     override suspend fun destroy() {

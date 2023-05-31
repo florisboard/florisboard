@@ -19,13 +19,14 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 import android.view.textservice.SuggestionsInfo
 import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionRequestFlags
 import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.native.NativeInstanceWrapper
+import dev.patrickgold.florisboard.native.NativeList
 import dev.patrickgold.florisboard.native.NativePtr
 import dev.patrickgold.florisboard.native.NativeStr
-import dev.patrickgold.florisboard.native.NativeList
 import dev.patrickgold.florisboard.native.toJavaString
 import dev.patrickgold.florisboard.native.toNativeList
 import dev.patrickgold.florisboard.native.toNativeStr
@@ -61,23 +62,41 @@ value class LatinNlpSession(private val _nativePtr: NativePtr = nativeInit()) : 
         prevWords: List<String>,
         flags: SuggestionRequestFlags,
     ): SpellingResult {
-        return withContext(Dispatchers.IO) {
-            val nativeSpellingResultStr = nativeSpell(
-                nativePtr = _nativePtr,
-                word = word.toNativeStr(),
-                prevWords = prevWords.toNativeList(),
-                flags = flags.toInt(),
-            ).toJavaString()
-            val nativeSpellingResult = Json.decodeFromString<NativeSpellingResult>(nativeSpellingResultStr)
-            return@withContext tryOrNull {
+        return tryOrNull {
+            withContext(Dispatchers.IO) {
+                val nativeSpellingResultStr = nativeSpell(
+                    nativePtr = _nativePtr,
+                    word = word.toNativeStr(),
+                    prevWords = prevWords.toNativeList(),
+                    flags = flags.toInt(),
+                ).toJavaString()
+                val nativeSpellingResult = Json.decodeFromString<NativeSpellingResult>(nativeSpellingResultStr)
                 SpellingResult(
                     SuggestionsInfo(
                         nativeSpellingResult.suggestionAttributes,
                         nativeSpellingResult.suggestions.toTypedArray(),
                     )
                 )
-            } ?: SpellingResult.unspecified()
-        }
+            }
+        } ?: SpellingResult.unspecified()
+    }
+
+    suspend fun suggest(
+        word: String,
+        prevWords: List<String>,
+        flags: SuggestionRequestFlags,
+    ): List<SuggestionCandidate> {
+        //return tryOrNull {
+            return withContext(Dispatchers.IO) {
+                val nativeCandidatesList = nativeSuggest(
+                    nativePtr = _nativePtr,
+                    word = word.toNativeStr(),
+                    prevWords = prevWords.toNativeList(),
+                    flags = flags.toInt(),
+                ).toJavaString()
+                Json.decodeFromString(nativeCandidatesList)
+            }
+        //} ?: emptyList()
     }
 
     override fun nativePtr(): NativePtr {
@@ -96,16 +115,25 @@ value class LatinNlpSession(private val _nativePtr: NativePtr = nativeInit()) : 
 
     companion object CXX {
         external fun nativeInit(): NativePtr
+
         external fun nativeDispose(nativePtr: NativePtr)
 
         external fun nativeLoadFromConfigFile(nativePtr: NativePtr, configPath: NativeStr)
+
         external fun nativeSpell(
             nativePtr: NativePtr,
             word: NativeStr,
             prevWords: NativeList,
             flags: Int,
         ): NativeStr
-        //external fun nativeSuggest(word: NativeStr, prevWords: List<NativeStr>, flags: Int)
+
+        external fun nativeSuggest(
+            nativePtr: NativePtr,
+            word: NativeStr,
+            prevWords: NativeList,
+            flags: Int,
+        ): NativeList
+
         //external fun nativeTrain(sentence: List<NativeStr>, maxPrevWords: Int)
     }
 }

@@ -211,13 +211,12 @@ class NlpManager(context: Context) {
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
         scope.launch {
-            val suggestions = plugins.getOrNull(subtype.nlpProviders.spelling)?.spell(
+            val candidates = plugins.getOrNull(subtype.nlpProviders.spelling)?.suggest(
                 subtypeId = subtype.id,
                 word = content.composingText,
                 prevWords = content.textBeforeSelection.split(" "), // TODO this split is incorrect
                 flags = activeSuggestionRequestFlags(),
-            ) ?: SpellingResult.unspecified()
-            val candidates = suggestions.suggestions().map { WordSuggestionCandidate(it) }
+            ) ?: emptyList()
             flogDebug { "candidates: $candidates" }
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {

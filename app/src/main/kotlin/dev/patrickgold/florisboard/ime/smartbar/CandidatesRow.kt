@@ -251,7 +251,7 @@ private fun CandidateItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            if (candidate.secondaryText != null) {
+            if (!candidate.secondaryText.isNullOrEmpty()) {
                 Text(
                     text = candidate.secondaryText!!.toString(),
                     color = style.foreground.solidColor(context),
