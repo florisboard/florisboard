@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.plugin
 
 import android.os.Message
+import android.os.Messenger
+import android.os.Parcelable
 
 /**
  * Class which wraps a [Message] object and also helps correctly encoding and decoding the message's what and data
@@ -30,8 +32,13 @@ import android.os.Message
  * |0       |        |11111111|        | Message action, may be one of the ACTION_* constants.
  * |01111111|11111111|        |        | Reserved for future use.
  */
-@JvmInline
-value class FlorisPluginMessage(val msg: Message) {
+data class FlorisPluginMessage(
+    val what: Int,
+    val id: Int,
+    val data: String?,
+    val obj: Parcelable?,
+    var replyTo: Messenger? = null,
+) {
     companion object {
         const val SOURCE_SERVICE = 1
         const val SOURCE_CONSUMER = 2
@@ -66,48 +73,67 @@ value class FlorisPluginMessage(val msg: Message) {
             )
         }
 
-        fun new(what: Int, id: Int, data: String?): FlorisPluginMessage {
-            val msg = Message.obtain(null, what, id, 0)
-            if (data != null) {
-                msg.data.putString(MESSAGE_DATA, data)
-            }
-            return FlorisPluginMessage(msg)
+        fun fromAndroidMessage(msg: Message): FlorisPluginMessage {
+            return FlorisPluginMessage(
+                what = msg.what,
+                id = msg.arg1,
+                data = msg.peekData()?.getString(MESSAGE_DATA),
+                obj = msg.obj as? Parcelable,
+                replyTo = msg.replyTo,
+            )
         }
 
-        fun requestToService(action: Int, id: Int = 0, data: String? = null): FlorisPluginMessage {
+        fun requestToService(
+            action: Int,
+            id: Int = 0,
+            data: String? = null,
+            obj: Parcelable? = null,
+        ): FlorisPluginMessage {
             val what = encodeWhatField(SOURCE_CONSUMER, TYPE_REQUEST, action)
-            return new(what, id, data)
+            return FlorisPluginMessage(what, id, data, obj)
         }
 
-        fun replyToConsumer(action: Int, id: Int = 0, data: String? = null): FlorisPluginMessage {
+        fun replyToConsumer(
+            action: Int,
+            id: Int = 0,
+            data: String? = null,
+            obj: Parcelable? = null,
+        ): FlorisPluginMessage {
             val what = encodeWhatField(SOURCE_SERVICE, TYPE_RESPONSE, action)
-            return new(what, id, data)
+            return FlorisPluginMessage(what, id, data, obj)
         }
 
-        fun requestToConsumer(action: Int, id: Int = 0, data: String? = null): FlorisPluginMessage {
+        fun requestToConsumer(
+            action: Int,
+            id: Int = 0,
+            data: String? = null,
+            obj: Parcelable? = null,
+        ): FlorisPluginMessage {
             val what = encodeWhatField(SOURCE_SERVICE, TYPE_REQUEST, action)
-            return new(what, id, data)
+            return FlorisPluginMessage(what, id, data, obj)
         }
 
-        fun replyToService(action: Int, id: Int = 0, data: String? = null): FlorisPluginMessage {
+        fun replyToService(
+            action: Int,
+            id: Int = 0,
+            data: String? = null,
+            obj: Parcelable? = null,
+        ): FlorisPluginMessage {
             val what = encodeWhatField(SOURCE_CONSUMER, TYPE_RESPONSE, action)
-            return new(what, id, data)
+            return FlorisPluginMessage(what, id, data, obj)
         }
     }
 
     fun metadata(): Triple<Int, Int, Int> {
-        return decodeWhatField(msg.what)
+        return decodeWhatField(what)
     }
 
-    fun id(): Int {
-        return msg.arg1
-    }
-
-    fun data(): String? {
-        return msg.peekData()?.getString(MESSAGE_DATA)
-    }
-
-    override fun toString(): String {
-        return msg.toString()
+    fun toAndroidMessage(): Message {
+        val msg = Message.obtain(null, what, id, 0, obj)
+        if (data != null) {
+            msg.data.putString(MESSAGE_DATA, data)
+        }
+        msg.replyTo = replyTo
+        return msg
     }
 }

@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.os.Build
 import android.view.textservice.SuggestionsInfo
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
 
 /**
  * Inline value class wrapping the Android spelling [SuggestionsInfo] class with helpers.
@@ -114,7 +115,7 @@ value class SpellingResult(val suggestionsInfo: SuggestionsInfo) {
          *  caller in the service.
          */
         fun grammarError(suggestions: Array<out String>, isHighConfidenceResult: Boolean = false): SpellingResult {
-            val attributes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val attributes = if (AndroidVersion.ATLEAST_API31_S) {
                 SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_GRAMMAR_ERROR
             } else {
                 SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO

@@ -26,10 +26,16 @@ import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.nlp.NlpProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.nlp.SuggestionRequest
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.devtools.flogInfo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.lang.ref.WeakReference
 
@@ -45,12 +51,15 @@ abstract class FlorisPluginService : Service(), NlpProvider {
 
     private lateinit var serviceMessenger: Messenger
     private lateinit var consumerInfo: PluginConsumerInfo
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     final override fun onCreate() {
         flogDebug { "" }
 
         super.onCreate()
-        create()
+        runBlocking(scope.coroutineContext) {
+            create()
+        }
     }
 
     final override fun onBind(intent: Intent?): IBinder? {
@@ -59,7 +68,7 @@ abstract class FlorisPluginService : Service(), NlpProvider {
 
         consumerInfo = PluginConsumerInfo(
             packageName = intent.getStringExtra(CONSUMER_PACKAGE_NAME) ?: return null,
-            versionCode = intent.getIntExtra(CONSUMER_VERSION_CODE, -1),
+            versionCode = intent.getIntExtra(CONSUMER_VERSION_CODE, -1).takeIf { it > 0 } ?: return null,
             versionName = intent.getStringExtra(CONSUMER_VERSION_NAME) ?: return null,
         )
         serviceMessenger = Messenger(IncomingHandler(this))
@@ -71,7 +80,9 @@ abstract class FlorisPluginService : Service(), NlpProvider {
     final override fun onDestroy() {
         flogDebug { "" }
 
-        destroy()
+        runBlocking(scope.coroutineContext) {
+            destroy()
+        }
         super.onDestroy()
     }
 
@@ -86,46 +97,69 @@ abstract class FlorisPluginService : Service(), NlpProvider {
 
         override fun handleMessage(msg: Message) {
             val service = serviceReference.get() ?: return
-            val message = FlorisPluginMessage(msg)
+            val message = FlorisPluginMessage.fromAndroidMessage(msg)
             val (source, type, action) = message.metadata()
             if (source != FlorisPluginMessage.SOURCE_CONSUMER) {
                 return
             }
+
             when (type) {
                 FlorisPluginMessage.TYPE_REQUEST -> when (action) {
-                    FlorisPluginMessage.ACTION_PRELOAD -> {
-                        try {
-                            val data = message.data() ?: return
-                            val subtype = Json.decodeFromString(ComputedSubtype.serializer(), data)
-                            post {
-                                flogInfo { "Processing action preload: $subtype" }
-                                service.preload(subtype)
-                            }
-                        } catch (e: SerializationException) {
-                            flogError { "Ill-formatted JSON data for action preload: $e" }
-                            return
-                        } catch (e: IllegalArgumentException) {
-                            flogError { "Invalid JSON data for action preload: $e" }
-                            return
+                    FlorisPluginMessage.ACTION_PRELOAD -> processAction("PRELOAD") {
+                        val data = message.data ?: error("Request message contains no data")
+                        val subtype = Json.decodeFromString<ComputedSubtype>(data)
+                        service.scope.launch {
+                            flogDebug { "ACTION_PRELOAD: $subtype" }
+                            service.preload(subtype)
                         }
                     }
-                    FlorisPluginMessage.ACTION_SPELL -> {
+
+                    FlorisPluginMessage.ACTION_SPELL -> processAction("SPELL") {
                         if (service !is SpellingProvider) {
-                            return
+                            error("This action can only be executed by a SpellingProvider")
+                        }
+                        val data = message.data ?: error("Request message contains no data")
+                        val id = message.id
+                        val replyToMessenger = message.replyTo ?: error("Request message contains no replyTo field")
+                        val suggestionRequest = Json.decodeFromString<SuggestionRequest>(data)
+                        service.scope.launch {
+                            flogDebug { "ACTION_SPELL: $suggestionRequest" }
+                            val spellingResult = service.spell(
+                                suggestionRequest.subtypeId,
+                                suggestionRequest.word,
+                                suggestionRequest.prevWords,
+                                suggestionRequest.flags,
+                            )
+                            val responseMessage = FlorisPluginMessage.replyToConsumer(
+                                action = FlorisPluginMessage.ACTION_SPELL,
+                                id = id,
+                                obj = spellingResult.suggestionsInfo,
+                            )
+                            replyToMessenger.send(responseMessage.toAndroidMessage())
                         }
                     }
-                    FlorisPluginMessage.ACTION_SUGGEST -> {
+
+                    FlorisPluginMessage.ACTION_SUGGEST -> processAction("SUGGEST") {
                         if (service !is SuggestionProvider) {
-                            return
+                            error("This action can only be executed by a SuggestionProvider")
                         }
                     }
-                    else -> {
-                        return
-                    }
                 }
-                else -> {
-                    return
-                }
+            }
+        }
+
+        private inline fun processAction(name: String, block: () -> Unit) {
+            try {
+                block()
+            } catch (e: SerializationException) {
+                flogError { "ACTION_$name: Ill-formatted JSON data with error: $e" }
+                return
+            } catch (e: IllegalArgumentException) {
+                flogError { "ACTION_$name: Invalid JSON data with error: $e" }
+                return
+            } catch (e: Exception) {
+                flogError { "ACTION_$name: Generic error: $e" }
+                return
             }
         }
     }

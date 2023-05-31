@@ -54,6 +54,7 @@ android {
 dependencies {
     api(project(":ime-lib"))
     implementation(libs.androidx.annotation)
+    implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
 }
 

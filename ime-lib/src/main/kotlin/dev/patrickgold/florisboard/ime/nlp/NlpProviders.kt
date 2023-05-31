@@ -30,7 +30,7 @@ interface NlpProvider {
      * Is called exactly once before any [preload] or task specific requests, which allows to make one-time setups, set
      * up necessary native bindings, threads, etc.
      */
-    fun create()
+    suspend fun create()
 
     /**
      * Is called at least once before a task specific request occurs, to allow for locale-specific preloading of
@@ -39,14 +39,14 @@ interface NlpProvider {
      * @param subtype Information about the subtype to preload, primarily used for getting the primary and secondary
      *  language for correct dictionary selection.
      */
-    fun preload(subtype: ComputedSubtype)
+    suspend fun preload(subtype: ComputedSubtype)
 
     /**
      * Is called when the provider is no longer needed and should be destroyed. Any native allocations should be freed
      * up and any asynchronous tasks/threads must be stopped. After this method call finishes, this provider object is
      * considered dead and will be queued to be cleaned up by the GC in the next round.
      */
-    fun destroy()
+    suspend fun destroy()
 }
 
 /**
@@ -63,22 +63,19 @@ interface SpellingProvider : NlpProvider {
      *
      * @param subtypeId THe ID of the subtype this request is for, is guaranteed to match one of the subtype IDs which
      *  have been passed to [preload].
-     * @param flags The suggestion request flags.
      * @param word The word to spell check, may contain any valid Unicode code point.
-     * @param precedingWords List of preceding words, which allows for a more context-based spellcheck. This list can
+     * @param prevWords List of preceding words, which allows for a more context-based spellcheck. This list can
      *  also be empty, if no surrounding context can be provided.
-     * @param followingWords List of following words, which allows for a more context-based spellcheck. This list can
-     *  also be empty, if no surrounding context can be provided.
+     * @param flags The suggestion request flags.
      *
      * @return A spelling result object, which indicates both the validity of this word and if needed suggested
      *  corrections for the misspelled word.
      */
-    fun spell(
+    suspend fun spell(
         subtypeId: Long,
-        flags: SuggestionRequestFlags,
         word: String,
-        precedingWords: List<String>,
-        followingWords: List<String>,
+        prevWords: List<String>,
+        flags: SuggestionRequestFlags,
     ): SpellingResult
 }
 
@@ -93,23 +90,20 @@ interface SuggestionProvider : NlpProvider {
      *
      * @param subtypeId THe ID of the subtype this request is for, is guaranteed to match one of the subtype IDs which
      *  have been passed to [preload].
-     * @param flags The suggestion request flags.
      * @param word The current word to use as a base for word prediction, may contain any valid Unicode code point.
-     * @param precedingWords List of preceding words, which allows for a more context-based word prediction. This list
+     * @param prevWords List of preceding words, which allows for a more context-based word prediction. This list
      *  can also be empty, if no surrounding context can be provided.
-     * @param followingWords List of following words, which allows for a more context-based word prediction. This list
-     *  can also be empty, if no surrounding context can be provided.
+     * @param flags The suggestion request flags.
      *
      * @return A list of candidate suggestions for the current editor content state, complying with the max count
      *  restrictions as best as possible. If the provider cannot at all provide any candidates, an empty list should be
      *  returned, in which case the UI automatically adapts and shows alternative actions.
      */
-    fun suggest(
+    suspend fun suggest(
         subtypeId: Long,
-        flags: SuggestionRequestFlags,
         word: String,
-        precedingWords: List<String>,
-        followingWords: List<String>,
+        prevWords: List<String>,
+        flags: SuggestionRequestFlags,
     ): List<SuggestionCandidate>
 
     /**
@@ -120,7 +114,7 @@ interface SuggestionProvider : NlpProvider {
      *  have been passed to [preload].
      * @param candidate The exact suggestion candidate which has been accepted.
      */
-    fun notifySuggestionAccepted(subtypeId: Long, candidate: SuggestionCandidate)
+    suspend fun notifySuggestionAccepted(subtypeId: Long, candidate: SuggestionCandidate)
 
     /**
      * Is called when a previously automatically accepted suggestion has been reverted by the user with backspace. This
@@ -130,7 +124,7 @@ interface SuggestionProvider : NlpProvider {
      *  have been passed to [preload].
      * @param candidate The exact suggestion candidate which has been reverted.
      */
-    fun notifySuggestionReverted(subtypeId: Long, candidate: SuggestionCandidate)
+    suspend fun notifySuggestionReverted(subtypeId: Long, candidate: SuggestionCandidate)
 
     /**
      * Called if the user requests to prevent a certain suggested word from showing again. It is up to the actual
@@ -142,54 +136,5 @@ interface SuggestionProvider : NlpProvider {
      *
      * @return True if the removal request is supported and is accepted, false otherwise.
      */
-    fun removeSuggestion(subtypeId: Long, candidate: SuggestionCandidate): Boolean
-}
-
-/**
- * Fallback NLP provider which implements all provider variants. Is used in case no other providers can be found.
- */
-object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
-    override fun create() {
-        // Do nothing
-    }
-
-    override fun preload(subtype: ComputedSubtype) {
-        // Do nothing
-    }
-
-    override fun spell(
-        subtypeId: Long,
-        flags: SuggestionRequestFlags,
-        word: String,
-        precedingWords: List<String>,
-        followingWords: List<String>
-    ): SpellingResult {
-        return SpellingResult.unspecified()
-    }
-
-    override fun suggest(
-        subtypeId: Long,
-        flags: SuggestionRequestFlags,
-        word: String,
-        precedingWords: List<String>,
-        followingWords: List<String>
-    ): List<SuggestionCandidate> {
-        return emptyList()
-    }
-
-    override fun notifySuggestionAccepted(subtypeId: Long, candidate: SuggestionCandidate) {
-        // Do nothing
-    }
-
-    override fun notifySuggestionReverted(subtypeId: Long, candidate: SuggestionCandidate) {
-        // Do nothing
-    }
-
-    override fun removeSuggestion(subtypeId: Long, candidate: SuggestionCandidate): Boolean {
-        return false
-    }
-
-    override fun destroy() {
-        // Do nothing
-    }
+    suspend fun removeSuggestion(subtypeId: Long, candidate: SuggestionCandidate): Boolean
 }
