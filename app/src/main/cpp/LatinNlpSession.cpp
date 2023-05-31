@@ -61,3 +61,22 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeLo
         session->loadConfigFromFile(config_path);
     });
 }
+
+extern "C" JNIEXPORT fl::jni::NativeStr JNICALL
+Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeSpell( //
+    JNIEnv* env,
+    jobject,
+    jlong native_ptr,
+    fl::jni::NativeStr j_word,
+    fl::jni::NativeList j_prev_words,
+    jint flags
+) {
+    auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
+    auto word = fl::jni::j2std_string(env, j_word);
+    auto prev_words = fl::jni::j2std_list<std::string>(env, j_prev_words);
+    auto spelling_result = session->spell(word, prev_words, flags);
+    auto json = nlohmann::json();
+    json["suggestionAttributes"] = spelling_result.suggestion_attributes;
+    json["suggestions"] = spelling_result.suggestions;
+    return fl::jni::std2j_string(env, json.dump());
+}

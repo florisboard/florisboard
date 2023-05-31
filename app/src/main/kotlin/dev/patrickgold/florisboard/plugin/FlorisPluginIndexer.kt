@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.plugin
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
@@ -27,10 +28,12 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
+import android.view.textservice.SuggestionsInfo
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.nlp.SuggestionRequest
 import dev.patrickgold.florisboard.ime.nlp.SuggestionRequestFlags
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.io.FlorisRef
@@ -41,10 +44,12 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
@@ -62,7 +67,7 @@ class FlorisPluginIndexer(private val context: Context) {
         pluginIndex.withLock { pluginIndex ->
             val newPluginIndex = mutableListOf<IndexedPlugin>()
 
-            fun registerPlugin(
+            suspend fun registerPlugin(
                 serviceName: ComponentName,
                 state: IndexedPluginState,
                 metadata: FlorisPluginMetadata = FlorisPluginMetadata(""),
@@ -123,7 +128,8 @@ class FlorisPluginIndexer(private val context: Context) {
         context.registerReceiver(receiver, IntentFilter("android.intent.action.PACKAGE_CHANGED"))
     }
 
-    suspend fun getOrNull(pluginId: String): IndexedPlugin? {
+    suspend fun getOrNull(pluginId: String?): IndexedPlugin? {
+        if (pluginId == null) return null
         return pluginIndex.withLock { pluginIndex ->
             pluginIndex.find { it.metadata.id == pluginId }
         }
@@ -139,12 +145,12 @@ class IndexedPlugin(
     private var messageIdGenerator = AtomicInteger(1)
     private var connection = IndexedPluginConnection(context)
 
-    override fun create() {
+    override suspend fun create() {
         if (isValidAndBound()) return
         connection.bindService(serviceName)
     }
 
-    override fun preload(subtype: ComputedSubtype) {
+    override suspend fun preload(subtype: ComputedSubtype) {
         val message = FlorisPluginMessage.requestToService(
             action = FlorisPluginMessage.ACTION_PRELOAD,
             id = messageIdGenerator.getAndIncrement(),
@@ -153,17 +159,27 @@ class IndexedPlugin(
         connection.sendMessage(message)
     }
 
-    override fun spell(
+    override suspend fun spell(
         subtypeId: Long,
-        flags: SuggestionRequestFlags,
         word: String,
-        precedingWords: List<String>,
-        followingWords: List<String>
+        prevWords: List<String>,
+        flags: SuggestionRequestFlags,
     ): SpellingResult {
-        TODO("Not yet implemented")
+        val request = SuggestionRequest(subtypeId, word, prevWords, flags)
+        val message = FlorisPluginMessage.requestToService(
+            action = FlorisPluginMessage.ACTION_SPELL,
+            id = messageIdGenerator.getAndIncrement(),
+            data = Json.encodeToString(SuggestionRequest.serializer(), request),
+        )
+        connection.sendMessage(message)
+        return withTimeoutOrNull(5000L) {
+            val replyMessage = connection.replyMessages.first { it.id == message.id }
+            val resultObj = replyMessage.obj as? SuggestionsInfo ?: return@withTimeoutOrNull null
+            SpellingResult(resultObj)
+        } ?: SpellingResult.unspecified()
     }
 
-    override fun destroy() {
+    override suspend fun destroy() {
         if (!isValidAndBound()) return
         connection.unbindService()
     }
@@ -225,13 +241,20 @@ class IndexedPlugin(
 class IndexedPluginConnection(private val context: Context) {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var serviceMessenger = MutableStateFlow<Messenger?>(null)
-    private val consumerMessenger = Messenger(IncomingHandler(context))
+    private val consumerMessenger = Messenger(IncomingHandler())
     private var isBound = AtomicBoolean(false)
     private val stagedOutgoingMessages = MutableSharedFlow<FlorisPluginMessage>(
         replay = 8,
         extraBufferCapacity = 8,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
+    private val _replyMessages = MutableSharedFlow<FlorisPluginMessage>(
+        replay = 8,
+        extraBufferCapacity = 8,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    val replyMessages = _replyMessages.asSharedFlow()
+
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             flogDebug { "$name, $binder" }
@@ -269,7 +292,7 @@ class IndexedPluginConnection(private val context: Context) {
         scope.launch {
             stagedOutgoingMessages.collect { message ->
                 val messenger = serviceMessenger.first { it != null }!!
-                messenger.send(message.msg.also { it.replyTo = consumerMessenger })
+                messenger.send(message.also { it.replyTo = consumerMessenger }.toAndroidMessage())
             }
         }
     }
@@ -298,21 +321,16 @@ class IndexedPluginConnection(private val context: Context) {
         stagedOutgoingMessages.emit(message)
     }
 
-    class IncomingHandler(context: Context) : Handler(context.mainLooper) {
+    @SuppressLint("HandlerLeak")
+    inner class IncomingHandler : Handler(context.mainLooper) {
         override fun handleMessage(msg: Message) {
-            val message = FlorisPluginMessage(msg)
-            val (source, type, action) = message.metadata()
-            if (source != FlorisPluginMessage.SOURCE_SERVICE) {
+            val message = FlorisPluginMessage.fromAndroidMessage(msg)
+            val (source, type, _) = message.metadata()
+            if (source != FlorisPluginMessage.SOURCE_SERVICE || type != FlorisPluginMessage.TYPE_RESPONSE) {
                 return
             }
-            when (type) {
-                FlorisPluginMessage.TYPE_RESPONSE -> when (action) {
-                    FlorisPluginMessage.ACTION_SPELL -> {
-                    }
-
-                    FlorisPluginMessage.ACTION_SUGGEST -> {
-                    }
-                }
+            runBlocking {
+                _replyMessages.emit(message)
             }
         }
     }
