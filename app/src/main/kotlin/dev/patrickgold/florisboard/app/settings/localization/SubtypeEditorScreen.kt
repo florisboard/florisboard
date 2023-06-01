@@ -34,8 +34,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -54,6 +56,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
@@ -63,15 +66,19 @@ import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
+import dev.patrickgold.florisboard.ime.nlp.SubtypeSupportInfo
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownLikeButton
 import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
+import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedText
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -83,6 +90,7 @@ private val SelectComponentName = ExtensionComponentName("00", "00")
 private val SelectNlpProviderId = SelectComponentName.toString()
 private val SelectNlpProviders = SubtypeNlpProviderMap(
     spelling = SelectNlpProviderId,
+    suggestion = SelectNlpProviderId,
 )
 private val SelectLayoutMap = SubtypeLayoutMap(
     characters = SelectComponentName,
@@ -96,6 +104,7 @@ private val SelectLayoutMap = SubtypeLayoutMap(
 )
 private val SelectLocale = FlorisLocale.from("00", "00")
 private val SelectListKeys = listOf(SelectComponentName)
+private val SelectNlpProviderKeys = listOf(SelectNlpProviderId)
 
 private class SubtypeEditorState(init: Subtype?) {
     companion object {
@@ -124,10 +133,11 @@ private class SubtypeEditorState(init: Subtype?) {
     val id: MutableState<Long> = mutableStateOf(init?.id ?: -1)
     val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
-    val nlpProviders: MutableState<SubtypeNlpProviderMap> = mutableStateOf(init?.nlpProviders ?: Subtype.FALLBACK.nlpProviders)
+    val nlpProviders: MutableState<SubtypeNlpProviderMap> = mutableStateOf(init?.nlpProviders ?: SelectNlpProviders)
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
-    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: Subtype.FALLBACK.punctuationRule)
+    val punctuationRule: MutableState<ExtensionComponentName> =
+        mutableStateOf(init?.punctuationRule ?: Subtype.FALLBACK.punctuationRule)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
@@ -168,14 +178,16 @@ private class SubtypeEditorState(init: Subtype?) {
 
 @Composable
 fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
-    title = stringRes(if (id == null) {
-        R.string.settings__localization__subtype_add_title
-    } else {
-        R.string.settings__localization__subtype_edit_title
-    })
+    title = stringRes(
+        if (id == null) {
+            R.string.settings__localization__subtype_add_title
+        } else {
+            R.string.settings__localization__subtype_edit_title
+        }
+    )
 
     val selectValue = stringRes(R.string.settings__localization__subtype_select_placeholder)
-    val selectListValues = remember (selectValue) { listOf(selectValue) }
+    val selectListValues = remember(selectValue) { listOf(selectValue) }
 
     val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
@@ -183,6 +195,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val configuration = LocalConfiguration.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val keyboardManager by context.keyboardManager()
+    val nlpManager by context.nlpManager()
     val subtypeManager by context.subtypeManager()
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
@@ -267,9 +280,10 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     content {
         Column(modifier = Modifier.padding(8.dp)) {
             if (id == null) {
-                Card(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
                 ) {
                     Column(modifier = Modifier.padding(vertical = 8.dp)) {
                         Text(
@@ -303,7 +317,9 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                                     },
                                     text = when (displayLanguageNamesIn) {
                                         DisplayLanguageNamesIn.SYSTEM_LOCALE -> suggestedPreset.locale.displayName()
-                                        DisplayLanguageNamesIn.NATIVE_LOCALE -> suggestedPreset.locale.displayName(suggestedPreset.locale)
+                                        DisplayLanguageNamesIn.NATIVE_LOCALE -> suggestedPreset.locale.displayName(
+                                            suggestedPreset.locale
+                                        )
                                     },
                                     secondaryText = suggestedPreset.preferred.characters.componentId,
                                 )
@@ -373,16 +389,21 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeGroupSpacer()
 
-            /*SubtypeProperty(stringRes(R.string.settings__localization__subtype_suggestion_provider)) {
+            SubtypeProperty(stringRes(R.string.settings__localization__subtype_suggestion_provider)) {
                 // TODO: Put this map somewhere more formal (another KeyboardExtension field?)
                 //  optionally use a string resource below
-                val nlpProviderMappings = mapOf(
-                    LatinLanguageProvider.ProviderId to "Latin",
-                    HanShapeBasedLanguageProvider.ProviderId to "Chinese shape-based"
-                )
+                val plugins by nlpManager.plugins.pluginIndexFlow.collectAsState()
+                val nlpProviderMappings = remember(plugins) {
+                    buildMap {
+                        for (plugin in plugins) {
+                            val packageContext = plugin.packageContext()
+                            put(plugin.metadata.id, plugin.metadata.title.getOrNull(packageContext) ?: "??")
+                        }
+                    }
+                }
 
                 val nlpProviderMappingIds = remember(nlpProviderMappings) {
-                    SelectListKeys + nlpProviderMappings.keys
+                    SelectNlpProviderKeys + nlpProviderMappings.keys
                 }
                 val nlpProviderMappingLabels = remember(nlpProviderMappings) {
                     selectListValues + nlpProviderMappings.values.map { it }
@@ -394,14 +415,64 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     expanded = expanded,
                     selectedIndex = selectedIndex,
                     isError = showSelectAsError && selectedIndex == 0,
-                    onSelectItem = { nlpProviders = SubtypeNlpProviderMap(
-                        suggestion = nlpProviderMappingIds[it] as String,
-                        spelling = nlpProviderMappingIds[it] as String
-                    ) },
+                    onSelectItem = {
+                        nlpProviders = SubtypeNlpProviderMap(
+                            suggestion = nlpProviderMappingIds[it],
+                            spelling = nlpProviderMappingIds[it],
+                        )
+                    },
                     onExpandRequest = { expanded = true },
                     onDismissRequest = { expanded = false },
                 )
-            }*/
+                val subtypeForPluginSupport = ComputedSubtype(
+                    id = subtypeEditor.id.value,
+                    primaryLocale = subtypeEditor.primaryLocale.value.languageTag(),
+                    secondaryLocales = subtypeEditor.secondaryLocales.value.map { it.languageTag() },
+                )
+                val subtypeSupportInfo by produceState<SubtypeSupportInfo?>(
+                    initialValue = null,
+                    plugins,
+                    subtypeForPluginSupport,
+                    nlpProviders,
+                ) {
+                    value = nlpManager.plugins.getOrNull(nlpProviders.suggestion)
+                        ?.evaluateIsSupported(subtypeForPluginSupport)
+                }
+                val supportInfo = subtypeSupportInfo
+                if (supportInfo == null) {
+                    FlorisOutlinedBox {
+                        Text(
+                            modifier = Modifier.defaultFlorisOutlinedText(),
+                            text = "No plugin selected",
+                            style = MaterialTheme.typography.body2,
+                        )
+                    }
+                } else if (supportInfo.isFullySupported()) {
+                    FlorisOutlinedBox {
+                        Text(
+                            modifier = Modifier.defaultFlorisOutlinedText(),
+                            text = "Supported",
+                            style = MaterialTheme.typography.body2,
+                        )
+                    }
+                } else if (supportInfo.isPartiallySupported()) {
+                    FlorisOutlinedBox {
+                        Text(
+                            modifier = Modifier.defaultFlorisOutlinedText(),
+                            text = "Partially supported\nReason: ${supportInfo.reason}",
+                            style = MaterialTheme.typography.body2,
+                        )
+                    }
+                } else if (supportInfo.isUnsupported()) {
+                    FlorisOutlinedBox {
+                        Text(
+                            modifier = Modifier.defaultFlorisOutlinedText(),
+                            text = "Unsupported\nReason: ${supportInfo.reason}",
+                            style = MaterialTheme.typography.body2,
+                        )
+                    }
+                }
+            }
 
             SubtypeGroupSpacer()
 
@@ -610,7 +681,9 @@ private fun SubtypeLayoutDropdown(
 
 @Composable
 private fun SubtypeGroupSpacer() {
-    Spacer(modifier = Modifier
-        .fillMaxWidth()
-        .height(32.dp))
+    Spacer(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(32.dp)
+    )
 }

@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
+import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedText
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
@@ -252,7 +253,7 @@ private fun FlorisInvalidPluginBox(plugin: IndexedPlugin) {
     val reason = (plugin.state as IndexedPluginState.Error).toString()
     FlorisOutlinedBox(modifier = Modifier.defaultFlorisOutlinedBox()) {
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.defaultFlorisOutlinedText(),
             text = "Unrecognised plugin with service name ${plugin.serviceName}\n\nReason: $reason",
             color = MaterialTheme.colors.error,
             fontStyle = FontStyle.Italic,

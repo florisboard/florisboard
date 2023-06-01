@@ -369,6 +369,10 @@ class NlpManager(context: Context) {
             // Do nothing
         }
 
+        override suspend fun evaluateIsSupported(subtype: ComputedSubtype): SubtypeSupportInfo {
+            return SubtypeSupportInfo.fullySupported()
+        }
+
         override suspend fun preload(subtype: ComputedSubtype) {
             // Do nothing
         }

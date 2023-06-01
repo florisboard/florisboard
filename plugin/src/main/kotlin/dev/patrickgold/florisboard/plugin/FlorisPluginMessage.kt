@@ -46,9 +46,10 @@ data class FlorisPluginMessage(
         const val TYPE_REQUEST = 1
         const val TYPE_RESPONSE = 2
 
-        const val ACTION_PRELOAD = 1
-        const val ACTION_SPELL = 2
-        const val ACTION_SUGGEST = 3
+        const val ACTION_EVALUATE_IS_SUPPORTED = 1
+        const val ACTION_PRELOAD = 2
+        const val ACTION_SPELL = 3
+        const val ACTION_SUGGEST = 4
 
         private const val M_SOURCE = 0x0000000F
         private val O_SOURCE = M_SOURCE.countTrailingZeroBits()

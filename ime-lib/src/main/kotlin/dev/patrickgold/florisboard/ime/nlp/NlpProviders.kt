@@ -33,6 +33,15 @@ interface NlpProvider {
     suspend fun create()
 
     /**
+     * Is called to check if the language provider supports the subtype using its primary/secondary language options.
+     *
+     * @param subtype Information about the subtype to check, primarily used for getting the primary and secondary
+     *  language for correct dictionary selection.
+     * @return true if this provider is able to provide NLP services for given subtype, false otherwise.
+     */
+    suspend fun evaluateIsSupported(subtype: ComputedSubtype): SubtypeSupportInfo
+
+    /**
      * Is called at least once before a task specific request occurs, to allow for locale-specific preloading of
      * dictionaries and language models.
      *

@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.nlp.SubtypeSupportInfo
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.SuggestionRequest
@@ -65,6 +66,20 @@ class IndexedPlugin(
     override suspend fun create() {
         if (isValidAndBound()) return
         connection.bindService(serviceName)
+    }
+
+    override suspend fun evaluateIsSupported(subtype: ComputedSubtype): SubtypeSupportInfo {
+        val message = FlorisPluginMessage.requestToService(
+            action = FlorisPluginMessage.ACTION_EVALUATE_IS_SUPPORTED,
+            id = messageIdGenerator.getAndIncrement(),
+            data = Json.encodeToString(subtype),
+        )
+        connection.sendMessage(message)
+        return withTimeoutOrNull(5000L) {
+            val replyMessage = connection.replyMessages.first { it.id == message.id }
+            val resultData = replyMessage.data ?: return@withTimeoutOrNull null
+            return@withTimeoutOrNull Json.decodeFromString(resultData)
+        } ?: SubtypeSupportInfo.unsupported("!! Error in communication with plugin !!")
     }
 
     override suspend fun preload(subtype: ComputedSubtype) {

@@ -301,3 +301,8 @@ fun Modifier.defaultFlorisOutlinedBox(): Modifier {
         .fillMaxWidth()
         .padding(vertical = 8.dp, horizontal = 16.dp)
 }
+
+fun Modifier.defaultFlorisOutlinedText(): Modifier {
+    return this
+        .padding(vertical = 8.dp, horizontal = 16.dp)
+}

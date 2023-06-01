@@ -21,6 +21,7 @@ import dev.patrickgold.florisboard.ime.core.ComputedSubtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyProximityChecker
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.ime.nlp.SubtypeSupportInfo
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.SuggestionRequestFlags
@@ -113,6 +114,16 @@ class LatinLanguageProviderService : FlorisPluginService(), SpellingProvider, Su
                 configFile.writeJson(config)
                 sessionWrapper.session.loadFromConfigFile(configFile)
             }
+        }
+    }
+
+    override suspend fun evaluateIsSupported(subtype: ComputedSubtype): SubtypeSupportInfo {
+        val baseDictionaries = getBaseDictionaryPaths(subtype)
+        return if (baseDictionaries.isNotEmpty()) {
+            SubtypeSupportInfo.fullySupported()
+        } else {
+            // TODO make string resource and translatable
+            SubtypeSupportInfo.unsupported("No dictionary could be found")
         }
     }
 

@@ -106,6 +106,23 @@ abstract class FlorisPluginService : Service(), NlpProvider {
 
             when (type) {
                 FlorisPluginMessage.TYPE_REQUEST -> when (action) {
+                    FlorisPluginMessage.ACTION_EVALUATE_IS_SUPPORTED -> processAction("EVALUATE_IS_SUPPORTED") {
+                        val data = message.data ?: error("Request message contains no data")
+                        val id = message.id
+                        val replyToMessenger = message.replyTo ?: error("Request message contains no replyTo field")
+                        val subtype = Json.decodeFromString<ComputedSubtype>(data)
+                        service.scope.launch {
+                            flogDebug { "ACTION_EVALUATE_IS_SUPPORTED: $subtype" }
+                            val info = service.evaluateIsSupported(subtype)
+                            val responseMessage = FlorisPluginMessage.replyToConsumer(
+                                action = FlorisPluginMessage.ACTION_EVALUATE_IS_SUPPORTED,
+                                id = id,
+                                data = Json.encodeToString(info),
+                            )
+                            replyToMessenger.send(responseMessage.toAndroidMessage())
+                        }
+                    }
+
                     FlorisPluginMessage.ACTION_PRELOAD -> processAction("PRELOAD") {
                         val data = message.data ?: error("Request message contains no data")
                         val subtype = Json.decodeFromString<ComputedSubtype>(data)
