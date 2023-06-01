@@ -26,7 +26,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinLanguageProviderService_0002
     jobject,
     fl::jni::NativeStr j_dict_path
 ) {
-    return fl::jni::run_in_exception_container(env, [&] {
+    return fl::jni::runInExceptionContainer(env, [&] {
         auto dict_path = fl::jni::j2std_string(env, j_dict_path);
         auto dict = fl::nlp::LatinDictionary(0);
         dict.file_path = dict_path;

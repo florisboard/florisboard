@@ -34,7 +34,7 @@
 namespace fl::jni {
 
 template<typename F>
-auto run_in_exception_container(JNIEnv* env, F&& block) noexcept -> std::invoke_result_t<F> {
+auto runInExceptionContainer(JNIEnv* env, F&& block) noexcept -> std::invoke_result_t<F> {
     jclass exception_class = nullptr;
     const char* exception_message = nullptr;
 

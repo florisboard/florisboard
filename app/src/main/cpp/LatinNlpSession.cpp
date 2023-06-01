@@ -30,7 +30,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeIn
     JNIEnv* env,
     jobject
 ) {
-    return fl::jni::run_in_exception_container(env, [&] {
+    return fl::jni::runInExceptionContainer(env, [&] {
         auto* session = new fl::nlp::LatinNlpSession();
         return reinterpret_cast<jlong>(session);
     });
@@ -42,7 +42,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeDi
     jobject,
     jlong native_ptr
 ) {
-    return fl::jni::run_in_exception_container(env, [&] {
+    return fl::jni::runInExceptionContainer(env, [&] {
         auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
         delete session;
     });
@@ -55,7 +55,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeLo
     jlong native_ptr,
     fl::jni::NativeStr j_config_path
 ) {
-    return fl::jni::run_in_exception_container(env, [&] {
+    return fl::jni::runInExceptionContainer(env, [&] {
         auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
         auto config_path = fl::jni::j2std_string(env, j_config_path);
         session->loadConfigFromFile(config_path);
@@ -71,14 +71,16 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeSp
     fl::jni::NativeList j_prev_words,
     jint flags
 ) {
-    auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
-    auto word = fl::jni::j2std_string(env, j_word);
-    auto prev_words = fl::jni::j2std_list<std::string>(env, j_prev_words);
-    auto spelling_result = session->spell(word, prev_words, flags);
-    auto json = nlohmann::json();
-    json["suggestionAttributes"] = spelling_result.suggestion_attributes;
-    json["suggestions"] = spelling_result.suggestions;
-    return fl::jni::std2j_string(env, json.dump());
+    return fl::jni::runInExceptionContainer(env, [&] {
+        auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
+        auto word = fl::jni::j2std_string(env, j_word);
+        auto prev_words = fl::jni::j2std_list<std::string>(env, j_prev_words);
+        auto spelling_result = session->spell(word, prev_words, flags);
+        auto json = nlohmann::json();
+        json["suggestionAttributes"] = spelling_result.suggestion_attributes;
+        json["suggestions"] = spelling_result.suggestions;
+        return fl::jni::std2j_string(env, json.dump());
+    });
 }
 
 extern "C" JNIEXPORT fl::jni::NativeList JNICALL
@@ -90,15 +92,21 @@ Java_dev_patrickgold_florisboard_ime_nlp_latin_LatinNlpSession_00024CXX_nativeSu
     fl::jni::NativeList j_prev_words,
     jint flags
 ) {
-    auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
-    auto word = fl::jni::j2std_string(env, j_word);
-    auto prev_words = fl::jni::j2std_list<std::string>(env, j_prev_words);
-    fl::nlp::SuggestionResults suggestion_results;
-    session->suggest(word, prev_words, flags, suggestion_results);
-    std::vector<fl::nlp::SuggestionCandidate> candidates;
-    candidates.reserve(suggestion_results.size());
-    for (auto& candidate_ptr : suggestion_results) {
-        candidates.push_back(std::move(*candidate_ptr));
-    }
-    return fl::jni::std2j_list(env, candidates);
+    return fl::jni::runInExceptionContainer(env, [&] {
+        auto* session = reinterpret_cast<fl::nlp::LatinNlpSession*>(native_ptr);
+        auto word = fl::jni::j2std_string(env, j_word);
+        if (word == "null") {
+            int* x = nullptr;
+            *x = 1;
+        }
+        auto prev_words = fl::jni::j2std_list<std::string>(env, j_prev_words);
+        fl::nlp::SuggestionResults suggestion_results;
+        session->suggest(word, prev_words, flags, suggestion_results);
+        std::vector<fl::nlp::SuggestionCandidate> candidates;
+        candidates.reserve(suggestion_results.size());
+        for (auto& candidate_ptr : suggestion_results) {
+            candidates.push_back(std::move(*candidate_ptr));
+        }
+        return fl::jni::std2j_list(env, candidates);
+    });
 }

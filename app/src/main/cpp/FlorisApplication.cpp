@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-#include <fstream>
-#include <vector>
-#include <jni.h>
-#include <unicode/udata.h>
+#include "fl_icuext.hpp"
+#include "utils/jni_exception.h"
 #include "utils/jni_utils.h"
 
-#include "fl_icuext.hpp"
+#include <jni.h>
 
-#pragma ide diagnostic ignored "UnusedLocalVariable"
-
-extern "C"
-JNIEXPORT jint JNICALL
-Java_dev_patrickgold_florisboard_FlorisApplication_00024Companion_nativeInitICUData(
-        JNIEnv *env, jobject, fl::jni::NativeStr path)
-{
-    auto path_str = fl::jni::j2std_string(env, path);
-    auto status = fl::icuext::loadAndSetCommonData(path_str);
-    return status;
+extern "C" JNIEXPORT jint JNICALL
+Java_dev_patrickgold_florisboard_FlorisApplication_00024Companion_nativeInitICUData( //
+    JNIEnv* env,
+    jobject,
+    fl::jni::NativeStr path
+) {
+    return fl::jni::runInExceptionContainer(env, [&] {
+        auto path_str = fl::jni::j2std_string(env, path);
+        auto status = fl::icuext::loadAndSetCommonData(path_str);
+        return status;
+    });
 }
