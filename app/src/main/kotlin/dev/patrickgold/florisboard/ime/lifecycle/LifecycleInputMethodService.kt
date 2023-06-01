@@ -23,9 +23,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import androidx.lifecycle.ViewTreeViewModelStoreOwner
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
@@ -45,13 +45,11 @@ open class LifecycleInputMethodService : InputMethodService(),
     final override val savedStateRegistry: SavedStateRegistry
         get() = savedStateRegistryController.savedStateRegistry
 
-    final override fun getLifecycle(): Lifecycle {
-        return lifecycleRegistry
-    }
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 
-    final override fun getViewModelStore(): ViewModelStore {
-        return store
-    }
+    override val viewModelStore: ViewModelStore
+        get() = store
 
     @CallSuper
     override fun onCreate() {
@@ -63,8 +61,8 @@ open class LifecycleInputMethodService : InputMethodService(),
 
     fun installViewTreeOwners() {
         val decorView = window!!.window!!.decorView
-        ViewTreeLifecycleOwner.set(decorView, this)
-        ViewTreeViewModelStoreOwner.set(decorView, this)
+        decorView.setViewTreeLifecycleOwner(this)
+        decorView.setViewTreeViewModelStoreOwner(this)
         decorView.setViewTreeSavedStateRegistryOwner(this)
     }
 

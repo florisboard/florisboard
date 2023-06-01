@@ -28,7 +28,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") } // JetPref library
+        // Uncomment the following if testing snapshots from Maven Central
+        // maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
     }
 }
 
