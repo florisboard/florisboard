@@ -137,6 +137,12 @@
         "direction": "ltr"
       },
       {
+        "id": "estonian",
+        "label": "Estonian",
+        "authors": [ "OneSheepy" ],
+        "direction": "ltr"
+      },
+      {
         "id": "faroese",
         "label": "Faroese (QWERTY)",
         "authors": [ "BinFlush" ],
