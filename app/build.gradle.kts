@@ -218,6 +218,12 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     }
 }
 
+val customClean by tasks.registering(Delete::class) {
+    delete(file(".cxx").absolutePath)
+    delete(file(".cxx_icu4c").absolutePath)
+}
+tasks.getByName("clean").dependsOn(customClean)
+
 dependencies {
     implementation(project(":ime-lib"))
     implementation(project(":plugin"))
