@@ -158,17 +158,25 @@ class LatinLanguageProviderService : FlorisPluginService(), SpellingProvider, Su
 
     private fun getBaseDictionaryPaths(subtype: ComputedSubtype): List<String> {
         val primaryLocale = FlorisLocale.fromTag(subtype.primaryLocale)
-        val dictionaries = mutableListOf<String>()
+        val exactMatchDicts = mutableListOf<String>()
+        val onlyLanguageMatchDicts = mutableListOf<String>()
         outer@ for (ext in extensionManager.dictionaryExtensions.value!!) {
             for (dict in ext.dictionaries) {
                 if (dict.locale == primaryLocale) {
                     ext.load(this).onSuccess {
-                        dictionaries.add(ext.workingDir!!.subFile(dict.dictionaryFile()).absolutePath)
+                        exactMatchDicts.add(ext.workingDir!!.subFile(dict.dictionaryFile()).absolutePath)
                     }
                     break@outer
+                } else if (dict.locale.language == primaryLocale.language) {
+                    ext.load(this).onSuccess {
+                        onlyLanguageMatchDicts.add(ext.workingDir!!.subFile(dict.dictionaryFile()).absolutePath)
+                    }
                 }
             }
         }
-        return dictionaries
+        if (exactMatchDicts.isEmpty() && onlyLanguageMatchDicts.isNotEmpty()) {
+            exactMatchDicts.add(onlyLanguageMatchDicts.first())
+        }
+        return exactMatchDicts
     }
 }
