@@ -520,6 +520,15 @@
       }
     },
     {
+      "languageTag": "sl-SI",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:sl-SI",
+      "preferred": {
+        "characters": "org.florisboard.layouts:slovenian"
+      }
+    },
+    {
       "languageTag": "lv-LV",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
