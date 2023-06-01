@@ -79,7 +79,8 @@ android {
                 cppFlags("-std=c++20", "-stdlib=libc++")
                 arguments(
                     "-DCMAKE_ANDROID_API=" + minSdk.toString(),
-                    "-DICU_ASSET_EXPORT_DIR=" + project.file("src/main/assets/icu4c").absolutePath,
+                    "-DICU_ASSET_EXPORT_DIR=" + project.file(".cxx_icu4c/android/assets/icu4c").absolutePath,
+                    "-DICU_BUILD_DIR=" + project.file(".cxx_icu4c").absolutePath,
                     "-DBUILD_SHARED_LIBS=false",
                     "-DANDROID_STL=c++_static",
                 )
@@ -93,7 +94,7 @@ android {
         sourceSets {
             maybeCreate("main").apply {
                 assets {
-                    srcDirs("src/main/assets")
+                    srcDirs("src/main/assets", ".cxx_icu4c/android/assets")
                 }
                 java {
                     srcDirs("src/main/kotlin")
@@ -187,6 +188,9 @@ android {
         configPath = "app/src/main/config"
     }
 
+    // This specific block is crucial as it forces the assets packing to be done AFTER the native code has been
+    // compiled. This is important as CMake generates the ICU4C data file which needs to be placed inside the assets
+    // dir, especially though for clean builds on workflow runners and for F-Droid.
     applicationVariants.all {
         assembleProvider.configure {
             dependsOn(javaCompileProvider.get())
