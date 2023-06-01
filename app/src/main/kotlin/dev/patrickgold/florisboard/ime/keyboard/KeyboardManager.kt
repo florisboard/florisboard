@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinNlpSession
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
@@ -147,13 +146,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 reevaluateInputShiftState()
                 updateActiveEvaluators()
                 editorInstance.refreshComposing()
-                resetSuggestions(editorInstance.activeContent)
+                generateSuggestions(editorInstance.activeContent)
             }
             clipboardManager.primaryClipFlow.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             editorInstance.activeContentFlow.collectIn(scope) { content ->
-                resetSuggestions(content)
+                generateSuggestions(content)
             }
             prefs.devtools.enabled.observeForever {
                 reevaluateDebugFlags()
@@ -213,15 +212,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    fun resetSuggestions(content: EditorContent) {
-        if (content.textBeforeSelection == "crash") {
-            LatinNlpSession.nativeInit()
-        }
-        if (!(activeState.isComposingEnabled || nlpManager.isSuggestionOn())) {
+    private suspend fun generateSuggestions(content: EditorContent) {
+        if (nlpManager.isSuggestionEnabled()) {
+            nlpManager.suggest(subtypeManager.activeSubtype, content)
+        } else {
             nlpManager.clearSuggestions()
-            return
         }
-        nlpManager.suggest(subtypeManager.activeSubtype, content)
     }
 
     /**

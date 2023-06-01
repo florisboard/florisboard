@@ -264,7 +264,7 @@ private fun FlorisInvalidPluginBox(plugin: IndexedPlugin) {
 @Composable
 private fun florisPluginFeatureToString(feature: FlorisPluginFeature): String {
     return when (feature) {
-        FlorisPluginFeature.SpellingConfig -> "Spelling"
-        FlorisPluginFeature.SuggestionConfig -> "Suggestion"
+        is FlorisPluginFeature.SpellingConfig -> "Spelling"
+        is FlorisPluginFeature.SuggestionConfig -> "Suggestion"
     }
 }

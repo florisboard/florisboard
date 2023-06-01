@@ -40,7 +40,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-@Suppress("BlockingMethodInNonBlockingContext")
 abstract class AbstractEditorInstance(context: Context) {
     companion object {
         private const val NumCharsBeforeCursor: Int = 256
@@ -242,7 +241,7 @@ abstract class AbstractEditorInstance(context: Context) {
             } else {
                 EditorRange.Unspecified
             }
-        val localComposing = if (determineComposingEnabled()) localCurrentWord else EditorRange.Unspecified
+        val localComposing = if (nlpManager.isSuggestionEnabled()) localCurrentWord else EditorRange.Unspecified
 
         // Build and publish text and content
         val text = buildString {
@@ -275,8 +274,6 @@ abstract class AbstractEditorInstance(context: Context) {
             }
         }
     }
-
-    abstract fun determineComposingEnabled(): Boolean
 
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
 

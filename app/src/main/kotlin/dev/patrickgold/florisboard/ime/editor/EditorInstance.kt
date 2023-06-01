@@ -111,13 +111,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         activeState.keyboardMode = keyboardMode
         activeState.isComposingEnabled = when (keyboardMode) {
             KeyboardMode.NUMERIC,
-            KeyboardMode.PHONE,
-            KeyboardMode.PHONE2,
-            -> false
-            else -> activeState.keyVariation != KeyVariation.PASSWORD &&
-                prefs.suggestion.enabled.get()// &&
-            //!instance.inputAttributes.flagTextAutoComplete &&
-            //!instance.inputAttributes.flagTextNoSuggestions
+            KeyboardMode.PHONE -> false
+            else -> activeState.keyVariation != KeyVariation.PASSWORD
         }
         activeState.isIncognitoMode = when (prefs.advanced.incognitoMode.get()) {
             IncognitoMode.FORCE_OFF -> false
@@ -136,10 +131,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         } else {
             super.handleSelectionUpdate(oldSelection, newSelection, composing)
         }
-    }
-
-    override fun determineComposingEnabled(): Boolean {
-        return nlpManager.isSuggestionOn()
     }
 
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
@@ -251,7 +242,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitCompletion(candidate: SuggestionCandidate): Boolean {
-        val text = candidate.text.toString()
+        val text = candidate.text
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
         val content = activeContent
         return if (content.composing.isValid) {

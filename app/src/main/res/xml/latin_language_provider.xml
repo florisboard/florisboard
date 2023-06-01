@@ -15,6 +15,6 @@
     <spelling/>
 
     <!-- Suggestion config -->
-    <suggestion/>
+    <suggestion fl:requireAlwaysEnabled="false"/>
 
 </plugin>

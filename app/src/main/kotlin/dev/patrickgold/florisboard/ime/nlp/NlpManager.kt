@@ -69,8 +69,6 @@ class NlpManager(context: Context) {
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider()
-    // lock unnecessary because values constant
-    private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
     val plugins = FlorisPluginIndexer(context)
 
     private val internalSuggestionsGuard = Mutex()
@@ -195,18 +193,15 @@ class NlpManager(context: Context) {
         }
     }
 
-    fun providerForcesSuggestionOn(subtype: Subtype): Boolean {
-        // Using a cache because I have no idea how fast the runBlocking is
-        //return providersForceSuggestionOn.getOrPut(subtype.nlpProviders.suggestion) {
-        //    runBlocking {
-        //        nlpProviderRegistry.getSuggestionProvider(subtype).forcesSuggestionOn
-        //    }
-        //}
-        return false
+    private suspend fun providerRequiresSuggestionAlwaysEnabled(subtype: Subtype): Boolean {
+        return plugins.getOrNull(subtype.nlpProviders.suggestion)
+            ?.metadata?.suggestionConfig?.requireAlwaysEnabled ?: false
     }
 
-    fun isSuggestionOn(): Boolean =
-        prefs.suggestion.enabled.get() || providerForcesSuggestionOn(subtypeManager.activeSubtype)
+    suspend fun isSuggestionEnabled(): Boolean {
+        return keyboardManager.activeState.isComposingEnabled &&
+            (prefs.suggestion.enabled.get() || providerRequiresSuggestionAlwaysEnabled(subtypeManager.activeSubtype))
+    }
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
@@ -274,7 +269,7 @@ class NlpManager(context: Context) {
     private fun assembleCandidates() {
         runBlocking {
             val candidates = when {
-                isSuggestionOn() -> {
+                isSuggestionEnabled() -> {
                     clipboardSuggestionProvider.suggest(
                         subtypeId = Subtype.FALLBACK.id,
                         word = editorInstance.activeContent.currentWordText,

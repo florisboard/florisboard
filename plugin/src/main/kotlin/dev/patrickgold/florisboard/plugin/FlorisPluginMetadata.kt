@@ -109,7 +109,11 @@ data class FlorisPluginMetadata(
                         )
                     }
                     "spelling" -> pluginMetadata?.spellingConfig = FlorisPluginFeature.SpellingConfig
-                    "suggestion" -> pluginMetadata?.suggestionConfig = FlorisPluginFeature.SuggestionConfig
+                    "suggestion" -> {
+                        pluginMetadata?.suggestionConfig = FlorisPluginFeature.SuggestionConfig(
+                            requireAlwaysEnabled = attrOrNull("requireAlwaysEnabled").toBoolean(),
+                        )
+                    }
                 }
                 eventType = parser.next()
             }
@@ -121,5 +125,8 @@ data class FlorisPluginMetadata(
 
 sealed interface FlorisPluginFeature {
     object SpellingConfig : FlorisPluginFeature
-    object SuggestionConfig : FlorisPluginFeature
+
+    data class SuggestionConfig(
+        val requireAlwaysEnabled: Boolean,
+    ) : FlorisPluginFeature
 }
