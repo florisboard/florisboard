@@ -187,6 +187,13 @@ android {
         configPath = "app/src/main/config"
     }
 
+    applicationVariants.all {
+        assembleProvider.configure {
+            dependsOn(javaCompileProvider.get())
+            dependsOn(externalNativeBuildProviders)
+        }
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
