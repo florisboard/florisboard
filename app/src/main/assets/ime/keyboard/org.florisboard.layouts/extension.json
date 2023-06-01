@@ -681,8 +681,8 @@
         "direction": "ltr"
       },
       {
-        "id": "sboard",
-        "label": "Samsung",
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
         "authors": [ "nettnikl" ],
         "direction": "ltr"
       }
