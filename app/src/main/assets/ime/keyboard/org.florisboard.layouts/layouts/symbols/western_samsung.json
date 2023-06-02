@@ -1,0 +1,85 @@
+[
+  [
+    { "code":   43, "label": "+", "popup": {
+      "main": { "code":  177, "label": "±" }
+    } },
+    { "code":  215, "label": "×" },
+    { "code":  247, "label": "÷" },
+    { "code":   61, "label": "=", "popup": {
+      "main": { "code": 8776, "label": "≈" },
+      "relevant": [
+        { "code": 8800, "label": "≠" },
+        { "code": 8801, "label": "≡" }
+      ]
+    } },
+    { "code":   47, "label": "/" },
+    { "code":   95, "label": "_" },
+    { "code":   60, "label": "<" },
+    { "code":   62, "label": ">" },
+    { "code":   91, "label": "[", "popup": {
+      "main": { "code": 12302, "label": "『" },
+      "relevant": [
+        { "code": 12300, "label": "「" },
+        { "code": 12308, "label": "〔" },
+        { "code": 12304, "label": "【" }
+      ]
+    } },
+    { "code":   93, "label": "]", "popup": {
+      "main": { "code": 12303, "label": "』" },
+      "relevant": [
+        { "code": 12301, "label": "」" },
+        { "code": 12309, "label": "〕" },
+        { "code": 12305, "label": "】" }
+      ]
+    } }
+  ],
+  [
+    { "code":   33, "label": "!", "popup": {
+      "main": { "code":  161, "label": "¡" }
+    } },
+    { "code":   64, "label": "@" },
+    { "code":   35, "label": "#", "popup": {
+      "main": { "code": 8470, "label": "№" }
+    } },
+    { "code": -801, "label": "currency_slot_1", "popup": {
+      "main": { "code": -802, "label": "currency_slot_2" },
+      "relevant": [
+        { "code": -806, "label": "currency_slot_6" },
+        { "code": -803, "label": "currency_slot_3" },
+        { "code": -804, "label": "currency_slot_4" },
+        { "code": -805, "label": "currency_slot_5" }
+      ]
+    } },
+    { "code":   37, "label": "%", "popup": {
+      "main": { "code": 1642, "label": "٪" },
+      "relevant": [
+        { "code": 8240, "label": "‰" }
+      ]
+    } },
+    { "code":   94, "label": "^" },
+    { "code":   38, "label": "&" },
+    { "code":   42, "label": "*" },
+    { "code":   40, "label": "(" },
+    { "code":   41, "label": ")" }
+  ],
+  [
+    { "code":   45, "label": "-", "popup": {
+      "main": { "code": 8208, "label": "‐" },
+      "relevant": [
+        { "code": 8211, "label": "–" },
+        { "code": 8212, "label": "—" }
+      ]
+    } },
+    { "code":   39, "label": "'" },
+    { "code":   34, "label": "\"" },
+    { "code":   58, "label": ":" },
+    { "code":   59, "label": ";" },
+    { "code":   44, "label": "," },
+    { "code":   63, "label": "?", "popup": {
+      "main": { "code":  191, "label": "¿" },
+      "relevant": [
+        { "code": 8253, "label": "‽" }
+      ]
+    } }
+  ]
+]

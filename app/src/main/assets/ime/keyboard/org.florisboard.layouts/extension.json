@@ -691,6 +691,12 @@
         "label": "Western (Additional symbols)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+      {
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
+        "authors": [ "nettnikl" ],
+        "direction": "ltr"
       }
     ],
     "symbolsMod": [
@@ -749,6 +755,12 @@
         "id": "western",
         "label": "Western",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
+        "authors": [ "nettnikl" ],
         "direction": "ltr"
       }
     ],
