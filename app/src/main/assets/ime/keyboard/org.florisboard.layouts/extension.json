@@ -137,6 +137,12 @@
         "direction": "ltr"
       },
       {
+        "id": "estonian",
+        "label": "Estonian",
+        "authors": [ "OneSheepy" ],
+        "direction": "ltr"
+      },
+      {
         "id": "faroese",
         "label": "Faroese (QWERTY)",
         "authors": [ "BinFlush" ],
@@ -328,6 +334,12 @@
         "id": "serbian_latin",
         "label": "Serbian (QWERTZ)",
         "authors": ["GrbavaCigla"],
+        "direction": "ltr"
+      },
+      {
+        "id": "slovenian",
+        "label": "Slovenian (QWERTZ)",
+        "authors": ["samo_lego"],
         "direction": "ltr"
       },
       {
@@ -584,7 +596,7 @@
       {
         "id": "tamil",
         "label": "Tamil",
-        "authors": [ "yashpalgoyal1304" ],
+        "authors": [ "Clem0908" ],
         "direction": "ltr"
       },
       {
@@ -679,6 +691,12 @@
         "label": "Western (Additional symbols)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+      {
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
+        "authors": [ "nettnikl" ],
+        "direction": "ltr"
       }
     ],
     "symbolsMod": [
@@ -737,6 +755,12 @@
         "id": "western",
         "label": "Western",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
+        "authors": [ "nettnikl" ],
         "direction": "ltr"
       }
     ],

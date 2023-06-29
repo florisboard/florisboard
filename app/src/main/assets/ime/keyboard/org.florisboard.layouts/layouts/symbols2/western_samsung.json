@@ -1,0 +1,45 @@
+[
+  [
+    { "code":   96, "label": "`" },
+    { "code":  126, "label": "~" },
+    { "code":   92, "label": "\\" },
+    { "code":  124, "label": "|" },
+    { "code":  123, "label": "{" },
+    { "code":  125, "label": "}" },
+    { "code": -802, "label": "currency_slot_2" },
+    { "code": -804, "label": "currency_slot_4" },
+    { "code": -805, "label": "currency_slot_5" },
+    { "code": -806, "label": "currency_slot_6" }
+  ],
+  [
+    { "code":  176, "label": "°" },
+    { "code": 8226, "label": "•" },
+    { "code": 9675, "label": "○" },
+    { "code": 9679, "label": "●" },
+    { "code": 9633, "label": "□" },
+    { "code": 9632, "label": "■" },
+    { "code": 9828, "label": "♤", "popup": {
+      "main": { "code": 9824, "label": "♠️" }
+    } },
+    { "code": 9825, "label": "♡", "popup": {
+      "main": { "code": 9829, "label": "♥️" }
+    } },
+    { "code": 9671, "label": "◇", "popup": {
+      "main": { "code": 9670, "label": "◆" }
+    } },
+    { "code": 9831, "label": "♧", "popup": {
+      "main": { "code": 9827, "label": "♣️" }
+    } }
+  ],
+  [
+    { "code": 9734, "label": "☆", "popup": {
+      "main": { "code":  9733, "label": "★" }
+    } },
+    { "code": 9642, "label": "▪️" },
+    { "code":  164, "label": "¤" },
+    { "code":12298, "label": "《" },
+    { "code":12299, "label": "》" },
+    { "code":  161, "label": "¡" },
+    { "code":  191, "label": "¿" }
+  ]
+]
