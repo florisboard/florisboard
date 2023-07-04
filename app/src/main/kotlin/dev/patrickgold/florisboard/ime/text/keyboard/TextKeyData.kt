@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.icu.lang.UCharacter
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -53,7 +54,7 @@ class TextKeyData(
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
             evaluator.slotData(this)?.let { data ->
-                TextKeyData(data.type, data.code, data.label, groupId, popup)
+                TextKeyData(type, data.code, data.label, groupId, popup)
             }
         } else {
             this
@@ -150,6 +151,12 @@ class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
+                VOICE_INPUT,
+                TOGGLE_SMARTBAR_VISIBILITY,
+                TOGGLE_ACTIONS_OVERFLOW,
+                TOGGLE_ACTIONS_EDITOR,
+                TOGGLE_INCOGNITO_MODE,
+                TOGGLE_AUTOCORRECT,
             )
         }
 
@@ -450,12 +457,6 @@ class TextKeyData(
             code = KeyCode.LANGUAGE_SWITCH,
             label = "language_switch",
         )
-        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
-        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
-            type = KeyType.SYSTEM_GUI,
-            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
-            label = "toggle_smartbar_visibility",
-        )
 
         /** Predefined key data for [KeyCode.IME_SHOW_UI] */
         val IME_SHOW_UI = TextKeyData(
@@ -483,6 +484,37 @@ class TextKeyData(
             code = KeyCode.VOICE_INPUT,
             label = "voice_input",
         )
+
+        /** Predefined key data for [KeyCode.TOGGLE_SMARTBAR_VISIBILITY] */
+        val TOGGLE_SMARTBAR_VISIBILITY = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_SMARTBAR_VISIBILITY,
+            label = "toggle_smartbar_visibility",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_ACTIONS_OVERFLOW] */
+        val TOGGLE_ACTIONS_OVERFLOW = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_ACTIONS_OVERFLOW,
+            label = "toggle_actions_overflow",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_ACTIONS_EDITOR] */
+        val TOGGLE_ACTIONS_EDITOR = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_ACTIONS_EDITOR,
+            label = "toggle_actions_editor",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_INCOGNITO_MODE] */
+        val TOGGLE_INCOGNITO_MODE = TextKeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.TOGGLE_INCOGNITO_MODE,
+            label = "toggle_incognito_mode",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_AUTOCORRECT] */
+        val TOGGLE_AUTOCORRECT = TextKeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.TOGGLE_AUTOCORRECT,
+            label = "toggle_autocorrect",
+        )
     }
 }
 
@@ -495,18 +527,16 @@ class AutoTextKeyData(
     override val groupId: Int = KeyData.GROUP_DEFAULT,
     override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
-    @Transient private val lower: TextKeyData =
-        TextKeyData(type, Character.toLowerCase(code), label.lowercase(FlorisLocale.default()), groupId, popup)
-    @Transient private val upper: TextKeyData =
-        TextKeyData(type, Character.toUpperCase(code), label.uppercase(FlorisLocale.default()), groupId, popup)
+    @Transient private val state = AutoLetterState()
 
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {
             evaluator.slotData(this)?.let { data ->
-                TextKeyData(data.type, data.code, data.label, groupId, popup)
+                TextKeyData(type, data.code, data.label, groupId, popup)
             }
         } else {
-            if (evaluator.activeState().isUppercase) { upper } else { lower }
+            state.recomputeIfNecessary(evaluator.subtype.primaryLocale)
+            if (evaluator.state.isUppercase) { state.upper } else { state.lower }
         }
     }
 
@@ -525,6 +555,33 @@ class AutoTextKeyData(
 
     override fun toString(): String {
         return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
+    }
+
+    private inner class AutoLetterState {
+        private var locale: FlorisLocale = FlorisLocale.ROOT
+        var lower: TextKeyData = TextKeyData.UNSPECIFIED
+            private set
+        var upper: TextKeyData = TextKeyData.UNSPECIFIED
+            private set
+
+        fun recomputeIfNecessary(locale: FlorisLocale) {
+            if (this.locale == locale) return
+            this.locale = locale
+            lower = TextKeyData(
+                type,
+                UCharacter.toString(code).lowercase(locale).codePointAt(0),
+                label.lowercase(locale),
+                groupId,
+                popup,
+            )
+            upper = TextKeyData(
+                type,
+                UCharacter.toString(code).uppercase(locale).codePointAt(0),
+                label.uppercase(locale),
+                groupId,
+                popup,
+            )
+        }
     }
 }
 

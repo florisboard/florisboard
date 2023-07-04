@@ -23,7 +23,7 @@ interface GlideTypingClassifier {
     /**
      * Change the word data of the gesture classifier.
      */
-    fun setWordData(words: HashMap<String, Int>, subtype: Subtype)
+    fun setWordData(subtype: Subtype)
 
     /**
      * Process a completed gesture and find its location.
@@ -36,7 +36,7 @@ interface GlideTypingClassifier {
      * @param maxSuggestionCount The maximum number of suggestions that are accepted.
      * @param gestureCompleted Whether the gesture is finished. (e.g to use a different algorithm for in progress words)
      */
-    fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String>
+    fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<CharSequence>
 
     fun clear()
 }

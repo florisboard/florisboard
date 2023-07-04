@@ -10,8 +10,8 @@
     <string name="emoji__category__travel_places" comment="Emoji category name">ⴰⵎⵓⴷⴷⵓ &amp; ⵉⴷⵖⴰⵔⵏ</string>
     <string name="emoji__category__objects" comment="Emoji category name">ⵜⵉⵖⴰⵡⵙⵉⵡⵉⵏ</string>
     <string name="emoji__category__flags" comment="Emoji category name">ⵉⵛⵏⵢⴰⵍⵏ</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">ⵕⵥⵎ ⵜⵉⵙⵖⴰⵍ.</string>
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ⵜⵉⵙⵖⴰⵍ</string>
     <string name="settings__home__title" comment="Title of the Home screen">ⴱⵔⵔⴽ ⴳ {app_name}</string>
@@ -20,7 +20,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">ⵔⴰⴷ ⵓⵎⴰⵏⵏ ⴳ ⵓⴼⵍⵍⴰ ⵏ ⵓⵏⴰⵙⵉⵡ</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">ⵉⵙⵓⵎⵔⵏ</string>
-    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">ⵅⴼ</string>
     <!-- Setup UI strings -->

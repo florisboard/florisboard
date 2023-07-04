@@ -16,6 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -24,12 +28,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.themeManager
 
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionComponent> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
+
+private val MaterialDarkFallbackPalette = darkColors()
+private val MaterialLightFallbackPalette = lightColors()
 
 object FlorisImeTheme {
     val config: ThemeExtensionComponent
@@ -61,7 +69,18 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val activeThemeInfo by themeManager.activeThemeInfo.observeAsNonNullState()
     val activeConfig = remember(activeThemeInfo) { activeThemeInfo.config }
     val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
-    CompositionLocalProvider(LocalConfig provides activeConfig, LocalStyle provides activeStyle) {
-        content()
+    val materialColors = if (activeConfig.isNightTheme) {
+        MaterialDarkFallbackPalette
+    } else {
+        MaterialLightFallbackPalette
+    }
+    MaterialTheme(materialColors) {
+        CompositionLocalProvider(
+            LocalConfig provides activeConfig,
+            LocalStyle provides activeStyle,
+            LocalTextStyle provides TextStyle.Default,
+        ) {
+            content()
+        }
     }
 }

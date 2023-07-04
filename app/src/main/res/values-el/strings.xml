@@ -25,16 +25,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Αντικείμενα</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Σύμβολα</string>
     <string name="emoji__category__flags" comment="Emoji category name">Σημαίες</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Διακόπτης γρήγορης ενέργειας. Εάν πατηθεί, προκαλεί εναλλαγή μεταξύ των προτάσεων λέξεων και των πλήκτρων γρήγορης ενέργειας.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Έξοδος από την επιφάνεια επεξεργασίας κειμένου.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Εναλλαγή κατάστασης της λειτουργίας ενός χεριού.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Άνοιγμα ρυθμίσεων.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Εναλλαγή στην επιφάνεια επεξεργασίας κειμένου.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Εναλλαγή στην όψη εισαγωγής μέσων.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Πλήκτρο αναίρεσης για αναίρεση της τελευταίας ενέργειας</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Πλήκτρο επαναφοράς για αναίρεση της τελευταίας Αναίρεσης</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Εάν είναι ορατό, υποδεικνύει ότι η ιδιωτική λειτουργία είναι ενεργή. Όταν πατηθεί, εμφανίζει πληροφορίες σχετικά με την ιδιωτική λειτουργία.</string>
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ρυθμίσεις</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Δοκιμάστε τις ρυθμίσεις σας</string>
@@ -96,9 +88,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ήχος &amp; Δόνηση</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ηχητική ανάδραση / Ήχοι</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ενεργοποίηση ηχητικής ανάδρασης</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Αναπαραγωγή ήχων για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Αγνόηση ρυθμίσεων ήχου συστήματος</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Χρήση των παρακάτω προτιμήσεων, ακόμα κι αν ο ήχος είναι απενεργοποιημένος στο σύστημα. Δε λειτουργεί όταν ο ήχος κλήσης συστήματος είναι σιγασμένος</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Ένταση ήχου για ενέργειες εισαγωγής</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Ήχοι πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ήχοι παρατεταμένου πατήματος πλήκτρου</string>
@@ -107,11 +96,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Ήχοι χειρονομιών ολίσθησης μετακίνησης</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Απτική ανάδραση / Δόνηση</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ενεργοποίηση απτικής ανάδρασης</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Δόνηση για ενέργειες εισαγωγής, εξαρτώμενη από τις ρυθμίσεις συστήματος</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Αγνόηση ρυθμίσεων απτικής ανάδρασης συστήματος</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Χρήση των παρακάτω προτιμήσεων, ακόμα κι αν η απτική ανάδραση είναι απενεργοποιημένη στο σύστημα</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Εκκίνηση δόνησης άμεσα</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Εκκίνηση δόνησης άμεσα αντί για χρήση του συνόλου χαρακτηριστικών απτικής ανάδρασης του Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Διάρκεια δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Ένταση δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους στο υλισμικό, η οποία απουσιάζει από τη συσκευή σας</string>
@@ -155,14 +139,10 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Αντιστροφή των πλήκτρων εναλλαγής</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Αντιστρέφει τα πλήκτρα εναλλαγής της σειράς ενεργειών</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Διάταξη σειράς</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Κύριες ενέργειες</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Προτάσεις &amp; Διορθώσεις</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Λειτουργία προβολής προτάσεων</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Προτάσεις περιεχομένου προχείρου</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Λήξη προτάσεων προχείρου</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
@@ -170,6 +150,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Τα κεφαλαία θα παραμείνουν ενεργοποιημένα όταν μεταβείτε σε διαφορετικό πεδίο κειμένου</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Τελεία με διπλό-κενό</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Το διπλό πάτημα του πλήκτρου διαστήματος εισάγει μία τελεία ακολουθούμενη από ένα διάστημα</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Απενεργοποιημένο σε επίπεδο συστήματος. Δε θα εμφανιστούν κόκκινες γραμμές σε πεδία κειμένου για λανθασμένες λέξεις. Πατήστε για αλλαγή.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Δεν έχει οριστεί υπηρεσία ενσωματωμένου ορθογραφικού ελέγχου κειμένου. Πατήστε για αλλαγή.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Γλώσσες</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Χρήση καταχωρήσεων λεξικού χρήστη</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Λεξικά χρήστη</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ενεργοποίηση λεξικού χρήστη στο σύστημα</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Προτάσεις λέξεων αποθηκευμένων στο λεξικό χρήστη στο σύστημα</string>
@@ -220,40 +204,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Γλώσσα ρυθμίσεων</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Εμφάνιση του εικονιδίου της εφαρμογής στον εκκινητή</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Πάντα ενεργοποιημένο σε Android 10+ λόγω περιορισμών του συστήματος</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Εξαναγκασμός ιδιωτικής λειτουργίας</string>
-    <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Ορθογραφικός έλεγχος</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Χρήση της ρύθμισης ορθογραφικού ελέγχου πληκτρολογίου</string>
-    <string name="pref__spelling__active_spellchecker__label">Ενσωματωμένος ορθογραφικός ελέγχος πεδίου κειμένου</string>
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Απενεργοποιημένο σε επίπεδο συστήματος. Δε θα εμφανιστούν κόκκινες γραμμές σε πεδία κειμένου για λανθασμένες λέξεις. Πατήστε για αλλαγή.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Δεν έχει οριστεί υπηρεσία ενσωματωμένου ορθογραφικού ελέγχου κειμένου. Πατήστε για αλλαγή.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Η επιλογή \"Γλώσσες\" στην οθόνη ορθογραφικού ελέγχου συστήματος έχει οριστεί σε \"Χρήση γλωσσών συστήματος\". Λόγω ενός προβλήματος αυτό ίσως προκαλέσει το {app_name} να μην εκτελέσει ενσωματωμένο ορθογραφικό έλεγχο. Σκεφτείτε να το αλλάξετε σε \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Ρύθμιση παραμέτρων</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Γλώσσες</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ΜΗ ΕΦΑΡΜΟΣΜΈΝΟ] Χρήση ονομάτων από τις επαφές</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Χρήση καταχωρήσεων λεξικού χρήστη</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Ο ορθογραφικός έλεγχος θα ψάξει τις καταχωρήσεις από το λεξικό χρήστη, εάν αυτές είναι ενεργές</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Διαχείριση λεξικών</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} εγκατεστημένα</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Δεν υπάρχουν εγκατεστημένα λεξικά ορθογραφικού ελέγχου. Προσθέστε το πρώτο με το \'+\'-πλήκτρο πιο κάτω!</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Προέκταση / Αρχείο</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Πρόθυμα + Αρχείο λεξικού</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Εισαγωγή νέου λεξικού</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Επιλογή πηγής</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Επιλέξτε την πηγή απ\' όπου λάβατε την επέκταση τρίτου μέρους. Αυτό βοηθάει στην ορθή ανάλυση της μη-FlorisBoard μορφής επέκτασης και στη μετατροπή της σε μορφή FlorisBoard.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Εισαγωγή αρχείου</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Τώρα εισάγετε το αρχείο επιλέγοντάς το στο διάλογο επιλογέα αρχείων.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Επιλογή γλώσσας</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Κωδικός γλώσσας (π.χ. en_US)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Εισαγωγή αρχείου προσφύματος/λεξικού</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Επιλογή αρχείου προσφύματος (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Επιλογή αρχείου λεξικού (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Επιβεβαίωση εισαγωγής</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Βεβαιώστε πως τα παρακάτω μεταδεδομένα είναι σωστά. Εάν κάτι είναι λανθασμένο, μπορείτε να επιστρέψετε σε κάποιο προηγούμενο βήμα και να επανεπιλέξετε την πηγή / επανεισάγετε το αρχείο.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Από πού αποκτώ λεξικά;</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">Το FlorisBoard χρησιμοποιεί το Nuspell ως μηχανή ορθογραφικού ελέγχου, το οποίο σημαίνει πως υπάρχει ένας τεράστιος αριθμός διαθέσιμων λεξικών, καθώς το Hunspell χρησιμοποιείται από πολλά άλλα προγράμματα επίσης. Η παρακάτω λίστα δείχνει μερικές επιλεγμένες πηγές τις οποίες ο διαχειριστής εισαγωγής υποστηρίζει. Κατεβάστε είτε το αρχειοθετημένο αρχείο είτε τα αρχεία του λεξικού, έπειτα στο διαχειριστή εισαγωγής επιλέξτε τη σωστή πηγή (είναι σημαντικό να διαβάσετε σωστά τη μορφή του αρχείου).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">εάν αυτή η λίστα δεν περιέχει λεξικά για τη γλώσσα ή διάλεκτό σας, μπορείτε επίσης να αναζητήσετε χειροκίνητα κάποιο λεξικό Hunspell και να εισάγετε τα \'aff\' και \'dic\' αρχεία για αυτό.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Σχετικά με</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Εικονίδιο εφαρμογής του FlorisBoard</string>
@@ -387,7 +337,6 @@
     <string name="ext__import__failure">Αποτυχία εισαγωγής επέκτασης: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Εισαγωγή επέκτασης</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Εισαγωγή επέκτασης πληκτρολογίου</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Εισαγωγή επέκτασης / λεξικού ορθογραφικού ελέγχου</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Εισαγωγή επέκτασης θέματος</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Το αρχείο δεν μπορεί να εισαχθεί. Αιτία:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Μη υποστηριζόμενος ή μη αναγνωρίσιμος τύπος αρχείου.</string>
@@ -453,12 +402,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Ανενεργό</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Λειτουργία για αριστερόχειρες</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Λειτουργία για δεξιόχειρες</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Πάνω από την πρωτεύουσα σειρά</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ του περιβάλλοντος της εφαρμογής και της πρωτεύουσας σειράς</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Κάτω από την πρωτεύουσα σειρά</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά μεταξύ της πρωτεύουσας σειράς και του πληκτρολογίου κειμένου</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Επικάλυψη περιβάλλοντος εφαρμογής</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Τοποθετεί τη δευτερεύουσα σειρά ως επικάλυμμα πάνω από το περιβάλλον της εφαρμογής, χωρίς να επηρεάζει το προκύπτον ύψος του περιβάλλοντος της εφαρμογής. Να σημειωθεί ότι αυτή η τοποθέτηση ίσως προκαλέσει μερική κάλυψη του πεδίου κειμένου της εφαρμογής</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Χρήση γλωσσών συστήματος</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Καμία ενέργεια</string>

@@ -73,7 +73,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
 
     private fun determineRepeatDelay(data: KeyData): Long {
         val factor = when (data.code) {
-            KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE_WORD -> 5.0f
+            KeyCode.DELETE_WORD, KeyCode.FORWARD_DELETE_WORD, KeyCode.UNDO, KeyCode.REDO -> 5.0f
             else -> 1.0f
         }
         return (KeyRepeatDelay * factor).toLong()
@@ -205,6 +205,15 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
 
     fun isUninterruptedEventSequence(data: KeyData): Boolean {
         return lastKeyEventDown.data.code == data.code
+    }
+
+    fun isRepeatable(data: KeyData): Boolean {
+        return repeatableKeyCodes.contains(data.code)
+    }
+
+    fun isRepeatableCodeLastDown(): Boolean {
+        val event = lastKeyEventDown
+        return repeatableKeyCodes.contains(event.data.code)
     }
 
     /**

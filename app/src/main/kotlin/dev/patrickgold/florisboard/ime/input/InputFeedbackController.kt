@@ -16,25 +16,19 @@
 
 package dev.patrickgold.florisboard.ime.input
 
-import android.content.Context
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
+import dev.patrickgold.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,39 +44,6 @@ val LocalInputFeedbackController = staticCompositionLocalOf<InputFeedbackControl
 class InputFeedbackController private constructor(private val ims: InputMethodService) {
     companion object {
         fun new(ims: InputMethodService) = InputFeedbackController(ims)
-
-        @Composable
-        fun hasAmplitudeControl(): Boolean {
-            val vibrator = LocalContext.current.systemVibratorOrNull()
-            return when {
-                AndroidVersion.ATLEAST_API26_O -> vibrator != null && vibrator.hasAmplitudeControl()
-                else -> false
-            }
-        }
-
-        @Composable
-        fun generateVibrationStrengthErrorSummary(): String? {
-            val vibrator = LocalContext.current.systemVibratorOrNull()
-            return when {
-                AndroidVersion.ATLEAST_API26_O -> when {
-                    vibrator == null || !vibrator.hasAmplitudeControl() -> {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
-                    }
-                    else -> null
-                }
-                else -> {
-                    stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
-                }
-            }
-        }
-
-        private fun Context.systemVibratorOrNull(): Vibrator? {
-            return if (AndroidVersion.ATLEAST_API31_S) {
-                this.systemServiceOrNull(VibratorManager::class)?.defaultVibrator
-            } else {
-                this.systemServiceOrNull(Vibrator::class)
-            }?.takeIf { it.hasVibrator() }
-        }
     }
 
     private val prefs by florisPreferenceModel()
@@ -133,7 +94,8 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     private fun performAudioFeedback(data: KeyData, factor: Double) {
         if (audioManager == null) return
         if (!prefs.inputFeedback.audioEnabled.get()) return
-        if (!prefs.inputFeedback.audioIgnoreSystemSettings.get() && !systemAudioEnabled) return
+        if (prefs.inputFeedback.audioActivationMode.get() ==
+            InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS && !systemAudioEnabled) return
 
         scope.launch {
             val volume = (prefs.inputFeedback.audioVolume.get() * factor) / 100.0
@@ -153,10 +115,11 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
     private fun performHapticFeedback(data: KeyData, factor: Double) {
         if (vibrator == null) return
         if (!prefs.inputFeedback.hapticEnabled.get()) return
-        if (!prefs.inputFeedback.hapticIgnoreSystemSettings.get() && !systemHapticEnabled) return
+        if (prefs.inputFeedback.hapticActivationMode.get() ==
+            InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS && !systemHapticEnabled) return
 
         scope.launch {
-            if (!prefs.inputFeedback.hapticUseVibrator.get()) {
+            if (prefs.inputFeedback.hapticVibrationMode.get() == HapticVibrationMode.USE_HAPTIC_FEEDBACK_INTERFACE) {
                 val view = ims.window?.window?.decorView ?: return@launch
                 val hfc = if (factor < 1.0 && AndroidVersion.ATLEAST_API27_O_MR1) {
                     HapticFeedbackConstants.TEXT_HANDLE_MOVE
@@ -171,29 +134,11 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
                 // If not performed fall back to using the vibrator directly
             }
 
-            val duration = prefs.inputFeedback.hapticVibrationDuration.get()
-            if (duration != 0) {
-                val effectiveDuration = (duration * factor).toLong().coerceAtLeast(1L)
-                if (AndroidVersion.ATLEAST_API26_O) {
-                    val strength = when {
-                        vibrator.hasAmplitudeControl() -> prefs.inputFeedback.hapticVibrationStrength.get()
-                        else -> VibrationEffect.DEFAULT_AMPLITUDE
-                    }
-                    if (strength != 0) {
-                        val effectiveStrength = when {
-                            vibrator.hasAmplitudeControl() -> (255.0 * ((strength * factor) / 100.0)).toInt().coerceIn(1, 255)
-                            else -> strength
-                        }
-                        flogDebug { "Perform haptic with duration=$effectiveDuration and strength=$effectiveStrength" }
-                        val effect = VibrationEffect.createOneShot(effectiveDuration, effectiveStrength)
-                        vibrator.vibrate(effect)
-                    }
-                } else {
-                    flogDebug { "Perform haptic with duration=$effectiveDuration" }
-                    @Suppress("DEPRECATION")
-                    vibrator.vibrate(effectiveDuration)
-                }
-            }
+            vibrator.vibrate(
+                duration = prefs.inputFeedback.hapticVibrationDuration.get(),
+                strength = prefs.inputFeedback.hapticVibrationStrength.get(),
+                factor = factor,
+            )
         }
     }
 }

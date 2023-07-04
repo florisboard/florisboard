@@ -19,10 +19,13 @@ package dev.patrickgold.florisboard.app.settings.theme
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -60,7 +63,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.LocalWindowInsets
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -106,6 +108,7 @@ internal val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
     restore = { it.toMutableStateList() },
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ThemeEditorScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
@@ -194,7 +197,7 @@ fun ThemeEditorScreen(
             handleBackPress()
         }
 
-        val isImeVisible = LocalWindowInsets.current.ime.isVisible
+        val isImeVisible = WindowInsets.isImeVisible
         LaunchedEffect(showEditComponentMetaDialog, showFineTuneDialog, snyggRuleToEdit, snyggPropertyToEdit) {
             val visible = showEditComponentMetaDialog || showFineTuneDialog ||
                 snyggRuleToEdit != null || snyggPropertyToEdit != null

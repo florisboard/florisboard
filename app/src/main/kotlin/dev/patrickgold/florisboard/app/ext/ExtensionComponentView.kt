@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
@@ -88,6 +89,22 @@ fun ExtensionComponentView(
                             appendLine("isBorderless = ${component.isBorderless}")
                             appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
                             append("stylesheetPath = ${component.stylesheetPath()}")
+                        }
+                    }
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.body2,
+                        color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                    )
+                }
+                is LanguagePackComponent -> {
+                    val text = remember(
+                        component.authors, component.locale, component.hanShapeBasedKeyCode,
+                    ) {
+                        buildString {
+                            appendLine("authors = ${component.authors}")
+                            appendLine("locale = ${component.locale.localeTag()}")
+                            appendLine("hanShapeBasedKeyCode = ${component.hanShapeBasedKeyCode}")
                         }
                     }
                     Text(

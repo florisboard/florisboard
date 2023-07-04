@@ -14,7 +14,6 @@
     { "code": -212, "label": "ime_ui_mode_media", "type": "system_gui" },
     { "code":   32, "label": "space" },
     { "code": 8204, "label": "half_space" },
-    { "code": 1600, "label": "kashida" },
     { "code":   46, "label": ".", "groupId": 2 },
     { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
   ]

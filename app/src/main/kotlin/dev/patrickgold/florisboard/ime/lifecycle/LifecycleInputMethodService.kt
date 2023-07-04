@@ -23,13 +23,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import androidx.lifecycle.ViewTreeViewModelStoreOwner
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
-import androidx.savedstate.ViewTreeSavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import kotlinx.coroutines.CoroutineScope
 
 open class LifecycleInputMethodService : InputMethodService(),
@@ -42,17 +42,14 @@ open class LifecycleInputMethodService : InputMethodService(),
     val uiScope: CoroutineScope
         get() = lifecycle.coroutineScope
 
-    final override fun getLifecycle(): Lifecycle {
-        return lifecycleRegistry
-    }
+    final override val savedStateRegistry: SavedStateRegistry
+        get() = savedStateRegistryController.savedStateRegistry
 
-    final override fun getViewModelStore(): ViewModelStore {
-        return store
-    }
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 
-    final override fun getSavedStateRegistry(): SavedStateRegistry {
-        return savedStateRegistryController.savedStateRegistry
-    }
+    override val viewModelStore: ViewModelStore
+        get() = store
 
     @CallSuper
     override fun onCreate() {
@@ -64,9 +61,9 @@ open class LifecycleInputMethodService : InputMethodService(),
 
     fun installViewTreeOwners() {
         val decorView = window!!.window!!.decorView
-        ViewTreeLifecycleOwner.set(decorView, this)
-        ViewTreeViewModelStoreOwner.set(decorView, this)
-        ViewTreeSavedStateRegistryOwner.set(decorView, this)
+        decorView.setViewTreeLifecycleOwner(this)
+        decorView.setViewTreeViewModelStoreOwner(this)
+        decorView.setViewTreeSavedStateRegistryOwner(this)
     }
 
     @CallSuper

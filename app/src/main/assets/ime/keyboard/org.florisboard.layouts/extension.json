@@ -43,6 +43,12 @@
         "authors": [ "patrickgold" ],
         "direction": "ltr"
       },
+	  {
+        "id": "bengali_bd",
+        "label": "বাংলা",
+        "authors": [ "iamrasel" ],
+        "direction": "ltr"
+      },
       {
         "id": "bepo",
         "label": "BÉPO",
@@ -131,6 +137,12 @@
         "direction": "ltr"
       },
       {
+        "id": "estonian",
+        "label": "Estonian",
+        "authors": [ "OneSheepy" ],
+        "direction": "ltr"
+      },
+      {
         "id": "faroese",
         "label": "Faroese (QWERTY)",
         "authors": [ "BinFlush" ],
@@ -199,13 +211,13 @@
       },
       {
         "id": "jcuken_russian",
-        "label": "Russian (JCUKEN)",
+        "label": "Russian (ЙЦУКЕН)",
         "authors": [ "williamtheaker" ],
         "direction": "ltr"
       },
       {
         "id": "jcuken_ukrainian",
-        "label": "Ukrainian (JCUKEN)",
+        "label": "Ukrainian (ЙЦУКЕН)",
         "authors": [ "williamtheaker", "33kk" ],
         "direction": "ltr"
       },
@@ -322,6 +334,12 @@
         "id": "serbian_latin",
         "label": "Serbian (QWERTZ)",
         "authors": ["GrbavaCigla"],
+        "direction": "ltr"
+      },
+      {
+        "id": "slovenian",
+        "label": "Slovenian (QWERTZ)",
+        "authors": ["samo_lego"],
         "direction": "ltr"
       },
       {
@@ -500,6 +518,12 @@
         "label": "Western Arabic (PC)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+	  {
+        "id": "bengali",
+        "label": "Bengali",
+        "authors": [ "iamrasel" ],
+        "direction": "ltr"
       }
     ],
     "numericRow": [
@@ -572,7 +596,7 @@
       {
         "id": "tamil",
         "label": "Tamil",
-        "authors": [ "yashpalgoyal1304" ],
+        "authors": [ "Clem0908" ],
         "direction": "ltr"
       },
       {
@@ -667,6 +691,12 @@
         "label": "Western (Additional symbols)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+      {
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
+        "authors": [ "nettnikl" ],
+        "direction": "ltr"
       }
     ],
     "symbolsMod": [
@@ -725,6 +755,12 @@
         "id": "western",
         "label": "Western",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "western_samsung",
+        "label": "Western (Samsung)",
+        "authors": [ "nettnikl" ],
         "direction": "ltr"
       }
     ],

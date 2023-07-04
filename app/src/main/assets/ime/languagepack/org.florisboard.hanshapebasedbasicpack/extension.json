@@ -1,0 +1,32 @@
+{
+  "$": "ime.extension.languagepack",
+  "meta": {
+    "id": "org.florisboard.hanshapebasedbasicpack",
+    "version": "0.0.0",
+    "title": "Default barebones Chinese shape-based pack",
+    "description": "默认中文形码语言包 / 預設中文形碼語言包 / Default barebones Chinese shape-based language pack which are always available.\n请访问下面的主页链接下载更多输入法 / 請訪問下面的主頁鏈接下載更多輸入法 / Please visit the homepage linked below to download more input methods.",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "waelwindows", "moonbeamcelery" ],
+    "homepage": "https://github.com/florisboard/florisboard/blob/master/LANGUAGEPACKS-CHINESE.md#default-barebones-chinese-shape-based-pack",
+    "license": "apache-2.0"
+  },
+  "items": [
+    {
+      "id": "zh_CN_zhengma",
+      "label": "中文 (中国) [郑码] / Chinese (China) [ZHENGMA]",
+      "authors": [ "waelwindows", "moonbeamcelery" ],
+      "hanShapeBasedKeyCode": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "id": "zh_TW_boshiamy",
+      "label": "中文 (台灣) [嘸蝦米] / Chinese (Taiwan) [BOSHIAMY]",
+      "authors": [ "waelwindows", "moonbeamcelery" ],
+      "hanShapeBasedKeyCode": ",.'abcdefghijklmnopqrstuvwxyz[]"
+    },
+    {
+      "id": "zh_TW_cangjielarge",
+      "label": "中文 (台灣) [倉頡-大字庫] / Chinese (Taiwan) [CANGJIELARGE]",
+      "authors": [ "waelwindows", "moonbeamcelery" ],
+      "hanShapeBasedKeyCode": "abcdefghijklmnopqrstuvwxyz&"
+    }
+  ]
+}

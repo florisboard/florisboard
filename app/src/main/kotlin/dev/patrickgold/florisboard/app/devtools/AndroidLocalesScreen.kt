@@ -26,11 +26,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.io.subDir
+import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.util.*
 
@@ -39,7 +45,37 @@ fun AndroidLocalesScreen() = FlorisScreen {
     title = stringRes(R.string.devtools__android_locales__title)
     scrollable = false
 
+    val context = LocalContext.current
     val availableLocales = remember { Locale.getAvailableLocales().sortedBy { it.toLanguageTag() } }
+
+    actions {
+        FlorisIconButton(
+            onClick = {
+                try {
+                    val devtoolsDir = context.noBackupFilesDir.subDir("devtools")
+                    devtoolsDir.mkdirs()
+                    val txtFile = devtoolsDir.subFile("system_locales.tsv")
+                    txtFile.bufferedWriter().use { out ->
+                        for (locale in availableLocales) {
+                            out.append(locale.toLanguageTag())
+                            out.append('\t')
+                            out.append(locale.getDisplayName(Locale.ENGLISH))
+                            out.append('\t')
+                            out.append(locale.getDisplayName(locale))
+                            out.appendLine()
+                        }
+                    }
+                    context.showLongToast("Exported available system locales to \"${txtFile.path}\"")
+                } catch (e: Exception) {
+                    context.showLongToast(
+                        R.string.error__snackbar_message_template,
+                        "error_message" to e.message.toString(),
+                    )
+                }
+            },
+            icon = painterResource(R.drawable.ic_save),
+        )
+    }
 
     content {
         val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()

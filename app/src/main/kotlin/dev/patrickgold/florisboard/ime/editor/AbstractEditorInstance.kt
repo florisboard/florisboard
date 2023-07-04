@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.editor
 
 import android.content.Context
-import android.icu.text.BreakIterator
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
 import android.text.TextUtils
@@ -31,7 +30,10 @@ import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
+import kotlin.math.max
+import kotlin.math.min
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -53,6 +55,7 @@ abstract class AbstractEditorInstance(context: Context) {
 
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
+    private val nlpManager by context.nlpManager()
     private val scope = MainScope()
     protected val breakIterators = BreakIteratorGroup()
 
@@ -80,6 +83,9 @@ abstract class AbstractEditorInstance(context: Context) {
             _activeContentFlow.value = v
         }
     private val expectedContentQueue = ExpectedContentQueue()
+    private val _lastCommitPosition = LastCommitPosition()
+    val lastCommitPosition
+        get() = LastCommitPosition(_lastCommitPosition)
 
     fun expectedContent(): EditorContent? {
         return runBlocking { expectedContentQueue.peekNewestOrNull() }
@@ -94,10 +100,13 @@ abstract class AbstractEditorInstance(context: Context) {
         currentInputConnection()?.requestCursorUpdates(CursorUpdateAll)
     }
 
-    open fun handleStartInputView(editorInfo: FlorisEditorInfo) {
+    open fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+        if (isRestart) {
+            reset() // Just to make sure our state is correct after a restart
+        }
         val ic = currentInputConnection()
         activeInfo = editorInfo
-        val selection = editorInfo.initialSelection
+        var selection = editorInfo.initialSelection
         if (ic == null || selection.isNotValid || editorInfo.isRawInputEditor) {
             activeCursorCapsMode = InputAttributes.CapsMode.NONE
             activeContent = EditorContent.Unspecified
@@ -105,13 +114,19 @@ abstract class AbstractEditorInstance(context: Context) {
             return
         }
 
-        // Get Text
-        val textBeforeSelection = editorInfo.getInitialTextBeforeCursor(NumCharsBeforeCursor)
-            ?: ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: ""
-        val textAfterSelection = editorInfo.getInitialTextAfterCursor(NumCharsAfterCursor)
-            ?: ic.getTextAfterCursor(NumCharsAfterCursor, 0) ?: ""
-        val selectedText = editorInfo.getInitialSelectedText()
-            ?: ic.getSelectedText(0) ?: ""
+        // Get text (ignore initial text of EditorInfo because some apps like to provide an old or invalid state)
+        val textBeforeSelection = ic.getTextBeforeCursor(NumCharsBeforeCursor, 0) ?: ""
+        val textAfterSelection = ic.getTextAfterCursor(NumCharsAfterCursor, 0) ?: ""
+        val selectedText = ic.getSelectedText(0) ?: ""
+
+        // Adjust initial selection issues as some apps like to do everything but provide the correct initial selection
+        if (selection.length != selectedText.length) {
+            selection = EditorRange(textBeforeSelection.length, textBeforeSelection.length + selectedText.length)
+        } else if (selection.start > 0 || selection.end > 0) {
+            if (textBeforeSelection.isEmpty() && textAfterSelection.isEmpty() && selectedText.isEmpty()) {
+                selection = EditorRange(0, 0)
+            }
+        }
 
         scope.launch {
             val content = generateContent(
@@ -134,6 +149,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (composing.isValid) {
             currentInputConnection()?.setComposingRegion(EditorRange.Unspecified)
         }
+        _lastCommitPosition.handleUpdateSelection(newSelection)
     }
 
     open fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
@@ -146,6 +162,7 @@ abstract class AbstractEditorInstance(context: Context) {
             return
         }
 
+        _lastCommitPosition.handleUpdateSelection(newSelection)
         val expected = runBlocking {
             expectedContentQueue.popUntilOrNull {
                 it.selection == newSelection && it.composing == composing &&
@@ -196,6 +213,7 @@ abstract class AbstractEditorInstance(context: Context) {
         activeCursorCapsMode = InputAttributes.CapsMode.NONE
         activeContent = EditorContent.Unspecified
         runBlocking { expectedContentQueue.clear() }
+        _lastCommitPosition.reset()
     }
 
     private suspend fun generateContent(
@@ -218,12 +236,13 @@ abstract class AbstractEditorInstance(context: Context) {
         }
 
         // Determine local composing word range, if any
-        val localComposing =
+        val localCurrentWord =
             if (shouldDetermineComposingRegion(editorInfo) && localSelection.isCursorMode && textBeforeSelection.isNotEmpty()) {
-                determineLocalComposing(textBeforeSelection)
+                determineLocalComposing(textBeforeSelection, _lastCommitPosition.pos - offset)
             } else {
                 EditorRange.Unspecified
             }
+        val localComposing = if (determineComposingEnabled()) localCurrentWord else EditorRange.Unspecified
 
         // Build and publish text and content
         val text = buildString {
@@ -231,7 +250,7 @@ abstract class AbstractEditorInstance(context: Context) {
             append(selectedText)
             append(textAfterSelection)
         }
-        return EditorContent(text, offset, localSelection, localComposing)
+        return EditorContent(text, offset, localSelection, localComposing, localCurrentWord)
     }
 
     private suspend fun EditorContent.generateCopy(
@@ -241,7 +260,9 @@ abstract class AbstractEditorInstance(context: Context) {
         textAfterSelection: CharSequence = this.textAfterSelection,
         selectedText: CharSequence = this.selectedText,
     ): EditorContent {
-        return generateContent(editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText)
+        return generateContent(
+            editorInfo, selection, textBeforeSelection, textAfterSelection, selectedText
+        )
     }
 
     private fun EditorContent.cursorCapsMode(): InputAttributes.CapsMode {
@@ -255,24 +276,18 @@ abstract class AbstractEditorInstance(context: Context) {
         }
     }
 
+    abstract fun determineComposingEnabled(): Boolean
+
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
 
     protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
         return editorInfo.isRichInputEditor
     }
 
-    private suspend fun determineLocalComposing(textBeforeSelection: CharSequence): EditorRange {
-        return breakIterators.word(subtypeManager.activeSubtype().primaryLocale) {
-            it.setText(textBeforeSelection.toString())
-            val end = it.last()
-            val isWord = it.ruleStatus != BreakIterator.WORD_NONE
-            if (isWord) {
-                val start = it.previous()
-                EditorRange(start, end)
-            } else {
-                EditorRange.Unspecified
-            }
-        }
+    private suspend fun determineLocalComposing(
+        textBeforeSelection: CharSequence, localLastCommitPosition: Int
+    ): EditorRange {
+        return nlpManager.determineLocalComposing(textBeforeSelection, breakIterators, localLastCommitPosition)
     }
 
     private fun InputConnection.setComposingRegion(composing: EditorRange) {
@@ -302,18 +317,40 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     open fun commitChar(char: String): Boolean {
+        return commitChar(
+            char = char,
+            deletePreviousSpace = false,
+            insertSpaceBeforeChar = false,
+            insertSpaceAfterChar = false,
+        )
+    }
+
+    protected fun commitChar(
+        char: String,
+        deletePreviousSpace: Boolean,
+        insertSpaceBeforeChar: Boolean,
+        insertSpaceAfterChar: Boolean,
+    ): Boolean {
         val content = activeContent
         val selection = content.selection
-        // TODO: length enforcement to 1 may be an issue for some Unicode chars which are 2 Java chars
-        if (char.length != 1 || selection.isNotValid || selection.isSelectionMode || activeInfo.isRawInputEditor) {
-            return commitText(char)
+        val isSingleChar = runBlocking {
+            breakIterators.measureUChars(char, 1, subtypeManager.activeSubtype.primaryLocale)
+        } == char.length
+        if (!isSingleChar || selection.isNotValid || selection.isSelectionMode || activeInfo.isRawInputEditor) {
+            return commitTextInternal(char)
         }
         val ic = currentInputConnection() ?: return false
-        val composer = determineComposer(subtypeManager.activeSubtype().composer)
-        val previous = content.textBeforeSelection.takeLast(composer.toRead)
-        val (rm, finalText) = composer.getActions(previous, char[0])
+        val composer = determineComposer(subtypeManager.activeSubtype.composer)
+        val previous = content.textBeforeSelection.takeLast(composer.toRead.coerceAtLeast(if (deletePreviousSpace) 1 else 0))
+        val (tempRm, tempText) = composer.getActions(previous, char)
+        val rm = if (deletePreviousSpace && previous.isNotEmpty() && previous.last() == ' ') tempRm + 1 else tempRm
+        val finalText = buildString(tempText.length + 2) {
+            if (insertSpaceBeforeChar) append(' ')
+            append(tempText)
+            if (insertSpaceAfterChar) append(' ')
+        }
         if (rm <= 0) {
-            commitText(finalText)
+            commitTextInternal(finalText)
         } else runBlocking {
             ic.beginBatchEdit()
             val newSelection = EditorRange.cursor(selection.start - rm + finalText.length)
@@ -337,7 +374,9 @@ abstract class AbstractEditorInstance(context: Context) {
         return true
     }
 
-    open fun commitText(text: String): Boolean {
+    open fun commitText(text: String): Boolean = commitTextInternal(text)
+
+    private fun commitTextInternal(text: String): Boolean {
         val ic = currentInputConnection() ?: return false
         val content = activeContent
         val selection = content.selection
@@ -363,6 +402,32 @@ abstract class AbstractEditorInstance(context: Context) {
         return true
     }
 
+    open fun finalizeComposingText(text: String): Boolean {
+        val ic = currentInputConnection() ?: return false
+        val content = activeContent
+        val composing = content.composing
+        ic.beginBatchEdit()
+        if (activeInfo.isRawInputEditor || composing.isNotValid) {
+            return false
+        } else runBlocking {
+            val newSelection = EditorRange.cursor(composing.end + (text.length - content.composingText.length))
+            val newContent = content.generateCopy(
+                selection = newSelection,
+                textBeforeSelection = buildString {
+                    append(content.textBeforeSelection.removeSuffix(content.composingText))
+                    append(text)
+                },
+                selectedText = "",
+            )
+            expectedContentQueue.push(newContent)
+            ic.setComposingText(text, 1)
+            ic.finishComposingText()
+            _lastCommitPosition.handleCommit(newContent.selection)
+        }
+        ic.endBatchEdit()
+        return true
+    }
+
     protected fun deleteBeforeCursor(type: TextType, n: Int): Boolean {
         val ic = currentInputConnection()
         if (ic == null || n < 1) return false
@@ -370,7 +435,7 @@ abstract class AbstractEditorInstance(context: Context) {
         // Cannot perform below check due to editors which lie about their correct selection
         //if (content.selection.isValid && content.selection.start == 0) return true
         val oldTextBeforeSelection = content.textBeforeSelection
-        return if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
+        return (if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
             // If editor is rich and text before selection is empty we seem to have an invalid state here, so we fall
             // back to emulating a hardware backspace.
             when (type) {
@@ -379,12 +444,13 @@ abstract class AbstractEditorInstance(context: Context) {
             }
         } else {
             runBlocking {
-                val locale = subtypeManager.activeSubtype().primaryLocale
+                val locale = subtypeManager.activeSubtype.primaryLocale
                 val length = when (type) {
                     TextType.CHARACTERS -> breakIterators.measureLastUChars(oldTextBeforeSelection, n, locale)
                     TextType.WORDS -> breakIterators.measureLastUWords(oldTextBeforeSelection, n, locale)
                 }
-                val newSelection = content.selection.translatedBy(-length)
+                val selection = content.selection
+                val newSelection = selection.translatedBy(-length)
                 val newContent = content.generateCopy(
                     selection = newSelection,
                     textBeforeSelection = oldTextBeforeSelection.dropLast(length),
@@ -396,6 +462,21 @@ abstract class AbstractEditorInstance(context: Context) {
                 ic.setComposingRegion(newContent.composing)
                 ic.endBatchEdit()
                 true
+            }
+        }).also {
+            deleteMoveLastCommitPosition()
+        }
+    }
+
+    fun refreshComposing() {
+        val content = activeContent
+        val ic = currentInputConnection()
+        if (activeInfo.isRawInputEditor || ic == null) return
+        runBlocking {
+            val newContent = content.generateCopy()
+            if (newContent.composing != content.composing) {
+                expectedContentQueue.push(newContent)
+                ic.setComposingRegion(newContent.composing)
             }
         }
     }
@@ -414,7 +495,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (n < 1 || text.isEmpty()) return ""
         return runBlocking {
             val text = textBeforeSelection
-            val length = breakIterators.measureLastUChars(text, n, subtypeManager.activeSubtype().primaryLocale)
+            val length = breakIterators.measureLastUChars(text, n, subtypeManager.activeSubtype.primaryLocale)
             text.takeLast(length)
         }
     }
@@ -433,7 +514,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (n < 1 || text.isEmpty()) return ""
         return runBlocking {
             val text = textAfterSelection
-            val length = breakIterators.measureUChars(text, n, subtypeManager.activeSubtype().primaryLocale)
+            val length = breakIterators.measureUChars(text, n, subtypeManager.activeSubtype.primaryLocale)
             text.take(length)
         }
     }
@@ -575,6 +656,43 @@ abstract class AbstractEditorInstance(context: Context) {
         suspend fun clear() {
             list.withLock { list ->
                 list.clear()
+            }
+        }
+    }
+
+    fun updateLastCommitPosition() = _lastCommitPosition.handleCommit(activeContent.selection)
+    fun deleteMoveLastCommitPosition() = _lastCommitPosition.handleDelete(activeContent.selection)
+
+    /**
+     * Class for handling history of last commit position.
+     */
+    data class LastCommitPosition(var pos: Int = -1) {
+
+        constructor(other: LastCommitPosition): this(other.pos)
+
+        fun reset() {
+            pos = -1
+        }
+
+        fun handleCommit(selection: EditorRange) {
+            if (selection.isValid) {
+                pos = max(selection.start, selection.end)
+            } else {
+                reset()
+            }
+        }
+
+        fun handleUpdateSelection(selection: EditorRange) {
+            val start = min(selection.start, selection.end)
+            if (start < pos) {
+                reset()
+            }
+        }
+
+        fun handleDelete(selection: EditorRange) {
+            val start = min(selection.start, selection.end)
+            if (start < pos) {
+                pos = start
             }
         }
     }

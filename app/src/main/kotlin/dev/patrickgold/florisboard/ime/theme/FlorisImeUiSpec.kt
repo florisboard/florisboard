@@ -112,40 +112,71 @@ object FlorisImeUiSpec : SnyggSpec({
         border()
     }
 
-    element(FlorisImeUi.SmartbarPrimaryRow) {
+    element(FlorisImeUi.Smartbar) {
         background()
     }
-    element(FlorisImeUi.SmartbarSecondaryRow) {
+    element(FlorisImeUi.SmartbarSharedActionsRow) {
         background()
     }
-    element(FlorisImeUi.SmartbarPrimaryActionsToggle) {
-        background()
-        foreground()
-        shape()
-        shadow()
-        border()
-    }
-    element(FlorisImeUi.SmartbarSecondaryActionsToggle) {
+    element(FlorisImeUi.SmartbarSharedActionsToggle) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarQuickAction) {
+    element(FlorisImeUi.SmartbarExtendedActionsRow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarExtendedActionsToggle) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarKey) {
+    element(FlorisImeUi.SmartbarActionKey) {
         background()
         foreground()
         font()
         shape()
         shadow()
         border()
+    }
+    element(FlorisImeUi.SmartbarActionTile) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.SmartbarActionsOverflowCustomizeButton) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(FlorisImeUi.SmartbarActionsOverflow) {
+        background()
+    }
+    element(FlorisImeUi.SmartbarActionsEditor) {
+        background()
+        shape()
+    }
+    element(FlorisImeUi.SmartbarActionsEditorHeader) {
+        background()
+        foreground()
+        font()
+    }
+    element(FlorisImeUi.SmartbarActionsEditorSubheader) {
+        foreground()
+        font()
+    }
+    element(FlorisImeUi.SmartbarCandidatesRow) {
+        background()
     }
     element(FlorisImeUi.SmartbarCandidateWord) {
         background()
@@ -222,6 +253,10 @@ object FlorisImeUiSpec : SnyggSpec({
     }
 
     element(FlorisImeUi.GlideTrail) {
+        foreground()
+    }
+
+    element(FlorisImeUi.IncognitoModeIndicator) {
         foreground()
     }
 

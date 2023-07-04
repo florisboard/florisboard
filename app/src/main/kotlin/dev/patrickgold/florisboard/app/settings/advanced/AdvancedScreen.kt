@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -143,11 +144,11 @@ fun AdvancedScreen() = FlorisScreen {
             },
             enabledIf = { AndroidVersion.ATMOST_API28_P },
         )
-        SwitchPreference(
-            prefs.advanced.forcePrivateMode,
-            iconId = R.drawable.ic_security,
-            title = stringRes(R.string.pref__advanced__force_private_mode__label),
-            summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
+        ListPreference(
+            prefs.advanced.incognitoMode,
+            iconId = R.drawable.ic_incognito,
+            title = stringRes(R.string.pref__advanced__incognito_mode__label),
+            entries = IncognitoMode.listEntries(),
         )
 
         PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {

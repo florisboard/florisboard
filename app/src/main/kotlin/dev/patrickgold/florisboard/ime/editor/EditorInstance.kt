@@ -32,6 +32,8 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -40,6 +42,7 @@ import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
+import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -52,18 +55,23 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
+    private val subtypeManager by context.subtypeManager()
     private val nlpManager by context.nlpManager()
 
     private val activeState get() = keyboardManager.activeState
+    val autoSpace = AutoSpaceState()
     val phantomSpace = PhantomSpaceState()
     val massSelection = MassSelectionState()
 
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
-    override fun handleStartInputView(editorInfo: FlorisEditorInfo) {
-        phantomSpace.setInactive()
-        massSelection.reset()
-        super.handleStartInputView(editorInfo)
+    override fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+        if (!prefs.correction.rememberCapsLockState.get()) {
+            activeState.inputShiftState = InputShiftState.UNSHIFTED
+        }
+        activeState.isActionsOverflowVisible = false
+        activeState.isActionsEditorVisible = false
+        super.handleStartInputView(editorInfo, isRestart)
         val keyboardMode = when (editorInfo.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
                 activeState.keyVariation = KeyVariation.NORMAL
@@ -111,12 +119,17 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
         }
-        if (!prefs.correction.rememberCapsLockState.get()) {
-            activeState.inputShiftState = InputShiftState.UNSHIFTED
+        activeState.isIncognitoMode = when (prefs.advanced.incognitoMode.get()) {
+            IncognitoMode.FORCE_OFF -> false
+            IncognitoMode.FORCE_ON -> true
+            IncognitoMode.DYNAMIC_ON_OFF -> {
+                editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.advanced.forceIncognitoModeFromDynamic.get()
+            }
         }
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
+        autoSpace.setInactiveFromUpdate()
         phantomSpace.setInactiveFromUpdate()
         if (massSelection.isActive) {
             super.handleMassSelectionUpdate(newSelection, composing)
@@ -125,14 +138,12 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
     }
 
-    override fun handleFinishInputView() {
-        phantomSpace.setInactive()
-        massSelection.reset()
-        super.handleFinishInputView()
+    override fun determineComposingEnabled(): Boolean {
+        return nlpManager.isSuggestionOn()
     }
 
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
-        return keyboardManager.resources.composers.value?.get(composerName) ?: Appender.DefaultInstance
+        return keyboardManager.resources.composers.value?.get(composerName) ?: Appender
     }
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
@@ -150,19 +161,59 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success or if the selection is already at specified position, false otherwise.
      */
     fun setSelection(start: Int, end: Int): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val selection = EditorRange.normalized(start, end)
         return super.setSelection(selection)
     }
 
+    private fun shouldInsertAutoSpaceBefore(text: String): Boolean {
+        if (!prefs.correction.autoSpacePunctuation.get() || text.isEmpty()) return false
+        if (activeInfo.isRawInputEditor) return false
+        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+
+        val punctuationRule = nlpManager.getActivePunctuationRule()
+        val textBefore = activeContent.getTextBeforeCursor(1)
+        return textBefore.isNotEmpty() && !textBefore.last().isWhitespace() &&
+            punctuationRule.symbolsFollowingAutoSpace.contains(text.first())
+    }
+
+    private fun shouldInsertAutoSpaceAfter(text: String): Boolean {
+        if (!prefs.correction.autoSpacePunctuation.get() || text.isEmpty()) return false
+        if (activeInfo.isRawInputEditor) return false
+        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+
+        val punctuationRule = nlpManager.getActivePunctuationRule()
+        val content = activeContent
+        val textBefore = content.getTextBeforeCursor(3).let { textBefore ->
+            if (autoSpace.isActive && textBefore.isNotEmpty() && textBefore.last() == ' ') {
+                textBefore.dropLast(1)
+            } else {
+                textBefore
+            }
+        }
+        return textBefore.isNotEmpty() && !textBefore.last().isWhitespace() &&
+            content.currentWordText.all { !it.isDigit() } &&
+            punctuationRule.symbolsPrecedingAutoSpace.contains(text.first())
+    }
+
     override fun commitChar(char: String): Boolean {
+        val isInsertAutoSpaceBeforeChar = shouldInsertAutoSpaceBefore(char)
+        val isInsertAutoSpaceAfterChar = shouldInsertAutoSpaceAfter(char)
+        val isDeletePreviousSpace = isInsertAutoSpaceAfterChar && autoSpace.isActive
+        if (isInsertAutoSpaceAfterChar) {
+            autoSpace.setActive()
+        } else {
+            autoSpace.setInactive()
+        }
         val isPhantomSpaceActive = phantomSpace.determine(char)
         phantomSpace.setInactive()
-        return if (isPhantomSpaceActive) {
-            super.commitChar("$SPACE$char")
-        } else {
-            super.commitChar(char)
-        }
+        return super.commitChar(
+            char = char,
+            deletePreviousSpace = isDeletePreviousSpace,
+            insertSpaceBeforeChar = isInsertAutoSpaceBeforeChar || isPhantomSpaceActive,
+            insertSpaceAfterChar = isInsertAutoSpaceAfterChar,
+        )
     }
 
     /**
@@ -179,6 +230,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     override fun commitText(text: String): Boolean {
         val isPhantomSpaceActive = phantomSpace.determine(text)
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (isPhantomSpaceActive) {
             super.commitText("$SPACE$text")
@@ -188,19 +240,35 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     /**
-     * Completes the given [text] in the current composing region. Does nothing if the current
+     * Completes the given [candidate] in the current composing region. Does nothing if the current
      * input editor is not rich or if the input connection is invalid.
      *
      * Current phantom space state is respected and a space char will be inserted accordingly.
      * Phantom space will be activated if the text is committed.
      *
-     * @param text The text to complete in this editor.
+     * @param candidate The candidate to complete in this editor.
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun commitCompletion(text: String): Boolean {
+    fun commitCompletion(candidate: SuggestionCandidate): Boolean {
+        val text = candidate.text.toString()
         if (text.isEmpty() || activeInfo.isRawInputEditor) return false
-        return commitText(text).also { phantomSpace.setActive(showComposingRegion = false) }
+        val content = activeContent
+        return if (content.composing.isValid) {
+            phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
+            super.finalizeComposingText(text)
+        } else {
+            val isPhantomSpaceActive = phantomSpace.determine(text)
+            phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
+            return if (isPhantomSpaceActive) {
+                super.commitText("$SPACE$text")
+            } else {
+                super.commitText(text)
+            }.also {
+                // handled in finalizeComposingText if content.composing.isValid
+                updateLastCommitPosition()
+            }
+        }
     }
 
     /**
@@ -221,6 +289,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             super.commitText("$SPACE$text")
         } else {
             super.commitText(text)
+        }.also {
+            updateLastCommitPosition()
         }
     }
 
@@ -238,7 +308,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val mimeTypes = item.mimeTypes
         return when (item.type) {
             ItemType.TEXT -> {
-                commitText(item.text.toString())
+                commitText(item.text.toString()).also {
+                    updateLastCommitPosition()
+                }
             }
             ItemType.IMAGE, ItemType.VIDEO -> {
                 item.uri ?: return false
@@ -276,9 +348,10 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      */
     fun deleteBackwards(): Boolean {
         val content = activeContent
-        if (phantomSpace.isActive && content.composing.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
+        if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
             return deleteWordBackwards()
         }
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (content.selection.isSelectionMode) {
             commitText("")
@@ -295,6 +368,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteWordBackwards(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (activeContent.selection.isSelectionMode) {
             commitText("")
@@ -304,6 +378,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     fun selectionSetNWordsLeft(n: Int): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val content = activeContent
         val selection = content.selection
@@ -323,6 +398,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCut(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
@@ -340,6 +416,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCopy(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
         if (text != null) {
@@ -358,8 +435,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardPaste(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
-        return commitClipboardItem(clipboardManager.primaryClip.value).also { result ->
+        return commitClipboardItem(clipboardManager.primaryClip).also { result ->
             if (!result) {
                 appContext.showShortToast("Failed to paste item.")
             }
@@ -373,6 +451,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardSelectAll(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val ic = currentInputConnection() ?: return false
         ic.finishComposingText()
@@ -389,11 +468,20 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnter(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (activeInfo.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
             commitText("\n")
+        }
+    }
+
+    fun tryPerformEnterCommitRaw(): Boolean {
+        return if (subtypeManager.activeSubtype.primaryLocale.language.startsWith("zh") && activeContent.composing.length > 0) {
+            finalizeComposingText(activeContent.composingText)
+        } else {
+            false
         }
     }
 
@@ -405,6 +493,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnterAction(action: ImeOptions.Action): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         val ic = currentInputConnection() ?: return false
         return ic.performEditorAction(action.toInt())
@@ -416,6 +505,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performUndo(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
     }
@@ -426,29 +516,34 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performRedo(): Boolean {
+        autoSpace.setInactive()
         phantomSpace.setInactive()
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
     }
 
     override fun reset() {
         super.reset()
+        autoSpace.setInactive()
         phantomSpace.setInactive()
+        massSelection.reset()
     }
 
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
-        val content = activeContent
-        val selection = content.selection
-        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0) return false
-        val textBefore = content.getTextBeforeCursor(2)
-        val punctuationRule = nlpManager.getActivePunctuationRule()
-        return punctuationRule.symbolsPrecedingSpace.matches(textBefore) &&
-            punctuationRule.symbolsFollowingSpace.matches(text)
+         val content = activeContent
+         val selection = content.selection
+         if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
+         val textBefore = content.getTextBeforeCursor(1)
+         val punctuationRule = nlpManager.getActivePunctuationRule()
+         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace) return false;
+         return textBefore.isNotEmpty() &&
+             (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
+                 textBefore[textBefore.length - 1].isLetterOrDigit()) &&
+             (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
     }
 
-    class PhantomSpaceState {
+    class AutoSpaceState {
         companion object {
             private const val F_IS_ACTIVE = 0x1
-            private const val F_SHOW_COMPOSING_REGION = 0x2
             private const val F_STAY_ACTIVE_NEXT_UPDATE = 0x4
         }
 
@@ -460,15 +555,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val isInactive: Boolean
             get() = !isActive
 
-        val showComposingRegion: Boolean
-            get() = state.get() and F_SHOW_COMPOSING_REGION != 0
-
-        fun setActive(showComposingRegion: Boolean, stayActiveNextUpdate: Boolean = true) {
-            state.set(
-                F_IS_ACTIVE
-                    or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0)
-                    or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0)
-            )
+        fun setActive(stayActiveNextUpdate: Boolean = true) {
+            state.set(F_IS_ACTIVE or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0))
         }
 
         fun setInactive() {
@@ -478,6 +566,54 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         fun setInactiveFromUpdate() {
             state.updateAndGet { state ->
                 if ((state and F_STAY_ACTIVE_NEXT_UPDATE) != 0) (state and F_STAY_ACTIVE_NEXT_UPDATE.inv()) else 0
+            }
+        }
+    }
+
+    class PhantomSpaceState {
+        companion object {
+            private const val F_IS_ACTIVE = 0x1
+            private const val F_SHOW_COMPOSING_REGION = 0x2
+            private const val F_STAY_ACTIVE_NEXT_UPDATE = 0x4
+        }
+
+        private val state = AtomicInteger(0)
+        var candidateForRevert: SuggestionCandidate? = null
+            private set
+
+        val isActive: Boolean
+            get() = state.get() and F_IS_ACTIVE != 0
+
+        val isInactive: Boolean
+            get() = !isActive
+
+        val showComposingRegion: Boolean
+            get() = state.get() and F_SHOW_COMPOSING_REGION != 0
+
+        fun setActive(
+            showComposingRegion: Boolean,
+            stayActiveNextUpdate: Boolean = true,
+            candidate: SuggestionCandidate? = null,
+        ) {
+            state.set(
+                F_IS_ACTIVE
+                    or (if (showComposingRegion) F_SHOW_COMPOSING_REGION else 0)
+                    or (if (stayActiveNextUpdate) F_STAY_ACTIVE_NEXT_UPDATE else 0)
+            )
+            candidateForRevert = candidate
+        }
+
+        fun setInactive() {
+            state.set(0)
+            candidateForRevert = null
+        }
+
+        fun setInactiveFromUpdate() {
+            val prevStateValue = state.getAndUpdate { state ->
+                if ((state and F_STAY_ACTIVE_NEXT_UPDATE) != 0) (state and F_STAY_ACTIVE_NEXT_UPDATE.inv()) else 0
+            }
+            if ((prevStateValue and F_STAY_ACTIVE_NEXT_UPDATE) == 0) {
+                candidateForRevert = null
             }
         }
     }

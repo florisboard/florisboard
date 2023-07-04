@@ -22,6 +22,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -36,9 +39,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.lib.compose.SystemUiApp
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
@@ -74,14 +75,13 @@ class FlorisAppActivity : ComponentActivity() {
     private var resourcesContext by mutableStateOf(this as Context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        installSplashScreen()
-
-        prefs.datastoreReadyStatus.observe(this) { ready ->
-            if (ready) {
-                AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
-            }
+        // Splash screen should be installed before calling super.onCreate()
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { !prefs.datastoreReadyStatus.get() }
         }
+        super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         prefs.advanced.settingsTheme.observe(this) {
             appTheme = it
         }
@@ -96,12 +96,13 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        setContent {
-            ProvideLocalizedResources(resourcesContext) {
-                FlorisAppTheme(theme = appTheme) {
-                    ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
+        // We defer the setContent call until the datastore model is loaded, until then the splash screen stays drawn
+        prefs.datastoreReadyStatus.observe(this) { isModelLoaded ->
+            if (!isModelLoaded) return@observe
+            AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+            setContent {
+                ProvideLocalizedResources(resourcesContext) {
+                    FlorisAppTheme(theme = appTheme) {
                         Surface(color = MaterialTheme.colors.background) {
                             SystemUiApp()
                             AppContent()
@@ -123,8 +124,6 @@ class FlorisAppActivity : ComponentActivity() {
             } else {
                 this.hideAppIcon()
             }
-        } else {
-            this.showAppIcon()
         }
     }
 
@@ -132,6 +131,8 @@ class FlorisAppActivity : ComponentActivity() {
     private fun AppContent() {
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
+
+        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
 
         CompositionLocalProvider(
             LocalNavController provides navController,
@@ -145,12 +146,13 @@ class FlorisAppActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier
                         .statusBarsPadding()
-                        .navigationBarsWithImePadding(),
+                        .navigationBarsPadding()
+                        .imePadding(),
                 ) {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),
                         navController = navController,
-                        startDestination = Routes.Splash.Screen,
+                        startDestination = if (isImeSetUp) Routes.Settings.Home else Routes.Setup.Screen,
                     )
                     PreviewKeyboardField(previewFieldController)
                 }

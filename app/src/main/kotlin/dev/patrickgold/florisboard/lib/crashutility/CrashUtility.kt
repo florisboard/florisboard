@@ -381,11 +381,10 @@ abstract class CrashUtility private constructor() {
         private val oldHandler: WeakReference<Thread.UncaughtExceptionHandler?>,
         private val ustDir: FsDir,
     ) : Thread.UncaughtExceptionHandler {
-        override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
+        override fun uncaughtException(thread: Thread, throwable: Throwable) {
             flogInfo(LogTopic.CRASH_UTILITY) {
                 "Detected application crash, executing custom crash handler."
             }
-            throwable ?: return
             val timestamp = System.currentTimeMillis()
             val stacktrace = Log.getStackTraceString(throwable)
             val ustFile = ustDir.subFile("$timestamp.$UNHANDLED_STACKTRACE_FILE_EXT")

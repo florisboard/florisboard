@@ -22,16 +22,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Gjenstander</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Rask handling-veksling. Veksler mellom ordforslag og hurtighandlingsknappene.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Avslutt tekstredigeringspanelet.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Veksle enhåndsmodus.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Åpne innstillinger.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Bytt til tekstredigeringspanelet.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Bytt til medieinputvisning.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Angre-knapp for å reversere den siste handlingen</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Omgjørings-knapp for å reversere den forrige angre-handlingen</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Når synlig, indikerer at privat-modus er aktiv. Når du klikker på den vises informasjon om privat-modus.</string>
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Innstillinger</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prøv oppsettet ditt</string>
@@ -75,9 +67,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Spill av lyder for input-hendelser, avhengig av systeminnstillinger</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorer systemlydinnstillinger</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Bruk innstillingene nedenfor, selv om lyd er deaktivert i systemet. Fungerer ikke når system-ringetone er dempet</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lydvolum for input-hendelser</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastetrykk-lyder</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tastetrykklyder ved langt trykk</string>
@@ -86,11 +75,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sveipe-lyder</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptisk tilbakemelding / Vibrasjon</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktiver haptisk tilbakemelding</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrer for input-hendelser, avhengig av systeminnstillinger</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorer haptiske innstillinger for systemet</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Bruk innstillingene under, selv om haptisk er deaktivert i systemet</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Utløs vibrasjoner direkte</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Utløs vibrasjoner direkte i stedet for å bruke Androids haptiske tilbakemeldingsfunksjonssett</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>
@@ -138,6 +122,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock forblir på når du flytter til et annet tekstfelt</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbel-mellomrom punktum</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Om du trykker to ganger på mellomromstasten settes det inn et punktum etterfulgt av et mellomrom</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Bruk brukerordlisteoppføringer</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Brukerordlister</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktiver system-brukerordliste</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Anbefal ord lagret i system-brukerordlisten</string>
@@ -188,40 +176,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Innstillingsspråk</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Vis app-ikon i programmeny</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Alltid privat modus</string>
-    <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Stavekontroll</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Bruk tastatur-stavekontroll konfigurasjon</string>
-    <string name="pref__spelling__active_spellchecker__label">Kontroll av linjebundet tekstfelt</string>
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Deaktivert på systembasis. Ingen røde linjer vil vises i tekstfelt for feil ord. Klikk for å endre.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Ingen linjebundet stavekontrolltjeneste angitt. Klikk for å endre.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Innstillingen \"Språk\" i system-ordliste-skjermen er satt til \"Bruk systemspråk\". På grunn av en bug kan dette føre til at {app_name} ikke får utført linjebundet stavekontroll. Vurder å endre den til \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfigurasjon</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Språk</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[IKKE IMPLEMENTERT] Bruk navn fra kontaktlisten</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Stavekontroll vil bruke navn fra din kontaktliste for å kontrollere staving</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Bruk brukerordlisteoppføringer</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Stavekontroll vil bruke brukerordlister, hvis disse er aktivert</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Rediger ordbøker</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} installert</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Ingen stavekontroll ordlister er installert. Trykk på \'+\'-knappen for å legge til den første!</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Utvidelse / Arkiv</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affix + Ordlistefil</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Importer ny ordliste</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Velg kilde</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Velg kilden du lastet ned tredjepartsutvidelsen fra. Dette hjelper deg med å analysere ikke-FlorisBoard-utvidelsesformatet riktig og konvertere det til FlorisBoard.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importer arkiv</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Importer arkivet ved å velge filen i fil-velger dialogen.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Velg språk</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Språkkode (f.eks. nb_NO)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Importer affix/ordliste filer</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Velg affix-fil (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Velg ordliste-fil (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verifiser import</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Kontroller at metadataene nedenfor er riktige. Hvis noe er galt, kan du bytte tilbake til et tidligere trinn og velge kilden / importere arkivet på nytt.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Hvor får jeg tak i ordlister?</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard bruker Nuspell som stavekontroll-motor, som betyr at det er en stor mengde med ordlister tilgjengelig, ettersom Hunspell også er brukt av mange andre programvarer. Listen under viser noen få hånd-valgte kilder import-funksjonen støtter. Last ned enten arkiv-filen eller ordliste-filene, velg riktig kilde i import-funksjonen, og importer (dette er viktig for at import-funksjonen skal få til å lese arkiv-formatet).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">hvis denne listen ikke inneholder ordlister for ditt språk eller din dialekt, kan du manuelt søke etter en Hunspell ordliste og importere \'aff\' og \'dic\' filene for språket/dialekten du vil legge til.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard\'s app ikon</string>
@@ -356,7 +310,6 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Under primærrad</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Bruk systemspråk</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Bruk tastatur-undertyper</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>

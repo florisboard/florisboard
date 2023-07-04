@@ -29,16 +29,8 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenhum emoji usado recentemente encontrado. Assim que você começar a digitar emojis, eles aparecerão automaticamente aqui.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica profissional: pressione e segure os emojis usados ​​recentemente para removê-los desta visualização novamente!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Removido dos emojis usados ​​recentemente</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alternar ação rápida. Se pressionado, alterna entre as sugestões de palavra e os botões de ação rápida.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Sair do painel de edição de texto.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Alternar estado do modo uma mão.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Abrir configurações.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Mudar para painel de edição de texto.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para visualização de entrada de mídia.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botão de desfazer para reverter a última ação</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botão de refazer para reverter a última ação desfeita</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Se visível, indica que o modo privado está ativo. Quando clicado, mostra informações sobre o modo privado.</string>
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Configurações</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Experimente sua configuração</string>
@@ -147,12 +139,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Ação de entrada do modo paisagem</string>
     <string name="snygg__rule_element__glide_trail">Trilha de deslizamento</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Linha principal da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Linha secundária da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Alternar ações primárias da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Alternar ações secundárias da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Ação rápida da barra inteligente</string>
-    <string name="snygg__rule_element__smartbar_key">Tecla da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palavra candidata da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Fixado candidato da barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaçador candidato de barra inteligente</string>
@@ -204,9 +190,6 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons e Vibração</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Resposta de Áudio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ativar resposta de áudio</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Tocar sons para eventos de entrada, dependendo das configurações do sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorar configurações de áudio do sistema</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Use as preferências abaixo, mesmo se o áudio estiver desativado no sistema. Não funciona quando o toque do sistema está silenciado</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume de som para eventos de entrada</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sons ao pressionar a tecla</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons ao pressionar e segurar a tecla</string>
@@ -215,11 +198,6 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sons de movimento de deslizar com gestos</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Resposta Tátil / Vibração</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ativar resposta tátil</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar para eventos de entrada, dependendo das configurações do sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar as configurações táteis do sistema</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Use as preferências abaixo, mesmo se a resposta tátil estiver desativada no sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Ativar vibração diretamente</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Ativar vibração diretamente em vez de utilizar as definições de resposta tátil do sistema</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duração da vibração</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidade da vibração</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Este recurso requer suporte de controle de amplitude de hardware, que está faltando em seu dispositivo</string>
@@ -266,26 +244,35 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Botões de alternância</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte a linha de ação de alternância</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Layout de linha</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Ações primárias</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Expandir/recolher automaticamente</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Expande/recolhe automaticamente a linha de ação primária com base no estado atual</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Ações secundárias</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Mostrar linha de ação secundária</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Sugestões e Correções</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Digitação</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostrar sugestões em linha fornecidas pelos serviços de preenchimento automático</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Exibir sugestões</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Fornece sugestões enquanto você digita</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de exibição de sugestões</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloqueie palavras possivelmente ofensivas</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Sugestões de conteúdo da área de transferência</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Tempo limite de sugestão da área de transferência</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Sugerir conteúdo da área de transferência copiado anteriormente</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limitar as sugestões da área de transferência a</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Itens copiados nos últimos {v} s</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostrar sugestões em linha fornecidas pelos serviços de preenchimento automático</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Capitalização automática</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Deixar palavras em maiúsculo com base no contexto de entrada atual</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Espaço automático após pontuação</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Inserir um espaço automaticamente após uma pontuação</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Lembrar do estado do caps lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">O caps lock permanecerá ligado ao mudar para outro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dois espaços para ponto final</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tocar duas vezes na barra de espaço insere um ponto final seguido por um espaço</string>
+    <string name="pref__spelling__title" comment="Preference group title">Ortografia</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado em todo o sistema. Nenhuma linha vermelha aparecerá nos campos de texto para palavras incorretas. Toque para mudar.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Nenhum serviço de corretor ortográfico de texto embutido definido. Toque para mudar.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usar nomes de contatos</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Procure nomes da sua lista de contatos</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Usar entradas de dicionário do usuário</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Procurar entradas nos dicionários do usuário</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Dicionários do usuário</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ativar dicionário de usuário do sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palavras armazenadas no dicionário de usuário do sistema</string>
@@ -351,41 +338,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Idioma das configurações</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone do aplicativo no launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre ativado no Android 10+ devido a restrições do sistema</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forçar o modo privado</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa recursos que funcionam com seus dados de entrada</string>
-    <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Corretor ortográfico</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuração do corretor ortográfico do teclado</string>
-    <string name="pref__spelling__active_spellchecker__label">Verificação ortográfica do campo de texto embutido</string>
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Desativado em todo o sistema. Nenhuma linha vermelha aparecerá nos campos de texto para palavras incorretas. Toque para mudar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Nenhum serviço de corretor ortográfico de texto embutido definido. Toque para mudar.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">A opção \"Idiomas\" na tela do corretor ortográfico do sistema está configurada para \"Usar idiomas do sistema\". Devido a um bug que pode causar ao {app_name} não executar a verificação ortográfica embutida. Considere mudar para \"{use_floris_config}\".</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuração</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomas</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NÃO IMPLEMENTADO] Use nomes de contatos</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">O corretor ortográfico procurará nomes na sua lista de contatos</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Usar entradas de dicionário do usuário</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">O corretor ortográfico procurará entradas nos dicionários do usuário, se estiverem ativados</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Gerenciar dicionários</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} instalado</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Nenhum dicionário de correção ortográfica instalado atualmente. Adicione o primeiro com o botão \'+\'-abaixo!</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extensão / Arquivo</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affix + Arquivo de dicionário</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Importar novo dicionário</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Selecionar fonte</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Selecione a fonte de onde você baixou a extensão de terceiros. Isso ajuda a analisar corretamente o formato de extensão não-FlorisBoard e convertê-lo em um formato FlorisBoard.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importar arquivo</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Agora importe o arquivo escolhendo o arquivo na caixa de diálogo do seletor de arquivos.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Selecionar idioma</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Código de idioma (p.ex. en_US)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Importar arquivos de afixo/dicionário</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Selecione o arquivo afixo (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Selecione o arquivo de dicionário (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verificar importação</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Verifique se os metadados abaixo estão corretos. Se algo estiver incorreto, você pode voltar para uma etapa anterior e selecionar novamente a fonte / reimportar o arquivo.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Onde posso obter dicionários?</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">O FlorisBoard usa o Nuspell como o corretor ortográfico, o que significa que há uma grande quantidade de dicionários disponíveis, já que o Hunspell também é usado por muitos outros softwares. A lista abaixo mostra algumas fontes selecionadas manualmente que o gerenciador de importação suporta. Baixe o arquivo compactado ou os arquivos de dicionário e, no gerenciador de importação, escolha a fonte correta (isso é importante para ler corretamente o formato do arquivo).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">se esta lista não contiver dicionários para o seu idioma ou dialeto, você também pode pesquisar manualmente um dicionário Hunspell e importar o arquivo \'aff\' e \'dic\' para isso.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do aplicativo FlorisBoard</string>
@@ -476,8 +428,9 @@
     <string name="clipboard__group_pinned">Fixado</string>
     <string name="clipboard__group_recent">Recente</string>
     <string name="clipboard__group_other">Outro</string>
-    <string name="clipboard__item_description_url">URL</string>
     <string name="clipboard__item_description_email">Email</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Telefone</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desafixar item</string>
     <string name="clip__pin_item">Fixar item</string>
@@ -550,11 +503,9 @@
     <string name="ext__error__not_found_description">Nenhuma extensão com o ID \"{id}\" pode ser encontrada.</string>
     <string name="ext__editor__title_create_any">Criar extensão</string>
     <string name="ext__editor__title_create_keyboard">Criar extensão de teclado</string>
-    <string name="ext__editor__title_create_spelling">Criar extensão de ortografia</string>
     <string name="ext__editor__title_create_theme">Criar extensão de tema</string>
     <string name="ext__editor__title_edit_any">Editar extensão</string>
     <string name="ext__editor__title_edit_keyboard">Editar extensão de teclado</string>
-    <string name="ext__editor__title_edit_spelling">Editar extensão de ortografia</string>
     <string name="ext__editor__title_edit_theme">Editar extensão de tema</string>
     <string name="ext__editor__metadata__title">Gerenciar metadados</string>
     <string name="ext__editor__metadata__title_invalid">Metadados inválidos</string>
@@ -574,7 +525,6 @@
     <string name="ext__import__failure">Falha ao importar extensão: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importar extensão</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importar extensão de teclado</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Importar extensão ortográfica / dicionário</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importar extensão de tema</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">O arquivo não pode ser importado. Razão:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipo de arquivo não compatível ou não reconhecido.</string>
@@ -676,20 +626,10 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Desligado</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modo canhoto</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modo destro</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Acima da linha primária</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Coloca a linha secundária entre a UI do aplicativo e a linha primária</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Abaixo da linha primária</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Coloca a linha secundária entre a linha primária e o teclado de texto</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Sobreposição da UI do aplicativo</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Coloca a linha secundária como uma sobreposição acima da UI do aplicativo, sem afetar a altura da UI do teclado resultante. Observe que este posicionamento pode fazer com que o campo de entrada do aplicativo fique parcialmente coberto</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Início da parte superior</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Final da parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Final da parte inferior</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Início da parte inferior</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Ações rápidas</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Ações rápidas organizáveis ​​em formato de linha com um menu flutuante</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Ferramentas do cursor da área de transferência</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Linha com a área de transferência e as ferramentas de movimento do cursor mais usadas</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Básico</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Apenas propriedades de cor são mostradas, propriedades e regras são traduzidas.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avançado</string>

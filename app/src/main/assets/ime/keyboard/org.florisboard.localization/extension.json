@@ -17,14 +17,19 @@
     {
       "id": "default",
       "label": "Default",
-      "symbolsPrecedingSpace": ".*[.,;:!?‽&%)\\]}»©®™\\p{L}0-9]",
-      "symbolsFollowingSpace": "[\\p{L}0-9].*"
+      "symbolsPrecedingAutoSpace": ".,?‽!\"&%)]}»",
+      "symbolsFollowingAutoSpace": "",
+      "symbolsPrecedingPhantomSpace": ".,;:?‽!&%)]}»©®™",
+      "symbolsFollowingPhantomSpace": "¿⸘¡([{",
+      "symbolsTerminatingSentence": ".?‽!"
     }
   ],
   "popupMappings": [
     { "id": "default", "authors": [ "patrickgold" ] },
     { "id": "ar", "authors": [ "HeiWiper" ] },
+    { "id": "ast", "authors": [ "Softastur" ] },
     { "id": "bg", "authors": [ "iorvethe" ] },
+    { "id": "bn-BD", "authors": [ "iamrasel" ] },
     { "id": "ca", "authors": [ "mikelloc" ] },
     { "id": "ckb", "authors": [ "GoRaN" ] },
     { "id": "cs", "authors": [ "stefan-misik" ] },
@@ -35,6 +40,7 @@
     { "id": "en", "authors": [ "patrickgold" ] },
     { "id": "eo", "authors": [ "jeremiah-miller" ] },
     { "id": "es", "authors": [ "patrickgold" ] },
+    { "id": "et", "authors": [ "OneSheepy" ] },
     { "id": "fa", "authors": [ "PHELAT" ] },
     { "id": "fa2", "authors": [ "M-Koushan" ] },
     { "id": "fa3", "authors": [ "SaeID-Rz" ] },
@@ -49,6 +55,7 @@
     { "id": "it", "authors": [ "patrickgold" ] },
     { "id": "iw", "authors": [ "Antony" ] },
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
+    { "id": "kab", "authors": [ "yanis867" ] },
     { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
     { "id": "lt", "authors": [ "patrickgold" ] },
@@ -514,6 +521,15 @@
       }
     },
     {
+      "languageTag": "sl-SI",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:sl-SI",
+      "preferred": {
+        "characters": "org.florisboard.layouts:slovenian"
+      }
+    },
+    {
       "languageTag": "lv-LV",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
@@ -640,6 +656,58 @@
       "popupMapping": "org.florisboard.localization:ur-PK",
       "preferred": {
         "characters": "org.florisboard.layouts:urdu_phonetic"
+      }
+    },
+    {
+      "languageTag": "zh-CN-zhengma",
+      "composer": "org.florisboard.composers:appender",
+      "nlpProviders": {
+        "spelling": "org.florisboard.nlp.providers.han.shape",
+        "suggestion": "org.florisboard.nlp.providers.han.shape"
+      },
+      "currencySet": "org.florisboard.currencysets:yen",
+      "popupMapping": "org.florisboard.localization:en",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty",
+        "symbols": "org.florisboard.layouts:cjk",
+        "symbols2": "org.florisboard.layouts:cjk"
+      }
+    },
+	  {
+      "languageTag": "bn-BD",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:bangladeshi_taka",
+      "popupMapping": "org.florisboard.localization:bn-BD",
+      "preferred": {
+        "characters": "org.florisboard.layouts:bengali_bd",
+        "numericRow": "org.florisboard.layouts:bengali",
+        "numericAdvanced": "org.florisboard.layouts:bengali"
+      }
+    },
+    {
+      "languageTag": "ast",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:ast",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
+      "languageTag": "ta-lk",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "preferred": {
+        "characters": "org.florisboard.layouts:tamil"
+      }
+    },
+    {
+      "languageTag": "kab",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:euro",
+      "popupMapping": "org.florisboard.localization:kab",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
       }
     }
   ]

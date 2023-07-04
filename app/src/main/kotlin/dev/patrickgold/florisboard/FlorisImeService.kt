@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.util.Size
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -70,11 +71,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
+import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
+import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
@@ -86,8 +90,9 @@ import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
-import dev.patrickgold.florisboard.ime.text.smartbar.SecondaryRowPlacement
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidInternalR
@@ -105,6 +110,7 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.lib.snygg.ui.shape
@@ -265,7 +271,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
-        subtypeManager.activeSubtype.observe(this) { subtype ->
+        subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             config.setLocale(subtype.primaryLocale)
             resourcesContext = createConfigurationContext(config)
@@ -274,6 +280,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onCreateInputView(): View {
         super.installViewTreeOwners()
+        // Instantiate and install bottom sheet host UI view
+        val bottomSheetView = FlorisBottomSheetHostUiView()
+        window.window!!.findViewById<ViewGroup>(android.R.id.content).addView(bottomSheetView)
+        // Instantiate and return input view
         val composeView = ComposeInputView()
         inputWindowView = composeView
         return composeView
@@ -324,7 +334,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         activeState.batchEdit {
             activeState.imeUiMode = ImeUiMode.TEXT
             activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
-            editorInstance.handleStartInputView(editorInfo)
+            editorInstance.handleStartInputView(editorInfo, isRestart = restarting)
         }
     }
 
@@ -383,6 +393,10 @@ class FlorisImeService : LifecycleInputMethodService() {
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = false
+        activeState.batchEdit {
+            activeState.isActionsOverflowVisible = false
+            activeState.isActionsEditorVisible = false
+        }
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
@@ -401,7 +415,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
-            editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info))
+            editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info), isRestart = true)
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(info)
@@ -462,16 +476,18 @@ class FlorisImeService : LifecycleInputMethodService() {
         val visibleTopY = inputWindowView.height - inputViewSize.height
         val needAdditionalOverlay =
             prefs.smartbar.enabled.get() &&
-                prefs.smartbar.secondaryActionsEnabled.get() &&
-                prefs.smartbar.secondaryActionsExpanded.get() &&
-                prefs.smartbar.secondaryActionsPlacement.get() == SecondaryRowPlacement.OVERLAY_APP_UI &&
+                prefs.smartbar.layout.get() == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED &&
+                prefs.smartbar.extendedActionsExpanded.get() &&
+                prefs.smartbar.extendedActionsPlacement.get() == ExtendedActionsPlacement.OVERLAY_APP_UI &&
                 keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
 
         outInsets.contentTopInsets = visibleTopY
         outInsets.visibleTopInsets = visibleTopY
         outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
         val left = 0
-        val top = visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
+        val top = if (keyboardManager.activeState.isBottomSheetShowing()) { 0 } else {
+            visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
+        }
         val right = inputViewSize.width
         val bottom = inputWindowView.height
         outInsets.touchableRegion.set(left, top, right, bottom)
@@ -541,14 +557,16 @@ class FlorisImeService : LifecycleInputMethodService() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     private fun ImeUi() {
-        val activeState by keyboardManager.observeActiveState()
+        val state by keyboardManager.activeState.collectAsState()
         val keyboardStyle = FlorisImeTheme.style.get(
             element = FlorisImeUi.Keyboard,
-            mode = activeState.inputShiftState.value,
+            mode = state.inputShiftState.value,
         )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {
-            keyboardManager.activeState.layoutDirection = layoutDirection
+            if (keyboardManager.activeState.layoutDirection != layoutDirection) {
+                keyboardManager.activeState.layoutDirection = layoutDirection
+            }
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggSurface(
@@ -592,7 +610,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                 .weight(keyboardWeight)
                                 .wrapContentHeight(),
                         ) {
-                            when (activeState.imeUiMode) {
+                            when (state.imeUiMode) {
                                 ImeUiMode.TEXT -> TextInputLayout()
                                 ImeUiMode.MEDIA -> MediaInputLayout()
                                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
@@ -618,6 +636,11 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean =
+        if (keyboardManager.onHardwareKeyDown(keyCode, event)) true
+        else super.onKeyDown(keyCode, event)
+
+
     private inner class ComposeInputView : AbstractComposeView(this) {
         init {
             isHapticFeedbackEnabled = true
@@ -636,6 +659,26 @@ class FlorisImeService : LifecycleInputMethodService() {
         override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             updateSoftInputWindowLayoutParameters()
+        }
+    }
+
+    private inner class FlorisBottomSheetHostUiView : AbstractComposeView(this) {
+        init {
+            isHapticFeedbackEnabled = true
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        }
+
+        @Composable
+        override fun Content() {
+            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+                FlorisImeTheme {
+                    BottomSheetHostUi()
+                }
+            }
+        }
+
+        override fun getAccessibilityClassName(): CharSequence {
+            return javaClass.name
         }
     }
 

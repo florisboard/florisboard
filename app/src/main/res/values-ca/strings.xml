@@ -9,13 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mou el teclat a l\'esquerra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mou el teclat a la dreta.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoticones</string>
+    <string name="settings__media__title">Emojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticones</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Talla màxima de l\'historial d\'emoticones</string>
-    <string name="prefs__media__emoji_preferred_skin_tone">Color de pell preferit per les emoticones</string>
-    <string name="prefs__media__emoji_preferred_hair_style">Pentinat preferit per les emoticones</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Mida màxima de l\'historial d\'emojis</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">To de pell preferit dels emojis</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Pentinat preferit dels emojis</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emocions &amp; Emoticones</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persones &amp; Cos</string>
@@ -26,16 +26,11 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objectes</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Commutació d\'acció ràpida. Si es prem, commuta entre els suggeriments de paraula i els botons d\'acció ràpida.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Surt del quadre d\'edició de text.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Commuta l\'estat del mode d\'una sola mà.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Obre la configuració.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Canvia al plafó d\'edició de text.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Canvia a la vista d\'entrada de suports.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botó de desfer per invertir l\'última acció</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botó de refer per revertir l\'últim desfer</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si visible, indica que el mode privat està actiu. Quan es fa clic, es mostra informació sobre el mode privat.</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No s\'han trobat emojis recents. En començar a escriure emojis, apareixeran automàticament aquí.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consell: Manteniu premut els emojis recents per a suprimir-los d\'aquesta llista!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">S\'ha eliminat {emoji} dels emojis recents</string>
+    <!-- Quick action strings -->
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Preferències</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prova la configuració</string>
@@ -143,17 +138,19 @@
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggereix paraules emmagatzemades al diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestiona el diccionari d\'usuari del sistema</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>
-    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__version__title" comment="Preference title">Versió</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Benvinguts!</string>
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tanca</string>
     <!-- Clipboard strings -->
     <string name="clipboard__group_other">Altres</string>
-    <string name="clipboard__item_description_url">Enllaç</string>
     <string name="clipboard__item_description_email">Correu</string>
+    <string name="clipboard__item_description_url">Enllaç</string>
     <string name="clip__delete_item">Eliminar</string>
+    <string name="clip__paste_item">Enganxa</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
     <string name="ext__meta__id">ID</string>

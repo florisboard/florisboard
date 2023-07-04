@@ -90,6 +90,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = stringRes(R.string.devtools__show_key_touch_boundaries__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            SwitchPreference(
+                prefs.devtools.showDragAndDropHelpers,
+                title = stringRes(R.string.devtools__show_drag_and_drop_helpers__label),
+                summary = stringRes(R.string.devtools__show_drag_and_drop_helpers__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
             Preference(
                 title = stringRes(R.string.devtools__clear_udm_internal_database__label),
                 summary = stringRes(R.string.devtools__clear_udm_internal_database__summary),
@@ -99,14 +105,7 @@ fun DevtoolsScreen() = FlorisScreen {
             Preference(
                 title = stringRes(R.string.devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
                 summary = stringRes(R.string.devtools__reset_flag_is_ime_set_up__summary),
-                onClick = {
-                    prefs.internal.isImeSetUp.set(false)
-                    navController.navigate(Routes.Setup.Screen) {
-                        popUpTo(Routes.Settings.Home) {
-                            inclusive = true
-                        }
-                    }
-                },
+                onClick = { prefs.internal.isImeSetUp.set(false) },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(
@@ -182,13 +181,6 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
                 onClick = {
                     context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
-                },
-            )
-            Preference(
-                title = "spellingDicts",
-                summary = extensionManager.spellingDicts.internalModuleDir.absolutePath,
-                onClick = {
-                    context.showLongToast(extensionManager.spellingDicts.internalModuleDir.absolutePath)
                 },
             )
             Preference(

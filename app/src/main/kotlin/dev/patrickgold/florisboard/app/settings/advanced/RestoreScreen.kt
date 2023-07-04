@@ -159,16 +159,6 @@ fun RestoreScreen() = FlorisScreen {
                 srcDir.copyRecursively(dstDir, overwrite = true)
             }
         }
-        if (restoreFilesSelector.imeSpelling) {
-            val srcDir = workspaceFilesDir.subDir(ExtensionManager.IME_SPELLING_PATH)
-            val dstDir = context.filesDir.subDir(ExtensionManager.IME_SPELLING_PATH)
-            if (shouldReset) {
-                dstDir.deleteContentsRecursively()
-            }
-            if (srcDir.exists()) {
-                srcDir.copyRecursively(dstDir, overwrite = true)
-            }
-        }
         if (restoreFilesSelector.imeTheme) {
             val srcDir = workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH)
             val dstDir = context.filesDir.subDir(ExtensionManager.IME_THEME_PATH)

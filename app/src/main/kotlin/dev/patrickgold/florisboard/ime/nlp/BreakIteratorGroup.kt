@@ -29,6 +29,8 @@ open class BreakIteratorGroup {
 
     private val wordInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
 
+    private val sentenceInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
+
     suspend fun <R> character(locale: FlorisLocale, action: (BreakIterator) -> R): R {
         contract {
             callsInPlace(action, InvocationKind.EXACTLY_ONCE)
@@ -45,6 +47,16 @@ open class BreakIteratorGroup {
         }
         val instance = wordInstances.get(locale) {
             guardedByLock { BreakIterator.getWordInstance(locale.base) }
+        }
+        return instance.withLock(null, action)
+    }
+
+    suspend fun <R> sentence(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+        contract {
+            callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+        }
+        val instance = sentenceInstances.get(locale) {
+            guardedByLock { BreakIterator.getSentenceInstance(locale.base) }
         }
         return instance.withLock(null, action)
     }

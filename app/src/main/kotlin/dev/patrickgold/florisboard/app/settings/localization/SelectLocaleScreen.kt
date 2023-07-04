@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -64,14 +65,15 @@ fun SelectLocaleScreen() = FlorisScreen {
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
     var searchTermValue by remember { mutableStateOf(TextFieldValue()) }
-    val systemLocales = remember(displayLanguageNamesIn) {
-        FlorisLocale.installedSystemLocales().sortedBy { locale ->
+    val context = LocalContext.current
+    val systemLocales =
+        FlorisLocale.extendedAvailableLocales(context).sortedBy { locale ->
             when (displayLanguageNamesIn) {
                 DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
                 DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
             }.lowercase()
         }
-    }
+
     val filteredSystemLocales = remember(searchTermValue) {
         if (searchTermValue.text.isBlank()) {
             systemLocales
@@ -80,6 +82,7 @@ fun SelectLocaleScreen() = FlorisScreen {
             systemLocales.filter { locale ->
                 locale.displayName().lowercase().contains(term) ||
                     locale.displayName(locale).lowercase().contains(term) ||
+                    locale.displayName(FlorisLocale.ENGLISH).lowercase().contains(term) ||
                     locale.languageTag().lowercase().startsWith(term) ||
                     locale.localeTag().lowercase().startsWith(term)
             }

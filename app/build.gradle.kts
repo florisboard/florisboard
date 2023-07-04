@@ -31,9 +31,9 @@ plugins {
 
 android {
     namespace = "dev.patrickgold.florisboard"
-    compileSdk = 31
-    buildToolsVersion = "31.0.0"
-    ndkVersion = "22.1.7171670"
+    compileSdk = 33
+    buildToolsVersion = "33.0.2"
+    ndkVersion = "25.2.9519653"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,18 +44,17 @@ android {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf(
             "-Xallow-result-return-type",
-            "-Xopt-in=kotlin.RequiresOptIn",
-            "-Xopt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=compatibility",
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xjvm-default=all-compatibility",
         )
     }
 
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 24
-        targetSdk = 31
-        versionCode = 86
-        versionName = "0.3.16"
+        targetSdk = 33
+        versionCode = 90
+        versionName = "0.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -69,9 +68,14 @@ android {
 
         externalNativeBuild {
             cmake {
-                cFlags("-fvisibility=hidden", "-DU_STATIC_IMPLEMENTATION=1")
-                cppFlags("-fvisibility=hidden", "-std=c++17", "-fexceptions", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
-                arguments("-DANDROID_STL=c++_static")
+                targets("florisboard-native")
+                cppFlags("-std=c++20", "-stdlib=libc++")
+                arguments(
+                    "-DCMAKE_ANDROID_API=" + minSdk.toString(),
+                    "-DICU_ASSET_EXPORT_DIR=" + project.file("src/main/assets/icu4c").absolutePath,
+                    "-DBUILD_SHARED_LIBS=false",
+                    "-DANDROID_STL=c++_static",
+                )
             }
         }
 
@@ -82,10 +86,7 @@ android {
         sourceSets {
             maybeCreate("main").apply {
                 assets {
-                    srcDirs("src/main/assets", "src/main/icu4c/prebuilt/assets")
-                }
-                jniLibs {
-                    srcDirs("src/main/icu4c/prebuilt/jniLibs")
+                    srcDirs("src/main/assets")
                 }
                 java {
                     srcDirs("src/main/kotlin")
@@ -108,7 +109,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     externalNativeBuild {
@@ -127,7 +128,7 @@ android {
 
             ndk {
                 // For running FlorisBoard on the emulator
-                abiFilters += listOf("x86", "x86_64")
+                // abiFilters += listOf("x86", "x86_64")
             }
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
@@ -138,7 +139,7 @@ android {
 
         create("beta") {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = ""
+            versionNameSuffix = "-alpha04"
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
@@ -191,9 +192,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
 dependencies {
     implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
@@ -212,13 +218,14 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.cache4k)
-    implementation(libs.jetpref.datastore.model)
-    implementation(libs.jetpref.datastore.ui)
-    implementation(libs.jetpref.material.ui)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
+    implementation(libs.patrickgold.compose.tooltip)
+    implementation(libs.patrickgold.jetpref.datastore.model)
+    implementation(libs.patrickgold.jetpref.datastore.ui)
+    implementation(libs.patrickgold.jetpref.material.ui)
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

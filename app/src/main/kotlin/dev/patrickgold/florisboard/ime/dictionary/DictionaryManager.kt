@@ -19,34 +19,22 @@ package dev.patrickgold.florisboard.ime.dictionary
 import android.content.Context
 import androidx.room.Room
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.nlp.SuggestionList
-import dev.patrickgold.florisboard.ime.nlp.Word
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.io.FlorisRef
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import java.lang.ref.WeakReference
 
 /**
  * TODO: document
  */
-class DictionaryManager private constructor(
-    context: Context,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-) {
+class DictionaryManager private constructor(context: Context) {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext ?: context)
     private val prefs by florisPreferenceModel()
-
-    private val dictionaryCache: MutableMap<String, Dictionary> = mutableMapOf()
 
     private var florisUserDictionaryDatabase: FlorisUserDictionaryDatabase? = null
     private var systemUserDictionaryDatabase: SystemUserDictionaryDatabase? = null
 
     companion object {
-        val FLORIS_EN_REF = FlorisRef.assets("ime/dict/en.flict")
-
         private var defaultInstance: DictionaryManager? = null
 
         fun init(applicationContext: Context): DictionaryManager {
@@ -67,81 +55,42 @@ class DictionaryManager private constructor(
         }
     }
 
-    inline fun suggest(
-        currentWord: Word,
-        preceidingWords: List<Word>,
-        subtype: Subtype,
-        allowPossiblyOffensive: Boolean,
-        maxSuggestionCount: Int,
-        block: (suggestions: SuggestionList) -> Unit
-    ) {
-        val suggestions = SuggestionList.new(maxSuggestionCount)
-        queryUserDictionary(currentWord, subtype.primaryLocale, suggestions)
-        loadDictionary(FLORIS_EN_REF).onSuccess {
-            it.getTokenPredictions(preceidingWords, currentWord, maxSuggestionCount, allowPossiblyOffensive, suggestions)
-        }
-        block(suggestions)
-        suggestions.dispose()
-    }
-
-    fun loadDictionary(ref: FlorisRef): Result<Dictionary> {
-        dictionaryCache[ref.toString()]?.let {
-            return Result.success(it)
-        }
-        if (ref.relativePath.endsWith(".flict")) {
-            // Assume this is a Flictionary
-            applicationContext.get()?.let {
-                Flictionary.load(it, ref).onSuccess { flict ->
-                    dictionaryCache[ref.toString()] = flict
-                    return Result.success(flict)
-                }.onFailure { err ->
-                    flogError { err.toString() }
-                    return Result.failure(err)
-                }
-            }
-        } else {
-            return Result.failure(Exception("Unable to determine supported type for given AssetRef!"))
-        }
-        return Result.failure(Exception("If this message is ever thrown, something is completely broken..."))
-    }
-
-    fun prepareDictionaries(subtype: Subtype) {
-        loadDictionary(FLORIS_EN_REF)
-    }
-
-    fun queryUserDictionary(word: Word, locale: FlorisLocale, destSuggestionList: SuggestionList) {
+    fun queryUserDictionary(word: String, locale: FlorisLocale): List<SuggestionCandidate> {
         val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()
         if (florisDao == null && systemDao == null) {
-            return
+            return emptyList()
         }
-        if (prefs.dictionary.enableFlorisUserDictionary.get()) {
-            florisDao?.query(word, locale)?.let {
-                for (entry in it) {
-                    destSuggestionList.add(entry.word, entry.freq)
+        return buildList {
+            if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+                florisDao?.query(word, locale)?.let {
+                    for (entry in it) {
+                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                    }
+                }
+                florisDao?.queryShortcut(word, locale)?.let {
+                    for (entry in it) {
+                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                    }
                 }
             }
-            florisDao?.queryShortcut(word, locale)?.let {
-                for (entry in it) {
-                    destSuggestionList.add(entry.word, entry.freq)
+            if (prefs.dictionary.enableSystemUserDictionary.get()) {
+                systemDao?.query(word, locale)?.let {
+                    for (entry in it) {
+                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                    }
+                }
+                systemDao?.queryShortcut(word, locale)?.let {
+                    for (entry in it) {
+                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                    }
                 }
             }
         }
-        if (prefs.dictionary.enableSystemUserDictionary.get()) {
-            systemDao?.query(word, locale)?.let {
-                for (entry in it) {
-                    destSuggestionList.add(entry.word, entry.freq)
-                }
-            }
-            systemDao?.queryShortcut(word, locale)?.let {
-                for (entry in it) {
-                    destSuggestionList.add(entry.word, entry.freq)
-                }
-            }
-        }
+
     }
 
-    fun spell(word: Word, locale: FlorisLocale): Boolean {
+    fun spell(word: String, locale: FlorisLocale): Boolean {
         val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()
         if (florisDao == null && systemDao == null) {

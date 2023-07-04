@@ -20,7 +20,6 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.widget.TextView
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -34,10 +33,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material.ButtonDefaults
@@ -117,7 +116,6 @@ private val VariantsTriangleShapeRtl = GenericShape { size, _ ->
     lineTo(x = 0f, y = size.height)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EmojiPaletteView(
     fullEmojiMappings: EmojiLayoutDataMap,
@@ -149,7 +147,7 @@ fun EmojiPaletteView(
     }
 
     var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
-    val lazyListState = rememberLazyListState()
+    val lazyListState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
 
     val preferredSkinTone by prefs.media.emojiPreferredSkinTone.observeAsState()
@@ -205,8 +203,8 @@ fun EmojiPaletteView(
                     LazyVerticalGrid(
                         modifier = Modifier
                             .fillMaxSize()
-                            .florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f), isVertical = true),
-                        cells = GridCells.Adaptive(minSize = EmojiBaseWidth),
+                            /*.florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f), isVertical = true)*/,
+                        columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyListState,
                     ) {
                         items(emojiMapping) { emojiSet ->

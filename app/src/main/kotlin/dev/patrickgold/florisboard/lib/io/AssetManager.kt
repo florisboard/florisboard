@@ -29,12 +29,12 @@ import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.lib.android.reader
 import dev.patrickgold.florisboard.lib.kotlin.resultErr
 import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
 import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -67,6 +67,8 @@ val DefaultJsonConfig = Json {
     }
 }
 
+// TODO: fully deprecate and remove this class, should be substituted by extension funs on the actual file and stream
+//       instances
 class AssetManager(context: Context) {
     val appContext by context.appContext()
 
@@ -135,13 +137,6 @@ class AssetManager(context: Context) {
         }
     }
 
-    inline fun <reified T> loadJsonAsset(ref: FlorisRef, jsonConfig: Json = DefaultJsonConfig): Result<T> {
-        return loadTextAsset(ref).fold(
-            onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
-            onFailure = { resultErr(it) }
-        )
-    }
-
     fun <T> loadJsonAsset(
         ref: FlorisRef,
         serializer: KSerializer<T>,
@@ -149,13 +144,6 @@ class AssetManager(context: Context) {
     ) = runCatching<T> {
         val jsonStr = loadTextAsset(ref).getOrThrow()
         jsonConfig.decodeFromString(serializer, jsonStr)
-    }
-
-    inline fun <reified T> loadJsonAsset(file: File, jsonConfig: Json = DefaultJsonConfig): Result<T> {
-        return readTextFile(file).fold(
-            onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
-            onFailure = { resultErr(it) }
-        )
     }
 
     inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = DefaultJsonConfig): Result<T> {
@@ -173,7 +161,7 @@ class AssetManager(context: Context) {
     fun loadTextAsset(ref: FlorisRef): Result<String> {
         return when {
             ref.isAssets -> runCatching {
-                appContext.assets.open(ref.relativePath).bufferedReader().use { it.readText() }
+                appContext.assets.reader(ref.relativePath).use { it.readText() }
             }
             ref.isCache || ref.isInternal -> {
                 val file = File(ref.absolutePath(appContext))
@@ -188,50 +176,13 @@ class AssetManager(context: Context) {
         }
     }
 
-    inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
-        return runCatching { jsonConfig.encodeToString(asset) }.fold(
-            onSuccess = { writeTextAsset(ref, it) },
-            onFailure = { resultErr(it) }
-        )
-    }
-
-    inline fun <reified T> writeJsonAsset(file: File, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
-        return runCatching { jsonConfig.encodeToString(asset) }.fold(
-            onSuccess = { writeTextFile(file, it) },
-            onFailure = { resultErr(it) }
-        )
-    }
-
-    fun writeTextAsset(ref: FlorisRef, text: String): Result<Unit> {
-        return when {
-            ref.isCache || ref.isInternal -> {
-                val file = File(ref.absolutePath(appContext))
-                writeTextFile(file, text)
-            }
-            else -> resultErrStr("Can not write an asset in source '${ref.scheme}'")
-        }
-    }
-
     /**
      * Reads a given [file] and returns its content.
      *
      * @param file The file object.
      * @return The contents of the file or an empty string, if the file does not exist.
      */
-    fun readTextFile(file: File) = runCatching {
+    private fun readTextFile(file: File) = runCatching {
         file.readText(Charsets.UTF_8)
-    }
-
-    /**
-     * Writes given [text] to given [file]. If the file already exists, its current content
-     * will be overwritten.
-     *
-     * @param file The file object.
-     * @param text The text to write to the file.
-     * @return The contents of the file or an empty string, if the file does not exist.
-     */
-    fun writeTextFile(file: File, text: String) = runCatching {
-        file.parentFile?.mkdirs()
-        file.writeText(text)
     }
 }

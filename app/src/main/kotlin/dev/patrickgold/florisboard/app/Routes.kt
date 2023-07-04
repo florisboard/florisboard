@@ -44,29 +44,22 @@ import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
 import dev.patrickgold.florisboard.app.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreen
+import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.localization.LocalizationScreen
 import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
 import dev.patrickgold.florisboard.app.settings.smartbar.SmartbarScreen
-import dev.patrickgold.florisboard.app.settings.spelling.ImportSpellingArchiveScreen
-import dev.patrickgold.florisboard.app.settings.spelling.ManageSpellingDictsScreen
-import dev.patrickgold.florisboard.app.settings.spelling.SpellingInfoScreen
-import dev.patrickgold.florisboard.app.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
-import dev.patrickgold.florisboard.app.splash.SplashScreen
 import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 
 @Suppress("FunctionName")
 object Routes {
-    object Splash {
-        const val Screen = "splash"
-    }
-
     object Setup {
         const val Screen = "setup"
     }
@@ -76,6 +69,9 @@ object Routes {
 
         const val Localization = "settings/localization"
         const val SelectLocale = "settings/localization/select-locale"
+        const val LanguagePackManager = "settings/localization/language-pack-manage/{action}"
+        fun LanguagePackManager(action: LanguagePackManagerScreenAction) =
+            LanguagePackManager.curlyFormat("action" to action.id)
         const val SubtypeAdd = "settings/localization/subtype/add"
         const val SubtypeEdit = "settings/localization/subtype/edit/{id}"
         fun SubtypeEdit(id: Long) = SubtypeEdit.curlyFormat("id" to id)
@@ -90,12 +86,6 @@ object Routes {
         const val Smartbar = "settings/smartbar"
 
         const val Typing = "settings/typing"
-
-        const val Spelling = "settings/spelling"
-        const val SpellingInfo = "settings/spelling/info"
-        const val ManageSpellingDicts = "settings/spelling/manage-dicts"
-        const val ImportSpellingArchive = "settings/spelling/import-archive"
-        const val ImportSpellingAffDic = "settings/spelling/import-aff-dic"
 
         const val Dictionary = "settings/dictionary"
         const val UserDictionary = "settings/dictionary/user-dictionary/{type}"
@@ -156,14 +146,18 @@ object Routes {
             navController = navController,
             startDestination = startDestination,
         ) {
-            composable(Splash.Screen) { SplashScreen() }
-
             composable(Setup.Screen) { SetupScreen() }
 
             composable(Settings.Home) { HomeScreen() }
 
             composable(Settings.Localization) { LocalizationScreen() }
             composable(Settings.SelectLocale) { SelectLocaleScreen() }
+            composable(Settings.LanguagePackManager) { navBackStack ->
+                val action = navBackStack.arguments?.getString("action")?.let { actionId ->
+                    LanguagePackManagerScreenAction.values().firstOrNull { it.id == actionId }
+                }
+                LanguagePackManagerScreen(action)
+            }
             composable(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
             composable(Settings.SubtypeEdit) { navBackStack ->
                 val id = navBackStack.arguments?.getString("id")?.toLongOrNull()
@@ -184,11 +178,6 @@ object Routes {
             composable(Settings.Smartbar) { SmartbarScreen() }
 
             composable(Settings.Typing) { TypingScreen() }
-
-            composable(Settings.Spelling) { SpellingScreen() }
-            composable(Settings.SpellingInfo) { SpellingInfoScreen() }
-            composable(Settings.ManageSpellingDicts) { ManageSpellingDictsScreen() }
-            composable(Settings.ImportSpellingArchive) { ImportSpellingArchiveScreen() }
 
             composable(Settings.Dictionary) { DictionaryScreen() }
             composable(Settings.UserDictionary) { navBackStack ->

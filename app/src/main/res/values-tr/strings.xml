@@ -27,17 +27,40 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Semboller</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bayraklar</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Geçmiş emoji bulunamadı. Emojileri kullanmaya başladığınızda burada gözükecektir.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">İpucu: Son kullanılan emojileri, geçmişten kaldırmak için emojilerin üstüne uzun bir süre tıklayın!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} son kullanılan emojilerden kaldırıldı</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Hızlı erişim tuşu. Basılı tutarak, kelime önerileri ve hızlı erişim tuşları arasında geçin yapar.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Yazı düzenleme panelinden çık.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Tek el modunu aç-kapa.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Ayarları aç.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Yazı düzenleme paneline dön.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Ortam giriş görünümüne geç.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Son eylemi geri almak için geri al tuşu</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Son eylemi tekrarlamak için</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Gizlilik modu aktif ise görünür. Dokunulduğunda, gizlilk modu hakkında bilgileri gösterir.</string>
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Yukarı ok</string>
+    <string name="quick_action__arrow_down" maxLength="12">Aşağı ok</string>
+    <string name="quick_action__arrow_left" maxLength="12">Sol ok</string>
+    <string name="quick_action__arrow_right" maxLength="12">Sağ ok</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopyala</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Kes</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Yapıştır</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Tümünü seç</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Pano</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Pano Geçmişini Aç</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">İfadeler</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Emoji panelini aç</string>
+    <string name="quick_action__settings" maxLength="12">Ayarlar</string>
+    <string name="quick_action__settings__tooltip">Ayarları aç</string>
+    <string name="quick_action__undo" maxLength="12">Geri al</string>
+    <string name="quick_action__undo__tooltip">Son değişikliği geri al</string>
+    <string name="quick_action__redo" maxLength="12">Yinele</string>
+    <string name="quick_action__redo__tooltip">Son girişi yinele</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Ek eylemleri göster veya gizle</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Gizli mod</string>
+    <string name="quick_action__voice_input" maxLength="12">Sesli giriş</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Ses girişi sağlayıcısını aç</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Tek el</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Hiçbiri</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">İşlem Yok</string>
+    <string name="quick_actions_overflow__customize_actions_button">Eylemleri yeniden sırala</string>
+    <string name="quick_actions_editor__header">Eylem sırasını özelleştir</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Sabit eylem ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dinamik eylemler ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Gizlenmiş eylemler ({n})</string>
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ayarlar</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Düzeninizi deneyin</string>
@@ -93,9 +116,14 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Açık temayı seç</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Koyu temayı seç</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">İndirilen temaları düzenle</string>
+    <string name="settings__theme_editor__fine_tune__title">İnce ayar düzenleyici</string>
+    <string name="settings__theme_editor__fine_tune__level">Seviyeyi düzenle</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Renkleri şu şekilde göster</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Diyaloglardan sonra klavyeyi görüntüle</string>
     <string name="settings__theme_editor__add_rule">Kural ekle</string>
     <string name="settings__theme_editor__edit_rule">Kuralı düzenle</string>
+    <string name="settings__theme_editor__rule_element">Hedef Element</string>
+    <string name="settings__theme_editor__rule_codes">Hedef anahtar kodları</string>
     <string name="settings__theme_editor__rule_groups">Gruplar</string>
     <string name="settings__theme_editor__code_placeholder">Kod</string>
     <string name="settings__theme_editor__code_recording_placeholder">Kaydediliyor…</string>
@@ -104,12 +132,34 @@
     <string name="settings__theme_editor__property_name">Özellik adı</string>
     <string name="settings__theme_editor__property_value">Özellik değeri</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Tüm köşeler için uygula</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Gece teması</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Kenarsız</string>
+    <string name="snygg__rule_element__key">Tuş</string>
+    <string name="snygg__rule_element__clipboard_item">Pano öğesi</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Pano öğesi için açılan pencere</string>
+    <string name="snygg__rule_element__emoji_key">Emoji Tuşu</string>
+    <string name="snygg__rule_element__emoji_key_tab">Emoji sekmesi</string>
+    <string name="snygg__rule_selector__disabled">Kapalı</string>
+    <string name="snygg__property_name__width">Genişlik</string>
+    <string name="snygg__property_name__height">Yükseklik</string>
+    <string name="snygg__property_name__background">Arkaplan</string>
+    <string name="snygg__property_name__foreground">Ön plan</string>
+    <string name="snygg__property_name__border_color">Kenar rengi</string>
+    <string name="snygg__property_name__border_style">Kenar stili</string>
+    <string name="snygg__property_name__border_width">Kenar genişliği</string>
+    <string name="snygg__property_name__font_family">Yazı tipi ailesi</string>
+    <string name="snygg__property_name__font_size">Yazı Boyutu</string>
+    <string name="snygg__property_name__font_style">Yazı tipi</string>
+    <string name="snygg__property_name__font_weight">Yazı tipi kalınlığı</string>
+    <string name="snygg__property_name__var_primary">Birincil renk</string>
+    <string name="snygg__property_name__var_primary_variant">Ana renk (variant)</string>
+    <string name="snygg__property_name__var_secondary">İkincil renk</string>
+    <string name="snygg__property_value__dp_size">Boyut (dp)</string>
+    <string name="snygg__property_value__sp_size">Boyut (sp)</string>
+    <string name="snygg__property_value__percentage_size">Boyut (%)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ses &amp; Titreşim</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için sesleri çal</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Sistem ses ayarlarını yok say</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Sistemde ses devre dışı bırakılmış olsa bile aşağıdaki tercihleri kullanın. Sistem zil sesi kapatıldığında çalışmaz</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Giriş olayları için ses seviyesi</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tuş dokunma sesleri</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tuş uzun dokunma sesleri</string>
@@ -118,11 +168,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Kaydırma jestleri hareket sesleri</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Dokunsal Geri bildirim / Titreşim</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Dokunsal geri bildirimi etkinleştir</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için titreştir</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Sistem dokunsal geri bildirim ayarlarını yok say</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Sistemde dokunsal geri bildirim etkin olmasa bile aşağıdaki ayarları kullan</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Titreşimi doğrudan tetikle</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Android\'in geri bildirim özelliği yerine titreşimi doğrudan tetikle</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Titreşim modu</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Titreşim süresi</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Titreşim şiddeti</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Bu özellik, cihazınızda eksik olan donanım genlik kontrol desteği gerektirir</string>
@@ -163,18 +209,10 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Geçiş düğmelerini ters çevir</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Eylem satır geçişlerini ters çevirir</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Satır dizilimi</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Birincil eylemler</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Otomatik genişlet/daralt</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Birincil eylem sırasını mevcut duruma göre otomatik genişletir/daraltır</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">İkincil eylemler</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">İkincil eylem satırını göster</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Öneriler &amp; Düzeltmeler</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Öneri gösterim modu</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Pano önerileri zaman aşımı</string>
     <string name="pref__correction__title" comment="Preference group title">Düzeltmeler</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Otomatik olarak büyük harf yap</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">İçeriğe göre kelimelerin ilk harfini büyüt</string>
@@ -182,6 +220,10 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir yazım alanına geçerken büyük harf kilidini açık tut</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukta nokta</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk tuşuna 2 defa basmak bir nokta ve ardından bir boşluk koyar</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı bırakıldı. Yanlış kelimeler için metin alanlarında kırmızı çizgiler görünmeyecektir. Değiştirmek için dokunun.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmadı. Değiştirmek için dokunun.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Diller</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Kullanıcı sözlüğünü kullan</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Kullanıcı sözlükleri</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Kullanıcı sözlüğünü etkinleştir</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Kullanıcı sözlüğünde saklanan kelimeleri öner</string>
@@ -197,6 +239,8 @@
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Sistem yöneticisi arayüzünü aç</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Kullanıcı sözlüğü başarıyla içe aktarıldı!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Kullanıcı sözlüğü başarıyla dışa aktarıldı!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Kelime ekle</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Kelimeyi düzenle</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sözcük</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Kısayol (seçmeli)</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Dil kodu (seçmeli)</string>
@@ -222,6 +266,7 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Boşluk tuşu sağa kaydırma</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Boşluk tuşu uzun basma</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Silme tuşu sola kaydırma</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Silmek için uzun süre basınız</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Kaydırma hızı eşiği</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Kaydırma mesafesi eşiği</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Gelişmiş</string>
@@ -233,40 +278,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Dili ayarla</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Uygulama simgesini başlatıcıda göster</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
-    <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Yazım denetleyicisi</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Klavye yazım denetleyicisi ayarlarını kullan</string>
-    <string name="pref__spelling__active_spellchecker__label">Satır içi metin alanı yazım denetimi</string>
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı bırakıldı. Yanlış kelimeler için metin alanlarında kırmızı çizgiler görünmeyecektir. Değiştirmek için dokunun.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmadı. Değiştirmek için dokunun.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Sistem yazım denetimi ekranındaki \"Diller\" seçeneği \"Sistem dillerini kullan\" olarak ayarlanmıştır. Bir hata nedeniyle bu, {app_name} öğesinin satır içi yazım denetimi yapmamasına neden olabilir. \"{use_floris_config}\" olarak değiştirmeyi düşünün.</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Ayarlar</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Diller</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[HENÜZ UYGULANMAMIŞ] Rehberdeki isimleri kullan</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Yazım denetleyici rehberinizdeki isimlere bakacak</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Kullanıcı sözlüğünü kullan</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Eğer aktifse, yazım denetleyici kullanıcı sözlüğünüzdeki girdilere bakacak</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Sözlükleri yönet</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} yüklendi</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Hiç bir yazım denetleme sözlüğü yüklü değil. Aşağıdaki \'+\' tuşunu kullanarak ilkini ekleyin!</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Uzantı / Arşiv</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Ekler + Sözlük dosyası</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Yeni sözlük içe aktar</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Kaynağı seçin</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Üçüncü taraf uzantısını indirdiğiniz kaynağı seçin. Bu, FlorisBoard olmayan uzantı biçiminin doğru bir şekilde ayrıştırılmasına ve onu bir FlorisBoard biçimine dönüştürülmesine yardımcı olur.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Arşiv içe aktar</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Şimdi dosya yöneticisinde dosyayı seçerek arşivi içe aktarın.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Dil Seçin</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Dil kodu (Örn. tr_TR)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Sözlük dosyasını içeri aktar</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Ekler dosyasını seçin (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Sözlük dosyasını seçin (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">İçe aktarmayı onayla</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Aşağıdaki meta verilerin doğru olduğunu doğrulayın. Bir şey yanlışsa, bir önceki adıma geri dönebilir ve kaynağı yeniden seçebilir / arşivi yeniden içe aktarabilirsiniz.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Sözlükleri nereden edinebilirim?</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard yazım denetimi motoru olarak Nuspell\'i kullanır. Bu bir çok program tarafından da kullanıldığı için halihazırda oldukça fazla sözlük bulunduğu anlamına gelir. Aşağıdaki liste, içe aktarma yöneticisi tarafından desteklenen elle seçilmiş bazı kaynakları gösterir. İster sözlük, ister arşiv dosyalarını indirin, içe aktarma yöneticisinde doğru kaynağı seçtiğinize emin olun (bu dosyaların doğru şekilde okunması için önemlidir).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">Eğer bu liste dilinize veya lehçenize ait sözlüğü içermiyorsa; kendiniz Hunspell sözlük dosyalarını arayabilir, \'aff\' ve \'dic\' dosyalarını içe aktarabilirsiniz.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard’un uygulama simgesi</string>
@@ -331,6 +342,9 @@
     <string name="clipboard__group_pinned">Sabitlendi</string>
     <string name="clipboard__group_recent">Son kullanılan</string>
     <string name="clipboard__group_other">Diğer</string>
+    <string name="clipboard__item_description_email">E-Posta</string>
+    <string name="clipboard__item_description_url">Adres</string>
+    <string name="clipboard__item_description_phone">Telefon</string>
     <string name="clip__clear_history">Geçmişi Temizle</string>
     <string name="clip__unpin_item">Öğeyi sabitlemeyi kaldır</string>
     <string name="clip__pin_item">Öğeyi sabitle</string>
@@ -386,11 +400,41 @@
     <string name="ext__meta__version">Sürüm</string>
     <string name="ext__error__not_found_title">Eklenti bulunamadı</string>
     <string name="ext__error__not_found_description">\"{id}\" kimlikli uzantı bulunamadı.</string>
+    <string name="ext__editor__create_component__from_empty">Boş</string>
     <!-- Action strings -->
+    <string name="action__add">Ekle</string>
+    <string name="action__apply">Uygula</string>
+    <string name="action__back_up">Yedekle</string>
+    <string name="action__cancel">İptal</string>
+    <string name="action__create">Oluştur</string>
     <string name="action__default">Varsayılan</string>
+    <string name="action__delete">Sil</string>
+    <string name="action__delete_confirm_title">Silmeyi onayla</string>
+    <string name="action__discard">Vazgeç</string>
+    <string name="action__discard_confirm_title">Kaydedilmemiş değişiklikler</string>
+    <string name="action__discard_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>
+    <string name="action__edit">Düzenle</string>
+    <string name="action__export">Dışa aktar</string>
+    <string name="action__import">İçe aktar</string>
+    <string name="action__no">Hayır</string>
+    <string name="action__ok">ОК</string>
+    <string name="action__restore">Yenile</string>
+    <string name="action__save">Kaydet</string>
+    <string name="action__select">Seç</string>
+    <string name="action__select_dir">Dizini seçin</string>
+    <string name="action__select_file">Dosyayı seçin</string>
+    <string name="action__select_files">Dosyaları seçiniz</string>
+    <string name="action__yes">Evet</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Hata</string>
+    <string name="error__details">Detaylar</string>
+    <string name="error__invalid">Geçersiz</string>
+    <string name="error__snackbar_message">Bir şeyler ters gitti</string>
+    <string name="error__snackbar_message_template">Bir şeyler ters gitti: {error_message}</string>
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">{url} adresini açmak için tarayıcı uygulaması bulunamadı</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; seç &#45;</string>
+    <string name="general__unlimited">Sınırsız</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Dikey</string>
     <string name="screen_orientation__landscape">Yatay</string>
@@ -399,29 +443,31 @@
     <!-- State strings -->
     <string name="state__disabled">Devre Dışı</string>
     <string name="state__enabled">Etkin</string>
+    <string name="state__no_file_selected">Dosya seçilmedi</string>
+    <string name="state__no_files_selected">Dosyalar Seçilmedi</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dinamik genişlik</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamik genişlik &amp; kaydırılabilir</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Onaltılık</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Kırmızı Yeşil Mavi (Rgb)</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Her zaman göster</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Asla gösterme</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Varsayılan cilt tonu</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Kırmızı Saç</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Beyaz Saç</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksan öncelikli</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakter her zaman birincil vurgudur veya birincil vurgu yoksa ipucu simgesidir</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">İpucu öncelikli</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakter her zaman ipucu sembolüdür veya ipucu sembolü yoksa birincil vurgudur</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Akıllı önceliklendirme</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Uzun basıştan sonra seçilen ilk karakterin, geçerli dil ve düzene bağlı olarak ya birincil vurgu ya da ipucu sembolü olduğuna dinamik olarak karar verilir</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Asla gösterme</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Her zaman göster</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamik olarak göster</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Kapalı</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Sol el modu</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Sağ el modu</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Birincil satırın üstünde</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">İkincil sırayı, uygulama arayüzü ve birincil sıranın arasına yerleştirir</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Birincil satırın altında</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">İkincil sırayı, yazı klavyesi ve birincil sıranın arasına yerleştirir</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Uygulama arayüzünün üstünü kapla</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Ortaya çıkan klavye kullanıcı arabirimi yüksekliğini etkilemeden ikincil satırı uygulama kullanıcı arabiriminin üzerine bir kaplama olarak yerleştirir. Bu yerleşimin, uygulama giriş alanının kısmen fazla çizilmesine neden olabileceğini unutmayın</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Hızlı eylemler</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Taşma menüsüyle bir satır biçiminde düzenlenebilir hızlı eylemler</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Pano imleç araçları</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">En sık kullanılan pano ve imleç hareket araçlar satırı</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Sistem dillerini kullan</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Klavye alt türlerini kullan</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Eylem yok</string>

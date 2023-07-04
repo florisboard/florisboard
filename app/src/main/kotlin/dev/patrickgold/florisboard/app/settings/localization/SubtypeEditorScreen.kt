@@ -58,10 +58,14 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
+import dev.patrickgold.florisboard.ime.core.SubtypeNlpProviderMap
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
@@ -79,6 +83,10 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
 private val SelectComponentName = ExtensionComponentName("00", "00")
+private val SelectNlpProviderId = SelectComponentName.toString()
+private val SelectNlpProviders = SubtypeNlpProviderMap(
+    spelling = SelectNlpProviderId,
+)
 private val SelectLayoutMap = SubtypeLayoutMap(
     characters = SelectComponentName,
     symbols = SelectComponentName,
@@ -100,6 +108,7 @@ private class SubtypeEditorState(init: Subtype?) {
                     id = editor.id.value,
                     primaryLocale = editor.primaryLocale.value,
                     secondaryLocales = editor.secondaryLocales.value,
+                    nlpProviders = editor.nlpProviders.value,
                     composer = editor.composer.value,
                     currencySet = editor.currencySet.value,
                     punctuationRule = editor.punctuationRule.value,
@@ -118,9 +127,10 @@ private class SubtypeEditorState(init: Subtype?) {
     val id: MutableState<Long> = mutableStateOf(init?.id ?: -1)
     val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
+    val nlpProviders: MutableState<SubtypeNlpProviderMap> = mutableStateOf(init?.nlpProviders ?: Subtype.DEFAULT.nlpProviders)
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
-    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: SelectComponentName)
+    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: Subtype.DEFAULT.punctuationRule)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
@@ -129,6 +139,7 @@ private class SubtypeEditorState(init: Subtype?) {
         primaryLocale.value = subtype.primaryLocale
         secondaryLocales.value = subtype.secondaryLocales
         composer.value = subtype.composer
+        nlpProviders.value = subtype.nlpProviders
         currencySet.value = subtype.currencySet
         punctuationRule.value = subtype.punctuationRule
         popupMapping.value = subtype.popupMapping
@@ -137,8 +148,11 @@ private class SubtypeEditorState(init: Subtype?) {
 
     fun toSubtype() = runCatching<Subtype> {
         check(primaryLocale.value != SelectLocale)
+        check(nlpProviders.value.spelling != SelectNlpProviderId)
+        check(nlpProviders.value.suggestion != SelectNlpProviderId)
         check(composer.value != SelectComponentName)
         check(currencySet.value != SelectComponentName)
+        check(punctuationRule.value != SelectComponentName)
         check(popupMapping.value != SelectComponentName)
         check(layoutMap.value.characters != SelectComponentName)
         check(layoutMap.value.symbols != SelectComponentName)
@@ -149,7 +163,7 @@ private class SubtypeEditorState(init: Subtype?) {
         check(layoutMap.value.phone != SelectComponentName)
         check(layoutMap.value.phone2 != SelectComponentName)
         Subtype(
-            id.value, primaryLocale.value, secondaryLocales.value, composer.value,
+            id.value, primaryLocale.value, secondaryLocales.value, nlpProviders.value, composer.value,
             currencySet.value, punctuationRule.value, popupMapping.value, layoutMap.value,
         )
     }
@@ -191,6 +205,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     var currencySet by subtypeEditor.currencySet
     var popupMapping by subtypeEditor.popupMapping
     var layoutMap by subtypeEditor.layoutMap
+    var nlpProviders by subtypeEditor.nlpProviders
 
     var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(false) }
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
@@ -356,6 +371,38 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     layoutMap = layoutMap,
                     onLayoutMapChanged = { layoutMap = it },
                     selectListValues = selectListValues,
+                )
+            }
+
+            SubtypeGroupSpacer()
+
+            SubtypeProperty(stringRes(R.string.settings__localization__subtype_suggestion_provider)) {
+                // TODO: Put this map somewhere more formal (another KeyboardExtension field?)
+                //  optionally use a string resource below
+                val nlpProviderMappings = mapOf(
+                    LatinLanguageProvider.ProviderId to "Latin",
+                    HanShapeBasedLanguageProvider.ProviderId to "Chinese shape-based"
+                )
+
+                val nlpProviderMappingIds = remember(nlpProviderMappings) {
+                    SelectListKeys + nlpProviderMappings.keys
+                }
+                val nlpProviderMappingLabels = remember(nlpProviderMappings) {
+                    selectListValues + nlpProviderMappings.values.map { it }
+                }
+                var expanded by remember { mutableStateOf(false) }
+                val selectedIndex = nlpProviderMappingIds.indexOf(nlpProviders.suggestion).coerceAtLeast(0)
+                FlorisDropdownMenu(
+                    items = nlpProviderMappingLabels,
+                    expanded = expanded,
+                    selectedIndex = selectedIndex,
+                    isError = showSelectAsError && selectedIndex == 0,
+                    onSelectItem = { nlpProviders = SubtypeNlpProviderMap(
+                        suggestion = nlpProviderMappingIds[it] as String,
+                        spelling = nlpProviderMappingIds[it] as String
+                    ) },
+                    onExpandRequest = { expanded = true },
+                    onDismissRequest = { expanded = false },
                 )
             }
 

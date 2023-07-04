@@ -1,0 +1,131 @@
+{
+    "all": {
+        "w": {
+            "relevant": [
+                { "$": "auto_text_key", "code":  695, "label": "ʷ" }
+            ]
+        },
+        "e": {
+            "relevant": [
+                { "$": "auto_text_key", "code":  234, "label": "ê" },
+                { "$": "auto_text_key", "code":  578, "label": "ɂ" },
+                { "$": "auto_text_key", "code":  233, "label": "é" },
+                { "$": "auto_text_key", "code":  232, "label": "è" },
+                { "$": "auto_text_key", "code":  235, "label": "ë" },
+                { "$": "auto_text_key", "code":  477, "label": "ǝ" },
+                { "$": "auto_text_key", "code":  603, "label": "ɛ" }
+            ]
+        },
+        "r": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7771, "label": "ṛ" }
+            ]
+        },
+        "t": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7789, "label": "ṭ" }
+            ]
+        },
+        "y": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  255, "label": "ÿ" }
+            ]
+        },
+        "u": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  118, "label": "v" },
+                { "$": "auto_text_key", "code":  251, "label": "û" },
+                { "$": "auto_text_key", "code":  249, "label": "ù" },
+                { "$": "auto_text_key", "code":  252, "label": "ü" }
+            ]
+        },
+        "i": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  239, "label": "ï" },
+                { "$": "auto_text_key", "code":  238, "label": "î" }
+            ]
+        },
+        "o": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  339, "label": "œ" },
+                { "$": "auto_text_key", "code":  244, "label": "ô" }
+            ]
+        },
+        "a": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  259, "label": "ă" },
+                { "$": "auto_text_key", "code":  224, "label": "à" },
+                { "$": "auto_text_key", "code":  226, "label": "â" },
+                { "$": "auto_text_key", "code":  230, "label": "æ" }
+            ]
+        },
+        "s": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7779, "label": "ṣ" },
+                { "$": "auto_text_key", "code":  353, "label": "š" }
+            ]
+        },
+        "d": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7693, "label": "ḍ" }
+            ]
+        },
+        "g": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  487, "label": "ǧ" },
+                { "$": "auto_text_key", "code":  611, "label": "ɣ" }
+            ]
+        },
+        "h": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7717, "label": "ḥ" }
+            ]
+        },
+        "j": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  496, "label": "ǰ" }
+            ]
+        },
+        "l": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7735, "label": "ḷ" }
+            ]
+        },
+        "z": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7827, "label": "ẓ" },
+                { "$": "auto_text_key", "code":  382, "label": "ž" }
+            ]
+        },
+        "c": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  269, "label": "č" },
+                { "$": "auto_text_key", "code":  231, "label": "ç" }
+            ]
+        },
+        "b": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  7685, "label": "ḅ" },
+                { "$": "auto_text_key", "code":  112, "label": "p" }
+            ]
+        },
+        "n": {
+            "relevant":[
+                { "$": "auto_text_key", "code":  331, "label": "ŋ" }
+            ]
+        }
+    },
+    "uri": {
+        "~right": {
+          "main": { "code": -255, "label": ".com" },
+          "relevant": [
+            { "code": -255, "label": ".dz" },
+            { "code": -255, "label": ".fr" },
+            { "code": -255, "label": ".gov" },
+            { "code": -255, "label": ".edu" },
+            { "code": -255, "label": ".org" },
+            { "code": -255, "label": ".net" }
+          ]
+        }
+      }
+}

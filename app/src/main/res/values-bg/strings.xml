@@ -29,16 +29,16 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Скоро не сте ползвали еможи. Като започнете да използвате ще се показват тук.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: За да премахнете еможди от този списък задръжте върху него!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Премахнато е {emoji} от последно използваните</string>
-    <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързите действия. При докосване превключва между предложения за въвеждане и бутони за бързи действия.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от режима за промяна на текст.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режим за работа с една ръка.</string>
-    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваря настройките.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Влиза в режим за промяна на текст.</string>
-    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Влиза в режим за въвеждане на медия.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Бутон за отменяне, който връща последното действие</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последното отменено действие</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава че е включен поверителния режим. При докосване показва информация за този режим.</string>
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Нагоре</string>
+    <string name="quick_action__arrow_up__tooltip">Изпълнява стрелка нагоре</string>
+    <string name="quick_action__arrow_down" maxLength="12">Надолу</string>
+    <string name="quick_action__arrow_down__tooltip">Изпълнява стрелка надолу</string>
+    <string name="quick_action__arrow_left" maxLength="12">Наляво</string>
+    <string name="quick_action__arrow_left__tooltip">Изпълнява стрелка наляво</string>
+    <string name="quick_action__arrow_right" maxLength="12">Надясно</string>
+    <string name="quick_action__arrow_right__tooltip">Изпълнява стрелка надясно</string>
+    <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Изпробвайте настройките тук</string>
@@ -147,12 +147,6 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие на пейзажно поле за въвеждане</string>
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
-    <string name="snygg__rule_element__smartbar_primary_row">Интелигентна лента, основен ред</string>
-    <string name="snygg__rule_element__smartbar_secondary_row">Интелигентна лента, допълнителен ред</string>
-    <string name="snygg__rule_element__smartbar_primary_actions_toggle">Интелигентна лента, клавиш за превкл. на основната лента</string>
-    <string name="snygg__rule_element__smartbar_secondary_actions_toggle">Интелигентна лента, клавиш за превкл. на допълнителната лента</string>
-    <string name="snygg__rule_element__smartbar_quick_action">Интелигентна лента, бързи действия</string>
-    <string name="snygg__rule_element__smartbar_key">Клавиш за интелигентната лента</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Интелигентна лента, кандидат за дума</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер на кандидата</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидата</string>
@@ -204,26 +198,22 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
-    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за звук</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключен звук. Не работи при изключен звук на звънене</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Не се изпълняват звуци при събития на въвеждане, независимо от системните настройки</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Сила на звука при събития на въвеждане</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук при докосване на клавиш</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук при задържане на клавиш</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Звук при продължително задържане на клавиш</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Звук при жестове</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Звук при движение на жест</string>
-    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Обратна връзка при докосване / вибрация</string>
-    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Обратна връзка при докосване</string>
-    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за обратна връзка при докосване</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключена обратна връзка при докосване от системата</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Директно предизвикване на вибриране</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Вибрациите се предизвикват без използване на способността на Android за обратна връзка при докосване</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Тактилна обратна връзка / вибрация</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Тактилна обратна връзка</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Без вибриране при събития на въвеждане, независимо от системните настройки</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Режим на вибриране</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продължителност на вибрацията</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила на вибрацията</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Тази възможност изисква поддръжка на хардуерен контрол на амплитудата, каквато липсва на устройството</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Тази възможност изисква поддръжка на хардуерен контрол на амплитудата, каквато е налична от Android 8.0 и по-нов</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Тази възможност изисква модул за вибрации, какъвто изглежда липсва на устройството</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Тази възможност изисква поддръжка на апаратен контрол на амплитудата, каквато липсва на устройството</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Тази възможност изисква поддръжка на апаратен контрол на амплитудата, каквато е налична от Android 8.0 и по-нов</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация при докосване на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация при задържане на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация при продължително задържане на клавиш</string>
@@ -266,26 +256,35 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните, превключващи редовете</string>
-    <string name="pref__smartbar__any_row_type__label" comment="Preference title">Съдържание на реда</string>
-    <string name="pref__smartbar__group_primary_actions__label" comment="Preference group title">Основни действия</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/събиране</string>
-    <string name="pref__smartbar__primary_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматично се разтваря/събира основния ред, на базата на състоянието</string>
-    <string name="pref__smartbar__group_secondary_actions__label" comment="Preference group title">Допълнителни действия</string>
-    <string name="pref__smartbar__secondary_actions_enabled__label" comment="Preference title">Ред с допълнителни действия</string>
     <!-- Typing strings -->
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Подсказки и помощ при писане</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Въвеждане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Показване на предложения</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Показва предложения докато въвеждате</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Спиране на предполагаемо обидни думи</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title">Време за предложения от междинната памет</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ограничаване на предложенията от временната памет до</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Елементите, копирани последните {v} сек.</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично въвеждане на главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Използват се главни букви въз основа на контекста на въвеждане</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Автом. поставяне на интервал след пунктуац. знак</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматично се поставят интервали след пунктуационните знаци</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на клавиш Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock се оставя включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
+    <string name="pref__spelling__title" comment="Preference group title">Поверка на правописа</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Правописмите грешки няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа в текстови полета. Докоснете, за да промените.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Използване на имената от контактите</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Търси в имената от списъка с контакти</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Търси в потребителските речници</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Потребителски речници</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Системен потребителски речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
@@ -351,41 +350,6 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Език на настройките</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Икона на приложението в стартовия панел</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
-    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
-    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключва обработката на въвежданите от вас данни</string>
-    <!-- Spelling UI strings -->
-    <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка на правописа</string>
-    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Използване на настройката за проверка на правописа от клавиатурата</string>
-    <string name="pref__spelling__active_spellchecker__label">Проверка на правописа при въвеждане</string>
-    <string name="pref__spelling__active_spellchecker__summary_disabled">Изключено от системните настройки. Сгрешените думи няма да бъдат подчертавани с червено. Докоснете, за да промените.</string>
-    <string name="pref__spelling__active_spellchecker__summary_none">Не е избрана услуга за проверка на правописа на текстови полета. Докоснете, за да промените.</string>
-    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Опция \"Езици\" в системните настройки за проверка на правописа е сложена на \"Използване на системните езици\". Поради дефект, {app_name} може да не проверява правописа. Препоръчително е да я смените на „{use_floris_config}“.</string>
-    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Настройка</string>
-    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Езици</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват и имената от контактите</string>
-    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">При проверка на правописа се използват и потребителските речници, ако са включени</string>
-    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Управление на речници</string>
-    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} добавен</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Липсват речници за проверка на правописа. Добавете, чрез докосване на бутона „+“</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Добавка / архив</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файлове на речник и афикси</string>
-    <string name="settings__spelling__import__title" comment="Title for the import screen">Внасяне на речник</string>
-    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Избиране на източник</string>
-    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Изберете произхода на добавката. По такъв начин ще улесните преобразуването ѝ във вида, в който FlorisBoard я използва.</string>
-    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Внасяне на архив</string>
-    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Внесете архива като изберете изтегления файл.</string>
-    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Избиране на език</string>
-    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Код на език (напр. bg)</string>
-    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Внасяне на афикси/речници</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Изберете файл с афикси (.aff)</string>
-    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Изберете файл на речника (.dic)</string>
-    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Проверка преди внесяне</string>
-    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Уверете се, че информацията по-долу е вярна. Ако забележите нещо невярно може да се върнете на предната стъпка и да изберете друг източник или да внесете друг архив.</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">От къде да се снабдя с речници?</string>
-    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard използва Nuspell за проверка на правописа. Това означава, че съществуват огромно количество речници, защото Hunspell се използва и от други софтуерни продукти. Следният списък съдържа само ръчно подбрани източници, с възможност за внасяне. Изтеглете или архива, или файловете на речника, после в помощника за внасяне изберете правилните файлове (важно за правилното разпознаване на формата на архива).</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">Ако в списъка липсва вашият език или диалект, потърсете речници на Hunspell и внесете файловете на „aff“ и „dic“.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението FlorisBoard</string>
@@ -441,10 +405,10 @@
     <string name="backup_and_restore__restore__summary">Възстановява настройките от резервно копие</string>
     <string name="backup_and_restore__restore__files">Изберете какво да бъде възстановено</string>
     <string name="backup_and_restore__restore__metadata">Избор на резервно копие</string>
-    <string name="backup_and_restore__restore__metadata_warn_different_version">Резервното копие е създадено от издание, различно от текущото, което се поддържа от приложението. Въпреки това, може да възникнат незначителни проблеми или някои настройки може да не се прехвърлят изцяло, поради разлики във възможностите.</string>
-    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Този резервен архив е бил генериран в друго приложение, което по принцип не е поддържано. Възможна е загуба на данни, използвайте на свой собствен риск!</string>
-    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Този резервен архив съдържа невалидни мета данни, в следствие на корупция или неправилно модифициране. Възобновяването от този архив е невъзможно, моля изберете друг.</string>
-    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Този резервен архив не съдържа файлове за възобновяване, моля изберете друг.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Резервното копие е създадено от издание, различно от текущото, което, като цяло, се поддържа от приложението. Въпреки това, може да възникнат незначителни проблеми или някои настройки може да не се прехвърлят изцяло, поради разлики във възможностите.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Резервното копие е създадено от друго приложение, което, като цяло, не се поддържа от приложението. Въможна е загуба на данни, възстановете на ваша отговорност!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Резервното копие съдържа грешна описателна информация. Или е била повредена, или неправилно променена. Да възстановите това резервно копие е невъзможно. Изберете друго.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Резервното копие не съдържа файлове, които да бъдат възстановени. Изберете друго.</string>
     <string name="backup_and_restore__restore__mode">Режим на възстановяване</string>
     <string name="backup_and_restore__restore__mode_merge">Сливане със съществуващите данни</string>
     <string name="backup_and_restore__restore__mode_erase_and_overwrite">Изтриване и презаписване на текущите данни</string>
@@ -476,8 +440,9 @@
     <string name="clipboard__group_pinned">Закачени</string>
     <string name="clipboard__group_recent">Последни</string>
     <string name="clipboard__group_other">Друго</string>
-    <string name="clipboard__item_description_url">Адрес</string>
     <string name="clipboard__item_description_email">Електронна поща</string>
+    <string name="clipboard__item_description_url">Адрес</string>
+    <string name="clipboard__item_description_phone">Телефон</string>
     <string name="clip__clear_history">Изчистване на историята</string>
     <string name="clip__unpin_item">Освобождаване</string>
     <string name="clip__pin_item">Закачане</string>
@@ -550,11 +515,9 @@
     <string name="ext__error__not_found_description">Няма добавка с идентификатор „{id}“.</string>
     <string name="ext__editor__title_create_any">Създаване на добавка</string>
     <string name="ext__editor__title_create_keyboard">Създаване на добавка с клавиатура</string>
-    <string name="ext__editor__title_create_spelling">Създаване на добавка за проверка на правопис</string>
     <string name="ext__editor__title_create_theme">Създаване на добавка с тема</string>
     <string name="ext__editor__title_edit_any">Променяне</string>
     <string name="ext__editor__title_edit_keyboard">Промяна на добавка с клавиатура</string>
-    <string name="ext__editor__title_edit_spelling">Промяна на добавка с проверка на правопис</string>
     <string name="ext__editor__title_edit_theme">Промяна на добавка с тема</string>
     <string name="ext__editor__metadata__title">Управление на мета данни</string>
     <string name="ext__editor__metadata__title_invalid">Недействителни мета данни</string>
@@ -565,7 +528,7 @@
     <string name="ext__editor__create_component__title_theme">Създаване на тема</string>
     <string name="ext__editor__create_component__from_empty">Празна</string>
     <string name="ext__editor__create_component__from_existing">От съществуваща</string>
-    <string name="ext__editor__create_component__from_empty_warning">Създаването и конфигурирането на празен компонент може да затрудни нови потребители на {app_name}, които не са запознати със спецификите. В такъв случай е препоръчително да копирате съществуващ компонент и да го модифицирате според нуждите си.</string>
+    <string name="ext__editor__create_component__from_empty_warning">Създаването и настройката на празен компонент може да ви затрудни ако сте нов потребител на {app_name} и не сте запознати със спецификите. В такъв случай по-добре копирайте съществуващ компонент и го променете според нуждите си.</string>
     <string name="ext__editor__edit_component__title">Редактиране на компонент</string>
     <string name="ext__editor__edit_component__title_theme">Редактиране на компонент-тема</string>
     <string name="ext__export__success">Темата е изнесена успешно!</string>
@@ -574,7 +537,6 @@
     <string name="ext__import__failure">Грешка при внасяне на разширение: {error_message}</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
-    <string name="ext__import__ext_spelling" comment="Title of Importer screen for spelling extension (or raw dictionary) import">Внасяне на добавка за правопис / речник</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Внасяне на добавка с тема</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Файлът не може да бъде внесен. Причина:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Неподдържан или непознат вид на файла.</string>
@@ -583,7 +545,7 @@
     <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Очакваше се архив с разширение от сериен тип \"{expected_serial_type}\", но вместо това е \"{actual_serial_type}\".</string>
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Очакваше се медиен файл (изображение, аудио, шрифт, т.н.), но бе намерен архив с разширение.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Очакваше се архив с разширение, но бе намерен медиен файл (изображение, аудио, шрифт, т.н.).</string>
-    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Неочаквана грешка при импортиране. Следните детайли бяха предоставени:</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Неочаквана грешка при внасяне. Предоставени са следните подробности:</string>
     <!-- Action strings -->
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>
@@ -660,12 +622,20 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Къдрава коса</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Бял цвят на косата</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Без коса</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Директно управление на вибрация</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} директно управлява модула за вибрация. Това дава по-голям контрол върху продължителността и силата, но вибрацията може да не е толкова плавна и оптимизирана, колкото при използването на интерфейс за тактилна обратна връзка</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Интерфейс за тактилна обратна връзка</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} използва интерфейса за тактилна обратна връзка, за да задейства предварително зададени последователности от вибрации за натискане на клавиши. Може да работи изключително добре на някои устройства, но да е напълно неприемливо или да работи много лошо на други</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Акцентът е с приоритет</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е основния акцент или знака от подсказката ако няма акцент</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Посдсазката е с приоритет</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е знака от подсказката или основния акцент ако в подсказката няма знак</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Интелигентен приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Първоначално избраният знак при задържане на клавиш се определя между основния акцент или знака от подсказката на базата на текущия език и подредба</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Динамично се изпълняват звуци при събития на въвеждане, зависи от системните настройки</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Изпълняват се звуци при събития на въвеждане, независимо от системните настройки</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Динамична вибрация при събития на въвеждане, зависи от системните натройки</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Вибриране при събития на въвеждане, независимо от системните настройки</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Без Shift</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift (ръчно)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shift (автоматично)</string>
@@ -676,20 +646,10 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
-    <string name="enum__secondary_row_placement__above_primary" comment="Enum value label">Над първия ред</string>
-    <string name="enum__secondary_row_placement__above_primary__description" comment="Enum value description">Добавя се втори ред между приложението и първия ред</string>
-    <string name="enum__secondary_row_placement__below_primary" comment="Enum value label">Под първия ред</string>
-    <string name="enum__secondary_row_placement__below_primary__description" comment="Enum value description">Добавя се втори ред между първия ред и клавиатурата</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui" comment="Enum value label">Слой върху приложението</string>
-    <string name="enum__secondary_row_placement__overlay_app_ui__description" comment="Enum value description">Добавя се втори ред като плаващ слой над клавиатурата без да се увеличава височината ѝ. Имайте предвид, че по този начин полето за въвеждане може частично да бъде закрито</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Долу, начало</string>
-    <string name="enum__smartbar_row_type__quick_actions" comment="Enum value label">Бързи действия</string>
-    <string name="enum__smartbar_row_type__quick_actions__description" comment="Enum value description">Бързите действия, подредени в един ред с допълнително меню</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools" comment="Enum value label">Инструменти за междинната памет и каретката</string>
-    <string name="enum__smartbar_row_type__clipboard_cursor_tools__description" comment="Enum value description">Най-използваните действия с междинната памет и придвижване на каретката</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Основен</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Само цветове, свойствата и правилата са преведени.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Разширен</string>
