@@ -215,6 +215,7 @@
         "inhs": "ính", "inhf": "ình", "inhr": "ỉnh", "inhx": "ĩnh", "inhj": "ịnh",
 
         "ías": "ias", "ìaf": "iaf", "ỉar": "iar", "ĩax": "iax", "ịaj": "iaj",
+        "iás": "ias", "iàf": "iaf", "iảr": "iar", "iãx": "iax", "iạj": "iaj",
         "ícs": "ics", "ịcj": "icj",
         "íms": "ims", "ìmf": "imf", "ỉmr": "imr", "ĩmx": "imx", "ịmj": "imj",
         "íns": "ins", "ìnf": "inf", "ỉnr": "inr", "ĩnx": "inx", "ịnj": "inj",
@@ -531,6 +532,11 @@
         "iénge": "iếng", "iènge": "iềng", "iẻnge": "iểng", "iẽnge": "iễng", "iẹnge": "iệng",
         "iêngs": "iếng", "iêngf": "iềng", "iêngr": "iểng", "iêngx": "iễng", "iêngj": "iệng",
 
+        "iếs": "iês", "iếe": "iée", "iêse": "iese", "iées": "iees",
+        "iềf": "iêf", "iềe": "ièe", "iêfe": "iefe", "ièef": "ieef",
+        "iểr": "iêr", "iểe": "iẻe", "iêre": "iere", "iẻer": "ieer",
+        "iễx": "iêx", "iễe": "iẽe", "iêxe": "iexe", "iẽex": "ieex",
+        "iệj": "iêj", "iệe": "iẹe", "iêje": "ieje", "iẹej": "ieej",
         "iếms": "iêms", "iếme": "iéme", "iêmse": "iemse", "iémes": "iemes",
         "iềmf": "iêmf", "iềme": "ième", "iêmfe": "iemfe", "ièmef": "iemef",
         "iểmr": "iêmr", "iểme": "iẻme", "iêmre": "iemre", "iẻmer": "iemer",
