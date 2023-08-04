@@ -1,68 +1,62 @@
 {
   "all": {
     "a": {
-      "relevant": [
-        { "$": "auto_text_key", "code":  225, "label": "á" }
-      ]
+      "main": { "$": "auto_text_key","code" : 225, "label": "á" }
     },
     "e": {
-      "relevant": [
-        { "$": "auto_text_key", "code":  233, "label": "é" }
-      ]
+      "main": {"$": "auto_text_key", "code" : 233, "label": "é" }
     },
     "i": {
-      "relevant": [
-        { "$": "auto_text_key", "code":  237, "label": "í" }
-      ]
+      "main": { "$": "auto_text_key" ,"code" : 237, "label": "í" }
     },
     "o": {
+      "main": { "$": "auto_text_key", "code" : 246, "label": "ö" },
       "relevant": [
-        { "$": "auto_text_key", "code":  243, "label": "ó" },
-        { "$": "auto_text_key", "code":  246, "label": "ö" },
-        { "$": "auto_text_key", "code":  337, "label": "ő" }
+        { "$": "auto_text_key", "code" : 243, "label": "ó" },
+        { "$": "auto_text_key", "code" : 337, "label": "ő" }
       ]
     },
     "ö": {
       "relevant": [
-        { "$": "auto_text_key", "code":  337, "label": "ő" }
+        { "$": "auto_text_key", "code" : 337, "label": "ő" }
       ]
     },
     "u": {
+      "main": { "$": "auto_text_key", "code" : 252, "label": "ü" },
       "relevant": [
-        { "$": "auto_text_key", "code":  250, "label": "ú" },
-        { "$": "auto_text_key", "code":  252, "label": "ü" },
-        { "$": "auto_text_key", "code":  369, "label": "ű" }
+        { "$": "auto_text_key", "code" : 250, "label": "ú" },
+        { "$": "auto_text_key", "code" : 369, "label": "ű" }
       ]
     },
     "ü": {
       "relevant": [
-        { "$": "auto_text_key", "code":  369, "label": "ű" }
+        { "$": "auto_text_key", "code" : 369, "label": "ű" }
       ]
-    },    
+    },
     "~right": {
-      "main": { "code":   44, "label": "," },
+      "main": { "code" : 44, "label": "," },
       "relevant": [
-        { "code":   38, "label": "&" },
-        { "code":   37, "label": "%" },
-        { "code":   43, "label": "+" },
-        { "code":   34, "label": "\"" },
-        { "code":   45, "label": "-" },
-        { "code":   58, "label": ":" },
-        { "code":   39, "label": "'" },
-        { "code":   64, "label": "@" },
-        { "code":   59, "label": ";" },
-        { "code":   47, "label": "/" },
+        { "code" : 37, "label": "%" },
+        { "code" : 38, "label": "&" },
+        { "code" : 43, "label": "+" },
+        { "code" : 34, "label": "\"" },
+        { "code" : 45, "label": "-" },
+        { "code" : 58, "label": ":" },
+        { "code" : 39, "label": "'" },
+        { "code" : 64, "label": "@" },
+        { "code" : 59, "label": ";" },
+        { "code" : 47, "label": "/" },
         { "$": "layout_direction_selector",
-          "ltr": { "code":   40, "label": "(" },
-          "rtl": { "code":   41, "label": "(" }
+          "ltr": { "code" : 40, "label": "(" },
+          "rtl": { "code" : 41, "label": "(" }
         },
         { "$": "layout_direction_selector",
-          "ltr": { "code":   41, "label": ")" },
-          "rtl": { "code":   40, "label": ")" }
+          "ltr": { "code" : 41, "label": ")" },
+          "rtl": { "code" : 40, "label": ")" }
         },
-        { "code":   35, "label": "#" },
-        { "code":   33, "label": "!" },
-        { "code":   63, "label": "?" }
+        { "code" : 35, "label": "#" },
+        { "code" : 33, "label": "!" },
+        { "code" : 63, "label": "?" }
       ]
     }
   },
@@ -74,7 +68,7 @@
         { "code": -255, "label": ".net" },
         { "code": -255, "label": ".org" },
         { "code": -255, "label": ".eu" },
-        { "code": -255, "label": ".gov.hu" }        
+        { "code": -255, "label": ".gov.hu" }
       ]
     }
   }
