@@ -7,9 +7,6 @@ src=".github/repo_icon.png" alt="App icon">
 devices. It aims at being modern, user-friendly and customizable while
 fully respecting your privacy. Currently in early-beta state.
 
-**The current focus is on implementing next-word suggestions, which has become complicated/hit a snag and is taking more time than originally planned.**
-**Updates will come when this issue is resolved. Thank you for being patient.**
-
 <table>
 <tr>
 <th align="center" width="50%">
@@ -58,7 +55,7 @@ fully respecting your privacy. Currently in early-beta state.
 </table>
 
 Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summary) versioning scheme.
-Beginning with v0.5.0 FlorisBoard will enter the public beta on Google Play.
+Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 
 ## Highlighted features
 - Integrated clipboard manager / history
@@ -107,7 +104,7 @@ Many thanks to [Nikolay Anzarov](https://www.behance.net/nikolayanzarov) ([@Bloo
 
 ## License
 ```
-Copyright 2020-2022 Patrick Goldinger
+Copyright 2020-2023 Patrick Goldinger
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
