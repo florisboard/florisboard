@@ -2,33 +2,26 @@
 
 First off, thanks for considering contributing to FlorisBoard!
 
-There are several ways to contribute to FlorisBoard. This document provides some general guidelines for each type of
-contribution.
+There are several ways to contribute to FlorisBoard. This document provides some general guidelines for each type of contribution.
 
 ## Giving general feedback
 
-NEW! You can now [give general feedback](https://github.com/florisboard/florisboard/discussions/new?category=feedback)
-directly here on GitHub. This is the preferred way to give feedback, as it allows not only for me to read and respond to
-feedback, but for everyone in this community.
+You can [give general feedback](https://github.com/florisboard/florisboard/discussions/new?category=feedback) directly here on GitHub. This is the preferred way to give feedback, as it allows not only for me to read and respond to feedback, but for everyone in this community.
 
-Optionally you can also use the review function within Google Play or email me
-at [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev). I love to hear from you! Note, that the amount of
-feedback emails I get is overwhelmingly high - so if I don't answer or answer really late, I apologize - I guarantee
-though that I read through every email and that I will use every feedback to improve FlorisBoard :)
+Optionally you can also use the review function within Google Play or email me at [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev). I love to hear from you! Note, that the amount of feedback emails I get is overwhelmingly high - so if I don't answer or answer really late, I apologize - I guarantee though that I read through every email and that I will use every feedback to improve FlorisBoard :)
 
 ## Translations
 
-To make FlorisBoard accessible in as many languages as possible, the
-platform [Crowdin](https://crowdin.florisboard.patrickgold.dev) is used to crowdsource and manage translations. This is
-the only source of translations from now on - **PRs that add/update translations are no longer accepted.** The list of
-languages in Crowdin covers the top 20 languages, but feel free to email me at
-[florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev) to request a language and I'll add it.
+To make FlorisBoard accessible in as many languages as possible, the platform [Crowdin](https://crowdin.florisboard.patrickgold.dev) is used to crowdsource and manage translations. This is
+the only source of translations from now on - **PRs that add/update translations are no longer accepted.** The list of languages in Crowdin covers the top 20 languages, but feel free to email me at [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev) to request a language and I'll add it.
+
+## Joining the team
+
+If you want to join the FlorisBoard maintainer/moderator team and be part of this project's journey that's great to hear! For more info see [this announcement]()!
 
 ## Adding a new feature or making large changes
 
-If you intend to add a new feature or to make large changes, please discuss this first through a proposal on GitHub.
-Discussing your idea enables both you and the dev team that we are on the same page before you start on working on your
-change. If you have any questions, feel free to ask for help at any time!
+If you intend to add a new feature or to make large changes, please discuss this first through a proposal on GitHub. Discussing your idea enables both you and the dev team that we are on the same page before you start on working on your change. If you have any questions, feel free to ask for help at any time!
 
 ## Adding a new keyboard layout
 
@@ -80,8 +73,7 @@ For popups of non-`characters` layout, simply add the popup directly to each key
 
 ## Adding a new dictionary for a language
 
-Currently the suggestions implementation is highly experimental and not available until 0.4.0, so dictionaries are
-currently not accepted.
+Currently any kind of dictionaries are not accepted until the suggestion implementation has been sorted out.
 
 ## Bug reporting
 
