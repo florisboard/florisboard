@@ -17,7 +17,7 @@ the only source of translations from now on - **PRs that add/update translations
 
 ## Joining the team
 
-If you want to join the FlorisBoard maintainer/moderator team and be part of this project's journey that's great to hear! For more info see [this announcement]()!
+If you want to join the FlorisBoard maintainer/moderator team and be part of this project's journey that's great to hear! For more info see [this announcement](https://github.com/florisboard/florisboard/discussions/2314)!
 
 ## Adding a new feature or making large changes
 

@@ -6,7 +6,7 @@ Each major milestone has associated alpha/beta releases, so if you are intereste
 
 ## 0.4
 
-**Main focus**: Getting the project back on track, see [TODO: insert discussion link!!](javascript:void(0)) for details. Note that this has also replaced the previous roadmap, however this step is necessary for getting the project back on track again.
+**Main focus**: Getting the project back on track, see [this announcement](https://github.com/florisboard/florisboard/discussions/2314) for details. Note that this has also replaced the previous roadmap, however this step is necessary for getting the project back on track again.
 
 This includes, but is not exclusive to:
 - Fixing the most reported bugs/issues
