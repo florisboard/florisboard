@@ -1,14 +1,11 @@
 <img align="left" width="80" height="80"
 src=".github/repo_icon.png" alt="App icon">
 
-# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
+# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
 
 **FlorisBoard** is a free and open-source keyboard for Android 7.0+
 devices. It aims at being modern, user-friendly and customizable while
 fully respecting your privacy. Currently in early-beta state.
-
-**The current focus is on implementing next-word suggestions, which has become complicated/hit a snag and is taking more time than originally planned.**
-**Updates will come when this issue is resolved. Thank you for being patient.**
 
 <table>
 <tr>
@@ -58,7 +55,7 @@ fully respecting your privacy. Currently in early-beta state.
 </table>
 
 Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summary) versioning scheme.
-Beginning with v0.5.0 FlorisBoard will enter the public beta on Google Play.
+Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 
 ## Highlighted features
 - Integrated clipboard manager / history
@@ -107,7 +104,7 @@ Many thanks to [Nikolay Anzarov](https://www.behance.net/nikolayanzarov) ([@Bloo
 
 ## License
 ```
-Copyright 2020-2022 Patrick Goldinger
+Copyright 2020-2023 Patrick Goldinger
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
