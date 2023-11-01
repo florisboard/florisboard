@@ -88,7 +88,7 @@ fun QuickActionsRow(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .snyggBackground(rowStyle),
+                .snyggBackground(context, rowStyle),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {

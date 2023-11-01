@@ -25,6 +25,7 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
@@ -41,8 +42,9 @@ fun SnyggSurface(
     clickAndSemanticsModifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    val context = LocalContext.current
     val elevationDp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp)
-    val contentColor = style.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+    val contentColor = style.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
     val absoluteElevation = LocalAbsoluteElevation.current + elevationDp
     CompositionLocalProvider(
         LocalContentColor provides contentColor,
@@ -51,9 +53,9 @@ fun SnyggSurface(
         Box(
             modifier = modifier
                 .snyggShadow(style)
-                .snyggBorder(style)
+                .snyggBorder(context, style)
                 .then(if (clip) Modifier.snyggClip(style) else Modifier)
-                .snyggBackground(style)
+                .snyggBackground(context, style)
                 .then(clickAndSemanticsModifier)
                 .padding(contentPadding),
             propagateMinConstraints = false,

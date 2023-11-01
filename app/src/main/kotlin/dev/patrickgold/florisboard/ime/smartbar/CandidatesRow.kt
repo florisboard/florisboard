@@ -98,7 +98,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
         Row(
             modifier = modifier
                 .fillMaxSize()
-                .snyggBackground(rowStyle)
+                .snyggBackground(context, rowStyle)
                 .then(
                     if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
                         Modifier.florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
@@ -139,7 +139,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                                 .width(1.dp)
                                 .fillMaxHeight(0.6f)
                                 .align(Alignment.CenterVertically)
-                                .snyggBackground(spacerStyle),
+                                .snyggBackground(context, spacerStyle),
                         )
                     }
                     CandidateItem(
@@ -176,6 +176,7 @@ private fun CandidateItem(
     onLongPress: () -> Boolean = { false },
     longPressDelay: Long,
 ) = with(LocalDensity.current) {
+    val context = LocalContext.current
     var isPressed by remember { mutableStateOf(false) }
 
     val style = if (candidate is ClipboardSuggestionCandidate) {
@@ -192,7 +193,7 @@ private fun CandidateItem(
 
     Row(
         modifier = modifier
-            .snyggBackground(style)
+            .snyggBackground(context, style)
             .pointerInput(Unit) {
                 forEachGesture {
                     awaitPointerEventScope {
@@ -233,7 +234,7 @@ private fun CandidateItem(
                     .padding(end = 4.dp),
                 painter = painterResource(candidate.iconId!!),
                 contentDescription = null,
-                tint = style.foreground.solidColor(),
+                tint = style.foreground.solidColor(context),
             )
         }
         Column(
@@ -243,7 +244,7 @@ private fun CandidateItem(
         ) {
             Text(
                 text = candidate.text.toString(),
-                color = style.foreground.solidColor(),
+                color = style.foreground.solidColor(context),
                 fontSize = style.fontSize.spSize(),
                 fontWeight = if (candidate.isEligibleForAutoCommit) FontWeight.Bold else FontWeight.Normal,
                 textAlign = TextAlign.Center,
@@ -253,7 +254,7 @@ private fun CandidateItem(
             if (candidate.secondaryText != null) {
                 Text(
                     text = candidate.secondaryText!!.toString(),
-                    color = style.foreground.solidColor(),
+                    color = style.foreground.solidColor(context),
                     fontSize = style.fontSize.spSize() safeTimes 0.6,
                     fontWeight = if (candidate.isEligibleForAutoCommit) FontWeight.Bold else FontWeight.Normal,
                     textAlign = TextAlign.Center,

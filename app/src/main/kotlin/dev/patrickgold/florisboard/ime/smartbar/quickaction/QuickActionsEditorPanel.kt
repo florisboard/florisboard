@@ -249,13 +249,13 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .snyggBackground(panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
+            .snyggBackground(context, panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
             .snyggClip(panelStyle),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .snyggBackground(headerStyle),
+                .snyggBackground(context, headerStyle),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButton(
@@ -263,12 +263,12 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
                 icon = painterResource(R.drawable.ic_keyboard_arrow_left),
-                iconColor = headerStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                iconColor = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
             )
             Text(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
-                color = headerStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                color = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
                 fontSize = headerStyle.fontSize.spSize(),
                 textAlign = TextAlign.Center,
             )
@@ -359,12 +359,13 @@ private fun Subheader(
     style: SnyggPropertySet,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     Text(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
         text = text,
-        color = style.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+        color = style.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
         fontWeight = FontWeight.Bold,
         fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )

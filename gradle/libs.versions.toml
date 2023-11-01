@@ -6,6 +6,7 @@ androidx-activity = "1.5.1"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.2.0"
 androidx-compose = "1.4.3"
+androidx-compose-material3 = "1.1.0"
 androidx-compose-compiler = "1.4.7"
 androidx-core = "1.10.0"
 androidx-core-splashscreen = "1.0.0"
@@ -41,6 +42,7 @@ androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref
 androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidx-autofill" }
 androidx-collection-ktx = { module = "androidx.collection:collection-ktx", version.ref = "androidx-collection" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "androidx-compose-material3" }
 androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "androidx-compose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose" }

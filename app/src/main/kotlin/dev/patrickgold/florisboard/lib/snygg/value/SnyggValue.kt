@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.lib.snygg.value
 
+import dev.patrickgold.florisboard.lib.android.AndroidVersion
+
 /**
  * SnyggValue is the base interface for all possible property values a Snygg stylesheet can hold. In general, a Snygg
  * value can be one specific type of value (e.g. a color, a keyword describing a behavior, shape, etc.).
@@ -105,8 +107,10 @@ object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
     override fun encoder() = this
 }
 
-val SnyggVarValueEncoders = listOf(
+val SnyggVarValueEncoders = listOfNotNull(
     SnyggSolidColorValue,
+    if (AndroidVersion.ATLEAST_API31_S) SnyggMaterialYouLightColorValue else null,
+    if (AndroidVersion.ATLEAST_API31_S) SnyggMaterialYouDarkColorValue else null,
     //SnyggImageRefValue,
     SnyggRectangleShapeValue,
     SnyggCircleShapeValue,

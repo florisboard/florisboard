@@ -28,6 +28,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -62,7 +63,8 @@ fun SystemUiApp() {
 fun SystemUiIme() {
     val systemUiController = rememberFlorisSystemUiController()
     val useDarkIcons = !FlorisImeTheme.config.isNightTheme
-    val backgroundColor = FlorisImeTheme.style.get(FlorisImeUi.SystemNavBar).background.solidColor()
+    val context = LocalContext.current
+    val backgroundColor = FlorisImeTheme.style.get(FlorisImeUi.SystemNavBar).background.solidColor(context)
 
     SideEffect {
         systemUiController.setStatusBarColor(

@@ -24,6 +24,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -43,10 +44,12 @@ fun RowScope.OneHandedPanel(
     val prefs by florisPreferenceModel()
     val inputFeedbackController = LocalInputFeedbackController.current
     val oneHandedPanelStyle = FlorisImeTheme.style.get(FlorisImeUi.OneHandedPanel)
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .weight(weight)
-            .snyggBackground(oneHandedPanelStyle),
+            .snyggBackground(context, oneHandedPanelStyle),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
@@ -57,7 +60,7 @@ fun RowScope.OneHandedPanel(
             Icon(
                 painter = painterResource(R.drawable.ic_zoom_out_map),
                 contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
-                tint = oneHandedPanelStyle.foreground.solidColor(),
+                tint = oneHandedPanelStyle.foreground.solidColor(context),
             )
         }
         IconButton(onClick = {
@@ -79,7 +82,7 @@ fun RowScope.OneHandedPanel(
                         R.string.one_handed__move_end_btn_content_description
                     }
                 ),
-                tint = oneHandedPanelStyle.foreground.solidColor(),
+                tint = oneHandedPanelStyle.foreground.solidColor(context),
             )
         }
     }

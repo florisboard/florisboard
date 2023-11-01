@@ -30,7 +30,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
@@ -83,20 +87,13 @@ internal fun SnyggValueIcon(
 ) {
     when (value) {
         is SnyggSolidColorValue -> {
-            Surface(
-                modifier = modifier.requiredSize(spec.iconSize),
-                color = MaterialTheme.colors.background,
-                elevation = spec.elevation,
-                shape = spec.boxShape,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .checkeredBackground(gridSize = spec.gridSize)
-                        .background(value.color),
-                )
-            }
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
+
+        is SnyggMaterialYouValue -> {
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.loadColor(LocalContext.current))
+        }
+
         is SnyggShapeValue -> {
             Box(
                 modifier = modifier
@@ -155,6 +152,27 @@ internal fun SnyggValueIcon(
         else -> {
             // Render nothing
         }
+    }
+}
+
+@Composable
+internal fun SnyggValueColorBox(
+    modifier: Modifier,
+    spec: SnyggValueIcon.Spec,
+    backgroundColor: Color
+) {
+    Surface(
+        modifier = modifier.requiredSize(spec.iconSize),
+        color = MaterialTheme.colors.background,
+        elevation = spec.elevation,
+        shape = spec.boxShape,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .checkeredBackground(gridSize = spec.gridSize)
+                .background(backgroundColor),
+        )
     }
 }
 

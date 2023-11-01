@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.snygg.ui
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.ui.Modifier
@@ -31,12 +32,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggValue
 
 fun Modifier.snyggBackground(
+    context: Context,
     style: SnyggPropertySet,
     fallbackColor: Color = Color.Unspecified,
     shape: Shape = style.shape.shape(),
@@ -46,6 +50,12 @@ fun Modifier.snyggBackground(
             color = bg.color,
             shape = shape,
         )
+
+        is SnyggMaterialYouValue -> this.background(
+            color = bg.loadColor(context),
+            shape = shape,
+        )
+
         else -> if (fallbackColor.isSpecified) {
             this.background(
                 color = fallbackColor,
@@ -58,9 +68,10 @@ fun Modifier.snyggBackground(
 }
 
 fun Modifier.snyggBorder(
+    context: Context,
     style: SnyggPropertySet,
     width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
-    color: Color = style.borderColor.solidColor(default = Color.Unspecified),
+    color: Color = style.borderColor.solidColor(context, default = Color.Unspecified),
     shape: Shape = style.shape.shape(),
 ): Modifier {
     return if (color.isSpecified) {
@@ -86,9 +97,10 @@ fun Modifier.snyggShadow(
     return this.shadow(elevation, shape, clip = false)
 }
 
-fun SnyggValue.solidColor(default: Color = Color.Transparent): Color {
+fun SnyggValue.solidColor(context: Context, default: Color = Color.Transparent): Color {
     return when (this) {
         is SnyggSolidColorValue -> this.color
+        is SnyggMaterialYouValue -> this.loadColor(context)
         else -> default
     }
 }

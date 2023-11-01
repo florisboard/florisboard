@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
@@ -42,8 +43,9 @@ fun SnyggButton(
     enabled: Boolean = true,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
 ) {
+    val context = LocalContext.current
     val border = remember (style) {
-        BorderStroke(style.borderWidth.dpSize(default = 0.dp), style.borderColor.solidColor())
+        BorderStroke(style.borderWidth.dpSize(default = 0.dp), style.borderColor.solidColor(context))
     }
     val elevation = style.shadowElevation.dpSize(default = 0.dp)
     Button(
@@ -59,8 +61,8 @@ fun SnyggButton(
         shape = style.shape.shape(),
         border = border,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = style.background.solidColor(default = FlorisImeTheme.fallbackContentColor()),
-            contentColor = style.foreground.solidColor(default = FlorisImeTheme.fallbackSurfaceColor()),
+            backgroundColor = style.background.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
+            contentColor = style.foreground.solidColor(context, default = FlorisImeTheme.fallbackSurfaceColor()),
         ),
         contentPadding = contentPadding,
         onClick = onClick,

@@ -154,7 +154,7 @@ fun EmojiPaletteView(
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
     val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
     val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
-    val contentColor = emojiKeyStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+    val contentColor = emojiKeyStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
 
     Column(modifier = modifier) {
         EmojiCategoriesTabRow(
@@ -249,11 +249,12 @@ private fun EmojiCategoriesTabRow(
     activeCategory: EmojiCategory,
     onCategoryChange: (EmojiCategory) -> Unit,
 ) {
+    val context = LocalContext.current
     val inputFeedbackController = LocalInputFeedbackController.current
     val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
     val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
-    val unselectedContentColor = tabStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
-    val selectedContentColor = tabStyleFocused.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+    val unselectedContentColor = tabStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
+    val selectedContentColor = tabStyleFocused.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
 
     val selectedTabIndex = EmojiCategoryValues.indexOf(activeCategory)
     TabRow(
@@ -377,6 +378,7 @@ private fun EmojiVariationsPopup(
 ) {
     val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
+    val context = LocalContext.current
 
     if (visible) {
         Popup(
@@ -391,8 +393,8 @@ private fun EmojiVariationsPopup(
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6)
                     .snyggShadow(popupStyle)
-                    .snyggBorder(popupStyle)
-                    .snyggBackground(popupStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor()),
+                    .snyggBorder(context, popupStyle)
+                    .snyggBackground(context, popupStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor()),
             ) {
                 for (emoji in variations) {
                     Box(
@@ -408,7 +410,7 @@ private fun EmojiVariationsPopup(
                             modifier = Modifier.align(Alignment.Center),
                             text = emoji.value,
                             emojiCompatInstance = emojiCompatInstance,
-                            color = popupStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                            color = popupStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
                             fontSize = popupStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier,
                         )
                     }

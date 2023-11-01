@@ -146,19 +146,19 @@ fun ClipboardInputLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight)
-                .snyggBackground(headerStyle),
+                .snyggBackground(context, headerStyle),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButtonWithInnerPadding(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_arrow_back),
-                iconColor = headerStyle.foreground.solidColor(),
+                iconColor = headerStyle.foreground.solidColor(context),
             )
             Text(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
-                color = headerStyle.foreground.solidColor(),
+                color = headerStyle.foreground.solidColor(context),
                 fontSize = headerStyle.fontSize.spSize(),
             )
             FlorisIconButtonWithInnerPadding(
@@ -169,14 +169,14 @@ fun ClipboardInputLayout(
                 } else {
                     R.drawable.ic_toggle_off
                 }),
-                iconColor = headerStyle.foreground.solidColor(),
+                iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier.autoMirrorForRtl(),
                 icon = painterResource(R.drawable.ic_clear_all),
-                iconColor = headerStyle.foreground.solidColor(),
+                iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
@@ -184,7 +184,7 @@ fun ClipboardInputLayout(
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
                 icon = painterResource(R.drawable.ic_edit),
-                iconColor = headerStyle.foreground.solidColor(),
+                iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )
         }
@@ -303,7 +303,7 @@ fun ClipboardInputLayout(
                             .padding(ItemPadding),
                         text = text,
                         style = TextStyle(textDirection = TextDirection.ContentOrLtr),
-                        color = style.foreground.solidColor(),
+                        color = style.foreground.solidColor(context),
                         fontSize = style.fontSize.spSize(),
                         maxLines = if (contentScrollInsteadOfClip) Int.MAX_VALUE else 5,
                         overflow = TextOverflow.Ellipsis,
@@ -383,8 +383,8 @@ fun ClipboardInputLayout(
                         modifier = Modifier
                             .padding(ItemMargin)
                             .snyggShadow(popupStyle)
-                            .snyggBorder(popupStyle)
-                            .snyggBackground(popupStyle)
+                            .snyggBorder(context, popupStyle)
+                            .snyggBackground(context, popupStyle)
                             .snyggClip(popupStyle),
                     ) {
                         PopupAction(
@@ -437,8 +437,8 @@ fun ClipboardInputLayout(
                         modifier = Modifier
                             .width(DialogWidth)
                             .snyggShadow(popupStyle)
-                            .snyggBorder(popupStyle)
-                            .snyggBackground(popupStyle)
+                            .snyggBorder(context, popupStyle)
+                            .snyggBackground(context, popupStyle)
                             .snyggClip(popupStyle)
                             .pointerInput(Unit) {
                                 detectTapGestures { /* Do nothing */ }
@@ -447,7 +447,7 @@ fun ClipboardInputLayout(
                         Text(
                             modifier = Modifier.padding(all = 16.dp),
                             text = stringRes(R.string.clipboard__confirm_clear_history__message),
-                            color = popupStyle.foreground.solidColor(),
+                            color = popupStyle.foreground.solidColor(context),
                         )
                         Row(modifier = Modifier.padding(horizontal = 8.dp)) {
                             Spacer(modifier = Modifier.weight(1f))
@@ -457,7 +457,7 @@ fun ClipboardInputLayout(
                                 },
                                 modifier = Modifier.padding(end = 8.dp),
                                 text = stringRes(R.string.action__no),
-                                colors = ButtonDefaults.textButtonColors(contentColor = popupStyle.foreground.solidColor()),
+                                colors = ButtonDefaults.textButtonColors(contentColor = popupStyle.foreground.solidColor(context)),
                             )
                             FlorisTextButton(
                                 onClick = {
@@ -466,7 +466,7 @@ fun ClipboardInputLayout(
                                     showClearAllHistory = false
                                 },
                                 text = stringRes(R.string.action__yes),
-                                colors = ButtonDefaults.textButtonColors(contentColor = popupStyle.foreground.solidColor()),
+                                colors = ButtonDefaults.textButtonColors(contentColor = popupStyle.foreground.solidColor(context)),
                             )
                         }
                     }
@@ -487,13 +487,13 @@ fun ClipboardInputLayout(
             Text(
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 text = stringRes(R.string.clipboard__empty__title),
-                color = itemStyle.foreground.solidColor(),
+                color = itemStyle.foreground.solidColor(context),
                 fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                 fontWeight = FontWeight.Bold,
             )
             Text(
                 text = stringRes(R.string.clipboard__empty__message),
-                color = itemStyle.foreground.solidColor(),
+                color = itemStyle.foreground.solidColor(context),
                 fontSize = itemStyle.fontSize.spSize(),
                 textAlign = TextAlign.Center,
             )
@@ -521,13 +521,13 @@ fun ClipboardInputLayout(
                     Text(
                         modifier = Modifier.padding(bottom = 8.dp),
                         text = stringRes(R.string.clipboard__disabled__title),
-                        color = itemStyle.foreground.solidColor(),
+                        color = itemStyle.foreground.solidColor(context),
                         fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
                         text = stringRes(R.string.clipboard__disabled__message),
-                        color = itemStyle.foreground.solidColor(),
+                        color = itemStyle.foreground.solidColor(context),
                         fontSize = itemStyle.fontSize.spSize(),
                     )
                     Button(
@@ -562,13 +562,13 @@ fun ClipboardInputLayout(
             Text(
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 text = stringRes(R.string.clipboard__locked__title),
-                color = itemStyle.foreground.solidColor(),
+                color = itemStyle.foreground.solidColor(context),
                 fontSize = itemStyle.fontSize.spSize() safeTimes 1.1f,
                 fontWeight = FontWeight.Bold,
             )
             Text(
                 text = stringRes(R.string.clipboard__locked__message),
-                color = itemStyle.foreground.solidColor(),
+                color = itemStyle.foreground.solidColor(context),
                 fontSize = itemStyle.fontSize.spSize(),
                 textAlign = TextAlign.Center,
             )
@@ -603,13 +603,14 @@ private fun ClipCategoryTitle(
     style: SnyggPropertySet,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     Text(
         modifier = modifier
             .padding(ItemMargin)
             .padding(top = 8.dp)
             .fillMaxWidth(),
         text = text.uppercase(),
-        color = style.foreground.solidColor(),
+        color = style.foreground.solidColor(context),
         fontWeight = FontWeight.Bold,
         fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )
@@ -621,6 +622,7 @@ private fun ClipTextItemDescription(
     style: SnyggPropertySet,
     modifier: Modifier = Modifier,
 ): Unit = with(LocalDensity.current) {
+    val context = LocalContext.current
     val iconId: Int?
     val description: String?
     when {
@@ -655,12 +657,12 @@ private fun ClipTextItemDescription(
                     .requiredSize(fontSize.toDp()),
                 painter = painterResource(id = iconId),
                 contentDescription = null,
-                tint = style.foreground.solidColor(),
+                tint = style.foreground.solidColor(context),
             )
             Text(
                 modifier = Modifier.weight(1f),
                 text = description,
-                color = style.foreground.solidColor(),
+                color = style.foreground.solidColor(context),
                 fontSize = fontSize safeTimes 0.8f,
                 fontStyle = FontStyle.Italic,
             )
@@ -676,6 +678,7 @@ private fun PopupAction(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
+    val context = LocalContext.current
     Row(
         modifier = modifier
             .width(ItemWidth)
@@ -687,12 +690,12 @@ private fun PopupAction(
             modifier = Modifier.padding(end = 8.dp),
             painter = painterResource(iconId),
             contentDescription = null,
-            tint = style.foreground.solidColor(),
+            tint = style.foreground.solidColor(context),
         )
         Text(
             modifier = Modifier.weight(1f),
             text = text,
-            color = style.foreground.solidColor(),
+            color = style.foreground.solidColor(context),
             fontSize = style.fontSize.spSize(),
         )
     }
