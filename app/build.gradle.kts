@@ -33,7 +33,7 @@ android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = 33
     buildToolsVersion = "33.0.2"
-    ndkVersion = "26.1.10909125"
+    ndkVersion = "25.2.9519653"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
