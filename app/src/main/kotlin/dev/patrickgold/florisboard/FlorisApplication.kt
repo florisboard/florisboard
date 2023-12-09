@@ -59,7 +59,7 @@ private var FlorisApplicationReference = WeakReference<FlorisApplication?>(null)
 @Suppress("unused")
 class FlorisApplication : Application() {
     companion object {
-        private const val ICU_DATA_ASSET_PATH = "icu4c/icudt.dat"
+        private const val ICU_DATA_ASSET_PATH = "icu4c/icudt73l.dat"
 
         private external fun nativeInitICUData(path: NativeStr): Int
 
