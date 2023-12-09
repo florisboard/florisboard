@@ -203,7 +203,7 @@ class ThemeManager(context: Context) {
         val chipStyle = style.getStatic(FlorisImeUi.SmartbarSharedActionsToggle)
         val bgColor = chipStyle.background.solidColor(context)
         val fgColor = chipStyle.foreground.solidColor(context)
-        val bgDrawableId = R.drawable.autofill_inline_suggestion_chip_background
+        val bgDrawableId = androidx.autofill.R.drawable.autofill_inline_suggestion_chip_background
         val stylesBuilder = UiVersions.newStylesBuilder()
         val suggestionStyle = InlineSuggestionUi.newStyleBuilder()
             .setSingleIconChipStyle(
