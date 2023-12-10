@@ -118,6 +118,13 @@
         "modifier": "org.florisboard.layouts:dvorak"
       },
       {
+        "id": "dvorak_de",
+        "label": "Dvorak (DE)",
+        "authors": [ "msrd0" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:dvorak_de"
+      },
+      {
         "id": "dvorak_es",
         "label": "Dvorak (ÑÇ)",
         "authors": [ "tsiflimagas" ],
@@ -439,6 +446,12 @@
         "id": "dvorak",
         "label": "Dvorak",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "dvorak_de",
+        "label": "Dvorak (DE)",
+        "authors": [ "msrd0" ],
         "direction": "ltr"
       },
       {
