@@ -7,6 +7,8 @@ src=".github/repo_icon.png" alt="App icon">
 devices. It aims at being modern, user-friendly and customizable while
 fully respecting your privacy. Currently in early-beta state.
 
+*Note: Due to various reasons development has been quite stuck in the past year, but things are slowly improving again and new releases/features will follow in the near future, please see the [roadmap](ROADMAP.md) for details!*
+
 <table>
 <tr>
 <th align="center" width="50%">
@@ -18,10 +20,10 @@ fully respecting your privacy. Currently in early-beta state.
 </tr>
 <tr>
 <td valign="top">
-<p><i>Major versions only, 1 release per 1-5 months</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
+<p><i>Major versions only</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
 </td>
 <td valign="top">
-<p><i>Beta versions, up to 1-2 releases per week</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
+<p><i>Alpha/Beta versions</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
 </td>
 </tr>
 <tr>
@@ -62,10 +64,8 @@ Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 - Advanced theming support and customization
 - Integrated extension support (still evolving)
 - Emoji keyboard
-- Spell checking service
-- Glide typing (currently English only)
 
-Word suggestions are not included in the current releases and are a major goal for the v0.4.0 milestone.
+Word suggestions/spell checking are not included in the current releases and are a major goal for the v0.5.0 milestone.
 
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
@@ -97,8 +97,6 @@ to get more information on this topic.
   [Kotlin](https://github.com/Kotlin)
 * [ICU4C](https://github.com/unicode-org/icu) by
   [The Unicode Consortium](https://github.com/unicode-org)
-* [Nuspell](https://github.com/nuspell/nuspell) by
-  [Nuspell](https://github.com/nuspell)
 
 Many thanks to [Nikolay Anzarov](https://www.behance.net/nikolayanzarov) ([@BloodRaven0](https://github.com/BloodRaven0)) for designing and providing the main app icons to this project!
 
