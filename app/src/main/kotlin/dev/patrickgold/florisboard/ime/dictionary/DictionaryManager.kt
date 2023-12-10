@@ -20,7 +20,6 @@ import android.content.Context
 import androidx.room.Room
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import java.lang.ref.WeakReference
 
@@ -65,24 +64,24 @@ class DictionaryManager private constructor(context: Context) {
             if (prefs.dictionary.enableFlorisUserDictionary.get()) {
                 florisDao?.query(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(SuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
                     }
                 }
                 florisDao?.queryShortcut(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(SuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
                     }
                 }
             }
             if (prefs.dictionary.enableSystemUserDictionary.get()) {
                 systemDao?.query(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(SuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
                     }
                 }
                 systemDao?.queryShortcut(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(SuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
                     }
                 }
             }

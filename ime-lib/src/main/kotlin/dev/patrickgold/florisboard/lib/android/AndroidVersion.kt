@@ -17,42 +17,52 @@
 package dev.patrickgold.florisboard.lib.android
 
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 
 @Suppress("unused")
 object AndroidVersion {
     /** Android 7.1 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N_MR1)
     inline val ATLEAST_API25_N_MR1 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
     inline val ATMOST_API25_N_MR1 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
 
     /** Android 8 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
     inline val ATLEAST_API26_O get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
     inline val ATMOST_API26_O get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O
 
     /** Android 8.1 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O_MR1)
     inline val ATLEAST_API27_O_MR1 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
     inline val ATMOST_API27_O_MR1 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
 
     /** Android 9 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.P)
     inline val ATLEAST_API28_P get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
     inline val ATMOST_API28_P get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.P
 
     /** Android 10 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.Q)
     inline val ATLEAST_API29_Q get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
     inline val ATMOST_API29_Q get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q
 
     /** Android 11 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
     inline val ATLEAST_API30_R get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
     inline val ATMOST_API30_R get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.R
 
     /** Android 12 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
     inline val ATLEAST_API31_S get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     inline val ATMOST_API31_S get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.S
 
     /** Android 12L **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S_V2)
     inline val ATLEAST_API32_S_V2 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S_V2
     inline val ATMOST_API32_S_V2 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2
 
     /** Android 13 **/
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
     inline val ATLEAST_API33_T get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     inline val ATMOST_API33_T get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU
 }

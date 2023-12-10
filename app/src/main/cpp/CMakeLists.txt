@@ -13,7 +13,9 @@ add_subdirectory(nlp)
 add_library(
         florisboard-native
         SHARED
-        dev_patrickgold_florisboard_FlorisApplication.cpp
+        FlorisApplication.cpp
+        LatinLanguageProviderService.cpp
+        LatinNlpSession.cpp
 )
 
 target_compile_options(florisboard-native PRIVATE -ffunction-sections -fdata-sections -fexceptions)

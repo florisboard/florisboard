@@ -17,14 +17,35 @@
 #ifndef FLORISBOARD_JNI_UTILS_H
 #define FLORISBOARD_JNI_UTILS_H
 
+#include <nlohmann/json.hpp>
+
 #include <jni.h>
+
 #include <string>
+#include <vector>
 
-namespace utils {
+namespace fl::jni {
 
-std::string j2std_string(JNIEnv *env, jobject jStr);
-jobject std2j_string(JNIEnv *env, const std::string& in);
+using NativeStr = jbyteArray;
+using NativeList = jbyteArray;
 
-} // namespace utils
+std::string j2std_string(JNIEnv* env, NativeStr jStr);
+NativeStr std2j_string(JNIEnv* env, const std::string& stdStr);
+
+template<typename T>
+std::vector<T> j2std_list(JNIEnv* env, NativeList j_list) {
+    auto list_str = j2std_string(env, j_list);
+    auto json = nlohmann::json::parse(list_str);
+    return json.template get<std::vector<T>>();
+}
+
+template<typename T>
+NativeList std2j_list(JNIEnv* env, std::vector<T> list) {
+    auto json = nlohmann::json(list);
+    auto list_str = json.dump();
+    return std2j_string(env, list_str);
+}
+
+} // namespace fl::jni
 
 #endif // FLORISBOARD_JNI_UTILS_H

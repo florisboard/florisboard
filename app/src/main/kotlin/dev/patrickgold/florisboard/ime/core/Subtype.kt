@@ -23,8 +23,6 @@ import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
 import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
 import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
@@ -60,7 +58,7 @@ data class Subtype(
         /**
          * Subtype to use when prefs do not contain any valid subtypes.
          */
-        val DEFAULT = Subtype(
+        val FALLBACK = Subtype(
             id = -1,
             primaryLocale = FlorisLocale.from("en", "US"),
             secondaryLocales = emptyList(),
@@ -93,6 +91,10 @@ data class Subtype(
         if (other.layoutMap != layoutMap) return false
 
         return true
+    }
+
+    fun compute(): ComputedSubtype {
+        return ComputedSubtype(id, primaryLocale.languageTag(), secondaryLocales.map { it.languageTag() })
     }
 }
 
@@ -208,12 +210,14 @@ data class SubtypeLayoutMap(
 
 @Serializable
 data class SubtypeNlpProviderMap(
-    val spelling: String = LatinLanguageProvider.ProviderId,
-    val suggestion: String = LatinLanguageProvider.ProviderId,
+    val spelling: String? = "org.florisboard.plugins.nlp.latin",
+    val spellingDictionary: ExtensionComponentName? = null,
+    val suggestion: String? = "org.florisboard.plugins.nlp.latin",
+    val suggestionDictionary: ExtensionComponentName? = null,
 ) {
-    inline fun forEach(action: (String, String) -> Unit) {
-        action("spelling", spelling)
-        action("suggestion", suggestion)
+    inline fun forEach(action: (String) -> Unit) {
+        if (spelling != null) action(spelling)
+        if (suggestion != null) action(suggestion)
     }
 }
 

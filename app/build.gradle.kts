@@ -29,9 +29,16 @@ plugins {
     alias(libs.plugins.mikepenz.aboutlibraries)
 }
 
+val projectCompileSdk: String by project
+val projectMinSdk: String by project
+val projectTargetSdk: String by project
+val projectVersionCode: String by project
+val projectVersionName: String by project
+val projectVersionNameSuffix: String by project
+
 android {
     namespace = "dev.patrickgold.florisboard"
-    compileSdk = 33
+    compileSdk = projectCompileSdk.toInt()
     buildToolsVersion = "33.0.2"
     ndkVersion = "26.1.10909125"
 
@@ -51,10 +58,10 @@ android {
 
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 90
-        versionName = "0.4.0"
+        minSdk = projectMinSdk.toInt()
+        targetSdk = projectTargetSdk.toInt()
+        versionCode = projectVersionCode.toInt()
+        versionName = projectVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -72,7 +79,8 @@ android {
                 cppFlags("-std=c++20", "-stdlib=libc++")
                 arguments(
                     "-DCMAKE_ANDROID_API=" + minSdk.toString(),
-                    "-DICU_ASSET_EXPORT_DIR=" + project.file("src/main/assets/icu4c").absolutePath,
+                    "-DICU_ASSET_EXPORT_DIR=" + project.file(".cxx_icu4c/android/assets/icu4c").absolutePath,
+                    "-DICU_BUILD_DIR=" + project.file(".cxx_icu4c").absolutePath,
                     "-DBUILD_SHARED_LIBS=false",
                     "-DANDROID_STL=c++_static",
                 )
@@ -86,7 +94,7 @@ android {
         sourceSets {
             maybeCreate("main").apply {
                 assets {
-                    srcDirs("src/main/assets")
+                    srcDirs("src/main/assets", ".cxx_icu4c/android/assets")
                 }
                 java {
                     srcDirs("src/main/kotlin")
@@ -139,7 +147,7 @@ android {
 
         create("beta") {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-alpha04"
+            versionNameSuffix = projectVersionNameSuffix
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
@@ -152,6 +160,8 @@ android {
         }
 
         named("release") {
+            versionNameSuffix = projectVersionNameSuffix
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
             isShrinkResources = true
@@ -178,6 +188,16 @@ android {
         configPath = "app/src/main/config"
     }
 
+    // This specific block is crucial as it forces the assets packing to be done AFTER the native code has been
+    // compiled. This is important as CMake generates the ICU4C data file which needs to be placed inside the assets
+    // dir, especially though for clean builds on workflow runners and for F-Droid.
+    applicationVariants.all {
+        assembleProvider.configure {
+            dependsOn(javaCompileProvider.get())
+            dependsOn(externalNativeBuildProviders)
+        }
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -198,7 +218,15 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     }
 }
 
+val customClean by tasks.registering(Delete::class) {
+    delete(file(".cxx").absolutePath)
+    delete(file(".cxx_icu4c").absolutePath)
+}
+tasks.getByName("clean").dependsOn(customClean)
+
 dependencies {
+    implementation(project(":ime-lib"))
+    implementation(project(":plugin"))
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)

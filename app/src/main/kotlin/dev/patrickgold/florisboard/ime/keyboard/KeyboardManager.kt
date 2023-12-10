@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
@@ -42,7 +43,6 @@ import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -57,7 +57,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.collectIn
@@ -147,13 +146,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 reevaluateInputShiftState()
                 updateActiveEvaluators()
                 editorInstance.refreshComposing()
-                resetSuggestions(editorInstance.activeContent)
+                generateSuggestions(editorInstance.activeContent)
             }
             clipboardManager.primaryClipFlow.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             editorInstance.activeContentFlow.collectIn(scope) { content ->
-                resetSuggestions(content)
+                generateSuggestions(content)
             }
             prefs.devtools.enabled.observeForever {
                 reevaluateDebugFlags()
@@ -213,12 +212,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    fun resetSuggestions(content: EditorContent) {
-        if (!(activeState.isComposingEnabled || nlpManager.isSuggestionOn())) {
+    private suspend fun generateSuggestions(content: EditorContent) {
+        if (nlpManager.isSuggestionEnabled()) {
+            nlpManager.suggest(subtypeManager.activeSubtype, content)
+        } else {
             nlpManager.clearSuggestions()
-            return
         }
-        nlpManager.suggest(subtypeManager.activeSubtype, content)
     }
 
     /**
@@ -278,7 +277,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     fun commitCandidate(candidate: SuggestionCandidate) {
         scope.launch {
-            candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
+            candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype.id, candidate)
         }
         when (candidate) {
             is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
@@ -397,7 +396,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             candidateForRevert.sourceProvider?.let { sourceProvider ->
                 scope.launch {
                     sourceProvider.notifySuggestionReverted(
-                        subtype = subtypeManager.activeSubtype,
+                        subtypeId = subtypeManager.activeSubtype.id,
                         candidate = candidateForRevert,
                     )
                 }
@@ -985,7 +984,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 keyboard = SmartbarQuickActionsKeyboard,
                 editorInfo = editorInfo,
                 state = state,
-                subtype = Subtype.DEFAULT,
+                subtype = Subtype.FALLBACK,
             )
         }
     }

@@ -31,6 +31,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -41,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -111,6 +113,13 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
     var languagePackExtToDelete by remember { mutableStateOf<Extension?>(null) }
 
     content {
+        FlorisOutlinedBox(modifier = Modifier.defaultFlorisOutlinedBox()) {
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                text = stringRes(R.string.settings__localization__language_pack_summary),
+                style = MaterialTheme.typography.body2,
+            )
+        }
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         if (action == LanguagePackManagerScreenAction.MANAGE) {
             FlorisOutlinedBox(

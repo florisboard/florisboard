@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2023 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,12 @@
  * limitations under the License.
  */
 
-#include <fstream>
-#include <vector>
-#include <jni.h>
-#include <unicode/udata.h>
-#include "utils/jni_utils.h"
+package dev.patrickgold.florisboard.ime.keyboard
 
-#include "fl_icuext.hpp"
+import kotlinx.serialization.Serializable
 
-#pragma ide diagnostic ignored "UnusedLocalVariable"
-
-extern "C"
-JNIEXPORT jint JNICALL
-Java_dev_patrickgold_florisboard_FlorisApplication_00024Companion_nativeInitICUData(
-        JNIEnv *env, jobject thiz, jobject path)
-{
-    auto path_str = utils::j2std_string(env, path);
-    auto status = fl::icuext::loadAndSetCommonData(path_str);
-    return status;
-}
+@Serializable
+class KeyProximityChecker(
+    var enabled: Boolean,
+    var mapping: Map<String, List<String>>,
+)

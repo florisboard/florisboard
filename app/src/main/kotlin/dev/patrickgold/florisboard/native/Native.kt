@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib
+package dev.patrickgold.florisboard.native
 
-import java.nio.ByteBuffer
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
 
 /**
  * Type alias for a native pointer.
@@ -31,31 +34,44 @@ const val NATIVE_NULLPTR: NativePtr = 0L
 /**
  * Type alias for a native string in standard UTF-8 encoding.
  */
-typealias NativeStr = ByteBuffer
+typealias NativeStr = ByteArray
 
 /**
  * Converts a native string to a Java string.
  */
 fun NativeStr.toJavaString(): String {
-    val bytes: ByteArray
-    if (this.hasArray()) {
-        bytes = this.array()
-    } else {
-        bytes = ByteArray(this.remaining())
-        this.get(bytes)
-    }
-    return String(bytes, Charsets.UTF_8)
+    return this.toString(Charsets.UTF_8)
 }
 
 /**
  * Converts a Java string to a native string.
  */
 fun String.toNativeStr(): NativeStr {
-    val bytes = this.toByteArray(Charsets.UTF_8)
-    val buffer = ByteBuffer.allocateDirect(bytes.size)
-    buffer.put(bytes)
-    buffer.rewind()
-    return buffer
+    return this.toByteArray(Charsets.UTF_8)
+}
+
+/**
+ * Type alias for a serialized native list in standard UTF-8 encoding.
+ */
+typealias NativeList = ByteArray
+
+/**
+ * Converts a serialized native list to a Java list.
+ */
+inline fun <reified T> NativeList.toJavaList(): List<T> {
+    return Json.decodeFromString(getListSerializer(), this.toJavaString())
+}
+
+/**
+ * Converts a Java list to a serialized native list.
+ */
+inline fun <reified T> List<T>.toNativeList(): NativeList {
+    return Json.encodeToString(getListSerializer(), this).toNativeStr()
+}
+
+@PublishedApi
+internal inline fun <reified T> getListSerializer(): KSerializer<List<T>> {
+    return ListSerializer(serializer())
 }
 
 /**

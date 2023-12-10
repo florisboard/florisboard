@@ -134,6 +134,12 @@ fun AdvancedScreen() = FlorisScreen {
                 }
             }
         )
+        ListPreference(
+            prefs.localization.displayLanguageNamesIn,
+            iconId = R.drawable.ic_language,
+            title = stringRes(R.string.settings__localization__display_language_names_in__label),
+            entries = DisplayLanguageNamesIn.listEntries(),
+        )
         SwitchPreference(
             prefs.advanced.showAppIcon,
             iconId = R.drawable.ic_preview,

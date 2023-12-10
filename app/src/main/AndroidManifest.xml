@@ -20,8 +20,9 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
-          ship with an IME or Spell Check service. This is used to guide the user
-          in the Settings Ui why FlorisBoard may not be working.
+          ship with an IME, Spell Check or FlorisBoard Plugin service. This is used
+          to guide the user in the Settings UI why FlorisBoard may not be working and
+          to provide plugin support.
      -->
     <queries>
         <intent>
@@ -29,6 +30,9 @@
         </intent>
         <intent>
             <action android:name="android.service.textservice.SpellCheckerService"/>
+        </intent>
+        <intent>
+            <action android:name="org.florisboard.plugin.FlorisPluginService"/>
         </intent>
     </queries>
 
@@ -70,6 +74,16 @@
                 <action android:name="android.service.textservice.SpellCheckerService"/>
             </intent-filter>
             <meta-data android:name="android.view.textservice.scs" android:resource="@xml/spellchecker"/>
+        </service>
+
+        <!-- Internal LatinLanguageProvider plugin service -->
+        <service
+            android:name=".ime.nlp.latin.LatinLanguageProviderService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.florisboard.plugin.FlorisPluginService"/>
+            </intent-filter>
+            <meta-data android:name="org.florisboard.plugin.flp" android:resource="@xml/latin_language_provider"/>
         </service>
 
         <!-- Main App Activity -->

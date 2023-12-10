@@ -35,3 +35,5 @@ dependencyResolutionManagement {
 
 include(":app")
 include(":benchmark")
+include(":ime-lib")
+include(":plugin")

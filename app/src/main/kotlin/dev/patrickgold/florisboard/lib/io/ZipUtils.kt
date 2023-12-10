@@ -143,8 +143,9 @@ object ZipUtils {
                 val flexEntry = flexEntries.nextElement()
                 val flexEntryFile = FsFile(dstDir, flexEntry.name)
                 if (flexEntry.isDirectory) {
-                    flexEntryFile.mkdir()
+                    flexEntryFile.mkdirs()
                 } else {
+                    flexEntryFile.parentDir?.mkdirs()
                     flexFile.copy(flexEntry, flexEntryFile)
                 }
             }

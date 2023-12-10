@@ -134,7 +134,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
             return
         }
 
-        this.words = nlpManager.getListOfWords(subtype)
+        this.words = emptyList() //nlpManager.getListOfWords(subtype)
 
         this.wordDataSubtype = subtype
         if (wordDataSubtype == layoutSubtype) {
@@ -203,7 +203,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
                 val locationDistance = calcLocationDistance(wordGesture, userGesture)
                 val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
                 val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
-                val frequency = 255f * nlpManager.getFrequencyForWord(currentSubtype!!, word).toFloat()
+                val frequency = 255f * 0.0f //nlpManager.getFrequencyForWord(currentSubtype!!, word).toFloat()
                 val confidence = 1.0f / (shapeProbability * locationProbability * frequency)
 
                 var candidateDistanceSortedIndex = 0

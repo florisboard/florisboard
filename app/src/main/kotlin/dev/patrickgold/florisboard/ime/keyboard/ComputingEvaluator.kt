@@ -60,7 +60,7 @@ object DefaultComputingEvaluator : ComputingEvaluator {
 
     override val state = KeyboardState.new()
 
-    override val subtype = Subtype.DEFAULT
+    override val subtype = Subtype.FALLBACK
 
     override fun context(): Context? = null
 

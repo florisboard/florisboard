@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
+import dev.patrickgold.florisboard.app.ext.PluginViewScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
@@ -47,6 +48,7 @@ import dev.patrickgold.florisboard.app.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreen
 import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.localization.LocalizationScreen
+import dev.patrickgold.florisboard.app.settings.localization.DictionaryManagerScreen
 import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
@@ -69,6 +71,7 @@ object Routes {
 
         const val Localization = "settings/localization"
         const val SelectLocale = "settings/localization/select-locale"
+        const val ManageDictionaries = "settings/localization/manage-dictionaries"
         const val LanguagePackManager = "settings/localization/language-pack-manage/{action}"
         fun LanguagePackManager(action: LanguagePackManagerScreenAction) =
             LanguagePackManager.curlyFormat("action" to action.id)
@@ -135,6 +138,11 @@ object Routes {
         fun View(id: String) = View.curlyFormat("id" to id)
     }
 
+    object Plugin {
+        const val View = "plugin/view/{id}"
+        fun View(id: String) = View.curlyFormat("id" to id)
+    }
+
     @Composable
     fun AppNavHost(
         modifier: Modifier,
@@ -152,6 +160,7 @@ object Routes {
 
             composable(Settings.Localization) { LocalizationScreen() }
             composable(Settings.SelectLocale) { SelectLocaleScreen() }
+            composable(Settings.ManageDictionaries) { DictionaryManagerScreen() }
             composable(Settings.LanguagePackManager) { navBackStack ->
                 val action = navBackStack.arguments?.getString("action")?.let { actionId ->
                     LanguagePackManagerScreenAction.values().firstOrNull { it.id == actionId }
@@ -214,7 +223,7 @@ object Routes {
                 val serialType = navBackStack.arguments?.getString("serial_type")
                 ExtensionEditScreen(
                     id = extensionId.toString(),
-                    createSerialType = serialType.takeIf { it != null && it.isNotBlank() },
+                    createSerialType = serialType.takeIf { !it.isNullOrBlank() },
                 )
             }
             composable(Ext.Export) { navBackStack ->
@@ -231,6 +240,11 @@ object Routes {
             composable(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionViewScreen(id = extensionId.toString())
+            }
+
+            composable(Plugin.View) { navBackStack ->
+                val pluginId = navBackStack.arguments?.getString("id")
+                PluginViewScreen(id = pluginId.toString())
             }
         }
     }

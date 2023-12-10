@@ -66,13 +66,13 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             setupSpellingIfNecessary()
         }
 
-        private fun setupSpellingIfNecessary() {
+        private fun setupSpellingIfNecessary() = runBlocking {
             val evaluatedSubtype = when (prefs.spelling.languageMode.get()) {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
                     subtypeManager.activeSubtype
                 }
                 else -> {
-                    Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())
+                    Subtype.FALLBACK.copy(primaryLocale = FlorisLocale.default())
                 }
             }
 
@@ -92,7 +92,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         ): Array<SpellingResult> = runBlocking {
             val retInfos = Array(textInfos.size) { n ->
                 val word = textInfos[n].text ?: ""
-                async { nlpManager.spell(spellingSubtype, word, emptyList(), emptyList(), suggestionsLimit) }
+                async { nlpManager.spell(spellingSubtype, word, emptyList(), suggestionsLimit) }
             }
             Array(textInfos.size) { n ->
                 retInfos[n].await().apply {
@@ -110,7 +110,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             return runBlocking {
                 nlpManager
-                    .spell(spellingSubtype, textInfo.text, emptyList(), emptyList(), suggestionsLimit)
+                    .spell(spellingSubtype, textInfo.text, emptyList(), suggestionsLimit)
                     .sendToDebugOverlayIfEnabled(textInfo)
                     .suggestionsInfo
             }

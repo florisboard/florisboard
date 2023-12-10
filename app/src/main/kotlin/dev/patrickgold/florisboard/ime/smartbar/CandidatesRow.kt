@@ -51,7 +51,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -251,7 +251,7 @@ private fun CandidateItem(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            if (candidate.secondaryText != null) {
+            if (!candidate.secondaryText.isNullOrEmpty()) {
                 Text(
                     text = candidate.secondaryText!!.toString(),
                     color = style.foreground.solidColor(context),
