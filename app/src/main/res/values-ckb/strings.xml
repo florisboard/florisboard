@@ -93,10 +93,13 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">پیشاندانی ناوی زمان بەشێوەی</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">شێوازەکان</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">زیادکردنی زمان</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">ڕێکخستن فەرهەنگ و زمان</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">تاقیکاری: بەڕێوەبردنی درێژکراوەکان کە پشتگیری بۆ زمانە تایبەتەکان زیاد دەکەن (بۆ ئێستا هاتنە ژوورەوەی چینی لەسەر بنەمای شێوە)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">دەستکاریکردن تەختەکلیل</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">زمانی سەرەکی</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">پیتەکانی خانەی دووەم</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">شێوازی نووسین</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">سەرچاوەی فەرهەنگ</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">شێوازی بنەڕەتی هێماکان</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">شێوازی دووەمی هێماکان</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">کۆدیک</string>
@@ -190,6 +193,12 @@
     <string name="snygg__rule_element__incognito_mode_indicator">دۆخی نادیار</string>
     <string name="snygg__rule_element__one_handed_panel">دۆخی یەکدەست</string>
     <string name="snygg__rule_element__smartbar">بەشی سەرەوە</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">ڕیزی فرمانەکانی توڵباری زیرەکی هاوبەشکراو</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">دوگمەی توڵباری زیرەکی هاوبەش پێکراو</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">ڕیزی فرمانەکانی تری توڵباری زیرەک</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">دوگمەی فرمانەکانی تری توڵباری زیرەک</string>
+    <string name="snygg__rule_element__smartbar_action_key">کلیلی فرمانەکانی توڵباری زیرەک</string>
+    <string name="snygg__rule_element__smartbar_action_tile">تەختەی فرمانی توڵباری زیرەک</string>
     <string name="snygg__rule_element__smartbar_candidate_word">ڕەنگی نووسینەکانی بەشی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">ڕەنگی ئایکۆنەکانی ئامراز</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">ماوەی نێوان ئامرازەکان</string>
@@ -297,6 +306,7 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">بەشی سەرەوە</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">شێواز</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">پیچەوانەکردنەوەی دوگمەکان</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">پێچەوانەکردنەوەی دوگمەکانی ئامرازەکان</string>
     <!-- Typing strings -->
@@ -545,6 +555,7 @@
     <string name="ext__meta__authors">دیزاینەر</string>
     <string name="ext__meta__components">زیادکراوەکان</string>
     <string name="ext__meta__components_theme">ڕووکارە دروستکراوەکان</string>
+    <string name="ext__meta__components_language_pack">زمانە بەردەستەکان</string>
     <string name="ext__meta__components_none_found">ئەم فایلە ئەرشیفە هیچ پێکهاتەیەکی لەخۆ نەگرتووە.</string>
     <string name="ext__meta__description">زانیاری</string>
     <string name="ext__meta__homepage">پەڕەی سەرەکی</string>
@@ -584,6 +595,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">هێنانی زیادکراو</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">هێنانی زیادکراوی تەختەکلیل</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">هێنانی ڕووکار</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">هێنانی فەرهەنگ</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">فایلەکە نەتوانرا بهێنرێت، بەهۆی:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">جۆری فایل نەگونجاوە یان بەباشی ڕێکنەخراوە(تێکچووە).</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">ناتوانێت پاکێجەکانی پاشکۆی گریمانەیی جێگۆڕکێ بکات یان نوێ بکاتەوە کە لەگەڵ سەرمایەکانی ناوکی کاربەرنامە دابین کراوە. ڕەچاوکردنی نوێکردنەوەی کاربەرنامەی خۆی ئەگەر تۆ دەتەوێت وەشانێکی نوێتری پاکێجی درێژکراوەی ناوکی بەکاربهێنیت.</string>
@@ -696,6 +708,7 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">سەرەتای خوارەوە</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">تەنیا پێشنیارکردن</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">تەنیا ئامرازەکان</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">بنچینەیی</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">تەنیا زانیاری ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>

@@ -30,14 +30,50 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: удержите палец на недавнем эмодзи, чтобы скрыть его!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} скрыт из недавних эмодзи</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">В начало</string>
+    <string name="quick_action__arrow_up__tooltip">Переместить курсор в начало</string>
     <string name="quick_action__arrow_down" maxLength="12">Стрелка вниз</string>
+    <string name="quick_action__arrow_down__tooltip">Переместить курсор в конец</string>
+    <string name="quick_action__arrow_left" maxLength="12">Влево</string>
+    <string name="quick_action__arrow_left__tooltip">Переместить курсор влево</string>
+    <string name="quick_action__arrow_right" maxLength="12">Вправо</string>
+    <string name="quick_action__arrow_right__tooltip">Переместить курсор вправо</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Копировать</string>
+    <string name="quick_action__clipboard_copy__tooltip">Выполнить копирование из буфера обмена</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Вырезать</string>
+    <string name="quick_action__clipboard_cut__tooltip">Выполнить вырезку из буфера обмена</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Вставить</string>
+    <string name="quick_action__clipboard_paste__tooltip">Выполнить вставку из буфера обмена</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Выбрать все</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер обмена</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Включить историю буфера обмена</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Эмодзи</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Открыть панель эмодзи</string>
     <string name="quick_action__settings" maxLength="12">Настройки</string>
+    <string name="quick_action__settings__tooltip">Открыть настройки</string>
     <string name="quick_action__undo" maxLength="12">Отменить</string>
+    <string name="quick_action__undo__tooltip">Отменить последний ввод</string>
+    <string name="quick_action__redo" maxLength="12">Повторить</string>
+    <string name="quick_action__redo__tooltip">Повторить последний ввод</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Ещё действия</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Показать или убрать дополнительные действия</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Инкогнито</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Включить режим инкогнито</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Автоисправ.</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Включить автоисправление</string>
+    <string name="quick_action__voice_input" maxLength="12">Голос. ввод</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Открытый провайдер голосового ввода</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Одной рукой</string>
+    <string name="quick_action__one_handed_mode__tooltip">Включить режим управления одной рукой</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Отсутствует</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Нет операции</string>
+    <string name="quick_actions_overflow__customize_actions_button">Изменить порядок действий</string>
+    <string name="quick_actions_editor__header">Настроить порядок действий</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Динамические действия ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Скрытые действия ({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Режим инкогнито включён\n\n{app_name} не будет обучаться под ваш стиль письма, пока этот режим активен</string>
+    <string name="incognito_mode__toast_after_disabled">Режим инкогнито отключён по умолчанию</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Протестируйте свои настройки</string>
@@ -51,10 +87,13 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Подписи к языкам</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подвиды</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Управление установленными языковыми пакетами</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Экспериментально: управление расширениями, которые добавляют поддержку определенных языков (на данный момент китайский ввод на основе формы)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основной язык</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Отображение всплывающих окон</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Схема расположения кнопок</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">Механизм предложений</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основная символьная раскладка</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная символьная раскладка</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Редактор</string>
@@ -145,7 +184,21 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">Горизонтальное поле ввода</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие горизонтального ввода</string>
     <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Индикатор режима инкогнито</string>
     <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
+    <string name="snygg__rule_element__smartbar">Умная панель навигации</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Ряд основных действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Переключатель основных действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Ряд расширенных действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Переключатель расширенных действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_action_key">Кнопка действия умной панели</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Кнопка действия умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Порядок действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Кнопка изменения порядка действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Редактор действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Заголовок редактора действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Подзаголовок редактора действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Ряд кандидатов умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
@@ -253,8 +306,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Раскладка</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Параметры, специфичные для раскладки</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Поменять местами кнопки переключения</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Поменять местами переключатели строки действий</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Автосворачивание/разворачивание</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Автоматическое разворачивание/сворачивание основной строки действия в зависимости от текущего состояния</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Размещение ряда действий</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Набор текста</string>
     <string name="pref__suggestion__title" comment="Preference group title">Подсказки</string>
@@ -349,6 +407,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Режим инкогнито</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">О приложении</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок приложения FlorisBoard</string>
@@ -498,6 +557,7 @@
     <string name="ext__meta__authors">Авторы</string>
     <string name="ext__meta__components">Встроенные компоненты</string>
     <string name="ext__meta__components_theme">Встроенные темы</string>
+    <string name="ext__meta__components_language_pack">Связанные языковые пакеты</string>
     <string name="ext__meta__components_none_found">В этом архиве расширения нет встроенных компонентов.</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Главная страница</string>
@@ -537,6 +597,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Импорт расширения</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Импорт расширения клавиатуры</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Импорт расширения темы</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Импорт расширения языкового пакета</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Файл не может быть импортирован. Причина:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Неподдерживаемый или неизвестный тип файла.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Невозможно заменить или обновить пакеты расширений по умолчанию. Если вы хотите использовать более новую версию основного пакета расширений, необходимо обновить само приложение.</string>
@@ -649,6 +710,11 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Низ начало</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Только предложения</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Только действия</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Показывает только строку действий, без строки-кандидата или явно закрепленного действия</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Предложения &amp; Общие действия</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Предложения &amp; Расширенные действия</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Ещё</string>

@@ -30,6 +30,28 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Druk lang op recent gebruikte emoji\'s om ze weer uit deze weergave te verwijderen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Pijl omhoog</string>
+    <string name="quick_action__arrow_down" maxLength="12">Pijl omlaag</string>
+    <string name="quick_action__arrow_left" maxLength="12">Pijl links</string>
+    <string name="quick_action__arrow_right" maxLength="12">Pijl rechts</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopiëer</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Knippen</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Plakken</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Alles selec.</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Klembord</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Klembordgeschiedenis openen</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji-paneel</string>
+    <string name="quick_action__settings" maxLength="12">Instellingen</string>
+    <string name="quick_action__settings__tooltip">Open instellingen</string>
+    <string name="quick_action__undo" maxLength="12">Annuleren</string>
+    <string name="quick_action__redo" maxLength="12">Opnieuw</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Meer acties</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__voice_input" maxLength="12">Spraakinvoer</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Met één hand</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Geen</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Geen operatie</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
@@ -176,6 +198,8 @@
     <string name="snygg__property_name__var_shape_variant">Gemeenschappelijke vorm (variant)</string>
     <string name="snygg__property_value__explicit_inherit">Erven</string>
     <string name="snygg__property_value__solid_color">Effen kleur</string>
+    <string name="snygg__property_value__material_you_light_color">Material You kleur (licht)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You kleur (donker)</string>
     <string name="snygg__property_value__image_ref">Afbeeldingsreferentie</string>
     <string name="snygg__property_value__rectangle_shape">Rechthoekige vorm</string>
     <string name="snygg__property_value__circle_shape">cirkelvorm</string>
@@ -198,6 +222,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Geluiden voor veegbewegingen</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Feedback /Vibratie</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Schakel haptische feedback in</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibratiemodus</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trillingsduur</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Deze functie vereist hardwarematige besturing van de trillingssterkte, en wordt niet ondersteund door uw apparaat</string>
@@ -242,9 +267,13 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Slimme Balk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Indeling</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Indeling-specifieke opties</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Schakelknoppen omdraaien</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Wisselt actierij schakelt</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatisch uitvouwen/samenvouwen</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Typen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggesties weergavemodus:</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
@@ -256,6 +285,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">CapsLock blijft aan bij het verplaatsen naar een ander tekstveld</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punt na twee spaties</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer tikken op spatiebalk voegt een punt toe gevolgd door een spatie</string>
+    <string name="pref__spelling__title" comment="Preference group title">Spelling</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systeem-breed uitgeschakeld. Er zullen geen rode lijnen verschijnen in tekstvelden voor incorrecte woorden. Klik om te wijzigen.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Geen inline spellingscontrole ingesteld. Klik om te wijzigen.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Talen</string>
@@ -325,6 +355,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Instellingen taal</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Altijd ingeschakeld op Android 10 vanwege systeembeperkingen</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Incognitomodus</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>
@@ -417,6 +448,7 @@
     <string name="clipboard__group_other">Overige</string>
     <string name="clipboard__item_description_email">E-mail</string>
     <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Telefoon</string>
     <string name="clip__clear_history">Wis geschiedenis</string>
     <string name="clip__unpin_item">Item losmaken</string>
     <string name="clip__pin_item">Item vastmaken</string>
@@ -616,6 +648,8 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">De beste</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Onderkant</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Begin onderaan</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Enkel suggesties</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Enkel acties</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Basis</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Alleen kleureigenschappen worden getoond, eigenschappen en regels worden vertaald.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Geavanceerd</string>

@@ -31,17 +31,52 @@
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} rimosso dagli emoji usati di recente</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Freccia su</string>
+    <string name="quick_action__arrow_up__tooltip">Eseguire freccia su</string>
     <string name="quick_action__arrow_down" maxLength="12">Freccia giù</string>
+    <string name="quick_action__arrow_down__tooltip">Eseguire freccia giù</string>
+    <string name="quick_action__arrow_left" maxLength="12">Sinistra</string>
+    <string name="quick_action__arrow_left__tooltip">Eseguire freccia sinistra</string>
+    <string name="quick_action__arrow_right" maxLength="12">Destra</string>
+    <string name="quick_action__arrow_right__tooltip">Eseguire freccia destra</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Esegui sgombro degli appunti primari</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_copy__tooltip">Esegui copia negli appunti</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Taglia</string>
+    <string name="quick_action__clipboard_cut__tooltip">Esegui taglia negli appunti</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Incolla</string>
+    <string name="quick_action__clipboard_paste__tooltip">Esegui incolla negli appunti</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Selez. tutto</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Esegui seleziona tutti negli appunti</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Appunti</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Apri cronologia degli appunti</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Apri pannello degli emoji</string>
     <string name="quick_action__settings" maxLength="12">Impostazioni</string>
+    <string name="quick_action__settings__tooltip">Apri impostazioni</string>
+    <string name="quick_action__undo" maxLength="12">Annulla</string>
+    <string name="quick_action__undo__tooltip">Annulla l\'ultima azione</string>
+    <string name="quick_action__redo" maxLength="12">Ripristina</string>
+    <string name="quick_action__redo__tooltip">Ripristina l\'ultima azione</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Altre azioni</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Mostra o nascondi azioni aggiuntive</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Attiva o disattiva modalità in incognito</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Auto-correz.</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Attiva o disattiva correzione automatica</string>
+    <string name="quick_action__voice_input" maxLength="12">Input vocale</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Apri fornitore d\'immissione di voce</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">A una mano</string>
+    <string name="quick_action__one_handed_mode__tooltip">Attiva o disattiva modalità a una mano</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posizione dell\'attuale marcatore di trascinamento</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna operazione</string>
+    <string name="quick_actions_overflow__customize_actions_button">Riordina azioni</string>
+    <string name="quick_actions_editor__header">Riordina ordine azioni</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Azioni dinamiche ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Azioni nascoste ({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">La modalità in incognito è ora attiva\n\n{app_name} non apprenderà le parole dai tuoi input mentre questa modalità è in funzione</string>
+    <string name="incognito_mode__toast_after_disabled">La modalità Incognito è ora disabilitata per impostazione predefinita</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Impostazioni</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prova la tua configurazione</string>
@@ -149,7 +184,13 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">Campo di input orizzontale</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Azione di input orizzontale</string>
     <string name="snygg__rule_element__glide_trail">Percorso di scorrimento</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Indicatore della modalità in incognito</string>
     <string name="snygg__rule_element__one_handed_panel">Pannello a una mano</string>
+    <string name="snygg__rule_element__smartbar">Smartbar</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Riga di azione condivisa della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Riga estesa d\'azioni della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Attiva azioni estese nella Smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_key">Tasto d\'azione della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
@@ -187,6 +228,8 @@
     <string name="snygg__property_name__var_shape_variant">Forma comune (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Eredita</string>
     <string name="snygg__property_value__solid_color">Tinta unita</string>
+    <string name="snygg__property_value__material_you_light_color">Material You (Chiaro)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You (Scuro)</string>
     <string name="snygg__property_value__image_ref">Riferimento dell\'immagine</string>
     <string name="snygg__property_value__rectangle_shape">Forma rettangolare</string>
     <string name="snygg__property_value__circle_shape">Forma di cerchio</string>
@@ -201,16 +244,16 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suoni &amp; Vibrazione</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suoni</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Attiva feedback audio</string>
-    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Alcuna riproduzione del suono alla battitura, nonostante le impostazioni di sistema</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Nessuna riproduzione del suono alla battitura, indipendentemente dalle impostazioni di sistema</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume dei suoni di immissione</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Suoni pressione tasti</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Suoni pressione prolungata tasti</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Suoni azioni ripetute sui tasti</string>
-    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Suoni gesti di scorrimento</string>
-    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Suoni di swipe in movimento a gesti</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Suoni durante lo swipe</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Riproduci suono allo swipe</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Feedback aptico / vibrazione</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Abilita il feedback aptico</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Alcuna riproduzione della vibrazione alla battitura, nonostante le impostazioni di sistema</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Nessuna riproduzione della vibrazione alla battitura, indipendentemente dalle impostazioni di sistema</string>
     <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Modalità vibrazione</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durata della vibrazione</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Resistenza alle vibrazioni</string>
@@ -220,13 +263,13 @@
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrazione dei tasti</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrazione dei tasti premuti a lungo</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibrazione dell\'azione ripetuta del tasto</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibrazione del gesto swipe</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibrazione dello swipe in movimento del gesto</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibrazione allo swipe</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibrazione dello swipe</string>
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">Per esempio tasti, pulsanti, schede emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">Es. Menu ha comparsa</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">Ad esempio il tasto di cancellazione</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">Non attuato</string>
-    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">Per esempio, il controllo del cursore che striscia</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">non implementato</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">esempio: controllo cursore</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastiera</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Barra numerica</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostra la riga dei numeri nella parte superiore della tastiera</string>
@@ -257,8 +300,11 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilita Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Disposizione</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Impostazioni specifiche della disposizione</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverti pulsanti di attivazione</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte i pulsanti di attivazione nella riga di azione</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Espandi/riduci automaticamente</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
@@ -336,9 +382,9 @@
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe giù</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe a sinistra</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe a destra</string>
-    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Swipe della barra di spazio in alto</string>
-    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Swipe a sinistra sulla barra spaziatrice</string>
-    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Swipe a destra sulla barra spaziatrice</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Swipe della barra verso l\'alto</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Swipe della barra verso sinistra</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Swipe della barra verso destra</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressione prolungata sulla barra di spazio</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe a sinistra sul tasto Elimina</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pressione prolungata del tasto Elimina</string>
@@ -353,6 +399,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Lingua delle impostazioni</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostra icona nel launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre abilitato su Android 10+ a causa delle restrizioni del sistema</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Modalità in incognito</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informazioni su</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app FlorisBoard</string>
@@ -487,6 +534,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Sovrappone gli attuali risultati di ortografia per il debug</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Mostra i limiti del tocco tasto</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Delinea i limiti della pressione del tasto in rosso</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Mostra gli helper per il drag&amp;drop</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Renderizza gli helper altrimenti invisibili nelle schermate di drag&amp;drop per il debug</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Cancella il dizionario utente interno</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Cancella tutte le parole dal dizionario</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset impostazione \"{flag_name}\"</string>
@@ -502,6 +551,7 @@
     <string name="ext__meta__authors">Autori</string>
     <string name="ext__meta__components">Componenti integrati</string>
     <string name="ext__meta__components_theme">Temi integrati</string>
+    <string name="ext__meta__components_language_pack">Pacchetti linguistici in dotazione</string>
     <string name="ext__meta__components_none_found">Questo archivio di estensione non contiene alcun componente integrato.</string>
     <string name="ext__meta__description">Descrizione</string>
     <string name="ext__meta__homepage">Pagina iniziale</string>
@@ -541,6 +591,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importa estensione</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importa estensione della tastiera</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importa estensione del tema</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importazio estensione del pacchetto linguistico</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Il file non può essere importato. Ragione:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">File non supportato o riconosciuto.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Impossibile sostituire o aggiornare i pacchetti di estensione predefiniti forniti con le risorse principali dell\'app. Considera l\'aggiornamento dell\'app se intendi utilizzare una versione più recente di un pacchetto di estensione principale.</string>
@@ -625,6 +676,12 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Capelli ricci</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Capelli bianchi</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Calvo</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Candidati di sopra</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Posiziona la riga estesa d\'azioni tra l\'UI dell\'app e la riga di candidati</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Candidati di sotto</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Posiziona la riga estesa d\'azioni tra la riga candidata e la tastiera del testo</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Sovrapponi UI dell\'app</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Posiziona la riga estesa d\'azioni come sovrapposizione sopra l\'UI dell\'app, senza influire sull\'altezza dell\'UI della tastiera risultante. Tieni presente che questo posizionamento potrebbe causare la parziale sovrascrittura del campo d\'ingresso dell\'app</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Usa direttamente il vibratore</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} interagisce direttamente con il vibratore hardware predefinito. Ciò offre un maggiore controllo sulla durata e l\'intensità di una vibrazione, ma la vibrazione potrebbe non essere fluida e ottimizzata come utilizzando l\'interfaccia di feedback tattile</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Usa l\'interfaccia di feedback tattile</string>
@@ -635,10 +692,16 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo la pressione prolungata è l\'accento principale, o il suggerimento se non c\'è un accento principale</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritizzazione intelligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Il carattere iniziale selezionato dopo una pressione prolungata viene deciso dinamicamente tra l\'accento principale o il suggerimento, in base alla lingua e al layout selezionati</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Disattivazione forzata</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">La modalità incognita sarà sempre disabilitata, indipendentemente dalle opzioni passate dall\'app di destinazione. L\'azione rapita incognito della Smartbar non sarà disponibile con questa opzione.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Attivazione forzata</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">La modalità incognita sarà sempre abilitata, indipendentemente dalle opzioni passate dall\'app di destinazione. L\'azione rapita incognito della Smartbar non sarà disponibile con questa opzione.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Attivazione dinamica</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Opzione consigliata. La modalità in incognito sarà attivata o disattivata dinamicamente attraverso le opzioni passate dell\'applicazione di destinazione o attivandola manualmente attraverso l\'azione rapida incognito nella Smartbar.</string>
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Riproduzione dinamica del suono alla battitura, seguendo le impostazioni di sistema</string>
-    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Riproduzione forzata del suono alla battitura, nonostante le impostazioni di sistema</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Riproduzione forzata del suono alla battitura, indipendentemente dalle impostazioni di sistema</string>
     <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Riproduzione dinamica della vibrazione alla battitura, seguendo le impostazioni di sistema</string>
-    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Riproduzione forzata della vibrazione alla battitura, nonostante le impostazioni di sistema</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Riproduzione forzata della vibrazione alla battitura, indipendentemente dalle impostazioni di sistema</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Maiusc disattivato</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Maiusc attivato (manuale)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Maiusc attivato (automatico)</string>
@@ -653,6 +716,8 @@
     <string name="enum__shape_corner__top_end" comment="Enum value label">Fine parte superiore</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fine parte inferiore</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Inizio parte inferiore</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Solo suggerimenti</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Solo azioni</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Di base</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Solo le proprietà del colore sono mostrate, le proprietà e le regole sono tradotte.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Avanzate</string>
@@ -665,9 +730,9 @@
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passa alla modalità precedente</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passa alla modalità successiva</string>
     <string name="enum__swipe_action__delete_character" comment="Enum value label">Elimina il carattere prima del cursore</string>
-    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Cancella lettere con precisione</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Cancella carattere con maggiore precisione</string>
     <string name="enum__swipe_action__delete_word" comment="Enum value label">Cancella la parola prima del cursore</string>
-    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Cancella parole con precisione</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Cancella parole con maggiore precisione</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Nascondi tastiera</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Inserisci spazio</string>
     <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Muovi cursore sopra</string>
@@ -680,15 +745,15 @@
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Sposta il cursore alla fine della pagina</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Apri gestore/cronologia appunti</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Maiuscolo</string>
-    <string name="enum__swipe_action__redo" comment="Enum value label">Ripeti</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Ripristina</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Annulla</string>
-    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Seleziona lettere con precisione</string>
-    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Seleziona parole con precisione</string>
-    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Mostra il selettore del metodo di immissione</string>
-    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Passa alla tastiera precedente</string>
-    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Vai allo stile di input precedente</string>
-    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Vai allo stile di input successivo</string>
-    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Attiva/Disattiva visibilità della Smartbar</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Seleziona lettere con maggiore precisione</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Seleziona parole con maggiore precisione</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Mostra metodo di immissione</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Tastiera precedente</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Stile di input precedente</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Stile di input successivo</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Attiva/Disattiva Smartbar</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Sempre chiaro</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Sempre scuro</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Come da Sistema</string>

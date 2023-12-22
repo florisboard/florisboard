@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Flytt tastaturet til venstre.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Flytt tastaturet til høyre.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojier</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojier</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Emojihistorikk maksstørrelse</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Foretrukket emoji-hudfarge</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Foretrukket emoji-sveis</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smilefjes &amp; Emotikon</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Folk &amp; Kropp</string>
@@ -22,8 +26,60 @@
     <string name="emoji__category__objects" comment="Emoji category name">Gjenstander</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Ingen nylig brukte emojis funnet. Når du begynner å bruke emojis vil de dukke opp her.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tips: Press og hold nylig brukte emojier for å fjerne dem fra denne visningen!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Fjernet {emoji} fra nylig brukte emojier</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Pil opp</string>
+    <string name="quick_action__arrow_up__tooltip">Gjør pil opp</string>
+    <string name="quick_action__arrow_down" maxLength="12">Pil ned</string>
+    <string name="quick_action__arrow_down__tooltip">Gjør pil ned</string>
+    <string name="quick_action__arrow_left" maxLength="12">Venstrepil</string>
+    <string name="quick_action__arrow_left__tooltip">Gjør venstrepil</string>
+    <string name="quick_action__arrow_right" maxLength="12">Høgrepil</string>
+    <string name="quick_action__arrow_right__tooltip">Gjør høgrepil</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Fjern klipp</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Slett primærklipp fra utklippstavle</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopier</string>
+    <string name="quick_action__clipboard_copy__tooltip">Gjør utklippstavlekopiering</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Klipp ut</string>
+    <string name="quick_action__clipboard_cut__tooltip">Gjør utklippstavleutklipp</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Lim inn</string>
+    <string name="quick_action__clipboard_paste__tooltip">Gjør utklippstavleinnliming</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Merk alt</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Gjør utklippstavleallmerking</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Utklipp</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Åpne utklippstavlehistorikk</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Åpne emojipanel</string>
+    <string name="quick_action__settings" maxLength="12">Valg</string>
+    <string name="quick_action__settings__tooltip">Åpne innstillinger</string>
+    <string name="quick_action__undo" maxLength="12">Angre</string>
+    <string name="quick_action__undo__tooltip">Angre siste fôring</string>
+    <string name="quick_action__redo" maxLength="12">Gjør om</string>
+    <string name="quick_action__redo__tooltip">Gjør om siste fôring</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Flere handl.</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Vis eller gjøm tilleggsgjerninger</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Privat modus</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Skru av/på privat modus</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Autoretting</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Skru av/på autoretting</string>
+    <string name="quick_action__voice_input" maxLength="12">Talefôring</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Åpne taleinndataleverandør</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Eihåndsmodus</string>
+    <string name="quick_action__one_handed_mode__tooltip">Skru av/på eihåndsmodus</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Dra-markør</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Dra-markørens posisjon</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen operasjon</string>
+    <string name="quick_actions_overflow__customize_actions_button">Omordne gjerninger</string>
+    <string name="quick_actions_editor__header">Endre gjerningsrekkefølgen</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Festet handling ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamiske handlinger ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Skjulte gjerninger ({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Privat modus er nå slått på\n\n{app_name} kan ikke lære nye ord ifra skrivinga di imens denne modusen er påslått</string>
+    <string name="incognito_mode__toast_after_disabled">Inkognitomodus er nå deaktivert som standard</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Innstillinger</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prøv oppsettet ditt</string>
@@ -33,10 +89,16 @@
     <string name="settings__home__title" comment="Title of the Home screen">Velkommen til {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke aktivert i systemet og vil derfor ikke være tilgjengelig som inndatametode i inndatavelgeren. Klikk her for å løse dette problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inndatametode. Klikk her for å løse dette problemet.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Mål &amp; Oppsett</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Vis målnavn på</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Undertyper</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Legg til undertype</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Administrere installerte språkpakker</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Eksperimentelt: administrere utvidelser som legger til støtte for spesifikke språk (formbasert kinesisk inndata foreløpig)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Rediger undertype</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primærspråk</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tegnoppsett</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">Forslagsmotor</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primært symboloppsett</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundært symboloppsett</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Komponist</string>
@@ -47,9 +109,17 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primært telefonoppsett</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundært telefonoppsett</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Velg språk</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Søk etter et mål</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Fant ikke et mål som samsvarte med \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; velg &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Tilrådde undertype-førehandsinnstillinger</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Ingen tilrådde førehandsinnstillinger tilgjengelige. Bruk knappen under for å vise alle undertype-førehandsinnstillinger.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Undertype-førehandsinnstillinger</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Vis alle</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det ser ut til at du ikke har konfigurert noen undertyper. Som en reserve vil undertypen engelsk/QWERTY bli brukt!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Denne undertypen finnes allerede!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Minst ett felt har ikke en valgt verdi. Vennligst velg en verdi for feltet/felta.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ikke installert)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tegnoppsett</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
@@ -64,6 +134,68 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Ressurser</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern Lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ekstern Leverandør</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Velg dagtema</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Velg nattema</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Handsam innlagte tema</string>
+    <string name="settings__theme_editor__fine_tune__title">Finpussingsredigerer</string>
+    <string name="settings__theme_editor__fine_tune__level">Endrer nivå</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Vis farger som</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Vis tastatur etter merknader</string>
+    <string name="settings__theme_editor__add_rule">Legg til rettesnor</string>
+    <string name="settings__theme_editor__edit_rule">Endre rettesnor</string>
+    <string name="settings__theme_editor__no_rules_defined">Dette stilarket har ingen definerte rettesnorer. Legg til ei rettesnor for å starte med å endre på stilarket.</string>
+    <string name="settings__theme_editor__rule_already_exists">Denne stilarkrettesnora er alt definert.</string>
+    <string name="settings__theme_editor__rule_element">Målelement</string>
+    <string name="settings__theme_editor__rule_groups">Grupper</string>
+    <string name="settings__theme_editor__add_code">Legg til tastekode</string>
+    <string name="settings__theme_editor__edit_code">Rediger tastekode</string>
+    <string name="settings__theme_editor__no_codes_defined">Bruk regelen på alle målelementer.</string>
+    <string name="settings__theme_editor__codes_defined">Bruk kun regelen på målelementer med følgende tastekoder:</string>
+    <string name="settings__theme_editor__code_already_exists">Denne tastekoden er allerede definert.</string>
+    <string name="settings__theme_editor__code_invalid">Denne tastekoden er ugyldig. Sjekk at verdien er minst {c_min} og maks {c_max} for tegn eller minst {i_min} og maks {i_max} for interne spesialtaster.</string>
+    <string name="settings__theme_editor__code_help_text">Alternativt vil de følgende lenkene hjelp deg å finne den tilsvarende tastekoden:</string>
+    <string name="settings__theme_editor__code_placeholder">Kode</string>
+    <string name="settings__theme_editor__code_recording_help_text">For å finne koden til en bestemt tast, bruk knappen ved siden av inndatafeltet. Når den er aktivert, registrerer den neste tastetrykk og setter inn koden i feltet.</string>
+    <string name="settings__theme_editor__code_recording_started">Innspilling av tastekode startet</string>
+    <string name="settings__theme_editor__code_recording_stopped">Innspilling av tastekode stoppet</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} må være standardtastatur for å spille inn en tastekode</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Spiller inn…</string>
+    <string name="settings__theme_editor__add_property">Legg til egenskap</string>
+    <string name="settings__theme_editor__edit_property">Rediger egenskap</string>
+    <string name="settings__theme_editor__property_already_exists">En egenskap med dette navnet eksisterer allerede innenfor den nåværende regelen.</string>
+    <string name="settings__theme_editor__property_name">Egenskapsnavn</string>
+    <string name="settings__theme_editor__property_value">Egenskapsverdi</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Rediger fargestreng</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Er kantløs(t)</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Stilark-sti</string>
+    <string name="snygg__rule_element__defines">Variabler</string>
+    <string name="snygg__rule_element__defines_description">Definer variabler innenfor denne regelen for å gjenbruke vanlige farger eller størrelser i ditt stilark.</string>
+    <string name="snygg__rule_element__keyboard">Tastaturvindu</string>
+    <string name="snygg__rule_element__key">Tast</string>
+    <string name="snygg__rule_element__emoji_key">Emojitast</string>
+    <string name="snygg__rule_element__emoji_key_popup">Emojitast-popup</string>
+    <string name="snygg__rule_element__glide_trail">Sveipespor</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Indikator for inkognitomodus</string>
+    <string name="snygg__rule_element__one_handed_panel">Enhånds-panel</string>
+    <string name="snygg__rule_element__smartbar">Gløggfelt</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Gløggfelt delt gjerningerrekke</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Gløggfelt delte gjerninger av/på-knapp</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Gløggfelt utvida gjerningerrekke</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Gløggfelt utvida gjerninger av/på-knapp</string>
+    <string name="snygg__rule_element__smartbar_action_key">Gløggfelt gjerningsknapp</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Gløggfelt gjerningsfelt</string>
+    <string name="snygg__rule_selector__focus">Fokusert</string>
+    <string name="snygg__rule_selector__disabled">Deaktivert</string>
+    <string name="snygg__property_name__width">Bredde</string>
+    <string name="snygg__property_name__height">Høyde</string>
+    <string name="snygg__property_name__background">Bakgrunn</string>
+    <string name="snygg__property_name__foreground">Forgrunn</string>
+    <string name="snygg__property_name__border_color">Kantfarge</string>
+    <string name="snygg__property_name__border_style">Kantstil</string>
+    <string name="snygg__property_name__border_width">Kantbredde</string>
+    <string name="snygg__property_name__font_family">Fontfamilie</string>
+    <string name="snygg__property_name__font_size">Fontstørrelse</string>
+    <string name="snygg__property_name__font_style">Fontstil</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Lyder &amp; Vibrasjon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Lydtilbakemelding / Lyder</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktiver lydtilbakemelding</string>
@@ -137,11 +269,18 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i den interne brukerordlisten</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Intern Brukerordliste</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System Brukerordliste</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvens: {freq} | Snarvei: {shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle språk</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Åpne systemadministrasjonsgrensesnitt</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Import av brukerordliste vellykket!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Eksport av brukerordliste vellykket!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Legg til ord</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Rediger ord</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Vennligst angi et ord</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Vennligst angi et ord som samsvarer med {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvens (mellom {f_min} og {f_max})</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Snarvei (valgfritt)</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Språkkode (valgfritt)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Denne språkkoden samsvarer ikke med den forventede syntaksen. Koden må enten være bare et språk (som no), et språk og et land (som nb_NO) eller et språk, land og skript (som nb_NO-script).</string>
@@ -176,6 +315,7 @@
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Innstillingsspråk</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Vis app-ikon i programmeny</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognitomodus</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard\'s app ikon</string>
@@ -211,8 +351,11 @@
     <string name="setup__select_ime__switch_keyboard_btn">Bytt Tastatur</string>
     <string name="setup__finish_up__title">Gjøre ferdig</string>
     <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>
+    <string name="setup__finish_up__description_p2">Dersom du støter på problemer, feil, krasj eller ønsker å komme med forslag, sjekk ut prosjektlageret fra Om-skjermen!</string>
     <string name="setup__finish_up__finish_btn">Begynn å Tilpasse</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__back_up__destination_file_sys">Lokalt filsystem</string>
+    <string name="backup_and_restore__restore__title">Gjenopprett data</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard feilmeldingsrapporter</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Beklager ulempen, men FlorisBoard har krasjet på grunn av en uventet feil.</string>
@@ -237,6 +380,7 @@
     <string name="clipboard__locked__title">Utklippstavlen din er låst</string>
     <string name="clipboard__group_pinned">Festet</string>
     <string name="clipboard__group_other">Annet</string>
+    <string name="clipboard__item_description_phone">Telefon</string>
     <string name="clip__clear_history">Slett loggen</string>
     <string name="clip__unpin_item">Løsne element</string>
     <string name="clip__pin_item">Fest element</string>
@@ -244,6 +388,7 @@
     <string name="clip__paste_item">Lim inn</string>
     <string name="clip__back_to_text_input">Tilbake til tekstinput</string>
     <string name="clip__cant_paste">Denne appen tillater ikke innliming av dette innholdet.</string>
+    <string name="clipboard__confirm_clear_history__message">Er du sikker på at du vil tømme utklippstavlehistorikken?</string>
     <string name="settings__clipboard__title">Utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Bruk intern utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Bruk en intern utklippstavle i steden for systemutklippstavlen</string>
@@ -253,6 +398,7 @@
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris-utklippstavlen oppdaterer også systemutklippstavlen</string>
     <string name="pref__clipboard__group_clipboard_history__label">Utklippstavle-historie</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Skru på utklippstavle-historie</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Behold utklippstavleobjekter for rask tilgang</string>
     <string name="pref__clipboard__clean_up_old__label">Rydd opp gamle elementer</string>
     <string name="pref__clipboard__clean_up_after__label">Rydd opp gamle elementer i etterkant</string>
     <string name="pref__clipboard__limit_history_size__label">Begrens historiestørrelse</string>
@@ -285,7 +431,39 @@
     <string name="ext__meta__version">Versjon</string>
     <string name="ext__error__not_found_title">Kunne ikke finne utvidelsen</string>
     <string name="ext__error__not_found_description">Kunne ikke finne en utvidelse med ID \"{id}\".</string>
+    <string name="ext__editor__title_create_any">Opprett utvidelse</string>
+    <string name="ext__editor__title_create_keyboard">Opprett tastaturutvidelse</string>
+    <string name="ext__editor__title_create_theme">Opprett temautvidelse</string>
+    <string name="ext__editor__title_edit_any">Rediger utvidelse</string>
+    <string name="ext__editor__title_edit_keyboard">Rediger tastaturutvidelse</string>
+    <string name="ext__editor__title_edit_theme">Rediger temautvidelse</string>
+    <string name="ext__editor__metadata__title">Behandle metadata</string>
+    <string name="ext__editor__metadata__title_invalid">Ugyldig metadata</string>
+    <string name="ext__editor__create_component__from_empty_warning">Opprettelse og konfigurering av tomme komponenter kan være vanskelig om du er ny til {app_name} eller ikke kjenner til detaljene. Dersom dette er tilfellet bør du vurdere å kopiere en eksisterende komponent og modifisere denne.</string>
+    <string name="ext__export__failure">Eksport av utvidelse feilet: {error_message}</string>
+    <string name="ext__import__failure">Import av utvidelse feilet: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importer utvidelse</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importer tastaturutvidelse</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importer temautvidelse</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importer språkpakkeutvidelse</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Filen kan ikke importeres. Årsak:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Mangler støtte for eller kjennskap til filtypen.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Kan ikke erstatte eller oppdatere standardutvidelsespakker som følger med appens kjerneressurser. Vurder å oppdatere selve appen dersom du vil bruke en nyere versjon av en kjerneutvidelsespakke.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">Filen er tilsynelatende et utvidelsesarkiv, men innlesing av arkivdata feilet. Arkivet er enten skadet eller ikke en utvidelse.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Forventet et utvidelsesarkiv av serietype \"{expected_serial_type}\" men var \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Forventet en mediafil (bilde, lyd, font, osv.) men fant et utvidelsesarkiv.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Forventet et utvidelsesarkiv men fant en mediafil (bilde, lyd, font, osv.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">En uventet feil oppstod under import. Følgende detaljer ble oppgitt:</string>
     <!-- Action strings -->
+    <string name="action__cancel">Avbryt</string>
+    <string name="action__create">Opprett</string>
+    <string name="action__default">Standard</string>
+    <string name="action__delete">Slett</string>
+    <string name="action__delete_confirm_title">Bekreft sletting</string>
+    <string name="action__delete_confirm_message">Er du sikker på at du vil slette \"{name}\"? Denne handlingen kan ikke angres.</string>
+    <string name="action__discard">Forkast</string>
+    <string name="action__discard_confirm_title">Ulagrede endringer</string>
+    <string name="action__discard_confirm_message">Er du sikker på at du vil forkaste endringer som ikke er lagret? Denne handlingen kan ikke angres.</string>
     <!-- Error strings (generic) -->
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">Ingen nettleser-app unnet for håndtering av URL {url}</string>
@@ -298,24 +476,46 @@
     <string name="state__disabled">Deaktivert</string>
     <string name="state__enabled">Aktivert</string>
     <!-- Enum label and description strings -->
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Heksadesimal</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Rød Grønn Blå Alfa</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Standard hudfarge</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Lys hudfarge</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Medium lys hudfarge</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Medium hudfarge</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Medium mørk hudfarge</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Mørk hudfarge</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Rødt hår</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Krøllete hår</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Hvitt hår</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Skallet</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Aksent er prioritisert</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Det første tegnet som velges etter langt trykk er alltid den primære aksenten, eller tipssymbolet hvis ingen primær aksent er tilgjengelig</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint er prioritisert</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Det første tegnet som velges etter langt trykk er alltid tipssymbolet eller den primære aksenten hvis det ikke finnes noe tipssymbol</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritisering</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Det første tegnet valgt etter et langt trykk bestemmes dynamisk for å være enten den primære aksenten eller tipssymbolet, basert på gjeldende språk og oppsett</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Tving av</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Privat modus vil alltid være avslått, uansett målappens innstillinger. Gjør òg så privat kvikkgjerning i Gløggfeltet vil være utilgjengelig.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Tving på</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Privat modus vil alltid være påslått, uansett målappens innstillinger. Gjør òg så privat kvikkgjerning i Gløggfeltet vil være utilgjengelig.</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis alltid</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisk visning</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Bare råd</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Bare gjerninger</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Enkel</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Avansert</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Utvikler</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Bruk systemspråk</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Bruk tastatur-undertyper</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Ingen handling</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ruller til forrige tastatur-modus</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ruller til neste tastatur-modus</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Slett tegn nøyaktig</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Slett ord foran markøren</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Slett ord nøyaktig</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Skjul tastatur</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Sett inn mellomrom</string>

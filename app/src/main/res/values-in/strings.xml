@@ -3,32 +3,32 @@
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Jeda</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Tunggu</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Tombol tiga titik. Jika terlihat, menandakan bahwa lebih banyak huruf dapat digunakan jika ditekan lama.</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikon titik tiga. Jika terlihat, menandakan bahwa lebih banyak huruf dapat digunakan jika ditekan lama.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tutup mode satu-tangan.</string>
-    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan papan ketik ke kiri.</string>
-    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan papan ketik ke kanan.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tutup mode satu tangan.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan keyboard ke kiri.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan keyboard ke kanan.</string>
     <!-- Media strings -->
-    <string name="settings__media__title">Emoticon</string>
+    <string name="settings__media__title">Emoji</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Ukuran maksimum riwayat emoji</string>
-    <string name="prefs__media__emoji_preferred_skin_tone">Warna kulit emoji yang diinginkan</string>
-    <string name="prefs__media__emoji_preferred_hair_style">Gaya rambut emoji yang diinginkan</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Ukuran maksimum histori emoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Warna kulit emoji yang disukai</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Gaya rambut emoji yang disukai</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Senyuman &amp; Perasaan</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smiley &amp; Emotikon</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Orang &amp; Badan</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Hewan &amp; Alam</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Makanan &amp; Minuman</string>
     <string name="emoji__category__travel_places" comment="Emoji category name">Perjalanan &amp; Tempat</string>
     <string name="emoji__category__activities" comment="Emoji category name">Aktivitas</string>
-    <string name="emoji__category__objects" comment="Emoji category name">Obyek</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Objek</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simbol</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bendera</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Tidak ada emoji terkini yang ditemukan. Ketika Anda mulai mengetik emoji mereka akan muncul secara otomatis di sini.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Tekan lama emoji terkini untuk menghapusnya dari tampilan ini!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} terhapus dari emoji terkini</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Tidak ditemukan emoji yang digunakan baru-baru ini. Setelah Anda mulai mengetikkan emoji, mereka akan muncul di sini secara otomatis.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Tekan lama emoji yang terakhir digunakan untuk menghapusnya dari tampilan ini!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Menghapus {emoji} dari emoji terakhir yang digunakan</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Panah atas</string>
     <string name="quick_action__arrow_up__tooltip">Lakukan panah atas</string>
@@ -52,8 +52,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Buka riwayat papan klip</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Buka panel emoji</string>
-    <string name="quick_action__settings" maxLength="12">Pengaturan</string>
-    <string name="quick_action__settings__tooltip">Buka pengaturan</string>
+    <string name="quick_action__settings" maxLength="12">Setelan</string>
+    <string name="quick_action__settings__tooltip">Buka setelan</string>
     <string name="quick_action__undo" maxLength="12">Urungkan</string>
     <string name="quick_action__undo__tooltip">Urungkan masukan terakhir</string>
     <string name="quick_action__redo" maxLength="12">Ulangi</string>
@@ -81,7 +81,7 @@
     <string name="incognito_mode__toast_after_enabled">Mode samaran diaktifkan\n\n{app_name} tidak akan mempelajari kata-kata dari masukan Anda ketika mode ini aktif</string>
     <string name="incognito_mode__toast_after_disabled">Mode samaran dinonaktifkan secara bawaan</string>
     <!-- Settings UI strings -->
-    <string name="settings__title" comment="Title of Settings">Pengaturan</string>
+    <string name="settings__title" comment="Title of Settings">Setelan</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Coba pengaturan Anda</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Bantuan</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
@@ -94,10 +94,13 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Tampilkan nama-nama bahasa di</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipe</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Atur paket bahasa yang terinstal</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Eksperimental: kelola ekstensi yang menambahkan dukungan untuk bahasa tertentu (input Tionghoa berbasis bentuk untuk saat ini)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtipe</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Bahasa utama</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Pemetaan munculan</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tata letak karakter</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">Mesin saran</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Tata letak utama simbol</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Tata letak sekunder simbol</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Penyusun</string>
@@ -563,6 +566,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__meta__authors">Pembuat</string>
     <string name="ext__meta__components">Komponen yang dibundel</string>
     <string name="ext__meta__components_theme">Tema terbundel</string>
+    <string name="ext__meta__components_language_pack">Kumpulan paket bahasa</string>
     <string name="ext__meta__components_none_found">Arsip ekstensi ini tidak berisi komponen apa pun yang dibundel.</string>
     <string name="ext__meta__description">Deskripsi</string>
     <string name="ext__meta__homepage">Beranda</string>
@@ -602,6 +606,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Impor ekstensi</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Impor ekstensi papan ketik</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Impor ekstensi tema</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Impor ekstensi paket bahasa</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">File tidak dapat diimpor. Alasan:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipe file tidak didukung atau tidak diketahui.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Tidak dapat menggantikan atau memperbarui paket-paket ekstensi bawaan yang disediakan dengan aset inti aplikasi. Pertimbangkan untuk memperbarui aplikasinya sendiri jika Anda ingin memakai paket ekstensi inti dengan versi yang baru.</string>

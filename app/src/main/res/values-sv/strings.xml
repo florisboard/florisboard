@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vänta</string>
     <!-- One-handed strings -->
@@ -21,6 +22,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggor</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Pil upp</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Inställningar</string>

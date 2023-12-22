@@ -30,6 +30,19 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica profissional: pressione e segure os emojis usados ​​recentemente para removê-los desta visualização novamente!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Removido dos emojis usados ​​recentemente</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Cima</string>
+    <string name="quick_action__arrow_up__tooltip">Execute a seta para cima</string>
+    <string name="quick_action__arrow_down" maxLength="12">Baixo</string>
+    <string name="quick_action__arrow_down__tooltip">Execute a seta para baixo</string>
+    <string name="quick_action__clipboard_cut__tooltip">Execute o corte da área de transferência</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Colar</string>
+    <string name="quick_action__clipboard_paste__tooltip">Executar colagem da área de transferência</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Executar seleção de tudo da área de transferência</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Painel de emojis</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Mostrar ou ocultar ações adicionais</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Alternar correção automática</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Abrir provedor de entrada de voz</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastar</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Configurações</string>

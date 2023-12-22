@@ -93,10 +93,13 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">语言名称的显示语言</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">键盘子类型</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">添加键盘子类型</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">管理已安装的语言包</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">试验功能：管理用来添加对特定语言的支持的扩展（目前用于中文形码输入）</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">编辑键盘子类型</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要语言</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">弹出键映射表</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">字符布局</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">建议引擎</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">符号主要布局</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">符号次要布局</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">输入框</string>
@@ -195,6 +198,7 @@
     <string name="snygg__rule_element__smartbar_extended_actions_row">智能栏扩展操作行</string>
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">智能栏扩展操作开关按钮</string>
     <string name="snygg__rule_element__smartbar_action_key">智能栏操作键</string>
+    <string name="snygg__rule_element__smartbar_action_tile">智能栏操作方块</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">智能栏更多操作</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">智能栏更多操作自定义按钮</string>
     <string name="snygg__rule_element__smartbar_actions_editor">智能栏操作编辑器</string>
@@ -238,6 +242,8 @@
     <string name="snygg__property_name__var_shape_variant">通用形状（变体）</string>
     <string name="snygg__property_value__explicit_inherit">继承</string>
     <string name="snygg__property_value__solid_color">纯色</string>
+    <string name="snygg__property_value__material_you_light_color">Material You 颜色（浅）</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You 颜色（深）</string>
     <string name="snygg__property_value__image_ref">参考图片</string>
     <string name="snygg__property_value__rectangle_shape">矩形形状</string>
     <string name="snygg__property_value__circle_shape">圆形形状</string>
@@ -561,6 +567,7 @@
     <string name="ext__meta__authors">作者</string>
     <string name="ext__meta__components">捆绑组件</string>
     <string name="ext__meta__components_theme">捆绑主题</string>
+    <string name="ext__meta__components_language_pack">捆绑语言包</string>
     <string name="ext__meta__components_none_found">此扩展档案不包含任何捆绑的组件。</string>
     <string name="ext__meta__description">描述</string>
     <string name="ext__meta__homepage">主页</string>
@@ -600,6 +607,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">导入扩展</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">导入键盘扩展</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">导入主题扩展</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">导入语言包扩展</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">无法导入文件。原因：</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">不支持或无法识别的文件类型。</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">无法替换或更新随应用核心资源提供的默认扩展包。如果您打算使用更新版本的核心扩展包，请考虑更新应用本身。</string>

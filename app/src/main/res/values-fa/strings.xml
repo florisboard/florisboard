@@ -30,6 +30,34 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">توصیه کاربردی: روی ایموجی های استفاده شده نگهدارید تا آن ها را از اینجا حذف کنید!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ایموجی {emoji} از ایموجی های اخیرا استفاده شده حذف شد</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">فلش بالا</string>
+    <string name="quick_action__arrow_up__tooltip">فلش به سمت بالا</string>
+    <string name="quick_action__arrow_down" maxLength="12">فلش پایین</string>
+    <string name="quick_action__arrow_down__tooltip">فلش به سمت پایین</string>
+    <string name="quick_action__arrow_left" maxLength="12">فلش چپ</string>
+    <string name="quick_action__arrow_left__tooltip">فلش به سمت چپ</string>
+    <string name="quick_action__arrow_right" maxLength="12">فلش راست</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">جابه جایی</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">برش</string>
+    <string name="quick_action__clipboard_cut__tooltip">برش کلیپ بورد را انجام دهید</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">جای گذاری</string>
+    <string name="quick_action__clipboard_paste__tooltip">چسباندن کلیپ بورد را انجام دهید</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">انتخاب همه</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">کلیپ‌بورد</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">باز کردن تاریخچه کلیپ بورد</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">شکلک</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">باز کردن پنل شکلک ها</string>
+    <string name="quick_action__settings" maxLength="12">تنظیمات</string>
+    <string name="quick_action__settings__tooltip">باز کردن تنظیمات</string>
+    <string name="quick_action__undo" maxLength="12">بازگرد</string>
+    <string name="quick_action__redo" maxLength="12">انجام مجدد</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">ناشناس</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">غیر فعال کردن حالت ناشناس</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">تصحیح خودکار</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">غیر فعال کردن تصحیح خودکار</string>
+    <string name="quick_action__voice_input" maxLength="12">ورودی صدا</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">یک دستی</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ کدام</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
@@ -44,6 +72,7 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">نام زبان ها را به این صورت نمایش بده</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">زیرنوع ها</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">افزودن زیر-نوعی</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">مدیریت پک های نصب شده زبان</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">زبان اصلی</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">چینش پاپ آپ ها</string>
@@ -120,7 +149,9 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">پس زمینه شب</string>
     <string name="snygg__rule_element__defines">متغیرها</string>
     <string name="snygg__rule_element__key">کلید</string>
+    <string name="snygg__rule_element__key_hint">راهنما دکمه</string>
     <string name="snygg__rule_element__key_popup">کلید خود بازشونده</string>
+    <string name="snygg__rule_element__clipboard_item">وسیله کلیپ بورد</string>
     <string name="snygg__rule_element__emoji_key">کلید ایموجی</string>
     <string name="snygg__property_name__font_size">اندازه نوشته</string>
     <string name="snygg__property_name__font_style">شکل نوشته</string>

@@ -29,6 +29,17 @@
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">최근에 사용한 이모지가 없습니다. 이모지를 입력하기 시작하면 여기에 자동으로 표시됩니다.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji}가 최근 사용 기록에서 삭제되었습니다</string>
     <!-- Quick action strings -->
+    <string name="quick_action__clipboard_copy" maxLength="12">복사</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">붙여넣기</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">모두 선택</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">클립보드</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">이모지</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">이모지 패널 열기</string>
+    <string name="quick_action__settings" maxLength="12">설정</string>
+    <string name="quick_action__settings__tooltip">설정 열기</string>
+    <string name="quick_action__undo" maxLength="12">실행 취소</string>
+    <string name="quick_action__redo" maxLength="12">다시 실행</string>
+    <string name="quick_action__voice_input" maxLength="12">음성 입력</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">설정</string>
@@ -47,6 +58,7 @@
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">언어 검색하기</string>
     <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">\"{search_term}\"과 일치하는 언어를 찾지 못했습니다.</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">모두 보기</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">레이아웃</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">테마</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">테마 모드</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">일출 시간</string>
@@ -58,6 +70,8 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">밝은 테마 선택</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">어두운 테마 선택</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">설치된 테마 관리</string>
+    <string name="settings__theme_editor__add_rule">규칙 추가</string>
+    <string name="settings__theme_editor__edit_rule">규칙 편집</string>
     <string name="settings__theme_editor__rule_groups">그룹</string>
     <string name="snygg__property_name__width">너비</string>
     <string name="snygg__property_name__height">높이</string>
@@ -65,22 +79,65 @@
     <string name="snygg__property_name__border_color">테두리 색</string>
     <string name="snygg__property_name__border_style">테두리 스타일</string>
     <string name="snygg__property_name__border_width">테두리 두께</string>
+    <string name="snygg__property_name__font_style">글꼴 스타일</string>
     <string name="snygg__property_value__dp_size">크기 (dp)</string>
     <string name="snygg__property_value__sp_size">크기 (sp)</string>
     <string name="snygg__property_value__percentage_size">크기 (%)</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">진동 지속 시간</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">진동 세기</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">키보드</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">레이아웃</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한 손 조작 모드</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한 손 조작 모드 키보드 너비</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">키보드 높이</string>
     <!-- Smartbar strings -->
+    <string name="pref__smartbar__layout__label" comment="Preference title">레이아웃</string>
     <!-- Typing strings -->
+    <string name="pref__suggestion__title" comment="Preference group title">제안</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">자동 대문자화</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">언어</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">사용자 사전</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">시스템 사용자 사전</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">단어 추가</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">단어 편집</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">단어</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">고급</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">설정 테마</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">시스템 기본값 (AMOLED)</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">밝은 테마</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">어두운 테마</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">검정 테마</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">설정 언어</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">런처에 앱 아이콘 표시</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">정보</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 앱 아이콘</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">오픈 소스 라이선스</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">개인 정보 보호 정책</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">소스 코드</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">오픈 소스 라이선스</string>
     <string name="about__version__title" comment="Preference title">버전</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">앱 버전을 클립보드에 복사했습니다.</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">오류가 발생했습니다: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">변경 내역</string>
+    <string name="about__changelog__summary" comment="Preference summary">새로운 기능</string>
+    <string name="about__repository__title" comment="Preference title">저장소 (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">소스 코드, 토론, 문제 신고 및 정보</string>
+    <string name="about__privacy_policy__title" comment="Preference title">개인 정보 보호 정책</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">이 프로젝트의 개인 정보 보호 정책</string>
+    <string name="about__project_license__title" comment="Preference title">프로젝트 라이선스</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard는 {license_name} 라이선스를 따르고 있습니다.</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">오류: 라이선스 텍스트를 불러오지 못했습니다.\n-&gt; 사유: {error_message}</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">서드 파티 라이선스</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">이 앱에 사용한 서드 파티 라이브러리의 라이선스</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">환영합니다!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name}를 사용해 주셔서 고맙습니다! 빠른 설정 가이드를 따라 {app_name}를 이 기기에서 사용하기 위해 필요한 절차를 완료해 보세요.</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">개인 정보 보호 정책</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">저장소</string>
+    <string name="setup__enable_ime__title">{app_name} 활성화</string>
+    <string name="setup__enable_ime__open_settings_btn">시스템 설정 열기</string>
+    <string name="setup__select_ime__title">{app_name} 선택</string>
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Posar</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Espera</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">L\'iconu de tres puntos. Si apaez, indica que se puen usar más lletres al tener primío.</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Zarrar mou a dos manes.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Muevi\'l tecláu a la esquierda.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Muevi\'l tecláu a la derecha.</string>
+    <!-- Media strings -->
+    <string name="settings__media__title">Fustaxes</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Fustaxes</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Fustaxes ASCII</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrises ya fustaxes</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Persones ya cuerpu</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animales ya natura</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Comida ya bébores</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viaxes ya llugares</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Actividaes</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Oxetos</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nun s\'atopó nengún fustaxe que s\'usare apocayá. Namás que comiences a usalos, apaecen equí.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseyu: ¡ten primíos los fustaxes usaos apocayá pa volver quitalos d\'esta seición!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Quitóse «{emoji}» de los fustaxes usaos apocayá</string>
+    <!-- Quick action strings -->
+    <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Apegar</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Cartafueyu</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir l\'historial de fustaxes</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Abrir el panel de fustaxes</string>
+    <string name="quick_action__settings" maxLength="12">Axustes</string>
+    <string name="quick_action__settings__tooltip">Abrir la configuración</string>
+    <string name="quick_action__undo" maxLength="12">Desfacer</string>
+    <string name="quick_action__redo" maxLength="12">Refacer</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Más aiciones</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Alternar el correutor automáticu</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Aiciones dinámiques ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Aiciones anubríes ({n})</string>
+    <!-- Incognito mode strings -->
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Configuración</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Ayuda</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Por defeutu</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Afáyate en {app_name}</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Llingües ya distribuciones</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Sotipos</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Llingua primaria</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapéu de los indicadores emerxentes</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Distribución de los caráuteres</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Distribución primaria de los símbolos</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Distribución secundaria de los símbolos</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositor</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Distribución numbérica</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Distribución numbérica (avanzada)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Distribución de la filera de los númberos</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Distribución primaria del tecláu telefónicu</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Distribución secundaria del tecláu telefónicu</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Distribuciones</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Estilu</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mou del estilu</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora del riscar</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora del aséu</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Estilu diurnu</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Estilu nocherniegu</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Estilu seleicionáu</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamientu internu</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Fornidor esternu</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Xestionar los estilos instalaos</string>
+    <string name="settings__theme_editor__no_rules_defined">Esta fueya d\'estilu nun tien nenguna regla definida. Amiesta una regla pa comenzar a personalizar la fueya d\'estilu.</string>
+    <string name="settings__theme_editor__rule_element">Elementu de destín</string>
+    <string name="settings__theme_editor__rule_groups">Grupos</string>
+    <string name="settings__theme_editor__rule_selectors">Selectores</string>
+    <string name="settings__theme_editor__no_codes_defined">Aplica la regla a tolos elementos de destín.</string>
+    <string name="snygg__rule_element__defines">Variables</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Distribución d\'entrada n\'horizontal</string>
+    <string name="snygg__rule_element__smartbar">Barra intelixente</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Alternador de les aiciones compartíes de la barra intelixente</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Alternador de les aiciones estendíes de la barra intelixente</string>
+    <string name="snygg__property_name__width">Llargor</string>
+    <string name="snygg__property_name__height">Altor</string>
+    <string name="snygg__property_name__shape">Forma</string>
+    <string name="snygg__property_name__var_primary">Color primariu</string>
+    <string name="snygg__property_name__var_secondary">Color secundariu</string>
+    <string name="snygg__property_value__rectangle_shape">Forma rectangular</string>
+    <string name="snygg__property_value__circle_shape">Forma circular</string>
+    <string name="snygg__property_value__percentage_size">Tamañu (%)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Soníos ya vibración</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Rempuesta auditiva / Soníos</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activar la rempuesta auditiva</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activar la rempuesta háptica</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Mou de la vibración</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de la vibración</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidá de la vibración</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tecláu</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Amuesa la filera de númberos enriba de la distribución de tecles</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Amosar la llingua na barra d\'espaciu</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Amuesa la llingua activa na barra d\'espaciu</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamañu de la fonte</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altor del tecláu</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pulsación de tecles</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidá de los indicadores emerxentes</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Amuesa un indicador emerxente cuando primes una tecla</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retrasu de la pulsación de tecles llonga</string>
+    <!-- Smartbar strings -->
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra intelixente</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Activar la barra intelixente</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Apaez enriba del tecláu</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Distribución</string>
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Escritura</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Suxerencies</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Amosar les suxerencies</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Forne suxerencies mentanto teclexes</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Mou de l\'apaición de les suxerencies</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloquiar les pallabres ofensives</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suxerencies del conteníu del cartafueyu</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suxer el conteníu del cartafueyu copiáu anteriormente</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Llendar les suxerencies del cartafueyu a</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">los elementos copiaos nos últimos {v} s</string>
+    <string name="pref__correction__title" comment="Preference group title">Correiciones</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúscules automátiques</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pon en mayúscula la primer lletra de les pallabres según el contestu de la entrada actual</string>
+    <string name="pref__spelling__title" comment="Preference group title">Ortografía</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Desactivóse en tol sistema. Nun apaez nenguna llinia colorada so les pallabres incorreutes. Toca equí pa camudar la configuración.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Llingües</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frecuencia: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frecuencia: {freq} | Atayu: {shortcut}</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Pallabra</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Introduz una pallabra</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Introduz una pallabra que concase con «{regex}»</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Introduz un númberu válidu que tea dientro de les llendes especificaes</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Introduz un atayu que concase con «{regex}»</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Xestos ya escritura eslizante</string>
+    <string name="pref__glide__title" comment="Preference group title">Escritura eslizante</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Activar la escritura eslizante</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Xestos en xeneral</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Xestos de la barra d\'espaciu</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Configuración avanzada</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Estilu de la configuración</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Llingua de la configuración</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Amosar l\'iconu l\'aplicación nel llanzador</string>
+    <!-- About UI strings -->
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Llicencies de códigu abiertu</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidá</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Códigu fonte</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicencies de códigu abiertu</string>
+    <string name="about__version__title" comment="Preference title">Versión</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">La versión copióse al cartafueyu</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Prodúxose daqué malo: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Rexistru de cambeos</string>
+    <string name="about__changelog__summary" comment="Preference summary">Les novedaes</string>
+    <string name="about__repository__title" comment="Preference title">Depósitu (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">El códigu fonte, los discutinios, los problemes ya más información</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Política de privacidá</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacidá d\'esti proyeutu</string>
+    <string name="about__project_license__title" comment="Preference title">Llicencia del proyeutu</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: la carga del testu de la llicencia falló.\n-&gt; Motivu: {error_message}</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Llicencies de terceros</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Les llicencies de les biblioteques de terceros que s\'inclúin nesta aplicación</string>
+    <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">¡Afáyate!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacidá</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Depósitu</string>
+    <string name="setup__enable_ime__title">Activación de {app_name}</string>
+    <string name="setup__enable_ime__description">Android rique que tolos teclaos personalizaos s\'activen per separtao enantes de poder usalos. Vete a la configuración de <i>Llingua ya entrada</i> p\'activar «{app_name}» ellí.</string>
+    <string name="setup__enable_ime__open_settings_btn">Abrir la configuración del sistema</string>
+    <string name="setup__select_ime__title">Seleición de {app_name}</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Cambiar de tecláu</string>
+    <string name="setup__finish_up__description_p1">{app_name} ta activáu nel sistema ya xá pues personalizalu.</string>
+    <string name="setup__finish_up__description_p2">Si atopes cualesquier problema, fallu, casque o namás quier facer dalguna suxerencia, revisa\'l depósitu del proyeutu na pantalla «Tocante a».</string>
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__back_up__destination_file_sys">Sistema de ficheros llocal</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Aplicación de terceros pel menú de compartición</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferencies</string>
+    <string name="backup_and_restore__restore__mode">Mou de la restauración</string>
+    <string name="backup_and_restore__restore__mode_merge">Mecer colos datos actuales</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Borrar ya sobrescribir los datos actuales</string>
+    <string name="backup_and_restore__restore__success">¡Los datos restauráronse correutamente!</string>
+    <string name="backup_and_restore__restore__failure">La restauración de los datos falló: {error_message}</string>
+    <!-- Crash Dialog strings -->
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zarrar</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard dexó de funcionar…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Paez que FlorisBoard dexa de funcionar de contino…</string>
+    <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Cartafueyu</string>
+    <string name="clipboard__disabled__message">L\'historial del cartafueyu de {app_name} permítete atroxar ya acceder aína al testu ya a les imáxenes que copies, cola capacidá de fixar elementos, configurar la llimpieza automática ya afitar un númberu máximu d\'elementos.</string>
+    <string name="clipboard__empty__title">El cartafueyu ta baleru</string>
+    <string name="clipboard__locked__title">El cartafueyu ta bloquiáu</string>
+    <string name="clipboard__locked__message">P\'acceder al historial del cartafueyu, desbloquia primero\'l preséu.</string>
+    <string name="clipboard__item_description_email">Corréu electrónicu</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clip__cant_paste">Esta aplicación nun permite apegar esti conteníu.</string>
+    <string name="settings__clipboard__title">Cartafueyu</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Usar el cartafueyu internu</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Usa un cartafueyu internu en cuentes del que tien sistema</string>
+    <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Ferramientes de desendolcu</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Ferramientes diseñaes específicamente pa depurar ya iguar problemes</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Amosar les llendes táctiles de les tecles</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Amosar los ayudantes de la función «drag&amp;drop»</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Una aición de depuración pa volver amosar la pantalla de configuración</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Probar la pantalla d\'informar casques</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Una aición de depuración pa producir un casque adré</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Ferramientes del sistema Android</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Configuración global d\'Android</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Configuración segura d\'Android</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Configuración del sistema Android</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Locales del sistema</string>
+    <!-- Extension strings -->
+    <string name="ext__meta__description">Descripción</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__keywords">Pallabres clave</string>
+    <string name="ext__meta__license">Llicencia</string>
+    <string name="ext__meta__maintainers_by">Por: {maintainers}</string>
+    <string name="ext__meta__version">Versión</string>
+    <string name="ext__error__not_found_description">Nun se pudo atopar nenguna estensión cola ID «{id}».</string>
+    <string name="ext__editor__title_create_any">Creación d\'una estensión</string>
+    <string name="ext__editor__metadata__title_invalid">Los metadatos nun son válidos</string>
+    <string name="ext__editor__metadata__message_invalid">Los metadatos d\'esta estensión nun son válidos. ¡Revisa l\'editor de metadatos pa consiguir más detalles!</string>
+    <string name="ext__editor__dependencies__title">Xestionar les dependencies</string>
+    <string name="ext__editor__create_component__title_theme">Creación d\'un estilu</string>
+    <string name="ext__export__failure">La esportación de la estensión falló: {error_message}</string>
+    <string name="ext__import__failure">La importación de la estensión falló: {error_message}</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">El ficheru nun se pue importar. Motivu:</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Prodúxose un error inesperáu demientres la importación. Forniéronse los detalles siguientes:</string>
+    <!-- Action strings -->
+    <string name="action__add">Amestar</string>
+    <string name="action__apply">Aplicar</string>
+    <string name="action__cancel">Encaboxar</string>
+    <string name="action__create">Crear</string>
+    <string name="action__default">Reafitar</string>
+    <string name="action__delete">Desaniciar</string>
+    <string name="action__discard">Escartar</string>
+    <string name="action__edit">Editar</string>
+    <string name="action__export">Esportar</string>
+    <string name="action__import">Importar</string>
+    <string name="action__no">Non</string>
+    <string name="action__ok">D\'acuerdu</string>
+    <string name="action__restore">Restaurar</string>
+    <string name="action__save">Guardar</string>
+    <string name="action__select_file">Seleicionar un ficheru</string>
+    <string name="action__yes">Sí</string>
+    <!-- Error strings (generic) -->
+    <string name="error__title">Error</string>
+    <string name="error__snackbar_message">Prodúxose daqué malo</string>
+    <string name="error__snackbar_message_template">Prodúxose daqué malo: {error_message}</string>
+    <!-- General strings -->
+    <string name="general__no_browser_app_found_for_url">Nun s\'atopó nengún restolador web pa remanar la URL «{url}»</string>
+    <!-- Screen orientation strings -->
+    <string name="screen_orientation__vertical">Vertical</string>
+    <string name="screen_orientation__horizontal">Horizontal</string>
+    <!-- State strings -->
+    <string name="state__no_dir_selected">Nun se seleicionó nengún direutoriu</string>
+    <string name="state__no_dirs_selected">Nun se seleicionó nengún direutoriu</string>
+    <string name="state__no_file_selected">Nun se seleicionó nengún ficheru</string>
+    <string name="state__no_files_selected">Nun se seleicionó nengún ficheru</string>
+    <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Llargor dinámicu</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Locale del sistema</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Locale nativa</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">Tonu de pelleyu predetermináu {emoji}</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">Tonu de pelleyu blanco {emoji}</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">Tonu de pelleyu mulato {emoji}</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">Tonu de pelleyu negro {emoji}</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">Pelo predeterminao {emoji}</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">Pelo rizoso {emoji}</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">Calvez {emoji}</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioridá intelixente</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Des/activación automática</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Apaición dinámica</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Configuración avanzada</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Refacer</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Desfacer</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Alternar la visibilidá de la barra intelixente</string>
+    <!-- Unit strings (symbols) -->
+    <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} hora</item>
+        <item quantity="other">{v} hores</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minutu</item>
+        <item quantity="other">{v} minutos</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} segundu</item>
+        <item quantity="other">{v} segundos</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} elementu</item>
+        <item quantity="other">{v} elementos</item>
+    </plurals>
+</resources>

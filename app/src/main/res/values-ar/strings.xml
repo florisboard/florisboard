@@ -93,10 +93,13 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">إضافة نوع فرعي</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">أدارة حزم اللغات المثبتة</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">تجريبي: إدارة الإضافات التي تضيف دعمًا للغات معينة (الإدخال الصيني المستند إلى الشكل في الوقت الحالي)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل النوع الفرعي</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة الأساسية</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">تخصيص المنبثقة</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">تخطيط المحارف</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">محرك الاقتراحات</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الاساسي</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الثانوي</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">المحرر</string>
@@ -239,6 +242,8 @@
     <string name="snygg__property_name__var_shape_variant">الشكل المشترك (متغير)</string>
     <string name="snygg__property_value__explicit_inherit">موروث</string>
     <string name="snygg__property_value__solid_color">لون كامل</string>
+    <string name="snygg__property_value__material_you_light_color">تصميم المواد الخاص بك (مضيء)</string>
+    <string name="snygg__property_value__material_you_dark_color">تصميم المواد الخاص بك (داكن)</string>
     <string name="snygg__property_value__image_ref">مرجع الصورة</string>
     <string name="snygg__property_value__rectangle_shape">شكل مستطيل</string>
     <string name="snygg__property_value__circle_shape">شكل الدائرة</string>
@@ -562,6 +567,7 @@
     <string name="ext__meta__authors">المؤلفون</string>
     <string name="ext__meta__components">العناصر المجمعة</string>
     <string name="ext__meta__components_theme">الثيمات المجمعة</string>
+    <string name="ext__meta__components_language_pack">حزم اللغات المضمنة</string>
     <string name="ext__meta__components_none_found">أرشيف هذا الملحق لا يحتوي على أي عناصر مجمعة.</string>
     <string name="ext__meta__description">التفاصيل</string>
     <string name="ext__meta__homepage">الصفحة الرئيسية</string>
@@ -601,6 +607,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">إستيراد الملحقات</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">استيراد ملحقات لوحة المفاتيح</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">استيراد ملحقات الثيم</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">استيراد حزم اللغة</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">الملف لايمكن استرداده. السبب:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">نوع الملف غير مدعوم أو غير معروف.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">تعذر استبدال أو تحديث حزم الإضافات الافتراضية المتوفرة مع أصول التطبيق الأساسية. ضع في اعتبارك تحديث التطبيق نفسه إذا كنت تنوي استخدام إصدار أحدث من حزمة الإضافات الأساسية.</string>

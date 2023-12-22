@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">השהה</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">המתן</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">סמל שלוש הנקודות. אם מוצג, מציין שניתן להשתמש באותיות נוספות בעזרת לחיצה ארוכה.</string>
@@ -8,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">הזז את המקלדת שמאלה.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">הזז את המקלדת ימינה.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">אימוג\'ים</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">אימוג\'ים</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">סמלי הבעה</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">קמוג\'י</string>
+    <string name="prefs__media__emoji_recently_used_max_size">היסטוריית האימוג\'י בגודל מקסימלי</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">גוון עור אמוג\'י מועדף</string>
+    <string name="prefs__media__emoji_preferred_hair_style">סגנון שיער אמוג\'י מועדף</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">סמיילים ורגשות</string>
     <string name="emoji__category__people_body" comment="Emoji category name">אנשים וחלקי גוף</string>
@@ -21,18 +26,80 @@
     <string name="emoji__category__objects" comment="Emoji category name">אובייקטים</string>
     <string name="emoji__category__symbols" comment="Emoji category name">סמלים</string>
     <string name="emoji__category__flags" comment="Emoji category name">דגלים</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">לא נמצאו אימוג\'ים שנעשה בהם שימוש לאחרונה. ברגע שתתחיל להקליד אימוג\'ים הם יופיעו כאן באופן אוטומטי.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">טיפ למקצוענים: לחיצה ארוכה השתמשה לאחרונה באימוג\'ים כדי להסיר אותם מתצוגה זו שוב!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">הוסר {emoji} מאמוג\'ים שהיו בשימוש לאחרונה</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">חץ למעלה</string>
+    <string name="quick_action__arrow_up__tooltip">ביצוע חץ למעלה</string>
+    <string name="quick_action__arrow_down" maxLength="12">חץ למטה</string>
+    <string name="quick_action__arrow_down__tooltip">ביצוע חץ למטה</string>
+    <string name="quick_action__arrow_left" maxLength="12">חץ שמאלי</string>
+    <string name="quick_action__arrow_left__tooltip">ביצוע חץ שמאלה</string>
+    <string name="quick_action__arrow_right" maxLength="12">חץ ימינה</string>
+    <string name="quick_action__arrow_right__tooltip">ביצוע חץ ימינה</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">נקה לוח ראשי</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">בצע ניקוי לוח ראשי</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">העתק</string>
+    <string name="quick_action__clipboard_copy__tooltip">בצע העתקה מהלוח</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">גזור</string>
+    <string name="quick_action__clipboard_cut__tooltip">בצע גזירה מהלוח</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">הדבק</string>
+    <string name="quick_action__clipboard_paste__tooltip">בצע הדבקה מהלוח</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">בחר הכל</string>
+    <string name="quick_action__clipboard_select_all__tooltip">בצע בחירה בהכל מהלוח</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">לוח הדבקה</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">אפשר היסטוריה של הלוח</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">אמוג\'י</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">לפתוח אימוג\'י לוח</string>
+    <string name="quick_action__settings" maxLength="12">הגדרות</string>
+    <string name="quick_action__settings__tooltip">לפתוח הגדרות</string>
+    <string name="quick_action__undo" maxLength="12">בטל</string>
+    <string name="quick_action__undo__tooltip">בטל את השינוי האחרון</string>
+    <string name="quick_action__redo" maxLength="12">בצע שוב</string>
+    <string name="quick_action__redo__tooltip">החזר את השינוי האחרון</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">עוד פעולות</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">להראות או להחביא פעולות נוספות</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">גלישה בסתר</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">הפעל גלישה בסתר</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">תיקון אוטומט</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">מתג תיקון אוטומטי</string>
+    <string name="quick_action__voice_input" maxLength="12">קלט קולי</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">לפתוח ספק קלט קולי</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">ביד אחת</string>
+    <string name="quick_action__one_handed_mode__tooltip">מתג מצב יד-אחת</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">סמן גרור</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">סמן גרור מיקום נוכחי</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">כלום</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">שום פעולה</string>
+    <string name="quick_actions_overflow__customize_actions_button">סדר פעולות</string>
+    <string name="quick_actions_editor__header">התאם אישית סדר פעולות</string>
+    <string name="quick_actions_editor__subheader_sticky_action">פעולה דביקה({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">פעולה דינאמית({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">פעולה מוסתרת({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">מצב גלישה בסתר כרגע מופעל\n\n{app_name} לא ילמד מילים מהקלט שלך בזמן שמצב זה פעיל</string>
+    <string name="incognito_mode__toast_after_disabled">מצב גלישה בסתר מושבת כרגע לפי ברירת מחדל</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">הגדרות</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">תנסו את ההגדרות שלכם</string>
     <string name="settings__help" comment="General label for help buttons in Settings">עזרה</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">ברירת מחדל</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">ברירת המחדל של המערכת</string>
     <string name="settings__home__title" comment="Title of the Home screen">ברוכים הבאים ל{app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard אינו מופעל במערכת ולכן לא יהיה זמין כשיטת קלט בעת בחירת סוג המלקדת. לחץ כאן כדי לפתור תקלה זו.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard אינו הוגדר כמקלדת ברירת המחדל. לחץ כאן כדי לפתור תקלה זו.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">שפות &amp; פריסות</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">הציגו שם שפה ב</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">תת-סוג</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">הוסף תת-סוג</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">נהל ערכות שפה מותקנות</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">ניסויי: נהל הרחבות שהוסיפו תמיכה לשפות ספציפיות (סינית על בסיס צורה קלט לעת עתה)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ערוך תת-סוג</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">שפה ראשית</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">מיפוי קופץ</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">מערך אותיות</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">מנוע הצעות</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">סמלים פריסה ראשית</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">סמלים פריסה משנית</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">מחבר</string>
@@ -40,8 +107,22 @@
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">פריסה מספרית</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">פריסה מספרית (מתקדם)</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">פריסת שורת מספרים</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">טלפון מערך ראשי</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">טלפון מערך משני</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">בחר שפה</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">חפש שפה</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">לא מצאתי שפה מתאימה ל\"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; בחר &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name}/{symbols_name}/{currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">תתי סוג מוצעים</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">אין הצעות מוגדרות זמינות. השתמש בלחצן למטה כדי להציג את כל הגדרות המשנה.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">תת סוג מוגדר</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">הצג הכל</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">נראה שלא הגדרת שום תת-סוג. לכן יהיה שימוש בתת-סוג אנגלית/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">תת הסוג הזה כבר קיים!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">לפחות בשדה אחד לא נבחר ערך. אנא בחר ערך עבור השדה/ות</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (לא מותקן)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">פריסות</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">ערכת נושא</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">מצב ערכת נושא</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">זמן זריחה</string>
@@ -54,6 +135,9 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">נכסי אפליקצית FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">אחסון פנימי</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">ספק חיצוני</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">בחר ערכת נושא של יום</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">בחר ערכת נושא לילית</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">נהל ערכות נושא מותקנות</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">מקלדת</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>

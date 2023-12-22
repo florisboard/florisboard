@@ -30,6 +30,24 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">ヒント：最近使用した絵文字を長押しして、このビューから再び削除します。</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">最近使用した絵文字から {emoji} を削除しました</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">上矢印</string>
+    <string name="quick_action__arrow_down" maxLength="12">下矢印</string>
+    <string name="quick_action__arrow_left" maxLength="12">左矢印</string>
+    <string name="quick_action__arrow_right" maxLength="12">右矢印</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">コピー</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">カット</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">ペースト</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">全て選択</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">クリップボード</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">絵文字</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">絵文字パネルを開く</string>
+    <string name="quick_action__settings" maxLength="12">設定</string>
+    <string name="quick_action__settings__tooltip">設定を開く</string>
+    <string name="quick_action__undo" maxLength="12">元に戻す</string>
+    <string name="quick_action__redo" maxLength="12">やり直し</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">その他の操作</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">シークレット</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">なし</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">設定</string>
@@ -99,6 +117,7 @@
     <string name="settings__theme_editor__rule_selectors">セレクター</string>
     <string name="settings__theme_editor__code_already_exists">このキーコードはすでに定義されています。</string>
     <string name="settings__theme_editor__code_invalid">このキーコードは無効です。 キーコードが、文字の場合は {c_min} から {c_max} の範囲内、内部特殊キーの場合は {i_min} から {i_max} の範囲内にあることを確認してください。</string>
+    <string name="settings__theme_editor__code_recording_help_text">キーのコードを見つけるには、コード入力フィールドの横にあるボタンを使用します。 アクティブ化されると、次にキーを押したことが記録され、コードが入力フィールドに挿入されます。</string>
     <string name="settings__theme_editor__add_property">プロパティを追加</string>
     <string name="settings__theme_editor__edit_property">プロパティを編集</string>
     <string name="settings__theme_editor__property_already_exists">この名前のプロパティは、現在のルール内にすでに存在します。</string>
@@ -252,19 +271,32 @@
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">頻度:{freq}</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">頻度:{freq} | ショートカット:{shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">すべての言語</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">この言語コードは、予想される構文に準拠していません。 コードは、言語のみ (en など)、言語と国 (en_US など)、または言語、国、およびスクリプト (en_US-script など) のいずれかである必要があります。</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
+    <string name="setup__enable_ime__description">Android では、使用する前にすべてのカスタム キーボードを個別に有効にする必要があります。 システム <i>言語 &amp; を開きます。 </i> 設定を入力すると、\"{app_name}\"が有効になります。</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__restore__metadata_warn_different_version">このバックアップ アーカイブは、通常サポートされている現在とは別のバージョンで生成されました。 ただし、機能の違いにより、軽微な問題が発生したり、一部の設定が正しく転送されない場合があることに注意してください。</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">このエラーを報告する場合、クラッシュがまだ報告されていない場合は、まず GitHub の課題トラッカーを確認してください。\n報告されていない場合は、生成されたクラッシュ ログをコピーして、新しい課題を開きます。 \"%s\"テンプレートを使用して、説明と再現手順を入力し、生成されたクラッシュ ログを最後に貼り付けます。 これは、FlorisBoard を誰にとってもより良く、より安定させるのに役立ちます。 ありがとうございました！</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__disabled__message">{app_name} のクリップボード履歴を使用すると、コピーしたテキストや画像をすばやく保存してアクセスできます。また、アイテムを固定したり、自動クリーンアップを構成したり、アイテムの上限を設定したりできます。</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__editor__create_component__from_empty_warning">{app_name} を初めて使用する場合、または詳細に慣れていない場合は、空のコンポーネントを作成して構成するのが難しい場合があります。 その場合は、既存のコンポーネントをコピーして好みに合わせて変更することを検討してください。</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">アプリのコア アセットで提供されるデフォルトの拡張機能パッケージを置換または更新できません。 新しいバージョンのコア拡張機能パッケージを使用する場合は、アプリ自体を更新することを検討してください。</string>
     <!-- Action strings -->
     <!-- Error strings (generic) -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">キーボード UI の高さに影響を与えずに、拡張アクションをアプリ UI の上にオーバーレイとして配置します。 この配置により、アプリの入力フィールドが部分的に上書きされる可能性があることに注意してください</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} デフォルトのハードウェアバイブレータと直接やり取りします。 これにより、振動の持続時間と強さをより詳細に制御できますが、振動は、触覚フィードバック インターフェイスを使用するほど滑らかで最適化されない場合があります。</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} は触覚フィードバック インターフェースを使用して、キーを押すと定義済みのバイブレーション シーケンスをトリガーします。 これは、一部のデバイスでは非常にうまく動作する場合がありますが、他のデバイスでは動作しないか、パフォーマンスが非常に低くなります。</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">ターゲット アプリの渡されたオプションに関係なく、シークレット モードは常に無効になります。 このオプションでは、Smartbar のシークレット クイック アクションは使用できません。</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">ターゲット アプリの渡されたオプションに関係なく、シークレット モードは常に有効になります。 このオプションでは、Smartbar のシークレット クイック アクションは使用できません。</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">推奨オプション。 シークレット モードは、ターゲット アプリのオプションを使用するか、Smartbar のシークレット クイック アクションを介して手動で切り替えることにより、動的に有効または無効になります。</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počakaj</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Zapri enoročni način.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Premakni tipkovnico na levo.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Premakni tipkovnico na desno.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Čustvenčki</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Čustvenčki</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Čustvenčki</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Največja zgodovina čustvenčkov</string>
     <!-- Emoji strings -->
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Puščica gor</string>
+    <string name="quick_action__arrow_down" maxLength="12">Puščica dol</string>
+    <string name="quick_action__arrow_left" maxLength="12">Puščica levo</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopiraj</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Izreži</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Prilepi</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Označi vse</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Odložišče</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Čustvenčki</string>
+    <string name="quick_action__settings" maxLength="12">Nastavitve</string>
+    <string name="quick_action__settings__tooltip">Odpri nastavitve</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Nastavitve</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Preizkusi postavitev</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Pomoč</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Privzeto</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistemsko privzeto</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtipi</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj podtip</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Uredi podtip</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Glavni jezik</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Postavitev znakov</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Urejevalnik</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- About UI strings -->
@@ -15,6 +45,7 @@
     <!-- Clipboard strings -->
     <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Uvozi nov jezik</string>
     <!-- Action strings -->
     <!-- Error strings (generic) -->
     <!-- General strings -->
