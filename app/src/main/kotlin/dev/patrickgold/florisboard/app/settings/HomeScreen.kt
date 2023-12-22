@@ -77,7 +77,7 @@ fun HomeScreen() = FlorisScreen {
             )
         }
 
-        Card(modifier = Modifier.padding(8.dp)) {
+        /*Card(modifier = Modifier.padding(8.dp)) {
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -106,7 +106,7 @@ fun HomeScreen() = FlorisScreen {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
-        }
+        }*/
         Preference(
             iconId = R.drawable.ic_language,
             title = stringRes(R.string.settings__localization__title),
