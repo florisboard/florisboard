@@ -55,4 +55,8 @@ object AndroidVersion {
     /** Android 13 **/
     inline val ATLEAST_API33_T get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     inline val ATMOST_API33_T get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU
+
+    /** Android 14 **/
+    inline val ATLEAST_API34_U get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+    inline val ATMOST_API34_U get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 }

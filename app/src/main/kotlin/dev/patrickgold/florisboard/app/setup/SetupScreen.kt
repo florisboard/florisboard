@@ -90,13 +90,9 @@ fun SetupScreen() = FlorisScreen {
         // Below block allows to return from the system IME enabler activity
         // as soon as it gets selected.
         LaunchedEffect(Unit) {
-            while (isActive) {
-                delay(200)
-                val imeIds = AndroidSettings.Secure.getString(
-                    context,
-                    Settings.Secure.ENABLED_INPUT_METHODS,
-                ) ?: "(null)"
-                val isEnabled = InputMethodUtils.parseIsFlorisboardEnabled(context, imeIds)
+            while (true) {
+                delay(200L)
+                val isEnabled = InputMethodUtils.isFlorisboardEnabled(context)
                 if (stepState.getCurrentAuto().value == Step.EnableIme &&
                     stepState.getCurrentManual().value == -1 &&
                     !isFlorisBoardEnabled &&
