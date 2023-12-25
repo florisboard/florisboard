@@ -1,7 +1,7 @@
 [versions]
 # Main
 accompanist = "0.30.1"
-android-gradle-plugin = "8.1.1"
+android-gradle-plugin = "8.2.0"
 androidx-activity = "1.5.1"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.2.0"
@@ -23,6 +23,7 @@ mannodermaus-android-junit5 = "1.8.2.1"
 mikepenz-aboutlibraries = "10.2.0"
 patrickgold-compose-tooltip = "0.1.0"
 patrickgold-jetpref = "0.1.0-beta14"
+xmlutil = "0.86.3"
 
 # Testing
 androidx-benchmark = "1.1.0"
@@ -63,6 +64,7 @@ patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:toolti
 patrickgold-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-material-ui = { module = "dev.patrickgold.jetpref:jetpref-material-ui", version.ref = "patrickgold-jetpref" }
+xmlutil = { module = "io.github.pdvrieze.xmlutil:serialization-android", version.ref = "xmlutil" }
 
 # Testing
 androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }
@@ -78,6 +80,7 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 [plugins]
 # Main
 agp-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+agp-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 agp-test = { id = "com.android.test", version.ref = "android-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
