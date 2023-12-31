@@ -11,18 +11,17 @@
   "layouts": {
     "characters": [
       {
+        "id": "azerty",
+        "label": "AZERTY",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
         "id": "arabic",
         "label": "Arabic",
         "authors": [ "HeiWiper" ],
         "direction": "rtl",
         "modifier": "org.florisboard.layouts:arabic"
-      },
-      {
-        "id": "western_armenian",
-        "label": "Armenian (Western)",
-        "authors": [ "PJTSearch" ],
-        "direction": "ltr",
-        "modifier": "org.florisboard.layouts:armenian"
       },
       {
         "id": "eastern_armenian",
@@ -32,27 +31,16 @@
         "modifier": "org.florisboard.layouts:armenian"
       },
       {
+        "id": "western_armenian",
+        "label": "Armenian (Western)",
+        "authors": [ "PJTSearch" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian"
+      },
+      {
         "id": "azerbaijani",
         "label": "Azerbaijani",
         "authors": [ "nijatismayilzada" ],
-        "direction": "ltr"
-      },
-      {
-        "id": "azerty",
-        "label": "AZERTY",
-        "authors": [ "patrickgold" ],
-        "direction": "ltr"
-      },
-	  {
-        "id": "bengali_bd",
-        "label": "বাংলা",
-        "authors": [ "iamrasel" ],
-        "direction": "ltr"
-      },
-      {
-        "id": "bepo",
-        "label": "BÉPO",
-        "authors": [ "salamandar" ],
         "direction": "ltr"
       },
       {
@@ -75,20 +63,26 @@
         "direction": "ltr"
       },
       {
+        "id": "bepo",
+        "label": "BÉPO",
+        "authors": [ "salamandar" ],
+        "direction": "ltr"
+      },
+      {
         "id": "canadian_french",
         "label": "Canadian French (QWERTY)",
         "authors": [ "The-Quantum-Alpha" ],
         "direction": "ltr"
       },
       {
-        "id": "catalan",
-        "label": "Catalan (QWERTY)",
+        "id": "catalan_accents",
+        "label": "Catalan (Accents)",
         "authors": [ "mikelloc" ],
         "direction": "ltr"
       },
       {
-        "id": "catalan_accents",
-        "label": "Catalan (Accents)",
+        "id": "catalan",
+        "label": "Catalan (QWERTY)",
         "authors": [ "mikelloc" ],
         "direction": "ltr"
       },
@@ -156,21 +150,15 @@
         "direction": "ltr"
       },
       {
-        "id": "german",
-        "label": "German (QWERTZ)",
-        "authors": [ "mahmoudk1000" ],
-        "direction": "ltr"
-      },
-      {
         "id": "german2",
         "label": "German (GBoard)",
         "authors": [ "M-Koushan" ],
         "direction": "rtl"
       },
       {
-        "id": "greek",
-        "label": "Ελληνικά",
-        "authors": [ "tsiflimagas" ],
+        "id": "german",
+        "label": "German (QWERTZ)",
+        "authors": [ "mahmoudk1000" ],
         "direction": "ltr"
       },
       {
@@ -178,13 +166,6 @@
         "label": "Halmak",
         "authors": [ "dessalines" ],
         "direction": "ltr"
-      },
-      {
-        "id": "hebrew",
-        "label": "עברית",
-        "authors": [ "Antony" ],
-        "direction": "rtl",
-        "modifier": "org.florisboard.layouts:hebrew"
       },
       {
         "id": "hungarian",
@@ -217,18 +198,6 @@
         "direction": "ltr"
       },
       {
-        "id": "jcuken_russian",
-        "label": "Russian (ЙЦУКЕН)",
-        "authors": [ "williamtheaker" ],
-        "direction": "ltr"
-      },
-      {
-        "id": "jcuken_ukrainian",
-        "label": "Ukrainian (ЙЦУКЕН)",
-        "authors": [ "williamtheaker", "33kk" ],
-        "direction": "ltr"
-      },
-      {
         "id": "jis",
         "label": "JIS",
         "authors": [ "waelwindows" ],
@@ -236,30 +205,10 @@
         "modifier": "org.florisboard.layouts:jis"
       },
       {
-        "id": "korean",
-        "label": "South Korean standard",
-        "authors": [ "patrickgold", "Hayleia" ],
-        "direction": "ltr"
-      },
-      {
-        "id": "kurdish",
-        "label": "کوردی (قوەرتی نوێ)",
-        "authors": [ "GoRaN" ],
-        "direction": "rtl",
-        "modifier": "org.florisboard.layouts:kurdish"
-      },
-      {
         "id": "kurdish_kurmanci",
         "label": "Kurdî",
         "authors": [ "GoRaN" ],
         "direction": "ltr"
-      },
-      {
-        "id": "kurdish_standard",
-        "label": 	"کوردی (ق‌ڤ‌ف‌غ)",
-        "authors": [ "GoRaN" ],
-        "direction": "rtl",
-        "modifier": "org.florisboard.layouts:kurdish"
       },
       {
         "id": "nalmy",
@@ -314,6 +263,12 @@
         "direction": "ltr"
       },
       {
+        "id": "jcuken_russian",
+        "label": "Russian (ЙЦУКЕН)",
+        "authors": [ "williamtheaker" ],
+        "direction": "ltr"
+      },
+      {
         "id": "rusyn",
         "label": "Rusyn",
         "authors": [ "svvvst" ],
@@ -332,21 +287,30 @@
         "direction": "ltr"
       },
       {
-        "id": "serbian_cyrillic",
-        "label": "Serbian (ЉЊЕРТЗ)",
-        "authors": ["GrbavaCigla"],
+        "id": "serbian_latin",
+        "label": "Serbian (QWERTZ)",
+        "authors": [ "GrbavaCigla" ],
         "direction": "ltr"
       },
       {
-        "id": "serbian_latin",
-        "label": "Serbian (QWERTZ)",
-        "authors": ["GrbavaCigla"],
+        "id": "serbian_cyrillic",
+        "label": "Serbian (ЉЊЕРТЗ)",
+        "authors": [ "GrbavaCigla" ],
         "direction": "ltr"
       },
       {
         "id": "slovenian",
         "label": "Slovenian (QWERTZ)",
-        "authors": ["samo_lego"],
+        "authors": [ "samo_lego" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "korean",
+        "label": "South Korean standard",
+        "authors": [
+          "patrickgold",
+          "Hayleia"
+        ],
         "direction": "ltr"
       },
       {
@@ -404,6 +368,12 @@
         "direction": "ltr"
       },
       {
+        "id": "jcuken_ukrainian",
+        "label": "Ukrainian (ЙЦУКЕН)",
+        "authors": [ "williamtheaker", "33kk" ],
+        "direction": "ltr"
+      },
+      {
         "id": "urdu_phonetic",
         "label": "Urdu Phonetic",
         "authors": [ "mubashir-rehman", "mirfatif" ],
@@ -411,24 +381,57 @@
         "modifier": "org.florisboard.layouts:arabic"
       },
       {
-        "id": "warang_citi",
-        "label": "𑢹𑣗𑣁𑣜𑣁𑣊 𑢯𑣂𑣕𑣂",
-        "authors": [ "Singkiring57" ],
-        "direction": "ltr"
-      },
-      {
         "id": "workman",
         "label": "Workman",
         "authors": [ "icyphox" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "greek",
+        "label": "Ελληνικά",
+        "authors": [ "tsiflimagas" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "hebrew",
+        "label": "עברית",
+        "authors": [ "Antony" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:hebrew"
+      },
+      {
+        "id": "kurdish",
+        "label": "کوردی (قوەرتی نوێ)",
+        "authors": [ "GoRaN" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:kurdish"
+      },
+      {
+        "id": "kurdish_standard",
+        "label": "کوردی (ق‌ڤ‌ف‌غ)",
+        "authors": [ "GoRaN" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:kurdish"
+      },
+      {
+        "id": "bengali_bd",
+        "label": "বাংলা",
+        "authors": [ "iamrasel" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "warang_citi",
+        "label": "𑢹𑣗𑣁𑣜𑣁𑣊 𑢯𑣂𑣕𑣂",
+        "authors": [ "Singkiring57" ],
         "direction": "ltr"
       }
     ],
     "charactersMod": [
       {
-        "id": "default",
-        "label": "Default character modifier layout",
-        "authors": [ "patrickgold" ],
-        "direction": "ltr"
+        "id": "arabic",
+        "label": "Arabic",
+        "authors": [ "HeiWiper" ],
+        "direction": "rtl"
       },
       {
         "id": "armenian",
@@ -437,10 +440,10 @@
         "direction": "ltr"
       },
       {
-        "id": "arabic",
-        "label": "Arabic",
-        "authors": [ "HeiWiper" ],
-        "direction": "rtl"
+        "id": "default",
+        "label": "Default character modifier layout",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
       },
       {
         "id": "dvorak",
@@ -455,22 +458,10 @@
         "direction": "ltr"
       },
       {
-        "id": "hebrew",
-        "label": "עברית",
-        "authors": [ "Antony" ],
-        "direction": "rtl"
-      },
-      {
         "id": "jis",
         "label": "JIS",
         "authors": [ "waelwindows" ],
         "direction": "ltr"
-      },
-      {
-        "id": "kurdish",
-        "label": "کوردی",
-        "authors": [ "GoRaN" ],
-        "direction": "rtl"
       },
       {
         "id": "neo2",
@@ -494,6 +485,18 @@
         "id": "persian3",
         "label": "Persian3",
         "authors": [ "SaeID-Rz" ],
+        "direction": "rtl"
+      },
+      {
+        "id": "hebrew",
+        "label": "עברית",
+        "authors": [ "Antony" ],
+        "direction": "rtl"
+      },
+      {
+        "id": "kurdish",
+        "label": "کوردی",
+        "authors": [ "GoRaN" ],
         "direction": "rtl"
       }
     ],
@@ -521,6 +524,12 @@
     ],
     "numericAdvanced": [
       {
+        "id": "bengali",
+        "label": "Bengali",
+        "authors": [ "iamrasel" ],
+        "direction": "ltr"
+      },
+      {
         "id": "western_arabic",
         "label": "Western Arabic",
         "authors": [ "patrickgold" ],
@@ -530,12 +539,6 @@
         "id": "western_arabic_pc",
         "label": "Western Arabic (PC)",
         "authors": [ "patrickgold" ],
-        "direction": "ltr"
-      },
-	  {
-        "id": "bengali",
-        "label": "Bengali",
-        "authors": [ "iamrasel" ],
         "direction": "ltr"
       }
     ],
@@ -714,12 +717,6 @@
     ],
     "symbolsMod": [
       {
-        "id": "default",
-        "label": "Default",
-        "authors": [ "patrickgold" ],
-        "direction": "ltr"
-      },
-      {
         "id": "armenian",
         "label": "Armenian",
         "authors": [ "PJTSearch" ],
@@ -729,6 +726,12 @@
         "id": "cjk",
         "label": "CJK",
         "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "default",
+        "label": "Default",
+        "authors": [ "patrickgold" ],
         "direction": "ltr"
       },
       {
@@ -779,15 +782,15 @@
     ],
     "symbols2Mod": [
       {
-        "id": "default",
-        "label": "Default",
-        "authors": [ "patrickgold" ],
-        "direction": "ltr"
-      },
-      {
         "id": "cjk",
         "label": "CJK",
         "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "default",
+        "label": "Default",
+        "authors": [ "patrickgold" ],
         "direction": "ltr"
       }
     ]
