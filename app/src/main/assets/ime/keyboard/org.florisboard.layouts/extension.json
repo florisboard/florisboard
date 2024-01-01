@@ -105,6 +105,12 @@
         "direction": "ltr"
       },
       {
+        "id": "colemak_dhm",
+        "label": "ColemakDHm",
+        "authors": [ "SteveP", "oneilljp" ],
+        "direction": "ltr"
+      },
+      {
         "id": "danish",
         "label": "Danish (QWERTY)",
         "authors": [ "patrickgold" ],
