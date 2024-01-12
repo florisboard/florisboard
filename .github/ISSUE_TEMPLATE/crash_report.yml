@@ -1,0 +1,38 @@
+name: Crash report
+description: Create a report with a generated crash log attached to help FlorisBoard improve
+labels:
+  - "bug"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your help in making FlorisBoard better!
+        Guide to a good crash-report:
+        • Please search existing bug/crash reports to avoid creating duplicates.
+        • Give your crash report a good name (no generics like "Error" or "Crash"), so others can easily identify the topic of your issue.
+        • Describe what you were doing what could've led to the crash and whether the crash is random or reproducible.
+  - type: textarea
+    id: description
+    attributes:
+      label: Short description
+      description: Describe the bug in a short but concise way.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1. Go to '…'
+        2. Click on '…'
+        3. Scroll down to '…'
+        4. See crash
+    validations:
+      required: true
+  - type: textarea
+    id: crashlog
+    attributes:
+      label: Crash log
+      description: Paste the generated crash log below
+    validations:
+      required: true
