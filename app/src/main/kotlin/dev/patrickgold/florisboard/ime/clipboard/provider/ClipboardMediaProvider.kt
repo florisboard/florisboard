@@ -91,6 +91,9 @@ class ClipboardMediaProvider : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         val id = tryOrNull { ContentUris.parseId(uri) } ?: return null
+        if (projection != null) {
+            return clipboardFilesDao?.getCurserByIdWithColums(id, projection.joinToString())
+        }
         return clipboardFilesDao?.getCursorById(id)
     }
 
@@ -130,9 +133,10 @@ class ClipboardMediaProvider : ContentProvider() {
                     val mediaUri = Uri.parse(values.getAsString(Columns.MediaUri))
                     val id = ClipboardFileStorage.cloneUri(context!!, mediaUri)
                     val size = ClipboardFileStorage.getFileForId(context!!, id).length()
+                    val orientation = 0 //TODO: Find out if this is always the right rotation for images
                     val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
                     val displayName = values.getAsString(OpenableColumns.DISPLAY_NAME)
-                    val fileInfo = ClipboardFileInfo(id, displayName, size, mimeTypes)
+                    val fileInfo = ClipboardFileInfo(id, displayName, size, 0, mimeTypes)
                     cachedFileInfos[id] = fileInfo
                     ioScope.launch {
                         clipboardFilesDao?.insert(fileInfo)
