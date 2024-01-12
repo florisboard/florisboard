@@ -1,0 +1,64 @@
+name: Bug Report
+description: Create a report to help FlorisBoard improve
+labels:
+  - "bug"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your help in making FlorisBoard better!
+        Guide to a good bug-report:
+        • Please search existing bug/crash reports reports to avoid creating duplicates.
+        • Give your bug report a good name (no generics like "Error" or "Crash"), so others can easily identify the topic of your issue.
+        • Describe the bug in a short but concise way.
+        • If you have a screenshot or screen recording of the bug, link them at the end of this issue.
+        • Also make sure to fill out the environment information. This info is valuable when trying to fix your described bug.
+  - type: textarea
+    id: description
+    attributes:
+      label: Short description
+      description: Describe the bug in a short but concise way.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1. Go to '…'
+        2. Click on '…'
+        3. Scroll down to '…'
+        4. See error
+    validations:
+      required: true
+  - type: input
+    id: florisversion
+    attributes:
+      label: FlorisBoard Version
+      placeholder: e.g. 0.X.X
+    validations:
+      required: true
+  - type: dropdown
+    id: installsource
+    attributes:
+      label: Install Source
+      options:
+        - Google PlayStore
+        - F-Droid
+        - GitHub
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      placeholder: e.g. OnePlus 7T
+    validations:
+      required: true
+  - type: input
+    id: androidversion
+    attributes:
+      label: Android
+      placeholder: e.g. 10, Stock
+    validations:
+      required: true
