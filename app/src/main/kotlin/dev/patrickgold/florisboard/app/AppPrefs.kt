@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
@@ -399,11 +400,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val spaceBarMode = enum(
             key = "keyboard__space_bar_display_mode",
-            default = SpaceBarMode.CURRENT_LANGUAGE
+            default = SpaceBarMode.CURRENT_LANGUAGE,
         )
-        val normalCapitalizationCycleEnabled = boolean(
-            key = "keyboard__normal_capitalization_cycle_enabled",
-            default = true
+        val capitalizationBehavior = enum(
+            key = "keyboard__capitalization_behavior",
+            default = CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP,
         )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",

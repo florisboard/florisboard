@@ -378,7 +378,7 @@ private fun TextKeyButton(
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
                 val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
-                when(spaceBarMode) {
+                when (spaceBarMode) {
                     SpaceBarMode.NOTHING -> return@let
                     SpaceBarMode.CURRENT_LANGUAGE -> {}
                     SpaceBarMode.SPACE_BAR_KEY -> customLabel = "␣"

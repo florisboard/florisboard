@@ -25,8 +25,6 @@ enum class SpaceBarMode {
                 key = SPACE_BAR_KEY,
                 label = stringRes(R.string.enum__space_bar_mode__space_bar_key),
             )
-
         }
     }
-
 }

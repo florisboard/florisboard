@@ -307,9 +307,7 @@
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Shows a configurable utility key next to space bar</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
-    <string name="pref__keyboard__normal_capitalisation_cycle_enabled__label" comment="Preference title">Change the capitalization cycle</string>
-    <string name="pref__keyboard__normal_capitalisation_cycle_enabled__summary_on" comment="Preference summary">Caps-lock with double tap</string>
-    <string name="pref__keyboard__normal_capitalisation_cycle_enabled__summary_off" comment="Preference summary">Cycle through capitalization modes</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
@@ -717,6 +715,9 @@
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
 
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
+
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
 
@@ -810,6 +811,10 @@
     <string name="enum__snygg_level__developer" comment="Enum value label">Developer</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">All properties are shown, properties and rules are displayed as written in the stylesheet file itself.</string>
 
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">No label</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Current language</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
+
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>
 
@@ -851,10 +856,6 @@
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
-
-    <string name="enum__space_bar_mode__nothing" comment="Enum value label">No label</string>
-    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Current language</string>
-    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>

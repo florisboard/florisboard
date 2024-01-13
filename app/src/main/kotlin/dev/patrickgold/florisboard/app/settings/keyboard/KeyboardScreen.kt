@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -76,13 +77,12 @@ fun KeyboardScreen() = FlorisScreen {
         ListPreference(
             prefs.keyboard.spaceBarMode,
             title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
-            entries = SpaceBarMode.listEntries()
+            entries = SpaceBarMode.listEntries(),
         )
-        SwitchPreference(
-            prefs.keyboard.normalCapitalizationCycleEnabled,
-            title = stringRes(R.string.pref__keyboard__normal_capitalisation_cycle_enabled__label),
-            summaryOn = stringRes(R.string.pref__keyboard__normal_capitalisation_cycle_enabled__summary_on),
-            summaryOff = stringRes(R.string.pref__keyboard__normal_capitalisation_cycle_enabled__summary_off)
+        ListPreference(
+            prefs.keyboard.capitalizationBehavior,
+            title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
+            entries = CapitalizationBehavior.listEntries(),
         )
         DialogSliderPreference(
             primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
