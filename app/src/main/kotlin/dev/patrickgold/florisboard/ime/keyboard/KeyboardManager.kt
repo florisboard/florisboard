@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
+import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.input.InputShiftState
@@ -474,13 +475,26 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(data: KeyData) {
-        if (inputEventDispatcher.isConsecutiveDown(data)) {
-            activeState.inputShiftState = InputShiftState.CAPS_LOCK
-        } else {
-            if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
-                activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
-            } else {
-                activeState.inputShiftState = InputShiftState.UNSHIFTED
+        val prefs = prefs.keyboard.capitalizationBehavior
+        when (prefs.get()) {
+            CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP -> {
+                if (inputEventDispatcher.isConsecutiveDown(data)) {
+                    activeState.inputShiftState = InputShiftState.CAPS_LOCK
+                } else {
+                    if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
+                        activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
+                    } else {
+                        activeState.inputShiftState = InputShiftState.UNSHIFTED
+                    }
+                }
+            }
+            CapitalizationBehavior.CAPSLOCK_BY_CYCLE -> {
+                activeState.inputShiftState = when (activeState.inputShiftState) {
+                    InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
+                    InputShiftState.SHIFTED_MANUAL -> InputShiftState.CAPS_LOCK
+                    InputShiftState.SHIFTED_AUTOMATIC -> InputShiftState.UNSHIFTED
+                    InputShiftState.CAPS_LOCK -> InputShiftState.UNSHIFTED
+                }
             }
         }
     }
