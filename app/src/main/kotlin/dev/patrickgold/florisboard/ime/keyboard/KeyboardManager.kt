@@ -57,7 +57,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.collectIn
@@ -473,15 +472,26 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(data: KeyData) {
-        if (inputEventDispatcher.isConsecutiveDown(data)) {
-            activeState.inputShiftState = InputShiftState.CAPS_LOCK
-        } else {
-            if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
-                activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
+        val prefs = prefs.keyboard.normalCapitalizationCycleEnabled
+        if (prefs.get()) {
+            if (inputEventDispatcher.isConsecutiveDown(data)) {
+                activeState.inputShiftState = InputShiftState.CAPS_LOCK
             } else {
-                activeState.inputShiftState = InputShiftState.UNSHIFTED
+                if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
+                    activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
+                } else {
+                    activeState.inputShiftState = InputShiftState.UNSHIFTED
+                }
+            }
+        } else {
+            activeState.inputShiftState = when(activeState.inputShiftState) {
+                InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
+                InputShiftState.SHIFTED_MANUAL -> InputShiftState.CAPS_LOCK
+                InputShiftState.SHIFTED_AUTOMATIC -> InputShiftState.UNSHIFTED
+                InputShiftState.CAPS_LOCK -> InputShiftState.UNSHIFTED
             }
         }
+
     }
 
     /**

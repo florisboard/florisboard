@@ -401,6 +401,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__space_bar_display_mode",
             default = SpaceBarMode.CURRENT_LANGUAGE
         )
+        val normalCapitalizationCycleEnabled = boolean(
+            key = "keyboard__normal_capitalization_cycle_enabled",
+            default = true
+        )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",
             default = 100,

@@ -78,6 +78,12 @@ fun KeyboardScreen() = FlorisScreen {
             title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
             entries = SpaceBarMode.listEntries()
         )
+        SwitchPreference(
+            prefs.keyboard.normalCapitalizationCycleEnabled,
+            title = stringRes(R.string.pref__keyboard__normal_capitalisation_cycle_enabled__label),
+            summaryOn = stringRes(R.string.pref__keyboard__normal_capitalisation_cycle_enabled__summary_on),
+            summaryOff = stringRes(R.string.pref__keyboard__normal_capitalisation_cycle_enabled__summary_off)
+        )
         DialogSliderPreference(
             primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
             secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,
