@@ -308,6 +308,7 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
     <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Display language on space bar</string>
     <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Displays the current active language name on the space bar</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
@@ -850,6 +851,9 @@
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
 
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">No label</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Current language</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>

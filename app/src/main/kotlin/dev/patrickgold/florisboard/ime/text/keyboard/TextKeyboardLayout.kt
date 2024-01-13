@@ -68,6 +68,7 @@ import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
 import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
@@ -373,18 +374,21 @@ private fun TextKeyButton(
         ) { }
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
+            var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
-                val displayLanguageName by prefs.keyboard.spaceBarLanguageDisplayEnabled.observeAsState()
-                if (!displayLanguageName) {
-                    return@let
+                val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
+                when(spaceBarMode) {
+                    SpaceBarMode.NOTHING -> return@let
+                    SpaceBarMode.CURRENT_LANGUAGE -> {}
+                    SpaceBarMode.SPACE_BAR_KEY -> customLabel = "␣"
                 }
             }
             Text(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
-                text = label,
+                text = customLabel,
                 color = keyStyle.foreground.solidColor(context),
                 fontSize = fontSize,
                 maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,

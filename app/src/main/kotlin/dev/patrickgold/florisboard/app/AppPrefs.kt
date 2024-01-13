@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
@@ -396,9 +397,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__utility_key_action",
             default = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
         )
-        val spaceBarLanguageDisplayEnabled = boolean(
-            key = "keyboard__space_bar_language_display_enabled",
-            default = true,
+        val spaceBarMode = enum(
+            key = "keyboard__space_bar_display_mode",
+            default = SpaceBarMode.CURRENT_LANGUAGE
         )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",
