@@ -54,10 +54,11 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.lib.android.AndroidKeyguardManager
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.collectIn
@@ -913,6 +914,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
         override fun context(): Context = appContext
 
+        val androidKeyguardManager = context().systemService(AndroidKeyguardManager::class)
+
         override fun displayLanguageNamesIn(): DisplayLanguageNamesIn {
             return prefs.localization.displayLanguageNamesIn.get()
         }
@@ -923,7 +926,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_CUT -> {
                     state.isSelectionMode && editorInfo.isRichInputEditor
                 }
-                KeyCode.CLIPBOARD_PASTE,
+                KeyCode.CLIPBOARD_PASTE -> {
+                    !androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
+                }
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                     clipboardManager.canBePasted(clipboardManager.primaryClip)
                 }
