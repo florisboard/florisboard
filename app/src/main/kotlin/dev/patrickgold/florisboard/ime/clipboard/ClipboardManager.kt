@@ -224,7 +224,14 @@ class ClipboardManager(
         if (prefs.clipboard.historyEnabled.get()) {
             val historyElement = history().all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
             if (historyElement != null) {
-                moveToTheBeginning(historyElement, newItem)
+                moveToTheBeginning(
+                    oldItem = historyElement,
+                    newItem = if (historyElement.isPinned) {
+                        newItem.copy(isPinned = true)
+                    } else {
+                        newItem
+                    }
+                )
             } else {
                 insertClip(newItem)
             }
