@@ -30,6 +30,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flags</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
 
