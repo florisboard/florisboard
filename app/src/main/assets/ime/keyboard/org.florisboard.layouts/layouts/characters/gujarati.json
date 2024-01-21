@@ -1,0 +1,135 @@
+[
+  [
+    { "$": "case_selector",
+      "upper": { "code": 2727, "label": "ધ" },
+      "lower": { "code": 2693, "label": "અ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2728, "label": "ન" },
+      "lower": { "code": 2750, "label": "ા" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2730, "label": "પ" },
+      "lower": { "code": 2751, "label": "િ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2731, "label": "ફ" },
+      "lower": { "code": 2752, "label": "ી" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2732, "label": "બ" },
+      "lower": { "code": 2753, "label": "ુ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2733, "label": "ભ" },
+      "lower": { "code": 2754, "label": "ૂ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2734, "label": "મ" },
+      "lower": { "code": 2759, "label": "ે" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2735, "label": "ય" },
+      "lower": { "code": 2760, "label": "ૈ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2736, "label": "ર" },
+      "lower": { "code": 2763, "label": "ો" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2738, "label": "લ" },
+      "lower": { "code": 2764, "label": "ૌ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2741, "label": "વ" },
+      "lower": { "code": 2690, "label": "ં" }
+    }
+  ],
+  [
+    { "$": "case_selector",
+      "upper": { "code": 2742, "label": "શ" },
+      "lower": { "code": 2691, "label": "ઃ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2743, "label": "ષ" },
+      "lower": { "code": 2709, "label": "ક" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2744, "label": "સ" },
+      "lower": { "code": 2710, "label": "ખ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2745, "label": "હ" },
+      "lower": { "code": 2711, "label": "ગ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2739, "label": "ળ" },
+      "lower": { "code": 2712, "label": "ઘ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2757, "label": "ૅ" },
+      "lower": { "code": 2713, "label": "ઙ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2761, "label": " ૉ" },
+      "lower": { "code": 2714, "label": "ચ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2694, "label": "આ" },
+      "lower": { "code": 2715, "label": "છ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2695, "label": "ઇ" },
+      "lower": { "code": 2716, "label": "જ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2696, "label": "ઈ" },
+      "lower": { "code": 2717, "label": "ઝ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2697, "label": "ઉ" },
+      "lower": { "code": 2718, "label": "ઞ" }
+    }
+  ],
+  [
+    { "$": "case_selector",
+      "upper": { "code": 2698, "label": "ઊ" },
+      "lower": { "code": 2719, "label": "ટ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2703, "label": "એ" },
+      "lower": { "code": 2720, "label": "ઠ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2704, "label": "ઐ" },
+      "lower": { "code": 2721, "label": "ડ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2707, "label": "ઓ" },
+      "lower": { "code": 2722, "label": "ઢ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2708, "label": "ઔ" },
+      "lower": { "code": 2723, "label": "ણ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2755, "label": "ૃ" },
+      "lower": { "code": 2724, "label": "ત" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2810, "label": "ૺ" },
+      "lower": { "code": 2725, "label": "થ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2768, "label": "ૐ" },
+      "lower": { "code": 2726, "label": "દ" }
+    },
+    { "$": "case_selector",
+      "upper": { "code": 2784, "label": "ૠ" },
+      "lower": { "code": 2765, "label": "્" },
+      "popup": {
+        "relevant": [
+          { "$": "lower", "code": 2801, "label": "૱" },
+    }
+  ]
+]
