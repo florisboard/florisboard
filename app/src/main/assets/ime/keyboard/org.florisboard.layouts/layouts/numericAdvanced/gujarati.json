@@ -1,0 +1,48 @@
+[
+  [
+    { "code":   43, "label": "+", "popup": {
+      "relevant": [
+        { "code":   45, "label": "-" },
+        { "code":   42, "label": "*" },
+        { "code":   47, "label": "/" }
+      ]
+    } },
+    { "code": 2791, "label": "૧", "type": "numeric" },
+    { "code": 2792, "label": "૨", "type": "numeric" },
+    { "code": 2793, "label": "૩", "type": "numeric" },
+    { "code":   37, "label": "%" }
+  ],
+  [
+    { "code":   40, "label": "(", "popup": {
+      "relevant": [
+        { "code":   91, "label": "[" },
+        { "code":  123, "label": "{" }
+      ]
+    } },
+    { "code": 2794, "label": "૪", "type": "numeric" },
+    { "code": 2795, "label": "૫", "type": "numeric" },
+    { "code": 2796, "label": "૬", "type": "numeric" },
+    { "code":   32, "label": "space" }
+  ],
+  [
+    { "code":   41, "label": ")", "popup": {
+      "relevant": [
+        { "code":   93, "label": "]" },
+        { "code":  125, "label": "}" }
+      ]
+    } },
+    { "code": 2797, "label": "૭", "type": "numeric" },
+    { "code": 2798, "label": "૮", "type": "numeric" },
+    { "code": 2799, "label": "૯", "type": "numeric" },
+    { "code":   -7, "label": "delete", "type": "enter_editing" }
+  ],
+  [
+    { "code": -201, "label": "view_characters", "type": "system_gui" },
+    { "code":   44, "label": "," },
+    { "code": -202, "label": "view_symbols", "type": "system_gui" },
+    { "code": 2790, "label": "૦", "type": "numeric" },
+    { "code":   61, "label": "=" },
+    { "code":   46, "label": "." },
+    { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+  ]
+]
