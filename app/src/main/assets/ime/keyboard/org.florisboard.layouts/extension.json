@@ -168,6 +168,12 @@
         "direction": "rtl"
       },
       {
+        "id": "gujarati",
+        "label": "Gujarati",
+        "authors": [ "MysterioABC" ],
+        "direction": "ltr"
+      },
+      {
         "id": "greek",
         "label": "Ελληνικά",
         "authors": [ "tsiflimagas" ],
