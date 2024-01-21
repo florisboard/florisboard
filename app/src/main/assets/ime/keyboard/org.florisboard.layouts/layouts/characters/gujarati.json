@@ -130,6 +130,8 @@
       "popup": {
         "relevant": [
           { "$": "lower", "code": 2801, "label": "૱" },
+          ]
+        }
     }
   ]
 ]
