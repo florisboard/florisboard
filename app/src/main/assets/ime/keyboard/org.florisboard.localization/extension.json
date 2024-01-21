@@ -702,6 +702,17 @@
       }
     },
     {
+      "languageTag": "gu-IN",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "popupMapping": "org.florisboard.localization:default",
+      "preferred": {
+        "characters": "org.florisboard.layouts:gujarati"
+        "numericRow": "org.florisboard.layouts:gujarati",
+        "numericAdvanced": "org.florisboard.layouts:gujarati"
+      }
+    },
+    {
       "languageTag": "kab",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
