@@ -69,7 +69,7 @@ import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
 private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)
 
-enum class QabType {
+enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
     INTERACTIVE_TILE,
     STATIC_TILE;
@@ -80,15 +80,15 @@ fun QuickActionButton(
     action: QuickAction,
     evaluator: ComputingEvaluator,
     modifier: Modifier = Modifier,
-    type: QabType = QabType.INTERACTIVE_BUTTON,
+    type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isEnabled = type == QabType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
+    val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
     val element = when (type) {
-        QabType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
+        QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
         else -> FlorisImeUi.SmartbarActionTile
     }
     // We always need to know both state's styles to animate smoothly
@@ -138,7 +138,7 @@ fun QuickActionButton(
         }
     }
 
-    val tooltipModifier = if (type == QabType.INTERACTIVE_BUTTON) {
+    val tooltipModifier = if (type == QuickActionBarType.INTERACTIVE_BUTTON) {
         Modifier.tooltip(action.computeTooltip(evaluator))
     } else {
         Modifier
@@ -157,7 +157,7 @@ fun QuickActionButton(
                 awaitEachGesture {
                     val down = awaitFirstDown()
                     down.consume()
-                    if (isEnabled && type != QabType.STATIC_TILE) {
+                    if (isEnabled && type != QuickActionBarType.STATIC_TILE) {
                         val press = PressInteraction.Press(down.position)
                         interactionSource.tryEmit(press)
                         action.onPointerDown(context)
@@ -213,12 +213,12 @@ fun QuickActionButton(
             }
 
             // Render additional info if this is a tile
-            if (type != QabType.INTERACTIVE_BUTTON) {
+            if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = action.computeDisplayName(evaluator = evaluator),
                     color = fgColor,
-                    fontSize = if (type == QabType.STATIC_TILE) 10.sp else 13.sp,
+                    fontSize = if (type == QuickActionBarType.STATIC_TILE) 10.sp else 13.sp,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
