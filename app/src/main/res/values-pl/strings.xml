@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Pokaż klucz użytkowy</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Pokazuje konfigurowalny klawisz użytkowy obok spacji</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Działanie klucza użytkowego</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Pokaż język na klawiszu spacji</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Wyświetla nazwę bieżącego aktywnego języka na klawiszu spacji</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tryb jednoręczny</string>

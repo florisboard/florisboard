@@ -278,8 +278,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra tasto funzionalità</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra un tasto funzionalità configurabile vicino alla barra spaziatrice</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Azione del tasto di strumenti</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Visualizza lingua sulla barra spaziatrice</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Visualizza il nome della lingua attiva corrente sulla barra spaziatrice</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Moltiplicatore dimensione carattere</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modalità ad una mano</string>

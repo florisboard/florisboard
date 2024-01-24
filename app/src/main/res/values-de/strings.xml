@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Utility-Taste anzeigen</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zeigt eine konfigurierbare Utility-Taste neben der Leertaste an</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility-Taste Aktion</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Sprache auf Leertaste anzeigen</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Zeigt den Namen der momentan aktiven Sprache auf der Leertaste an</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Schriftgröße</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Einhandmodus</string>

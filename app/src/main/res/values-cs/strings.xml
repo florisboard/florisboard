@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazit pomocné tlačítko</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí nastavitelné pomocné tlačítko vedle mezerníku</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Funkce pomocného tlačítka</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Zobrazit jazyk na mezerníku</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Zobrazí název aktuálně používaného jazyka na mezerníku</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim jedné ruky</string>

@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">عرض مفتاح الادوات</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">عرض مفتاح الأدوات القابل لتخصيص بجوار شريط المسافة</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">وظيفة مفتاح الادوات</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">عرض اسم اللغة على شريط المسافة</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">عرض اسم اللغة الحالية على زر المسافة</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">مضاعف حجم الخط</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">التخطيط</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">وضع اليد الواحدة</string>

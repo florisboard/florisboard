@@ -245,8 +245,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Toon functietoets</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Toont een instelbare functietoets naast de spatiebalk</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Functietoets actie</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Taal weergeven op spatiebalk</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Toont de huidige actieve taalnaam op de spatiebalk</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Vermenigvuldigingsfactor tekengrootte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Indeling</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modus met één hand</string>

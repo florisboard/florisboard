@@ -220,8 +220,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">ユーティリティキーを表示</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">スペースバーの横に設定可能なユーティリティキーを表示します</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">ユーティリティキーアクション</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">スペースバーに言語を表示する</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">スペースバーに現在アクティブな言語名を表示します</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズの倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">片手モード</string>

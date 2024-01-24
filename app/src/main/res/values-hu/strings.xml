@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Kellékgomb megjelenítése</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Egy beállítható kellékgomb megjelenítése a szóköz mellett</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Kellékgomb művelet</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Nyelv megjelenítése a szóköz gombon</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Jelenleg aktív nyelv mutatása a szóközön</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Betűméret-szorzó</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Egykezes mód</string>

@@ -99,8 +99,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidá de la vibración</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tecláu</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Amuesa la filera de númberos enriba de la distribución de tecles</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Amosar la llingua na barra d\'espaciu</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Amuesa la llingua activa na barra d\'espaciu</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamañu de la fonte</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Altor del tecláu</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pulsación de tecles</string>

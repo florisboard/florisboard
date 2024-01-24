@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Afficher la touche utilitaire</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Affiche une touche utilitaire configurable à côté de la barre d\'espace</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Action de la touche utilitaire</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Afficher la langue sur la barre d\'espace</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Affiche le nom de la langue actuellement active sur la barre d\'espace</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicateur de la taille de la police</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode à une main</string>
