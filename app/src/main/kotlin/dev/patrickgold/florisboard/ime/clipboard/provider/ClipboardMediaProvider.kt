@@ -25,6 +25,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -91,19 +92,13 @@ class ClipboardMediaProvider : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         val id = tryOrNull { ContentUris.parseId(uri) } ?: return null
-        if (projection != null) { //Filters the query
-            return clipboardFilesDao
-                ?.getCurserByIdWithColums(
-                    id,
-                    listOf(
-                        "id",
-                        "displayname",
-                        "size",
-                        "orientation",
-                        "mimetypes"
-                    ).filter {
-                        projection.contains(it)
-                    }.joinToString())
+        if (projection != null) {
+            if (projection.contains(MediaStore.Images.Media.ORIENTATION)) {
+                clipboardFilesDao?.getCurserByIdWithColums(id, MediaStore.Images.Media.ORIENTATION)
+            } else {
+                //Return null if the projection query is invalid
+                return null
+            }
         }
         return clipboardFilesDao?.getCursorById(id)
     }
