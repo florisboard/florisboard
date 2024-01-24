@@ -53,11 +53,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.compose.tooltip.tooltip
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.snygg.ui.shape
@@ -83,7 +85,7 @@ fun QuickActionButton(
     type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
-
+    val inputFeedbackController = LocalInputFeedbackController.current
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
@@ -115,7 +117,7 @@ fun QuickActionButton(
                 actionStyleNotPressed.background.solidColor(context)
             }
         },
-        animationSpec = BackgroundAnimationSpec,
+        animationSpec = BackgroundAnimationSpec, label = "bgColor",
     )
     val fgColor = when (action.keyData().code) {
         KeyCode.DRAG_MARKER -> {
@@ -159,6 +161,7 @@ fun QuickActionButton(
                     down.consume()
                     if (isEnabled && type != QuickActionBarType.STATIC_TILE) {
                         val press = PressInteraction.Press(down.position)
+                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
                         interactionSource.tryEmit(press)
                         action.onPointerDown(context)
                         val up = waitForUpOrCancellation()
