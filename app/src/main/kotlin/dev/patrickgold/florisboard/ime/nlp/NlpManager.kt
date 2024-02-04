@@ -56,11 +56,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
 
-private const val NEW_LINE = "\n"
-private const val TAB = "\t"
-private const val SPACE = ""
+private const val BLANK_STR_PATTERN = "^\\s*$"
 
 class NlpManager(context: Context) {
+    private val blankStrRegex = Regex(BLANK_STR_PATTERN)
+
     private val prefs by florisPreferenceModel()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
@@ -470,7 +470,8 @@ class NlpManager(context: Context) {
                     // Check if content is empty
                     && contentText.isBlank()
                     // Check if clipboard content has any valid characters
-                    && currentItem.text?.replace(NEW_LINE, SPACE)?.replace(TAB, SPACE)?.isBlank() == false
+                    && !currentItem.text.isNullOrBlank()
+                    && !blankStrRegex.matches(currentItem.text)
             }
     }
 }
