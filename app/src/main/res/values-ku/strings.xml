@@ -160,6 +160,7 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mifteya avîteyê nîşan bide</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mifteya avîtyê ya mîhengkirî li rex darişa cîhê nîşan dide</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Çalakiya bişkojka avît</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Zimanê li ser darikê fezayê nîşan de</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pirjimara mezinahiya curenivîsê</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raxistin</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Moda yek-destî</string>

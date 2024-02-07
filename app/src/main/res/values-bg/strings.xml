@@ -292,6 +292,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Помощен клавиш</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Показва се помощен бутон до клавиша за интервал</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Действие на помощния клавиш</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Езикът е посочен на клавиша за интервал</string>
+    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Текущият език е видим върху клавиша за интервал</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Размер на надписите на клавишите</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Режим за работа с една ръка</string>
