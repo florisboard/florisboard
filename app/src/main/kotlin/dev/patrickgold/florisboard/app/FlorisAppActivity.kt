@@ -97,9 +97,11 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
+        //Check if android 13+ is running and the NotificationPermission is not set
         if (AndroidVersion.ATLEAST_API33_T &&
             prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
         ) {
+            // update pref value to show the setup screen again again
             prefs.internal.isImeSetUp.set(false)
         }
 

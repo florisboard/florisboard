@@ -104,6 +104,8 @@ private fun FlorisScreenScope.content(
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
     hasNotificationPermission: NotificationPermissionState,
 ) {
+
+    // Show screen without notification permission if the android version is below android 13.
     if (AndroidVersion.ATMOST_API32_S_V2) {
 
         val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
@@ -163,6 +165,7 @@ private fun FlorisScreenScope.content(
                 },
             )
         }
+        // Show the screen with notification permission on android 13+
     } else {
         val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
             val initStep = when {
