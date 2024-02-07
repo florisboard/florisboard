@@ -184,7 +184,7 @@ fun EmojiPaletteView(
             } else {
                 emojiMappings[activeCategory]!!
             }
-            if(activeCategory == EmojiCategory.RECENTLY_USED && deviceLocked) {
+            if (activeCategory == EmojiCategory.RECENTLY_USED && deviceLocked) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

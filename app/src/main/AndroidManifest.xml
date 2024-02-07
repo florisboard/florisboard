@@ -19,7 +19,7 @@
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-    <!-- Permission needed to create notifications on devices running android 13+-->
+    <!-- Permission needed to create notifications on devices running Android 13+ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that

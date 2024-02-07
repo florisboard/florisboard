@@ -369,7 +369,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val notificationPermissionState = enum(
             key = "internal__notification_permission_state",
-            default = NotificationPermissionState.NOT_SET
+            default = NotificationPermissionState.NOT_SET,
         )
     }
 
