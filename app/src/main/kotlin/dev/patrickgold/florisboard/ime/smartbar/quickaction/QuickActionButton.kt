@@ -53,7 +53,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.compose.tooltip.tooltip
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
@@ -85,7 +85,8 @@ fun QuickActionButton(
     type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
-    val inputFeedbackController = LocalInputFeedbackController.current
+    // Get the inputFeedbackController through the FlorisImeService companion-object.
+    val inputFeedbackController = FlorisImeService.inputFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
@@ -161,7 +162,7 @@ fun QuickActionButton(
                     down.consume()
                     if (isEnabled && type != QuickActionBarType.STATIC_TILE) {
                         val press = PressInteraction.Press(down.position)
-                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                         interactionSource.tryEmit(press)
                         action.onPointerDown(context)
                         val up = waitForUpOrCancellation()
