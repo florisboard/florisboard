@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.app.setup
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,22 +32,19 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.launchActivity
 import dev.patrickgold.florisboard.lib.android.launchUrl
@@ -60,6 +56,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisStepState
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 import kotlinx.coroutines.delay
 
@@ -73,23 +70,19 @@ fun SetupScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
+    val prefs by florisPreferenceModel()
+
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
     val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
-    val hasNotificationPermission = remember { mutableStateOf(false) }
+    val hasNotificationPermission by prefs.internal.notificationPermissionState.observeAsState()
 
-    LaunchedEffect(Unit) {
-        hasNotificationPermission.value = if (AndroidVersion.ATLEAST_API33_T) {
-            ContextCompat.checkSelfPermission(
-                context,
-                android.Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    }
     val requestNotification =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            hasNotificationPermission.value = true
+            if (isGranted) {
+                prefs.internal.notificationPermissionState.set(NotificationPermissionState.GRANTED)
+            } else {
+                prefs.internal.notificationPermissionState.set(NotificationPermissionState.DENIED)
+            }
         }
 
     content(
@@ -109,8 +102,8 @@ private fun FlorisScreenScope.content(
     context: Context,
     navController: NavController,
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
-    hasNotificationPermission: MutableState<Boolean>,
-): Unit {
+    hasNotificationPermission: NotificationPermissionState,
+) {
     if (AndroidVersion.ATMOST_API32_S_V2) {
 
         val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
@@ -175,19 +168,19 @@ private fun FlorisScreenScope.content(
             val initStep = when {
                 !isFlorisBoardEnabled -> Steps.WithNotifications.EnableIme.id
                 !isFlorisBoardSelected -> Steps.WithNotifications.SelectIme.id
-                !hasNotificationPermission.value -> Steps.WithNotifications.SelectNotification.id
+                hasNotificationPermission == NotificationPermissionState.NOT_SET -> Steps.WithNotifications.SelectNotification.id
                 else -> Steps.WithNotifications.FinishUp.id
             }
             FlorisStepState.new(init = initStep)
         }
 
         content {
-            LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission.value) {
+            LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
                 stepState.setCurrentAuto(
                     when {
                         !isFlorisBoardEnabled -> Steps.WithNotifications.EnableIme.id
                         !isFlorisBoardSelected -> Steps.WithNotifications.SelectIme.id
-                        !hasNotificationPermission.value -> Steps.WithNotifications.SelectNotification.id
+                        hasNotificationPermission == NotificationPermissionState.NOT_SET -> Steps.WithNotifications.SelectNotification.id
                         else -> Steps.WithNotifications.FinishUp.id
                     }
                 )
@@ -203,7 +196,7 @@ private fun FlorisScreenScope.content(
                         stepState.getCurrentManual().value == -1 &&
                         !isFlorisBoardEnabled &&
                         !isFlorisBoardSelected &&
-                        !hasNotificationPermission.value &&
+                        hasNotificationPermission == NotificationPermissionState.NOT_SET &&
                         isEnabled
                     ) {
                         context.launchActivity(FlorisAppActivity::class) {
