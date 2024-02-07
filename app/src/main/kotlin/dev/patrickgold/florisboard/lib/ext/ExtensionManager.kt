@@ -70,7 +70,7 @@ val ExtensionJsonConfig = Json {
             subclass(HangulUnicode::class, HangulUnicode.serializer())
             subclass(KanaUnicode::class, KanaUnicode.serializer())
             subclass(WithRules::class, WithRules.serializer())
-            default { Appender.serializer() }
+            defaultDeserializer { Appender.serializer() }
         }
     }
 }
