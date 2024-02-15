@@ -51,7 +51,7 @@ enum class ItemType(val value: Int) {
 
     companion object {
         fun fromInt(value : Int) : ItemType {
-            return values().first { it.value == value }
+            return entries.first { it.value == value }
         }
     }
 }

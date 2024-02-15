@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -365,7 +366,7 @@ private fun PropertyValueEditor(
                 listOf("") + definedVariables.keys.toList()
             }
             val selectedIndex by remember(variableKeys, value.key) {
-                mutableStateOf(variableKeys.indexOf(value.key).coerceIn(variableKeys.indices))
+                mutableIntStateOf(variableKeys.indexOf(value.key).coerceIn(variableKeys.indices))
             }
             var expanded by remember { mutableStateOf(false) }
             Row(
@@ -528,7 +529,7 @@ private fun PropertyValueEditor(
             }
 
             val selectedIndex by remember(value.colorName) {
-                mutableStateOf(
+                mutableIntStateOf(
                     MaterialYouColor.colorNames.indexOf(value.colorName).coerceIn(MaterialYouColor.colorNames.indices)
                 )
             }
@@ -756,13 +757,13 @@ private fun PropertyValueEditor(
 
             is SnyggPercentShapeValue -> {
                 var showDialogInitPercentage by rememberSaveable {
-                    mutableStateOf(0)
+                    mutableIntStateOf(0)
                 }
                 var showDialogForCorner by rememberSaveable {
                     mutableStateOf<ShapeCorner?>(null)
                 }
                 var topStart by rememberSaveable {
-                    mutableStateOf(
+                    mutableIntStateOf(
                         when (value) {
                             is SnyggCutCornerPercentShapeValue -> value.topStart
                             is SnyggRoundedCornerPercentShapeValue -> value.topStart
@@ -770,7 +771,7 @@ private fun PropertyValueEditor(
                     )
                 }
                 var topEnd by rememberSaveable {
-                    mutableStateOf(
+                    mutableIntStateOf(
                         when (value) {
                             is SnyggCutCornerPercentShapeValue -> value.topEnd
                             is SnyggRoundedCornerPercentShapeValue -> value.topEnd
@@ -778,7 +779,7 @@ private fun PropertyValueEditor(
                     )
                 }
                 var bottomEnd by rememberSaveable {
-                    mutableStateOf(
+                    mutableIntStateOf(
                         when (value) {
                             is SnyggCutCornerPercentShapeValue -> value.bottomEnd
                             is SnyggRoundedCornerPercentShapeValue -> value.bottomEnd
@@ -786,7 +787,7 @@ private fun PropertyValueEditor(
                     )
                 }
                 var bottomStart by rememberSaveable {
-                    mutableStateOf(
+                    mutableIntStateOf(
                         when (value) {
                             is SnyggCutCornerPercentShapeValue -> value.bottomStart
                             is SnyggRoundedCornerPercentShapeValue -> value.bottomStart

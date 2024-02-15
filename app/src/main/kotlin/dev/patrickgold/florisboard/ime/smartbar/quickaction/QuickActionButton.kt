@@ -21,8 +21,8 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -153,23 +153,21 @@ fun QuickActionButton(
             .snyggClip(actionStyle)
             .indication(interactionSource, LocalIndication.current)
             .pointerInput(action, isEnabled) {
-                forEachGesture {
-                    awaitPointerEventScope {
-                        val down = awaitFirstDown()
-                        down.consume()
-                        if (isEnabled && type != QabType.STATIC_TILE) {
-                            val press = PressInteraction.Press(down.position)
-                            interactionSource.tryEmit(press)
-                            action.onPointerDown(context)
-                            val up = waitForUpOrCancellation()
-                            if (up != null) {
-                                up.consume()
-                                interactionSource.tryEmit(PressInteraction.Release(press))
-                                action.onPointerUp(context)
-                            } else {
-                                interactionSource.tryEmit(PressInteraction.Cancel(press))
-                                action.onPointerCancel(context)
-                            }
+                awaitEachGesture {
+                    val down = awaitFirstDown()
+                    down.consume()
+                    if (isEnabled && type != QabType.STATIC_TILE) {
+                        val press = PressInteraction.Press(down.position)
+                        interactionSource.tryEmit(press)
+                        action.onPointerDown(context)
+                        val up = waitForUpOrCancellation()
+                        if (up != null) {
+                            up.consume()
+                            interactionSource.tryEmit(PressInteraction.Release(press))
+                            action.onPointerUp(context)
+                        } else {
+                            interactionSource.tryEmit(PressInteraction.Cancel(press))
+                            action.onPointerCancel(context)
                         }
                     }
                 }

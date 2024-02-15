@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.ime.media
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -59,7 +59,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
-import kotlinx.coroutines.coroutineScope
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
@@ -126,23 +125,19 @@ internal fun KeyboardLikeButton(
     )
     SnyggSurface(
         modifier = modifier.pointerInput(Unit) {
-            forEachGesture {
-                coroutineScope {
-                    awaitPointerEventScope {
-                        awaitFirstDown(requireUnconsumed = false).also {
-                            if (it.pressed != it.previousPressed) it.consume()
-                        }
-                        isPressed = true
-                        inputEventDispatcher.sendDown(keyData)
-                        inputFeedbackController.keyPress(keyData)
-                        val up = waitForUpOrCancellation()
-                        isPressed = false
-                        if (up != null) {
-                            inputEventDispatcher.sendUp(keyData)
-                        } else {
-                            inputEventDispatcher.sendCancel(keyData)
-                        }
-                    }
+            awaitEachGesture {
+                awaitFirstDown(requireUnconsumed = false).also {
+                    if (it.pressed != it.previousPressed) it.consume()
+                }
+                isPressed = true
+                inputEventDispatcher.sendDown(keyData)
+                inputFeedbackController.keyPress(keyData)
+                val up = waitForUpOrCancellation()
+                isPressed = false
+                if (up != null) {
+                    inputEventDispatcher.sendUp(keyData)
+                } else {
+                    inputEventDispatcher.sendCancel(keyData)
                 }
             }
         },
