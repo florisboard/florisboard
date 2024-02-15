@@ -113,8 +113,8 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
 
     init {
         val codePoints = value.codePoints().toList()
-        skinTone = EmojiSkinTone.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
-        hairStyle = EmojiHairStyle.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
+        skinTone = EmojiSkinTone.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
+        hairStyle = EmojiHairStyle.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
     }
 
     override fun compute(evaluator: ComputingEvaluator): KeyData {

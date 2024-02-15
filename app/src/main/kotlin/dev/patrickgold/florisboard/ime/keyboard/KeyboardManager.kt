@@ -878,7 +878,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
             val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
             val localSubtypePresets = mutableListOf<SubtypePreset>()
-            for (layoutType in LayoutType.values()) {
+            for (layoutType in LayoutType.entries) {
                 localLayouts[layoutType] = mutableMapOf()
             }
             for (keyboardExtension in keyboardExtensions) {
@@ -890,7 +890,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 keyboardExtension.layouts.forEach { (type, layoutComponents) ->
                     for (layoutComponent in layoutComponents) {
-                        localLayouts[LayoutType.values().first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
+                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
                     }
                 }
                 keyboardExtension.popupMappings.forEach { popupMapping ->

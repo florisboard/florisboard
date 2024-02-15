@@ -48,7 +48,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
     init {
         // Initialize all odes with an empty array. As we won't remove the arrays anymore (only clear them), any
         // get operations on `cache` will be automatically assumed to be not null.
-        for (mode in KeyboardMode.values()) {
+        for (mode in KeyboardMode.entries) {
             cache[mode] = SparseArrayCompat()
         }
     }
@@ -58,7 +58,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      */
     fun clear() {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear whole cache" }
-        for (mode in KeyboardMode.values()) {
+        for (mode in KeyboardMode.entries) {
             cache[mode]!!.clear()
         }
     }
@@ -80,7 +80,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      */
     fun clear(subtype: Subtype) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear cache for subtype '${subtype.toShortString()}'" }
-        for (mode in KeyboardMode.values()) {
+        for (mode in KeyboardMode.entries) {
             cache[mode]!!.remove(subtype.hashCode())
         }
     }
