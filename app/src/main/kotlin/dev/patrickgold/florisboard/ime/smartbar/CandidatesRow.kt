@@ -16,8 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -195,29 +195,27 @@ private fun CandidateItem(
         modifier = modifier
             .snyggBackground(context, style)
             .pointerInput(Unit) {
-                forEachGesture {
-                    awaitPointerEventScope {
-                        val down = awaitFirstDown()
-                        isPressed = true
-                        if (down.pressed != down.previousPressed) down.consume()
-                        var upOrCancel: PointerInputChange? = null
-                        try {
-                            upOrCancel = withTimeout(longPressDelay) {
-                                waitForUpOrCancellation()
-                            }
-                            upOrCancel?.let { if (it.pressed != it.previousPressed) it.consume() }
-                        } catch (_: PointerEventTimeoutCancellationException) {
-                            if (onLongPress()) {
-                                upOrCancel = null
-                                isPressed = false
-                            }
-                            waitForUpOrCancellation()?.let { if (it.pressed != it.previousPressed) it.consume() }
+                awaitEachGesture {
+                    val down = awaitFirstDown()
+                    isPressed = true
+                    if (down.pressed != down.previousPressed) down.consume()
+                    var upOrCancel: PointerInputChange? = null
+                    try {
+                        upOrCancel = withTimeout(longPressDelay) {
+                            waitForUpOrCancellation()
                         }
-                        if (upOrCancel != null) {
-                            onClick()
+                        upOrCancel?.let { if (it.pressed != it.previousPressed) it.consume() }
+                    } catch (_: PointerEventTimeoutCancellationException) {
+                        if (onLongPress()) {
+                            upOrCancel = null
+                            isPressed = false
                         }
-                        isPressed = false
+                        waitForUpOrCancellation()?.let { if (it.pressed != it.previousPressed) it.consume() }
                     }
+                    if (upOrCancel != null) {
+                        onClick()
+                    }
+                    isPressed = false
                 }
             }
             .padding(horizontal = 12.dp),

@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -76,7 +77,7 @@ class PopupUiController(
     private var baseRenderInfo by mutableStateOf<BaseRenderInfo?>(null)
     private var extRenderInfo by mutableStateOf<ExtRenderInfo?>(null)
 
-    private var activeElementIndex by mutableStateOf(-1)
+    private var activeElementIndex by mutableIntStateOf(-1)
     var evaluator: ComputingEvaluator = DefaultComputingEvaluator
     var fontSizeMultiplier: Float = 1.0f
     var keyHintConfiguration: KeyHintConfiguration = KeyHintConfiguration.HINTS_DISABLED

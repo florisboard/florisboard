@@ -20,6 +20,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
@@ -188,7 +189,7 @@ class CacheManager(context: Context) {
         var currentAction by mutableStateOf<EditorAction?>(null)
         var ext: Extension? = null
         var editor by mutableStateOf<T?>(null, neverEqualPolicy())
-        var version by mutableStateOf(0)
+        var version by mutableIntStateOf(0)
 
         val isModified get() = version > 0
 

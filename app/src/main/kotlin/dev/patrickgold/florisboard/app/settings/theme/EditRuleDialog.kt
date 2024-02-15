@@ -25,8 +25,11 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -46,6 +49,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -61,7 +65,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.flowlayout.FlowRow
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
@@ -100,6 +103,7 @@ private val TransparentTextSelectionColors = TextSelectionColors(
 )
 internal val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun EditRuleDialog(
     initRule: SnyggRule,
@@ -119,7 +123,7 @@ internal fun EditRuleDialog(
     var elementsExpanded by remember { mutableStateOf(false) }
     var elementsSelectedIndex by rememberSaveable {
         val index = possibleElementNames.indexOf(initRule.element).coerceIn(possibleElementNames.indices)
-        mutableStateOf(index)
+        mutableIntStateOf(index)
     }
 
     val codes = rememberSaveable(saver = IntListSaver) { initRule.codes.toMutableStateList() }
@@ -269,7 +273,7 @@ internal fun EditRuleDialog(
             }
 
             DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
-                FlowRow(mainAxisSpacing = 4.dp) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     FlorisChip(
                         onClick = { shiftStateUnshifted = !shiftStateUnshifted },
                         text = when (level) {
@@ -349,7 +353,7 @@ private fun EditCodeValueDialog(
     }
     var showKeyCodesHelp by rememberSaveable(codeValue) { mutableStateOf(false) }
     var showError by rememberSaveable(codeValue) { mutableStateOf(false) }
-    var errorId by rememberSaveable(codeValue) { mutableStateOf(NATIVE_NULLPTR.toInt()) }
+    var errorId by rememberSaveable(codeValue) { mutableIntStateOf(NATIVE_NULLPTR.toInt()) }
 
     val focusRequester = remember { FocusRequester() }
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
