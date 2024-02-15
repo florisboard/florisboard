@@ -33,7 +33,7 @@ enum class KeyVariation(val value: Int) {
     URI(4);
 
     companion object {
-        fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: ALL
+        fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: ALL
     }
 
     fun toInt() = value
