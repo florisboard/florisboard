@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-// Suppress needed until https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed
-@file:Suppress("DSL_SCOPE_VIOLATION")
-
 plugins {
     alias(libs.plugins.agp.test)
     alias(libs.plugins.kotlin.android)
