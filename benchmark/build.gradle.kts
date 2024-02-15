@@ -24,7 +24,7 @@ plugins {
 
 android {
     namespace = "dev.patrickgold.florisboard.benchmark"
-    compileSdk = 32
+    compileSdk = 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,7 +37,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 32
+        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
