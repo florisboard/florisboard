@@ -39,7 +39,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         ANDROID_VERSION_TO_OLD_ERROR,
         TYPE_NOT_SUPPORTED_ERROR;
 
-
         @Composable
         fun showError() {
             val textStyle = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
@@ -56,7 +55,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                 fontSize = 18.sp
             )
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,9 +92,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             }
         }
 
-
-
-
         setContent {
             CopyToClipboardBottomSheet(
                 onDismiss = {
@@ -133,5 +128,4 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             }
         }
     }
-
 }
