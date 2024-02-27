@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.CopyToClipboardBottomSheet
+import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 
@@ -93,37 +94,39 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         }
 
         setContent {
-            CopyToClipboardBottomSheet(
-                onDismiss = {
-                    finish()
-                }
-            ) {
-                val textStyle = FlorisImeTheme.style.get(element = FlorisImeUi.KeyHint)
-                val buttonContentStyle = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
-                val context = LocalContext.current
-
-                error?.showError()
-                bitmap?.let {
-                    Text(
-                        text = stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard),
-                        color = textStyle.foreground.solidColor(context = context)
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Image(
-                        modifier = Modifier.fillMaxWidth(),
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = null
-                    )
-                }
-                Button(
-                    onClick = { it() },
-                    modifier = Modifier.align(alignment = Alignment.End),
-                    colors = ButtonDefaults.textButtonColors(
-                        //containerColor = buttonContainer.background.solidColor(context = context),
-                        contentColor = buttonContentStyle.foreground.solidColor(context = context),
-                    )
+            ProvideLocalizedResources(this) {
+                CopyToClipboardBottomSheet(
+                    onDismiss = {
+                        finish()
+                    }
                 ) {
-                    Text(text = stringRes(id = R.string.action__ok))
+                    val textStyle = FlorisImeTheme.style.get(element = FlorisImeUi.KeyHint)
+                    val buttonContentStyle = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
+                    val context = LocalContext.current
+
+                    error?.showError()
+                    bitmap?.let {
+                        Text(
+                            text = stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard),
+                            color = textStyle.foreground.solidColor(context = context)
+                        )
+                        Spacer(modifier = Modifier.size(8.dp))
+                        Image(
+                            modifier = Modifier.fillMaxWidth(),
+                            bitmap = bitmap.asImageBitmap(),
+                            contentDescription = null
+                        )
+                    }
+                    Button(
+                        onClick = { it() },
+                        modifier = Modifier.align(alignment = Alignment.End),
+                        colors = ButtonDefaults.textButtonColors(
+                            //containerColor = buttonContainer.background.solidColor(context = context),
+                            contentColor = buttonContentStyle.foreground.solidColor(context = context),
+                        )
+                    ) {
+                        Text(text = stringRes(id = R.string.action__ok))
+                    }
                 }
             }
         }
