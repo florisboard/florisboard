@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
 import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.CopyToClipboardBottomSheet
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 
 
@@ -35,7 +36,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
 
     enum class CopyToClipboardError {
         UNKNOWN_ERROR,
-        TO_OLD_ANDROID_ERROR,
+        ANDROID_VERSION_TO_OLD_ERROR,
         TYPE_NOT_SUPPORTED_ERROR;
 
 
@@ -44,13 +45,13 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             val textStyle = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
             val context = LocalContext.current
 
-            val text = when (this) {
-                UNKNOWN_ERROR -> "An unknown Error occured. Pleas try again!"
-                TYPE_NOT_SUPPORTED_ERROR -> "This media type is not supported."
-                TO_OLD_ANDROID_ERROR -> "The version of android is to old for this feature."
+            val textId = when (this) {
+                UNKNOWN_ERROR -> R.string.send_to_clipboard__unknown_error
+                TYPE_NOT_SUPPORTED_ERROR -> R.string.send_to_clipboard__type_not_supported_error
+                ANDROID_VERSION_TO_OLD_ERROR -> R.string.send_to_clipboard__android_version_to_old_error
             }
             Text(
-                text = text,
+                text = stringRes(textId),
                 color = textStyle.foreground.solidColor(context = context),
                 fontSize = 18.sp
             )
@@ -64,7 +65,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         val type = intent.type
         val action = intent.action
         var error: CopyToClipboardError? = null
-        var clip: ClipData? = null
         var bitmap: Bitmap? = null
         if (Intent.ACTION_SEND != action || type == null) {
             error = CopyToClipboardError.UNKNOWN_ERROR
@@ -76,7 +76,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                 } else {
                     // pasting images via virtual keyboard only available since Android 7.1 (API 25)
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
-                        error = CopyToClipboardError.TO_OLD_ANDROID_ERROR
+                        error = CopyToClipboardError.ANDROID_VERSION_TO_OLD_ERROR
                     } else {
                         val uri: Uri? =
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -84,7 +84,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                             } else {
                                 intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
                             }
-                        clip = ClipData.newUri(contentResolver, "image", uri)
+                        val clip = ClipData.newUri(contentResolver, "image", uri)
                         systemClipboardManager.setPrimaryClip(clip)
                         bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
                     }
@@ -100,7 +100,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         setContent {
             CopyToClipboardBottomSheet(
                 onDismiss = {
-                    println("Dismissed");finish()
+                    finish()
                 }
             ) {
                 val textStyle = FlorisImeTheme.style.get(element = FlorisImeUi.KeyHint)
@@ -110,14 +110,14 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                 error?.showError()
                 bitmap?.let {
                     Text(
-                        text = "Copied below image to clipboard!",
+                        text = stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard),
                         color = textStyle.foreground.solidColor(context = context)
                     )
                     Spacer(modifier = Modifier.size(8.dp))
                     Image(
                         modifier = Modifier.fillMaxWidth(),
                         bitmap = bitmap.asImageBitmap(),
-                        contentDescription = "Picture"
+                        contentDescription = null
                     )
                 }
                 Button(
@@ -128,7 +128,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                         contentColor = buttonContentStyle.foreground.solidColor(context = context),
                     )
                 ) {
-                    Text(text = "Ok")
+                    Text(text = stringRes(id = R.string.action__ok))
                 }
             }
         }
