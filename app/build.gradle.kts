@@ -15,7 +15,6 @@
  */
 
 import java.io.ByteArrayOutputStream
-import java.io.File
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -135,7 +134,7 @@ android {
 
             ndk {
                 // For running FlorisBoard on the emulator
-                // abiFilters += listOf("x86", "x86_64")
+                abiFilters += listOf("x86", "x86_64")
             }
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
