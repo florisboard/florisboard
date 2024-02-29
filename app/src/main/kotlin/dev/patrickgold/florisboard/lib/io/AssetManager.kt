@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.lib.kotlin.resultErr
 import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
 import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -56,13 +55,13 @@ val DefaultJsonConfig = Json {
             subclass(LayoutDirectionSelector::class, LayoutDirectionSelector.serializer())
             subclass(CharWidthSelector::class, CharWidthSelector.serializer())
             subclass(KanaSelector::class, KanaSelector.serializer())
-            default { TextKeyData.serializer() }
+            defaultDeserializer { TextKeyData.serializer() }
         }
         polymorphic(KeyData::class) {
             subclass(TextKeyData::class, TextKeyData.serializer())
             subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
             subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
-            default { TextKeyData.serializer() }
+            defaultDeserializer { TextKeyData.serializer() }
         }
     }
 }

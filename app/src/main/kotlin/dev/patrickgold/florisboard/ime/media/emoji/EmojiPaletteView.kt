@@ -87,7 +87,9 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.android.AndroidKeyguardManager
 import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
@@ -146,6 +148,9 @@ fun EmojiPaletteView(
             }
         }
     }
+    val androidKeyguardManager = remember { context.systemService(AndroidKeyguardManager::class) }
+
+    val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
 
     var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
     val lazyListState = rememberLazyGridState()
@@ -181,8 +186,18 @@ fun EmojiPaletteView(
             } else {
                 emojiMappings[activeCategory]!!
             }
-
-            if (activeCategory == EmojiCategory.RECENTLY_USED && emojiMapping.isEmpty()) {
+            if (activeCategory == EmojiCategory.RECENTLY_USED && deviceLocked) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(all = 8.dp),
+                ) {
+                    Text(
+                        text = stringRes(R.string.emoji__recently_used__phone_locked_message),
+                        color = contentColor,
+                    )
+                }
+            } else if (activeCategory == EmojiCategory.RECENTLY_USED && emojiMapping.isEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -199,7 +214,8 @@ fun EmojiPaletteView(
                         fontStyle = FontStyle.Italic,
                     )
                 }
-            } else key(emojiMapping) {
+            }
+            else key(emojiMapping) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     LazyVerticalGrid(
                         modifier = Modifier

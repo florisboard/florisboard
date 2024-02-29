@@ -53,11 +53,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.compose.tooltip.tooltip
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.snygg.ui.shape
@@ -69,7 +71,7 @@ import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
 private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)
 
-enum class QabType {
+enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
     INTERACTIVE_TILE,
     STATIC_TILE;
@@ -80,15 +82,16 @@ fun QuickActionButton(
     action: QuickAction,
     evaluator: ComputingEvaluator,
     modifier: Modifier = Modifier,
-    type: QabType = QabType.INTERACTIVE_BUTTON,
+    type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
-
+    // Get the inputFeedbackController through the FlorisImeService companion-object.
+    val inputFeedbackController = FlorisImeService.inputFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isEnabled = type == QabType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
+    val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
     val element = when (type) {
-        QabType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
+        QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
         else -> FlorisImeUi.SmartbarActionTile
     }
     // We always need to know both state's styles to animate smoothly
@@ -115,12 +118,13 @@ fun QuickActionButton(
                 actionStyleNotPressed.background.solidColor(context)
             }
         },
-        animationSpec = BackgroundAnimationSpec,
+        animationSpec = BackgroundAnimationSpec, label = "bgColor",
     )
     val fgColor = when (action.keyData().code) {
         KeyCode.DRAG_MARKER -> {
             DebugHelperColor
         }
+
         else -> {
             actionStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
         }
@@ -137,7 +141,7 @@ fun QuickActionButton(
         }
     }
 
-    val tooltipModifier = if (type == QabType.INTERACTIVE_BUTTON) {
+    val tooltipModifier = if (type == QuickActionBarType.INTERACTIVE_BUTTON) {
         Modifier.tooltip(action.computeTooltip(evaluator))
     } else {
         Modifier
@@ -156,8 +160,9 @@ fun QuickActionButton(
                 awaitEachGesture {
                     val down = awaitFirstDown()
                     down.consume()
-                    if (isEnabled && type != QabType.STATIC_TILE) {
+                    if (isEnabled && type != QuickActionBarType.STATIC_TILE) {
                         val press = PressInteraction.Press(down.position)
+                        inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                         interactionSource.tryEmit(press)
                         action.onPointerDown(context)
                         val up = waitForUpOrCancellation()
@@ -200,6 +205,7 @@ fun QuickActionButton(
                             )
                         }
                     }
+
                     is QuickAction.InsertText -> {
                         Text(
                             text = action.data.firstOrNull().toString().ifBlank { "?" },
@@ -211,12 +217,12 @@ fun QuickActionButton(
             }
 
             // Render additional info if this is a tile
-            if (type != QabType.INTERACTIVE_BUTTON) {
+            if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = action.computeDisplayName(evaluator = evaluator),
                     color = fgColor,
-                    fontSize = if (type == QabType.STATIC_TILE) 10.sp else 13.sp,
+                    fontSize = if (type == QuickActionBarType.STATIC_TILE) 10.sp else 13.sp,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

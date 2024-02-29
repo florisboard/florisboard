@@ -26,15 +26,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
-import dev.patrickgold.florisboard.keyboardManager
 
 private val SheetOutOfBoundsBgColorInactive = Color(0x00000000)
 private val SheetOutOfBoundsBgColorActive = Color(0x52000000)
@@ -43,14 +39,13 @@ private val DialogContentEnterTransition = slideInVertically { it }
 private val DialogContentExitTransition = slideOutVertically { it }
 
 @Composable
-fun BottomSheetHostUi() {
-    val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
-    val state by keyboardManager.activeState.collectAsState()
-
-    val isBottomSheetShowing = state.isBottomSheetShowing()
+fun BottomSheetHostUi(
+    isShowing: Boolean,
+    onHide: () -> Unit,
+    content: @Composable () -> Unit,
+) {
     val bgColorOutOfBounds by animateColorAsState(
-        if (isBottomSheetShowing) SheetOutOfBoundsBgColorActive else SheetOutOfBoundsBgColorInactive
+        if (isShowing) SheetOutOfBoundsBgColorActive else SheetOutOfBoundsBgColorInactive
     )
 
     Column(Modifier.background(bgColorOutOfBounds)) {
@@ -58,21 +53,22 @@ fun BottomSheetHostUi() {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .then(if (isBottomSheetShowing) {
-                    Modifier.pointerInput(Unit) {
-                        detectTapGestures {
-                            keyboardManager.activeState.isActionsEditorVisible = false
+                .then(
+                    if (isShowing) {
+                        Modifier.pointerInput(Unit) {
+                            detectTapGestures {
+                                onHide()
+                            }
                         }
-                    }
-                } else {
-                    Modifier
-                }),
+                    } else {
+                        Modifier
+                    }),
         )
         AnimatedVisibility(
-            visible = state.isActionsEditorVisible,
+            visible = isShowing,
             enter = DialogContentEnterTransition,
             exit = DialogContentExitTransition,
-            content = { QuickActionsEditorPanel() },
+            content = { content() },
         )
     }
 }

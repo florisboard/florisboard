@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
@@ -365,6 +366,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val versionLastChangelog = string(
             key = "internal__version_last_changelog",
             default = VersionName.DEFAULT_RAW,
+        )
+        val notificationPermissionState = enum(
+            key = "internal__notification_permission_state",
+            default = NotificationPermissionState.NOT_SET,
         )
     }
 

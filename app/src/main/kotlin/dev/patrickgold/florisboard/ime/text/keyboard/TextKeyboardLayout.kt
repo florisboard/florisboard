@@ -283,20 +283,20 @@ fun TextKeyboardLayout(
             },
             isSuitableForBasicPopup = { key ->
                 if (key is TextKey) {
-                    val c = key.computedData.code
-                    val t = key.computedData.type
+                    val keyCode = key.computedData.code
+                    val keyType = key.computedData.type
                     val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
                         keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
-                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
-                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
+                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && keyType == KeyType.NUMERIC
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE && !numeric
                 } else {
                     true
                 }
             },
             isSuitableForExtendedPopup = { key ->
                 if (key is TextKey) {
-                    val c = key.computedData.code
-                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(c)
+                    val keyCode = key.computedData.code
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(keyCode)
                 } else {
                     true
                 }

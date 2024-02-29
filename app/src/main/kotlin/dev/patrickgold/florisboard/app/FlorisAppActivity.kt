@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
+import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.hideAppIcon
@@ -94,6 +95,14 @@ class FlorisAppActivity : ComponentActivity() {
             prefs.advanced.showAppIcon.observe(this) {
                 showAppIcon = it
             }
+        }
+
+        //Check if android 13+ is running and the NotificationPermission is not set
+        if (AndroidVersion.ATLEAST_API33_T &&
+            prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
+        ) {
+            // update pref value to show the setup screen again again
+            prefs.internal.isImeSetUp.set(false)
         }
 
         // We defer the setContent call until the datastore model is loaded, until then the splash screen stays drawn
