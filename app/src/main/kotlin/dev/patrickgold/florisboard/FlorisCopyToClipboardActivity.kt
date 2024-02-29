@@ -55,7 +55,6 @@ import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import kotlin.math.roundToInt
 
 class FlorisCopyToClipboardActivity : ComponentActivity() {
-
     private var error: CopyToClipboardError? = null
     private var bitmap: Bitmap? = null
 
