@@ -26,7 +26,7 @@ import java.util.*
 typealias EmojiLayoutDataMap = EnumMap<EmojiCategory, MutableList<EmojiSet>>
 
 val PlaceholderLayoutDataMap = EmojiLayoutDataMap(EmojiCategory::class.java).also { map ->
-    for (category in EmojiCategory.values()) {
+    for (category in EmojiCategory.entries) {
         map[category] = mutableListOf()
     }
 }
@@ -45,7 +45,7 @@ fun parseRawEmojiSpecsFile(
 ): EmojiLayoutDataMap {
     cachedEmojiLayoutMap?.let { return it }
     val layouts = EmojiLayoutDataMap(EmojiCategory::class.java)
-    for (category in EmojiCategory.values()) {
+    for (category in EmojiCategory.entries) {
         layouts[category] = mutableListOf()
     }
 
@@ -63,7 +63,7 @@ fun parseRawEmojiSpecsFile(
                 // Comment line
             } else if (line.startsWith("[")) {
                 commitEmojiEditorList()
-                ec = EmojiCategory.values().find { it.id == line.slice(1 until (line.length - 1)) }
+                ec = EmojiCategory.entries.find { it.id == line.slice(1 until (line.length - 1)) }
             } else if (line.trim().isEmpty() || ec == null) {
                 // Empty line
                 continue

@@ -21,6 +21,7 @@ import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
@@ -96,7 +97,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     val resources = KeyboardManagerResources()
     val activeState = ObservableKeyboardState.new()
-    var smartbarVisibleDynamicActionsCount by mutableStateOf(0)
+    var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
 
     private val activeEvaluatorGuard = Mutex(locked = false)
@@ -878,7 +879,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
             val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
             val localSubtypePresets = mutableListOf<SubtypePreset>()
-            for (layoutType in LayoutType.values()) {
+            for (layoutType in LayoutType.entries) {
                 localLayouts[layoutType] = mutableMapOf()
             }
             for (keyboardExtension in keyboardExtensions) {
@@ -890,7 +891,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 keyboardExtension.layouts.forEach { (type, layoutComponents) ->
                     for (layoutComponent in layoutComponents) {
-                        localLayouts[LayoutType.values().first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
+                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
                     }
                 }
                 keyboardExtension.popupMappings.forEach { popupMapping ->
