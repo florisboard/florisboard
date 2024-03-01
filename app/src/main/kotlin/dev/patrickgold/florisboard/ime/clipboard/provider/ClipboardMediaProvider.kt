@@ -27,6 +27,7 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import androidx.exifinterface.media.ExifInterface
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
@@ -137,12 +138,23 @@ class ClipboardMediaProvider : ContentProvider() {
                 return try {
                     values as ContentValues
                     val mediaUri = Uri.parse(values.getAsString(Columns.MediaUri))
+                    // Get the orientation of the image
+                    val exifInterface = ExifInterface(context!!.contentResolver.openInputStream(mediaUri)!!)
+                    var rotation = 0
+                    val orientation = exifInterface.getAttributeInt(
+                        ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_NORMAL
+                    )
+                    when (orientation) {
+                        ExifInterface.ORIENTATION_ROTATE_90 -> rotation = 90
+                        ExifInterface.ORIENTATION_ROTATE_180 -> rotation = 180
+                        ExifInterface.ORIENTATION_ROTATE_270 -> rotation = 270
+                    }
                     val id = ClipboardFileStorage.cloneUri(context!!, mediaUri)
                     val size = ClipboardFileStorage.getFileForId(context!!, id).length()
-                    val orientation = 0 //TODO: Find out if this is always the right rotation for images
                     val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
                     val displayName = values.getAsString(OpenableColumns.DISPLAY_NAME)
-                    val fileInfo = ClipboardFileInfo(id, displayName, size, 0, mimeTypes)
+                    val fileInfo = ClipboardFileInfo(id, displayName, size, rotation, mimeTypes)
                     cachedFileInfos[id] = fileInfo
                     ioScope.launch {
                         clipboardFilesDao?.insert(fileInfo)
