@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,6 +69,7 @@ import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
 import dev.patrickgold.florisboard.ime.popup.PopupUiController
 import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
@@ -281,20 +283,20 @@ fun TextKeyboardLayout(
             },
             isSuitableForBasicPopup = { key ->
                 if (key is TextKey) {
-                    val c = key.computedData.code
-                    val t = key.computedData.type
+                    val keyCode = key.computedData.code
+                    val keyType = key.computedData.type
                     val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
                         keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
-                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
-                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
+                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && keyType == KeyType.NUMERIC
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE && !numeric
                 } else {
                     true
                 }
             },
             isSuitableForExtendedPopup = { key ->
                 if (key is TextKey) {
-                    val c = key.computedData.code
-                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(c)
+                    val keyCode = key.computedData.code
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(keyCode)
                 } else {
                     true
                 }
@@ -373,18 +375,21 @@ private fun TextKeyButton(
         ) { }
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
+            var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by florisPreferenceModel()
-                val displayLanguageName by prefs.keyboard.spaceBarLanguageDisplayEnabled.observeAsState()
-                if (!displayLanguageName) {
-                    return@let
+                val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
+                when (spaceBarMode) {
+                    SpaceBarMode.NOTHING -> return@let
+                    SpaceBarMode.CURRENT_LANGUAGE -> {}
+                    SpaceBarMode.SPACE_BAR_KEY -> customLabel = "␣"
                 }
             }
             Text(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
-                text = label,
+                text = customLabel,
                 color = keyStyle.foreground.solidColor(context),
                 fontSize = fontSize,
                 maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
@@ -460,7 +465,7 @@ private class TextKeyboardLayoutController(
     val glideTypingDetector = GlideTypingGesture.Detector(context)
     val glideDataForDrawing = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
     val fadingGlide = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
-    var fadingGlideRadius by mutableStateOf(0.0f)
+    var fadingGlideRadius by mutableFloatStateOf(0.0f)
     private val swipeGestureDetector = SwipeGesture.Detector(this)
 
     lateinit var keyboard: TextKeyboard

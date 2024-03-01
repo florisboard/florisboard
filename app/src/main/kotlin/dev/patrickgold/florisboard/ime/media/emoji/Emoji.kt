@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
@@ -108,13 +106,12 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
     val hairStyle: EmojiHairStyle
 
     val codePoints: IntStream
-        @RequiresApi(Build.VERSION_CODES.N)
         get() = value.codePoints()
 
     init {
         val codePoints = value.codePoints().toList()
-        skinTone = EmojiSkinTone.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
-        hairStyle = EmojiHairStyle.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
+        skinTone = EmojiSkinTone.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
+        hairStyle = EmojiHairStyle.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
     }
 
     override fun compute(evaluator: ComputingEvaluator): KeyData {

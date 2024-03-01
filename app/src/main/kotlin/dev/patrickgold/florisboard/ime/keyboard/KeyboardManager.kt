@@ -21,6 +21,7 @@ import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
@@ -39,6 +40,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
+import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.input.InputShiftState
@@ -54,10 +56,11 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.lib.android.AndroidKeyguardManager
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.showShortToast
+import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.kotlin.collectIn
@@ -94,7 +97,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     val resources = KeyboardManagerResources()
     val activeState = ObservableKeyboardState.new()
-    var smartbarVisibleDynamicActionsCount by mutableStateOf(0)
+    var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
 
     private val activeEvaluatorGuard = Mutex(locked = false)
@@ -473,13 +476,26 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(data: KeyData) {
-        if (inputEventDispatcher.isConsecutiveDown(data)) {
-            activeState.inputShiftState = InputShiftState.CAPS_LOCK
-        } else {
-            if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
-                activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
-            } else {
-                activeState.inputShiftState = InputShiftState.UNSHIFTED
+        val prefs = prefs.keyboard.capitalizationBehavior
+        when (prefs.get()) {
+            CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP -> {
+                if (inputEventDispatcher.isConsecutiveDown(data)) {
+                    activeState.inputShiftState = InputShiftState.CAPS_LOCK
+                } else {
+                    if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
+                        activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
+                    } else {
+                        activeState.inputShiftState = InputShiftState.UNSHIFTED
+                    }
+                }
+            }
+            CapitalizationBehavior.CAPSLOCK_BY_CYCLE -> {
+                activeState.inputShiftState = when (activeState.inputShiftState) {
+                    InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
+                    InputShiftState.SHIFTED_MANUAL -> InputShiftState.CAPS_LOCK
+                    InputShiftState.SHIFTED_AUTOMATIC -> InputShiftState.UNSHIFTED
+                    InputShiftState.CAPS_LOCK -> InputShiftState.UNSHIFTED
+                }
             }
         }
     }
@@ -863,7 +879,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
             val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
             val localSubtypePresets = mutableListOf<SubtypePreset>()
-            for (layoutType in LayoutType.values()) {
+            for (layoutType in LayoutType.entries) {
                 localLayouts[layoutType] = mutableMapOf()
             }
             for (keyboardExtension in keyboardExtensions) {
@@ -875,7 +891,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 keyboardExtension.layouts.forEach { (type, layoutComponents) ->
                     for (layoutComponent in layoutComponents) {
-                        localLayouts[LayoutType.values().first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
+                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
                     }
                 }
                 keyboardExtension.popupMappings.forEach { popupMapping ->
@@ -913,6 +929,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
         override fun context(): Context = appContext
 
+        val androidKeyguardManager = context().systemService(AndroidKeyguardManager::class)
+
         override fun displayLanguageNamesIn(): DisplayLanguageNamesIn {
             return prefs.localization.displayLanguageNamesIn.get()
         }
@@ -923,7 +941,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_CUT -> {
                     state.isSelectionMode && editorInfo.isRichInputEditor
                 }
-                KeyCode.CLIPBOARD_PASTE,
+                KeyCode.CLIPBOARD_PASTE -> {
+                    !androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
+                }
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                     clipboardManager.canBePasted(clipboardManager.primaryClip)
                 }

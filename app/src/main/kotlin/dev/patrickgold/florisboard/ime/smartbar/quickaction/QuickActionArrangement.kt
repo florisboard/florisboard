@@ -20,7 +20,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -37,7 +36,7 @@ private val QuickActionJsonConfig = Json(DefaultJsonConfig) {
         polymorphic(QuickAction::class) {
             subclass(QuickAction.InsertKey::class, QuickAction.InsertKey.serializer())
             subclass(QuickAction.InsertText::class, QuickAction.InsertText.serializer())
-            default { QuickAction.InsertKey.serializer() }
+            defaultDeserializer { QuickAction.InsertKey.serializer() }
         }
     }
 }

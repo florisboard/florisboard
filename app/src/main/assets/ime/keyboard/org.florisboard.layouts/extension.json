@@ -404,6 +404,18 @@
         "direction": "ltr"
       },
       {
+        "id": "udmurt_compact",
+        "label": "Udmurt (3 чур)",
+        "authors": [ "vorgoron" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "udmurt_extended",
+        "label": "Udmurt (4 чур)",
+        "authors": [ "vorgoron" ],
+        "direction": "ltr"
+      },
+      {
         "id": "urdu_phonetic",
         "label": "Urdu Phonetic",
         "authors": [ "mubashir-rehman", "mirfatif" ],

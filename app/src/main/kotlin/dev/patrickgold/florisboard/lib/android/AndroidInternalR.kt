@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.android
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
 
 /**
@@ -25,6 +26,7 @@ import android.content.res.Resources
  * modified system resources or something has changed in a newer Android version.
  */
 object AndroidInternalR {
+    @SuppressLint("DiscouragedApi")
     @Suppress("ClassName")
     object string {
         val ime_action_go by lazy {

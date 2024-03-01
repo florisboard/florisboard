@@ -301,7 +301,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         modifier = Modifier.animateItemPlacement(),
                         action = stickyAction,
                         evaluator = evaluator,
-                        type = QabType.STATIC_TILE,
+                        type = QuickActionBarType.STATIC_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -316,7 +316,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         modifier = Modifier.animateItemPlacement(),
                         action = action,
                         evaluator = evaluator,
-                        type = QabType.STATIC_TILE,
+                        type = QuickActionBarType.STATIC_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -331,7 +331,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         modifier = Modifier.animateItemPlacement(),
                         action = action,
                         evaluator = evaluator,
-                        type = QabType.STATIC_TILE,
+                        type = QuickActionBarType.STATIC_TILE,
                     )
                 }
             }
@@ -346,7 +346,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         .offset(-size.width / 2, -size.height / 2),
                     action = activeDragAction!!,
                     evaluator = evaluator,
-                    type = QabType.STATIC_TILE,
+                    type = QuickActionBarType.STATIC_TILE,
                 )
             }
         }

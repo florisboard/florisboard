@@ -134,7 +134,7 @@ android {
 
             ndk {
                 // For running FlorisBoard on the emulator
-                // abiFilters += listOf("x86", "x86_64")
+                abiFilters += listOf("x86", "x86_64")
             }
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
@@ -207,7 +207,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-    implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
