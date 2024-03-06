@@ -22,6 +22,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
+import android.provider.MediaStore.Images.Media
 import android.provider.OpenableColumns
 import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
@@ -307,6 +308,7 @@ data class ClipboardFileInfo(
     @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
     @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
     @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
+    @ColumnInfo(name=Media.ORIENTATION) val orientation: Int,
     val mimeTypes: Array<String>,
 ) {
     override fun equals(other: Any?): Boolean {
@@ -340,6 +342,9 @@ interface ClipboardFilesDao {
     @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
     fun getCursorById(uid: Long) : Cursor
 
+    @Query("SELECT (:projection) FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
+    fun getCurserByIdWithColums(uid: Long, projection: String) : Cursor
+
     @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
 
@@ -350,7 +355,7 @@ interface ClipboardFilesDao {
     fun getAll(): List<ClipboardFileInfo>
 }
 
-@Database(entities = [ClipboardFileInfo::class], version = 1)
+@Database(entities = [ClipboardFileInfo::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class ClipboardFilesDatabase : RoomDatabase() {
     abstract fun clipboardFilesDao() : ClipboardFilesDao
