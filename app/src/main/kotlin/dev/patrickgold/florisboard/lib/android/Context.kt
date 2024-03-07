@@ -20,8 +20,8 @@ package dev.patrickgold.florisboard.lib.android
 
 import android.content.Context
 import androidx.annotation.StringRes
-import dev.patrickgold.florisboard.lib.kotlin.CurlyArg
-import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.curlyFormat
 import kotlin.reflect.KClass
 
 /**

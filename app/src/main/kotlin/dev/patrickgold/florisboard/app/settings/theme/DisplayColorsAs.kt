@@ -19,8 +19,8 @@ package dev.patrickgold.florisboard.app.settings.theme
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import org.florisboard.lib.kotlin.curlyFormat
 
 /**
  * DisplayColorsAs indicates how color strings should be visually presented to the user.

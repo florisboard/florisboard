@@ -30,13 +30,13 @@ import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.lib.android.reader
-import dev.patrickgold.florisboard.lib.kotlin.resultErr
-import dev.patrickgold.florisboard.lib.kotlin.resultErrStr
-import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.florisboard.lib.kotlin.resultErr
+import org.florisboard.lib.kotlin.resultErrStr
+import org.florisboard.lib.kotlin.resultOk
 import java.io.File
 
 val DefaultJsonConfig = Json {

@@ -16,19 +16,13 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package dev.patrickgold.florisboard.lib.kotlin
+package org.florisboard.lib.kotlin
 
-import dev.patrickgold.florisboard.lib.FlorisLocale
+import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(locale.base)
 
-inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
-
-inline fun String.titlecase(locale: FlorisLocale = FlorisLocale.ROOT): String {
-    return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale.base) else it.toString() }
-}
 
 fun String.safeSubstring(startIndex: Int): String {
     return try {
@@ -51,6 +45,7 @@ private const val CURLY_ARG_CLOSE = '}'
 
 typealias CurlyArg = Pair<String, Any?>
 
+@OptIn(ExperimentalContracts::class)
 fun String.curlyFormat(argValueFactory: (argName: String) -> String?): String {
     contract {
         callsInPlace(argValueFactory, InvocationKind.UNKNOWN)

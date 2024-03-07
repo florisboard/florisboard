@@ -45,9 +45,9 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.AssetManager
 import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
 import dev.patrickgold.florisboard.lib.io.subFile
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.florisboard.lib.toNativeStr
 import dev.patrickgold.jetpref.datastore.JetPref
+import org.florisboard.lib.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 
 /**

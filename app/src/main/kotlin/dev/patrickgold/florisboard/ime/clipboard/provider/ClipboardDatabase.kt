@@ -40,7 +40,7 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
 import dev.patrickgold.florisboard.lib.android.query
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
+import org.florisboard.lib.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
 private const val CLIPBOARD_FILES_TABLE = "clipboard_files"

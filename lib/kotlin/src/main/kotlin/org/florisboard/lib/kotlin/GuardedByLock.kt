@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.kotlin
+package org.florisboard.lib.kotlin
 
 import kotlinx.coroutines.sync.Mutex
+import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -24,6 +25,7 @@ class GuardedByLock<out T : Any>(@PublishedApi internal val wrapped: T) {
     @PublishedApi
     internal val lock = Mutex(locked = false)
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun <R> withLock(owner: Any? = null, action: (T) -> R): R {
         contract {
             callsInPlace(action, InvocationKind.EXACTLY_ONCE)
@@ -37,6 +39,7 @@ class GuardedByLock<out T : Any>(@PublishedApi internal val wrapped: T) {
     }
 }
 
+@OptIn(ExperimentalContracts::class)
 inline fun <T : Any> guardedByLock(initializer: () -> T): GuardedByLock<T> {
     contract {
         callsInPlace(initializer, InvocationKind.EXACTLY_ONCE)

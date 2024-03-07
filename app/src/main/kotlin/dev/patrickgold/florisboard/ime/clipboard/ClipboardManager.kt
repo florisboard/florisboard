@@ -33,7 +33,6 @@ import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager_OnPrimary
 import dev.patrickgold.florisboard.lib.android.setOrClearPrimaryClip
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.systemService
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -46,6 +45,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import org.florisboard.lib.kotlin.tryOrNull
 import java.io.Closeable
 
 /**

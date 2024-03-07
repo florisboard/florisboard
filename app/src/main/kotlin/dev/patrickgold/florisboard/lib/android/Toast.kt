@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.lib.android
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
-import dev.patrickgold.florisboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.CurlyArg
 
 /**
  * Shows a short toast with specified text.

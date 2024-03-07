@@ -35,3 +35,4 @@ dependencyResolutionManagement {
 
 include(":app")
 include(":benchmark")
+include(":lib:kotlin")

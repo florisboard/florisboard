@@ -236,6 +236,9 @@ dependencies {
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
 
+
+    implementation(project(":lib:kotlin"))
+
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.extensions.roboelectric)

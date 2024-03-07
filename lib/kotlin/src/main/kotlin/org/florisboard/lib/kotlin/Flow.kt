@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.kotlin
+package org.florisboard.lib.kotlin
 
-fun Number.toStringWithoutDotZero(): String = this.toString().removeSuffix(".0")
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
+fun <T> Flow<T>.collectIn(scope: CoroutineScope, collector: FlowCollector<T>) {
+    scope.launch { this@collectIn.collect(collector) }
+}
+
+fun <T> Flow<T>.collectLatestIn(scope: CoroutineScope, action: suspend (value: T) -> Unit) {
+    scope.launch { this@collectLatestIn.collectLatest(action) }
+}
