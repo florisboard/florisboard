@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.kotlin
+package org.florisboard.lib.kotlin
 
 @Throws(NoSuchElementException::class)
 fun <K, V> Map<K, V>.getKeyByValue(value: V): K {

@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.kotlin
+package org.florisboard.lib.kotlin
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
-fun <T> Flow<T>.collectIn(scope: CoroutineScope, collector: FlowCollector<T>) {
-    scope.launch { this@collectIn.collect(collector) }
-}
-
-fun <T> Flow<T>.collectLatestIn(scope: CoroutineScope, action: suspend (value: T) -> Unit) {
-    scope.launch { this@collectLatestIn.collectLatest(action) }
+inline fun <R> tryOrNull(block: () -> R): R? {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return try {
+        block()
+    } catch (_: Throwable) {
+        null
+    }
 }

@@ -68,8 +68,6 @@ import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
-import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
-import dev.patrickgold.florisboard.lib.kotlin.toStringWithoutDotZero
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpec
@@ -97,6 +95,8 @@ import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterialUi
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
+import org.florisboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.toStringWithoutDotZero
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     name = "- select -",

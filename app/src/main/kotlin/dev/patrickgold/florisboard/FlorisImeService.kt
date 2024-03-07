@@ -112,7 +112,6 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
-import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.lib.snygg.ui.shape
@@ -124,6 +123,7 @@ import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
 
 /**

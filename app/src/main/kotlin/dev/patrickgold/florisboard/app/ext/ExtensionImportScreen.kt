@@ -61,9 +61,8 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.io.FileRegistry
-import dev.patrickgold.florisboard.lib.kotlin.resultOk
+import org.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
     val id: String,
