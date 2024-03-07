@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Patrick Goldinger
+ * Copyright 2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,11 @@ sourceSets {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf(
+            "-Xallow-result-return-type",
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xjvm-default=all-compatibility",
+        )
     }
 }
 

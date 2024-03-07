@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
-
 package org.florisboard.lib.kotlin
 
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-
 
 
 fun String.safeSubstring(startIndex: Int): String {
@@ -45,7 +41,6 @@ private const val CURLY_ARG_CLOSE = '}'
 
 typealias CurlyArg = Pair<String, Any?>
 
-@OptIn(ExperimentalContracts::class)
 fun String.curlyFormat(argValueFactory: (argName: String) -> String?): String {
     contract {
         callsInPlace(argValueFactory, InvocationKind.UNKNOWN)

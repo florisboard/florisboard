@@ -16,11 +16,9 @@
 
 package org.florisboard.lib.kotlin
 
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@OptIn(ExperimentalContracts::class)
 inline fun <R> tryOrNull(block: () -> R): R? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
