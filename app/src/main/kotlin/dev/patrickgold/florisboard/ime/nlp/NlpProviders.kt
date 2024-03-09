@@ -20,7 +20,7 @@ import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.emoji.EMOJI_SUGGESTION_INDICATOR
+import dev.patrickgold.florisboard.ime.media.emoji.EMOJI_SUGGESTION_INDICATOR
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive

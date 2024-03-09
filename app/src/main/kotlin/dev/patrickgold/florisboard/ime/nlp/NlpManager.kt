@@ -33,8 +33,8 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.emoji.EMOJI_SUGGESTION_MAX_COUNT
-import dev.patrickgold.florisboard.ime.emoji.EmojiSuggestionProvider
+import dev.patrickgold.florisboard.ime.media.emoji.EMOJI_SUGGESTION_MAX_COUNT
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
@@ -262,7 +262,7 @@ class NlpManager(context: Context) {
             val candidates = when {
                 isSuggestionOn() -> {
                     emojiSuggestionProvider.suggest(
-                        subtype = Subtype.DEFAULT,
+                        subtype = subtypeManager.activeSubtype,
                         content = editorInstance.activeContent,
                         maxCandidateCount = EMOJI_SUGGESTION_MAX_COUNT,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),

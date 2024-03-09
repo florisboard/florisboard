@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.emoji
+package dev.patrickgold.florisboard.ime.media.emoji
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,9 +11,6 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.media.emoji.Emoji
-import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
-import dev.patrickgold.florisboard.ime.media.emoji.parseRawEmojiSpecsFile
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
