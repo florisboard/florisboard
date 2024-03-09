@@ -18,8 +18,6 @@ package dev.patrickgold.florisboard.lib
 
 import android.content.Context
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
-import dev.patrickgold.florisboard.lib.kotlin.titlecase
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -361,4 +359,12 @@ class FlorisLocale private constructor(val base: Locale) {
             return fromTag(decoder.decodeString())
         }
     }
+}
+
+inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(locale.base)
+
+inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
+
+inline fun String.titlecase(locale: FlorisLocale = FlorisLocale.ROOT): String {
+    return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale.base) else it.toString() }
 }

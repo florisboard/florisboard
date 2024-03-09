@@ -21,11 +21,11 @@ import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.FsDir
 import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.kotlin.resultErr
-import dev.patrickgold.florisboard.lib.kotlin.resultOk
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import org.florisboard.lib.kotlin.resultErr
+import org.florisboard.lib.kotlin.resultOk
 
 /**
  * An extension container holding a parsed config, a working directory file

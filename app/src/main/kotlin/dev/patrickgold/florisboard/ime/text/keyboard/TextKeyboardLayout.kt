@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -282,20 +283,20 @@ fun TextKeyboardLayout(
             },
             isSuitableForBasicPopup = { key ->
                 if (key is TextKey) {
-                    val c = key.computedData.code
-                    val t = key.computedData.type
+                    val keyCode = key.computedData.code
+                    val keyType = key.computedData.type
                     val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
                         keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
-                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && t == KeyType.NUMERIC
-                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE && !numeric
+                        keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && keyType == KeyType.NUMERIC
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE && !numeric
                 } else {
                     true
                 }
             },
             isSuitableForExtendedPopup = { key ->
                 if (key is TextKey) {
-                    val c = key.computedData.code
-                    c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(c)
+                    val keyCode = key.computedData.code
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(keyCode)
                 } else {
                     true
                 }
@@ -464,7 +465,7 @@ private class TextKeyboardLayoutController(
     val glideTypingDetector = GlideTypingGesture.Detector(context)
     val glideDataForDrawing = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
     val fadingGlide = mutableStateListOf<Pair<GlideTypingGesture.Detector.Position, Long>>()
-    var fadingGlideRadius by mutableStateOf(0.0f)
+    var fadingGlideRadius by mutableFloatStateOf(0.0f)
     private val swipeGestureDetector = SwipeGesture.Detector(this)
 
     lateinit var keyboard: TextKeyboard

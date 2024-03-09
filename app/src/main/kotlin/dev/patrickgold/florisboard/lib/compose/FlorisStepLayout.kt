@@ -46,6 +46,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.Alignment
@@ -116,17 +117,17 @@ class FlorisStepLayoutScope(
 @Suppress("unused")
 class FlorisStepState private constructor(
     private val currentAuto: MutableState<Int>,
-    private val currentManual: MutableState<Int> = mutableStateOf(-1),
+    private val currentManual: MutableState<Int> = mutableIntStateOf(-1),
 ) {
     companion object {
-        fun new(init: Int) = FlorisStepState(mutableStateOf(init))
+        fun new(init: Int) = FlorisStepState(mutableIntStateOf(init))
 
         val Saver = Saver<FlorisStepState, ArrayList<Int>>(
             save = {
                 arrayListOf(it.currentAuto.value, it.currentManual.value)
             },
             restore = {
-                FlorisStepState(mutableStateOf(it[0]), mutableStateOf(it[1]))
+                FlorisStepState(mutableIntStateOf(it[0]), mutableIntStateOf(it[1]))
             },
         )
     }

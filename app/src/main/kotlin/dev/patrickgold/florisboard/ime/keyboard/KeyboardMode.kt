@@ -31,7 +31,7 @@ enum class KeyboardMode(val value: Int) {
     SMARTBAR_QUICK_ACTIONS(10);
 
     companion object {
-        fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: CHARACTERS
+        fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: CHARACTERS
     }
 
     fun toInt() = value

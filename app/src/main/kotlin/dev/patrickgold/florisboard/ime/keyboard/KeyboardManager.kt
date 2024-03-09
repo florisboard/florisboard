@@ -21,7 +21,7 @@ import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
@@ -62,10 +62,8 @@ import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.kotlin.collectIn
-import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
-import dev.patrickgold.florisboard.lib.kotlin.titlecase
-import dev.patrickgold.florisboard.lib.kotlin.uppercase
+import dev.patrickgold.florisboard.lib.titlecase
+import dev.patrickgold.florisboard.lib.uppercase
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -77,6 +75,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.kotlin.collectIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
@@ -96,7 +96,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     val resources = KeyboardManagerResources()
     val activeState = ObservableKeyboardState.new()
-    var smartbarVisibleDynamicActionsCount by mutableStateOf(0)
+    var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
 
     private val activeEvaluatorGuard = Mutex(locked = false)
@@ -878,7 +878,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
             val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
             val localSubtypePresets = mutableListOf<SubtypePreset>()
-            for (layoutType in LayoutType.values()) {
+            for (layoutType in LayoutType.entries) {
                 localLayouts[layoutType] = mutableMapOf()
             }
             for (keyboardExtension in keyboardExtensions) {
@@ -890,7 +890,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 keyboardExtension.layouts.forEach { (type, layoutComponents) ->
                     for (layoutComponent in layoutComponents) {
-                        localLayouts[LayoutType.values().first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
+                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
                     }
                 }
                 keyboardExtension.popupMappings.forEach { popupMapping ->

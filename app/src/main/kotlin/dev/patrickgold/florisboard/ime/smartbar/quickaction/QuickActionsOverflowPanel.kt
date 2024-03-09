@@ -82,7 +82,7 @@ fun QuickActionsOverflowPanel() {
                 QuickActionButton(
                     action = action,
                     evaluator = evaluator,
-                    type = QabType.INTERACTIVE_TILE,
+                    type = QuickActionBarType.INTERACTIVE_TILE,
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {

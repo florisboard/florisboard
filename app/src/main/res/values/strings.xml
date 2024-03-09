@@ -30,6 +30,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flags</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
 
@@ -477,6 +478,13 @@
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Switch Keyboard</string>
 
+    <string name="setup__grant_notification_permission__title">Permit Crash Report Notifications</string>
+    <string name="setup__grant_notification_permission__description">As of Android 13+, apps must ask for permission to
+        send notifications. In Florisboard, this is only used to open a crash report screen in the event of a crash.
+        This permission can be changed at any time in the system settings.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Grant Permission</string>
+
     <string name="setup__finish_up__title">Finish Up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
@@ -569,6 +577,11 @@
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
+    <string name="send_to_clipboard__unknown_error">An unknown error occurred. Please try again!</string>
+    <string name="send_to_clipboard__type_not_supported_error">This media type is not supported.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">The version of android is to old for this feature.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Copied below image to clipboard.</string>
 
 
     <!-- Devtools strings -->

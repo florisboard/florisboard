@@ -25,8 +25,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.Unicode
-import dev.patrickgold.florisboard.lib.kotlin.lowercase
-import dev.patrickgold.florisboard.lib.kotlin.uppercase
+import dev.patrickgold.florisboard.lib.lowercase
+import dev.patrickgold.florisboard.lib.uppercase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

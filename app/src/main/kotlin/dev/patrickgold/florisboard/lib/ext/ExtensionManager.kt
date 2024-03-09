@@ -38,7 +38,6 @@ import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.io.writeJson
-import dev.patrickgold.florisboard.lib.kotlin.throwOnFailure
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,6 +48,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.florisboard.lib.kotlin.throwOnFailure
 
 @OptIn(ExperimentalSerializationApi::class)
 val ExtensionJsonConfig = Json {
@@ -70,7 +70,7 @@ val ExtensionJsonConfig = Json {
             subclass(HangulUnicode::class, HangulUnicode.serializer())
             subclass(KanaUnicode::class, KanaUnicode.serializer())
             subclass(WithRules::class, WithRules.serializer())
-            default { Appender.serializer() }
+            defaultDeserializer { Appender.serializer() }
         }
     }
 }

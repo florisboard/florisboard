@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.ext
 
-import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.curlyFormat
 
 object ExtensionDefaults {
     private const val ID_LOCAL_TEMPLATE = "local.{groupName}.{extensionName}"

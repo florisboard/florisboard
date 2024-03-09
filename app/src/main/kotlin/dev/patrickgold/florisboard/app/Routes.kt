@@ -56,7 +56,7 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
-import dev.patrickgold.florisboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.curlyFormat
 
 @Suppress("FunctionName")
 object Routes {
@@ -154,7 +154,7 @@ object Routes {
             composable(Settings.SelectLocale) { SelectLocaleScreen() }
             composable(Settings.LanguagePackManager) { navBackStack ->
                 val action = navBackStack.arguments?.getString("action")?.let { actionId ->
-                    LanguagePackManagerScreenAction.values().firstOrNull { it.id == actionId }
+                    LanguagePackManagerScreenAction.entries.firstOrNull { it.id == actionId }
                 }
                 LanguagePackManagerScreen(action)
             }
@@ -167,7 +167,7 @@ object Routes {
             composable(Settings.Theme) { ThemeScreen() }
             composable(Settings.ThemeManager) { navBackStack ->
                 val action = navBackStack.arguments?.getString("action")?.let { actionId ->
-                    ThemeManagerScreenAction.values().firstOrNull { it.id == actionId }
+                    ThemeManagerScreenAction.entries.firstOrNull { it.id == actionId }
                 }
                 ThemeManagerScreen(action)
             }
@@ -182,7 +182,7 @@ object Routes {
             composable(Settings.Dictionary) { DictionaryScreen() }
             composable(Settings.UserDictionary) { navBackStack ->
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
-                    UserDictionaryType.values().firstOrNull { it.id == typeId }
+                    UserDictionaryType.entries.firstOrNull { it.id == typeId }
                 }
                 UserDictionaryScreen(type!!)
             }
@@ -223,7 +223,7 @@ object Routes {
             }
             composable(Ext.Import) { navBackStack ->
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
-                    ExtensionImportScreenType.values().firstOrNull { it.id == typeId }
+                    ExtensionImportScreenType.entries.firstOrNull { it.id == typeId }
                 } ?: ExtensionImportScreenType.EXT_ANY
                 val uuid = navBackStack.arguments?.getString("uuid")?.takeIf { it != "null" }
                 ExtensionImportScreen(type, uuid)

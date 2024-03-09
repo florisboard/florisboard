@@ -15,7 +15,6 @@
  */
 
 import java.io.ByteArrayOutputStream
-import java.io.File
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -135,7 +134,7 @@ android {
 
             ndk {
                 // For running FlorisBoard on the emulator
-                // abiFilters += listOf("x86", "x86_64")
+                abiFilters += listOf("x86", "x86_64")
             }
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
@@ -208,7 +207,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-    implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
@@ -223,6 +221,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.emoji2)
     implementation(libs.androidx.emoji2.views)
+    implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
@@ -236,6 +235,9 @@ dependencies {
     implementation(libs.patrickgold.jetpref.datastore.model)
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
+
+
+    implementation(project(":lib:kotlin"))
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)
