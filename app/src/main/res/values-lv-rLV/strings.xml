@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Apturēt</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Uzgaidīt</string>
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Zīmes</string>
     <string name="emoji__category__flags" comment="Emoji category name">Karogi</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nav nesen izmantotu sajūtu rakstzīmju. Tās parādīsies šeit pēc izmantošanas.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Lai piekļūtu savai emocijzīmju vēsturei, vispirms ir jāatslēdz iekārta.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Lietderīgs padoms: ilgs piespiediens uz nesen izmantotajām sajūtu rakstzīmēm noņems tās no šī skata.</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} tika noņemta no nesen izmantotajām sajūtu rakstzīmēm</string>
     <!-- Quick action strings -->
@@ -286,8 +287,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Rādīt rīkpogu</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Tiek rādīta pielāgojama rīkpoga blakus atstarpes taustiņam</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Rīktaustiņa darbība</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Attēlot valodu uz atstarpes taustiņa</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Attēlo pašreizējās valodas nosaukumu uz atstarpes taustiņa</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Atstarpes taustiņa etiķete</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Lielo burtu rakstīšanas uzvedība</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Fonta izmēra reizinātājs</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Vienrocīga ievade</string>
@@ -443,6 +444,12 @@
     <string name="setup__select_ime__title">Atlasīt {app_name}</string>
     <string name="setup__select_ime__description">{app_name} tagad ir iespējots. Lai to izmantotu, jāpārslēdzas uz {app_name}, atlasot to ievades izvēles logā.</string>
     <string name="setup__select_ime__switch_keyboard_btn">Pārslēgt tastatūru</string>
+    <string name="setup__grant_notification_permission__title">Atļaut avārijas atskaišu paziņojumus</string>
+    <string name="setup__grant_notification_permission__description">Sākot ar Android 13, lietotnēm ir jāprasa atļauja, lai
+        nosūtītu paziņojumus. Florisboard tā tiek izmantota tikai, lai atvērtu avārijas ziņojuma ekrānu avārijas gadījumā.
+        Šo atļauju sistēmas iestatījumos var mainīt jebkurā laikā.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Piešķirt atļauju</string>
     <string name="setup__finish_up__title">Pabeigt</string>
     <string name="setup__finish_up__description_p1">{app_name} tagad ir iespējots un ir gatavs pielāgojumiem.</string>
     <string name="setup__finish_up__description_p2">Ja tiek pamanītas kādas nepilnības, kļūdas, avārijas vai ir vēlme kaut ko ieteikt, apskati projekta glabātavu, kuras saite ir sadaļā \"Par\"!</string>
@@ -530,6 +537,11 @@
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Galvenā vienuma notīrīšana dzēš arī jaunāko vēstures ierakstu</string>
+    <string name="send_to_clipboard__unknown_error">Radusies nezināma kļūda. Lūgums vēlāk mēģināt vēlreiz.</string>
+    <string name="send_to_clipboard__type_not_supported_error">Šis informācijas nesēja veids netiek atbalstīts.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Android versija pārāk veca, lai izmantotu šo iespēju.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Zemāk esošais attēls ir ievietots starpliktuvē.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Izstrādātāju rīki</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Iespējot izstrādātāju rīkus</string>
@@ -663,6 +675,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Ierasts (3 kolonnas)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Mainīgs platums</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Mainīgs platums un ritināms</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Iespējot burtslēgu ar divkāršu piesitienu pārslēgšanas taustiņam</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Pārslēgties uz nākamo lielā burta rakstīšānas soli katru reizi, kad tiek nospiests pārslēgšanas taustiņš</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Sešpadsmitisks</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Sarkans Zaļš Zils Caurredzamība</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Rādīt vienmēr</string>
@@ -740,6 +754,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Tiek parādītas visas īpašības, īpašības un nosacījumi tiek tulkoti.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Izstrādātājs</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Tiek parādītas visas īpašības, īpašības un nosacījumi tiek attēloti tā, kā tie ir rakstīti stilu lapā.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Nav etiķetes</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Pašreizējā valoda</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Izmantot sistēmas valodas</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Izmantot tastatūras apakšveidus</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nav darbības</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">暂停</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">等待</string>
@@ -292,8 +292,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">显示功能键</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">在空格键旁边显示一个可配置的功能键</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">功能键操作</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">空格键上显示语言</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">在空格键上显示当前活动的语言名称</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">单手模式</string>

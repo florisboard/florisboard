@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Зачекайте</string>
@@ -254,7 +254,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Показати допоміжну клавішу</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Показує настроювану допоміжну клавішу поряд з пробілом</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Дія допоміжної клавіші</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Показує поточну мову на клавіші Пробіл</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множник шрифту</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Розкладка</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Керування однією рукою</string>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">إيقاف مؤقت</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">انتظر</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">أيقونة ثلاث نقاط. إذا كانت ظاهرة ، تشير إلى أنه يمكن استخدام المزيد من الأحرف إذا تم الضغط عليها لفترة أطول.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">إغلاق وضع بيد واحدة.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">غلق وضع اليد الواحدة.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">نقل لوحة المفاتيح إلى اليسار.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">نقل لوحة المفاتيح إلى اليمين.</string>
     <!-- Media strings -->
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">الرموز</string>
     <string name="emoji__category__flags" comment="Emoji category name">أعلام</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">لم يتم العثور على رموز تعبيرية مستخدمة مؤخرًا. بمجرد أن تبدأ في استخدامها الرموز التعبيرية فإنها ستظهر تلقائيًا هنا.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">للوصول إلى سجل الرموز التعبيرية الخاص بك، يرجى أولاً إلغاء قُفْل جهازك.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">نصيحة للمحترفين: الضغط لفترة طويلة على الرموز التعبيرية المستخدمة مؤخرًا لإزالتها من هذا العرض مرة أخرى!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">تمت إزالة {emoji} من الرموز التعبيرية المستخدمة مؤخرًا</string>
     <!-- Quick action strings -->
@@ -56,8 +57,8 @@
     <string name="quick_action__settings__tooltip">فتح الإعدادات</string>
     <string name="quick_action__undo" maxLength="12">تراجع</string>
     <string name="quick_action__undo__tooltip">التراجع عن الإدخال الأخير</string>
-    <string name="quick_action__redo" maxLength="12">إعادة</string>
-    <string name="quick_action__redo__tooltip">إعادة الإدخال الأخير</string>
+    <string name="quick_action__redo" maxLength="12">إرجاع</string>
+    <string name="quick_action__redo__tooltip">إرجاع الإدخال الأخير</string>
     <string name="quick_action__toggle_actions_overflow" maxLength="12">خيارات أخرى</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">عرض او إخفاء إجراءات إضافية</string>
     <string name="quick_action__toggle_incognito_mode" maxLength="12">متخفي</string>
@@ -67,7 +68,7 @@
     <string name="quick_action__voice_input" maxLength="12">إدخال الصوت</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">افتح موفر خدمة الإدخال الصوتي</string>
     <string name="quick_action__one_handed_mode" maxLength="12">اليد الواحدة</string>
-    <string name="quick_action__one_handed_mode__tooltip">تفعيل وضع بيد واحدة</string>
+    <string name="quick_action__one_handed_mode__tooltip">تفعيل وضع اليد الواحدة</string>
     <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">سحب التمييز</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">موضع علامة السحب الحالي</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">لا شَيْء</string>
@@ -292,8 +293,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">عرض مفتاح الادوات</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">عرض مفتاح الأدوات القابل لتخصيص بجوار شريط المسافة</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">وظيفة مفتاح الادوات</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">عرض اسم اللغة على شريط المسافة</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">عرض اسم اللغة الحالية على زر المسافة</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">تسمية شريط المسافة</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">سلوك الأحرف الكبيرة</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">مضاعف حجم الخط</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">التخطيط</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">وضع اليد الواحدة</string>
@@ -449,6 +450,11 @@
     <string name="setup__select_ime__title">اختيار {app_name}</string>
     <string name="setup__select_ime__description">تم تمكين {app_name} الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى {app_name} عن طريق تحديده في مربع حوار محدد الإدخال!</string>
     <string name="setup__select_ime__switch_keyboard_btn">تبديل لوحة المفاتيح</string>
+    <string name="setup__grant_notification_permission__title">السماح بإخطارات تقرير الأعطال</string>
+    <string name="setup__grant_notification_permission__description">اعتبارًا من نظام التشغيل Android 13+، يجب أن تطلب التطبيقات الإذن بذلك
+         إرسال الإخطارات. في Florisboard، يُستخدم هذا فقط لفتح شاشة تقرير الأعطال في حالة حدوث عطل.
+         يمكن تغيير هذا الإذن في أي وقت في إعدادات النظام.    </string>
+    <string name="setup__grant_notification_permission__btn">منح الإذن</string>
     <string name="setup__finish_up__title">تم انهاء الاعداد</string>
     <string name="setup__finish_up__description_p1">تم تمكين{app_name} في النظام وجاهز للتخصيص بأسلوبك.</string>
     <string name="setup__finish_up__description_p2">إذا واجهت أي مشاكل أو أخطاء أو أعطال أو اذا كنت ترغب فقط في تقديم اقتراح ، تحقق من مستودع المشروع من شاشة \"حول التطبيق\"!</string>
@@ -536,6 +542,10 @@
     <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">مسح الحافظة الأساسية يؤثر على السجل</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">يؤدي مسح السجل الأساسي للحافظة أيضًا إلى حذف آخر إدخال للمحفوظات</string>
+    <string name="send_to_clipboard__unknown_error">حدث خطأ غير معروف. حاول مرة اخرى!</string>
+    <string name="send_to_clipboard__type_not_supported_error">هذا النوع من الوسائط غير مدعوم.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">إصدار Android قديم جدًا لهذه الميزة.    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">نسخ الصورة أدناه إلى الحافظة.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">أدوات المطور</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">تفعيل أدوات المطور</string>
@@ -669,6 +679,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">كلاسيكي(3 أعمدة)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">عرض ديناميكي</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">عرض ديناميكي &amp; قابل للسحب</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">تمكين مفتاح Caps Lock من خلال النقر المزدوج على Shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">قم بالتبديل إلى خطوة الكتابة بالأحرف الكبيرة التالية في كل مرة يتم فيها الضغط على مفتاح Shift</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">سداسي عشري</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">أحمر أخضر أزرق الشفافية</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">الإظهار دائماً</string>
@@ -746,6 +758,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">يتم عرض جميع الخصائص ، ويتم ترجمته والقواعد كذلك.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">المطور</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">يتم عرض جميع الخصائص ، ويتم عرض الخصائص والقواعد كما هو مكتوب في ملف ورقة الأنماط نفسه.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">دون تسمية</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">اللغة الحالية</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استخدام لغات النظام</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">استخدم الأنواع الفرعية للوحة المفاتيح</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">بلا إجراء</string>

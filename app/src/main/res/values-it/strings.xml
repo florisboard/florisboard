@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Attendi</string>
@@ -278,8 +278,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra tasto funzionalità</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra un tasto funzionalità configurabile vicino alla barra spaziatrice</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Azione del tasto di strumenti</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Visualizza lingua sulla barra spaziatrice</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Visualizza il nome della lingua attiva corrente sulla barra spaziatrice</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Etichetta per la barra spaziatrice</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportamento delle maiuscole</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Moltiplicatore dimensione carattere</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modalità ad una mano</string>
@@ -653,6 +653,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classico (3 colonne)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dimensione dinamica</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Larghezza dinamica &amp; scorrevole</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Abilita Capslock cliccando due volte su shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Passa alla prossime maiuscole ogni volta che premi shift</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Esadecimale</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rosso Verde Blu Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostra sempre</string>
@@ -724,6 +726,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Vengono mostrate tutte le proprietà, le proprietà e le regole sono tradotte.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Sviluppatore</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Vengono mostrate tutte le proprietà, le proprietà e le regole vengono visualizzate come scritte nel file di stile stesso.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Niente etichetta</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Lingua attuale</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">(barra spaziatrice)</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Usa lingua di sistema</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Usa gli stili di input</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Nessuna azione</string>

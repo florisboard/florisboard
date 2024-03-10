@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Warten</string>
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggen</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Keine kürzlich verwendeten Emojis gefunden. Sobald Sie Emojis verwendet haben erscheinen diese hier.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Um auf deinen Emoji-verlauf zuzugreifen, entsperre zuerst dein Gerät.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt um diese wieder aus der Ansicht zu entfernen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} wurde aus \"kürzlich verwendeten Emojis\" entfernt</string>
     <!-- Quick action strings -->
@@ -292,8 +293,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Utility-Taste anzeigen</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zeigt eine konfigurierbare Utility-Taste neben der Leertaste an</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility-Taste Aktion</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Sprache auf Leertaste anzeigen</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Zeigt den Namen der momentan aktiven Sprache auf der Leertaste an</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Leertastenbeschriftung</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Großschreibverhalten</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Schriftgröße</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Einhandmodus</string>
@@ -449,6 +450,7 @@
     <string name="setup__select_ime__title">{app_name} auswählen</string>
     <string name="setup__select_ime__description">{app_name} ist nun auf deinem System aktiviert. Um es zu benutzen, wähle bei der Standard-Eingabemethode {app_name} aus!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Tastatur wechseln</string>
+    <string name="setup__grant_notification_permission__btn">Berechtigung erteilen</string>
     <string name="setup__finish_up__title">Fertigstellen</string>
     <string name="setup__finish_up__description_p1">{app_name} ist nun im System aktiviert und bereit von dir angepasst zu werden.</string>
     <string name="setup__finish_up__description_p2">Falls dir irgendwelche Probleme, Bugs oder Abstürze begegnen, oder du einfach einen Vorschlag machen möchtest, besuche einfach die GitHub Seite des Projekts (zu finden im About \"Über die App\" Screen)!</string>
@@ -536,6 +538,8 @@
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Das Löschen des aktiven Elements betrifft den Verlauf</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Durch das Löschen des aktiven Elements wird auch das neueste Verlaufselement entfernt</string>
+    <string name="send_to_clipboard__unknown_error">Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Dieser Media-Typ wird nicht unterstützt.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Entwicklerwerkzeuge</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Entwickler-Werkzeuge ein/aus</string>
@@ -669,6 +673,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klassisch (3 Spalten)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamische Breite</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamische Breite &amp; scrollbar</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Aktiviere die Feststelltaste durch Doppeltippen von Shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Wechsel mit jedem Drücken der Shift-Taste zur nächsten Großschreibstufe</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadezimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rot Grün Blau Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Immer anzeigen</string>
@@ -746,6 +752,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Alle Eigenschaften werden angezeigt. Eigenschaften und Regeln werden übersetzt.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Entwickler</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Alle Eigenschaften werden angezeigt. Eigenschaften und Regeln werden so wie im Stylesheet selbst dargestellt.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Keine Beschriftung</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Aktuelle Sprache</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Systemsprache verwenden</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Tastatur-Subtypen verwenden</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Keine Aktion</string>

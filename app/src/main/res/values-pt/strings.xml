@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Aguarde</string>
@@ -30,6 +30,8 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica: Um clique longo num emoji utilizado recentemente remove-lo desta lista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} removido da lista de emojis recentes</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Seta p/ cima</string>
+    <string name="quick_action__arrow_up__tooltip">Aciona a seta para cima</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Definições</string>
@@ -200,7 +202,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar tecla utilitária</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra uma tecla utilitária ao lado da barra de espaço</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ação da tecla utilitária</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Mostrar idioma na barra de espaços</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho das letras</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo de uma mão</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Jeda</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Tunggu</string>
@@ -243,6 +243,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="snygg__property_name__var_shape_variant">Bentuk umum (varian)</string>
     <string name="snygg__property_value__explicit_inherit">Warisan</string>
     <string name="snygg__property_value__solid_color">Warna padat</string>
+    <string name="snygg__property_value__material_you_light_color">Warna Material You (Terang)</string>
+    <string name="snygg__property_value__material_you_dark_color">Warna Material You (Gelap)</string>
     <string name="snygg__property_value__image_ref">Referensi gambar</string>
     <string name="snygg__property_value__rectangle_shape">Bentuk persegi panjang</string>
     <string name="snygg__property_value__circle_shape">Bentuk lingkaran</string>
@@ -291,8 +293,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Tampilkan tombol utilitas</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Menampilkan tombol utilitas yang dapat diatur di sebelah batang spasi</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Tindakan tombol utilitas</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Tampilkan bahasa pada batang spasi</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Menampilkan nama bahasa aktif saat ini pada batang spasi</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Label bar spasi</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Perilaku kapitalisasi</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pengganda ukuran font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Tata letak</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode satu tangan</string>
@@ -668,6 +670,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasik (3 baris)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Lebar dinamis</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Lebar dinamis &amp; dapat digulir</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Aktifkan Capslock dengan klik shift dua kali</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Ganti ke kapitalisasi berikutnya setiap tombol shift ditekan</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Heksadesimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Merah Hijau Biru Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Selalu tampilkan</string>
@@ -745,6 +749,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Semua properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Pengembang</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Semua properti ditampilkan, properti dan aturan ditampilkan seperti yang tertulis di file lembar gayanya.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Tidak ada label</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Bahasa saat ini</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Gunakan bahasa sistem</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Gunakan subtipe papan ketik</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Tidak ada aksi</string>

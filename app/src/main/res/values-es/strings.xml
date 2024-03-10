@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausar</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Espere</string>
@@ -263,8 +263,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar teclas de utilidad</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Muestra una tecla de utilidad configurable junto a la barra espaciadora</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acción de tecla de utilidad</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Mostrar idioma en barra espaciadora</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Mostrar el nombre del idioma activo actual en la barra espaciadora</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamaño de fuente</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo a una mano</string>

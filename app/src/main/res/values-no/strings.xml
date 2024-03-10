@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vent</string>
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Ingen nylig brukte emojis funnet. Når du begynner å bruke emojis vil de dukke opp her.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">For å tå tilgang til din emoji-historikk, lås opp enheten din først.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tips: Press og hold nylig brukte emojier for å fjerne dem fra denne visningen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Fjernet {emoji} fra nylig brukte emojier</string>
     <!-- Quick action strings -->
@@ -349,6 +350,8 @@
     <string name="setup__select_ime__title">Velg {app_name}</string>
     <string name="setup__select_ime__description">{app_name} er nå aktivert i systemet ditt. For å bruke det, bytt til {app_name} ved å velge den i input-valg-dialogen!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Bytt Tastatur</string>
+    <string name="setup__grant_notification_permission__title">Tillat krasjrapport-meldinger</string>
+    <string name="setup__grant_notification_permission__btn">Gi tillatelse</string>
     <string name="setup__finish_up__title">Gjøre ferdig</string>
     <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>
     <string name="setup__finish_up__description_p2">Dersom du støter på problemer, feil, krasj eller ønsker å komme med forslag, sjekk ut prosjektlageret fra Om-skjermen!</string>
@@ -403,6 +406,7 @@
     <string name="pref__clipboard__clean_up_after__label">Rydd opp gamle elementer i etterkant</string>
     <string name="pref__clipboard__limit_history_size__label">Begrens historiestørrelse</string>
     <string name="pref__clipboard__max_history_size__label">Maks historiestørrelse</string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Kopierte det nedenforstående bildet til utklippstavlen.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Utviklerverktøy</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Skru på utviklerverktøy</string>

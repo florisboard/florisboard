@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Tauko</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Odota</string>
@@ -175,8 +175,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Näytä toimintopainike</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Näyttää muokattavan toimintopainikkeen välilyönnin vieressä</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Toimintopainikkeen toiminto</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Näytä kieli välilyönnissä</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Näyttää aktiivisen kielen nimen välilyöntinäppäimessä</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Kirjasinkoon kerroin</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Ulkoasu</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Yksikätinen tila</string>

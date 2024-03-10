@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počakaj</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Zapri enoročni način.</string>
@@ -36,6 +36,8 @@
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Glavni jezik</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Postavitev znakov</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Urejevalnik</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Oznaka preslednice</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Pravila za velike začetnice</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
     <!-- About UI strings -->
@@ -52,6 +54,10 @@
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Omogoči Capslock z dvakratnim pritiskom na shift</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Brez oznake</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Trenutni jezik</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

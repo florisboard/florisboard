@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počkat</string>
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboly</string>
     <string name="emoji__category__flags" comment="Emoji category name">Vlajky</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenalezeny žádné nedávno použité emotikony. Jakmile je začnete psát, objeví se automaticky zde.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Pro přístup k historii smajlíků nejprve prosím odemkněte své zařízení.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Tip: Stiskněte a držte prst na naposledy použitých emotikonech pro jejich odebrání z daného seznamu!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Emotikon {emoji} bylo odebráno z nedávno použitých</string>
     <!-- Quick action strings -->
@@ -292,8 +293,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazit pomocné tlačítko</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí nastavitelné pomocné tlačítko vedle mezerníku</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Funkce pomocného tlačítka</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Zobrazit jazyk na mezerníku</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Zobrazí název aktuálně používaného jazyka na mezerníku</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Popisek mezerníku</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Chování při psaní velkých písmen</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim jedné ruky</string>
@@ -449,6 +450,12 @@
     <string name="setup__select_ime__title">Vyberte {app_name}</string>
     <string name="setup__select_ime__description">{app_name} je nyní povolena ve vašem systému. Pro její aktivní používání přepněte na {app_name} jejím vybráním v dialogu výběru vstupu!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Přepnout klávesnici</string>
+    <string name="setup__grant_notification_permission__title">Povolit oznámení o hlášení pádu</string>
+    <string name="setup__grant_notification_permission__description">Počínaje systémem Android 13 musí aplikace žádat o oprávnění
+        k posílání oznámení. V aplikaci FlorisBoard je toto oprávnění použito pouze pro otevření obrazovky hlášení
+        o pádu. Toto oprávnění lze kdykoli změnit v systémových nastaveních.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Udělit oprávnění</string>
     <string name="setup__finish_up__title">Dokončit</string>
     <string name="setup__finish_up__description_p1">{app_name} je nyní povolena ve vašem systému a je připravena na přizpůsobení.</string>
     <string name="setup__finish_up__description_p2">Pokud objevíte jakékoli problémy, chyby, pády nebo prostě jen budete chtít podat návrh, podívejte se na repozitář projektu na obrazovce O aplikaci!</string>
@@ -536,6 +543,11 @@
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Vymazání primární položky ovlivní historii</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Vymazání primární položky také vymaže poslední zápis v historii</string>
+    <string name="send_to_clipboard__unknown_error">Došlo k neznámé chybě. Zkuste to prosím znovu!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Tento typ médií není podporován.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Pro použití této funkce máte příliš starou verzi systému.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Obrázek níže zkopírován do schránky.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Vývojářské nástroje</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Zapnout vývojářské nástroje</string>
@@ -669,6 +681,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasická (3 sloupce)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamická šířka</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamická šířka a skrolovatelné</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Zapnout Caps Lock při dvojitém klepnutí na Shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Přepnout na další krok kapitalizace při každém stisknutí klávesy Shift</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimální</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Červená Zelená Modrá Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Vždy zobrazit</string>
@@ -746,6 +760,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Jsou zobrazeny všechny vlastnosti, vlastnosti a pravidla jsou přeloženy.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Vývojář</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Jsou zobrazeny všechny vlastnosti, vlastnosti a pravidla jsou zobrazeny tak, jak jsou napsány v samotné tabulce stylů.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Bez popisku</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Aktuální jazyk</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Použít systémové jazyky</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Použít klávesnicové podtypy</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Žádná akce</string>

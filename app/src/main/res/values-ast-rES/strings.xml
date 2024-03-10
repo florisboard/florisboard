@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Posar</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Espera</string>
@@ -14,16 +14,17 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Fustaxes ASCII</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrises ya fustaxes</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Persones ya cuerpu</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Animales ya natura</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Comida ya bébores</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Viaxes ya llugares</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrises y fustaxes</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Persones y cuerpu</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animales y natura</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Comida y bébores</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viaxes y llugares</string>
     <string name="emoji__category__activities" comment="Emoji category name">Actividaes</string>
     <string name="emoji__category__objects" comment="Emoji category name">Oxetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nun s\'atopó nengún fustaxe que s\'usare apocayá. Namás que comiences a usalos, apaecen equí.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">P\'acceder al historial de fustaxes, desbloquia\'l preséu primero.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseyu: ¡ten primíos los fustaxes usaos apocayá pa volver quitalos d\'esta seición!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Quitóse «{emoji}» de los fustaxes usaos apocayá</string>
     <!-- Quick action strings -->
@@ -47,8 +48,11 @@
     <string name="settings__help" comment="General label for help buttons in Settings">Ayuda</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Por defeutu</string>
     <string name="settings__home__title" comment="Title of the Home screen">Afáyate en {app_name}</string>
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">Llingües ya distribuciones</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Llingües y distribuciones</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Amosar los nomes de les llingües na</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Sotipos</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Xestionar los paquetes de llingua instalaos</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Opción esperimental: xestiona les estensiones qu\'amiesten compatibilidá pa llingües específiques (pel momentu, entrada china basada en formes)</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Llingua primaria</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapéu de los indicadores emerxentes</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Distribución de los caráuteres</string>
@@ -90,7 +94,7 @@
     <string name="snygg__property_value__rectangle_shape">Forma rectangular</string>
     <string name="snygg__property_value__circle_shape">Forma circular</string>
     <string name="snygg__property_value__percentage_size">Tamañu (%)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Soníos ya vibración</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Soníos y vibración</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Rempuesta auditiva / Soníos</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activar la rempuesta auditiva</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activar la rempuesta háptica</string>
@@ -99,8 +103,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidá de la vibración</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tecláu</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Amuesa la filera de númberos enriba de la distribución de tecles</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Amosar la llingua na barra d\'espaciu</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Amuesa la llingua activa na barra d\'espaciu</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamañu de la fonte</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Altor del tecláu</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pulsación de tecles</string>
@@ -136,7 +138,7 @@
     <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Introduz una pallabra que concase con «{regex}»</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Introduz un númberu válidu que tea dientro de les llendes especificaes</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Introduz un atayu que concase con «{regex}»</string>
-    <string name="settings__gestures__title" comment="Title of Gestures screen">Xestos ya escritura eslizante</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Xestos y escritura eslizante</string>
     <string name="pref__glide__title" comment="Preference group title">Escritura eslizante</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Activar la escritura eslizante</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Xestos en xeneral</string>
@@ -156,7 +158,7 @@
     <string name="about__changelog__title" comment="Preference title">Rexistru de cambeos</string>
     <string name="about__changelog__summary" comment="Preference summary">Les novedaes</string>
     <string name="about__repository__title" comment="Preference title">Depósitu (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">El códigu fonte, los discutinios, los problemes ya más información</string>
+    <string name="about__repository__summary" comment="Preference summary">El códigu fonte, los discutinios, los problemes y más información</string>
     <string name="about__privacy_policy__title" comment="Preference title">Política de privacidá</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacidá d\'esti proyeutu</string>
     <string name="about__project_license__title" comment="Preference title">Llicencia del proyeutu</string>
@@ -168,11 +170,11 @@
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacidá</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Depósitu</string>
     <string name="setup__enable_ime__title">Activación de {app_name}</string>
-    <string name="setup__enable_ime__description">Android rique que tolos teclaos personalizaos s\'activen per separtao enantes de poder usalos. Vete a la configuración de <i>Llingua ya entrada</i> p\'activar «{app_name}» ellí.</string>
+    <string name="setup__enable_ime__description">Android rique que tolos teclaos personalizaos s\'activen per separtao enantes de poder usalos. Vete a la configuración de <i>Llingua y entrada</i> p\'activar «{app_name}» ellí.</string>
     <string name="setup__enable_ime__open_settings_btn">Abrir la configuración del sistema</string>
     <string name="setup__select_ime__title">Seleición de {app_name}</string>
     <string name="setup__select_ime__switch_keyboard_btn">Cambiar de tecláu</string>
-    <string name="setup__finish_up__description_p1">{app_name} ta activáu nel sistema ya xá pues personalizalu.</string>
+    <string name="setup__finish_up__description_p1">{app_name} ta activáu nel sistema y yá pues personalizalu.</string>
     <string name="setup__finish_up__description_p2">Si atopes cualesquier problema, fallu, casque o namás quier facer dalguna suxerencia, revisa\'l depósitu del proyeutu na pantalla «Tocante a».</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__back_up__destination_file_sys">Sistema de ficheros llocal</string>
@@ -180,7 +182,7 @@
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferencies</string>
     <string name="backup_and_restore__restore__mode">Mou de la restauración</string>
     <string name="backup_and_restore__restore__mode_merge">Mecer colos datos actuales</string>
-    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Borrar ya sobrescribir los datos actuales</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Borrar y sobrescribir los datos actuales</string>
     <string name="backup_and_restore__restore__success">¡Los datos restauráronse correutamente!</string>
     <string name="backup_and_restore__restore__failure">La restauración de los datos falló: {error_message}</string>
     <!-- Crash Dialog strings -->
@@ -189,7 +191,7 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Paez que FlorisBoard dexa de funcionar de contino…</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Cartafueyu</string>
-    <string name="clipboard__disabled__message">L\'historial del cartafueyu de {app_name} permítete atroxar ya acceder aína al testu ya a les imáxenes que copies, cola capacidá de fixar elementos, configurar la llimpieza automática ya afitar un númberu máximu d\'elementos.</string>
+    <string name="clipboard__disabled__message">L\'historial del cartafueyu de {app_name} permítete atroxar y acceder aína al testu y a les imáxenes que copies, cola capacidá de fixar elementos, configurar la llimpieza automática y afitar un númberu máximu d\'elementos.</string>
     <string name="clipboard__empty__title">El cartafueyu ta baleru</string>
     <string name="clipboard__locked__title">El cartafueyu ta bloquiáu</string>
     <string name="clipboard__locked__message">P\'acceder al historial del cartafueyu, desbloquia primero\'l preséu.</string>
@@ -199,9 +201,11 @@
     <string name="settings__clipboard__title">Cartafueyu</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar el cartafueyu internu</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa un cartafueyu internu en cuentes del que tien sistema</string>
+    <string name="send_to_clipboard__unknown_error">Prodúxose un error desconocíu. ¡Volvi tentalo!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Esti elementu multimedia nun ye compatible.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Ferramientes de desendolcu</string>
-    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Ferramientes diseñaes específicamente pa depurar ya iguar problemes</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Ferramientes diseñaes específicamente pa depurar y iguar problemes</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Amosar les llendes táctiles de les tecles</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Amosar los ayudantes de la función «drag&amp;drop»</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Una aición de depuración pa volver amosar la pantalla de configuración</string>
@@ -275,8 +279,10 @@
     <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Des/activación automática</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Apaición dinámica</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Configuración avanzada</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Llingua actual</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Refacer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Desfacer</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Cambiar al tecláu anterior</string>
     <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Alternar la visibilidá de la barra intelixente</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->

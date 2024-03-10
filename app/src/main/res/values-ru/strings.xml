@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Ожидание</string>
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Символы</string>
     <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Список недавних эмодзи пуст. Как только вы начнете их использовать, они автоматически появятся здесь.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Для доступа к истории эмодзи необходимо разблокировать устройство.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: удержите палец на недавнем эмодзи, чтобы скрыть его!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} скрыт из недавних эмодзи</string>
     <!-- Quick action strings -->
@@ -284,8 +285,6 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Показать служебную клавишу</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Показывает настраиваемую служебную клавишу рядом с пробелом</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Действие служебной клавиши</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Показывать язык на кнопке пробела</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Показывать название текущего активного языка на кнопке пробела</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
@@ -441,6 +440,7 @@
     <string name="setup__select_ime__title">Выберите {app_name}</string>
     <string name="setup__select_ime__description">{app_name} активирована. Чтобы ею пользоваться, переключитесь на {app_name} в окне способа ввода!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Переключить клавиатуру</string>
+    <string name="setup__grant_notification_permission__btn">Предоставить разрешение</string>
     <string name="setup__finish_up__title">Готово</string>
     <string name="setup__finish_up__description_p1">Клавиатура {app_name} активирована и готова к дальнейшей настройке.</string>
     <string name="setup__finish_up__description_p2">Если столкнетесь с какими-либо трудностями, ошибками, сбоями или просто захотите предложить идею, загляните в репозиторий проекта в разделе «О программе»!</string>
@@ -528,6 +528,8 @@
     <string name="pref__clipboard__max_history_size__label">Максимальный размер истории</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Очистка основного клипа влияет на историю</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">При очистке основного клипа также удаляется последняя запись в истории</string>
+    <string name="send_to_clipboard__unknown_error">Неизвестная ошибка. Попробуйте еще раз!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Данный формат файла не поддерживается.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Инструменты разработчика</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Включить инструменты разработчика</string>

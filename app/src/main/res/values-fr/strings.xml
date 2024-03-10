@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Attendre</string>
@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboles</string>
     <string name="emoji__category__flags" comment="Emoji category name">Drapeaux</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Aucun émoji récemment utilisé n\'a été trouvé. Une fois que vous aurez commencé à taper des émojis, ils apparaîtront automatiquement ici.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Pour accéder à l\'historique emoji, veuillez d\'abord déverrouiller votre appareil.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseil de pro : appuyez longuement sur les émojis récemment utilisés pour les supprimer à nouveau de cette vue !</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Suppression de {emoji} des emojis récemment utilisés</string>
     <!-- Quick action strings -->
@@ -292,8 +293,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Afficher la touche utilitaire</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Affiche une touche utilitaire configurable à côté de la barre d\'espace</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Action de la touche utilitaire</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Afficher la langue sur la barre d\'espace</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Affiche le nom de la langue actuellement active sur la barre d\'espace</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Étiquette de la barre d\'espace</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportement de capitalisation</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicateur de la taille de la police</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode à une main</string>
@@ -451,6 +452,12 @@
     <string name="setup__select_ime__title">Sélectionnez {app_name}</string>
     <string name="setup__select_ime__description">{app_name} est maintenant activé dans votre système. Pour l\'utiliser, passez à {app_name} en le sélectionnant dans le menu de sélection des saisies !</string>
     <string name="setup__select_ime__switch_keyboard_btn">Changer de Clavier</string>
+    <string name="setup__grant_notification_permission__title">Autoriser les notifications de rapport d\'incident</string>
+    <string name="setup__grant_notification_permission__description">Depuis Android 13+, les applications doivent demander la permission pour
+        envoyer des notifications. Dans Florisboard, cette autorisation n\'est utilisée que pour ouvrir un écran de rapport en cas d\'incident.
+        Cette autorisation peut être modifiée à tout moment dans les paramètres du système.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Donner l\'autorisation</string>
     <string name="setup__finish_up__title">Terminer</string>
     <string name="setup__finish_up__description_p1">{app_name} est maintenant activé dans le système et prêt à être personnalisé par vous.</string>
     <string name="setup__finish_up__description_p2">Si vous rencontrez des problèmes, des bogues, des pannes ou si vous voulez simplement faire une suggestion, consultez le dépôt du projet à partir de l\'écran \" à propos \" !</string>
@@ -538,6 +545,11 @@
     <string name="pref__clipboard__max_history_size__label">Taille maximale de l\'historique</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Effacer l\'attache principale affecte l\'historique</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Effacer l\'attache principale supprime aussi le dernier élément de l\'historique</string>
+    <string name="send_to_clipboard__unknown_error">Une erreur inconnue s\'est produite. Merci de réessayer !</string>
+    <string name="send_to_clipboard__type_not_supported_error">Ce type de média n\'est pas supporté.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">La version d\'Android est trop ancienne pour cette fonctionnalité.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">L\'image ci-dessous est copiée dans le presse-papiers.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Outils de développement</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Activer les outils de développeur</string>
@@ -671,6 +683,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classique (3 colonnes)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largeur dynamique</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largeur dynamique &amp; déroulant</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Activer le Ver Maj en appuyant deux fois sur Maj</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Basculer sur le prochain mode de capitalisation à chaque appui sur la touche Maj</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadécimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rouge Vert Bleu Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Toujours afficher</string>
@@ -748,6 +762,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Toutes les propriétés de couleur sont affichées, les propriétés et les règles sont traduites.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Développeur</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Toutes les propriétés sont affichées, les propriétés et les règles sont affichées telles qu\'elles sont écrites dans le fichier de feuille de style lui-même.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Pas d\'étiquette</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Langue actuelle</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Utiliser la langue du système</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Utiliser les sous-types du clavier</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Aucune action</string>
