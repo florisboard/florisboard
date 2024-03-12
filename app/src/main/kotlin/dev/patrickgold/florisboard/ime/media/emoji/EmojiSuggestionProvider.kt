@@ -14,6 +14,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.subtypeManager
 
 const val EMOJI_SUGGESTION_INDICATOR = ':'
 const val EMOJI_SUGGESTION_MAX_COUNT = 5
@@ -34,6 +35,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
 
     private val prefs by florisPreferenceModel()
     private val editorInstance by context.editorInstance()
+    private val subtypeManager by context.subtypeManager()
     private val supportedEmojiSet: Set<Emoji> by lazy { initSupportedEmojiSet() }
     private val lettersRegex = "^:[A-Za-z]*$".toRegex()
 
@@ -85,7 +87,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
             val emojiMatch = emojiCompatInstance?.getEmojiMatch(emoji.value, emojiCompatMetadataVersion)
             emojiMatch == EmojiCompat.EMOJI_SUPPORTED || systemFontPaint.hasGlyph(emoji.value)
         }
-        parseRawEmojiSpecsFile(context, "ime/media/emoji/root.txt").values.flatten()
+        parseRawEmojiSpecsFile(context, resolveEmojiAssetPath(context, subtypeManager.activeSubtype)).values.flatten()
             .filter { isEmojiSupported(it.base()) }.map { it.base(emojiPreferredSkinTone) }.toSet()
     }
 
