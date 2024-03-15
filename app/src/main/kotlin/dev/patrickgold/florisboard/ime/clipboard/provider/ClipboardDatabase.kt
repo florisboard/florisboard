@@ -210,7 +210,7 @@ data class ClipboardItem(
 
     fun stringRepresentation(): String {
         return when {
-            text != null -> text
+            text != null -> text.take(500)
             uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }
