@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.content.Context
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.bufferedReader
 import java.util.*
 
@@ -92,4 +94,54 @@ fun parseRawEmojiSpecsFile(
 
     cachedEmojiLayoutMap = layouts
     return layouts
+}
+
+/**
+ * Resolves the path to the emoji asset file based on the active keyboard subtype and active locale.
+ *
+ * This method prioritizes usage of cached emoji layout maps when available. If a cached map is found then return,
+ * the parseRawEmojiSpecsFile will correctly return the cached data
+ *
+ * It then attempts to locate a matching emoji asset file within the "ime/media/emoji/" directory in the
+ * application's assets based on locale priority:
+ * - Primary locale of the active subtype
+ * - Secondary locales of the active subtype
+ * - Root path ("ime/media/emoji/root.txt") as a fallback
+ *
+ * For each locale, file matching follows this preference order:
+ * - {language}_{country}_{variant}.txt
+ * - {language}_{country}.txt
+ * - {language}.txt
+ *
+ * @param context The context used to access application assets.
+ * @param activeSubtype The currently active keyboard subtype.
+ *
+ * @return The path to the emoji asset file, or the root path ("ime/media/emoji/root.txt") if no match is found.
+ */
+fun resolveEmojiAssetPath(context: Context, activeSubtype: Subtype): String {
+    val rootPath = "ime/media/emoji/root.txt"
+    cachedEmojiLayoutMap?.let { return rootPath }
+    val emojiAssets = context.assets.list("ime/media/emoji/")?.toList() ?: return rootPath
+    return emojiFilesForLocale(activeSubtype.primaryLocale, emojiAssets)
+        ?: activeSubtype.secondaryLocales.firstNotNullOfOrNull { emojiFilesForLocale(it, emojiAssets) }
+        ?: rootPath
+}
+
+private fun emojiFilesForLocale(locale: FlorisLocale, assets: List<String>): String? {
+    val makePath = { file: String -> "ime/media/emoji/$file" }
+    val language = locale.language
+    val country = locale.country.takeIf { it.isNotBlank() }
+    val variant = locale.variant.takeIf { it.isNotBlank() }
+    if (variant != null && country != null) {
+        "${language}_${country}_${variant}.txt".takeIf { assets.contains(it) }?.let {
+            return makePath(it)
+        }
+    }
+    if (country != null) {
+        "${language}_${country}.txt".takeIf { assets.contains(it) }?.let { return makePath(it) }
+    }
+    "${language}.txt".takeIf { assets.contains(it) }?.let {
+        return makePath(it)
+    }
+    return null
 }
