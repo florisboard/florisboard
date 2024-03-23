@@ -30,102 +30,97 @@
     "ড়": {
       "main": { "$": "auto_text_key", "code":  2525, "label": "ঢ়" }
     },
-	"ৃ": {
-      "main": { "$": "auto_text_key", "code":  2443, "label": "ঋ" },
-	  "relevant": [
-		{ "$": "auto_text_key", "code":  2500, "label": "ৄ" },
-		{ "$": "auto_text_key", "code":  2528, "label": "ৠ" },
-		{ "$": "auto_text_key", "code":  2529, "label": "ৡ" },
-		{ "$": "auto_text_key", "code":  2530, "label": "ৢ" },
-		{ "$": "auto_text_key", "code":  2531, "label": "ৣ" }
-      ]
+    "ৃ": {
+      "main": { "$": "auto_text_key", "code":  2443, "label": "ঋ" }
     },
-	"ু": {
+    "ু": {
       "main": { "$": "auto_text_key", "code":  2441, "label": "উ" }
     },
-	"ি": {
+    "ি": {
       "main": { "$": "auto_text_key", "code":  2439, "label": "ই" }
     },
-	"া": {
+    "া": {
       "main": { "$": "auto_text_key", "code":  2438, "label": "আ" },
-	  "relevant": [
+      "relevant": [
         { "$": "auto_text_key", "code":  2437, "label": "অ" }
       ]
     },
-	"্": {
+    "্": {
       "main": { "$": "auto_text_key", "code":  2433, "label": "ঁ" }
     },
-	"ব": {
+    "ব": {
       "main": { "$": "auto_text_key", "code":  2477, "label": "ভ" }
     },
-	"ক": {
+    "ক": {
       "main": { "$": "auto_text_key", "code":  2454, "label": "খ" }
     },
-	"ত": {
+    "ত": {
       "main": { "$": "auto_text_key", "code":  2469, "label": "থ" },
-	  "relevant": [
+      "relevant": [
         { "$": "auto_text_key", "code":  2510, "label": "ৎ" }
       ]
     },
-	"দ": {
+    "দ": {
       "main": { "$": "auto_text_key", "code":  2471, "label": "ধ" }
     },
-	"ো": {
+    "ো": {
       "main": { "$": "auto_text_key", "code":  2451, "label": "ও" }
     },
-	"ে": {
+    "ে": {
       "main": { "$": "auto_text_key", "code":  2447, "label": "এ" }
     },
-	"র": {
+    "র": {
       "main": { "$": "auto_text_key", "code":  2482, "label": "ল" },
-	  "relevant": [
+      "relevant": [
         { "code": -255, "label": "র‌্য" }
       ]
     },
-	"ন": {
+    "ন": {
       "main": { "$": "auto_text_key", "code":  2467, "label": "ণ" }
     },
-	"স": {
+    "স": {
       "main": { "$": "auto_text_key", "code":  2487, "label": "ষ" }
     },
-	"ম": {
+    "ম": {
       "main": { "$": "auto_text_key", "code":  2486, "label": "শ" }
     },
-	"ূ": {
+    "ূ": {
       "main": { "$": "auto_text_key", "code":  2442, "label": "ঊ" }
     },
-	"ী": {
+    "ী": {
       "main": { "$": "auto_text_key", "code":  2440, "label": "ঈ" }
     },
-	"ঁ": {
+    "ঁ": {
+      "main": { "$": "auto_text_key", "code":  2492, "label": "়" },
       "relevant": [
-		{ "$": "auto_text_key", "code":  2493, "label": "ঽ" },
-		{ "$": "auto_text_key", "code":  2544, "label": "ৰ" },
-		{ "$": "auto_text_key", "code":  2545, "label": "ৱ" },
-		{ "$": "auto_text_key", "code":  2492, "label": "়" },
-		{ "$": "auto_text_key", "code":  2554, "label": "৺" },
-		{ "$": "auto_text_key", "code":  2519, "label": "ৗ" }
+        { "$": "auto_text_key", "code":  2500, "label": "ৄ" },
+        { "$": "auto_text_key", "code":  2530, "label": "ৢ" },
+        { "$": "auto_text_key", "code":  2531, "label": "ৣ" },
+        { "$": "auto_text_key", "code":  2528, "label": "ৠ" },
+        { "$": "auto_text_key", "code":  2444, "label": "ঌ" },
+        { "$": "auto_text_key", "code":  2529, "label": "ৡ" },
+        { "$": "auto_text_key", "code":  2544, "label": "ৰ" },
+        { "$": "auto_text_key", "code":  2545, "label": "ৱ" },
+        { "$": "auto_text_key", "code":  2493, "label": "ঽ" },
+        { "$": "auto_text_key", "code":  2554, "label": "৺" },
+        { "$": "auto_text_key", "code":  2519, "label": "ৗ" }
       ]
     },
-	"ৌ": {
+    "ৌ": {
       "main": { "$": "auto_text_key", "code":  2452, "label": "ঔ" }
     },
-	"ৈ": {
+    "ৈ": {
       "main": { "$": "auto_text_key", "code":  2448, "label": "ঐ" }
     },
     "~right": {
       "main": { "code":   2404, "label": "।" },
       "relevant": [
-        { "code":   38, "label": "&" },
-        { "code":   37, "label": "%" },
-        { "code":   43, "label": "+" },
-        { "code":   34, "label": "\"" },
-        { "code":   45, "label": "-" },
-        { "code":   2435, "label": "ঃ" },
-        { "code":   39, "label": "'" },
-        { "code":   64, "label": "@" },
-        { "code":   59, "label": ";" },
-        { "code":   47, "label": "/" },
+      	{ "code":   37, "label": "%" },
+      	{ "code":   43, "label": "+" },
+      	{ "code":   45, "label": "-" },
+      	{ "code":   58, "label": ":" },
+      	{ "code":   59, "label": ";" },
+      	{ "code":   47, "label": "/" },
         { "$": "layout_direction_selector",
           "ltr": { "code":   40, "label": "(" },
           "rtl": { "code":   41, "label": "(" }
@@ -134,9 +129,13 @@
           "ltr": { "code":   41, "label": ")" },
           "rtl": { "code":   40, "label": ")" }
         },
+        { "code":   64, "label": "@" },
         { "code":   35, "label": "#" },
+        { "code":   8205, "label": ">⁞<" },
+        { "code":   8204, "label": "<⁞>" },
         { "code":   33, "label": "!" },
-        { "code":   63, "label": "?" }
+        { "code":   63, "label": "?" },
+        { "code":   2405, "label": "॥" }
       ]
     }
   },
