@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.keyData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
@@ -689,6 +690,48 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
             -> {
                 entry.transform(rawValue = entry.rawValue.uppercase())
+            }
+            "smartbar__action_arrangement" -> {
+                val oldArrangement = QuickActionArrangement.Serializer.deserialize(entry.rawValue)
+                val newDefault = QuickActionArrangement.Default
+
+                // FIXME: what is the canonical equality for two quick actions? Using .keyData().code for now.
+                val oldActionKeys = buildSet {
+                    oldArrangement.stickyAction?.let { add(it.keyData().code) }
+                    oldArrangement.dynamicActions.forEach { add(it.keyData().code) }
+                    oldArrangement.hiddenActions.forEach { add(it.keyData().code) }
+                }
+                val newActionKeys = buildSet {
+                    newDefault.stickyAction?.let { add(it.keyData().code) }
+                    newDefault.dynamicActions.forEach { add(it.keyData().code) }
+                    newDefault.hiddenActions.forEach { add(it.keyData().code) }
+                }
+                val newStickyAction = oldArrangement.stickyAction?.takeIf { it.keyData().code in newActionKeys }
+                val newDynamicActions = oldArrangement.dynamicActions.filter { it.keyData().code in newActionKeys }.toMutableList()
+                val newHiddenActions = oldArrangement.hiddenActions.filter { it.keyData().code in newActionKeys }.toMutableList()
+                newDefault.stickyAction?.let {
+                    if (it.keyData().code !in oldActionKeys) {
+                        newDynamicActions.add(it)
+                    }
+                }
+                for (it in newDefault.dynamicActions) {
+                    if (it.keyData().code !in oldActionKeys) {
+                        newDynamicActions.add(it)
+                    }
+                }
+                for (it in newDefault.hiddenActions) {
+                    if (it.keyData().code !in oldActionKeys) {
+                        newHiddenActions.add(it)
+                    }
+                }
+                val newArrangement = QuickActionArrangement(
+                    stickyAction = newStickyAction,
+                    dynamicActions = newDynamicActions.toList(),
+                    hiddenActions = newHiddenActions.toList()
+                )
+                entry.transform(
+                    rawValue = QuickActionArrangement.Serializer.serialize(newArrangement)
+                )
             }
 
             // Migrate old private mode force flag as this is a sensitive preference

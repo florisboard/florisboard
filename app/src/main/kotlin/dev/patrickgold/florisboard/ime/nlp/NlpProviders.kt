@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 
@@ -110,6 +111,8 @@ interface SpellingProvider : NlpProvider {
  * Interface for an NLP provider specializing in next/current-word suggestion and autocorrect services.
  */
 interface SuggestionProvider : NlpProvider {
+    private val dictionaryManager get() = DictionaryManager.default()
+
     /**
      * Callback from the editor logic that the editor content has changed and that new suggestions should be generated
      * for the new user input. There is no guarantee that candidates returned are actually used, as there may be sudden
@@ -140,6 +143,65 @@ interface SuggestionProvider : NlpProvider {
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate>
+
+    suspend fun suggestFromUserDictionary(
+        subtype: Subtype,
+        content: EditorContent,
+        maxCandidateCount: Int,
+        allowPossiblyOffensive: Boolean,
+        isPrivateSession: Boolean,
+    ): List<SuggestionCandidate> {
+        return if (!isPrivateSession && content.composingText.isNotEmpty()) {
+            // load user dictionary. Should this be put here, or in the preload() for every SuggestionProvider?
+            dictionaryManager.loadUserDictionariesIfNecessary()
+            // assuming no offensive ones in the dictionary?
+            val subtypeLocale = subtype.primaryLocale
+            // Use locale and parent locales. TODO: control this by a pref?
+            val totalCandidates = dictionaryManager.queryUserDictionary(
+                content.composingText, subtypeLocale
+            ).sortedWith(
+                // sorted by auto commit, confidence, then alphabetical.
+                compareByDescending<SuggestionCandidate> { it.isEligibleForAutoCommit }.thenBy { it.confidence }.thenBy { it.text.toString() }
+            )
+            // Delegates to user dictionary query system (whether match is exact) for isEligibleForAutoCommit
+            return totalCandidates.subList(0, maxCandidateCount.coerceAtMost(totalCandidates.size))
+        } else {
+            emptyList()
+        }
+    }
+
+    suspend fun mergeFromSuggestionsSources(
+        fromDictionary: List<SuggestionCandidate>,
+        fromNlp: List<SuggestionCandidate>,
+        maxCandidateCount: Int,
+    ): List<SuggestionCandidate> {
+        // TODO: currently user dictionary supersedes other suggestions (except 1st one). Maybe use a pref to control this.
+        val maxFromDictionary = (maxCandidateCount - fromNlp.size.coerceAtMost(1)).coerceAtLeast(0)
+        var existsEligibleForAutoCommit = false
+        return buildList {
+            addAll(fromDictionary.subList(
+                0, maxFromDictionary.coerceAtMost(fromDictionary.size)
+            ))
+            val remaining = (maxCandidateCount - size).coerceAtLeast(0)
+            addAll(fromNlp.subList(
+                0, remaining.coerceAtMost(fromNlp.size)
+            ))
+        }.map { suggestionCandidate ->
+            // Only keep 1st isEligibleForAutoCommit true, set others to false
+            when (suggestionCandidate) {
+                is WordSuggestionCandidate -> {
+                    suggestionCandidate.copy(
+                        isEligibleForAutoCommit = if (existsEligibleForAutoCommit) false
+                        else suggestionCandidate.isEligibleForAutoCommit
+                    )
+                }
+                is ClipboardSuggestionCandidate -> suggestionCandidate
+                else -> suggestionCandidate
+            }.also {
+                existsEligibleForAutoCommit = existsEligibleForAutoCommit || suggestionCandidate.isEligibleForAutoCommit
+            }
+        }
+    }
 
     /**
      * Is called when a suggestion has been accepted, either manually by the user or automatically through auto-commit.
@@ -261,7 +323,14 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
-        return emptyList()
+//        return emptyList()
+        return suggestFromUserDictionary(
+            subtype=subtype,
+            content=content,
+            maxCandidateCount=maxCandidateCount,
+            allowPossiblyOffensive=allowPossiblyOffensive,
+            isPrivateSession=isPrivateSession,
+        )
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
