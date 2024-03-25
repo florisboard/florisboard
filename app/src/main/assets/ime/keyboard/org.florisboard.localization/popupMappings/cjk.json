@@ -1,0 +1,117 @@
+{
+  "all": {
+    "a": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  257, "label": "ā" },
+        { "$": "auto_text_key", "code":  225, "label": "á" },
+        { "$": "auto_text_key", "code":  462, "label": "ǎ" },
+        { "$": "auto_text_key", "code":  224, "label": "à" },
+        { "$": "auto_text_key", "code":  230, "label": "æ" },
+        { "$": "auto_text_key", "code":  227, "label": "ã" },
+        { "$": "auto_text_key", "code":  229, "label": "å" },
+        { "$": "auto_text_key", "code":  226, "label": "â" },
+        { "$": "auto_text_key", "code":  228, "label": "ä" }
+      ]
+    },
+    "c": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  231, "label": "ç" }
+      ]
+    },
+    "e": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  275, "label": "ē" },
+        { "$": "auto_text_key", "code":  233, "label": "é" },
+        { "$": "auto_text_key", "code":  283, "label": "ě" },
+        { "$": "auto_text_key", "code":  232, "label": "è" },
+        { "$": "auto_text_key", "code":  234, "label": "ê" },
+        { "$": "auto_text_key", "code":  235, "label": "ë" }
+      ]
+    },
+    "i": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  299, "label": "ī" },
+        { "$": "auto_text_key", "code":  237, "label": "í" },
+        { "$": "auto_text_key", "code":  464, "label": "ǐ" },
+        { "$": "auto_text_key", "code":  236, "label": "ì" },
+        { "$": "auto_text_key", "code":  239, "label": "ï" },
+        { "$": "auto_text_key", "code":  238, "label": "î" }
+      ]
+    },
+    "n": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  241, "label": "ñ" },
+        { "$": "auto_text_key", "code":  324, "label": "ń" }
+      ]
+    },
+    "o": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  333, "label": "ō" },
+        { "$": "auto_text_key", "code":  243, "label": "ó" },
+        { "$": "auto_text_key", "code":  466, "label": "ǒ" },
+        { "$": "auto_text_key", "code":  242, "label": "ò" },
+        { "$": "auto_text_key", "code":  245, "label": "õ" },
+        { "$": "auto_text_key", "code":  339, "label": "œ" },
+        { "$": "auto_text_key", "code":  248, "label": "ø" },
+        { "$": "auto_text_key", "code":  246, "label": "ö" },
+        { "$": "auto_text_key", "code":  244, "label": "ô" }
+      ]
+    },
+    "s": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  223, "label": "ß" }
+      ]
+    },
+    "u": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  363, "label": "ū" },
+        { "$": "auto_text_key", "code":  250, "label": "ú" },
+        { "$": "auto_text_key", "code":  468, "label": "ǔ" },
+        { "$": "auto_text_key", "code":  249, "label": "ù" },
+        { "$": "auto_text_key", "code":  252, "label": "ü" },
+        { "$": "auto_text_key", "code":  470, "label": "ǖ" },
+        { "$": "auto_text_key", "code":  472, "label": "ǘ" },
+        { "$": "auto_text_key", "code":  474, "label": "ǚ" },
+        { "$": "auto_text_key", "code":  476, "label": "ǜ" },
+        { "$": "auto_text_key", "code":  251, "label": "û" }
+      ]
+    },
+    "~right": {
+      "main": { "code":   44, "label": "," },
+      "relevant": [
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":   34, "label": "\"" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   39, "label": "'" },
+        { "code":   64, "label": "@" },
+        { "code":   59, "label": ";" },
+        { "code":   47, "label": "/" },
+        { "$": "layout_direction_selector",
+          "ltr": { "code":   40, "label": "(" },
+          "rtl": { "code":   41, "label": "(" }
+        },
+        { "$": "layout_direction_selector",
+          "ltr": { "code":   41, "label": ")" },
+          "rtl": { "code":   40, "label": ")" }
+        },
+        { "code":   35, "label": "#" },
+        { "code":   33, "label": "!" },
+        { "code":   63, "label": "?" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".gov" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" }
+      ]
+    }
+  }
+}
