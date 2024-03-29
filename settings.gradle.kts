@@ -26,10 +26,11 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        // maven { url = uri("https://jitpack.io") }
         google()
         mavenCentral()
         // Uncomment the following if testing snapshots from Maven Central
-        // maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+        maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
     }
 }
 

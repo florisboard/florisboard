@@ -31,6 +31,8 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -120,7 +122,7 @@ fun PreviewKeyboardField(
                             }
                         }) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_keyboard),
+                                imageVector = Icons.Default.Keyboard,
                                 contentDescription = null,
                             )
                         }

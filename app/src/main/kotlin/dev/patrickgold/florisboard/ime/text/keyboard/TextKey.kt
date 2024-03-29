@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
@@ -228,7 +228,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     fun computeLabelsAndDrawables(evaluator: ComputingEvaluator) {
         label = evaluator.computeLabel(computedData)
         hintedLabel = null
-        foregroundDrawableId = evaluator.computeIconResId(computedData)
+        foregroundImageVector = evaluator.computeImageVector(computedData)
 
         val data = computedData
         if (data.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE) {

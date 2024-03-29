@@ -37,6 +37,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.UnfoldLess
+import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -48,9 +53,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
@@ -100,12 +103,14 @@ fun Smartbar() {
                     SmartbarMainRow()
                 }
             }
+
             ExtendedActionsPlacement.BELOW_CANDIDATES -> {
                 Column {
                     SmartbarMainRow()
                     SmartbarSecondaryRow()
                 }
             }
+
             ExtendedActionsPlacement.OVERLAY_APP_UI -> {
                 Box(
                     modifier = Modifier
@@ -173,15 +178,16 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .autoMirrorForRtl()
                         .rotate(rotation),
-                    painter = painterResource(
-                        if (flipToggles) {
-                            R.drawable.ic_keyboard_arrow_left
-                        } else {
-                            R.drawable.ic_keyboard_arrow_right
-                        }
-                    ),
+                    imageVector = if (flipToggles) {
+                        Icons.Default.KeyboardArrowLeft
+                    } else {
+                        Icons.Default.KeyboardArrowRight
+                    },
                     contentDescription = null,
-                    tint = primaryActionsToggleStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
+                    tint = primaryActionsToggleStyle.foreground.solidColor(
+                        context,
+                        default = FlorisImeTheme.fallbackContentColor()
+                    ),
                 )
             }
         }
@@ -247,7 +253,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .alpha(alpha)
                         .rotate(rotation),
-                    painter = painterResource(R.drawable.ic_unfold_less),
+                    imageVector = Icons.Default.UnfoldLess,
                     contentDescription = null,
                     tint = secondaryActionsToggleStyle.foreground.solidColor(context),
                 )
@@ -256,7 +262,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .alpha(1f - alpha)
                         .rotate(rotation - 180f),
-                    painter = painterResource(R.drawable.ic_unfold_more),
+                    imageVector = Icons.Default.UnfoldMore,
                     contentDescription = null,
                     tint = secondaryActionsToggleStyle.foreground.solidColor(context),
                 )
@@ -273,9 +279,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             actionArrangement.stickyAction != null -> {
                 actionArrangement.stickyAction
             }
+
             smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED && sharedActionsExpanded -> {
                 ToggleOverflowPanelAction
             }
+
             else -> null
         }
 
@@ -310,9 +318,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
                 CandidatesRow()
             }
+
             SmartbarLayout.ACTIONS_ONLY -> {
                 QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
             }
+
             SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED -> {
                 if (!flipToggles) {
                     SharedActionsToggle()
@@ -324,6 +334,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     SharedActionsToggle()
                 }
             }
+
             SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED -> {
                 if (!flipToggles) {
                     ExtendedActionsToggle()

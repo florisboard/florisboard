@@ -19,6 +19,10 @@ package dev.patrickgold.florisboard.app.ext
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,11 +52,11 @@ fun ExtensionMaintainerChip(
         text = maintainer.name,
         trailingIcons = when {
             maintainer.email != null && maintainer.url != null -> listOf(
-                R.drawable.ic_email,
-                R.drawable.ic_link,
+                Icons.Outlined.Mail,
+                Icons.Default.Link,
             )
-            maintainer.email != null -> listOf(R.drawable.ic_email)
-            maintainer.url != null -> listOf(R.drawable.ic_link)
+            maintainer.email != null -> listOf(Icons.Outlined.Mail)
+            maintainer.url != null -> listOf(Icons.Default.Link)
             else -> listOf()
         },
         onClick = { showDialog = !showDialog },
@@ -70,7 +74,7 @@ fun ExtensionMaintainerChip(
                     FlorisChip(
                         onClick = { context.launchUrl("mailto:${maintainer.email}") },
                         text = maintainer.email.toString(),
-                        leadingIcons = listOf(R.drawable.ic_email),
+                        leadingIcons = listOf(Icons.Outlined.Mail),
                         shape = RoundedCornerShape(4.dp),
                     )
                 }
@@ -78,7 +82,7 @@ fun ExtensionMaintainerChip(
                     FlorisChip(
                         onClick = { context.launchUrl(maintainer.url.toString()) },
                         text = maintainer.url.toString(),
-                        leadingIcons = listOf(R.drawable.ic_link),
+                        leadingIcons = listOf(Icons.Default.Link),
                         shape = RoundedCornerShape(4.dp),
                     )
                 }

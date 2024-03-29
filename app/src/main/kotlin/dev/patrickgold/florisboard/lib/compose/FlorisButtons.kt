@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -79,7 +80,7 @@ fun FlorisButton(
 fun FlorisOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
+    icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small,
@@ -99,7 +100,7 @@ fun FlorisOutlinedButton(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -111,7 +112,7 @@ fun FlorisOutlinedButton(
 fun FlorisTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
+    icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small,
@@ -131,7 +132,7 @@ fun FlorisTextButton(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -143,7 +144,7 @@ fun FlorisTextButton(
 fun FlorisIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter,
+    icon: ImageVector,
     enabled: Boolean = true,
     iconModifier: Modifier = Modifier,
     iconColor: Color = Color.Unspecified,
@@ -161,7 +162,7 @@ fun FlorisIconButton(
         ) {
             Icon(
                 modifier = iconModifier,
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -172,7 +173,7 @@ fun FlorisIconButton(
 fun FlorisIconButtonWithInnerPadding(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter,
+    icon: ImageVector,
     enabled: Boolean = true,
     iconModifier: Modifier = Modifier,
     iconColor: Color = Color.Unspecified,
@@ -195,7 +196,7 @@ fun FlorisIconButtonWithInnerPadding(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    painter = icon,
+                    imageVector = icon,
                     contentDescription = null,
                 )
             }

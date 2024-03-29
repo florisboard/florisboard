@@ -221,7 +221,7 @@ private fun CandidateItem(
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (candidate.iconId != null) {
+        if (candidate.icon != null) {
             Icon(
                 modifier = Modifier
                     .requiredSize(
@@ -230,7 +230,7 @@ private fun CandidateItem(
                             .toDp() * 1.5f
                     )
                     .padding(end = 4.dp),
-                painter = painterResource(candidate.iconId!!),
+                imageVector = candidate.icon!!,
                 contentDescription = null,
                 tint = style.foreground.solidColor(context),
             )

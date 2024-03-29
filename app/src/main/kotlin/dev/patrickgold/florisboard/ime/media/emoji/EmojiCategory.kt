@@ -16,6 +16,18 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EmojiEmotions
+import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.EmojiFlags
+import androidx.compose.material.icons.filled.EmojiFoodBeverage
+import androidx.compose.material.icons.filled.EmojiNature
+import androidx.compose.material.icons.filled.EmojiObjects
+import androidx.compose.material.icons.filled.EmojiPeople
+import androidx.compose.material.icons.filled.EmojiSymbols
+import androidx.compose.material.icons.filled.EmojiTransportation
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.R
 
 enum class EmojiCategory(val id: String) {
@@ -30,18 +42,18 @@ enum class EmojiCategory(val id: String) {
     SYMBOLS("symbols"),
     FLAGS("flags");
 
-    fun iconId(): Int {
+    fun icon(): ImageVector {
         return when (this) {
-            RECENTLY_USED -> R.drawable.ic_schedule
-            SMILEYS_EMOTION -> R.drawable.ic_emoji_emotions
-            PEOPLE_BODY -> R.drawable.ic_emoji_people
-            ANIMALS_NATURE -> R.drawable.ic_emoji_nature
-            FOOD_DRINK -> R.drawable.ic_emoji_food_beverage
-            TRAVEL_PLACES -> R.drawable.ic_emoji_transportation
-            ACTIVITIES -> R.drawable.ic_emoji_events
-            OBJECTS -> R.drawable.ic_emoji_objects
-            SYMBOLS -> R.drawable.ic_emoji_symbols
-            FLAGS -> R.drawable.ic_emoji_flags
+            RECENTLY_USED -> Icons.Default.Schedule
+            SMILEYS_EMOTION -> Icons.Default.EmojiEmotions
+            PEOPLE_BODY -> Icons.Default.EmojiPeople
+            ANIMALS_NATURE -> Icons.Default.EmojiNature
+            FOOD_DRINK -> Icons.Default.EmojiFoodBeverage
+            TRAVEL_PLACES -> Icons.Default.EmojiTransportation
+            ACTIVITIES -> Icons.Default.EmojiEvents
+            OBJECTS -> Icons.Default.EmojiObjects
+            SYMBOLS -> Icons.Default.EmojiSymbols
+            FLAGS -> Icons.Default.EmojiFlags
         }
     }
 }

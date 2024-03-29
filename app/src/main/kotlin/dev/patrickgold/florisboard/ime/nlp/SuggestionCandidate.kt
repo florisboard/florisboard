@@ -16,6 +16,15 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Videocam
+import androidx.compose.material.icons.outlined.Assignment
+import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -80,7 +89,7 @@ interface SuggestionCandidate {
      * In the UI, if the ID is non-null, it will be shown to the start of the main label and scaled accordingly.
      * The color of the icon is entirely decided by the theme of the user. Icons that are monochrome work best.
      */
-    val iconId: Int?
+    val icon: ImageVector?
 
     /**
      * The source provider of this candidate. Is used for several callbacks for training, blacklisting of candidates on
@@ -103,7 +112,7 @@ data class WordSuggestionCandidate(
     override val isEligibleForUserRemoval: Boolean = true,
     override val sourceProvider: SuggestionProvider? = null,
 ) : SuggestionCandidate {
-    override val iconId: Int? = null
+    override val icon: ImageVector? = null
 }
 
 /**
@@ -126,14 +135,14 @@ data class ClipboardSuggestionCandidate(
 
     override val isEligibleForUserRemoval: Boolean = true
 
-    override val iconId: Int = when (clipboardItem.type) {
+    override val icon: ImageVector = when (clipboardItem.type) {
         ItemType.TEXT -> when {
-            NetworkUtils.isEmailAddress(text) -> R.drawable.ic_email
-            NetworkUtils.isUrl(text) -> R.drawable.ic_link
-            NetworkUtils.isPhoneNumber(text) -> R.drawable.ic_phone
-            else -> R.drawable.ic_assignment
+            NetworkUtils.isEmailAddress(text) -> Icons.Default.Email
+            NetworkUtils.isUrl(text) -> Icons.Default.Link
+            NetworkUtils.isPhoneNumber(text) -> Icons.Default.Phone
+            else -> Icons.Outlined.Assignment
         }
-        ItemType.IMAGE -> R.drawable.ic_image
-        ItemType.VIDEO -> R.drawable.ic_videocam
+        ItemType.IMAGE -> Icons.Default.Image
+        ItemType.VIDEO -> Icons.Default.Videocam
     }
 }

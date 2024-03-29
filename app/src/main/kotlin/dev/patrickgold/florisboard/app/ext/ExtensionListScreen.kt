@@ -45,7 +45,7 @@ fun ExtensionListScreen() = FlorisScreen {
         )
     }
     Preference(
-        iconId = R.drawable.ic_info,
+        icon = R.drawable.ic_info,
         title = stringRes(R.string.about__version__title),
         summary = appVersion,
         onClick = {
@@ -67,31 +67,31 @@ fun ExtensionListScreen() = FlorisScreen {
         },
     )
     Preference(
-        iconId = R.drawable.ic_history,
+        icon = R.drawable.ic_history,
         title = stringRes(R.string.about__changelog__title),
         summary = stringRes(R.string.about__changelog__summary),
         onClick = { launchUrl(context, R.string.florisboard__changelog_url, arrayOf(BuildConfig.VERSION_NAME)) },
     )
     Preference(
-        iconId = R.drawable.ic_code,
+        icon = R.drawable.ic_code,
         title = stringRes(R.string.about__repository__title),
         summary = stringRes(R.string.about__repository__summary),
         onClick = { launchUrl(context, R.string.florisboard__repo_url) },
     )
     Preference(
-        iconId = R.drawable.ic_policy,
+        icon = R.drawable.ic_policy,
         title = stringRes(R.string.about__privacy_policy__title),
         summary = stringRes(R.string.about__privacy_policy__summary),
         onClick = { launchUrl(context, R.string.florisboard__privacy_policy_url) },
     )
     Preference(
-        iconId = R.drawable.ic_description,
+        icon = R.drawable.ic_description,
         title = stringRes(R.string.about__project_license__title),
         summary = stringRes(R.string.about__project_license__summary, "license_name" to "Apache 2.0"),
         onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
     )
     Preference(
-        iconId = R.drawable.ic_description,
+        icon = R.drawable.ic_description,
         title = stringRes(id = R.string.about__third_party_licenses__title),
         summary = stringRes(id = R.string.about__third_party_licenses__summary),
         onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },

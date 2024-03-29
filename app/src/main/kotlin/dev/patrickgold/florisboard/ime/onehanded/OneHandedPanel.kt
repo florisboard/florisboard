@@ -23,6 +23,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ZoomOutMap
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +68,7 @@ fun RowScope.OneHandedPanel(
             modifier = Modifier.fillMaxWidth()
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_zoom_out_map),
+                imageVector = Icons.Default.ZoomOutMap,
                 contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
                 tint = oneHandedPanelStyle.foreground.solidColor(context),
             )
@@ -77,13 +81,11 @@ fun RowScope.OneHandedPanel(
             modifier = Modifier.height(FlorisImeSizing.keyboardUiHeight()).fillMaxWidth()
         ) {
             Icon(
-                painter = painterResource(
-                    if (panelSide == OneHandedMode.START) {
-                        R.drawable.ic_keyboard_arrow_left
-                    } else {
-                        R.drawable.ic_keyboard_arrow_right
-                    }
-                ),
+                imageVector = if (panelSide == OneHandedMode.START) {
+                    Icons.Default.KeyboardArrowLeft
+                } else {
+                    Icons.Default.KeyboardArrowRight
+                },
                 contentDescription = stringRes(
                     if (panelSide == OneHandedMode.START) {
                         R.string.one_handed__move_start_btn_content_description

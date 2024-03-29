@@ -31,6 +31,9 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -144,7 +147,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                         onClick = {
                             extToDelete = ext
                         },
-                        icon = painterResource(R.drawable.ic_delete),
+                        icon = Icons.Default.Delete,
                         text = stringRes(R.string.action__delete),
                         colors = ButtonDefaults.outlinedButtonColors(
                             contentColor = MaterialTheme.colors.error,
@@ -156,7 +159,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     onClick = {
                         navController.navigate(Routes.Ext.Export(ext.meta.id))
                     },
-                    icon = painterResource(R.drawable.ic_share),
+                    icon = Icons.Default.Share,
                     text = stringRes(R.string.action__export),
                 )
             }

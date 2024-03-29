@@ -56,7 +56,7 @@ import dev.patrickgold.compose.tooltip.tooltip
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -189,12 +189,12 @@ fun QuickActionButton(
             ) {
                 when (action) {
                     is QuickAction.InsertKey -> {
-                        val (iconResId, label) = remember(action, evaluator) {
-                            evaluator.computeIconResId(action.data) to evaluator.computeLabel(action.data)
+                        val (imageVector, label) = remember(action, evaluator) {
+                            evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
                         }
-                        if (iconResId != null) {
+                        if (imageVector != null) {
                             Icon(
-                                painter = painterResource(id = iconResId),
+                                imageVector = imageVector,
                                 contentDescription = null,
                                 tint = fgColor,
                             )

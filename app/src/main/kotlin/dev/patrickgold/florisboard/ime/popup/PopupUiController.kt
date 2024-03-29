@@ -28,13 +28,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -266,7 +267,7 @@ class PopupUiController(
             elements[rowIndex].add(Element(
                 data = keyData,
                 label = evaluator.computeLabel(keyData),
-                iconResId = evaluator.computeIconResId(keyData),
+                icon = evaluator.computeImageVector(keyData),
                 orderedIndex = uiIndex,
                 adjustedIndex = adjustedIndex,
             ))
@@ -498,7 +499,7 @@ class PopupUiController(
     data class Element(
         val data: KeyData,
         val label: String?,
-        val iconResId: Int?,
+        val icon: ImageVector?,
         val orderedIndex: Int,
         val adjustedIndex: Int,
     )

@@ -31,6 +31,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Input
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -64,6 +67,7 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.jetIcon
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 enum class LanguagePackManagerScreenAction(val id: String) {
@@ -120,7 +124,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
                     onClick = { navController.navigate(
                         Routes.Ext.Import(ExtensionImportScreenType.EXT_LANGUAGEPACK, null)
                     ) },
-                    iconId = R.drawable.ic_input,
+                    icon = Icons.Default.Input.jetIcon,
                     title = stringRes(R.string.action__import),
                 )
             }
@@ -176,7 +180,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
                             onClick = {
                                 languagePackExtToDelete = ext
                             },
-                            icon = painterResource(R.drawable.ic_delete),
+                            icon = Icons.Default.Delete,
                             text = stringRes(R.string.action__delete),
                             colors = ButtonDefaults.textButtonColors(
                                 contentColor = MaterialTheme.colors.error,

@@ -423,12 +423,12 @@ private fun TextKeyButton(
                 overflow = TextOverflow.Visible,
             )
         }
-        key.foregroundDrawableId?.let { drawableId ->
+        key.foregroundImageVector?.let { imageVector ->
             Icon(
                 modifier = Modifier
                     .requiredSize(fontSize.toDp() * 1.1f)
                     .align(Alignment.Center),
-                painter = painterResource(drawableId),
+                imageVector = imageVector,
                 contentDescription = null,
                 tint = keyStyle.foreground.solidColor(context),
             )

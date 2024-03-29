@@ -45,6 +45,10 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.HelpOutline
+import androidx.compose.material.icons.filled.Pageview
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -74,7 +78,7 @@ import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -248,7 +252,7 @@ internal fun EditRuleDialog(
                     FlorisIconButton(
                         onClick = { editCodeDialogValue = NATIVE_NULLPTR.toInt() },
                         modifier = Modifier.offset(x = 12.dp),
-                        icon = painterResource(R.drawable.ic_add),
+                        icon = Icons.Default.Add,
                     )
                 },
             ) {
@@ -466,7 +470,7 @@ private fun EditCodeValueDialog(
             FlorisIconButton(
                 onClick = { showKeyCodesHelp = !showKeyCodesHelp },
                 modifier = Modifier.offset(x = 12.dp),
-                icon = painterResource(R.drawable.ic_help_outline),
+                icon = Icons.Default.HelpOutline,
             )
         },
     ) {
@@ -533,7 +537,7 @@ private fun EditCodeValueDialog(
                 }
                 FlorisIconButton(
                     onClick = { requestStartRecording() },
-                    icon = painterResource(R.drawable.ic_pageview),
+                    icon = Icons.Default.Pageview,
                     iconColor = recordingKeyColor,
                 )
             }
@@ -575,7 +579,7 @@ private fun TextKeyDataPreviewBox(
     }
 
     val label = remember(data) { evaluator.computeLabel(data) }
-    val iconId = remember(data) { evaluator.computeIconResId(data) }
+    val icon = remember(data) { evaluator.computeImageVector(data) }
     val displayName = remember(data) {
         if (data.code > 0) {
             UCharacter.getName(data.code) ?: UCharacter.getExtendedName(data.code)
@@ -605,10 +609,10 @@ private fun TextKeyDataPreviewBox(
                     softWrap = false,
                 )
             }
-            if (iconId != null) {
+            if (icon != null) {
                 Icon(
                     modifier = Modifier.requiredSize(24.dp),
-                    painter = painterResource(iconId),
+                    imageVector = icon,
                     contentDescription = null,
                 )
             }
