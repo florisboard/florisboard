@@ -39,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -48,7 +47,7 @@ import androidx.compose.ui.unit.dp
 fun FlorisButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
+    icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small,
@@ -68,7 +67,7 @@ fun FlorisButton(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
