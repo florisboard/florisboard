@@ -20,6 +20,7 @@ import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
+import dev.patrickgold.florisboard.ime.media.emoji.EMOJI_SUGGESTION_INDICATOR
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -216,7 +217,13 @@ interface SuggestionProvider : NlpProvider {
             val end = it.last()
             val isWord = it.ruleStatus != BreakIterator.WORD_NONE
             if (isWord) {
-                val start = it.previous()
+                val start = it.previous().let { pos ->
+                    // Include Emoji indicator in local composing. This is required so that emoji suggestion indicator'
+                    // can be detected in the composing text.
+                    (pos - 1).takeIf { updatedPos ->
+                        textBeforeSelection.getOrNull(updatedPos) == EMOJI_SUGGESTION_INDICATOR
+                    } ?: pos
+                }
                 EditorRange(start, end)
             } else {
                 EditorRange.Unspecified
