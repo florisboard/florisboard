@@ -101,12 +101,6 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
-    //externalNativeBuild {
-    //    cmake {
-    //        path("src/main/cpp/CMakeLists.txt")
-    //    }
-    //}
-
     buildTypes {
         named("debug") {
             applicationIdSuffix = ".debug"
@@ -152,11 +146,6 @@ android {
             initWith(getByName("release"))
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
-
-            ndk {
-                // For running FlorisBoard on the emulator
-                abiFilters += listOf("x86", "x86_64")
-            }
         }
     }
 
@@ -214,8 +203,8 @@ dependencies {
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
 
-
     implementation(project(":lib:kotlin"))
+    implementation(project(":lib:native"))
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

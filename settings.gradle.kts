@@ -36,3 +36,4 @@ dependencyResolutionManagement {
 include(":app")
 include(":benchmark")
 include(":lib:kotlin")
+include(":lib:native")
