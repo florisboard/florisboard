@@ -1,3 +1,0 @@
-[submodule "app/src/main/cpp/nlp"]
-	path = app/src/main/cpp/nlp
-	url = https://github.com/florisboard/nlp
