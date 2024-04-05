@@ -1,5 +1,9 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.util.stream.Collectors
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -12,9 +16,7 @@ import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.subtypeManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.stream.Collectors
+
 
 const val EMOJI_SUGGESTION_INDICATOR = ':'
 const val EMOJI_SUGGESTION_MAX_COUNT = 5
