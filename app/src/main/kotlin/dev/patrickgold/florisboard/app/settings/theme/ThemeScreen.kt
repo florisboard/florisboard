@@ -26,7 +26,6 @@ import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,7 +45,6 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import dev.patrickgold.jetpref.datastore.ui.jetIcon
 
 @Composable
 fun ThemeScreen() = FlorisScreen {
@@ -74,7 +72,7 @@ fun ThemeScreen() = FlorisScreen {
 
         ListPreference(
             prefs.theme.mode,
-            icon = Icons.Default.BrightnessAuto.jetIcon,
+            icon = Icons.Default.BrightnessAuto,
             title = stringRes(R.string.pref__theme__mode__label),
             entries = ThemeMode.listEntries(),
         )
@@ -87,7 +85,7 @@ fun ThemeScreen() = FlorisScreen {
             )
         }
         Preference(
-            icon = Icons.Outlined.Palette.jetIcon,
+            icon = Icons.Outlined.Palette,
             title = stringRes(R.string.settings__theme_manager__title_manage),
             onClick = {
                 navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.MANAGE))
@@ -99,7 +97,7 @@ fun ThemeScreen() = FlorisScreen {
             enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
         ) {
             Preference(
-                icon = Icons.Default.LightMode.jetIcon,
+                icon = Icons.Default.LightMode,
                 title = stringRes(R.string.pref__theme__any_theme__label),
                 summary = dayThemeId.toString(),
                 onClick = {
@@ -108,7 +106,7 @@ fun ThemeScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.theme.dayThemeAdaptToApp,
-                icon = Icons.Default.FormatPaint.jetIcon,
+                icon = Icons.Default.FormatPaint,
                 title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
                 summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
                 visibleIf = { false },
@@ -120,7 +118,7 @@ fun ThemeScreen() = FlorisScreen {
             enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
         ) {
             Preference(
-                icon = Icons.Default.DarkMode.jetIcon,
+                icon = Icons.Default.DarkMode,
                 title = stringRes(R.string.pref__theme__any_theme__label),
                 summary = nightThemeId.toString(),
                 onClick = {
@@ -129,7 +127,7 @@ fun ThemeScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.theme.nightThemeAdaptToApp,
-                icon = Icons.Default.FormatPaint.jetIcon,
+                icon = Icons.Default.FormatPaint,
                 title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
                 summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
                 visibleIf = { false },

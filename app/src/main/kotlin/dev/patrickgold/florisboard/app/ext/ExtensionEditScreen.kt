@@ -35,7 +35,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.LibraryBooks
 import androidx.compose.material.icons.outlined.LibraryBooks
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,7 +44,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -93,7 +91,7 @@ import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.jetIcon
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import java.util.*
 import kotlin.reflect.KClass
@@ -329,17 +327,17 @@ private fun EditScreen(
         ) {
             this@content.Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageMetaData },
-                icon = Icons.Default.Code.jetIcon,
+                icon = Icons.Default.Code,
                 title = stringRes(R.string.ext__editor__metadata__title),
             )
             this@content.Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageDependencies },
-                icon = Icons.Outlined.LibraryBooks.jetIcon,
+                icon = Icons.Outlined.LibraryBooks,
                 title = stringRes(R.string.ext__editor__dependencies__title),
             )
             this@content.Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageFiles },
-                icon = R.drawable.ic_file_blank.jetIcon,
+                icon = vectorResource(R.drawable.ic_file_blank),
                 title = stringRes(R.string.ext__editor__files__title),
             )
         }

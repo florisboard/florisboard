@@ -26,7 +26,6 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
-        // maven { url = uri("https://jitpack.io") }
         google()
         mavenCentral()
         // Uncomment the following if testing snapshots from Maven Central

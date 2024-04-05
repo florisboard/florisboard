@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRightAlt
-import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Backspace
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
@@ -47,9 +46,8 @@ import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material.icons.filled.Undo
 import androidx.compose.material.icons.outlined.Assignment
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -59,6 +57,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 interface ComputingEvaluator {
     val version: Int
@@ -287,23 +286,23 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.KANA_SWITCHER -> {
             if (evaluator.state.isKanaKata) {
-                ImageVector.vectorResource(theme = null, resId = R.drawable.ic_keyboard_kana_switcher_kata, res = this.context()?.resources!!)
+                this.context()?.vectorResource(R.drawable.ic_keyboard_kana_switcher_kata)
             } else {
-                ImageVector.vectorResource(theme = null, resId = R.drawable.ic_keyboard_kana_switcher_hira, res = this.context()?.resources!!)
+                this.context()?.vectorResource(R.drawable.ic_keyboard_kana_switcher_hira)
             }
         }
         KeyCode.CHAR_WIDTH_SWITCHER -> {
             if (evaluator.state.isCharHalfWidth) {
-                ImageVector.vectorResource(theme = null, resId = R.drawable.ic_keyboard_char_width_switcher_full, res = this.context()?.resources!!)
+                this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_full)
             } else {
-                ImageVector.vectorResource(theme = null, resId = R.drawable.ic_keyboard_char_width_switcher_half, res = this.context()?.resources!!)
+                this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_half)
             }
         }
         KeyCode.CHAR_WIDTH_FULL -> {
-            ImageVector.vectorResource(theme = null, resId = R.drawable.ic_keyboard_char_width_switcher_full, res = this.context()?.resources!!)
+            this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_full)
         }
         KeyCode.CHAR_WIDTH_HALF -> {
-            ImageVector.vectorResource(theme = null, resId = R.drawable.ic_keyboard_char_width_switcher_half, res = this.context()?.resources!!)
+            this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_half)
         }
         KeyCode.DRAG_MARKER -> {
             if (evaluator.state.debugShowDragAndDropHelpers) Icons.Default.Close else null

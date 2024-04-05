@@ -42,7 +42,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -67,7 +66,6 @@ import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.jetIcon
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 enum class ThemeManagerScreenAction(val id: String) {
@@ -145,14 +143,14 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                     onClick = { navController.navigate(
                         Routes.Ext.Edit("null", ThemeExtension.SERIAL_TYPE)
                     ) },
-                    icon = Icons.Default.Add.jetIcon,
+                    icon = Icons.Default.Add,
                     title = stringRes(R.string.ext__editor__title_create_theme),
                 )
                 this@content.Preference(
                     onClick = { navController.navigate(
                         Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME, null)
                     ) },
-                    icon = Icons.Default.Input.jetIcon,
+                    icon = Icons.Default.Input,
                     title = stringRes(R.string.action__import),
                 )
             }

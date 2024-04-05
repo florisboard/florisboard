@@ -64,7 +64,6 @@ import dev.patrickgold.florisboard.lib.io.readJson
 import dev.patrickgold.florisboard.lib.io.subDir
 import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.jetpref.datastore.JetPref
-import dev.patrickgold.jetpref.datastore.ui.jetIcon
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -252,15 +251,15 @@ fun RestoreScreen() = FlorisScreen {
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
             ) {
                 this@content.Preference(
-                    icon = Icons.Default.Code.jetIcon,
+                    icon = Icons.Default.Code,
                     title = workspace.metadata.packageName,
                 )
                 this@content.Preference(
-                    icon = Icons.Outlined.Info.jetIcon,
+                    icon = Icons.Outlined.Info,
                     title = "${workspace.metadata.versionName} (${workspace.metadata.versionCode})",
                 )
                 this@content.Preference(
-                    icon = Icons.Default.Schedule.jetIcon,
+                    icon = Icons.Default.Schedule,
                     title = remember(workspace.metadata.timestamp) {
                         val formatter = DateFormat.getDateTimeInstance()
                         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))

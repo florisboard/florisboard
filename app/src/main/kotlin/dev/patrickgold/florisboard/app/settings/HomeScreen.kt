@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.jetIcon
 
 @Composable
 fun HomeScreen() = FlorisScreen {
@@ -108,62 +107,62 @@ fun HomeScreen() = FlorisScreen {
             }
         }*/
         Preference(
-            icon = Icons.Default.Language.jetIcon,
+            icon = Icons.Default.Language,
             title = stringRes(R.string.settings__localization__title),
             onClick = { navController.navigate(Routes.Settings.Localization) },
         )
         Preference(
-            icon = Icons.Outlined.Palette.jetIcon,
+            icon = Icons.Outlined.Palette,
             title = stringRes(R.string.settings__theme__title),
             onClick = { navController.navigate(Routes.Settings.Theme) },
         )
         Preference(
-            icon = Icons.Outlined.Keyboard.jetIcon,
+            icon = Icons.Outlined.Keyboard,
             title = stringRes(R.string.settings__keyboard__title),
             onClick = { navController.navigate(Routes.Settings.Keyboard) },
         )
         Preference(
-            icon = Icons.Default.SmartButton.jetIcon,
+            icon = Icons.Default.SmartButton,
             title = stringRes(R.string.settings__smartbar__title),
             onClick = { navController.navigate(Routes.Settings.Smartbar) },
         )
         Preference(
-            icon = Icons.Default.Spellcheck.jetIcon,
+            icon = Icons.Default.Spellcheck,
             title = stringRes(R.string.settings__typing__title),
             onClick = { navController.navigate(Routes.Settings.Typing) },
         )
         Preference(
-            icon = Icons.Default.LibraryBooks.jetIcon,
+            icon = Icons.Default.LibraryBooks,
             title = stringRes(R.string.settings__dictionary__title),
             onClick = { navController.navigate(Routes.Settings.Dictionary) },
         )
         Preference(
-            icon = Icons.Default.Gesture.jetIcon,
+            icon = Icons.Default.Gesture,
             title = stringRes(R.string.settings__gestures__title),
             onClick = { navController.navigate(Routes.Settings.Gestures) },
         )
         Preference(
-            icon = Icons.Outlined.Assignment.jetIcon,
+            icon = Icons.Outlined.Assignment,
             title = stringRes(R.string.settings__clipboard__title),
             onClick = { navController.navigate(Routes.Settings.Clipboard) },
         )
         Preference(
-            icon = Icons.Default.SentimentSatisfiedAlt.jetIcon,
+            icon = Icons.Default.SentimentSatisfiedAlt,
             title = stringRes(R.string.settings__media__title),
             onClick = { navController.navigate(Routes.Settings.Media) },
         )
         Preference(
-            icon = Icons.Default.Adb.jetIcon,
+            icon = Icons.Default.Adb,
             title = stringRes(R.string.devtools__title),
             onClick = { navController.navigate(Routes.Devtools.Home) },
         )
         Preference(
-            icon = Icons.Outlined.Build.jetIcon,
+            icon = Icons.Outlined.Build,
             title = stringRes(R.string.settings__advanced__title),
             onClick = { navController.navigate(Routes.Settings.Advanced) },
         )
         Preference(
-            icon = Icons.Outlined.Info.jetIcon,
+            icon = Icons.Outlined.Info,
             title = stringRes(R.string.about__title),
             onClick = { navController.navigate(Routes.Settings.About) },
         )

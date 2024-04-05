@@ -39,8 +39,8 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import dev.patrickgold.jetpref.datastore.ui.jetIcon
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 @Composable
 fun AdvancedScreen() = FlorisScreen {
@@ -52,7 +52,7 @@ fun AdvancedScreen() = FlorisScreen {
     content {
         ListPreference(
             prefs.advanced.settingsTheme,
-            icon = Icons.Default.Palette.jetIcon,
+            icon = Icons.Default.Palette,
             title = stringRes(R.string.pref__advanced__settings_theme__label),
             entries = listPrefEntries {
                 entry(
@@ -79,7 +79,7 @@ fun AdvancedScreen() = FlorisScreen {
         )
         ListPreference(
             prefs.advanced.settingsLanguage,
-            icon = Icons.Default.Language.jetIcon,
+            icon = Icons.Default.Language,
             title = stringRes(R.string.pref__advanced__settings_language__label),
             entries = listPrefEntries {
                 listOf(
@@ -143,7 +143,7 @@ fun AdvancedScreen() = FlorisScreen {
         )
         SwitchPreference(
             prefs.advanced.showAppIcon,
-            icon = Icons.Default.Preview.jetIcon,
+            icon = Icons.Default.Preview,
             title = stringRes(R.string.pref__advanced__show_app_icon__label),
             summary = when {
                 AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__advanced__show_app_icon__summary_atleast_q)
@@ -153,7 +153,7 @@ fun AdvancedScreen() = FlorisScreen {
         )
         ListPreference(
             prefs.advanced.incognitoMode,
-            icon = R.drawable.ic_incognito.jetIcon,
+            icon = vectorResource(id = R.drawable.ic_incognito),
             title = stringRes(R.string.pref__advanced__incognito_mode__label),
             entries = IncognitoMode.listEntries(),
         )
@@ -161,13 +161,13 @@ fun AdvancedScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {
             Preference(
                 onClick = { navController.navigate(Routes.Settings.Backup) },
-                icon = Icons.Default.Archive.jetIcon,
+                icon = Icons.Default.Archive,
                 title = stringRes(R.string.backup_and_restore__back_up__title),
                 summary = stringRes(R.string.backup_and_restore__back_up__summary),
             )
             Preference(
                 onClick = { navController.navigate(Routes.Settings.Restore) },
-                icon = Icons.Default.SettingsBackupRestore.jetIcon,
+                icon = Icons.Default.SettingsBackupRestore,
                 title = stringRes(R.string.backup_and_restore__restore__title),
                 summary = stringRes(R.string.backup_and_restore__restore__summary),
             )
