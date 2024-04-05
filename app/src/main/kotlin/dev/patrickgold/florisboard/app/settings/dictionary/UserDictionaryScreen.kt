@@ -75,7 +75,7 @@ enum class UserDictionaryType(val id: String) {
 }
 
 @Composable
-fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
+fun UserDictionaryScreen(type: UserDictionaryType, adding: Boolean, addLocale: String) = FlorisScreen {
     title = stringRes(when (type) {
         UserDictionaryType.FLORIS -> R.string.settings__udm__title_floris
         UserDictionaryType.SYSTEM -> R.string.settings__udm__title_system
@@ -88,10 +88,13 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     val dictionaryManager = DictionaryManager.default()
     val scope = rememberCoroutineScope()
 
-    var currentLocale by remember { mutableStateOf<FlorisLocale?>(null) }
+    var currentLocale by remember { mutableStateOf<FlorisLocale?>(if (adding) FlorisLocale.fromTag(addLocale) else null) }
     var languageList by remember { mutableStateOf(emptyList<FlorisLocale>()) }
     var wordList by remember { mutableStateOf(emptyList<UserDictionaryEntry>()) }
-    var userDictionaryEntryForDialog by remember { mutableStateOf<UserDictionaryEntry?>(null) }
+    var userDictionaryEntryForDialog by remember { mutableStateOf<UserDictionaryEntry?>(
+        if (adding) UserDictionaryEntryToAdd.copy(locale=addLocale)
+        else null
+    ) }
 
     fun userDictionaryDao(): UserDictionaryDao? {
         return when (type) {
@@ -232,7 +235,10 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
 
     floatingActionButton {
         ExtendedFloatingActionButton(
-            onClick = { userDictionaryEntryForDialog = UserDictionaryEntryToAdd },
+            onClick = { userDictionaryEntryForDialog = UserDictionaryEntryToAdd.copy(
+                // pre-fill locale if showing its screen, except for zz
+                locale = currentLocale?.localeTag().takeIf { it != AllLanguagesLocale.localeTag() } ?: ""
+            ) },
             icon = { Icon(painter = painterResource(R.drawable.ic_add), contentDescription = null) },
             text = { Text(text = stringRes(R.string.settings__udm__dialog__title_add)) },
         )
@@ -297,7 +303,9 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
         val wordEntry = userDictionaryEntryForDialog
         if (wordEntry != null) {
             var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-            val isAddWord = wordEntry === UserDictionaryEntryToAdd
+            // only compare id to allow pre-filling fields.
+            // assume existing entries for editing have non-zero id due to `@PrimaryKey(autoGenerate = true)`
+            val isAddWord = wordEntry.id == UserDictionaryEntryToAdd.id
             var word by rememberSaveable { mutableStateOf(wordEntry.word) }
             val wordValidation = rememberValidationResult(UserDictionaryValidation.Word, word)
             var freq by rememberSaveable { mutableStateOf(wordEntry.freq.toString()) }

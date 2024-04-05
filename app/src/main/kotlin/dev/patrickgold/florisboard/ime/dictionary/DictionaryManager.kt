@@ -65,24 +65,38 @@ class DictionaryManager private constructor(context: Context) {
             if (prefs.dictionary.enableFlorisUserDictionary.get()) {
                 florisDao?.query(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(WordSuggestionCandidate(
+                            entry.word, confidence = entry.freq / 255.0,
+                            isEligibleForAutoCommit=entry.word == word, // only allow auto commit if exact match
+                        ))
                     }
                 }
                 florisDao?.queryShortcut(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(WordSuggestionCandidate(
+                            entry.word, secondaryText = entry.shortcut,
+                            confidence = entry.freq / 255.0,
+                            isEligibleForAutoCommit=entry.shortcut == word, // only allow auto commit if exact match
+                        ))
                     }
                 }
             }
             if (prefs.dictionary.enableSystemUserDictionary.get()) {
                 systemDao?.query(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(WordSuggestionCandidate(
+                            entry.word, confidence = entry.freq / 255.0,
+                            isEligibleForAutoCommit=entry.word == word, // only allow auto commit if exact match
+                        ))
                     }
                 }
                 systemDao?.queryShortcut(word, locale)?.let {
                     for (entry in it) {
-                        add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
+                        add(WordSuggestionCandidate(
+                            entry.word, secondaryText = entry.shortcut,
+                            confidence = entry.freq / 255.0,
+                            isEligibleForAutoCommit=entry.shortcut == word, // only allow auto commit if exact match
+                        ))
                     }
                 }
             }

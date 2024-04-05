@@ -216,6 +216,9 @@ fun ComputingEvaluator.computeIconResId(data: KeyData): Int? {
         KeyCode.SETTINGS -> {
             R.drawable.ic_settings
         }
+        KeyCode.ADD_USER_DICTIONARY -> {
+            R.drawable.ic_library_books
+        }
         KeyCode.SHIFT -> {
             when (evaluator.state.inputShiftState != InputShiftState.UNSHIFTED) {
                 true -> R.drawable.ic_keyboard_capslock
