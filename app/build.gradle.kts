@@ -71,23 +71,6 @@ android {
             arg("room.expandProjection", "true")
         }
 
-        externalNativeBuild {
-            cmake {
-                targets("florisboard-native")
-                cppFlags("-std=c++20", "-stdlib=libc++")
-                arguments(
-                    "-DCMAKE_ANDROID_API=" + minSdk.toString(),
-                    "-DICU_ASSET_EXPORT_DIR=" + project.file("src/main/assets/icu4c").absolutePath,
-                    "-DBUILD_SHARED_LIBS=false",
-                    "-DANDROID_STL=c++_static",
-                )
-            }
-        }
-
-        ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
-        }
-
         sourceSets {
             maybeCreate("main").apply {
                 assets {
@@ -118,12 +101,6 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
-    externalNativeBuild {
-        cmake {
-            path("src/main/cpp/CMakeLists.txt")
-        }
-    }
-
     buildTypes {
         named("debug") {
             applicationIdSuffix = ".debug"
@@ -131,11 +108,6 @@ android {
 
             isDebuggable = true
             isJniDebuggable = false
-
-            ndk {
-                // For running FlorisBoard on the emulator
-                abiFilters += listOf("x86", "x86_64")
-            }
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
@@ -174,11 +146,6 @@ android {
             initWith(getByName("release"))
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
-
-            ndk {
-                // For running FlorisBoard on the emulator
-                abiFilters += listOf("x86", "x86_64")
-            }
         }
     }
 
@@ -237,8 +204,8 @@ dependencies {
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
 
-
     implementation(project(":lib:kotlin"))
+    implementation(project(":lib:native"))
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

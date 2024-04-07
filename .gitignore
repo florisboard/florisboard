@@ -47,3 +47,13 @@ crowdin.properties
 # Nix stuff
 .direnv/
 result
+
+# VSCode
+.vscode/
+
+# Rust
+debug/
+target/
+Cargo.lock
+**/*.rs.bk
+*.pdb

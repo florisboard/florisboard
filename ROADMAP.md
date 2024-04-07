@@ -14,23 +14,25 @@ This includes, but is not exclusive to:
 - Merging in other external PRs as best as possible
 - Reworking the Settings UI warning boxes and hiding any UI for features related to word suggestions until they are ready
 - Remove existing glide/swipe typing (see 0.5 milestone)
-- Fix compilation issues introduced with the 0.4 alphas as best as possible
-
-Maybe in this release, but no guarantee and may be delayed to 0.5:
-- Develop usable preview of an on-device statistical word suggestion algorithm (see the main [NLP project](https://github.com/florisboard/nlp) for details)
-- Add experimental plugin system which supports communication with the aforementioned native suggestion algorithm
-- Include precompiled dictionaries for major languages: English (US/UK), German, Spanish, French, Italian & Russian
+- Improvements in clipboard / emoji functionality (v0.4.0-beta01/beta02)
+- Prepare project to have native code implemented in [Rust](https://www.rust-lang.org/) (v0.4.0-beta02)
 
 Note that the previous versioning scheme has been dropped in favor of using a major.minor.patch versioning scheme, so versions like `0.3.16` are a thing of the past :)
 
 ## 0.5
 
-- New text processing logic
-  - RFC document with technical details will be released later
+- Implement predictive text support / spell checking
+  - Consider adding proximity-based key typo detection
+- Add new extension type: Language Pack
+  - Basically groups all locale-relevant data (predictive base model, emoji suggestion data, ...)
+    in a dynamically importable extension file
 - New keyboard layout engine + file syntax based on the upcoming Unicode Keyboard v3 standard
   - RFC document with technical details will be released later
+- New text processing logic (maybe moved back to 0.6)
+  - RFC document with technical details will be released later
 - Add Tablet mode / Optimizations for landscape input based on new keyboard layout engine
-- Reimplementation of glide typing with the new layout engine and word suggestion core
+- Reimplementation of glide typing with the new layout engine and predictive text core
+- Add support for importing extensions via system file handler APIs (relevant for Addons store)
 - Add support for any remaining new features introduced with Android 13
 
 ## 0.6
@@ -38,9 +40,8 @@ Note that the previous versioning scheme has been dropped in favor of using a ma
 - Complete rework of the Emoji panel
   - Recently used / Emoji history (already implemented with 0.3.14)
   - Emoji search
-  - Emoji suggestions when using :emoji_name: syntax
-  - Kaomoji panel implementation (the third tab which currently has "not yet implemented")
-  - Maybe: consider upgrading to emoji2 for better unified system-wide emoji styles)
+  - Emoji suggestions when using :emoji_name: syntax (already implemented with v0.4.0-beta02)
+  - Maybe: consider upgrading to emoji2 for better unified system-wide emoji styles
 - Prepare FlorisBoard repository and app store presence for public beta release on Google Play (will go live with stable 0.6)
 - Rework branding images and texts of FlorisBoard for the app stores
 - Focus on stability and experience improvements of the app and keyboard
@@ -53,14 +54,13 @@ Note that the previous versioning scheme has been dropped in favor of using a ma
 
 - Upgrade Settings UI to Material 3
 - Full on-board layout editor which allows users to create their own layouts without writing a JSON file
-- Import/Export of custom layout files packed in Flex extensions
 - Theme rework part II
 - Adaptive themes v2
 - Voice-to-text with Mozilla's open-source voice service (or any other oss voice provider)
 - Text translation
-- Proximity-based key typo detection
 - Floating keyboard
 - Stickers/GIFs
+- Kaomoji panel implementation
 - FlorisBoard landing web page for presentation
 - Implementing additional layouts
 - Support for Tasker/Automate/MacroDroid plugins

@@ -1,0 +1,12 @@
+[package]
+name = "fl_native_rust"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "fl_native_rust"
+crate-type = ["staticlib"]
+
+[dependencies]
+dummy = { path = "../../../../../libnative/dummy" }
+jni = "0.21.1"
