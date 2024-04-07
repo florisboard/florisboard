@@ -36,6 +36,10 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -131,7 +135,7 @@ fun FlorisErrorCard(
             modifier = Modifier
                 .padding(end = CardDefaults.IconSpacing)
                 .requiredSize(CardDefaults.IconRequiredSize),
-            painter = painterResource(R.drawable.ic_error_outline),
+            imageVector = Icons.Default.ErrorOutline,
             contentDescription = null,
         ) }) else null,
         text = text,
@@ -156,7 +160,7 @@ fun FlorisWarningCard(
             modifier = Modifier
                 .padding(end = CardDefaults.IconSpacing)
                 .requiredSize(CardDefaults.IconRequiredSize),
-            painter = painterResource(R.drawable.ic_warning_outline),
+            imageVector = Icons.Outlined.Warning,
             contentDescription = null,
         ) }) else null,
         text = text,
@@ -179,7 +183,7 @@ fun FlorisInfoCard(
             modifier = Modifier
                 .padding(end = CardDefaults.IconSpacing)
                 .requiredSize(CardDefaults.IconRequiredSize),
-            painter = painterResource(R.drawable.ic_info),
+            imageVector = Icons.Default.Info,
             contentDescription = null,
         ) }) else null,
         text = text,

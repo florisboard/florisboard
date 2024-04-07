@@ -16,25 +16,24 @@
 
 package dev.patrickgold.florisboard.app.settings
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Adb
+import androidx.compose.material.icons.filled.Gesture
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.LibraryBooks
+import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
+import androidx.compose.material.icons.filled.SmartButton
+import androidx.compose.material.icons.filled.Spellcheck
+import androidx.compose.material.icons.outlined.Assignment
+import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -108,62 +107,62 @@ fun HomeScreen() = FlorisScreen {
             }
         }*/
         Preference(
-            iconId = R.drawable.ic_language,
+            icon = Icons.Default.Language,
             title = stringRes(R.string.settings__localization__title),
             onClick = { navController.navigate(Routes.Settings.Localization) },
         )
         Preference(
-            iconId = R.drawable.ic_palette,
+            icon = Icons.Outlined.Palette,
             title = stringRes(R.string.settings__theme__title),
             onClick = { navController.navigate(Routes.Settings.Theme) },
         )
         Preference(
-            iconId = R.drawable.ic_keyboard,
+            icon = Icons.Outlined.Keyboard,
             title = stringRes(R.string.settings__keyboard__title),
             onClick = { navController.navigate(Routes.Settings.Keyboard) },
         )
         Preference(
-            iconId = R.drawable.ic_smartbar,
+            icon = Icons.Default.SmartButton,
             title = stringRes(R.string.settings__smartbar__title),
             onClick = { navController.navigate(Routes.Settings.Smartbar) },
         )
         Preference(
-            iconId = R.drawable.ic_spellcheck,
+            icon = Icons.Default.Spellcheck,
             title = stringRes(R.string.settings__typing__title),
             onClick = { navController.navigate(Routes.Settings.Typing) },
         )
         Preference(
-            iconId = R.drawable.ic_library_books,
+            icon = Icons.Default.LibraryBooks,
             title = stringRes(R.string.settings__dictionary__title),
             onClick = { navController.navigate(Routes.Settings.Dictionary) },
         )
         Preference(
-            iconId = R.drawable.ic_gesture,
+            icon = Icons.Default.Gesture,
             title = stringRes(R.string.settings__gestures__title),
             onClick = { navController.navigate(Routes.Settings.Gestures) },
         )
         Preference(
-            iconId = R.drawable.ic_assignment,
+            icon = Icons.Outlined.Assignment,
             title = stringRes(R.string.settings__clipboard__title),
             onClick = { navController.navigate(Routes.Settings.Clipboard) },
         )
         Preference(
-            iconId = R.drawable.ic_sentiment_satisfied,
+            icon = Icons.Default.SentimentSatisfiedAlt,
             title = stringRes(R.string.settings__media__title),
             onClick = { navController.navigate(Routes.Settings.Media) },
         )
         Preference(
-            iconId = R.drawable.ic_adb,
+            icon = Icons.Default.Adb,
             title = stringRes(R.string.devtools__title),
             onClick = { navController.navigate(Routes.Devtools.Home) },
         )
         Preference(
-            iconId = R.drawable.ic_build,
+            icon = Icons.Outlined.Build,
             title = stringRes(R.string.settings__advanced__title),
             onClick = { navController.navigate(Routes.Settings.Advanced) },
         )
         Preference(
-            iconId = R.drawable.ic_info,
+            icon = Icons.Outlined.Info,
             title = stringRes(R.string.about__title),
             onClick = { navController.navigate(Routes.Settings.About) },
         )

@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -46,8 +47,8 @@ fun FlorisChip(
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     shape: Shape = CircleShape,
-    @DrawableRes leadingIcons: List<Int> = listOf(),
-    @DrawableRes trailingIcons: List<Int> = listOf(),
+    leadingIcons: List<ImageVector> = listOf(),
+    trailingIcons: List<ImageVector> = listOf(),
 ) {
     val backgroundColor = color.takeOrElse {
         MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.BackgroundOpacity)
@@ -67,7 +68,7 @@ fun FlorisChip(
             for (leadingIcon in leadingIcons) {
                 Icon(
                     modifier = Modifier.padding(end = 8.dp).size(16.dp),
-                    painter = painterResource(leadingIcon),
+                    imageVector = leadingIcon,
                     contentDescription = null,
                 )
             }
@@ -79,7 +80,7 @@ fun FlorisChip(
             for (trailingIcon in trailingIcons) {
                 Icon(
                     modifier = Modifier.padding(start = 8.dp).size(16.dp),
-                    painter = painterResource(trailingIcon),
+                    imageVector = trailingIcon,
                     contentDescription = null,
                 )
             }

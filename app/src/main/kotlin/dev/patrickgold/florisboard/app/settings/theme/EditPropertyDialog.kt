@@ -33,6 +33,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HelpOutline
+import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -454,7 +457,7 @@ private fun PropertyValueEditor(
                         FlorisIconButton(
                             onClick = { showSyntaxHelp = !showSyntaxHelp },
                             modifier = Modifier.offset(x = 12.dp),
-                            icon = painterResource(R.drawable.ic_help_outline),
+                            icon = Icons.Default.HelpOutline,
                         )
                     },
                 ) {

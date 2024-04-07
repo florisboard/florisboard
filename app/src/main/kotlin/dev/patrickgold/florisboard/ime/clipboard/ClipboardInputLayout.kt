@@ -50,6 +50,13 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ClearAll
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ToggleOff
+import androidx.compose.material.icons.filled.ToggleOn
+import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -152,7 +159,7 @@ fun ClipboardInputLayout(
             FlorisIconButtonWithInnerPadding(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.autoMirrorForRtl(),
-                icon = painterResource(R.drawable.ic_arrow_back),
+                icon = Icons.Default.ArrowBack,
                 iconColor = headerStyle.foreground.solidColor(context),
             )
             Text(
@@ -164,18 +171,18 @@ fun ClipboardInputLayout(
             FlorisIconButtonWithInnerPadding(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier.autoMirrorForRtl(),
-                icon = painterResource(if (historyEnabled) {
-                    R.drawable.ic_toggle_on
+                icon = if (historyEnabled) {
+                    Icons.Default.ToggleOn
                 } else {
-                    R.drawable.ic_toggle_off
-                }),
+                    Icons.Default.ToggleOff
+                },
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier.autoMirrorForRtl(),
-                icon = painterResource(R.drawable.ic_clear_all),
+                icon = Icons.Default.ClearAll,
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
@@ -183,7 +190,7 @@ fun ClipboardInputLayout(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
-                icon = painterResource(R.drawable.ic_edit),
+                icon = Icons.Default.Edit,
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )
@@ -277,7 +284,7 @@ fun ClipboardInputLayout(
                             .align(Alignment.BottomStart)
                             .padding(start = 4.dp, bottom = 4.dp)
                             .background(Color.White, CircleShape),
-                        painter = painterResource(R.drawable.ic_videocam),
+                        imageVector = Icons.Default.Videocam,
                         contentDescription = null,
                         tint = Color.Black,
                     )

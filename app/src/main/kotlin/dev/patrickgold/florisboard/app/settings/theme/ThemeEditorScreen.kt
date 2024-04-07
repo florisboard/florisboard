@@ -40,6 +40,11 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -164,21 +169,21 @@ fun ThemeEditorScreen(
     navigationIcon {
         FlorisIconButton(
             onClick = { handleBackPress() },
-            icon = painterResource(R.drawable.ic_close),
+            icon = Icons.Default.Close,
         )
     }
 
     actions {
         FlorisIconButton(
             onClick = { showFineTuneDialog = true },
-            icon = painterResource(R.drawable.ic_tune),
+            icon = Icons.Default.Tune,
         )
     }
 
     floatingActionButton {
         ExtendedFloatingActionButton(
             icon = { Icon(
-                painter = painterResource(R.drawable.ic_add),
+                imageVector = Icons.Default.Add,
                 contentDescription = null,
             ) },
             text = { Text(
@@ -612,14 +617,14 @@ private fun SnyggRuleRow(
         if (showEditBtn) {
             FlorisIconButton(
                 onClick = onEditRuleBtnClick,
-                icon = painterResource(R.drawable.ic_edit),
+                icon = Icons.Default.Edit,
                 iconColor = MaterialTheme.colors.primary,
                 iconModifier = Modifier.size(ButtonDefaults.IconSize),
             )
         }
         FlorisIconButton(
             onClick = onAddPropertyBtnClick,
-            icon = painterResource(R.drawable.ic_add),
+            icon = Icons.Default.Add,
             iconColor = MaterialTheme.colors.secondary,
             iconModifier = Modifier.size(ButtonDefaults.IconSize),
         )

@@ -28,6 +28,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FormatSize
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Straighten
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -104,14 +108,14 @@ internal fun SnyggValueIcon(
         is SnyggDpSizeValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
-                painter = painterResource(R.drawable.ic_straighten),
+                imageVector = Icons.Default.Straighten,
                 contentDescription = null,
             )
         }
         is SnyggSpSizeValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
-                painter = painterResource(R.drawable.ic_format_size),
+                imageVector = Icons.Default.FormatSize,
                 contentDescription = null,
             )
         }
@@ -120,7 +124,7 @@ internal fun SnyggValueIcon(
             if (realValue == null) {
                 Icon(
                     modifier = modifier.requiredSize(spec.iconSize),
-                    painter = painterResource(R.drawable.ic_link),
+                    imageVector = Icons.Default.Link,
                     contentDescription = null,
                 )
             } else {
@@ -143,7 +147,7 @@ internal fun SnyggValueIcon(
                     )
                     Icon(
                         modifier = Modifier.requiredSize(smallSpec.iconSize),
-                        painter = painterResource(R.drawable.ic_link),
+                        imageVector = Icons.Default.Link,
                         contentDescription = null,
                     )
                 }

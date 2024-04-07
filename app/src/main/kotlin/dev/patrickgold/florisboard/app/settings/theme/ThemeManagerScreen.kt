@@ -26,6 +26,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Input
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -35,7 +42,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -137,14 +143,14 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                     onClick = { navController.navigate(
                         Routes.Ext.Edit("null", ThemeExtension.SERIAL_TYPE)
                     ) },
-                    iconId = R.drawable.ic_add,
+                    icon = Icons.Default.Add,
                     title = stringRes(R.string.ext__editor__title_create_theme),
                 )
                 this@content.Preference(
                     onClick = { navController.navigate(
                         Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME, null)
                     ) },
-                    iconId = R.drawable.ic_input,
+                    icon = Icons.Default.Input,
                     title = stringRes(R.string.action__import),
                 )
             }
@@ -174,11 +180,11 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                         trailing = {
                             Icon(
                                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                                painter = painterResource(if (config.isNightTheme) {
-                                    R.drawable.ic_dark_mode
+                                imageVector = if (config.isNightTheme) {
+                                    Icons.Default.DarkMode
                                 } else {
-                                    R.drawable.ic_light_mode
-                                }),
+                                    Icons.Default.LightMode
+                                },
                                 contentDescription = null,
                                 tint = grayColor,
                             )
@@ -195,7 +201,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                             onClick = {
                                 themeExtToDelete = ext
                             },
-                            icon = painterResource(R.drawable.ic_delete),
+                            icon = Icons.Default.Delete,
                             text = stringRes(R.string.action__delete),
                             colors = ButtonDefaults.textButtonColors(
                                 contentColor = MaterialTheme.colors.error,
@@ -206,7 +212,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
                             onClick = {
                                 navController.navigate(Routes.Ext.Edit(ext.meta.id))
                             },
-                            icon = painterResource(R.drawable.ic_edit),
+                            icon = Icons.Default.Edit,
                             text = stringRes(R.string.action__edit),
                         )
                     }

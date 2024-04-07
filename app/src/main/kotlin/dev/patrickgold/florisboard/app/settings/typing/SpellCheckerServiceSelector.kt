@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -104,7 +106,7 @@ fun SpellCheckerServiceSelector(florisSpellCheckerEnabled: MutableState<Boolean>
                                 modifier = Modifier
                                     .padding(end = 8.dp)
                                     .requiredSize(32.dp),
-                                painter = painterResource(R.drawable.ic_help_outline),
+                                imageVector = Icons.Default.HelpOutline,
                                 contentDescription = null,
                             )
                         }

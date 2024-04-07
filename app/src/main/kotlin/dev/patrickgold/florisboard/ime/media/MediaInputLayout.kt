@@ -30,6 +30,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Backspace
+import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -102,7 +105,7 @@ fun MediaInputLayout(
                     inputEventDispatcher = keyboardManager.inputEventDispatcher,
                     keyData = TextKeyData.DELETE,
                 ) {
-                    Icon(painter = painterResource(R.drawable.ic_backspace), contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Backspace, contentDescription = null)
                 }
             }
         }

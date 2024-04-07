@@ -12,6 +12,7 @@ androidx-core = "1.12.0"
 androidx-core-splashscreen = "1.0.1"
 androidx-emoji2 = "1.3.0"
 androidx-exifinterface = "1.3.6"
+androidx-material-icons = "1.6.4"
 androidx-navigation = "2.7.7"
 androidx-profileinstaller = "1.3.1"
 androidx-room = "2.4.3"
@@ -23,7 +24,7 @@ ksp = "1.9.22-1.0.17"
 mannodermaus-android-junit5 = "1.10.0.0"
 mikepenz-aboutlibraries = "10.10.0"
 patrickgold-compose-tooltip = "0.1.0"
-patrickgold-jetpref = "0.1.0-rc01"
+patrickgold-jetpref = "0.1.0-rc02"
 xmlutil = "0.86.3"
 
 # Testing
@@ -52,6 +53,7 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 androidx-emoji2 = { module = "androidx.emoji2:emoji2", version.ref = "androidx-emoji2" }
 androidx-emoji2-views = { module = "androidx.emoji2:emoji2-views", version.ref = "androidx-emoji2" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidx-exifinterface" }
+androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "androidx-material-icons" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidx-profileinstaller" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }

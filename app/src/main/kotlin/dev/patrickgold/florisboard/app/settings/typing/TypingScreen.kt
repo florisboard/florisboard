@@ -20,6 +20,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.LibraryBooks
+import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -101,7 +106,7 @@ fun TypingScreen() = FlorisScreen {
             val isAutoSpacePunctuationEnabled by prefs.correction.autoSpacePunctuation.observeAsState()
             SwitchPreference(
                 prefs.correction.autoSpacePunctuation,
-                iconId = R.drawable.ic_space_bar,
+                icon = Icons.Default.SpaceBar,
                 title = stringRes(R.string.pref__correction__auto_space_punctuation__label),
                 summary = stringRes(R.string.pref__correction__auto_space_punctuation__summary),
             )
@@ -139,14 +144,14 @@ fun TypingScreen() = FlorisScreen {
             SpellCheckerServiceSelector(florisSpellCheckerEnabled)
             ListPreference(
                 prefs.spelling.languageMode,
-                iconId = R.drawable.ic_language,
+                icon = Icons.Default.Language,
                 title = stringRes(R.string.pref__spelling__language_mode__label),
                 entries = SpellingLanguageMode.listEntries(),
                 enabledIf = { florisSpellCheckerEnabled.value },
             )
             SwitchPreference(
                 prefs.spelling.useContacts,
-                iconId = R.drawable.ic_contacts,
+                icon = Icons.Default.Contacts,
                 title = stringRes(R.string.pref__spelling__use_contacts__label),
                 summary = stringRes(R.string.pref__spelling__use_contacts__summary),
                 enabledIf = { florisSpellCheckerEnabled.value },
@@ -154,7 +159,7 @@ fun TypingScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.spelling.useUdmEntries,
-                iconId = R.drawable.ic_library_books,
+                icon = Icons.Default.LibraryBooks,
                 title = stringRes(R.string.pref__spelling__use_udm_entries__label),
                 summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
                 enabledIf = { florisSpellCheckerEnabled.value },

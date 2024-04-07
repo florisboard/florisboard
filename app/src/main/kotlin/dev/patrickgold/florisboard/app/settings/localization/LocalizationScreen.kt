@@ -16,38 +16,28 @@
 
 package dev.patrickgold.florisboard.app.settings.localization
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.settings.advanced.Restore
-import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.readToFile
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.parentDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -69,13 +59,17 @@ fun LocalizationScreen() = FlorisScreen {
 
     floatingActionButton {
         ExtendedFloatingActionButton(
-            icon = { Icon(
-                painter = painterResource(R.drawable.ic_add),
-                contentDescription = stringRes(R.string.settings__localization__subtype_add_title),
-            ) },
-            text = { Text(
-                text = stringRes(R.string.settings__localization__subtype_add_title),
-            ) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringRes(R.string.settings__localization__subtype_add_title),
+                )
+            },
+            text = {
+                Text(
+                    text = stringRes(R.string.settings__localization__subtype_add_title),
+                )
+            },
             onClick = { navController.navigate(Routes.Settings.SubtypeAdd) },
         )
     }
@@ -88,7 +82,7 @@ fun LocalizationScreen() = FlorisScreen {
             entries = DisplayLanguageNamesIn.listEntries(),
         )
         Preference(
-//            iconId = R.drawable.ic_edit,
+//            icon = R.drawable.ic_edit,
             title = stringRes(R.string.settings__localization__language_pack_title),
             summary = stringRes(R.string.settings__localization__language_pack_summary),
             onClick = {
@@ -122,9 +116,11 @@ fun LocalizationScreen() = FlorisScreen {
                             DisplayLanguageNamesIn.NATIVE_LOCALE -> subtype.primaryLocale.displayName(subtype.primaryLocale)
                         },
                         summary = summary,
-                        onClick = { navController.navigate(
-                            Routes.Settings.SubtypeEdit(subtype.id)
-                        ) },
+                        onClick = {
+                            navController.navigate(
+                                Routes.Settings.SubtypeEdit(subtype.id)
+                            )
+                        },
                     )
                 }
             }

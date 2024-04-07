@@ -27,6 +27,9 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,7 +90,7 @@ fun PopupBaseBox(
                 modifier = Modifier
                     .requiredSize(fontSize.toDp() * 0.65f)
                     .align(Alignment.CenterEnd),
-                painter = painterResource(R.drawable.ic_more_horiz),
+                imageVector = Icons.Default.MoreHoriz,
                 contentDescription = null,
                 tint = popupStyle.foreground.solidColor(context),
             )
@@ -156,12 +159,12 @@ fun PopupExtBox(
                                 softWrap = false,
                             )
                         }
-                        element.iconResId?.let { iconResId ->
+                        element.icon?.let { icon ->
                             Icon(
                                 modifier = Modifier
                                     .requiredSize(elemFontSize.toDp() * 1.1f)
                                     .align(Alignment.Center),
-                                painter = painterResource(iconResId),
+                                imageVector = icon,
                                 contentDescription = null,
                                 tint = elemStyle.foreground.solidColor(context),
                             )

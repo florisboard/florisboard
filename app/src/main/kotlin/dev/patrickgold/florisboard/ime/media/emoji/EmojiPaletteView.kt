@@ -300,7 +300,7 @@ private fun EmojiCategoriesTabRow(
                 selected = activeCategory == category,
                 icon = { Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
-                    painter = painterResource(category.iconId()),
+                    imageVector = category.icon(),
                     contentDescription = null,
                 ) },
                 unselectedContentColor = unselectedContentColor,

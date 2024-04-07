@@ -28,6 +28,10 @@ import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -247,15 +251,15 @@ fun RestoreScreen() = FlorisScreen {
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
             ) {
                 this@content.Preference(
-                    iconId = R.drawable.ic_code,
+                    icon = Icons.Default.Code,
                     title = workspace.metadata.packageName,
                 )
                 this@content.Preference(
-                    iconId = R.drawable.ic_info,
+                    icon = Icons.Outlined.Info,
                     title = "${workspace.metadata.versionName} (${workspace.metadata.versionCode})",
                 )
                 this@content.Preference(
-                    iconId = R.drawable.ic_schedule,
+                    icon = Icons.Default.Schedule,
                     title = remember(workspace.metadata.timestamp) {
                         val formatter = DateFormat.getDateTimeInstance()
                         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))

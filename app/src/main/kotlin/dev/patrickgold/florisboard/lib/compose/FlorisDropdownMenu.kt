@@ -29,6 +29,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -90,7 +93,7 @@ fun <T : Any> FlorisDropdownMenu(
             )
             Icon(
                 modifier = Modifier.rotate(indicatorRotation),
-                painter = painterResource(R.drawable.ic_keyboard_arrow_down),
+                imageVector = Icons.Default.KeyboardArrowLeft,
                 tint = if (enabled) {
                     color.copy(alpha = ContentAlpha.medium)
                 } else {
@@ -151,7 +154,7 @@ fun FlorisDropdownLikeButton(
             )
             Icon(
                 modifier = Modifier.autoMirrorForRtl(),
-                painter = painterResource(R.drawable.ic_keyboard_arrow_right),
+                imageVector = Icons.Default.KeyboardArrowRight,
                 tint = color.copy(alpha = ContentAlpha.medium),
                 contentDescription = "Dropdown indicator",
             )

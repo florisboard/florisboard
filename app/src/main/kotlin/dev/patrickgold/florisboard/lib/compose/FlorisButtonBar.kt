@@ -34,6 +34,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -69,7 +70,7 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
         text: String,
         modifier: Modifier = Modifier,
         enabled: Boolean = true,
-        @DrawableRes iconId: Int? = null,
+        icon: ImageVector? = null,
         onClick: () -> Unit,
     ) {
         Button(
@@ -81,10 +82,10 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
             ),
             onClick = onClick,
         ) {
-            if (iconId != null) {
+            if (icon != null) {
                 Icon(
                     modifier = Modifier.padding(end = 8.dp),
-                    painter = painterResource(iconId),
+                    imageVector = icon,
                     contentDescription = null,
                 )
             }
@@ -97,7 +98,7 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
         text: String,
         modifier: Modifier = Modifier,
         enabled: Boolean = true,
-        @DrawableRes iconId: Int? = null,
+        icon: ImageVector? = null,
         onClick: () -> Unit,
     ) {
         TextButton(
@@ -108,10 +109,10 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
             ),
             onClick = onClick,
         ) {
-            if (iconId != null) {
+            if (icon != null) {
                 Icon(
                     modifier = Modifier.padding(end = 8.dp),
-                    painter = painterResource(iconId),
+                    imageVector = icon,
                     contentDescription = null,
                 )
             }
