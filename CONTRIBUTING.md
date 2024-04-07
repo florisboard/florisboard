@@ -1,97 +1,97 @@
-# Contributing
+# Contribution guidelines
 
-First off, thanks for considering contributing to FlorisBoard!
+Thanks for considering contributing to FlorisBoard!
 
 There are several ways to contribute to FlorisBoard. This document provides some general guidelines for each type of contribution.
 
-## Giving general feedback
+## General contributions
+
+### Translation
+
+To make FlorisBoard accessible in as many languages as possible, the platform [Crowdin](https://crowdin.florisboard.patrickgold.dev) is used to crowdsource and manage translations.  The list of languages in Crowdin covers a good range of languages, but feel free to send an email to [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev) to request a new language.
+
+> [!IMPORTANT]
+> This is the only source of translations - **PRs that add/update translations are not accepted.**
+
+### Feedback
 
 You can [give general feedback](https://github.com/florisboard/florisboard/discussions/new?category=feedback) directly here on GitHub. This is the preferred way to give feedback, as it allows not only for me to read and respond to feedback, but for everyone in this community.
 
-Optionally you can also use the review function within Google Play or email me at [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev). I love to hear from you! Note, that the amount of feedback emails I get is overwhelmingly high - so if I don't answer or answer really late, I apologize - I guarantee though that I read through every email and that I will use every feedback to improve FlorisBoard :)
+### Bug reporting
 
-## Translations
+This kind of contribution is the most important, as it tells where FlorisBoard has flaws and thus should be improved to maximize stability and user experience. To make this process as smooth as possible, please use the pre-made [issue template](.github/ISSUE_TEMPLATE/bug_report.md) for bug reporting. This makes it easy for us to understand what the bug is and how to solve it.
 
-To make FlorisBoard accessible in as many languages as possible, the platform [Crowdin](https://crowdin.florisboard.patrickgold.dev) is used to crowdsource and manage translations. This is
-the only source of translations from now on - **PRs that add/update translations are no longer accepted.** The list of languages in Crowdin covers the top 20 languages, but feel free to email me at [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev) to request a language and I'll add it.
+#### Capturing error logs
+
+Logs are captured by FlorisBoard's crash handler, which gives you the ability to copy it to the clipboard and paste it in GitHub. This is the preferred way to capture logs.
+
+Alternatively, you can also use ADB (Android Debug Bridge) to capture the error log. This is recommended for experienced users only.
+
+### Feature proposals
+
+Use the feature proposal issue template to suggest a new idea or improvement for this project.
+
+## Code contributions
+
+You are always welcome to contribute new features or work on existing issues, there are a lot to choose from :) It is always best to quickly ask if someone is already working on this issue to avoid duplicate issues.
+
+> [!NOTE]
+> If you intend to implement a bigger feature please coordinate with us so we can prevent that there's a major difference in expected implementation.
+
+If you are overwhelmed by the code don't hesistate to ask for help in the [dev chat](https://matrix.to/#/#florisboard-dev:matrix.org) or the discussions tab! Some issues are also marked as good first issue, which are easy to do tasks.
+
+### System requirements for development
+
+- Desktop PC with Linux or WSL2 (Windows)
+  - MacOS and Windows without WSL2 probably works too however there's no official support
+- At least 16GB of RAM (because of Android Studio)
+- The following tools must be installed:
+  - Android Studio (bundles SDK and NDK)
+  - Java 17
+  - CMake 3.22+
+  - Clang 15+
+  - Git
+  - [Rust](https://www.rust-lang.org/tools/install)
+- Utilities (optional)
+  - Python 3.10+
+  - Bash, realpath, grep, ...
+
+### Manual build without Android Studio
+
+If you want to manually build the project without Android Studio you must ensure that the Android SDK and NDK are properly installed on your system. Then issue
+
+```./gradlew clean && ./gradlew assembleDebug```
+
+and Gradle should take care of every build task.
 
 ## Joining the team
 
-If you want to join the FlorisBoard maintainer/moderator team and be part of this project's journey that's great to hear! For more info see [this announcement](https://github.com/florisboard/florisboard/discussions/2314)!
+If you want to join the core maintainer/moderator team on a volunteer basis and be part of this project's journey that's great to hear!
 
-## Adding a new feature or making large changes
+### Basic Requirements
 
-If you intend to add a new feature or to make large changes, please discuss this first through a proposal on GitHub. Discussing your idea enables both you and the dev team that we are on the same page before you start on working on your change. If you have any questions, feel free to ask for help at any time!
+- A passion for seeing FlorisBoard flourish
+- Good English skills for team and public communication
+- A GitHub account and a Matrix handle
 
-## Adding a new keyboard layout
+### Why Join
 
-Adding a layout to FlorisBoard is very simple and does not require any coding skills, although you should understand the
-basics of the JSON syntax (it is very easy though by just looking at some other layout files). Most of the time is
-enough to look at the existing layout files, but the following attempts to help you in creating layouts from scratch.
+You'll have the chance to work directly with me and other team members. While the general idea is for us to work on all kinds of different aspects of the project as a team, if you're particularly interested in a specific area (e.g., UI, extensions, text processing), that's totally okay too!
 
-### Adding the layout
+### Available Roles
 
-Since v0.3.14-beta06 it is possible to add custom layouts for all types using the new extension format, Flex.
+Currently the following roles are available and need help:
 
-Keyboard layout assets are grouped in [`app/src/main/assets/ime/keyboard`](app/src/main/assets/ime/keyboard) and are
-further sub-grouped into the following:
+Role Description | Required Dev Experience
+---|---
+Software Developer (Kotlin) for Core App | Java/Kotlin development experience (on Android)
+Software Developer (Rust) for Native Core | Some Rust development experience
+GitHub Issues/Discussions Moderator | None
+Crowdin Translation Verifier | Language proficiency for the language you want to verify
 
-- `org.florisboard.composers`: Defines standard composers for interpreting input, currently supports basic typing and
-  Korean input. Most of the time you won't need to add new composers, so if you don't know what they are always
-  assume `appender` (the default composer which does not alter input in any way) is in use.
-- `org.florisboard.currencysets`: Lists all currency sets, which can be chosen for each subtype. If you consider adding
-  a new one, make sure that the first currency symbol matches the name of the currency set and also ensure that you have
-  exactly 6 currency symbols. This is important as the symbol layouts have exactly 6 slots available to fill these
-  defined currency symbols in.
-- `org.florisboard.layouts`: Contains the actual layout files for all layout types.
-- `org.florisboard.localization`: Contains all popup mappings and subtype presets (formally the `config.json` file). The
-  subtype presets are a list of all pre-made subtypes. Each time the user selects a language in the `Subtype Add`
-  -dialog, all options configured here will get selected if found in the presets. The language tag must adhere to the
-  IETF BCP 47 code ([ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
-  and [ISO 3166-1 region code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)). For
-  example, Dutch as spoken in Belgium is `nl-be`.
-
-To add a new layout, head to above directory and add the necessary files to each extension group.
-
-For the `code` field of each key, make sure to use the UTF-8 code. An useful tool for finding the correct code
-is [unicode-table.com](https://unicode-table.com/en/). From there, you search for your letter and then use the HTML
-code, but without the `&#;`
-For internal codes of functional or UI keys, see
-[`app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt`](app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt)
-.
-
-The label is equally important and should always match up with the defined code. If `code` and `label` don't match up,
-FlorisBoard won't crash but it will most likely lead to confusion in the key processing logic.
-
-Any accents or diacritics that should be exposed via long press can be added
-at [`app/src/main/assets/ime/keyboard/org.florisboard.localization/popupMappings/<languageTag>.json`](app/src/main/assets/ime/keyboard/org.florisboard.localization/popupMappings)
-. For each key, you can add 1 main and several relevant accents. The main accent should be used for accents which are
-important for the language you add. The main field is used for determining if a hint or an accent should take priority,
-so please make sure to leave main empty and just use relevant for accents which are not-so important.
-
-For popups of non-`characters` layout, simply add the popup directly to each key via the `popup` field.
-
-## Adding a new dictionary for a language
-
-Currently any kind of dictionaries are not accepted until the suggestion implementation has been sorted out.
-
-## Bug reporting
-
-This kind of contribution is the most important, as it tells where FlorisBoard has flaws and thus should be improved to
-maximize stability and user experience. To make this process as smooth as possible, please use the
-pre-made [issue template](.github/ISSUE_TEMPLATE/bug_report.md)
-for bug reporting. This makes it easy for us to understand what the bug is and how to solve it.
-
-### Capturing error logs
-
-Logs are captured by FlorisBoard's crash handler, which gives you the ability to copy it to the clipboard and paste it
-in GitHub. This is the preferred way to capture logs.
-
-Alternatively, you can also use ADB (Android Debug Bridge) to capture the error log. This is recommended for experienced
-users only.
+Interested? Feel free to dm me ([@patrickgold](https://matrix.to/#/@patrickgold:matrix.org)) on Matrix or send an email to [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev).
 
 ## Donating
 
-If none of the above options are feasible for you but you still want to show your support, you can also buy me a coffee,
-so I can stay up all night and chase away bugs or add new cool stuff :)
+Alternatively you can also show your support by buying me a coffee, so I can stay up all night and chase away bugs or add new cool stuff :)
 See the `Sponsors` button for available options!

@@ -70,11 +70,8 @@ Word suggestions/spell checking are not included in the current releases and are
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
 ## Contributing
-Wanna contribute to FlorisBoard? That's great to hear! There are lots of
-different ways to help out. Bug reporting, making pull requests,
-translating FlorisBoard to make it more accessible, etc. For more
-information see the [contributing guidelines](CONTRIBUTING.md). Thank
-you for your help!
+Want to contribute to FlorisBoard? That's great to hear! There are lots of
+different ways to help out, please see the [contribution guidelines](CONTRIBUTING.md) for more info.
 
 ## List of permissions FlorisBoard requests
 Please refer to this [page](https://github.com/florisboard/florisboard/wiki/List-of-permissions-FlorisBoard-requests)
