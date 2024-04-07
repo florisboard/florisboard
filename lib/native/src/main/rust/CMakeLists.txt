@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 3.22)
 
 project(florisboard)
 
-if(WIN32)
-    set(USER_HOME_DIRECTORY "$ENV{USERPROFILE}")
+find_program(RUSTUP_EXECUTABLE NAMES rustup)
+find_program(CARGO_EXECUTABLE NAMES cargo)
+if(NOT RUSTUP_EXECUTABLE OR NOT CARGO_EXECUTABLE)
+    message(FATAL_ERROR "Rust toolchain not found on this system. Please install Rust toolchain, then try again.")
 else()
-    set(USER_HOME_DIRECTORY "$ENV{HOME}")
+    message(STATUS "Using Rust toolchain: ${RUSTUP_EXECUTABLE}")
 endif()
-set(RUST_TOOLCHAIN "${USER_HOME_DIRECTORY}/.cargo/bin")
 
 ### FlorisBoard ###
 
@@ -34,11 +35,11 @@ set(FL_NATIVE_RUST_PATH "${CMAKE_CURRENT_SOURCE_DIR}/target/${RUST_TARGET}/relea
 
 add_custom_target(
     setup_rust_target ALL
-    COMMAND ${RUST_TOOLCHAIN}/rustup target add ${RUST_TARGET}
+    COMMAND ${RUSTUP_EXECUTABLE} target add ${RUST_TARGET}
 )
 add_custom_target(
     fl_native_rust_build ALL
-    COMMAND ${RUST_TOOLCHAIN}/cargo rustc --release --target ${RUST_TARGET} --
+    COMMAND ${CARGO_EXECUTABLE} rustc --release --target ${RUST_TARGET} --
         -C linker="${LLVM_TOOLCHAIN}/${ANDROID_TARGET}${CMAKE_ANDROID_API}-clang"
     DEPENDS setup_rust_target
     BYPRODUCTS ${FL_NATIVE_RUST_PATH}
