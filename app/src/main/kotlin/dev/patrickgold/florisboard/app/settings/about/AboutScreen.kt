@@ -78,7 +78,6 @@ fun AboutScreen() = FlorisScreen {
                 modifier = Modifier.padding(top = 16.dp),
             )
         }
-        //TODO: Wait until https://github.com/patrickgold/jetpref/pull/2 is merged to update the preferences
         Preference(
             icon = Icons.Outlined.Info,
             title = stringRes(R.string.about__version__title),
