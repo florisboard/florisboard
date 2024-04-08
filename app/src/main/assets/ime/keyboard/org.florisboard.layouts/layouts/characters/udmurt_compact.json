@@ -9,7 +9,7 @@
     { "$": "auto_text_key", "code":  1075, "label": "г" },
     { "$": "auto_text_key", "code":  1096, "label": "ш" },
     { "$": "auto_text_key", "code":  1097, "label": "щ" },
-    { "code":  1079, "label": "з", "popup": {
+    { "$": "auto_text_key", "code":  1079, "label": "з", "popup": {
       "relevant": [
         { "code": 1247, "label": "ӟ" }
       ]
