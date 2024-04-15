@@ -152,7 +152,7 @@ fun Modifier.florisScrollbar(
     }
 
     val visibleItemsInfo = state.layoutInfo.visibleItemsInfo
-    val visibleItems = if(visibleItemsInfo.isNotEmpty()) remember { visibleItemsInfo.size } else 0
+    val visibleItems = if (visibleItemsInfo.isNotEmpty()) remember { visibleItemsInfo.size } else 0
     drawWithContent {
         drawContent()
         val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
@@ -265,7 +265,11 @@ internal fun percentOffset (
     item: LazyGridItemInfo,
     orientation: Orientation
 ): Float {
-    val offset = if (orientation==Orientation.Horizontal) item.offset.x else item.offset.y
-    val size = if (orientation==Orientation.Horizontal) item.size.width else item.size.height
+    val offset = if (orientation == Orientation.Horizontal) {
+        item.offset.x else item.offset.y
+    }
+    val size = if (orientation == Orientation.Horizontal) {
+        item.size.width else item.size.height
+    }
     return offset.toFloat() / size
 }
