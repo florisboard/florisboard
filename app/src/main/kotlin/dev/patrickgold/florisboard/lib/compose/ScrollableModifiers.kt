@@ -255,12 +255,13 @@ fun Modifier.florisScrollbar(
 /**
  * Item's offset on main axis as a percentage of size
  */
-fun percentOffset (
+internal fun percentOffset (
     item: LazyListItemInfo,
 ): Float {
     return item.offset.toFloat() / item.size
 }
-fun percentOffset (
+
+internal fun percentOffset (
     item: LazyGridItemInfo,
     orientation: Orientation
 ): Float {
