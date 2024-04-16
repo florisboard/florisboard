@@ -266,10 +266,14 @@ internal fun percentOffset (
     orientation: Orientation
 ): Float {
     val offset = if (orientation == Orientation.Horizontal) {
-        item.offset.x else item.offset.y
+        item.offset.x
+    } else {
+        item.offset.y
     }
     val size = if (orientation == Orientation.Horizontal) {
-        item.size.width else item.size.height
+        item.size.width
+    } else {
+        item.size.height
     }
     return offset.toFloat() / size
 }
