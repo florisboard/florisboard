@@ -90,6 +90,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.android.AndroidKeyguardManager
 import dev.patrickgold.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.android.systemService
+import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
@@ -220,7 +221,7 @@ fun EmojiPaletteView(
                     LazyVerticalGrid(
                         modifier = Modifier
                             .fillMaxSize()
-                            /*.florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f), isVertical = true)*/,
+                            .florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f)),
                         columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyListState,
                     ) {

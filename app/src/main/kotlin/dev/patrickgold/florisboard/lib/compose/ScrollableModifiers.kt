@@ -20,8 +20,12 @@ import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -40,6 +44,7 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import java.lang.Math.min
 
 private val DefaultScrollbarSize = 4.dp
 // IgnoreInVeryFastOut (basically)
@@ -146,6 +151,8 @@ fun Modifier.florisScrollbar(
         isInitial = false
     }
 
+    val visibleItemsInfo = state.layoutInfo.visibleItemsInfo
+    val visibleItems = if (visibleItemsInfo.isNotEmpty()) remember { visibleItemsInfo.size } else 0
     drawWithContent {
         drawContent()
         val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
@@ -155,18 +162,18 @@ fun Modifier.florisScrollbar(
             val scrollbarHeight: Float
             val scrollbarOffsetX: Float
             val scrollbarOffsetY: Float
-
+            val first = state.layoutInfo.visibleItemsInfo.first()
             if (isVertical) {
                 val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
                 scrollbarWidth = size.toPx()
-                scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * elementHeight
+                scrollbarHeight = visibleItems * elementHeight
                 scrollbarOffsetX = this.size.width - scrollbarWidth
-                scrollbarOffsetY = firstVisibleElementIndex * elementHeight
+                scrollbarOffsetY = (firstVisibleElementIndex - percentOffset(first)) * elementHeight
             } else {
                 val elementWidth = this.size.width / state.layoutInfo.totalItemsCount
-                scrollbarWidth = state.layoutInfo.visibleItemsInfo.size * elementWidth
+                scrollbarWidth = visibleItems * elementWidth
                 scrollbarHeight = size.toPx()
-                scrollbarOffsetX = firstVisibleElementIndex * elementWidth
+                scrollbarOffsetX = (firstVisibleElementIndex - percentOffset(first)) * elementWidth
                 scrollbarOffsetY = this.size.height - scrollbarHeight
             }
 
@@ -178,4 +185,95 @@ fun Modifier.florisScrollbar(
             )
         }
     }
+}
+
+fun Modifier.florisScrollbar(
+    state: LazyGridState,
+    size: Dp = DefaultScrollbarSize,
+    color: Color = Color.Unspecified,
+): Modifier = composed {
+    var isInitial by remember { mutableStateOf(true) }
+    val targetAlpha = if (state.isScrollInProgress || isInitial) 1f else 0f
+    val duration = if (state.isScrollInProgress || isInitial) 0 else 950
+    val alpha by animateFloatAsState(
+        targetValue = targetAlpha,
+        animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
+    )
+    val scrollbarColor = color.takeOrElse { MaterialTheme.colors.onSurface.copy(alpha = 0.28f) }
+
+    LaunchedEffect(Unit) {
+        delay(1850)
+        isInitial = false
+    }
+
+    val orientation = state.layoutInfo.orientation
+    val visibleItemsInfo = state.layoutInfo.visibleItemsInfo
+    val visibleItems = if (visibleItemsInfo.isNotEmpty()) remember { visibleItemsInfo.size } else 0
+    val last = visibleItemsInfo.lastOrNull()
+    val stacks = if (last != null && orientation == Orientation.Vertical) {
+        remember { last.column }
+    } else if (last != null && orientation == Orientation.Horizontal) {
+        remember { last.row }
+    } else {
+        0
+    }
+    drawWithContent {
+        drawContent()
+        val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
+        val needDrawScrollbar = state.isScrollInProgress || isInitial || alpha > 0f
+        if (needDrawScrollbar && firstVisibleElementIndex != null) {
+            val scrollbarWidth: Float
+            val scrollbarHeight: Float
+            val scrollbarOffsetX: Float
+            val scrollbarOffsetY: Float
+            val first = state.layoutInfo.visibleItemsInfo.first()
+
+            if (orientation == Orientation.Vertical) {
+                val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
+                scrollbarWidth = size.toPx()
+                scrollbarOffsetX = this.size.width - scrollbarWidth
+                scrollbarOffsetY = (firstVisibleElementIndex - stacks*percentOffset(first, orientation)) * elementHeight
+                scrollbarHeight = min(visibleItems * elementHeight, this.size.height - scrollbarOffsetY)
+            } else {
+                val elementWidth = this.size.width / state.layoutInfo.totalItemsCount
+                scrollbarHeight = size.toPx()
+                scrollbarOffsetX = (firstVisibleElementIndex - stacks*percentOffset(first, orientation)) * elementWidth
+                scrollbarOffsetY = this.size.height - scrollbarHeight
+                scrollbarWidth = min(visibleItems * elementWidth, this.size.height - scrollbarOffsetX)
+            }
+
+            drawRect(
+                color = scrollbarColor,
+                topLeft = Offset(scrollbarOffsetX, scrollbarOffsetY),
+                size = Size(scrollbarWidth, scrollbarHeight),
+                alpha = alpha,
+            )
+        }
+    }
+}
+
+/**
+ * Item's offset on main axis as a percentage of size
+ */
+internal fun percentOffset (
+    item: LazyListItemInfo,
+): Float {
+    return item.offset.toFloat() / item.size
+}
+
+internal fun percentOffset (
+    item: LazyGridItemInfo,
+    orientation: Orientation
+): Float {
+    val offset = if (orientation == Orientation.Horizontal) {
+        item.offset.x
+    } else {
+        item.offset.y
+    }
+    val size = if (orientation == Orientation.Horizontal) {
+        item.size.width
+    } else {
+        item.size.height
+    }
+    return offset.toFloat() / size
 }
