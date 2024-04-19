@@ -151,7 +151,6 @@ fun FlorisDropdownLikeButton(
                 color = color,
             )
             Icon(
-                modifier = Modifier.autoMirrorForRtl(),
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 tint = color.copy(alpha = ContentAlpha.medium),
                 contentDescription = "Dropdown indicator",
