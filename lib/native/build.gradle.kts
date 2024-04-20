@@ -36,6 +36,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
             )
         }
+        create("beta") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+            )
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
