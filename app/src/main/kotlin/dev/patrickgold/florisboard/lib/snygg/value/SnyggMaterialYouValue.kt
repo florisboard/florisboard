@@ -25,7 +25,6 @@ import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.ColorName
 import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.ColorNameId
 import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.darkColorName
 import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.lightColorName
-import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor.primary
 
 sealed interface SnyggMaterialYouValue : SnyggValue {
     val colorName: String
@@ -47,7 +46,7 @@ sealed interface SnyggMaterialYouValueEncoder<T : SnyggMaterialYouValue> : Snygg
             }
         }
 
-    override fun defaultValue() = newInstance(primary)
+    override fun defaultValue() = newInstance(MaterialYouColor.ColorPalette.Primary.id)
 
     override fun serialize(v: SnyggValue) = runCatching<String> {
         require(v::class.java == clazz)
@@ -95,101 +94,87 @@ object MaterialYouColor {
         darkColorScheme = null
     }
 
-    const val primary = "primary"
-    private const val onPrimary = "onPrimary"
-    private const val primaryContainer = "primaryContainer"
-    private const val onPrimaryContainer = "onPrimaryContainer"
-    private const val inversePrimary = "inversePrimary"
-    private const val secondary = "secondary"
-    private const val onSecondary = "onSecondary"
-    private const val secondaryContainer = "secondaryContainer"
-    private const val onSecondaryContainer = "onSecondaryContainer"
-    private const val tertiary = "tertiary"
-    private const val onTertiary = "onTertiary"
-    private const val tertiaryContainer = "tertiaryContainer"
-    private const val onTertiaryContainer = "onTertiaryContainer"
-    private const val background = "background"
-    private const val onBackground = "onBackground"
-    private const val surface = "surface"
-    private const val onSurface = "onSurface"
-    private const val surfaceVariant = "surfaceVariant"
-    private const val onSurfaceVariant = "onSurfaceVariant"
-    private const val surfaceTint = "surfaceTint"
-    private const val inverseSurface = "inverseSurface"
-    private const val inverseOnSurface = "inverseOnSurface"
-    private const val error = "error"
-    private const val onError = "onError"
-    private const val errorContainer = "errorContainer"
-    private const val onErrorContainer = "onErrorContainer"
-    private const val outline = "outline"
-    private const val outlineVariant = "outlineVariant"
-    private const val scrim = "scrim"
+    enum class ColorPalette(val id: String) {
+        Primary("primary"),
+        OnPrimary("onPrimary"),
+        PrimaryContainer("primaryContainer"),
+        OnPrimaryContainer("onPrimaryContainer"),
+        InversePrimary("inversePrimary"),
+        Secondary("secondary"),
+        OnSecondary("onSecondary"),
+        SecondaryContainer("secondaryContainer"),
+        OnSecondaryContainer("onSecondaryContainer"),
+        Tertiary("tertiary"),
+        OnTertiary("onTertiary"),
+        TertiaryContainer("tertiaryContainer"),
+        OnTertiaryContainer("onTertiaryContainer"),
+        Background("background"),
+        OnBackground("onBackground"),
+        // Surface("surface"), // removed and replaced by the specific Surface* variants
+        OnSurface("onSurface"),
+        SurfaceVariant("surfaceVariant"),
+        OnSurfaceVariant("onSurfaceVariant"),
+        SurfaceTint("surfaceTint"),
+        InverseSurface("inverseSurface"),
+        InverseOnSurface("inverseOnSurface"),
+        Error("error"),
+        OnError("onError"),
+        ErrorContainer("errorContainer"),
+        OnErrorContainer("onErrorContainer"),
+        Outline("outline"),
+        OutlineVariant("outlineVariant"),
+        Scrim("scrim"),
+        SurfaceBright("surfaceBright"),
+        SurfaceDim("surfaceDim"),
+        SurfaceContainer("surfaceContainer"),
+        SurfaceContainerHigh("surfaceContainerHigh"),
+        SurfaceContainerHighest("surfaceContainerHighest"),
+        SurfaceContainerLow("surfaceContainerLow"),
+        SurfaceContainerLowest("surfaceContainerLowest")
+    }
 
-    val colorNames = listOf(
-        primary,
-        onPrimary,
-        primaryContainer,
-        onPrimaryContainer,
-        inversePrimary,
-        secondary,
-        onSecondary,
-        secondaryContainer,
-        onSecondaryContainer,
-        tertiary,
-        onTertiary,
-        tertiaryContainer,
-        onTertiaryContainer,
-        background,
-        onBackground,
-        surface,
-        onSurface,
-        surfaceVariant,
-        onSurfaceVariant,
-        surfaceTint,
-        inverseSurface,
-        inverseOnSurface,
-        error,
-        onError,
-        errorContainer,
-        onErrorContainer,
-        outline,
-        outlineVariant,
-        scrim
-    )
+    val colorNames = ColorPalette.entries.map { it.id }
 
     fun loadColor(context: Context, colorName: String, dark: Boolean): Color {
         val colorScheme = getAndCacheColorScheme(context, dark)
 
         return when (colorName) {
-            primary -> colorScheme.primary
-            onPrimary -> colorScheme.onPrimary
-            primaryContainer -> colorScheme.primaryContainer
-            onPrimaryContainer -> colorScheme.onPrimaryContainer
-            inversePrimary -> colorScheme.inversePrimary
-            secondary -> colorScheme.secondary
-            onSecondary -> colorScheme.onSecondary
-            secondaryContainer -> colorScheme.secondaryContainer
-            onSecondaryContainer -> colorScheme.onSecondaryContainer
-            tertiary -> colorScheme.tertiary
-            onTertiary -> colorScheme.onTertiary
-            tertiaryContainer -> colorScheme.tertiaryContainer
-            onTertiaryContainer -> colorScheme.onTertiaryContainer
-            background -> colorScheme.background
-            onBackground -> colorScheme.onBackground
-            surface -> colorScheme.surface
-            onSurface -> colorScheme.onSurface
-            surfaceVariant -> colorScheme.surfaceVariant
-            onSurfaceVariant -> colorScheme.onSurfaceVariant
-            surfaceTint -> colorScheme.surfaceTint
-            inverseSurface -> colorScheme.inverseSurface
-            inverseOnSurface -> colorScheme.inverseOnSurface
-            error -> colorScheme.error
-            onError -> colorScheme.onError
-            errorContainer -> colorScheme.errorContainer
-            onErrorContainer -> colorScheme.onErrorContainer
-            outline -> colorScheme.outline
-            outlineVariant -> colorScheme.outlineVariant
-            scrim -> colorScheme.scrim
+            ColorPalette.Primary.id -> colorScheme.primary
+            ColorPalette.OnPrimary.id -> colorScheme.onPrimary
+            ColorPalette.PrimaryContainer.id -> colorScheme.primaryContainer
+            ColorPalette.OnPrimaryContainer.id -> colorScheme.onPrimaryContainer
+            ColorPalette.InversePrimary.id -> colorScheme.inversePrimary
+            ColorPalette.Secondary.id -> colorScheme.secondary
+            ColorPalette.OnSecondary.id -> colorScheme.onSecondary
+            ColorPalette.SecondaryContainer.id -> colorScheme.secondaryContainer
+            ColorPalette.OnSecondaryContainer.id -> colorScheme.onSecondaryContainer
+            ColorPalette.Tertiary.id -> colorScheme.tertiary
+            ColorPalette.OnTertiary.id -> colorScheme.onTertiary
+            ColorPalette.TertiaryContainer.id -> colorScheme.tertiaryContainer
+            ColorPalette.OnTertiaryContainer.id -> colorScheme.onTertiaryContainer
+            ColorPalette.Background.id -> colorScheme.background
+            ColorPalette.OnBackground.id -> colorScheme.onBackground
+            // ColorPalette.Surface.id -> colorScheme.surface
+            ColorPalette.OnSurface.id -> colorScheme.onSurface
+            ColorPalette.SurfaceVariant.id -> colorScheme.surfaceVariant
+            ColorPalette.OnSurfaceVariant.id -> colorScheme.onSurfaceVariant
+            ColorPalette.SurfaceTint.id -> colorScheme.surfaceTint
+            ColorPalette.InverseSurface.id -> colorScheme.inverseSurface
+            ColorPalette.InverseOnSurface.id -> colorScheme.inverseOnSurface
+            ColorPalette.Error.id -> colorScheme.error
+            ColorPalette.OnError.id -> colorScheme.onError
+            ColorPalette.ErrorContainer.id -> colorScheme.errorContainer
+            ColorPalette.OnErrorContainer.id -> colorScheme.onErrorContainer
+            ColorPalette.Outline.id -> colorScheme.outline
+            ColorPalette.OutlineVariant.id -> colorScheme.outlineVariant
+            ColorPalette.Scrim.id -> colorScheme.scrim
+            ColorPalette.SurfaceBright.id -> colorScheme.surfaceBright
+            ColorPalette.SurfaceDim.id -> colorScheme.surfaceDim
+            ColorPalette.SurfaceContainer.id -> colorScheme.surfaceContainer
+            ColorPalette.SurfaceContainerHigh.id -> colorScheme.surfaceContainerHigh
+            ColorPalette.SurfaceContainerHighest.id -> colorScheme.surfaceContainerHighest
+            ColorPalette.SurfaceContainerLow.id -> colorScheme.surfaceContainerLow
+            ColorPalette.SurfaceContainerLowest.id -> colorScheme.surfaceContainerLowest
             else -> colorScheme.primary
         }
     }

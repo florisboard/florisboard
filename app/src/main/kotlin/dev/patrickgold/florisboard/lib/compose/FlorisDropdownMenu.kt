@@ -30,18 +30,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.outline
 
 @Composable
@@ -93,7 +91,7 @@ fun <T : Any> FlorisDropdownMenu(
             )
             Icon(
                 modifier = Modifier.rotate(indicatorRotation),
-                imageVector = Icons.Default.KeyboardArrowLeft,
+                imageVector = Icons.Filled.KeyboardArrowDown,
                 tint = if (enabled) {
                     color.copy(alpha = ContentAlpha.medium)
                 } else {
@@ -153,8 +151,7 @@ fun FlorisDropdownLikeButton(
                 color = color,
             )
             Icon(
-                modifier = Modifier.autoMirrorForRtl(),
-                imageVector = Icons.Default.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 tint = color.copy(alpha = ContentAlpha.medium),
                 contentDescription = "Dropdown indicator",
             )
