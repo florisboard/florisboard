@@ -316,7 +316,7 @@ class ClipboardManager(
             } else {
                 val currentHistory = this@ClipboardManager.history().all
                 for (item in items) {
-                    if (!currentHistory.contains(item)) {
+                    if (!currentHistory.map { it.copy(id = 0) }.contains(item.copy(id = 0))) {
                         this@ClipboardManager.insertClip(item.copy(id = 0))
                     }
                 }
