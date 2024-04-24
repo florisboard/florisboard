@@ -40,6 +40,8 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
 import dev.patrickgold.florisboard.lib.android.query
+import dev.patrickgold.florisboard.lib.util.UriSerializer
+import kotlinx.serialization.Serializable
 import org.florisboard.lib.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
@@ -63,6 +65,7 @@ enum class ItemType(val value: Int) {
  * If type == ItemType.IMAGE there must be a uri set
  * if type == ItemType.TEXT there must be a text set
  */
+@Serializable
 @Entity(tableName = CLIPBOARD_HISTORY_TABLE)
 data class ClipboardItem(
     @PrimaryKey(autoGenerate = true)
@@ -70,6 +73,7 @@ data class ClipboardItem(
     var id: Long = 0,
     val type: ItemType,
     val text: String?,
+    @Serializable(with = UriSerializer::class)
     val uri: Uri?,
     val creationTimestampMs: Long,
     val isPinned: Boolean,

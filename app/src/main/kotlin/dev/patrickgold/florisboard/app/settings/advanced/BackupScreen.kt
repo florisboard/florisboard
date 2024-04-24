@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.writeFromFile
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -58,6 +59,7 @@ import kotlinx.serialization.Serializable
 object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
     const val METADATA_JSON_NAME = "backup_metadata.json"
+    const val CLIPBOARD_JSON_NAME = "clipboard.json"
 
     fun defaultFileName(metadata: Metadata): String {
         return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
@@ -72,9 +74,10 @@ object Backup {
         var jetprefDatastore by mutableStateOf(true)
         var imeKeyboard by mutableStateOf(true)
         var imeTheme by mutableStateOf(true)
+        var clipboardData by mutableStateOf(true)
 
         fun atLeastOneSelected(): Boolean {
-            return jetprefDatastore || imeKeyboard || imeTheme
+            return jetprefDatastore || imeKeyboard || imeTheme || clipboardData
         }
     }
 
@@ -102,7 +105,7 @@ fun BackupScreen() = FlorisScreen {
     var backupWorkspace: CacheManager.BackupAndRestoreWorkspace? = null
 
     val backUpToFileSystemLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument(),
+        contract = ActivityResultContracts.CreateDocument("application/zip"),
         onResult = { uri ->
             if (uri == null) {
                 // User can modify checkboxes between cancellation and second
@@ -142,6 +145,9 @@ fun BackupScreen() = FlorisScreen {
             context.filesDir.subDir(ExtensionManager.IME_THEME_PATH).let { dir ->
                 dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH))
             }
+        }
+        if (backupFilesSelector.clipboardData) {
+            workspace.inputDir.subFile(Backup.CLIPBOARD_JSON_NAME).writeJson(context.clipboardManager().value.history().all)
         }
         workspace.metadata = Backup.Metadata(
             packageName = BuildConfig.APPLICATION_ID,
@@ -253,9 +259,15 @@ internal fun BackupFilesSelector(
             checked = filesSelector.imeTheme,
             text = stringRes(R.string.backup_and_restore__back_up__files_ime_theme),
         )
+        CheckboxListItem(
+            onClick = { filesSelector.clipboardData = !filesSelector.clipboardData },
+            checked = filesSelector.clipboardData,
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history),
+        )
     }
 }
 
+// TODO?: Move to lib.compose??
 @Composable
 internal fun CheckboxListItem(
     onClick: () -> Unit,

@@ -47,6 +47,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -171,6 +173,14 @@ fun RestoreScreen() = FlorisScreen {
             }
             if (srcDir.exists()) {
                 srcDir.copyRecursively(dstDir, overwrite = true)
+            }
+        }
+        if (restoreFilesSelector.clipboardData) {
+            val clipboardItems = workspace.outputDir.subFile(Backup.CLIPBOARD_JSON_NAME)
+            val clipboardManager = context.clipboardManager().value
+            if (clipboardItems.exists()) {
+                val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList)
             }
         }
     }

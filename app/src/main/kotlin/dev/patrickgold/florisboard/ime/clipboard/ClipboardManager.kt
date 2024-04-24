@@ -296,6 +296,34 @@ class ClipboardManager(
         }
     }
 
+
+    /**
+     * Restore the clipboard history from a [List]
+     *
+     * @param shouldReset if the history should be reset
+     * @param items the [ClipboardItem] list with the new items
+     */
+    fun restoreHistory(shouldReset: Boolean, items: List<ClipboardItem>) {
+        ioScope.launch {
+            if (shouldReset) {
+                for (item in history().all) {
+                    item.close(appContext)
+                }
+                clipHistoryDao?.deleteAll()
+                for (item in items) {
+                    this@ClipboardManager.insertClip(item.copy(id = 0))
+                }
+            } else {
+                val currentHistory = this@ClipboardManager.history().all
+                for (item in items) {
+                    if (!currentHistory.contains(item)) {
+                        this@ClipboardManager.insertClip(item.copy(id = 0))
+                    }
+                }
+            }
+        }
+    }
+
     fun deleteClip(item: ClipboardItem) {
         ioScope.launch {
             clipHistoryDao?.delete(item)
