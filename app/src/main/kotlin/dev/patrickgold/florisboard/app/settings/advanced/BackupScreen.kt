@@ -267,7 +267,6 @@ internal fun BackupFilesSelector(
     }
 }
 
-// TODO?: Move to lib.compose??
 @Composable
 internal fun CheckboxListItem(
     onClick: () -> Unit,

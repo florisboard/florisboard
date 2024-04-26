@@ -39,8 +39,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
+import dev.patrickgold.florisboard.lib.android.UriSerializer
 import dev.patrickgold.florisboard.lib.android.query
-import dev.patrickgold.florisboard.lib.util.UriSerializer
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.kotlin.tryOrNull
 

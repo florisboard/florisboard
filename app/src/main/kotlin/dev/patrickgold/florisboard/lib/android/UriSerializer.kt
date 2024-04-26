@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.lib.util
+package dev.patrickgold.florisboard.lib.android
 
 import android.net.Uri
 import androidx.core.net.toUri
