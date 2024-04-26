@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.settings.advanced
 
+import android.content.ContentUris
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,6 +46,9 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardMediaProvider
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.writeFromFile
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -70,7 +74,9 @@ import kotlinx.serialization.Serializable
 object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
     const val METADATA_JSON_NAME = "backup_metadata.json"
-    const val CLIPBOARD_JSON_NAME = "clipboard.json"
+    const val CLIPBOARD_TEXT_ITEMS_JSON_NAME = "clipboard_text_items.json"
+    const val CLIPBOARD_IMAGES_JSON_NAME = "clipboard_images.json"
+    const val CLIPBOARD_VIDEO_JSON_NAME = "clipboard_video.json"
 
     fun defaultFileName(metadata: Metadata): String {
         return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
@@ -92,6 +98,10 @@ object Backup {
 
         fun validateClipboardCheckbox(): Boolean {
             return clipboardTextItems && clipboardImageItems && clipboardVideoItems
+        }
+
+        fun provideClipboardItems(): Boolean {
+            return clipboardTextItems || clipboardImageItems || clipboardVideoItems
         }
 
         fun atLeastOneSelected(): Boolean {
@@ -164,9 +174,35 @@ fun BackupScreen() = FlorisScreen {
                 dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH))
             }
         }
-        if (backupFilesSelector.clipboardTextItems) {
-            workspace.inputDir.subFile(Backup.CLIPBOARD_JSON_NAME)
-                .writeJson(context.clipboardManager().value.history().all)
+
+        if (backupFilesSelector.provideClipboardItems()) {
+            val clipboardHistory = context.clipboardManager().value.history().all
+            val clipboardFilesDir = workspace.inputDir.subDir("clipboard")
+            clipboardFilesDir.mkdir()
+            if (backupFilesSelector.clipboardTextItems) {
+                clipboardFilesDir.subFile(Backup.CLIPBOARD_TEXT_ITEMS_JSON_NAME)
+                    .writeJson(clipboardHistory.filter { it.type == ItemType.TEXT })
+            }
+            if (backupFilesSelector.clipboardImageItems) {
+                clipboardFilesDir.subFile(Backup.CLIPBOARD_IMAGES_JSON_NAME)
+                    .writeJson(clipboardHistory.filter { it.type == ItemType.IMAGE })
+                for (item in clipboardHistory.filter { it.type == ItemType.IMAGE }) {
+                    val id = ContentUris.parseId(item.uri!!)
+                    ClipboardFileStorage.getFileForId(context, id).copyTo(
+                        clipboardFilesDir.subFile("${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/$id")
+                    )
+                }
+            }
+            if (backupFilesSelector.clipboardVideoItems) {
+                clipboardFilesDir.subFile(Backup.CLIPBOARD_VIDEO_JSON_NAME)
+                    .writeJson(clipboardHistory.filter { it.type == ItemType.VIDEO })
+                for (item in clipboardHistory.filter { it.type == ItemType.VIDEO }) {
+                    val id = ContentUris.parseId(item.uri!!)
+                    ClipboardFileStorage.getFileForId(context, id).copyTo(
+                        clipboardFilesDir.subFile("${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/$id")
+                    )
+                }
+            }
         }
         workspace.metadata = Backup.Metadata(
             packageName = BuildConfig.APPLICATION_ID,

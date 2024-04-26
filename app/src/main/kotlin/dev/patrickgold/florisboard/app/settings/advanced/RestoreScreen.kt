@@ -48,7 +48,9 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -175,13 +177,36 @@ fun RestoreScreen() = FlorisScreen {
                 srcDir.copyRecursively(dstDir, overwrite = true)
             }
         }
-
-        if (restoreFilesSelector.clipboardData) {
-            val clipboardItems = workspace.outputDir.subFile(Backup.CLIPBOARD_JSON_NAME)
+        if (restoreFilesSelector.provideClipboardItems()) {
+            val clipboardFilesDir = workspace.outputDir.subDir("clipboard")
             val clipboardManager = context.clipboardManager().value
-            if (clipboardItems.exists()) {
-                val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
-                clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList)
+
+            if (restoreFilesSelector.clipboardTextItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_TEXT_ITEMS_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.TEXT })
+                }
+            }
+            if (restoreFilesSelector.clipboardImageItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_IMAGES_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    for (item in clipboardItemsList.filter { it.type == ItemType.IMAGE }) {
+                        ClipboardFileStorage.instertFileFromBackup(context, clipboardFilesDir.subFile("${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${item.id}"))
+                    }
+                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.IMAGE })
+                }
+            }
+            if (restoreFilesSelector.clipboardVideoItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_VIDEO_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    for (item in clipboardItemsList.filter { it.type == ItemType.VIDEO }) {
+                        ClipboardFileStorage.instertFileFromBackup(context, clipboardFilesDir.subFile("${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${item.id}"))
+                    }
+                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.VIDEO })
+                }
             }
         }
     }

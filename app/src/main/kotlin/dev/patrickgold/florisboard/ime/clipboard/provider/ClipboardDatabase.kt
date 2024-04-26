@@ -308,6 +308,7 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
 }
 
 @Entity(tableName = CLIPBOARD_FILES_TABLE)
+@Serializable
 data class ClipboardFileInfo(
     @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
     @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
