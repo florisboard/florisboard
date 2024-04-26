@@ -175,6 +175,7 @@ fun RestoreScreen() = FlorisScreen {
                 srcDir.copyRecursively(dstDir, overwrite = true)
             }
         }
+
         if (restoreFilesSelector.clipboardData) {
             val clipboardItems = workspace.outputDir.subFile(Backup.CLIPBOARD_JSON_NAME)
             val clipboardManager = context.clipboardManager().value

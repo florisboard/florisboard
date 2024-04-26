@@ -19,7 +19,16 @@ package dev.patrickgold.florisboard.app.settings.advanced
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Checkbox
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.RadioButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.BuildConfig
@@ -41,6 +51,7 @@ import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.FlorisSimpleCard
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -74,10 +85,17 @@ object Backup {
         var jetprefDatastore by mutableStateOf(true)
         var imeKeyboard by mutableStateOf(true)
         var imeTheme by mutableStateOf(true)
+        var clipboardTextItems by mutableStateOf(true)
+        var clipboardImageItems by mutableStateOf(true)
+        var clipboardVideoItems by mutableStateOf(true)
         var clipboardData by mutableStateOf(true)
 
+        fun validateClipboardCheckbox(): Boolean {
+            return clipboardTextItems && clipboardImageItems && clipboardVideoItems
+        }
+
         fun atLeastOneSelected(): Boolean {
-            return jetprefDatastore || imeKeyboard || imeTheme || clipboardData
+            return jetprefDatastore || imeKeyboard || imeTheme || clipboardTextItems || clipboardImageItems || clipboardVideoItems
         }
     }
 
@@ -146,8 +164,9 @@ fun BackupScreen() = FlorisScreen {
                 dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH))
             }
         }
-        if (backupFilesSelector.clipboardData) {
-            workspace.inputDir.subFile(Backup.CLIPBOARD_JSON_NAME).writeJson(context.clipboardManager().value.history().all)
+        if (backupFilesSelector.clipboardTextItems) {
+            workspace.inputDir.subFile(Backup.CLIPBOARD_JSON_NAME)
+                .writeJson(context.clipboardManager().value.history().all)
         }
         workspace.metadata = Backup.Metadata(
             packageName = BuildConfig.APPLICATION_ID,
@@ -170,8 +189,10 @@ fun BackupScreen() = FlorisScreen {
                 Backup.Destination.FILE_SYS -> {
                     backUpToFileSystemLauncher.launch(backupWorkspace!!.zipFile.name)
                 }
+
                 Backup.Destination.SHARE_INTENT -> {
-                    val uri = FileProvider.getUriForFile(context, Backup.FILE_PROVIDER_AUTHORITY, backupWorkspace!!.zipFile)
+                    val uri =
+                        FileProvider.getUriForFile(context, Backup.FILE_PROVIDER_AUTHORITY, backupWorkspace!!.zipFile)
                     val shareIntent = ShareCompat.IntentBuilder(context)
                         .setStream(uri)
                         .setType(FileRegistry.BackupArchive.mediaType)
@@ -259,11 +280,53 @@ internal fun BackupFilesSelector(
             checked = filesSelector.imeTheme,
             text = stringRes(R.string.backup_and_restore__back_up__files_ime_theme),
         )
+
         CheckboxListItem(
-            onClick = { filesSelector.clipboardData = !filesSelector.clipboardData },
-            checked = filesSelector.clipboardData,
-            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history),
+            onClick = {
+                if (!filesSelector.clipboardData) {
+                    filesSelector.clipboardTextItems = true
+                    filesSelector.clipboardImageItems = true
+                    filesSelector.clipboardVideoItems = true
+                } else {
+                    filesSelector.clipboardTextItems = false
+                    filesSelector.clipboardImageItems = false
+                    filesSelector.clipboardVideoItems = false
+                }
+                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+            },
+            checked = filesSelector.clipboardTextItems && filesSelector.clipboardImageItems && filesSelector.clipboardVideoItems,
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history)
         )
+
+
+        CheckboxListItem(
+            onClick = {
+                filesSelector.clipboardTextItems = !filesSelector.clipboardTextItems
+                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+            },
+            checked = filesSelector.clipboardTextItems,
+            text = "Text items",
+            isSecondaryListItem = true,
+        )
+        CheckboxListItem(
+            onClick = {
+                filesSelector.clipboardImageItems = !filesSelector.clipboardImageItems
+                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+            },
+            checked = filesSelector.clipboardImageItems,
+            text = "Images",
+            isSecondaryListItem = true,
+        )
+        CheckboxListItem(
+            onClick = {
+                filesSelector.clipboardVideoItems = !filesSelector.clipboardVideoItems
+                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+            },
+            checked = filesSelector.clipboardVideoItems,
+            text = "Videos",
+            isSecondaryListItem = true,
+        )
+
     }
 }
 
@@ -272,14 +335,20 @@ internal fun CheckboxListItem(
     onClick: () -> Unit,
     checked: Boolean,
     text: String,
+    isSecondaryListItem: Boolean = false
 ) {
     JetPrefListItem(
         modifier = Modifier.rippleClickable(onClick = onClick),
         icon = {
-            Checkbox(
-                checked = checked,
-                onCheckedChange = null,
-            )
+            Row {
+                if (isSecondaryListItem) {
+                    Spacer(modifier = Modifier.width(56.dp))
+                }
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = null,
+                )
+            }
         },
         text = text,
     )
