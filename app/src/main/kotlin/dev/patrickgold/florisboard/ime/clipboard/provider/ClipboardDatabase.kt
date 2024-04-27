@@ -286,6 +286,9 @@ interface ClipboardHistoryDao {
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE")
     fun deleteAll()
 
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE type = :type")
+    fun deleteAllFromType(type: ItemType)
+
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE NOT isPinned")
     fun deleteAllUnpinned()
 }
@@ -307,8 +310,8 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
     }
 }
 
-@Entity(tableName = CLIPBOARD_FILES_TABLE)
 @Serializable
+@Entity(tableName = CLIPBOARD_FILES_TABLE)
 data class ClipboardFileInfo(
     @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
     @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,

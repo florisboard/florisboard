@@ -303,13 +303,13 @@ class ClipboardManager(
      * @param shouldReset if the history should be reset
      * @param items the [ClipboardItem] list with the new items
      */
-    fun restoreHistory(shouldReset: Boolean, items: List<ClipboardItem>) {
+    fun restoreHistory(items: List<ClipboardItem>, shouldReset: Boolean, itemType: ItemType) {
         ioScope.launch {
             if (shouldReset) {
                 for (item in history().all) {
                     item.close(appContext)
                 }
-                clipHistoryDao?.deleteAll()
+                clipHistoryDao?.deleteAllFromType(itemType)
                 for (item in items) {
                     this@ClipboardManager.insertClip(item.copy(id = 0))
                 }

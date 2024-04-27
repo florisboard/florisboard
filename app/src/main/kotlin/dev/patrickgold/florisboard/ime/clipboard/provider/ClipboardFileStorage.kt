@@ -28,7 +28,6 @@ import dev.patrickgold.florisboard.lib.io.subFile
  * Backend helper object which is used by [ClipboardMediaProvider] to serve content.
  */
 object ClipboardFileStorage {
-
     const val CLIPBOARD_FILES_PATH = "clipboard_files"
 
     private val Context.clipboardFilesDir: FsFile
@@ -63,6 +62,6 @@ object ClipboardFileStorage {
     }
 
     fun instertFileFromBackup(context: Context, file: FsFile) {
-        file.copyTo(context.clipboardFilesDir.subFile(file.name))
+        file.copyTo(context.clipboardFilesDir.subFile(file.name), overwrite = false)
     }
 }

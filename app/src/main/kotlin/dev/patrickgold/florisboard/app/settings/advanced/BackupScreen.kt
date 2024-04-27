@@ -20,16 +20,10 @@ import android.content.ContentUris
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Checkbox
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
 import androidx.compose.material.RadioButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,7 +41,6 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardMediaProvider
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.android.writeFromFile
@@ -55,7 +48,6 @@ import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.FlorisSimpleCard
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -91,10 +83,10 @@ object Backup {
         var jetprefDatastore by mutableStateOf(true)
         var imeKeyboard by mutableStateOf(true)
         var imeTheme by mutableStateOf(true)
-        var clipboardTextItems by mutableStateOf(true)
-        var clipboardImageItems by mutableStateOf(true)
-        var clipboardVideoItems by mutableStateOf(true)
-        var clipboardData by mutableStateOf(true)
+        var clipboardTextItems by mutableStateOf(false)
+        var clipboardImageItems by mutableStateOf(false)
+        var clipboardVideoItems by mutableStateOf(false)
+        var clipboardData by mutableStateOf(false)
 
         fun validateClipboardCheckbox(): Boolean {
             return clipboardTextItems && clipboardImageItems && clipboardVideoItems
@@ -341,7 +333,7 @@ internal fun BackupFilesSelector(
                 filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
             },
             checked = filesSelector.clipboardTextItems,
-            text = "Text items",
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_text_items),
             isSecondaryListItem = true,
         )
         CheckboxListItem(
@@ -350,7 +342,7 @@ internal fun BackupFilesSelector(
                 filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
             },
             checked = filesSelector.clipboardImageItems,
-            text = "Images",
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_image_items),
             isSecondaryListItem = true,
         )
         CheckboxListItem(
@@ -359,7 +351,7 @@ internal fun BackupFilesSelector(
                 filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
             },
             checked = filesSelector.clipboardVideoItems,
-            text = "Videos",
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_video_items),
             isSecondaryListItem = true,
         )
 
