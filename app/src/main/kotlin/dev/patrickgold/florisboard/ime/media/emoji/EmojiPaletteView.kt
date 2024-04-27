@@ -67,7 +67,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
@@ -122,7 +121,7 @@ private val VariantsTriangleShapeRtl = GenericShape { size, _ ->
 
 @Composable
 fun EmojiPaletteView(
-    fullEmojiMappings: EmojiLayoutDataMap,
+    fullEmojiMappings: EmojiLayoutData,
     modifier: Modifier = Modifier,
 ) {
     val prefs by florisPreferenceModel()
