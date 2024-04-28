@@ -227,7 +227,7 @@ fun RestoreScreen() = FlorisScreen {
             ButtonBarTextButton(
                 onClick = {
                     restoreWorkspace?.close()
-                    navController.popBackStack()
+                    navController.navigateUp()
                 },
                 text = stringRes(R.string.action__cancel),
             )
@@ -237,7 +237,7 @@ fun RestoreScreen() = FlorisScreen {
                         try {
                             performRestore()
                             context.showLongToast(R.string.backup_and_restore__restore__success)
-                            navController.popBackStack()
+                            navController.navigateUp()
                         } catch (e: Throwable) {
                             context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to e.localizedMessage)
                         }
