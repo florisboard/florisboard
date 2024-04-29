@@ -502,6 +502,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Keyboard extensions</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Spelling extensions / dictionaries</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Theme extensions</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Clipboard history</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Text items</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Images</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videos</string>
     <string name="backup_and_restore__back_up__success">Successfully exported backup archive!</string>
     <string name="backup_and_restore__back_up__failure">Failed to export backup archive: {error_message}</string>
     <string name="backup_and_restore__restore__title">Restore data</string>

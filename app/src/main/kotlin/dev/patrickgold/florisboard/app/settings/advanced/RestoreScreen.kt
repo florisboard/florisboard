@@ -47,6 +47,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -173,6 +177,48 @@ fun RestoreScreen() = FlorisScreen {
                 srcDir.copyRecursively(dstDir, overwrite = true)
             }
         }
+        if (restoreFilesSelector.provideClipboardItems()) {
+            val clipboardFilesDir = workspace.outputDir.subDir("clipboard")
+            val clipboardManager = context.clipboardManager().value
+
+            if (restoreFilesSelector.clipboardTextItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_TEXT_ITEMS_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.TEXT }, itemType = ItemType.TEXT)
+                }
+            }
+            if (restoreFilesSelector.clipboardImageItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_IMAGES_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    for (item in clipboardItemsList.filter { it.type == ItemType.IMAGE }) {
+                        ClipboardFileStorage.instertFileFromBackup(
+                            context,
+                            clipboardFilesDir.subFile(
+                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${item.uri!!.path!!.split('/').last()}"
+                            )
+                        )
+                    }
+                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.IMAGE }, itemType = ItemType.IMAGE)
+                }
+            }
+            if (restoreFilesSelector.clipboardVideoItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_VIDEO_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    for (item in clipboardItemsList.filter { it.type == ItemType.VIDEO }) {
+                        ClipboardFileStorage.instertFileFromBackup(
+                            context,
+                            clipboardFilesDir.subFile(
+                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${item.uri!!.path!!.split('/').last()}"
+                            )
+                        )
+                    }
+                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.VIDEO }, itemType = ItemType.VIDEO)
+                }
+            }
+        }
     }
 
     bottomBar {
@@ -181,7 +227,7 @@ fun RestoreScreen() = FlorisScreen {
             ButtonBarTextButton(
                 onClick = {
                     restoreWorkspace?.close()
-                    navController.popBackStack()
+                    navController.navigateUp()
                 },
                 text = stringRes(R.string.action__cancel),
             )
@@ -191,7 +237,7 @@ fun RestoreScreen() = FlorisScreen {
                         try {
                             performRestore()
                             context.showLongToast(R.string.backup_and_restore__restore__success)
-                            navController.popBackStack()
+                            navController.navigateUp()
                         } catch (e: Throwable) {
                             context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to e.localizedMessage)
                         }
