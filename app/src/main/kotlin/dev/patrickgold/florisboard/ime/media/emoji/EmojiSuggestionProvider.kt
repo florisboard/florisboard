@@ -57,7 +57,10 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         val candidates = withContext(Dispatchers.Default) {
             emojis.parallelStream()
-                .filter { emoji -> emoji.name.contains(query) && emoji.keywords.any { it.contains(query) } }
+                .filter { emoji ->
+                    emoji.name.contains(query, ignoreCase = true) &&
+                        emoji.keywords.any { it.contains(query, ignoreCase = true) }
+                }
                 .limit(maxCandidateCount.toLong())
                 .map { EmojiSuggestionCandidate(it) }
                 .collect(Collectors.toList())
