@@ -51,7 +51,7 @@ import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiLayoutData
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
@@ -67,9 +67,9 @@ fun MediaInputLayout(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    var emojiLayoutDataMap by remember { mutableStateOf(EmojiLayoutData.Empty) }
+    var emojiLayoutDataMap by remember { mutableStateOf(EmojiData.Fallback) }
     LaunchedEffect(Unit) {
-        emojiLayoutDataMap = EmojiLayoutData.get(context, "ime/media/emoji/root.txt")
+        emojiLayoutDataMap = EmojiData.get(context, "ime/media/emoji/root.txt")
     }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {

@@ -4,18 +4,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.stream.Collectors
 import android.content.Context
-import android.graphics.Paint
-import android.graphics.Typeface
-import androidx.emoji2.text.EmojiCompat
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.subtypeManager
 import io.github.reactivecircus.cache4k.Cache
 
 const val EMOJI_SUGGESTION_INDICATOR = ':'
@@ -35,28 +30,17 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     override val providerId = "org.florisboard.nlp.providers.emoji"
 
     private val prefs by florisPreferenceModel()
-    private val editorInstance by context.editorInstance()
-    private val subtypeManager by context.subtypeManager()
-    private lateinit var supportedEmojiSet: Set<Emoji>
     private val lettersRegex = "^:[A-Za-z]*$".toRegex()
 
-    private val cachedEmojiMappings = Cache.Builder().build<FlorisLocale, Map<EmojiSkinTone, List<Emoji>>>()
+    private val cachedEmojiMappings = Cache.Builder().build<FlorisLocale, EmojiDataBySkinTone>()
 
     override suspend fun create() {
-        //supportedEmojiSet = initSupportedEmojiSet()
     }
 
     override suspend fun preload(subtype: Subtype) {
         subtype.locales().forEach { locale ->
             cachedEmojiMappings.get(locale) {
-                val map = mutableMapOf<EmojiSkinTone, MutableList<Emoji>>()
-                EmojiLayoutData.get(context, locale).values.flatten().forEach { emojiSet ->
-                    emojiSet.emojis.forEach { emoji ->
-                        val list = map.getOrPut(emoji.skinTone) { mutableListOf() }
-                        list.add(emoji)
-                    }
-                }
-                map.map { it.key to it.value.toList() }.toMap()
+                EmojiData.get(context, locale).bySkinTone
             }
         }
     }
@@ -98,22 +82,6 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     override suspend fun destroy() {
         cachedEmojiMappings.invalidateAll()
     }
-
-    /**
-     * Initializes the list of supported emojis.
-     */
-    // TODO: what do do about this??
-    /*private fun initSupportedEmojiSet() = with(editorInstance.activeInfo) {
-        val emojiCompatInstance = FlorisEmojiCompat.getAsFlow(false).value
-        val systemFontPaint = Paint().apply { typeface = Typeface.DEFAULT }
-        val emojiPreferredSkinTone = prefs.media.emojiPreferredSkinTone.get()
-        val isEmojiSupported = { emoji: Emoji ->
-            val emojiMatch = emojiCompatInstance?.getEmojiMatch(emoji.value, emojiCompatMetadataVersion)
-            emojiMatch == EmojiCompat.EMOJI_SUPPORTED || systemFontPaint.hasGlyph(emoji.value)
-        }
-        getOrLoadEmojiDataMap(context, resolveEmojiAssetPath(context, subtypeManager.activeSubtype.primaryLocale)).values.flatten()
-            .filter { isEmojiSupported(it.base()) }.map { it.base(emojiPreferredSkinTone) }.toSet()
-    }*/
 
     /**
      * Validates the user input query for emoji suggestions.

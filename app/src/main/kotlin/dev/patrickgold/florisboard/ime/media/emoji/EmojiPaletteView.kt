@@ -121,7 +121,7 @@ private val VariantsTriangleShapeRtl = GenericShape { size, _ ->
 
 @Composable
 fun EmojiPaletteView(
-    fullEmojiMappings: EmojiLayoutData,
+    fullEmojiMappings: EmojiData,
     modifier: Modifier = Modifier,
 ) {
     val prefs by florisPreferenceModel()
@@ -139,7 +139,7 @@ fun EmojiPaletteView(
     val replaceAll = activeEditorInfo.emojiCompatReplaceAll
     val emojiCompatInstance by FlorisEmojiCompat.getAsFlow(replaceAll).collectAsState()
     val emojiMappings = remember(emojiCompatInstance, fullEmojiMappings, metadataVersion, systemFontPaint) {
-        fullEmojiMappings.mapValues { (_, emojiSetList) ->
+        fullEmojiMappings.byCategory.mapValues { (_, emojiSetList) ->
             emojiSetList.mapNotNull { emojiSet ->
                 emojiSet.emojis.filter { emoji ->
                     emojiCompatInstance?.getEmojiMatch(emoji.value, metadataVersion) == EmojiCompat.EMOJI_SUPPORTED ||

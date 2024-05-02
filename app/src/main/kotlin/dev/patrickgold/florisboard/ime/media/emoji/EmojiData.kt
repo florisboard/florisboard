@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,41 +19,62 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.content.Context
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.bufferedReader
-import dev.patrickgold.florisboard.lib.lowercase
 import io.github.reactivecircus.cache4k.Cache
 import java.util.*
 
-class EmojiLayoutData() : EnumMap<EmojiCategory, MutableList<EmojiSet>>(EmojiCategory::class.java) {
+private typealias EmojiDataByCategoryImpl = EnumMap<EmojiCategory, MutableList<EmojiSet>>
+private typealias EmojiDataBySkinToneImpl = EnumMap<EmojiSkinTone, MutableList<Emoji>>
+typealias EmojiDataByCategory = Map<EmojiCategory, List<EmojiSet>>
+typealias EmojiDataBySkinTone = Map<EmojiSkinTone, List<Emoji>>
+
+data class EmojiData(
+    val byCategory: EmojiDataByCategory,
+    val bySkinTone: EmojiDataBySkinTone,
+) {
     companion object {
-        val Empty = EmojiLayoutData().also { map ->
-            for (category in EmojiCategory.entries) {
-                map[category] = mutableListOf()
+        private val cache = Cache.Builder().build<String, EmojiData>()
+        val Fallback = empty()
+
+        private fun newByCategory(): EmojiDataByCategoryImpl {
+            return EmojiDataByCategoryImpl(EmojiCategory::class.java).also { map ->
+                for (category in EmojiCategory.entries) {
+                    map[category] = mutableListOf()
+                }
             }
         }
 
-        private val cache = Cache.Builder().build<String, EmojiLayoutData>()
+        private fun newBySkinTone(): EmojiDataBySkinToneImpl {
+            return EmojiDataBySkinToneImpl(EmojiSkinTone::class.java).also { map ->
+                for (skinTone in EmojiSkinTone.entries) {
+                    map[skinTone] = mutableListOf()
+                }
+            }
+        }
 
-        suspend fun get(context: Context, path: String): EmojiLayoutData {
+        fun empty(): EmojiData {
+            return EmojiData(newByCategory(), newBySkinTone())
+        }
+
+        suspend fun get(context: Context, path: String): EmojiData {
             return cache.get(path) {
                 loadEmojiDataMap(context, path)
             }
         }
 
-        suspend fun get(context: Context, locale: FlorisLocale): EmojiLayoutData {
-            return get(context, resolveEmojiAssetPath(context, locale))
+        suspend fun get(context: Context, locale: FlorisLocale): EmojiData {
+            val path = resolveEmojiAssetPath(context, locale) ?: return empty()
+            return get(context, path)
         }
 
-        private fun loadEmojiDataMap(context: Context, path: String): EmojiLayoutData {
-            val layouts = EmojiLayoutData()
-            for (category in EmojiCategory.entries) {
-                layouts[category] = mutableListOf()
-            }
+        private fun loadEmojiDataMap(context: Context, path: String): EmojiData {
+            val byCategory = newByCategory()
+            val bySkinTone = newBySkinTone()
 
             var ec: EmojiCategory? = null
             var emojiEditorList: MutableList<Emoji>? = null
 
             fun commitEmojiEditorList() {
-                emojiEditorList?.let { layouts[ec]!!.add(EmojiSet(it)) }
+                emojiEditorList?.let { byCategory[ec]!!.add(EmojiSet(it)) }
                 emojiEditorList = null
             }
 
@@ -90,7 +111,15 @@ class EmojiLayoutData() : EnumMap<EmojiCategory, MutableList<EmojiSet>>(EmojiCat
                 commitEmojiEditorList()
             }
 
-            return layouts
+            for (category in byCategory.keys) {
+                for (emojiSet in byCategory[category]!!) {
+                    for (emoji in emojiSet.emojis) {
+                        bySkinTone[emoji.skinTone]!!.add(emoji)
+                    }
+                }
+            }
+
+            return EmojiData(byCategory, bySkinTone)
         }
 
         /**
@@ -115,26 +144,21 @@ class EmojiLayoutData() : EnumMap<EmojiCategory, MutableList<EmojiSet>>(EmojiCat
          *
          * @return The path to the emoji asset file, or the root path ("ime/media/emoji/root.txt") if no match is found.
          */
-        private fun resolveEmojiAssetPath(context: Context, locale: FlorisLocale): String {
-            val rootPath = "ime/media/emoji/root.txt"
-            val emojiAssets = context.assets.list("ime/media/emoji/")?.toList() ?: return rootPath
-            return emojiFilesForLocale(locale, emojiAssets) ?: rootPath
-        }
-
-        private fun emojiFilesForLocale(locale: FlorisLocale, assets: List<String>): String? {
+        private fun resolveEmojiAssetPath(context: Context, locale: FlorisLocale): String? {
+            val emojiAssets = context.assets.list("ime/media/emoji/")!!.toList()
             val makePath = { file: String -> "ime/media/emoji/$file" }
             val language = locale.language.lowercase()
             val country = locale.country.takeIf { it.isNotBlank() }
             val variant = locale.variant.takeIf { it.isNotBlank() }
             if (variant != null && country != null) {
-                "${language}_${country}_${variant}.txt".takeIf { assets.contains(it) }?.let {
+                "${language}_${country}_${variant}.txt".takeIf { emojiAssets.contains(it) }?.let {
                     return makePath(it)
                 }
             }
             if (country != null) {
-                "${language}_${country}.txt".takeIf { assets.contains(it) }?.let { return makePath(it) }
+                "${language}_${country}.txt".takeIf { emojiAssets.contains(it) }?.let { return makePath(it) }
             }
-            "${language}.txt".takeIf { assets.contains(it) }?.let {
+            "${language}.txt".takeIf { emojiAssets.contains(it) }?.let {
                 return makePath(it)
             }
             return null
