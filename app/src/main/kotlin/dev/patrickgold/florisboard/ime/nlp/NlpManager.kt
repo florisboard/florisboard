@@ -150,6 +150,7 @@ class NlpManager(context: Context) {
 
     fun preload(subtype: Subtype) {
         scope.launch {
+            emojiSuggestionProvider.preload(subtype)
             providers.withLock { providers ->
                 subtype.nlpProviders.forEach { _, providerId ->
                     providers[providerId]?.let { provider ->
