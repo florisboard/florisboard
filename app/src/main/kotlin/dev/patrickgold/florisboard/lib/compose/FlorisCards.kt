@@ -40,7 +40,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,8 +73,8 @@ fun FlorisSimpleCard(
     modifier: Modifier = Modifier,
     text: String,
     secondaryText: String? = null,
-    backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = MaterialTheme.colorScheme.contentColorFor(backgroundColor),
+    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
     icon: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
@@ -87,6 +86,8 @@ fun FlorisSimpleCard(
         colors = CardDefaults.cardColors(
             contentColor = contentColor,
             containerColor = backgroundColor,
+            disabledContainerColor = backgroundColor,
+            disabledContentColor = contentColor
         )
         //backgroundColor = backgroundColor,
         //contentColor = contentColor,
@@ -128,9 +129,10 @@ fun FlorisErrorCard(
     contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
+    println(MaterialTheme.colorScheme.errorContainer)
     FlorisSimpleCard(
         modifier = modifier,
-        backgroundColor = MaterialTheme.colorScheme.error,
+        backgroundColor = MaterialTheme.colorScheme.errorContainer,
         contentColor = Color.White,
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
