@@ -28,8 +28,9 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,7 +45,6 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import java.lang.Math.min
 
 private val DefaultScrollbarSize = 4.dp
 // IgnoreInVeryFastOut (basically)
@@ -88,7 +88,7 @@ fun Modifier.florisScrollbar(
         targetValue = targetAlpha,
         animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
     )
-    val scrollbarColor = MaterialTheme.colors.onSurface.copy(alpha = 0.28f)
+    val scrollbarColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.28f)
 
     LaunchedEffect(Unit) {
         delay(1850)
@@ -144,14 +144,14 @@ fun Modifier.florisScrollbar(
         targetValue = targetAlpha,
         animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
     )
-    val scrollbarColor = color.takeOrElse { MaterialTheme.colors.onSurface.copy(alpha = 0.28f) }
+    val scrollbarColor = color.takeOrElse { MaterialTheme.colorScheme.onSurface.copy(alpha = 0.28f) }
 
     LaunchedEffect(Unit) {
         delay(1850)
         isInitial = false
     }
 
-    val visibleItemsInfo = state.layoutInfo.visibleItemsInfo
+    val visibleItemsInfo = remember { derivedStateOf { state.layoutInfo } }.value.visibleItemsInfo
     val visibleItems = if (visibleItemsInfo.isNotEmpty()) remember { visibleItemsInfo.size } else 0
     drawWithContent {
         drawContent()
@@ -199,15 +199,15 @@ fun Modifier.florisScrollbar(
         targetValue = targetAlpha,
         animationSpec = tween(durationMillis = duration, easing = ScrollbarAnimationEasing),
     )
-    val scrollbarColor = color.takeOrElse { MaterialTheme.colors.onSurface.copy(alpha = 0.28f) }
+    val scrollbarColor = color.takeOrElse { MaterialTheme.colorScheme.onSurface.copy(alpha = 0.28f) }
 
     LaunchedEffect(Unit) {
         delay(1850)
         isInitial = false
     }
 
-    val orientation = state.layoutInfo.orientation
-    val visibleItemsInfo = state.layoutInfo.visibleItemsInfo
+    val orientation = remember { derivedStateOf { state.layoutInfo } }.value.orientation
+    val visibleItemsInfo = remember { derivedStateOf { state.layoutInfo } }.value.visibleItemsInfo
     val visibleItems = if (visibleItemsInfo.isNotEmpty()) remember { visibleItemsInfo.size } else 0
     val last = visibleItemsInfo.lastOrNull()
     val stacks = if (last != null && orientation == Orientation.Vertical) {
@@ -233,13 +233,13 @@ fun Modifier.florisScrollbar(
                 scrollbarWidth = size.toPx()
                 scrollbarOffsetX = this.size.width - scrollbarWidth
                 scrollbarOffsetY = (firstVisibleElementIndex - stacks*percentOffset(first, orientation)) * elementHeight
-                scrollbarHeight = min(visibleItems * elementHeight, this.size.height - scrollbarOffsetY)
+                scrollbarHeight = (visibleItems * elementHeight).coerceAtMost(this.size.height - scrollbarOffsetY)
             } else {
                 val elementWidth = this.size.width / state.layoutInfo.totalItemsCount
                 scrollbarHeight = size.toPx()
                 scrollbarOffsetX = (firstVisibleElementIndex - stacks*percentOffset(first, orientation)) * elementWidth
                 scrollbarOffsetY = this.size.height - scrollbarHeight
-                scrollbarWidth = min(visibleItems * elementWidth, this.size.height - scrollbarOffsetX)
+                scrollbarWidth = (visibleItems * elementWidth).coerceAtMost(this.size.height - scrollbarOffsetX)
             }
 
             drawRect(
