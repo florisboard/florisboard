@@ -30,6 +30,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -75,6 +76,7 @@ fun <T : Any> FlorisDropdownMenu(
             } else {
                 ButtonDefaults.outlinedButtonBorder
             },
+            shape = ShapeDefaults.ExtraSmall,
             enabled = enabled,
             onClick = onExpandRequest,
         ) {
@@ -138,6 +140,7 @@ fun FlorisDropdownLikeButton(
             } else {
                 ButtonDefaults.outlinedButtonBorder
             },
+            shape = ShapeDefaults.ExtraSmall,
             onClick = onClick,
         ) {
             Text(
