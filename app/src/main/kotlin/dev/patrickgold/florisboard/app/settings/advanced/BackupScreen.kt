@@ -370,7 +370,7 @@ internal fun CheckboxListItem(
         icon = {
             Row {
                 if (isSecondaryListItem) {
-                    Spacer(modifier = Modifier.width(56.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                 }
                 Checkbox(
                     checked = checked,
