@@ -22,7 +22,6 @@ import android.content.ContextWrapper
 import android.inputmethodservice.InputMethodService
 import android.view.View
 import android.view.Window
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
@@ -39,25 +38,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 
-@Composable
-fun SystemUiApp() {
-    val systemUiController = rememberFlorisSystemUiController()
-    val useDarkIcons = MaterialTheme.colors.isLight
-
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons,
-        )
-        if (AndroidVersion.ATLEAST_API26_O) {
-            systemUiController.setNavigationBarColor(
-                color = Color.Transparent,
-                darkIcons = useDarkIcons,
-                navigationBarContrastEnforced = false,
-            )
-        }
-    }
-}
 
 @Composable
 fun SystemUiIme() {

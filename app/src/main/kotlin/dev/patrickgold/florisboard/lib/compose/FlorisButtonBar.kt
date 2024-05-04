@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.lib.compose
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -24,33 +23,32 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun FlorisButtonBar(content: @Composable FlorisButtonBarScope.() -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colors.background,
-        elevation = 8.dp,
+        color = MaterialTheme.colorScheme.background,
+        tonalElevation = 8.dp,
     ) {
         Column {
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp),
-                color = MaterialTheme.colors.surface,
+                color = MaterialTheme.colorScheme.surface,
             ) {}
             Row(
                 modifier = Modifier
@@ -77,8 +75,8 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
             modifier = modifier.padding(start = 16.dp),
             enabled = enabled,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.primary,
-                contentColor = MaterialTheme.colors.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
             ),
             onClick = onClick,
         ) {
@@ -105,7 +103,7 @@ class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
             modifier = modifier.padding(start = 16.dp),
             enabled = enabled,
             colors = ButtonDefaults.textButtonColors(
-                contentColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colorScheme.primary,
             ),
             onClick = onClick,
         ) {

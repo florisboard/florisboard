@@ -29,9 +29,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -228,8 +228,8 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = stringRes(R.string.ext__import__error_unexpected_exception),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                 )
                 SelectionContainer {
                     Text(
@@ -237,8 +237,8 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             .florisHorizontalScroll()
                             .padding(horizontal = 16.dp),
                         text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
-                        style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colors.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error,
                         fontStyle = FontStyle.Italic,
                     )
                 }
@@ -266,20 +266,20 @@ private fun FileInfoView(
             Row {
                 Text(
                     text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = grayColor,
                 )
                 if (ext != null) {
                     FlorisBulletSpacer()
                     Text(
                         text = ext.meta.id,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = grayColor,
                     )
                     FlorisBulletSpacer()
                     Text(
                         text = ext.meta.version,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = grayColor,
                     )
                 }
@@ -288,12 +288,12 @@ private fun FileInfoView(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = ext.meta.title,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 ext.meta.description?.let { description ->
                     Text(
                         text = description,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                         fontStyle = FontStyle.Italic,
                     )
                 }
@@ -303,13 +303,13 @@ private fun FileInfoView(
                 }
                 Text(
                     text = stringRes(R.string.ext__meta__maintainers_by, "maintainers" to maintainers),
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 for (component in ext.components()) {
                     Text(
                         text = component.id,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }
@@ -318,16 +318,16 @@ private fun FileInfoView(
                     .fillMaxWidth()
                     .height(19.dp)
                     .padding(top = 10.dp, bottom = 8.dp)
-                    .background(MaterialTheme.colors.error.copy(alpha = 0.56f)))
+                    .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f)))
                 Text(
                     text = stringRes(R.string.ext__import__file_skip),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                 )
                 Text(
                     text = stringRes(fileInfo.skipReason),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                     fontStyle = FontStyle.Italic,
                 )
             }

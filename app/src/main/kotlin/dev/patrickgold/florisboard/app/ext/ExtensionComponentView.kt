@@ -21,21 +21,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -97,8 +94,8 @@ fun ExtensionComponentView(
                     }
                     Text(
                         text = text,
-                        style = MaterialTheme.typography.body2,
-                        color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = LocalContentColor.current,
                     )
                 }
                 is LanguagePackComponent -> {
@@ -113,8 +110,8 @@ fun ExtensionComponentView(
                     }
                     Text(
                         text = text,
-                        style = MaterialTheme.typography.body2,
-                        color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = LocalContentColor.current,
                     )
                 }
                 else -> { }
@@ -132,7 +129,7 @@ fun ExtensionComponentView(
                         icon = Icons.Default.Delete,
                         text = stringRes(R.string.action__delete),
                         colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colors.error,
+                            contentColor = MaterialTheme.colorScheme.error,
                         ),
                     )
                 }
@@ -149,7 +146,6 @@ fun ExtensionComponentView(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T : ExtensionComponent> ExtensionComponentListView(
     modifier: Modifier = Modifier,
@@ -160,19 +156,19 @@ fun <T : ExtensionComponent> ExtensionComponentListView(
 ) {
     Column(modifier = modifier) {
         ListItem(
-            text = { Text(
+            headlineContent = { Text(
                 text = title,
-                color = MaterialTheme.colors.secondary,
+                color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             ) },
-            trailing = if (onCreateBtnClick != null) {
+            trailingContent = if (onCreateBtnClick != null) {
                 @Composable {
                     FlorisIconButton(
                         onClick = onCreateBtnClick,
                         icon = Icons.Default.Add,
-                        iconColor = MaterialTheme.colors.secondary,
+                        iconColor = MaterialTheme.colorScheme.secondary,
                     )
                 }
             } else { null },

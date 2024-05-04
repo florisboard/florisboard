@@ -29,35 +29,33 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.apptheme.outline
 
 
-object CardDefaults {
+object FlorisCardDefaults {
     val IconRequiredSize = 24.dp
     val IconSpacing = 8.dp
 
@@ -70,15 +68,15 @@ object BoxDefaults {
     val ContentPadding = PaddingValues(all = 0.dp)
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlorisSimpleCard(
     modifier: Modifier = Modifier,
     text: String,
     secondaryText: String? = null,
-    backgroundColor: Color = MaterialTheme.colors.surface,
-    contentColor: Color = contentColorFor(backgroundColor),
-    contentPadding: PaddingValues = CardDefaults.ContentPadding,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    contentColor: Color = MaterialTheme.colorScheme.contentColorFor(backgroundColor),
+    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
     icon: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
@@ -86,8 +84,12 @@ fun FlorisSimpleCard(
         onClick = onClick ?: { },
         enabled = onClick != null,
         modifier = modifier.fillMaxWidth(),
-        backgroundColor = backgroundColor,
-        contentColor = contentColor,
+        colors = CardDefaults.cardColors(
+            contentColor = contentColor,
+            containerColor = backgroundColor,
+        )
+        //backgroundColor = backgroundColor,
+        //contentColor = contentColor,
     ) {
         Row(
             modifier = Modifier.padding(contentPadding),
@@ -104,13 +106,13 @@ fun FlorisSimpleCard(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = text,
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 if (secondaryText != null) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = secondaryText,
-                        style = MaterialTheme.typography.subtitle2,
+                        style = MaterialTheme.typography.titleSmall,
                     )
                 }
             }
@@ -123,18 +125,18 @@ fun FlorisErrorCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = CardDefaults.ContentPadding,
+    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
         modifier = modifier,
-        backgroundColor = Color(0xFFCC0000),
+        backgroundColor = MaterialTheme.colorScheme.error,
         contentColor = Color.White,
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = CardDefaults.IconSpacing)
-                .requiredSize(CardDefaults.IconRequiredSize),
+                .padding(end = FlorisCardDefaults.IconSpacing)
+                .requiredSize(FlorisCardDefaults.IconRequiredSize),
             imageVector = Icons.Default.ErrorOutline,
             contentDescription = null,
         ) }) else null,
@@ -148,7 +150,7 @@ fun FlorisWarningCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = CardDefaults.ContentPadding,
+    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -158,8 +160,8 @@ fun FlorisWarningCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = CardDefaults.IconSpacing)
-                .requiredSize(CardDefaults.IconRequiredSize),
+                .padding(end = FlorisCardDefaults.IconSpacing)
+                .requiredSize(FlorisCardDefaults.IconRequiredSize),
             imageVector = Icons.Outlined.Warning,
             contentDescription = null,
         ) }) else null,
@@ -173,7 +175,7 @@ fun FlorisInfoCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = CardDefaults.ContentPadding,
+    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -181,8 +183,8 @@ fun FlorisInfoCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = CardDefaults.IconSpacing)
-                .requiredSize(CardDefaults.IconRequiredSize),
+                .padding(end = FlorisCardDefaults.IconSpacing)
+                .requiredSize(FlorisCardDefaults.IconRequiredSize),
             imageVector = Icons.Default.Info,
             contentDescription = null,
         ) }) else null,
@@ -199,7 +201,7 @@ fun FlorisOutlinedBox(
     subtitle: String? = null,
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colors.outline,
+    borderColor: Color = MaterialTheme.colorScheme.outline,
     shape: Shape = BoxDefaults.OutlinedBoxShape,
     contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
@@ -209,7 +211,7 @@ fun FlorisOutlinedBox(
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.subtitle2,
+                style = MaterialTheme.typography.titleSmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -249,7 +251,7 @@ fun FlorisOutlinedBox(
     subtitle: (@Composable () -> Unit)? = null,
     onSubtitleClick: (() -> Unit)? = null,
     borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colors.outline,
+    borderColor: Color = MaterialTheme.colorScheme.outline,
     shape: Shape = BoxDefaults.OutlinedBoxShape,
     contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
@@ -287,7 +289,7 @@ fun FlorisOutlinedBox(
                 modifier = Modifier
                     .height(23.dp)
                     .offset(x = 10.dp, y = (-12).dp)
-                    .background(MaterialTheme.colors.background)
+                    .background(MaterialTheme.colorScheme.background)
                     .rippleClickable(enabled = onTitleClick != null) {
                         onTitleClick!!()
                     }

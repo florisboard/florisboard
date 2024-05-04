@@ -25,13 +25,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,8 +54,8 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.CardDefaults
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.lib.compose.FlorisCardDefaults
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -314,23 +314,23 @@ fun RestoreScreen() = FlorisScreen {
                     },
                 )
                 if (workspace.restoreErrorId != null) {
-                    Column(modifier = Modifier.padding(CardDefaults.ContentPadding)) {
+                    Column(modifier = Modifier.padding(FlorisCardDefaults.ContentPadding)) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(9.dp)
                                 .padding(bottom = 8.dp)
-                                .background(MaterialTheme.colors.error.copy(alpha = 0.56f))
+                                .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f))
                         )
                         Text(
                             text = stringRes(workspace.restoreErrorId!!),
-                            style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.error,
                             fontStyle = FontStyle.Italic,
                         )
                     }
                 } else if (workspace.restoreWarningId != null) {
-                    Column(modifier = Modifier.padding(CardDefaults.ContentPadding)) {
+                    Column(modifier = Modifier.padding(FlorisCardDefaults.ContentPadding)) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -340,7 +340,7 @@ fun RestoreScreen() = FlorisScreen {
                         )
                         Text(
                             text = stringRes(workspace.restoreWarningId!!),
-                            style = MaterialTheme.typography.body2,
+                            style = MaterialTheme.typography.bodyMedium,
                             color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
                             fontStyle = FontStyle.Italic,
                         )

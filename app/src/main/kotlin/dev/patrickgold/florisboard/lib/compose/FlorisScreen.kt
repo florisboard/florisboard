@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.lib.compose
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -29,8 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel

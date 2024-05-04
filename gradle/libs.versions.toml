@@ -24,7 +24,7 @@ ksp = "1.9.22-1.0.17"
 mannodermaus-android-junit5 = "1.10.0.0"
 mikepenz-aboutlibraries = "10.10.0"
 patrickgold-compose-tooltip = "0.1.0"
-patrickgold-jetpref = "0.1.0-rc02"
+patrickgold-jetpref = "20240503T181800-SNAPSHOT"
 xmlutil = "0.86.3"
 
 # Testing
