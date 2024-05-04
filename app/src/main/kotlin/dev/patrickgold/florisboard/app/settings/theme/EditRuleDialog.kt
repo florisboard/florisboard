@@ -224,6 +224,7 @@ internal fun EditRuleDialog(
                             SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__pressed)
                         },
+                        selected = pressedSelector,
                         color = if (pressedSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
@@ -233,6 +234,7 @@ internal fun EditRuleDialog(
                             SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__focus)
                         },
+                        selected = focusSelector,
                         color = if (focusSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
@@ -241,6 +243,7 @@ internal fun EditRuleDialog(
                             SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__disabled)
                         },
+                        selected = disabledSelector,
                         color = if (disabledSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                 }
@@ -270,6 +273,7 @@ internal fun EditRuleDialog(
                         FlorisChip(
                             onClick = { editCodeDialogValue = code },
                             text = code.toString(),
+                            selected = editCodeDialogValue == code,
                             shape = MaterialTheme.shapes.medium,
                         )
                     }
@@ -286,6 +290,7 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__unshifted)
                         },
+                        selected = shiftStateUnshifted,
                         color = if (shiftStateUnshifted) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
@@ -296,6 +301,7 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
                         },
+                        selected = shiftStateShiftedManual,
                         color = if (shiftStateShiftedManual) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
@@ -306,6 +312,7 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
                         },
+                        selected = shiftStateShiftedAutomatic,
                         color = if (shiftStateShiftedAutomatic) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
@@ -316,6 +323,7 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__caps_lock)
                         },
+                        selected = shiftStateCapsLock,
                         color = if (shiftStateCapsLock) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                 }
