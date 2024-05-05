@@ -87,7 +87,7 @@ fun FlorisSimpleCard(
             contentColor = contentColor,
             containerColor = backgroundColor,
             disabledContainerColor = backgroundColor,
-            disabledContentColor = contentColor
+            disabledContentColor = contentColor,
         )
         //backgroundColor = backgroundColor,
         //contentColor = contentColor,

@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.lib.compose
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
@@ -43,7 +42,7 @@ fun FlorisChip(
     selected: Boolean = false,
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
-    shape: Shape = CircleShape,
+    shape: Shape = MaterialTheme.shapes.small,
     leadingIcons: List<ImageVector> = listOf(),
     trailingIcons: List<ImageVector> = listOf(),
 ) {
@@ -54,6 +53,8 @@ fun FlorisChip(
     InputChip(
         selected = selected,
         onClick = onClick,
+        enabled = enabled,
+        shape = shape,
         label = {
             Text(
                 text = text,
@@ -88,8 +89,6 @@ fun FlorisChip(
                 }
             }
         }
-
-
     )
 
     /*Surface(

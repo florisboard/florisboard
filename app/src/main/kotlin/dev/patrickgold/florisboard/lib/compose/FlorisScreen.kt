@@ -123,16 +123,17 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
             bottomBar = bottomBar,
             floatingActionButton = fab,
         ) { innerPadding ->
-            val modifier = if (scrollable) {
+            val scrollModifier = if (scrollable) {
                 Modifier.florisVerticalScroll()
             } else {
                 Modifier
-        }
+            }
             PreferenceLayout(
                 florisPreferenceModel(),
-                modifier = modifier
+                modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .then(scrollModifier),
                 iconSpaceReserved = iconSpaceReserved,
                 content = content,
             )

@@ -81,10 +81,10 @@ fun AdvancedScreen() = FlorisScreen {
         SwitchPreference(
             pref = prefs.advanced.useMaterialYou,
             icon = Icons.Default.FormatPaint,
-            title = "Use Material You",
+            title = stringRes(R.string.pref__advanced__settings_material_you__label),
             visibleIf = {
                 AndroidVersion.ATLEAST_API31_S
-            }
+            },
         )
         ListPreference(
             prefs.advanced.settingsLanguage,

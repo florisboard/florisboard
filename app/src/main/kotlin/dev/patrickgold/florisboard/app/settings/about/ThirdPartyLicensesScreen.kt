@@ -46,7 +46,7 @@ fun ThirdPartyLicensesScreen() = FlorisScreen {
                 badgeBackgroundColor = MaterialTheme.colorScheme.primaryContainer,
                 badgeContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 contentColor = MaterialTheme.colorScheme.onBackground,
-                dialogConfirmButtonColor = MaterialTheme.colorScheme.primary
+                dialogConfirmButtonColor = MaterialTheme.colorScheme.primary,
             ),
             lazyListState = lazyListState,
         )
