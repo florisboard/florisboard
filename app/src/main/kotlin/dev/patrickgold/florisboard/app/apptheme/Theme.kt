@@ -18,13 +18,16 @@ package dev.patrickgold.florisboard.app.apptheme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -179,7 +182,7 @@ fun FlorisAppTheme(
                 isMaterialYouAware -> when {
                     isSystemInDarkTheme() -> dynamicDarkColorScheme(LocalContext.current).copy(
                         background = amoledDark,
-                        surface = amoledDark,//Color(0xFF212121),
+                        surface = amoledDark,
                     )
 
                     else -> dynamicLightColorScheme(LocalContext.current)
@@ -206,7 +209,7 @@ fun FlorisAppTheme(
             AppTheme.AMOLED_DARK -> when {
                 isMaterialYouAware -> dynamicDarkColorScheme(LocalContext.current).copy(
                     background = amoledDark,
-                    surface = amoledDark,//Color(0xFF212121),
+                    surface = amoledDark,
                 )
 
                 else -> amoledScheme
@@ -236,14 +239,11 @@ fun FlorisAppTheme(
         || (theme == AppTheme.AUTO && isSystemInDarkTheme())
         || (theme == AppTheme.AUTO_AMOLED && isSystemInDarkTheme())
 
-
-
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colors.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !darkTheme
         }
     }
 

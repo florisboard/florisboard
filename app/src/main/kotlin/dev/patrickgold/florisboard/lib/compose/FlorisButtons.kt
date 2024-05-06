@@ -114,7 +114,7 @@ fun FlorisTextButton(
     icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
-    shape: Shape = MaterialTheme.shapes.small,
+    shape: Shape = ButtonDefaults.shape,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
 ) {
