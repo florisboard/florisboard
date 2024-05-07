@@ -33,6 +33,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ChipDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -68,6 +69,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
@@ -548,7 +550,7 @@ private fun SnyggRuleRow(
         Text(
             modifier = Modifier
                 .padding(end = 8.dp)
-                .background(MaterialTheme.colorScheme.primaryContainer),
+                .background(MaterialTheme.colorScheme.primaryContainer, shape = Shapes.small),
             text = text,
             style = MaterialTheme.typography.bodyMedium,
             fontFamily = FontFamily.Monospace,
