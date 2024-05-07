@@ -56,9 +56,9 @@ import androidx.compose.ui.unit.sp
 
 object FlorisCardDefaults {
     val IconRequiredSize = 24.dp
-    val IconSpacing = 8.dp
+    val IconSpacing = 12.dp
 
-    val ContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
+    val ContentPadding = PaddingValues(start = 0.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
 }
 
 object BoxDefaults {
@@ -67,7 +67,6 @@ object BoxDefaults {
     val ContentPadding = PaddingValues(all = 0.dp)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlorisSimpleCard(
     modifier: Modifier = Modifier,
@@ -102,7 +101,7 @@ fun FlorisSimpleCard(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = if (icon != null) 16.dp else 0.dp),
+                    .padding(start = if (icon == null) 16.dp else 0.dp),
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -136,7 +135,7 @@ fun FlorisErrorCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = FlorisCardDefaults.IconSpacing)
+                .padding(all = FlorisCardDefaults.IconSpacing)
                 .requiredSize(FlorisCardDefaults.IconRequiredSize),
             imageVector = Icons.Default.ErrorOutline,
             contentDescription = null,
@@ -161,7 +160,7 @@ fun FlorisWarningCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = FlorisCardDefaults.IconSpacing)
+                .padding(all = FlorisCardDefaults.IconSpacing)
                 .requiredSize(FlorisCardDefaults.IconRequiredSize),
             imageVector = Icons.Outlined.Warning,
             contentDescription = null,
@@ -184,7 +183,7 @@ fun FlorisInfoCard(
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(end = FlorisCardDefaults.IconSpacing)
+                .padding(all = FlorisCardDefaults.IconSpacing)
                 .requiredSize(FlorisCardDefaults.IconRequiredSize),
             imageVector = Icons.Default.Info,
             contentDescription = null,
