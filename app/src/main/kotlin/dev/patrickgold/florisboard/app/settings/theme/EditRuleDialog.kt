@@ -39,16 +39,17 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.Pageview
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -65,7 +66,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -190,7 +190,7 @@ internal fun EditRuleDialog(
         } else {
             null
         },
-        neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.error),
+        neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
         onNeutral = { onDeleteRule(initRule) },
     ) {
         Column {
@@ -198,7 +198,7 @@ internal fun EditRuleDialog(
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
                     text = stringRes(R.string.settings__theme_editor__rule_already_exists),
-                    color = MaterialTheme.colors.error,
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
 
@@ -224,7 +224,8 @@ internal fun EditRuleDialog(
                             SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__pressed)
                         },
-                        color = if (pressedSelector) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = pressedSelector,
+                        color = if (pressedSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { focusSelector = !focusSelector },
@@ -233,7 +234,8 @@ internal fun EditRuleDialog(
                             SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__focus)
                         },
-                        color = if (focusSelector) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = focusSelector,
+                        color = if (focusSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { disabledSelector = !disabledSelector },
@@ -241,7 +243,8 @@ internal fun EditRuleDialog(
                             SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
                             else -> stringRes(R.string.snygg__rule_selector__disabled)
                         },
-                        color = if (disabledSelector) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = disabledSelector,
+                        color = if (disabledSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                 }
             }
@@ -270,6 +273,7 @@ internal fun EditRuleDialog(
                         FlorisChip(
                             onClick = { editCodeDialogValue = code },
                             text = code.toString(),
+                            selected = editCodeDialogValue == code,
                             shape = MaterialTheme.shapes.medium,
                         )
                     }
@@ -286,7 +290,8 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__unshifted)
                         },
-                        color = if (shiftStateUnshifted) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = shiftStateUnshifted,
+                        color = if (shiftStateUnshifted) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { shiftStateShiftedManual = !shiftStateShiftedManual },
@@ -296,7 +301,8 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
                         },
-                        color = if (shiftStateShiftedManual) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = shiftStateShiftedManual,
+                        color = if (shiftStateShiftedManual) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { shiftStateShiftedAutomatic = !shiftStateShiftedAutomatic },
@@ -306,7 +312,8 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
                         },
-                        color = if (shiftStateShiftedAutomatic) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = shiftStateShiftedAutomatic,
+                        color = if (shiftStateShiftedAutomatic) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { shiftStateCapsLock = !shiftStateCapsLock },
@@ -316,7 +323,8 @@ internal fun EditRuleDialog(
                             }
                             else -> stringRes(R.string.enum__input_shift_state__caps_lock)
                         },
-                        color = if (shiftStateCapsLock) MaterialTheme.colors.primaryVariant else Color.Unspecified,
+                        selected = shiftStateCapsLock,
+                        color = if (shiftStateCapsLock) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                 }
             }
@@ -335,6 +343,7 @@ internal fun EditRuleDialog(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EditCodeValueDialog(
     codeValue: Int,
@@ -368,7 +377,7 @@ private fun EditCodeValueDialog(
     val recordingKeyColor = if (isRecordingKey) {
         rememberInfiniteTransition().animateColor(
             initialValue = LocalContentColor.current,
-            targetValue = MaterialTheme.colors.error,
+            targetValue = MaterialTheme.colorScheme.error,
             animationSpec = infiniteRepeatable(
                 tween(750),
                 repeatMode = RepeatMode.Reverse,
@@ -461,7 +470,7 @@ private fun EditCodeValueDialog(
         } else {
             null
         },
-        neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colors.error),
+        neutralColors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
         onNeutral = {
             onDelete(codeValue)
             onDismiss()
@@ -526,12 +535,12 @@ private fun EditCodeValueDialog(
                         isError = showError,
                         singleLine = true,
                         colors = if (isRecordingKey) {
-                            TextFieldDefaults.outlinedTextFieldColors(
-                                textColor = Color.Transparent,
+                            OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.Transparent,
                                 cursorColor = Color.Transparent,
                             )
                         } else {
-                            TextFieldDefaults.outlinedTextFieldColors()
+                            OutlinedTextFieldDefaults.colors()
                         },
                     )
                 }
@@ -550,7 +559,7 @@ private fun EditCodeValueDialog(
                         "i_min" to KeyCode.Spec.INTERNAL_MIN,
                         "i_max" to KeyCode.Spec.INTERNAL_MAX,
                     ),
-                    color = MaterialTheme.colors.error,
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
         }
@@ -593,7 +602,7 @@ private fun TextKeyDataPreviewBox(
             modifier = Modifier
                 .padding(end = 16.dp)
                 .background(
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                     shape = MaterialTheme.shapes.medium,
                 )
                 .height(36.dp)

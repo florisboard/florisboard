@@ -28,14 +28,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.outlined.LibraryBooks
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,7 +47,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.apptheme.outline
 import dev.patrickgold.florisboard.app.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
 import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
@@ -863,7 +862,7 @@ private fun EditorSheetTextField(
     showValidationError: Boolean = false,
     validationResult: ValidationResult? = null,
 ) {
-    val borderColor = MaterialTheme.colors.outline
+    val borderColor = MaterialTheme.colorScheme.outline
     Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
         Row(
             modifier = Modifier
@@ -872,14 +871,14 @@ private fun EditorSheetTextField(
         ) {
             Text(
                 text = label,
-                style = MaterialTheme.typography.subtitle2,
+                style = MaterialTheme.typography.titleSmall,
             )
             if (isRequired) {
                 Text(
                     modifier = Modifier.padding(start = 2.dp),
                     text = "*",
-                    style = MaterialTheme.typography.subtitle2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
         }
@@ -891,7 +890,7 @@ private fun EditorSheetTextField(
             singleLine = singleLine,
             showValidationError = showValidationError,
             validationResult = validationResult,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = borderColor,
                 disabledBorderColor = borderColor,
             )

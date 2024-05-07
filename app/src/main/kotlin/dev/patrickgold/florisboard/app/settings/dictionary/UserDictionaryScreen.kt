@@ -23,16 +23,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,7 +43,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -214,14 +213,14 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                     importDictionary.launch("*/*")
                     expanded = false
                 },
-                content = { Text(text = stringRes(R.string.action__import)) },
+                text = { Text(text = stringRes(R.string.action__import)) },
             )
             DropdownMenuItem(
                 onClick = {
                     exportDictionary.launch("my-personal-dictionary.clb")
                     expanded = false
                 },
-                content = { Text(text = stringRes(R.string.action__export)) },
+                text = { Text(text = stringRes(R.string.action__export)) },
             )
             if (type == UserDictionaryType.SYSTEM) {
                 DropdownMenuItem(
@@ -229,7 +228,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                         context.launchActivity { it.action = SystemUserDictionaryUiIntentAction }
                         expanded = false
                     },
-                    content = { Text(text = stringRes(R.string.settings__udm__open_system_manager_ui)) },
+                    text = { Text(text = stringRes(R.string.settings__udm__open_system_manager_ui)) },
                 )
             }
         }

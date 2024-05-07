@@ -16,12 +16,15 @@
 
 package dev.patrickgold.florisboard.lib.compose
 
+import android.app.Activity
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -29,8 +32,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import dev.patrickgold.florisboard.R
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -112,29 +117,38 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
         this.navigationIcon = navigationIcon
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Render() {
+        val context = LocalContext.current
         val previewFieldController = LocalPreviewFieldController.current
 
         SideEffect {
+            val window = (context as Activity).window
             previewFieldController?.isVisible = previewFieldVisible
+            window.statusBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = Color.Transparent.toArgb()
         }
 
+        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
         Scaffold(
-            topBar = { FlorisAppBar(title, navigationIcon.takeIf { navigationIconVisible }, actions) },
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = { FlorisAppBar(title, navigationIcon.takeIf { navigationIconVisible }, actions, scrollBehavior) },
             bottomBar = bottomBar,
             floatingActionButton = fab,
         ) { innerPadding ->
-            val modifier = if (scrollable) {
+            val scrollModifier = if (scrollable) {
                 Modifier.florisVerticalScroll()
             } else {
                 Modifier
-        }
+            }
             PreferenceLayout(
                 florisPreferenceModel(),
-                modifier = modifier
+                modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .then(scrollModifier),
                 iconSpaceReserved = iconSpaceReserved,
                 content = content,
             )

@@ -25,8 +25,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
@@ -50,7 +50,6 @@ import dev.patrickgold.florisboard.lib.android.showAppIcon
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.SystemUiApp
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
@@ -111,9 +110,9 @@ class FlorisAppActivity : ComponentActivity() {
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
                 ProvideLocalizedResources(resourcesContext) {
-                    FlorisAppTheme(theme = appTheme) {
-                        Surface(color = MaterialTheme.colors.background) {
-                            SystemUiApp()
+                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = prefs.advanced.useMaterialYou.observeAsState().value) {
+                        Surface(color = MaterialTheme.colorScheme.background) {
+                            //SystemUiApp()
                             AppContent()
                         }
                     }
@@ -154,7 +153,7 @@ class FlorisAppActivity : ComponentActivity() {
             ) {
                 Column(
                     modifier = Modifier
-                        .statusBarsPadding()
+                        //.statusBarsPadding()
                         .navigationBarsPadding()
                         .imePadding(),
                 ) {

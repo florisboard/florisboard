@@ -24,7 +24,7 @@ ksp = "1.9.22-1.0.17"
 mannodermaus-android-junit5 = "1.10.0.0"
 mikepenz-aboutlibraries = "10.10.0"
 patrickgold-compose-tooltip = "0.1.0"
-patrickgold-jetpref = "0.1.0-rc02"
+patrickgold-jetpref = "0.2.0-beta01"
 xmlutil = "0.86.3"
 
 # Testing
@@ -62,7 +62,7 @@ cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }
-mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "mikepenz-aboutlibraries" }
+mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "mikepenz-aboutlibraries" }
 patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:tooltip", version.ref = "patrickgold-compose-tooltip" }
 patrickgold-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "patrickgold-jetpref" }

@@ -26,13 +26,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldColors
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -51,7 +51,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.apptheme.outline
 import dev.patrickgold.florisboard.lib.ValidationResult
 
 @Composable
@@ -74,7 +73,7 @@ fun FlorisOutlinedTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(),
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
     var textFieldValueState by remember { mutableStateOf(TextFieldValue(text = value)) }
     val textFieldValue = textFieldValueState.copy(text = value)
@@ -127,13 +126,17 @@ fun FlorisOutlinedTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        unfocusedBorderColor = MaterialTheme.colors.outline,
-        disabledBorderColor = MaterialTheme.colors.outline,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+        disabledBorderColor = MaterialTheme.colorScheme.outline,
     ),
 ) {
     val textColor = textStyle.color.takeOrElse {
-        colors.textColor(enabled).value
+        if (!enabled) {
+            colors.disabledTextColor
+        } else {
+            colors.unfocusedTextColor
+        }
     }
     val mergedTextStyle = textStyle.copy(color = textColor, textDirection = TextDirection.Content)
     val isFocused by interactionSource.collectIsFocusedAsState()
@@ -152,17 +155,33 @@ fun FlorisOutlinedTextField(
             singleLine = singleLine,
             maxLines = maxLines,
             visualTransformation = visualTransformation,
-            cursorBrush = SolidColor(colors.cursorColor(isErrorState).value),
+            cursorBrush = SolidColor(
+                if (isErrorState) {
+                    colors.errorCursorColor
+                } else {
+                    colors.cursorColor
+                }
+            ),
             decorationBox = { innerTextField ->
                 Surface(
                     modifier = modifier.fillMaxWidth(),
-                    color = colors.backgroundColor(enabled).value,
+                    color = if (enabled) {
+                                if (isErrorState) {
+                                    colors.errorContainerColor
+                                } else if (isFocused) {
+                                    colors.focusedContainerColor
+                                } else {
+                                    colors.unfocusedContainerColor
+                                }
+                            } else {
+                                colors.disabledContainerColor
+                            },
                     border = if (isErrorState && enabled) {
-                        BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
+                        BorderStroke(ButtonDefaults.outlinedButtonBorder.width, MaterialTheme.colorScheme.error)
                     } else if (isFocused) {
-                        BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.primary)
+                        BorderStroke(ButtonDefaults.outlinedButtonBorder.width, MaterialTheme.colorScheme.primary)
                     } else {
-                        ButtonDefaults.outlinedBorder
+                        ButtonDefaults.outlinedButtonBorder
                     },
                     shape = shape,
                 ) {
@@ -181,8 +200,8 @@ fun FlorisOutlinedTextField(
                         if (!placeholder.isNullOrBlank()) {
                             Text(
                                 text = placeholder,
-                                style = MaterialTheme.typography.body2,
-                                color = MaterialTheme.colors.onSurface.copy(alpha = 0.56f),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.56f),
                             )
                         }
                     }
@@ -194,16 +213,16 @@ fun FlorisOutlinedTextField(
     if (showValidationHint && validationResult?.isValid() == true && validationResult.hasHintMessage()) {
         Text(
             text = validationResult.hintMessage(),
-            style = MaterialTheme.typography.body2,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.56f),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.56f),
         )
     }
 
     if (showValidationError && validationResult?.isInvalid() == true && validationResult.hasErrorMessage()) {
         Text(
             text = validationResult.errorMessage(),
-            style = MaterialTheme.typography.body2,
-            color = MaterialTheme.colors.error,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.error,
         )
     }
 }

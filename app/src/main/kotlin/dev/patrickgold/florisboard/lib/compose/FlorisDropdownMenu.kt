@@ -21,17 +21,17 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,7 +40,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import dev.patrickgold.florisboard.app.apptheme.outline
 
 @Composable
 fun <T : Any> FlorisDropdownMenu(
@@ -64,19 +63,20 @@ fun <T : Any> FlorisDropdownMenu(
         val indicatorRotation by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
         val index = selectedIndex.coerceIn(items.indices)
         val color = if (!enabled) {
-            MaterialTheme.colors.outline
+            MaterialTheme.colorScheme.outline
         } else if (isError) {
-            MaterialTheme.colors.error
+            MaterialTheme.colorScheme.error
         } else {
-            MaterialTheme.colors.onBackground
+            MaterialTheme.colorScheme.onBackground
         }
         OutlinedButton(
             modifier = Modifier.fillMaxWidth(),
             border = if (isError && enabled) {
-                BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
+                BorderStroke(ButtonDefaults.outlinedButtonBorder.width, MaterialTheme.colorScheme.error)
             } else {
-                ButtonDefaults.outlinedBorder
+                ButtonDefaults.outlinedButtonBorder
             },
+            shape = ShapeDefaults.ExtraSmall,
             enabled = enabled,
             onClick = onExpandRequest,
         ) {
@@ -93,7 +93,7 @@ fun <T : Any> FlorisDropdownMenu(
                 modifier = Modifier.rotate(indicatorRotation),
                 imageVector = Icons.Filled.KeyboardArrowDown,
                 tint = if (enabled) {
-                    color.copy(alpha = ContentAlpha.medium)
+                    color.copy(alpha = 0.74f) //Also test 0.60f
                 } else {
                     color
                 },
@@ -106,13 +106,14 @@ fun <T : Any> FlorisDropdownMenu(
         ) {
             for ((n, item) in items.withIndex()) {
                 DropdownMenuItem(
+                    text = {
+                        Text(text = asString(item))
+                    },
                     onClick = {
                         onSelectItem(n)
                         onDismissRequest()
                     },
-                ) {
-                    Text(text = asString(item))
-                }
+                )
             }
         }
     }
@@ -127,18 +128,19 @@ fun FlorisDropdownLikeButton(
 ) {
     Box(modifier = modifier.wrapContentSize(Alignment.TopStart)) {
         val color = if (isError) {
-            MaterialTheme.colors.error
+            MaterialTheme.colorScheme.error
         } else {
-            MaterialTheme.colors.onBackground
+            MaterialTheme.colorScheme.onBackground
         }
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth(),
             border = if (isError) {
-                BorderStroke(ButtonDefaults.OutlinedBorderSize, MaterialTheme.colors.error)
+                BorderStroke(ButtonDefaults.outlinedButtonBorder.width, MaterialTheme.colorScheme.error)
             } else {
-                ButtonDefaults.outlinedBorder
+                ButtonDefaults.outlinedButtonBorder
             },
+            shape = ShapeDefaults.ExtraSmall,
             onClick = onClick,
         ) {
             Text(
@@ -152,7 +154,7 @@ fun FlorisDropdownLikeButton(
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                tint = color.copy(alpha = ContentAlpha.medium),
+                tint = color.copy(alpha = 0.74f), //Also test 0.60f
                 contentDescription = "Dropdown indicator",
             )
         }

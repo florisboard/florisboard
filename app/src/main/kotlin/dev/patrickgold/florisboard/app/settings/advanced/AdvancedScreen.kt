@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.settings.advanced
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Preview
@@ -75,6 +76,14 @@ fun AdvancedScreen() = FlorisScreen {
                     key = AppTheme.AMOLED_DARK,
                     label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
                 )
+            },
+        )
+        SwitchPreference(
+            pref = prefs.advanced.useMaterialYou,
+            icon = Icons.Default.FormatPaint,
+            title = stringRes(R.string.pref__advanced__settings_material_you__label),
+            visibleIf = {
+                AndroidVersion.ATLEAST_API31_S
             },
         )
         ListPreference(

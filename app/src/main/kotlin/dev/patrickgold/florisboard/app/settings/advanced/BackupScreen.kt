@@ -23,8 +23,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Checkbox
-import androidx.compose.material.RadioButton
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.RadioButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -370,7 +370,7 @@ internal fun CheckboxListItem(
         icon = {
             Row {
                 if (isSecondaryListItem) {
-                    Spacer(modifier = Modifier.width(56.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                 }
                 Checkbox(
                     checked = checked,

@@ -17,21 +17,24 @@
 package dev.patrickgold.florisboard.lib.compose
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlorisAppBar(
     title: String,
     navigationIcon: FlorisScreenNavigationIcon?,
     actions: @Composable RowScope.() -> Unit = { },
+    scrollBehavior: TopAppBarScrollBehavior
 ) {
     TopAppBar(
-        navigationIcon = navigationIcon,
+        navigationIcon = navigationIcon ?: {},
         title = {
             Text(
                 text = title,
@@ -40,7 +43,7 @@ fun FlorisAppBar(
             )
         },
         actions = actions,
-        backgroundColor = Color.Transparent,
-        elevation = 0.dp,
+        colors = TopAppBarDefaults.topAppBarColors(),
+        scrollBehavior = scrollBehavior
     )
 }

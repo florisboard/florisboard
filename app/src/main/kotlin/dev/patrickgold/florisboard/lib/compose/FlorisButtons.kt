@@ -22,21 +22,21 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.takeOrElse
@@ -114,7 +114,7 @@ fun FlorisTextButton(
     icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
-    shape: Shape = MaterialTheme.shapes.small,
+    shape: Shape = ButtonDefaults.shape,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
 ) {
@@ -153,10 +153,9 @@ fun FlorisIconButton(
         enabled = enabled,
         onClick = onClick,
     ) {
-        val contentAlpha = if (enabled) LocalContentAlpha.current else 0.14f
-        val contentColor = iconColor.takeOrElse { LocalContentColor.current }
+        val contentAlpha = if (enabled) 1f else 0.14f
+        val contentColor = iconColor.takeOrElse { LocalContentColor.current }.copy(alpha = contentAlpha)
         CompositionLocalProvider(
-            LocalContentAlpha provides contentAlpha,
             LocalContentColor provides contentColor,
         ) {
             Icon(
@@ -182,9 +181,8 @@ fun FlorisIconButtonWithInnerPadding(
         enabled = enabled,
         onClick = onClick,
     ) {
-        val contentAlpha = if (enabled) LocalContentAlpha.current else 0.14f
+        val contentAlpha = if (enabled) 1f else 0.14f
         CompositionLocalProvider(
-            LocalContentAlpha provides contentAlpha,
             LocalContentColor provides iconColor,
         ) {
             Box(
@@ -195,6 +193,7 @@ fun FlorisIconButtonWithInnerPadding(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
+                    modifier = modifier.alpha(contentAlpha),
                     imageVector = icon,
                     contentDescription = null,
                 )

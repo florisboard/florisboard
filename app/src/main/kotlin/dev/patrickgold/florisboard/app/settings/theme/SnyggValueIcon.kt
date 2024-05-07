@@ -25,26 +25,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Straighten
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import dev.patrickgold.florisboard.lib.snygg.value.SnyggShapeValue
@@ -102,7 +99,7 @@ internal fun SnyggValueIcon(
             Box(
                 modifier = modifier
                     .requiredSize(spec.iconSizeMinusBorder)
-                    .border(spec.borderWith, MaterialTheme.colors.onBackground, value.alwaysPercentShape())
+                    .border(spec.borderWith, MaterialTheme.colorScheme.onBackground, value.alwaysPercentShape())
             )
         }
         is SnyggDpSizeValue -> {
@@ -143,7 +140,7 @@ internal fun SnyggValueIcon(
                             .offset(x = 1.dp)
                             .requiredSize(smallSpec.iconSize)
                             .padding(vertical = 2.dp)
-                            .background(MaterialTheme.colors.background, spec.boxShape),
+                            .background(MaterialTheme.colorScheme.background, spec.boxShape),
                     )
                     Icon(
                         modifier = Modifier.requiredSize(smallSpec.iconSize),
@@ -167,8 +164,8 @@ internal fun SnyggValueColorBox(
 ) {
     Surface(
         modifier = modifier.requiredSize(spec.iconSize),
-        color = MaterialTheme.colors.background,
-        elevation = spec.elevation,
+        color = MaterialTheme.colorScheme.background,
+        shadowElevation = spec.elevation,
         shape = spec.boxShape,
     ) {
         Box(
