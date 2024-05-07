@@ -32,9 +32,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -119,23 +120,17 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Render() {
+        val context = LocalContext.current
         val previewFieldController = LocalPreviewFieldController.current
 
         SideEffect {
+            val window = (context as Activity).window
             previewFieldController?.isVisible = previewFieldVisible
+            window.statusBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = Color.Transparent.toArgb()
         }
 
-        //Set Topappbar scroll behavior and statusbarcolor
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-        val systemBarColors = TopAppBarDefaults.topAppBarColors().scrolledContainerColor.toArgb()
-        val view = LocalView.current
-        if (!view.isInEditMode) {
-            SideEffect {
-                val window = (view.context as Activity).window
-                window.statusBarColor = systemBarColors
-                window.navigationBarColor = systemBarColors
-            }
-        }
 
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

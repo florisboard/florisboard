@@ -153,7 +153,7 @@ class FlorisAppActivity : ComponentActivity() {
             ) {
                 Column(
                     modifier = Modifier
-                        .statusBarsPadding()
+                        //.statusBarsPadding()
                         .navigationBarsPadding()
                         .imePadding(),
                 ) {
