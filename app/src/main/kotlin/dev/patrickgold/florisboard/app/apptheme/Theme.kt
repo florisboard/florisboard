@@ -158,7 +158,7 @@ private val amoledScheme = darkScheme.copy(
 @Composable
 fun FlorisAppTheme(
     theme: AppTheme,
-    isMaterialYouAware: Boolean = false,
+    isMaterialYouAware: Boolean,
     content: @Composable () -> Unit
 ) {
 

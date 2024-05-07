@@ -67,7 +67,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val useMaterialYou = boolean(
             key = "advanced__use_material_you",
-            default = false,
+            default = true,
         )
         val settingsLanguage = string(
             key = "advanced__settings_language",
