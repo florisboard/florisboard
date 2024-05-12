@@ -139,16 +139,13 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Day theme</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Night theme</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selected theme</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapt colors to app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Theme colors adapt to those in the current app, if the target app supports this.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Assets</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Internal Storage</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">External Provider</string>
 
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Select day theme</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
 
     <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
     <string name="settings__theme_editor__fine_tune__level">Editing level</string>
