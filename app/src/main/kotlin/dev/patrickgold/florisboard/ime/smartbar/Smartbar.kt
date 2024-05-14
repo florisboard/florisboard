@@ -38,8 +38,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.runtime.Composable
@@ -62,7 +62,6 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelA
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.horizontalTween
 import dev.patrickgold.florisboard.lib.compose.verticalTween
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
@@ -172,16 +171,15 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             ) {
                 val rotation by animateFloatAsState(
                     animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
-                    targetValue = if (sharedActionsExpanded) 180f else 0f,
+                    targetValue = if (sharedActionsExpanded) 180f else 0f, label = "Icon rotation",
                 )
                 Icon(
                     modifier = Modifier
-                        .autoMirrorForRtl()
                         .rotate(rotation),
                     imageVector = if (flipToggles) {
-                        Icons.Default.KeyboardArrowLeft
+                        Icons.AutoMirrored.Default.KeyboardArrowLeft
                     } else {
-                        Icons.Default.KeyboardArrowRight
+                        Icons.AutoMirrored.Default.KeyboardArrowRight
                     },
                     contentDescription = null,
                     tint = primaryActionsToggleStyle.foreground.solidColor(
