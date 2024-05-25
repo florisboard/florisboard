@@ -325,6 +325,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
@@ -789,6 +790,9 @@
     <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Incognito mode will always be enabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
     <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamically on/off</string>
     <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Recommended option. Incognito mode will be dynamically enabled or disabled either through the target app\'s passed options or by manually toggling it through the incognito quick action in the Smartbar.</string>
+
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Replace shared actions toggle icon with the incognito indicator</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Display the incognito indicator behind the keyboard</string>
 
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamically play sounds for input events, depending on system settings</string>
     <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Always play sounds for input events, regardless of system settings</string>

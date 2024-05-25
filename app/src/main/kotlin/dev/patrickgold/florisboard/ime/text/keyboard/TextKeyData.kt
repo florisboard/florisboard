@@ -62,7 +62,7 @@ class TextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return buildString {
+        return asString(this, isForDisplay)/*buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
                 if (Unicode.isNonSpacingMark(code) && !label.startsWith("◌")) {
                     append("◌")
@@ -71,7 +71,7 @@ class TextKeyData(
             } else {
                 try { appendCodePoint(code) } catch (_: Throwable) { }
             }
-        }
+        }*/
     }
 
     override fun toString(): String {
@@ -541,7 +541,8 @@ class AutoTextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return buildString {
+        return asString(this, isForDisplay)
+        /*return buildString {
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
                 if (Unicode.isNonSpacingMark(code) && !label.startsWith("◌")) {
                     append("◌")
@@ -550,7 +551,7 @@ class AutoTextKeyData(
             } else {
                 try { appendCodePoint(code) } catch (_: Throwable) { }
             }
-        }
+        }*/
     }
 
     override fun toString(): String {
@@ -614,5 +615,18 @@ class MultiTextKeyData(
 
     override fun toString(): String {
         return "${MultiTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
+    }
+}
+
+internal fun asString(data: KeyData, isForDisplay: Boolean) : String {
+    return buildString {
+        if (isForDisplay || data.code == KeyCode.URI_COMPONENT_TLD || data.code < KeyCode.SPACE) {
+            if (Unicode.isNonSpacingMark(data.code) && !data.label.startsWith("◌")) {
+                append("◌")
+            }
+            append(data.label)
+        } else {
+            try { appendCodePoint(data.code) } catch (_: Throwable) { }
+        }
     }
 }

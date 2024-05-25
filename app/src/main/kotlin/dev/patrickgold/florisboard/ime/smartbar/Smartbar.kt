@@ -54,6 +54,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
@@ -69,6 +70,7 @@ import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
 import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 private const val AnimationDuration = 200
 
@@ -173,14 +175,29 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
                     targetValue = if (sharedActionsExpanded) 180f else 0f, label = "Icon rotation",
                 )
+                val arrowIcon = if (flipToggles) {
+                    Icons.AutoMirrored.Default.KeyboardArrowLeft
+                } else {
+                    Icons.AutoMirrored.Default.KeyboardArrowRight
+                }
+                val incognitoIcon = vectorResource(id = R.drawable.ic_incognito)
+                val incognitoDisplayMode = prefs.keyboard.incognitoDisplayMode.observeAsState()
+                val isIncognitoMode = keyboardManager.activeState.isIncognitoMode
+                val icon = if (isIncognitoMode) {
+                    when (incognitoDisplayMode.value) {
+                        IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE -> incognitoIcon!!
+                        IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD -> arrowIcon
+                    }
+                } else {
+                    arrowIcon
+                }
                 Icon(
-                    modifier = Modifier
-                        .rotate(rotation),
-                    imageVector = if (flipToggles) {
-                        Icons.AutoMirrored.Default.KeyboardArrowLeft
-                    } else {
-                        Icons.AutoMirrored.Default.KeyboardArrowRight
+                    modifier = Modifier.apply {
+                        if (isIncognitoMode && incognitoDisplayMode.value == IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE) {
+                            this.rotate(rotation)
+                        }
                     },
+                    imageVector = icon,
                     contentDescription = null,
                     tint = primaryActionsToggleStyle.foreground.solidColor(
                         context,

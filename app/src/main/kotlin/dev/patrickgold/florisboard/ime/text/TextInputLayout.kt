@@ -34,13 +34,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
+import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowPanel
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable
 fun TextInputLayout(
@@ -48,6 +51,8 @@ fun TextInputLayout(
 ) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
+
+    val prefs by florisPreferenceModel()
 
     val state by keyboardManager.activeState.collectAsState()
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
@@ -63,7 +68,8 @@ fun TextInputLayout(
                 QuickActionsOverflowPanel()
             } else {
                 Box {
-                    if (evaluator.state.isIncognitoMode) {
+                    val showIncognitoIcon = evaluator.state.isIncognitoMode && prefs.keyboard.incognitoDisplayMode.observeAsState().value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
+                    if (showIncognitoIcon) {
                         val indicatorStyle = FlorisImeTheme.style.get(FlorisImeUi.IncognitoModeIndicator)
                         Icon(
                             modifier = Modifier
