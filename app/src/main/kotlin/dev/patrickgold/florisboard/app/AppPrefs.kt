@@ -37,6 +37,7 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -474,6 +475,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val spaceBarSwitchesToCharacters = boolean(
             key = "keyboard__space_bar_switches_to_characters",
             default = true,
+        )
+        val incognitoDisplayMode = enum(
+            key = "keyboard__incognito_indicator",
+            default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
         )
 
         fun keyHintConfiguration(): KeyHintConfiguration {

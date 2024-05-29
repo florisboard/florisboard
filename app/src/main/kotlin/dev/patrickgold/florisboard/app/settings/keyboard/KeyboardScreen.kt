@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -94,6 +95,11 @@ fun KeyboardScreen() = FlorisScreen {
             min = 50,
             max = 150,
             stepIncrement = 5,
+        )
+        ListPreference(
+            listPref = prefs.keyboard.incognitoDisplayMode,
+            title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
+            entries = IncognitoDisplayMode.listEntries(),
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_layout__label)) {

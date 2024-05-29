@@ -942,6 +942,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 KeyCode.CLIPBOARD_PASTE -> {
                     !androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
+                        && clipboardManager.canBePasted(clipboardManager.primaryClip)
                 }
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                     clipboardManager.canBePasted(clipboardManager.primaryClip)
