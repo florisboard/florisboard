@@ -478,7 +478,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val incognitoDisplayMode = enum(
             key = "keyboard__incognito_indicator",
-            default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
+            default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
         )
 
         fun keyHintConfiguration(): KeyHintConfiguration {

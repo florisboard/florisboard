@@ -99,7 +99,7 @@ fun KeyboardScreen() = FlorisScreen {
         ListPreference(
             listPref = prefs.keyboard.incognitoDisplayMode,
             title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
-            entries = IncognitoDisplayMode.listEntries()
+            entries = IncognitoDisplayMode.listEntries(),
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_layout__label)) {
