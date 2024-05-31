@@ -93,7 +93,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="content"/>
                 <data android:host="*"/>
-                <data android:mimeType="*/*"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
             </intent-filter>
         </activity>
 
