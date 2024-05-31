@@ -25,7 +25,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -150,6 +149,10 @@ class FlorisAppActivity : ComponentActivity() {
             fileImportIntent = intent
             return
         }
+        if (intent?.action == Intent.ACTION_SEND && intent.clipData != null) {
+            fileImportIntent = intent
+            return
+        }
         fileImportIntent = null
     }
 
@@ -188,7 +191,12 @@ class FlorisAppActivity : ComponentActivity() {
         LaunchedEffect(fileImportIntent) {
             val intent = fileImportIntent
             if (intent != null) {
-                val workspace = runCatching { cacheManager.readFromUriIntoCache(intent.data!!) }.getOrNull()
+                val data = if (intent.action == Intent.ACTION_VIEW) {
+                    intent.data!!
+                } else {
+                    intent.clipData!!.getItemAt(0).uri
+                }
+                val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
                 navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
             }
             fileImportIntent = null

@@ -95,6 +95,11 @@
                 <data android:host="*"/>
                 <data android:mimeType="application/vnd.florisboard.extension+zip"/>
             </intent-filter>
+            <intent-filter android:label="Import Extension">
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+            </intent-filter>
         </activity>
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
