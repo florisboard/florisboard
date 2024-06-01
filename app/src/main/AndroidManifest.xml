@@ -92,13 +92,14 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="content"/>
-                <data android:host="*"/>
                 <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
             <intent-filter android:label="Import Extension">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
         </activity>
 
