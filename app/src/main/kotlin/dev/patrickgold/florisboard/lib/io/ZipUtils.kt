@@ -158,6 +158,9 @@ object ZipUtils {
 
     private fun ZipFile.copy(srcEntry: ZipEntry, dstFile: FsFile) {
         dstFile.outputStream().use { outStream ->
+            if (srcEntry.size > 100000000) {
+                return
+            }
             this.getInputStream(srcEntry).use { inStream ->
                 inStream.copyTo(outStream)
             }
