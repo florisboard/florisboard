@@ -114,11 +114,8 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     NATIVE_NULLPTR.toInt()
                 }
             }
-            fileInfo.mediaType == FileRegistry.FlexExtension.mediaType -> {
+            else -> { // ext == null
                 R.string.ext__import__file_skip_ext_corrupted
-            }
-            else -> {
-                NATIVE_NULLPTR.toInt()
             }
         }
     }
