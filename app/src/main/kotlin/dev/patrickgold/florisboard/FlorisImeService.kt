@@ -273,6 +273,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
+        WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             config.setLocale(subtype.primaryLocale)

@@ -1,6 +1,5 @@
 [versions]
 # Main
-accompanist = "0.34.0"
 android-gradle-plugin = "8.3.1"
 androidx-activity = "1.8.2"
 androidx-autofill = "1.1.0"
@@ -38,7 +37,6 @@ kotest-extensions-roboelectric = "0.5.0"
 
 [libraries]
 # Main
-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidx-autofill" }
