@@ -141,9 +141,15 @@ object ZipUtils {
             val flexEntries = flexFile.entries()
             while (flexEntries.hasMoreElements()) {
                 val flexEntry = flexEntries.nextElement()
+                if (flexEntry.name.length > 255) {
+                    continue
+                }
                 val flexEntryFile = FsFile(dstDir, flexEntry.name)
                 val canonicalDestinationDirPath = dstDir.canonicalPath
                 val canonicalDestinationFilePath = flexEntryFile.canonicalPath
+                if (canonicalDestinationFilePath.length > 1023) {
+                    continue
+                }
                 if (!canonicalDestinationFilePath.startsWith(canonicalDestinationDirPath + FsFile.separator)) {
                     continue
                 }
