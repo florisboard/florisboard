@@ -616,6 +616,10 @@
 
 
     <!-- Extension strings -->
+    <string name="ext__home__title">Addons &amp; Extensions</string>
+    <string name="ext__list__ext_theme">Theme extensions</string>
+    <string name="ext__list__ext_keyboard">Keyboard extensions</string>
+    <string name="ext__list__ext_languagepack">Language pack extensions</string>
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
     <string name="ext__meta__components_theme">Bundled themes</string>

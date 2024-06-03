@@ -27,8 +27,11 @@ import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
@@ -58,7 +61,7 @@ import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
 import org.florisboard.lib.kotlin.curlyFormat
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "ConstPropertyName")
 object Routes {
     object Setup {
         const val Screen = "setup"
@@ -117,6 +120,13 @@ object Routes {
     }
 
     object Ext {
+        const val Home = "ext"
+
+        const val List = "ext/list/{type}"
+        fun List(
+            type: ExtensionListScreenType,
+        ) = List.curlyFormat("type" to type.id)
+
         const val Edit = "ext/edit/{id}?create={serial_type}"
         fun Edit(id: String, serialType: String? = null): String {
             return Edit.curlyFormat("id" to id, "serial_type" to (serialType ?: ""))
@@ -209,12 +219,19 @@ object Routes {
             }
             composable(Devtools.ExportDebugLog) { ExportDebugLogScreen() }
 
+            composable(Ext.Home) { ExtensionHomeScreen() }
+            composable(Ext.List) { navBackStack ->
+                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
+                    ExtensionListScreenType.entries.firstOrNull { it.id == typeId }
+                } ?: error("unknown type")
+                ExtensionListScreen(type)
+            }
             composable(Ext.Edit) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 val serialType = navBackStack.arguments?.getString("serial_type")
                 ExtensionEditScreen(
                     id = extensionId.toString(),
-                    createSerialType = serialType.takeIf { it != null && it.isNotBlank() },
+                    createSerialType = serialType.takeIf { !it.isNullOrBlank() },
                 )
             }
             composable(Ext.Export) { navBackStack ->

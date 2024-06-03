@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.app.settings.typing
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.LibraryBooks
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -32,6 +32,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
@@ -42,6 +44,7 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
@@ -50,6 +53,8 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 fun TypingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__typing__title)
     previewFieldVisible = true
+
+    val navController = LocalNavController.current
 
     content {
         // This card is temporary and is therefore not using a string resource
@@ -159,11 +164,19 @@ fun TypingScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.spelling.useUdmEntries,
-                icon = Icons.Default.LibraryBooks,
+                icon = Icons.AutoMirrored.Filled.LibraryBooks,
                 title = stringRes(R.string.pref__spelling__use_udm_entries__label),
                 summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
                 enabledIf = { florisSpellCheckerEnabled.value },
                 visibleIf = { false }, // For now
+            )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.settings__dictionary__title)) {
+            Preference(
+                icon = Icons.AutoMirrored.Filled.LibraryBooks,
+                title = stringRes(R.string.settings__dictionary__title),
+                onClick = { navController.navigate(Routes.Settings.Dictionary) },
             )
         }
     }
