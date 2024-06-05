@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Shop
+import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,12 +20,14 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import org.florisboard.lib.kotlin.curlyFormat
@@ -67,6 +70,32 @@ fun ExtensionHomeScreen() = FlorisScreen {
                     icon = Icons.AutoMirrored.Filled.Input,
                     text = stringRes(R.string.action__import),
                 )
+            }
+        }
+
+        FlorisOutlinedBox(
+            modifier = Modifier.defaultFlorisOutlinedBox(),
+        ) {
+            Text(
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
+                text = "Since this app does not have Internet permission, updates for installed extensions must be checked manually.",
+                style = MaterialTheme.typography.bodySmall,
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 6.dp),
+            ) {
+                val extensionManager by context.extensionManager()
+                val extensionIndex = extensionManager.combinedExtensionList()
+                FlorisTextButton(
+                    onClick = {
+                        context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "https://fladdonstest.patrickgold.dev"))
+                    },
+                    icon = Icons.Outlined.FileDownload,
+                    text = "Search for Updates"
+                )
+                Spacer(modifier = Modifier.weight(1f))
             }
         }
 

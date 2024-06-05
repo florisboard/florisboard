@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.lib.ext
 import android.content.Context
 import android.net.Uri
 import android.os.FileObserver
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
@@ -38,6 +39,7 @@ import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.io.writeJson
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -92,6 +94,11 @@ class ExtensionManager(context: Context) {
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
     val languagePacks = ExtensionIndex(LanguagePackExtension.serializer(), IME_LANGUAGEPACK_PATH)
+
+    @Composable
+    fun combinedExtensionList() = listOf(keyboardExtensions.observeAsNonNullState(), themes.observeAsNonNullState(), languagePacks.observeAsNonNullState()).map {
+        it.value
+    }.flatten()
 
     fun init() {
         keyboardExtensions.init()
