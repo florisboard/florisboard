@@ -90,7 +90,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
                 val extensionIndex = extensionManager.combinedExtensionList()
                 FlorisTextButton(
                     onClick = {
-                        context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "https://fladdonstest.patrickgold.dev"))
+                        context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "fladdonstest.patrickgold.dev"))
                     },
                     icon = Icons.Outlined.FileDownload,
                     text = "Search for Updates"

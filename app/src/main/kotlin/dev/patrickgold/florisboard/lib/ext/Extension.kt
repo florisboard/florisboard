@@ -130,7 +130,7 @@ internal fun List<Extension>.generateUpdateUrl(
         authority(host)
         appendPath("updates")
         appendPath(version)
-        fragment(
+        encodedFragment(
             buildString {
                 append("data={")
                 for (extension in this@generateUpdateUrl) {
