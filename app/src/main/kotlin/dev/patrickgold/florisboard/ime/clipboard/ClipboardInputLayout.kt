@@ -47,7 +47,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ClearAll
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ToggleOff
@@ -158,8 +158,7 @@ fun ClipboardInputLayout(
         ) {
             FlorisIconButtonWithInnerPadding(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
-                modifier = Modifier.autoMirrorForRtl(),
-                icon = Icons.Default.ArrowBack,
+                icon = Icons.AutoMirrored.Filled.ArrowBack,
                 iconColor = headerStyle.foreground.solidColor(context),
             )
             Text(

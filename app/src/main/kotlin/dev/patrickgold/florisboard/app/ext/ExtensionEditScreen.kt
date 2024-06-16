@@ -29,7 +29,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.outlined.LibraryBooks
@@ -68,7 +68,6 @@ import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
-import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
@@ -299,8 +298,7 @@ private fun EditScreen(
     navigationIcon {
         FlorisIconButton(
             onClick = { handleBackPress() },
-            modifier = Modifier.autoMirrorForRtl(),
-            icon = Icons.Default.ArrowBack,
+            icon = Icons.AutoMirrored.Filled.ArrowBack,
         )
     }
 
