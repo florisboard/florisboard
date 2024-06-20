@@ -462,7 +462,7 @@
         "direction": "rtl"
       },
       {
-	"id": "diktor",
+        "id": "diktor",
         "label": "Diktor",
         "authors": [ "kuroya2mouse" ],
         "direction": "ltr"
