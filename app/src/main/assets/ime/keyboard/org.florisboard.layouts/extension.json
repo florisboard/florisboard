@@ -111,6 +111,13 @@
         "direction": "ltr"
       },
       {
+        "id": "diktor",
+        "label": "Diktor",
+        "authors": [ "kuroya2mouse" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:diktor"
+      },
+      {
         "id": "dvorak",
         "label": "Dvorak",
         "authors": [ "patrickgold" ],
@@ -453,6 +460,12 @@
         "label": "Arabic",
         "authors": [ "HeiWiper" ],
         "direction": "rtl"
+      },
+      {
+        "id": "diktor",
+        "label": "Diktor",
+        "authors": [ "kuroya2mouse" ],
+        "direction": "ltr"
       },
       {
         "id": "dvorak",
