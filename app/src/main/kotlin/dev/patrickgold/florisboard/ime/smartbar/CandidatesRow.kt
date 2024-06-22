@@ -16,6 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -30,8 +33,10 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,12 +50,12 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
@@ -75,11 +80,13 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
+    val clipboardManager by context.clipboardManager()
     val subtypeManager by context.subtypeManager()
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
+    val clipboardItem by clipboardManager.primaryClipFlow.collectAsState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
@@ -93,6 +100,30 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             for (inlineSuggestion in inlineSuggestions) {
                 InlineSuggestionView(inlineSuggestion = inlineSuggestion)
             }
+        }
+    } else if (clipboardItem != null) {
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+                .florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight),
+        ) {
+            Spacer(Modifier.weight(1f))
+            Text(
+                modifier = Modifier
+                    .border(
+                        BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
+                        RoundedCornerShape(8.dp)
+                    )
+                    .padding(8.dp)
+                    .align(Alignment.CenterVertically)
+                    .clickable {
+                    },
+                text = clipboardItem!!.text.toString(),
+                color = FlorisImeTheme.fallbackContentColor(),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+            )
+            Spacer(Modifier.weight(1f))
         }
     } else {
         Row(
@@ -124,7 +155,9 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             if (displayMode == CandidatesDisplayMode.CLASSIC) {
                                 Modifier.weight(1f)
                             } else {
-                                Modifier.wrapContentWidth().widthIn(max = 160.dp)
+                                Modifier
+                                    .wrapContentWidth()
+                                    .widthIn(max = 160.dp)
                             }
                         )
                 }
