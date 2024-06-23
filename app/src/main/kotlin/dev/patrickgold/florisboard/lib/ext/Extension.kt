@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.lib.ext
 
 import android.content.Context
 import android.net.Uri
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.FsDir
 import dev.patrickgold.florisboard.lib.io.FsFile
@@ -122,8 +123,8 @@ abstract class Extension {
  * @return the Url
  */
 internal fun List<Extension>.generateUpdateUrl(
-    version: String,
-    host: String = "addons.florisboard.org",
+    version: String = BuildConfig.API_VERSION,
+    host: String = BuildConfig.STORE_URL,
 ): String {
     return Uri.Builder().run {
         scheme("https")

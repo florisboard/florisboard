@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Shop
-import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,10 +26,8 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import org.florisboard.lib.kotlin.curlyFormat
 
 @Composable
 fun ExtensionHomeScreen() = FlorisScreen {
@@ -39,6 +36,8 @@ fun ExtensionHomeScreen() = FlorisScreen {
 
     val context = LocalContext.current
     val navController = LocalNavController.current
+    val extensionManager by context.extensionManager()
+    val extensionIndex = extensionManager.combinedExtensionList()
 
     content {
         FlorisOutlinedBox(
@@ -73,31 +72,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
             }
         }
 
-        FlorisOutlinedBox(
-            modifier = Modifier.defaultFlorisOutlinedBox(),
-        ) {
-            Text(
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
-                text = "Since this app does not have Internet permission, updates for installed extensions must be checked manually.",
-                style = MaterialTheme.typography.bodySmall,
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 6.dp),
-            ) {
-                val extensionManager by context.extensionManager()
-                val extensionIndex = extensionManager.combinedExtensionList()
-                FlorisTextButton(
-                    onClick = {
-                        context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "fladdonstest.patrickgold.dev"))
-                    },
-                    icon = Icons.Outlined.FileDownload,
-                    text = "Search for Updates"
-                )
-                Spacer(modifier = Modifier.weight(1f))
-            }
-        }
+        UpdateBox(extensionIndex = extensionIndex)
 
         PreferenceGroup(title = "Manage installed extensions") {
             Preference(
@@ -120,49 +95,6 @@ fun ExtensionHomeScreen() = FlorisScreen {
                 onClick = {
                     navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_LANGUAGEPACK,false))
                 },
-            )
-        }
-    }
-}
-
-@Composable
-fun AddonManagementReferenceBox(
-    type: ExtensionListScreenType? = null
-) {
-    val navController = LocalNavController.current
-
-    FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
-        title = "Managing {extensions}".curlyFormat(
-            "extensions" to (type?.let { stringRes(id = it.titleResId).lowercase() } ?: " extensions")
-        )
-    ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-            text = "All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.",
-            style = MaterialTheme.typography.bodySmall,
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 6.dp),
-        ) {
-            Spacer(modifier = Modifier.weight(1f))
-            FlorisTextButton(
-                onClick = {
-                    val route = if (type != null) {
-                        Routes.Ext.List(type, showUpdate = true)
-                    } else {
-                        Routes.Ext.Home
-                    }
-                    navController.navigate(
-                        route
-                    )
-                },
-                icon = Icons.Default.Shop,
-                text = "Go to {ext_home_title}".curlyFormat(
-                    "ext_home_title" to stringRes(type?.titleResId ?: R.string.ext__home__title),
-                ),
             )
         }
     }
