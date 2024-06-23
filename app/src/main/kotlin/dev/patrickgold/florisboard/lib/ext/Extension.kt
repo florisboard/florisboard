@@ -123,8 +123,8 @@ abstract class Extension {
  * @return the Url
  */
 internal fun List<Extension>.generateUpdateUrl(
-    version: String = BuildConfig.API_VERSION,
-    host: String = BuildConfig.STORE_URL,
+    version: String = BuildConfig.FLADDONS_API_VERSION,
+    host: String = BuildConfig.FLADDONS_STORE_URL,
 ): String {
     return Uri.Builder().run {
         scheme("https")
