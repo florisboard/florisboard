@@ -104,21 +104,21 @@ fun ExtensionHomeScreen() = FlorisScreen {
                 icon = Icons.Default.Palette,
                 title = stringRes(R.string.ext__list__ext_theme),
                 onClick = {
-                    navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_THEME))
+                    navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_THEME,false))
                 },
             )
             Preference(
                 icon = Icons.Default.Keyboard,
                 title = stringRes(R.string.ext__list__ext_keyboard),
                 onClick = {
-                    navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_KEYBOARD))
+                    navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_KEYBOARD,false))
                 },
             )
             Preference(
                 icon = Icons.Default.Language,
                 title = stringRes(R.string.ext__list__ext_languagepack),
                 onClick = {
-                    navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_LANGUAGEPACK))
+                    navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_LANGUAGEPACK,false))
                 },
             )
         }
@@ -126,12 +126,16 @@ fun ExtensionHomeScreen() = FlorisScreen {
 }
 
 @Composable
-fun AddonManagementReferenceBox() {
+fun AddonManagementReferenceBox(
+    type: ExtensionListScreenType? = null
+) {
     val navController = LocalNavController.current
 
     FlorisOutlinedBox(
         modifier = Modifier.defaultFlorisOutlinedBox(),
-        title = "Managing extensions"
+        title = "Managing {extensions}".curlyFormat(
+            "extensions" to (type?.let { stringRes(id = it.titleResId).lowercase() } ?: " extensions")
+        )
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -146,11 +150,18 @@ fun AddonManagementReferenceBox() {
             Spacer(modifier = Modifier.weight(1f))
             FlorisTextButton(
                 onClick = {
-                    navController.navigate(Routes.Ext.Home)
+                    val route = if (type != null) {
+                        Routes.Ext.List(type, showUpdate = true)
+                    } else {
+                        Routes.Ext.Home
+                    }
+                    navController.navigate(
+                        route
+                    )
                 },
                 icon = Icons.Default.Shop,
                 text = "Go to {ext_home_title}".curlyFormat(
-                    "ext_home_title" to stringRes(R.string.ext__home__title),
+                    "ext_home_title" to stringRes(type?.titleResId ?: R.string.ext__home__title),
                 ),
             )
         }

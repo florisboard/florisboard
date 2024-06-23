@@ -122,10 +122,11 @@ object Routes {
     object Ext {
         const val Home = "ext"
 
-        const val List = "ext/list/{type}"
+        const val List = "ext/list/{type}?showUpdate={showUpdate}"
         fun List(
             type: ExtensionListScreenType,
-        ) = List.curlyFormat("type" to type.id)
+            showUpdate: Boolean
+        ) = List.curlyFormat("type" to type.id, "showUpdate" to showUpdate)
 
         const val Edit = "ext/edit/{id}?create={serial_type}"
         fun Edit(id: String, serialType: String? = null): String {
@@ -224,7 +225,8 @@ object Routes {
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
                     ExtensionListScreenType.entries.firstOrNull { it.id == typeId }
                 } ?: error("unknown type")
-                ExtensionListScreen(type)
+                val showUpdate = navBackStack.arguments?.getString("showUpdate")
+                ExtensionListScreen(type, showUpdate == "true")
             }
             composable(Ext.Edit) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")

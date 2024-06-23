@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -41,15 +42,15 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
+import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 
 enum class ExtensionListScreenType(
@@ -79,7 +80,7 @@ enum class ExtensionListScreenType(
 }
 
 @Composable
-fun ExtensionListScreen(type: ExtensionListScreenType) = FlorisScreen {
+fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = FlorisScreen {
     title = stringRes(type.titleResId)
     previewFieldVisible = false
 
@@ -89,6 +90,31 @@ fun ExtensionListScreen(type: ExtensionListScreenType) = FlorisScreen {
     val extensionIndex by type.getExtensionIndex(extensionManager).observeAsNonNullState()
 
     content {
+        if (showUpdate) {
+            FlorisOutlinedBox(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
+                    text = "Since this app does not have Internet permission, updates for installed extensions must be checked manually.",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 6.dp),
+                ) {
+                    FlorisTextButton(
+                        onClick = {
+                            context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "fladdonstest.patrickgold.dev"))
+                        },
+                        icon = Icons.Outlined.FileDownload,
+                        text = "Search for Updates"
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+        }
         for (ext in extensionIndex) {
             FlorisOutlinedBox(
                 modifier = Modifier.defaultFlorisOutlinedBox(),

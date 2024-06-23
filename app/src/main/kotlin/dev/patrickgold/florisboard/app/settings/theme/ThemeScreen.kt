@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.ext.AddonManagementReferenceBox
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
@@ -107,6 +108,6 @@ fun ThemeScreen() = FlorisScreen {
             },
         )
 
-        AddonManagementReferenceBox()
+        AddonManagementReferenceBox(type = ExtensionListScreenType.EXT_THEME)
     }
 }
