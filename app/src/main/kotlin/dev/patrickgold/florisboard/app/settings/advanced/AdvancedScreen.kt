@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.settings.advanced
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Adb
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.Language
@@ -165,6 +166,11 @@ fun AdvancedScreen() = FlorisScreen {
             icon = vectorResource(id = R.drawable.ic_incognito),
             title = stringRes(R.string.pref__advanced__incognito_mode__label),
             entries = IncognitoMode.listEntries(),
+        )
+        Preference(
+            icon = Icons.Default.Adb,
+            title = stringRes(R.string.devtools__title),
+            onClick = { navController.navigate(Routes.Devtools.Home) },
         )
 
         PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {

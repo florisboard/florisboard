@@ -642,18 +642,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "theme__mode",
             default = ThemeMode.FOLLOW_SYSTEM,
         )
-        val dayThemeAdaptToApp = boolean(
-            key = "theme__day_theme_adapt_to_app",
-            default = false,
-        )
         val dayThemeId = custom(
             key = "theme__day_theme_id",
             default = extCoreTheme("floris_day"),
             serializer = ExtensionComponentName.Serializer,
-        )
-        val nightThemeAdaptToApp = boolean(
-            key = "theme__night_theme_adapt_to_app",
-            default = false,
         )
         val nightThemeId = custom(
             key = "theme__night_theme_id",

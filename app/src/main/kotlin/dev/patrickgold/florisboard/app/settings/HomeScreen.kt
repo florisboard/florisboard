@@ -18,14 +18,13 @@ package dev.patrickgold.florisboard.app.settings
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Adb
+import androidx.compose.material.icons.automirrored.outlined.Assignment
+import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Gesture
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.LibraryBooks
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.SmartButton
 import androidx.compose.material.icons.filled.Spellcheck
-import androidx.compose.material.icons.outlined.Assignment
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Keyboard
@@ -132,17 +131,12 @@ fun HomeScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.Typing) },
         )
         Preference(
-            icon = Icons.Default.LibraryBooks,
-            title = stringRes(R.string.settings__dictionary__title),
-            onClick = { navController.navigate(Routes.Settings.Dictionary) },
-        )
-        Preference(
             icon = Icons.Default.Gesture,
             title = stringRes(R.string.settings__gestures__title),
             onClick = { navController.navigate(Routes.Settings.Gestures) },
         )
         Preference(
-            icon = Icons.Outlined.Assignment,
+            icon = Icons.AutoMirrored.Outlined.Assignment,
             title = stringRes(R.string.settings__clipboard__title),
             onClick = { navController.navigate(Routes.Settings.Clipboard) },
         )
@@ -152,9 +146,9 @@ fun HomeScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.Media) },
         )
         Preference(
-            icon = Icons.Default.Adb,
-            title = stringRes(R.string.devtools__title),
-            onClick = { navController.navigate(Routes.Devtools.Home) },
+            icon = Icons.Default.Extension,
+            title = stringRes(R.string.ext__home__title),
+            onClick = { navController.navigate(Routes.Ext.Home) },
         )
         Preference(
             icon = Icons.Outlined.Build,

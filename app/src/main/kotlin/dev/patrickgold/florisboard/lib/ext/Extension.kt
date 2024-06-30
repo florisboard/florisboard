@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.lib.ext
 
 import android.content.Context
+import android.net.Uri
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.FsDir
 import dev.patrickgold.florisboard.lib.io.FsFile
@@ -111,6 +113,37 @@ abstract class Extension {
     }
 
     abstract fun edit(): ExtensionEditor
+}
+
+/**
+ * Generates an update url for [Extension] lists.
+ *
+ * @param version the version of the api path
+ * @param host the host for the addons store
+ * @return the Url
+ */
+internal fun List<Extension>.generateUpdateUrl(
+    version: String = BuildConfig.FLADDONS_API_VERSION,
+    host: String = BuildConfig.FLADDONS_STORE_URL,
+): String {
+    return Uri.Builder().run {
+        scheme("https")
+        authority(host)
+        appendPath("updates")
+        appendPath(version)
+        encodedFragment(
+            buildString {
+                append("data={")
+                for (extension in this@generateUpdateUrl) {
+                    append(extension.meta.getUpdateJsonPair())
+                    if (extension != this@generateUpdateUrl.last()) {
+                        append(",")
+                    }
+                }
+                append("}")
+            }
+        )
+    }.build().toString()
 }
 
 interface ExtensionEditor {

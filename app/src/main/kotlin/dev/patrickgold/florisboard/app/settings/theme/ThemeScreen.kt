@@ -16,35 +16,32 @@
 
 package dev.patrickgold.florisboard.app.settings.theme
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.outlined.Palette
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.ext.AddonManagementReferenceBox
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.lib.android.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @Composable
 fun ThemeScreen() = FlorisScreen {
@@ -53,13 +50,21 @@ fun ThemeScreen() = FlorisScreen {
 
     val context = LocalContext.current
     val navController = LocalNavController.current
+    val themeManager by context.themeManager()
+
+    @Composable
+    fun ThemeManager.getThemeLabel(id: ExtensionComponentName): String {
+        val configs by indexedThemeConfigs.observeAsState()
+        configs?.get(id)?.let { return it.label }
+        return id.toString()
+    }
 
     content {
         val themeMode by prefs.theme.mode.observeAsState()
         val dayThemeId by prefs.theme.dayThemeId.observeAsState()
         val nightThemeId by prefs.theme.nightThemeId.observeAsState()
 
-        Card(modifier = Modifier.padding(8.dp)) {
+        /*Card(modifier = Modifier.padding(8.dp)) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Text("If you want to give feedback on the new stylesheet editor and theme engine, please do so in below linked feedback thread:\n")
                 Button(onClick = {
@@ -68,7 +73,7 @@ fun ThemeScreen() = FlorisScreen {
                     Text("Open Feedback Thread")
                 }
             }
-        }
+        }*/
 
         ListPreference(
             prefs.theme.mode,
@@ -85,53 +90,24 @@ fun ThemeScreen() = FlorisScreen {
             )
         }
         Preference(
-            icon = Icons.Outlined.Palette,
-            title = stringRes(R.string.settings__theme_manager__title_manage),
+            icon = Icons.Default.LightMode,
+            title = stringRes(R.string.pref__theme__day),
+            summary = themeManager.getThemeLabel(dayThemeId),
+            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
             onClick = {
-                navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.MANAGE))
+                navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_DAY))
+            },
+        )
+        Preference(
+            icon = Icons.Default.DarkMode,
+            title = stringRes(R.string.pref__theme__night),
+            summary = themeManager.getThemeLabel(nightThemeId),
+            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
+            onClick = {
+                navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_NIGHT))
             },
         )
 
-        PreferenceGroup(
-            title = stringRes(R.string.pref__theme__day),
-            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
-        ) {
-            Preference(
-                icon = Icons.Default.LightMode,
-                title = stringRes(R.string.pref__theme__any_theme__label),
-                summary = dayThemeId.toString(),
-                onClick = {
-                    navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_DAY))
-                },
-            )
-            SwitchPreference(
-                prefs.theme.dayThemeAdaptToApp,
-                icon = Icons.Default.FormatPaint,
-                title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
-                summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
-                visibleIf = { false },
-            )
-        }
-
-        PreferenceGroup(
-            title = stringRes(R.string.pref__theme__night),
-            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
-        ) {
-            Preference(
-                icon = Icons.Default.DarkMode,
-                title = stringRes(R.string.pref__theme__any_theme__label),
-                summary = nightThemeId.toString(),
-                onClick = {
-                    navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_NIGHT))
-                },
-            )
-            SwitchPreference(
-                prefs.theme.nightThemeAdaptToApp,
-                icon = Icons.Default.FormatPaint,
-                title = stringRes(R.string.pref__theme__any_theme_adapt_to_app__label),
-                summary = stringRes(R.string.pref__theme__any_theme_adapt_to_app__summary),
-                visibleIf = { false },
-            )
-        }
+        AddonManagementReferenceBox(type = ExtensionListScreenType.EXT_THEME)
     }
 }

@@ -51,4 +51,11 @@ object AndroidInternalR {
             Resources.getSystem().getIdentifier("ime_action_default", "string", "android")
         }
     }
+    @SuppressLint("DiscouragedApi")
+    @Suppress("ClassName")
+    object drawable {
+        val ic_qs_one_handed_mode by lazy {
+            Resources.getSystem().getIdentifier("ic_qs_one_handed_mode", "drawable", "android")
+        }
+    }
 }

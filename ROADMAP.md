@@ -16,6 +16,8 @@ This includes, but is not exclusive to:
 - Remove existing glide/swipe typing (see 0.5 milestone)
 - Improvements in clipboard / emoji functionality (v0.4.0-beta01/beta02)
 - Prepare project to have native code implemented in [Rust](https://www.rust-lang.org/) (v0.4.0-beta02)
+- - Upgrade Settings UI to Material 3 (v0.4.0-beta03)
+- Add support for importing extensions via system file handler APIs (relevant for Addons store) (v0.4.0-beta03)
 
 Note that the previous versioning scheme has been dropped in favor of using a major.minor.patch versioning scheme, so versions like `0.3.16` are a thing of the past :)
 
@@ -32,7 +34,6 @@ Note that the previous versioning scheme has been dropped in favor of using a ma
   - RFC document with technical details will be released later
 - Add Tablet mode / Optimizations for landscape input based on new keyboard layout engine
 - Reimplementation of glide typing with the new layout engine and predictive text core
-- Add support for importing extensions via system file handler APIs (relevant for Addons store)
 - Add support for any remaining new features introduced with Android 13
 
 ## 0.6
@@ -52,7 +53,6 @@ Note that the previous versioning scheme has been dropped in favor of using a ma
 
 **Features that MAY be added (even in versions mentioned above) or dismissed**
 
-- Upgrade Settings UI to Material 3
 - Full on-board layout editor which allows users to create their own layouts without writing a JSON file
 - Theme rework part II
 - Adaptive themes v2

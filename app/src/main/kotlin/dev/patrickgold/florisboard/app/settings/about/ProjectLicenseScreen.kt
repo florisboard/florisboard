@@ -28,12 +28,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.io.FlorisRef
+import dev.patrickgold.florisboard.lib.io.loadTextAsset
 
 @Composable
 fun ProjectLicenseScreen() = FlorisScreen {
@@ -41,7 +41,6 @@ fun ProjectLicenseScreen() = FlorisScreen {
     scrollable = false
 
     val context = LocalContext.current
-    val assetManager by context.assetManager()
 
     content {
         // Forcing LTR because the Apache 2.0 License shipped and displayed
@@ -54,8 +53,8 @@ fun ProjectLicenseScreen() = FlorisScreen {
                     .florisVerticalScroll()
                     .florisHorizontalScroll(),
             ) {
-                val licenseText = assetManager.loadTextAsset(
-                    FlorisRef.assets("license/project_license.txt")
+                val licenseText = FlorisRef.assets("license/project_license.txt").loadTextAsset(
+                    context
                 ).getOrElse {
                     stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
                 }
