@@ -1,0 +1,13 @@
+[package]
+name = "flesttools"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+flest = { path = "../../libnative/flest" }
+textutils = { path = "../../libnative/textutils" }
+pancurses = { version = "0.17.0", features = ["wide"] }
+serde = "1.0.203"
+serde_json = "1.0.120"
