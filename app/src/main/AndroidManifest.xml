@@ -84,9 +84,22 @@
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/FlorisAppTheme.Splash"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <data android:scheme="florisboard" android:host="app-ui"/>
+            </intent-filter>
+            <intent-filter android:label="Import Extension">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="content"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
+            </intent-filter>
+            <intent-filter android:label="Import Extension">
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
         </activity>
 
@@ -105,24 +118,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity-alias>
-
-        <!-- Import File Bridging Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.app.ext.ImportFileActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/settings__title"
-            android:launchMode="singleTask"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/FlorisAppTheme"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="*" android:host="*" android:pathPattern=".*\\.flex"/>
-                <data android:scheme="*" android:host="*" android:pathPattern=".*\\.xpi"/>
-            </intent-filter>
-        </activity>
 
         <!-- Crash Dialog Activity -->
         <activity

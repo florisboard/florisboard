@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,11 +25,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +42,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
+import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.android.hideAppIcon
@@ -70,9 +73,11 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
+    private val cacheManager by cacheManager()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
+    private var fileImportIntent by mutableStateOf<Intent?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash screen should be installed before calling super.onCreate()
@@ -110,14 +115,15 @@ class FlorisAppActivity : ComponentActivity() {
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
                 ProvideLocalizedResources(resourcesContext) {
-                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = prefs.advanced.useMaterialYou.observeAsState().value) {
+                    val useMaterialYou by prefs.advanced.useMaterialYou.observeAsState()
+                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = useMaterialYou) {
                         Surface(color = MaterialTheme.colorScheme.background) {
-                            //SystemUiApp()
                             AppContent()
                         }
                     }
                 }
             }
+            onNewIntent(intent)
         }
     }
 
@@ -133,6 +139,21 @@ class FlorisAppActivity : ComponentActivity() {
                 this.hideAppIcon()
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+
+        if (intent?.action == Intent.ACTION_VIEW && intent.data != null) {
+            fileImportIntent = intent
+            return
+        }
+        if (intent?.action == Intent.ACTION_SEND && intent.clipData != null) {
+            fileImportIntent = intent
+            return
+        }
+        fileImportIntent = null
     }
 
     @Composable
@@ -165,6 +186,20 @@ class FlorisAppActivity : ComponentActivity() {
                     PreviewKeyboardField(previewFieldController)
                 }
             }
+        }
+
+        LaunchedEffect(fileImportIntent) {
+            val intent = fileImportIntent
+            if (intent != null) {
+                val data = if (intent.action == Intent.ACTION_VIEW) {
+                    intent.data!!
+                } else {
+                    intent.clipData!!.getItemAt(0).uri
+                }
+                val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
+                navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
+            }
+            fileImportIntent = null
         }
 
         SideEffect {

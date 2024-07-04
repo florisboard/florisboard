@@ -40,7 +40,6 @@ import dev.patrickgold.florisboard.lib.devtools.Flog
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.io.AssetManager
 import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPref
 import org.florisboard.lib.kotlin.tryOrNull
@@ -67,7 +66,6 @@ class FlorisApplication : Application() {
     private val prefs by florisPreferenceModel()
     private val mainHandler by lazy { Handler(mainLooper) }
 
-    val assetManager = lazy { AssetManager(this) }
     val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
     val editorInstance = lazy { EditorInstance(this) }
@@ -143,8 +141,6 @@ private tailrec fun Context.florisApplication(): FlorisApplication {
 }
 
 fun Context.appContext() = lazyOf(this.florisApplication())
-
-fun Context.assetManager() = this.florisApplication().assetManager
 
 fun Context.cacheManager() = this.florisApplication().cacheManager
 

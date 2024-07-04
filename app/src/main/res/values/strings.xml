@@ -139,16 +139,13 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Day theme</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Night theme</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selected theme</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapt colors to app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Theme colors adapt to those in the current app, if the target app supports this.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Assets</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Internal Storage</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">External Provider</string>
 
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Select day theme</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
 
     <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
     <string name="settings__theme_editor__fine_tune__level">Editing level</string>
@@ -620,6 +617,10 @@
 
 
     <!-- Extension strings -->
+    <string name="ext__home__title">Addons &amp; Extensions</string>
+    <string name="ext__list__ext_theme">Theme extensions</string>
+    <string name="ext__list__ext_keyboard">Keyboard extensions</string>
+    <string name="ext__list__ext_languagepack">Language pack extensions</string>
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
     <string name="ext__meta__components_theme">Bundled themes</string>
@@ -672,7 +673,39 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
-
+    <string name="ext__validation__enter_package_name">Please enter a package name</string>
+    <string name="ext__validation__error_package_name">Package name does not match regex {id_regex}</string>
+    <string name="ext__validation__enter_version">Please enter a version</string>
+    <string name="ext__validation__enter_title">Please enter a title</string>
+    <string name="ext__validation__enter_maintainer">Please enter at least one valid maintainer</string>
+    <string name="ext__validation__enter_license">Please enter a license identifier</string>
+    <string name="ext__validation__enter_component_id">Please enter a component ID</string>
+    <string name="ext__validation__error_component_id">Please enter a component ID matching {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Please enter a component label</string>
+    <string name="ext__validation__hint_component_label_to_long">Your component label is quite long, which may lead to clipping in the UI</string>
+    <string name="ext__validation__error_author">Please enter at least one valid author</string>
+    <string name="ext__validation__error_stylesheet_path_blank">The stylesheet path must not be blank</string>
+    <string name="ext__validation__error_stylesheet_path">Please enter a valid stylesheet path matching {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Please enter a variable name</string>
+    <string name="ext__validation__error_property">Please enter a valid variable name matching {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">By convention a FlorisCSS variable name starts with two dashes (--)</string>
+    <string name="ext__validation__enter_color">Please enter a color string</string>
+    <string name="ext__validation__error_color">Please enter a valid color string</string>
+    <string name="ext__validation__enter_dp_size">Please enter a dp size</string>
+    <string name="ext__validation__enter_valid_number">Please enter a valid number</string>
+    <string name="ext__validation__enter_positive_number">Please enter a positive number (>=0)</string>
+    <string name="ext__validation__enter_percent_size">Please enter a percent size</string>
+    <string name="ext__validation__enter_number_between_0_100">Please enter a positive number between 0 and 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
+    <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
+    <string name="ext__update_box__search_for_updates">Search for Updates</string>
+    <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
+    <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
+    <string name="ext__home__info">You can download and install extensions from the FlorisBoard Addons Store or import any extension file you have downloaded from the internet.</string>
+    <string name="ext__home__visit_store">Visit Addons Store</string>
+    <string name="ext__home__manage_extensions">Manage installed extensions</string>
+    <string name="ext__list__view_details">View details</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>
