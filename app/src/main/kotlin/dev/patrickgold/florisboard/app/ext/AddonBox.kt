@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.lib.android.launchUrl
@@ -32,7 +33,7 @@ fun UpdateBox(extensionIndex: List<Extension>) {
     ) {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
-            text = "Since this app does not have Internet permission, updates for installed extensions must be checked manually.",
+            text = stringRes(id = R.string.ext__update_box__internet_permission_hint),
             style = MaterialTheme.typography.bodySmall,
         )
         Row(
@@ -45,7 +46,7 @@ fun UpdateBox(extensionIndex: List<Extension>) {
                     context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "fladdonstest.patrickgold.dev"))
                 },
                 icon = Icons.Outlined.FileDownload,
-                text = "Search for Updates"
+                text = stringRes(id = R.string.ext__update_box__search_for_updates)
             )
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -60,13 +61,13 @@ fun AddonManagementReferenceBox(
 
     FlorisOutlinedBox(
         modifier = Modifier.defaultFlorisOutlinedBox(),
-        title = "Managing {extensions}".curlyFormat(
+        title = stringRes(id = R.string.ext__addon_management_box__managing_placeholder).curlyFormat(
             "extensions" to type.let { stringRes(id = it.titleResId).lowercase() }
         )
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-            text = "All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.",
+            text = stringRes(id = R.string.ext__addon_management_box__addon_manager_info),
             style = MaterialTheme.typography.bodySmall,
         )
         Row(
@@ -83,7 +84,7 @@ fun AddonManagementReferenceBox(
                     )
                 },
                 icon = Icons.Default.Shop,
-                text = "Go to {ext_home_title}".curlyFormat(
+                text = stringRes(id = R.string.ext__addon_management_box__go_to_page).curlyFormat(
                     "ext_home_title" to stringRes(type.titleResId),
                 ),
             )

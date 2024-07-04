@@ -111,7 +111,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                             navController.navigate(Routes.Ext.View(ext.meta.id))
                         },
                         icon = Icons.Outlined.Info,
-                        text = "View details",//stringRes(R.string.action__add),
+                        text = stringRes(id = R.string.ext__list__view_details),//stringRes(R.string.action__add),
                         colors = ButtonDefaults.textButtonColors(),
                     )
                     Spacer(modifier = Modifier.weight(1f))
@@ -134,12 +134,12 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                 icon = {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = "Create extension",
+                        contentDescription = stringRes(id = R.string.ext__editor__title_create_any),
                     )
                 },
                 text = {
                     Text(
-                        text = "Create extension",
+                        text = stringRes(id = R.string.ext__editor__title_create_any),
                     )
                 },
                 shape = FloatingActionButtonDefaults.extendedFabShape,

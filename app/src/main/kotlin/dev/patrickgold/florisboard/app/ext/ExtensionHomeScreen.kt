@@ -45,7 +45,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
         ) {
             Text(
                 modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
-                text = "You can download and install extensions from the FlorisBoard Addons Store or import any extension file you have downloaded from the internet.",
+                text = stringRes(id = R.string.ext__home__info),
                 style = MaterialTheme.typography.bodySmall,
             )
             Row(
@@ -59,7 +59,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
                         context.launchUrl("https://fladdonstest.patrickgold.dev")
                     },
                     icon = Icons.Default.Shop,
-                    text = "Visit Addons Store",//stringRes(R.string.action__edit),
+                    text = stringRes(id = R.string.ext__home__visit_store),//stringRes(R.string.action__edit),
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FlorisTextButton(
@@ -74,7 +74,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
 
         UpdateBox(extensionIndex = extensionIndex)
 
-        PreferenceGroup(title = "Manage installed extensions") {
+        PreferenceGroup(title = stringRes(id = R.string.ext__home__visit_store)) {
             Preference(
                 icon = Icons.Default.Palette,
                 title = stringRes(R.string.ext__list__ext_theme),
