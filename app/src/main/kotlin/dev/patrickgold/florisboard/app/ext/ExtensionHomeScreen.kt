@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -55,11 +56,10 @@ fun ExtensionHomeScreen() = FlorisScreen {
             ) {
                 FlorisTextButton(
                     onClick = {
-                        //context.launchUrl("https://beta.addons.florisboard.org")
-                        context.launchUrl("https://fladdonstest.patrickgold.dev")
+                        context.launchUrl("https://${BuildConfig.FLADDONS_STORE_URL}/")
                     },
                     icon = Icons.Default.Shop,
-                    text = stringRes(id = R.string.ext__home__visit_store),//stringRes(R.string.action__edit),
+                    text = stringRes(id = R.string.ext__home__visit_store),
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FlorisTextButton(
