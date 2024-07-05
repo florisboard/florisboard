@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.settings.media
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.pluralsRes
@@ -37,7 +38,7 @@ fun MediaScreen() = FlorisScreen {
         ListPreference(
             prefs.media.emojiPreferredSkinTone,
             title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
-            entries = EmojiSkinTone.listEntries(),
+            entries = enumDisplayEntriesOf(EmojiSkinTone::class),
         )
         DialogSliderPreference(
             prefs.media.emojiRecentlyUsedMaxSize,

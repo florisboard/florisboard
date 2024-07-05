@@ -16,31 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.landscapeinput
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 enum class LandscapeInputUiMode {
     NEVER_SHOW,
     ALWAYS_SHOW,
     DYNAMICALLY_SHOW;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = NEVER_SHOW,
-                label = stringRes(R.string.enum__landscape_input_ui_mode__never_show),
-            )
-            entry(
-                key = ALWAYS_SHOW,
-                label = stringRes(R.string.enum__landscape_input_ui_mode__always_show),
-            )
-            entry(
-                key = DYNAMICALLY_SHOW,
-                label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
-            )
-        }
-    }
 }

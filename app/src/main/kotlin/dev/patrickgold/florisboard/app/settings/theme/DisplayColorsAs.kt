@@ -16,34 +16,10 @@
 
 package dev.patrickgold.florisboard.app.settings.theme
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-import org.florisboard.lib.kotlin.curlyFormat
-
 /**
  * DisplayColorsAs indicates how color strings should be visually presented to the user.
  */
 enum class DisplayColorsAs {
     HEX8,
     RGBA;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = HEX8,
-                label = stringRes(R.string.enum__display_colors_as__hex8),
-                description = stringRes(R.string.general__example_given).curlyFormat("example" to "#4caf50ff"),
-                showDescriptionOnlyIfSelected = true,
-            )
-            entry(
-                key = RGBA,
-                label = stringRes(R.string.enum__display_colors_as__rgba),
-                description = stringRes(R.string.general__example_given).curlyFormat("example" to "rgba(76,175,80,1.0)"),
-                showDescriptionOnlyIfSelected = true,
-            )
-        }
-    }
 }

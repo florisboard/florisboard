@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import org.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
@@ -151,7 +152,7 @@ fun TypingScreen() = FlorisScreen {
                 prefs.spelling.languageMode,
                 icon = Icons.Default.Language,
                 title = stringRes(R.string.pref__spelling__language_mode__label),
-                entries = SpellingLanguageMode.listEntries(),
+                entries = enumDisplayEntriesOf(SpellingLanguageMode::class),
                 enabledIf = { florisSpellCheckerEnabled.value },
             )
             SwitchPreference(

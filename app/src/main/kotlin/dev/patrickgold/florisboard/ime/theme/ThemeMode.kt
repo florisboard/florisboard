@@ -16,11 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 /**
  * Enum class which specifies all theme modes available. Used in the Settings
  * to properly manage different use cases when the day or night theme should
@@ -31,26 +26,4 @@ enum class ThemeMode {
     ALWAYS_NIGHT,
     FOLLOW_SYSTEM,
     FOLLOW_TIME;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = ALWAYS_DAY,
-                label = stringRes(R.string.enum__theme_mode__always_day),
-            )
-            entry(
-                key = ALWAYS_NIGHT,
-                label = stringRes(R.string.enum__theme_mode__always_night),
-            )
-            entry(
-                key = FOLLOW_SYSTEM,
-                label = stringRes(R.string.enum__theme_mode__follow_system),
-            )
-            entry(
-                key = FOLLOW_TIME,
-                label = stringRes(R.string.enum__theme_mode__follow_time),
-            )
-        }
-    }
 }
