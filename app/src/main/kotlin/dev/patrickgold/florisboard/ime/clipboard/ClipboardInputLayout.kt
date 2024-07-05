@@ -92,10 +92,10 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.AndroidKeyguardManager
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.showShortToast
-import dev.patrickgold.florisboard.lib.android.systemService
+import org.florisboard.lib.android.AndroidKeyguardManager
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButtonWithInnerPadding
 import dev.patrickgold.florisboard.lib.compose.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton

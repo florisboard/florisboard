@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.util
 
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.AndroidVersion
 
 /**
  * Helper object containing methods to validate and extract network names and components from strings.

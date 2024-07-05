@@ -21,9 +21,9 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
-import dev.patrickgold.florisboard.lib.android.vibrate
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.systemVibratorOrNull
+import org.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference

@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.view.textservice.SuggestionsInfo
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.AndroidVersion
 
 /**
  * Inline value class wrapping the Android spelling [SuggestionsInfo] class with helpers.

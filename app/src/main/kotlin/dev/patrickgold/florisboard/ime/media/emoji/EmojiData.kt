@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.content.Context
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.bufferedReader
+import org.florisboard.lib.android.bufferedReader
 import io.github.reactivecircus.cache4k.Cache
 import java.util.*
 

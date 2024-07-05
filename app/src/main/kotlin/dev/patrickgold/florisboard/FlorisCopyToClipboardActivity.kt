@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.android.AndroidClipboardManager
-import dev.patrickgold.florisboard.lib.android.stringRes
-import dev.patrickgold.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.AndroidClipboardManager
+import org.florisboard.lib.android.stringRes
+import org.florisboard.lib.android.systemService
 
 class FlorisCopyToClipboardActivity : ComponentActivity() {
     private var error: CopyToClipboardError? = null

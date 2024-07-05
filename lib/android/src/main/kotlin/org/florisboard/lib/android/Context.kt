@@ -16,7 +16,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
 import android.content.Context
 import androidx.annotation.StringRes

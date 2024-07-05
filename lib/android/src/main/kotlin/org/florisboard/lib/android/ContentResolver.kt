@@ -16,12 +16,12 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
 import android.content.ContentResolver
 import android.content.res.AssetFileDescriptor
 import android.net.Uri
-import dev.patrickgold.florisboard.lib.io.FsFile
+import org.florisboard.lib.kotlin.io.FsFile
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStream

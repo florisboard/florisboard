@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import dev.patrickgold.florisboard.lib.android.launchUrl
+import dev.patrickgold.florisboard.lib.util.launchUrl
 
 @Composable
 fun FlorisHyperlinkText(
