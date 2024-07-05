@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.app.ext.AddonManagementReferenceBox
 import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -79,7 +80,7 @@ fun ThemeScreen() = FlorisScreen {
             prefs.theme.mode,
             icon = Icons.Default.BrightnessAuto,
             title = stringRes(R.string.pref__theme__mode__label),
-            entries = ThemeMode.listEntries(),
+            entries = enumDisplayEntriesOf(ThemeMode::class),
         )
         if (themeMode == ThemeMode.FOLLOW_TIME) {
             FlorisInfoCard(

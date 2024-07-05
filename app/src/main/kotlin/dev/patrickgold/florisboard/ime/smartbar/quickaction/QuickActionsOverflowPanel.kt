@@ -39,8 +39,8 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.ui.SnyggButton
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 @Composable

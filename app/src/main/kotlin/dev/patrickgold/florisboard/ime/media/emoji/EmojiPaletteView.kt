@@ -92,11 +92,11 @@ import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

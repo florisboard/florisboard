@@ -817,15 +817,15 @@
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
 
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Replace shared actions toggle icon with the incognito indicator</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Display the incognito indicator behind the keyboard</string>
+
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Force off</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Incognito mode will always be disabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Force on</string>
     <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Incognito mode will always be enabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
     <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamically on/off</string>
     <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Recommended option. Incognito mode will be dynamically enabled or disabled either through the target app\'s passed options or by manually toggling it through the incognito quick action in the Smartbar.</string>
-
-    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Replace shared actions toggle icon with the incognito indicator</string>
-    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Display the incognito indicator behind the keyboard</string>
 
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamically play sounds for input events, depending on system settings</string>
     <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Always play sounds for input events, regardless of system settings</string>

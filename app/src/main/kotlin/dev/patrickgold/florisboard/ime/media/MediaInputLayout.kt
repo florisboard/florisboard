@@ -57,7 +57,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.SnyggSurface
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable

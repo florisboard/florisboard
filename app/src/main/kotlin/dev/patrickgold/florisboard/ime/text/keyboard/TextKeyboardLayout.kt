@@ -91,10 +91,10 @@ import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.toIntOffset
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.channels.Channel

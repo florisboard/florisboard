@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -56,28 +57,7 @@ fun AdvancedScreen() = FlorisScreen {
             prefs.advanced.settingsTheme,
             icon = Icons.Default.Palette,
             title = stringRes(R.string.pref__advanced__settings_theme__label),
-            entries = listPrefEntries {
-                entry(
-                    key = AppTheme.AUTO,
-                    label = stringRes(R.string.settings__system_default),
-                )
-                entry(
-                    key = AppTheme.AUTO_AMOLED,
-                    label = stringRes(R.string.pref__advanced__settings_theme__auto_amoled),
-                )
-                entry(
-                    key = AppTheme.LIGHT,
-                    label = stringRes(R.string.pref__advanced__settings_theme__light),
-                )
-                entry(
-                    key = AppTheme.DARK,
-                    label = stringRes(R.string.pref__advanced__settings_theme__dark),
-                )
-                entry(
-                    key = AppTheme.AMOLED_DARK,
-                    label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
-                )
-            },
+            entries = enumDisplayEntriesOf(AppTheme::class),
         )
         SwitchPreference(
             pref = prefs.advanced.useMaterialYou,
@@ -165,7 +145,7 @@ fun AdvancedScreen() = FlorisScreen {
             prefs.advanced.incognitoMode,
             icon = vectorResource(id = R.drawable.ic_incognito),
             title = stringRes(R.string.pref__advanced__incognito_mode__label),
-            entries = IncognitoMode.listEntries(),
+            entries = enumDisplayEntriesOf(IncognitoMode::class),
         )
         Preference(
             icon = Icons.Default.Adb,

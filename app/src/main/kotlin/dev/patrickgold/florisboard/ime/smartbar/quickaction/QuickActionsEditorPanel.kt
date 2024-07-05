@@ -66,11 +66,11 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggClip
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.toIntOffset
 
 private const val ItemNotFound = -1

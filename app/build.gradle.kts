@@ -208,6 +208,7 @@ dependencies {
     implementation(project(":lib:android"))
     implementation(project(":lib:kotlin"))
     implementation(project(":lib:native"))
+    implementation(project(":lib:snygg"))
 
     testImplementation(libs.equalsverifier)
     testImplementation(libs.kotest.assertions.core)

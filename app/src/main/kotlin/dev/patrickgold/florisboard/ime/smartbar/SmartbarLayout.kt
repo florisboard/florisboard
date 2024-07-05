@@ -16,40 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 enum class SmartbarLayout {
     SUGGESTIONS_ONLY,
     ACTIONS_ONLY,
     SUGGESTIONS_ACTIONS_SHARED,
     SUGGESTIONS_ACTIONS_EXTENDED;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = SUGGESTIONS_ONLY,
-                label = stringRes(R.string.enum__smartbar_layout__suggestions_only),
-                description = stringRes(R.string.enum__smartbar_layout__suggestions_only__description),
-            )
-            entry(
-                key = ACTIONS_ONLY,
-                label = stringRes(R.string.enum__smartbar_layout__actions_only),
-                description = stringRes(R.string.enum__smartbar_layout__actions_only__description),
-            )
-            entry(
-                key = SUGGESTIONS_ACTIONS_SHARED,
-                label = stringRes(R.string.enum__smartbar_layout__suggestions_action_shared),
-                description = stringRes(R.string.enum__smartbar_layout__suggestions_action_shared__description),
-            )
-            entry(
-                key = SUGGESTIONS_ACTIONS_EXTENDED,
-                label = stringRes(R.string.enum__smartbar_layout__suggestions_actions_extended),
-                description = stringRes(R.string.enum__smartbar_layout__suggestions_actions_extended__description),
-            )
-        }
-    }
 }

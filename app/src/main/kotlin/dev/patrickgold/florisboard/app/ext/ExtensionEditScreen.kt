@@ -83,7 +83,7 @@ import dev.patrickgold.florisboard.lib.ext.validate
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
+import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
