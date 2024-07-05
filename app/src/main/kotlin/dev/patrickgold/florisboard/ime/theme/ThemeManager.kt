@@ -47,11 +47,6 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.value.MaterialYouColor
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,7 +54,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.decodeFromString
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.value.MaterialYouColor
+import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import kotlin.properties.Delegates
 
 /**

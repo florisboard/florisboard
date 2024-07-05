@@ -20,17 +20,17 @@ import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.lib.ValidationRule
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggPercentShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.value.SnyggDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.lib.validate
+import org.florisboard.lib.snygg.value.SnyggVarValue
 
 object ExtensionValidation {
     private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*${'$'}""".toRegex()
     private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
     private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*${'$'}""".toRegex()
-    val ThemeComponentVariableNameRegex = """^[a-zA-Z0-9-_]+${'$'}""".toRegex()
 
     val MetaId = ValidationRule<String> {
         forKlass = ExtensionMeta::class
@@ -148,8 +148,8 @@ object ExtensionValidation {
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_property)
                 str == "-" || str.startsWith("--") -> resultValid()
-                !ThemeComponentVariableNameRegex.matches(str) -> {
-                    resultInvalid(error = R.string.ext__validation__error_property, "variable_name_regex" to ThemeComponentVariableNameRegex)
+                !SnyggVarValue.VariableNameRegex.matches(str) -> {
+                    resultInvalid(error = R.string.ext__validation__error_property, "variable_name_regex" to SnyggVarValue.VariableNameRegex)
                 }
                 else -> resultValid(hint = R.string.ext__validation__hint_property)
             }
@@ -163,7 +163,7 @@ object ExtensionValidation {
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_color)
-                dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                org.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
                     resultInvalid(error = R.string.ext__validation__error_color)
                 }
                 else -> resultValid()
