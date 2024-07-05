@@ -55,7 +55,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.AndroidInternalR
+import org.florisboard.lib.android.AndroidInternalR
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 interface ComputingEvaluator {

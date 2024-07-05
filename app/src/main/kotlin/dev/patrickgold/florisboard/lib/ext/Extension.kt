@@ -20,12 +20,12 @@ import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.io.FsDir
-import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
 import org.florisboard.lib.kotlin.resultErr
 import org.florisboard.lib.kotlin.resultOk
 

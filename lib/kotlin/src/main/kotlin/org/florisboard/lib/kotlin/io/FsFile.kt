@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.io
+package org.florisboard.lib.kotlin.io
 
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.decodeFromString

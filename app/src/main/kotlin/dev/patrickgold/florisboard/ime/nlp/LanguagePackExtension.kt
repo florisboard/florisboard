@@ -9,11 +9,11 @@ import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
 import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
-import dev.patrickgold.florisboard.lib.io.FsDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.subFile
 
 @Serializable
 class LanguagePackComponent(

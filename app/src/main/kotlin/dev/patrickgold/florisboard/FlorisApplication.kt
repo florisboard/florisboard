@@ -40,8 +40,8 @@ import dev.patrickgold.florisboard.lib.devtools.Flog
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
 import dev.patrickgold.jetpref.datastore.JetPref
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.tryOrNull
 import org.florisboard.libnative.dummyAdd
 import java.lang.ref.WeakReference

@@ -46,10 +46,9 @@ import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.hideAppIcon
-import dev.patrickgold.florisboard.lib.android.setLocale
-import dev.patrickgold.florisboard.lib.android.showAppIcon
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.hideAppIcon
+import org.florisboard.lib.android.showAppIcon
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
@@ -92,7 +91,8 @@ class FlorisAppActivity : ComponentActivity() {
         }
         prefs.advanced.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
-            config.setLocale(if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it))
+            val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
+            config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {

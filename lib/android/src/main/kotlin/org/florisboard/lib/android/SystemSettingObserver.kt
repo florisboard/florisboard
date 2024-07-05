@@ -14,6 +14,26 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
-typealias AndroidKeyguardManager = android.app.KeyguardManager
+import android.content.Context
+import android.database.ContentObserver
+import android.os.Handler
+
+fun interface OnSystemSettingsChangedListener {
+    fun onChanged()
+}
+
+class SystemSettingsObserver(
+    context: Context,
+    private val listener: OnSystemSettingsChangedListener,
+) : ContentObserver(Handler(context.mainLooper)) {
+
+    override fun deliverSelfNotifications(): Boolean {
+        return true
+    }
+
+    override fun onChange(selfChange: Boolean) {
+        listener.onChanged()
+    }
+}

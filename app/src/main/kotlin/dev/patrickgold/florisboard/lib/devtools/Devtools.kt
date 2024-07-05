@@ -23,7 +23,7 @@ import android.os.Debug
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppPrefs
-import dev.patrickgold.florisboard.lib.android.systemService
+import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils

@@ -55,19 +55,19 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryValidation
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.launchActivity
-import dev.patrickgold.florisboard.lib.android.showLongToast
-import dev.patrickgold.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.rememberValidationResult
+import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.stringRes
 
 private val AllLanguagesLocale = FlorisLocale.from(language = "zz")
 private val UserDictionaryEntryToAdd = UserDictionaryEntry(id = 0, "", 255, null, null)

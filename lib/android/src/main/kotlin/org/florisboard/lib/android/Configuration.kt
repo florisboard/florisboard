@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
 import android.content.res.Configuration
-import dev.patrickgold.florisboard.lib.FlorisLocale
 
 fun Configuration.isOrientationPortrait(): Boolean {
     return this.orientation == Configuration.ORIENTATION_PORTRAIT
@@ -25,8 +24,4 @@ fun Configuration.isOrientationPortrait(): Boolean {
 
 fun Configuration.isOrientationLandscape(): Boolean {
     return this.orientation == Configuration.ORIENTATION_LANDSCAPE
-}
-
-fun Configuration.setLocale(locale: FlorisLocale) {
-    return this.setLocale(locale.base)
 }

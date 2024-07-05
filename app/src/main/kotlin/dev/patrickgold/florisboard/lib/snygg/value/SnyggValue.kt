@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.snygg.value
 
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.AndroidVersion
 
 /**
  * SnyggValue is the base interface for all possible property values a Snygg stylesheet can hold. In general, a Snygg

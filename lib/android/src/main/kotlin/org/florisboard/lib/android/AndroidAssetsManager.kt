@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
-import dev.patrickgold.florisboard.lib.io.FsDir
-import dev.patrickgold.florisboard.lib.io.FsFile
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.Reader

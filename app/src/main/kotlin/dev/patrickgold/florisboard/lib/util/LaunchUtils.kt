@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.android
+package dev.patrickgold.florisboard.lib.util
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -24,6 +24,7 @@ import androidx.annotation.StringRes
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.io.FlorisRef
+import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.CurlyArg
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

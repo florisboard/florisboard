@@ -18,8 +18,10 @@ package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.lib.android.copyRecursively
-import dev.patrickgold.florisboard.lib.android.write
+import org.florisboard.lib.android.copyRecursively
+import org.florisboard.lib.android.write
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile

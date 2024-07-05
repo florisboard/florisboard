@@ -54,7 +54,7 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 
 private const val AnimationDuration = 200

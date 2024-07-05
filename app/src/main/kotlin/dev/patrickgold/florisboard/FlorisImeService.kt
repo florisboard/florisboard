@@ -97,14 +97,6 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPa
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.android.AndroidInternalR
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
-import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
-import dev.patrickgold.florisboard.lib.android.launchActivity
-import dev.patrickgold.florisboard.lib.android.setLocale
-import dev.patrickgold.florisboard.lib.android.showShortToast
-import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
 import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
@@ -122,7 +114,14 @@ import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
 import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
+import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.AndroidInternalR
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
 
@@ -276,7 +275,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
-            config.setLocale(subtype.primaryLocale)
+            config.setLocale(subtype.primaryLocale.base)
             resourcesContext = createConfigurationContext(config)
         }
     }

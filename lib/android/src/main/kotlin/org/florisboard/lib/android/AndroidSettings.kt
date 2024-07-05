@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
 import android.content.Context
 import android.net.Uri
 import android.provider.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import org.florisboard.lib.kotlin.tryOrNull
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
@@ -57,65 +48,15 @@ abstract class AndroidSettingsHelper(
         return reflectionGetAllStaticFields(kClass)
     }
 
-    private fun observe(context: Context, key: String, observer: SystemSettingsObserver) {
+    fun observe(context: Context, key: String, observer: SystemSettingsObserver) {
         getUriFor(key)?.let { uri ->
             context.contentResolver.registerContentObserver(uri, false, observer)
             observer.dispatchChange(false, uri)
         }
     }
 
-    private fun removeObserver(context: Context, observer: SystemSettingsObserver) {
+    fun removeObserver(context: Context, observer: SystemSettingsObserver) {
         context.contentResolver.unregisterContentObserver(observer)
-    }
-
-    @Composable
-    fun observeAsState(
-        key: String,
-        foregroundOnly: Boolean = false,
-    ) = observeAsState(
-        key = key,
-        foregroundOnly = foregroundOnly,
-        transform = { it },
-    )
-
-    @Composable
-    fun <R> observeAsState(
-        key: String,
-        foregroundOnly: Boolean = false,
-        transform: (String?) -> R,
-    ): State<R> {
-        val lifecycleOwner = LocalLifecycleOwner.current
-        val context = LocalContext.current.applicationContext
-        val state = remember(key) { mutableStateOf(transform(getString(context, key))) }
-        DisposableEffect(lifecycleOwner.lifecycle) {
-            val observer = SystemSettingsObserver(context) {
-                state.value = transform(getString(context, key))
-            }
-            if (foregroundOnly) {
-                val eventObserver = LifecycleEventObserver { _, event ->
-                    when (event) {
-                        Lifecycle.Event.ON_RESUME -> {
-                            observe(context, key, observer)
-                        }
-                        Lifecycle.Event.ON_PAUSE -> {
-                            removeObserver(context, observer)
-                        }
-                        else -> {}
-                    }
-                }
-                lifecycleOwner.lifecycle.addObserver(eventObserver)
-                onDispose {
-                    lifecycleOwner.lifecycle.removeObserver(eventObserver)
-                    removeObserver(context, observer)
-                }
-            } else {
-                observe(context, key, observer)
-                onDispose {
-                    removeObserver(context, observer)
-                }
-            }
-        }
-        return state
     }
 }
 

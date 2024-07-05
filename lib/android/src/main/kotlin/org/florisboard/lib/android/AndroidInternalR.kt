@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.android
+package org.florisboard.lib.android
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
@@ -51,6 +51,7 @@ object AndroidInternalR {
             Resources.getSystem().getIdentifier("ime_action_default", "string", "android")
         }
     }
+
     @SuppressLint("DiscouragedApi")
     @Suppress("ClassName")
     object drawable {

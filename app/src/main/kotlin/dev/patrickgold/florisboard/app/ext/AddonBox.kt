@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.android.launchUrl
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox

@@ -85,7 +85,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisRect
 import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.compose.DisposableLifecycleEffect
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
