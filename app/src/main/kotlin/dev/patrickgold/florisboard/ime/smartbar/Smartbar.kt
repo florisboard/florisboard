@@ -171,10 +171,19 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .snyggBackground(context, primaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
-                val rotation by animateFloatAsState(
+                val oldRotation by animateFloatAsState(
                     animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
-                    targetValue = if (sharedActionsExpanded) 180f else 0f, label = "Icon rotation",
+                    targetValue = if (sharedActionsExpanded) 180f else 0f, label = "sharedActionsExpandedToggleBtn",
                 )
+                val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
+                val rotation by transition.animateFloat(
+                    transitionSpec = {
+                        if (shouldAnimate) AnimationTween else NoAnimationTween
+                    },
+                    label = "rotation"
+                ) {
+                    if (it) 180f else 0f
+                }
                 val arrowIcon = if (flipToggles) {
                     Icons.AutoMirrored.Default.KeyboardArrowLeft
                 } else {
@@ -192,12 +201,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     arrowIcon
                 }
                 Icon(
-                    modifier = Modifier.apply {
-                        if (!(isIncognitoMode && incognitoDisplayMode.value == IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE)) {
-                            // FIXME: Rotation is not applied
-                            this.rotate(rotation)
-                        }
-                    },
+                    modifier = Modifier.rotate(if (incognitoDisplayMode.value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD) rotation else 0f),
                     imageVector = icon,
                     contentDescription = null,
                     tint = primaryActionsToggleStyle.foreground.solidColor(
