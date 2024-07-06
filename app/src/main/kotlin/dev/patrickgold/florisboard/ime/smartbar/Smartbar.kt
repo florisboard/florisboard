@@ -35,13 +35,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -65,12 +65,12 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.horizontalTween
 import dev.patrickgold.florisboard.lib.compose.verticalTween
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
 import org.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 private const val AnimationDuration = 200
 
@@ -193,7 +193,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 }
                 Icon(
                     modifier = Modifier.apply {
-                        if (isIncognitoMode && incognitoDisplayMode.value == IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE) {
+                        if (!(isIncognitoMode && incognitoDisplayMode.value == IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE)) {
+                            // FIXME: Rotation is not applied
                             this.rotate(rotation)
                         }
                     },

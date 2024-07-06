@@ -16,10 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -32,17 +32,17 @@ import androidx.compose.ui.text.TextStyle
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
-import org.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.themeManager
 import org.florisboard.lib.snygg.Snygg
+import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.ui.ProvideSnyggUiDefaults
 import org.florisboard.lib.snygg.ui.SnyggUiDefaults
 
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionComponent> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
 
-private val MaterialDarkFallbackPalette = darkColors()
-private val MaterialLightFallbackPalette = lightColors()
+private val MaterialDarkFallbackPalette = darkColorScheme()
+private val MaterialLightFallbackPalette = lightColorScheme()
 
 object FlorisImeTheme {
     val config: ThemeExtensionComponent
