@@ -217,6 +217,11 @@ object FlorisImeUiSpec : SnyggSpec({
         shadow()
         border()
     }
+    element(FlorisImeUi.EnableClipboardButton) {
+        background()
+        foreground()
+        shape()
+    }
 
     element(FlorisImeUi.EmojiKey) {
         background()

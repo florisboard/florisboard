@@ -19,6 +19,8 @@ package dev.patrickgold.florisboard.ime.theme
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -33,6 +35,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.themeManager
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.ui.ProvideSnyggUiDefaults
@@ -113,9 +116,17 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val activeConfig = remember(activeThemeInfo) { activeThemeInfo.config }
     val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
     val materialColors = if (activeConfig.isNightTheme) {
-        MaterialDarkFallbackPalette
+        if (AndroidVersion.ATLEAST_API31_S) {
+            dynamicDarkColorScheme(context)
+        } else {
+            MaterialDarkFallbackPalette
+        }
     } else {
-        MaterialLightFallbackPalette
+        if (AndroidVersion.ATLEAST_API31_S) {
+            dynamicLightColorScheme(context)
+        } else {
+            MaterialLightFallbackPalette
+        }
     }
     MaterialTheme(materialColors) {
         CompositionLocalProvider(
