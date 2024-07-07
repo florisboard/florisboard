@@ -104,7 +104,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(14.sp)
         shape = roundedCornerShape(12.dp)
     }
-    FlorisImeUi.EnableClipboardButton {
+    FlorisImeUi.ClipboardEnableHistoryButton {
         background = `var`("primary")
         foreground = rgbaColor(0, 0, 0)
         shape = roundedCornerShape(12.dp)

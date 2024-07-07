@@ -143,7 +143,7 @@ fun ClipboardInputLayout(
     val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardHeader)
     val itemStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardItem)
     val popupStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardItemPopup)
-    val buttonStyle = FlorisImeTheme.style.get(FlorisImeUi.EnableClipboardButton)
+    val enableHistoryButtonStyle = FlorisImeTheme.style.get(FlorisImeUi.ClipboardEnableHistoryButton)
 
     fun isPopupSurfaceActive() = popupItem != null || showClearAllHistory
 
@@ -541,7 +541,7 @@ fun ClipboardInputLayout(
                             .padding(top = 8.dp)
                             .align(Alignment.End),
                         onClick = { prefs.clipboard.historyEnabled.set(true) },
-                        style = buttonStyle,
+                        style = enableHistoryButtonStyle,
                         text = stringRes(R.string.clipboard__disabled__enable_button)
                     )
                 }

@@ -20,7 +20,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
@@ -171,10 +170,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .snyggBackground(context, primaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
-                val oldRotation by animateFloatAsState(
-                    animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
-                    targetValue = if (sharedActionsExpanded) 180f else 0f, label = "sharedActionsExpandedToggleBtn",
-                )
                 val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
                 val rotation by transition.animateFloat(
                     transitionSpec = {
