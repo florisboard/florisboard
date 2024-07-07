@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Schedule
@@ -74,8 +73,7 @@ import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import java.io.FileNotFoundException
 import java.text.DateFormat
-import java.util.Calendar
-import java.util.TimeZone
+import java.util.*
 
 object Restore {
     const val MIN_VERSION_CODE = 64
@@ -337,12 +335,12 @@ fun RestoreScreen() = FlorisScreen {
                                 .fillMaxWidth()
                                 .height(9.dp)
                                 .padding(bottom = 8.dp)
-                                .background(LocalContentColor.current.copy(alpha = LocalContentAlpha.current))
+                                .background(LocalContentColor.current)
                         )
                         Text(
                             text = stringRes(workspace.restoreWarningId!!),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                            color = LocalContentColor.current,
                             fontStyle = FontStyle.Italic,
                         )
                     }

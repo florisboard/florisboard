@@ -55,7 +55,6 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import org.florisboard.lib.android.AndroidInternalR
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 interface ComputingEvaluator {
@@ -208,7 +207,7 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
         KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
-            context()?.vectorResource(id = AndroidInternalR.drawable.ic_qs_one_handed_mode)
+            context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
         }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice

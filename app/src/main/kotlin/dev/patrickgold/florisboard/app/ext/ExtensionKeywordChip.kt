@@ -17,13 +17,11 @@
 package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ExtensionKeywordChip(
     keyword: String,

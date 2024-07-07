@@ -217,6 +217,11 @@ object FlorisImeUiSpec : SnyggSpec({
         shadow()
         border()
     }
+    element(FlorisImeUi.ClipboardEnableHistoryButton) {
+        background()
+        foreground()
+        shape()
+    }
 
     element(FlorisImeUi.EmojiKey) {
         background()

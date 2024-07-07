@@ -20,7 +20,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
@@ -35,13 +34,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -65,12 +64,12 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.horizontalTween
 import dev.patrickgold.florisboard.lib.compose.verticalTween
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
 import org.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 
 private const val AnimationDuration = 200
 
@@ -171,10 +170,15 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .snyggBackground(context, primaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
-                val rotation by animateFloatAsState(
-                    animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
-                    targetValue = if (sharedActionsExpanded) 180f else 0f, label = "Icon rotation",
-                )
+                val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
+                val rotation by transition.animateFloat(
+                    transitionSpec = {
+                        if (shouldAnimate) AnimationTween else NoAnimationTween
+                    },
+                    label = "rotation",
+                ) {
+                    if (it) 180f else 0f
+                }
                 val arrowIcon = if (flipToggles) {
                     Icons.AutoMirrored.Default.KeyboardArrowLeft
                 } else {
@@ -192,11 +196,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     arrowIcon
                 }
                 Icon(
-                    modifier = Modifier.apply {
-                        if (isIncognitoMode && incognitoDisplayMode.value == IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE) {
-                            this.rotate(rotation)
-                        }
-                    },
+                    modifier = Modifier.rotate(if (incognitoDisplayMode.value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD) rotation else 0f),
                     imageVector = icon,
                     contentDescription = null,
                     tint = primaryActionsToggleStyle.foreground.solidColor(

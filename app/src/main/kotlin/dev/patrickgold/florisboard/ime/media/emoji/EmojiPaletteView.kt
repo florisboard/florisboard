@@ -39,16 +39,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
@@ -86,21 +84,21 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import org.florisboard.lib.android.AndroidKeyguardManager
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.florisboard.lib.android.AndroidKeyguardManager
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemService
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
 import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.ui.spSize
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -279,15 +277,13 @@ private fun EmojiCategoriesTabRow(
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight),
         selectedTabIndex = selectedTabIndex,
-        backgroundColor = Color.Transparent,
+        containerColor = Color.Transparent,
         contentColor = selectedContentColor,
         indicator = { tabPositions ->
-            Box(
-                modifier = Modifier
-                    .tabIndicatorOffset(tabPositions[selectedTabIndex])
-                    .padding(horizontal = 8.dp)
-                    .height(TabRowDefaults.IndicatorHeight)
-                    .background(LocalContentColor.current, CircleShape),
+            TabRowDefaults.PrimaryIndicator(
+                Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                color = selectedContentColor,
+                height = 4.dp
             )
         },
     ) {
