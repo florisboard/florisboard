@@ -175,7 +175,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     transitionSpec = {
                         if (shouldAnimate) AnimationTween else NoAnimationTween
                     },
-                    label = "rotation"
+                    label = "rotation",
                 ) {
                     if (it) 180f else 0f
                 }
