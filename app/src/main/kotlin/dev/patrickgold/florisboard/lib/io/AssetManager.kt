@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
-import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
@@ -29,7 +28,7 @@ import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.lib.android.reader
+import org.florisboard.lib.android.reader
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -66,122 +65,118 @@ val DefaultJsonConfig = Json {
     }
 }
 
-// TODO: fully deprecate and remove this class, should be substituted by extension funs on the actual file and stream
-//       instances
-class AssetManager(context: Context) {
-    val appContext by context.appContext()
-
-    fun delete(ref: FlorisRef) {
-        when {
-            ref.isCache || ref.isInternal -> {
-                ref.absoluteFile(appContext).delete()
-            }
-            else -> error("Can not delete directory/file in location '${ref.scheme}'.")
+fun FlorisRef.delete(context: Context) {
+    when {
+        isCache || isInternal -> {
+            absoluteFile(context).delete()
         }
-    }
-
-    fun hasAsset(ref: FlorisRef): Boolean {
-        return when {
-            ref.isAssets -> {
-                try {
-                    val file = File(ref.relativePath)
-                    val list = appContext.assets.list(file.parent?.toString() ?: "")
-                    list?.contains(file.name) == true
-                } catch (e: Exception) {
-                    false
-                }
-            }
-            ref.isCache || ref.isInternal -> {
-                val file = File(ref.absolutePath(appContext))
-                file.exists() && file.isFile
-            }
-            else -> false
-        }
-    }
-
-    fun list(ref: FlorisRef) = list(ref, files = true, dirs = true)
-
-    fun listFiles(ref: FlorisRef) = list(ref, files = true, dirs = false)
-
-    fun listDirs(ref: FlorisRef) = list(ref, files = false, dirs = true)
-
-    private fun list(ref: FlorisRef, files: Boolean, dirs: Boolean) = runCatching<List<FlorisRef>> {
-        when {
-            !files && !dirs -> listOf()
-            ref.isAssets -> {
-                appContext.assets.list(ref.relativePath)?.mapNotNull { fileName ->
-                    val subList = appContext.assets.list("${ref.relativePath}/$fileName") ?: return@mapNotNull null
-                    when {
-                        files && dirs || files && subList.isEmpty() || dirs && subList.isNotEmpty() -> {
-                            ref.subRef(fileName)
-                        }
-                        else -> null
-                    }
-                } ?: listOf()
-            }
-            ref.isCache || ref.isInternal -> {
-                val dir = ref.absoluteFile(appContext)
-                if (dir.isDirectory) {
-                    when {
-                        files && dirs -> dir.listFiles()?.toList()
-                        files -> dir.listFiles()?.filter { it.isFile }
-                        dirs -> dir.listFiles()?.filter { it.isDirectory }
-                        else -> null
-                    }!!.map { ref.subRef(it.name) }
-                } else {
-                    listOf()
-                }
-            }
-            else -> error("Unsupported FlorisRef source!")
-        }
-    }
-
-    fun <T> loadJsonAsset(
-        ref: FlorisRef,
-        serializer: KSerializer<T>,
-        jsonConfig: Json = DefaultJsonConfig,
-    ) = runCatching<T> {
-        val jsonStr = loadTextAsset(ref).getOrThrow()
-        jsonConfig.decodeFromString(serializer, jsonStr)
-    }
-
-    inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = DefaultJsonConfig): Result<T> {
-        return runCatching { jsonConfig.decodeFromString(jsonStr) }
-    }
-
-    fun <T> loadJsonAsset(
-        jsonStr: String,
-        serializer: KSerializer<T>,
-        jsonConfig: Json = DefaultJsonConfig,
-    ) = runCatching<T> {
-        jsonConfig.decodeFromString(serializer, jsonStr)
-    }
-
-    fun loadTextAsset(ref: FlorisRef): Result<String> {
-        return when {
-            ref.isAssets -> runCatching {
-                appContext.assets.reader(ref.relativePath).use { it.readText() }
-            }
-            ref.isCache || ref.isInternal -> {
-                val file = File(ref.absolutePath(appContext))
-                val contents = readTextFile(file).getOrElse { return resultErr(it) }
-                if (contents.isBlank()) {
-                    resultErrStr("File is blank!")
-                } else {
-                    resultOk(contents)
-                }
-            }
-            else -> resultErrStr("Unsupported asset ref!")
-        }
-    }
-
-    /**
-     * Reads a given [file] and returns its content.
-     *
-     * @param file The file object.
-     * @return The contents of the file or an empty string, if the file does not exist.
-     */
-    private fun readTextFile(file: File) = runCatching {
-        file.readText(Charsets.UTF_8)
+        else -> error("Can not delete directory/file in location '${scheme}'.")
     }
 }
+
+fun FlorisRef.hasAsset(context: Context): Boolean {
+    return when {
+        isAssets -> {
+            try {
+                val file = File(relativePath)
+                val list = context.assets.list(file.parent?.toString() ?: "")
+                list?.contains(file.name) == true
+            } catch (e: Exception) {
+                false
+            }
+        }
+        isCache || isInternal -> {
+            val file = File(absolutePath(context))
+            file.exists() && file.isFile
+        }
+        else -> false
+    }
+}
+
+fun FlorisRef.list(context: Context) = list(context, files = true, dirs = true)
+
+fun FlorisRef.listFiles(context: Context) = list(context, files = true, dirs = false)
+
+fun FlorisRef.listDirs(context: Context) = list(context, files = false, dirs = true)
+
+private fun FlorisRef.list(appContext: Context, files: Boolean, dirs: Boolean) = runCatching<List<FlorisRef>> {
+    when {
+        !files && !dirs -> listOf()
+        isAssets -> {
+            appContext.assets.list(relativePath)?.mapNotNull { fileName ->
+                val subList = appContext.assets.list("${relativePath}/$fileName") ?: return@mapNotNull null
+                when {
+                    files && dirs || files && subList.isEmpty() || dirs && subList.isNotEmpty() -> {
+                        subRef(fileName)
+                    }
+                    else -> null
+                }
+            } ?: listOf()
+        }
+        isCache || isInternal -> {
+            val dir = absoluteFile(appContext)
+            if (dir.isDirectory) {
+                when {
+                    files && dirs -> dir.listFiles()?.toList()
+                    files -> dir.listFiles()?.filter { it.isFile }
+                    dirs -> dir.listFiles()?.filter { it.isDirectory }
+                    else -> null
+                }!!.map { subRef(it.name) }
+            } else {
+                listOf()
+            }
+        }
+        else -> error("Unsupported FlorisRef source!")
+    }
+}
+
+fun <T> FlorisRef.loadJsonAsset(
+    context: Context,
+    serializer: KSerializer<T>,
+    jsonConfig: Json = DefaultJsonConfig,
+) = runCatching<T> {
+    val jsonStr = loadTextAsset(context).getOrThrow()
+    jsonConfig.decodeFromString(serializer, jsonStr)
+}
+
+inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = DefaultJsonConfig): Result<T> {
+    return runCatching { jsonConfig.decodeFromString(jsonStr) }
+}
+
+fun <T> loadJsonAsset(
+    jsonStr: String,
+    serializer: KSerializer<T>,
+    jsonConfig: Json = DefaultJsonConfig,
+) = runCatching<T> {
+    jsonConfig.decodeFromString(serializer, jsonStr)
+}
+
+fun FlorisRef.loadTextAsset(context: Context): Result<String> {
+    return when {
+        isAssets -> runCatching {
+            context.assets.reader(relativePath).use { it.readText() }
+        }
+        isCache || isInternal -> {
+            val file = File(absolutePath(context))
+            val contents = readTextFile(file).getOrElse { return resultErr(it) }
+            if (contents.isBlank()) {
+                resultErrStr("File is blank!")
+            } else {
+                resultOk(contents)
+            }
+        }
+        else -> resultErrStr("Unsupported asset ref!")
+    }
+}
+
+/**
+ * Reads a given [file] and returns its content.
+ *
+ * @param file The file object.
+ * @return The contents of the file or an empty string, if the file does not exist.
+ */
+private fun readTextFile(file: File) = runCatching {
+    file.readText(Charsets.UTF_8)
+}
+
+

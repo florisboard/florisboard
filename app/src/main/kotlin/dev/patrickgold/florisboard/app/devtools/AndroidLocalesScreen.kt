@@ -32,14 +32,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import java.util.*
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
+import java.util.Locale
 
 @Composable
 fun AndroidLocalesScreen() = FlorisScreen {

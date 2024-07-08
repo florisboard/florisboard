@@ -385,7 +385,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 )
 
                 val nlpProviderMappingIds = remember(nlpProviderMappings) {
-                    SelectListKeys + nlpProviderMappings.keys
+                    listOf(SelectNlpProviderId) + nlpProviderMappings.keys
                 }
                 val nlpProviderMappingLabels = remember(nlpProviderMappings) {
                     selectListValues + nlpProviderMappings.values.map { it }
@@ -398,8 +398,8 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     selectedIndex = selectedIndex,
                     isError = showSelectAsError && selectedIndex == 0,
                     onSelectItem = { nlpProviders = SubtypeNlpProviderMap(
-                        suggestion = nlpProviderMappingIds[it] as String,
-                        spelling = nlpProviderMappingIds[it] as String
+                        suggestion = nlpProviderMappingIds[it],
+                        spelling = nlpProviderMappingIds[it]
                     ) },
                     onExpandRequest = { expanded = true },
                     onDismissRequest = { expanded = false },

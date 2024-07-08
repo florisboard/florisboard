@@ -27,8 +27,8 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
-import dev.patrickgold.florisboard.lib.android.AndroidSettings
-import dev.patrickgold.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes

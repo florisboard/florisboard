@@ -29,8 +29,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.ui.solidColor
 
 
 @Composable

@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.AppTheme
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.AndroidVersion
 
 /*private val AmoledDarkColorPalette = darkColorScheme(
     primary = Green500,

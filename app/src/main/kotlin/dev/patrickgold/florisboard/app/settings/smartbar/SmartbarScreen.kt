@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.settings.smartbar
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
@@ -41,7 +42,7 @@ fun SmartbarScreen() = FlorisScreen {
         ListPreference(
             listPref = prefs.smartbar.layout,
             title = stringRes(R.string.pref__smartbar__layout__label),
-            entries = SmartbarLayout.listEntries(),
+            entries = enumDisplayEntriesOf(SmartbarLayout::class),
             enabledIf = { prefs.smartbar.enabled isEqualTo true },
         )
 
@@ -49,7 +50,7 @@ fun SmartbarScreen() = FlorisScreen {
             ListPreference(
                 prefs.suggestion.displayMode,
                 title = stringRes(R.string.pref__suggestion__display_mode__label),
-                entries = CandidatesDisplayMode.listEntries(),
+                entries = enumDisplayEntriesOf(CandidatesDisplayMode::class),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
                 visibleIf = { prefs.smartbar.layout isNotEqualTo SmartbarLayout.ACTIONS_ONLY },
             )
@@ -73,7 +74,7 @@ fun SmartbarScreen() = FlorisScreen {
             ListPreference(
                 listPref = prefs.smartbar.extendedActionsPlacement,
                 title = stringRes(R.string.pref__smartbar__extended_actions_placement__label),
-                entries = ExtendedActionsPlacement.listEntries(),
+                entries = enumDisplayEntriesOf(ExtendedActionsPlacement::class),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
                 visibleIf = { prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED },
             )

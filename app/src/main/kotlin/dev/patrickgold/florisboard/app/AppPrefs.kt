@@ -46,10 +46,10 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
-import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.android.isOrientationPortrait
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
+import org.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
@@ -642,18 +642,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "theme__mode",
             default = ThemeMode.FOLLOW_SYSTEM,
         )
-        val dayThemeAdaptToApp = boolean(
-            key = "theme__day_theme_adapt_to_app",
-            default = false,
-        )
         val dayThemeId = custom(
             key = "theme__day_theme_id",
             default = extCoreTheme("floris_day"),
             serializer = ExtensionComponentName.Serializer,
-        )
-        val nightThemeAdaptToApp = boolean(
-            key = "theme__night_theme_adapt_to_app",
-            default = false,
         )
         val nightThemeId = custom(
             key = "theme__night_theme_id",

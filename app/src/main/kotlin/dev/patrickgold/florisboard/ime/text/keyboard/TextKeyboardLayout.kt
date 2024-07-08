@@ -30,8 +30,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -55,7 +55,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -85,21 +84,21 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisRect
 import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.compose.DisposableLifecycleEffect
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.toIntOffset
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
+import org.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 import kotlin.math.abs
 import kotlin.math.sqrt
 

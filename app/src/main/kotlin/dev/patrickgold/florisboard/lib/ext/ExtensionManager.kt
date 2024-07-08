@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.lib.ext
 import android.content.Context
 import android.net.Uri
 import android.os.FileObserver
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
@@ -30,14 +30,16 @@ import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
 import dev.patrickgold.florisboard.ime.text.composing.KanaUnicode
 import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.android.FileObserver
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.writeJson
+import dev.patrickgold.florisboard.lib.io.delete
+import dev.patrickgold.florisboard.lib.io.listDirs
+import dev.patrickgold.florisboard.lib.io.listFiles
+import dev.patrickgold.florisboard.lib.io.loadJsonAsset
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,6 +50,9 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.florisboard.lib.android.FileObserver
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.writeJson
 import org.florisboard.lib.kotlin.throwOnFailure
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -86,12 +91,16 @@ class ExtensionManager(context: Context) {
     }
 
     private val appContext by context.appContext()
-    private val assetManager by context.assetManager()
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
     val languagePacks = ExtensionIndex(LanguagePackExtension.serializer(), IME_LANGUAGEPACK_PATH)
+
+    @Composable
+    fun combinedExtensionList() = listOf(keyboardExtensions.observeAsNonNullState(), themes.observeAsNonNullState(), languagePacks.observeAsNonNullState()).map {
+        it.value
+    }.flatten()
 
     fun init() {
         keyboardExtensions.init()
@@ -142,7 +151,7 @@ class ExtensionManager(context: Context) {
     fun delete(ext: Extension) {
         check(canDelete(ext)) { "Cannot delete extension!" }
         ext.unload(appContext)
-        assetManager.delete(ext.sourceRef!!)
+        ext.sourceRef!!.delete(appContext)
     }
 
     inner class ExtensionIndex<T : Extension>(
@@ -200,11 +209,11 @@ class ExtensionManager(context: Context) {
 
         private fun indexAssetsModule(): List<T> {
             val list = mutableListOf<T>()
-            assetManager.listDirs(assetsModuleRef).fold(
+            assetsModuleRef.listDirs(appContext).fold(
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
-                        assetManager.loadJsonAsset(fileRef, serializer, ExtensionJsonConfig).fold(
+                        fileRef.loadJsonAsset(appContext, serializer, ExtensionJsonConfig).fold(
                             onSuccess = { ext ->
                                 ext.sourceRef = extRef
                                 list.add(ext)
@@ -224,7 +233,7 @@ class ExtensionManager(context: Context) {
 
         private fun indexInternalModule(): List<T> {
             val list = mutableListOf<T>()
-            assetManager.listFiles(internalModuleRef).fold(
+            internalModuleRef.listFiles(appContext).fold(
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.absoluteFile(appContext)
@@ -233,7 +242,7 @@ class ExtensionManager(context: Context) {
                         }
                         ZipUtils.readFileFromArchive(appContext, extRef, ExtensionDefaults.MANIFEST_FILE_NAME).fold(
                             onSuccess = { metaStr ->
-                                assetManager.loadJsonAsset(metaStr, serializer, ExtensionJsonConfig).fold(
+                                loadJsonAsset(metaStr, serializer, ExtensionJsonConfig).fold(
                                     onSuccess = { ext ->
                                         ext.sourceRef = extRef
                                         list.add(ext)

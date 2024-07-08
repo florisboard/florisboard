@@ -29,11 +29,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.lib.android.AndroidSettings
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
+import dev.patrickgold.florisboard.lib.compose.observeAsState
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.delay
+import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.systemServiceOrNull
 
 private const val DELIMITER = ':'
 private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisImeService"

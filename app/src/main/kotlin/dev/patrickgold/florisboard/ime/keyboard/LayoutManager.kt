@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
@@ -34,6 +33,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.io.loadJsonAsset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -69,7 +69,6 @@ private data class CachedPopupMapping(
 class LayoutManager(context: Context) {
     private val prefs by florisPreferenceModel()
     private val appContext by context.appContext()
-    private val assetManager by context.assetManager()
     private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()
 
@@ -101,7 +100,7 @@ class LayoutManager(context: Context) {
                 val layout = async {
                     runCatching {
                         val jsonStr = ZipUtils.readFileFromArchive(appContext, ext.sourceRef!!, path).getOrThrow()
-                        val arrangement = assetManager.loadJsonAsset<LayoutArrangement>(jsonStr).getOrThrow()
+                        val arrangement = loadJsonAsset<LayoutArrangement>(jsonStr).getOrThrow()
                         CachedLayout(ltn.type, ltn.name, meta, arrangement)
                     }
                 }
@@ -128,7 +127,7 @@ class LayoutManager(context: Context) {
                 val popupMapping = async {
                     runCatching {
                         val jsonStr = ZipUtils.readFileFromArchive(appContext, ext.sourceRef!!, path).getOrThrow()
-                        val mapping = assetManager.loadJsonAsset<PopupMapping>(jsonStr).getOrThrow()
+                        val mapping = loadJsonAsset<PopupMapping>(jsonStr).getOrThrow()
                         CachedPopupMapping(name, meta, mapping)
                     }
                 }

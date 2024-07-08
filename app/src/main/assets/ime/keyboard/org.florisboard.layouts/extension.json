@@ -105,10 +105,23 @@
         "direction": "ltr"
       },
       {
+        "id": "colemak_dhm",
+        "label": "ColemakDHm",
+        "authors": [ "SteveP", "oneilljp" ],
+        "direction": "ltr"
+      },
+      {
         "id": "danish",
         "label": "Danish (QWERTY)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+      {
+        "id": "diktor",
+        "label": "Diktor",
+        "authors": [ "kuroya2mouse" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:diktor"
       },
       {
         "id": "dvorak",
@@ -433,6 +446,12 @@
         "label": "Workman",
         "authors": [ "icyphox" ],
         "direction": "ltr"
+      },
+      {
+        "id": "jcuken_interslavic",
+        "label": "Interslavic (ЈЦУКЕН)",
+        "authors": [ "victorbnl" ],
+        "direction": "ltr"
       }
     ],
     "charactersMod": [
@@ -453,6 +472,12 @@
         "label": "Arabic",
         "authors": [ "HeiWiper" ],
         "direction": "rtl"
+      },
+      {
+        "id": "diktor",
+        "label": "Diktor",
+        "authors": [ "kuroya2mouse" ],
+        "direction": "ltr"
       },
       {
         "id": "dvorak",

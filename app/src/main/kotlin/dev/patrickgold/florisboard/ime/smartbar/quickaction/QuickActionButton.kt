@@ -35,8 +35,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -47,7 +47,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -62,11 +61,11 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.snygg.ui.shape
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.shape
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggClip
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
 
 private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
 private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)

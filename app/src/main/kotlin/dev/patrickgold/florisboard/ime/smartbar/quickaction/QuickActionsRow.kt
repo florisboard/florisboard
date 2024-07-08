@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 internal val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
