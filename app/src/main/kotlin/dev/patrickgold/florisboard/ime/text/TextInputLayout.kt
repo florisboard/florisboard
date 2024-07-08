@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowPanel
@@ -82,7 +83,11 @@ fun TextInputLayout(
                             ),
                         )
                     }
-                    TextKeyboardLayout(evaluator = evaluator)
+                    if (state.keyboardMode != KeyboardMode.EDITING) {
+                        TextKeyboardLayout(evaluator = evaluator)
+                    } else {
+                        HowDidWeGetHere()
+                    }
                 }
             }
         }
