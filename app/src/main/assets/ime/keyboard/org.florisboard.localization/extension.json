@@ -31,6 +31,7 @@
     { "id": "bg", "authors": [ "iorvethe" ] },
     { "id": "bn-BD", "authors": [ "iamrasel" ] },
     { "id": "ca", "authors": [ "mikelloc" ] },
+    { "id": "cjk", "authors": [ "moonbeamcelery" ] },
     { "id": "ckb", "authors": [ "GoRaN" ] },
     { "id": "cs", "authors": [ "stefan-misik" ] },
     { "id": "da", "authors": [ "patrickgold" ] },
@@ -675,7 +676,7 @@
         "suggestion": "org.florisboard.nlp.providers.han.shape"
       },
       "currencySet": "org.florisboard.currencysets:yen",
-      "popupMapping": "org.florisboard.localization:en",
+      "popupMapping": "org.florisboard.localization:cjk",
       "preferred": {
         "characters": "org.florisboard.layouts:qwerty",
         "symbols": "org.florisboard.layouts:cjk",
