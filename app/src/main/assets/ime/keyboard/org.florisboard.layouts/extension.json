@@ -440,6 +440,12 @@
         "label": "Workman",
         "authors": [ "icyphox" ],
         "direction": "ltr"
+      },
+      {
+        "id": "jcuken_interslavic",
+        "label": "Interslavic (ЈЦУКЕН)",
+        "authors": [ "victorbnl" ],
+        "direction": "ltr"
       }
     ],
     "charactersMod": [
