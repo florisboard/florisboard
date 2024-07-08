@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Schedule
@@ -51,8 +50,6 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.lib.android.readToFile
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisCardDefaults
@@ -63,15 +60,17 @@ import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
-import dev.patrickgold.florisboard.lib.io.readJson
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import java.io.FileNotFoundException
 import java.text.DateFormat
 import java.util.*
@@ -336,12 +335,12 @@ fun RestoreScreen() = FlorisScreen {
                                 .fillMaxWidth()
                                 .height(9.dp)
                                 .padding(bottom = 8.dp)
-                                .background(LocalContentColor.current.copy(alpha = LocalContentAlpha.current))
+                                .background(LocalContentColor.current)
                         )
                         Text(
                             text = stringRes(workspace.restoreWarningId!!),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                            color = LocalContentColor.current,
                             fontStyle = FontStyle.Italic,
                         )
                     }

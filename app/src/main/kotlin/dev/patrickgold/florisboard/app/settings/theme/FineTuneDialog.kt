@@ -20,9 +20,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
+import org.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -40,17 +41,17 @@ fun FineTuneDialog(onDismiss: () -> Unit) {
             ListPreference(
                 listPref = prefs.theme.editorLevel,
                 title = stringRes(R.string.settings__theme_editor__fine_tune__level),
-                entries = SnyggLevel.listEntries(),
+                entries = enumDisplayEntriesOf(SnyggLevel::class),
             )
             ListPreference(
                 listPref = prefs.theme.editorDisplayColorsAs,
                 title = stringRes(R.string.settings__theme_editor__fine_tune__display_colors_as),
-                entries = DisplayColorsAs.listEntries(),
+                entries = enumDisplayEntriesOf(DisplayColorsAs::class),
             )
             ListPreference(
                 listPref = prefs.theme.editorDisplayKbdAfterDialogs,
                 title = stringRes(R.string.settings__theme_editor__fine_tune__display_kbd_after_dialogs),
-                entries = DisplayKbdAfterDialogs.listEntries(),
+                entries = enumDisplayEntriesOf(DisplayKbdAfterDialogs::class),
             )
         }
     }

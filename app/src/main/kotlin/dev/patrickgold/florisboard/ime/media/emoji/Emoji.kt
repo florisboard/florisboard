@@ -16,16 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import java.util.stream.IntStream
 import kotlin.streams.toList
 
@@ -36,54 +32,6 @@ enum class EmojiSkinTone(val id: Int) {
     MEDIUM_SKIN_TONE(0x1F3FD),
     MEDIUM_DARK_SKIN_TONE(0x1F3FE),
     DARK_SKIN_TONE(0x1F3FF);
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = DEFAULT,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__default,
-                    "emoji" to "\uD83D\uDC4B" // 👋
-                ),
-            )
-            entry(
-                key = LIGHT_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__light_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFB" // 👋🏻
-                ),
-            )
-            entry(
-                key = MEDIUM_LIGHT_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__medium_light_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFC" // 👋🏼
-                ),
-            )
-            entry(
-                key = MEDIUM_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__medium_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFD" // 👋🏽
-                ),
-            )
-            entry(
-                key = MEDIUM_DARK_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__medium_dark_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFE" // 👋🏾
-                ),
-            )
-            entry(
-                key = DARK_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__dark_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFF" // 👋🏿
-                ),
-            )
-        }
-    }
 }
 
 enum class EmojiHairStyle(val id: Int) {

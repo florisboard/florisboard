@@ -31,7 +31,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.android.stringRes
+import org.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogWarning

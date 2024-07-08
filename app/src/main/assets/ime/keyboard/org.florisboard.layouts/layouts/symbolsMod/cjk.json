@@ -8,11 +8,17 @@
     { "code": -201, "label": "view_characters", "type": "system_gui" },
     { "$": "char_width_selector",
       "full": { "code": 12289, "label": "、", "popup": {
-          "main": { "code": 65292, "label": "，" }
+          "main": { "code":   65292, "label": "，" },
+          "relevant": [
+            { "code":   44, "label": "," }
+          ]
         }
       },
       "half": { "code": 65380, "label": "､", "popup": {
-          "main": { "code":   44, "label": "," }
+          "main": { "code":   44, "label": "," },
+          "relevant": [
+            { "code":   65292, "label": "，" }
+          ]
         }
       }
     },

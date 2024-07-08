@@ -25,10 +25,10 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
-import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
-import dev.patrickgold.florisboard.lib.android.vibrate
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.systemServiceOrNull
+import org.florisboard.lib.android.systemVibratorOrNull
+import org.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

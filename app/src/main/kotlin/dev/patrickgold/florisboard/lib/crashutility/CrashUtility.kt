@@ -32,14 +32,14 @@ import android.util.Log
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
-import dev.patrickgold.florisboard.lib.io.FsDir
-import dev.patrickgold.florisboard.lib.io.FsFile
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 

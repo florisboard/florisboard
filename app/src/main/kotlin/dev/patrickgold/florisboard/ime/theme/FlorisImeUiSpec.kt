@@ -16,21 +16,21 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import dev.patrickgold.florisboard.lib.snygg.Snygg
-import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
-import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpecBuilder
-import dev.patrickgold.florisboard.lib.snygg.SnyggSpec
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggCircleShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpSizeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.Snygg
+import org.florisboard.lib.snygg.SnyggLevel
+import org.florisboard.lib.snygg.SnyggPropertySetSpecBuilder
+import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
+import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 
 fun SnyggPropertySetSpecBuilder.background() {
     property(
@@ -216,6 +216,11 @@ object FlorisImeUiSpec : SnyggSpec({
         shape()
         shadow()
         border()
+    }
+    element(FlorisImeUi.ClipboardEnableHistoryButton) {
+        background()
+        foreground()
+        shape()
     }
 
     element(FlorisImeUi.EmojiKey) {

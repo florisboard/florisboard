@@ -24,7 +24,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.HelpOutline
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -34,13 +34,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.android.AndroidSettings
-import dev.patrickgold.florisboard.lib.android.launchActivity
 import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisSimpleCard
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
+import dev.patrickgold.florisboard.lib.compose.observeAsState
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.util.launchActivity
+import org.florisboard.lib.android.AndroidSettings
 
 @Composable
 fun SpellCheckerServiceSelector(florisSpellCheckerEnabled: MutableState<Boolean>) {
@@ -105,7 +106,7 @@ fun SpellCheckerServiceSelector(florisSpellCheckerEnabled: MutableState<Boolean>
                                 modifier = Modifier
                                     .padding(end = 8.dp)
                                     .requiredSize(32.dp),
-                                imageVector = Icons.Default.HelpOutline,
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
                                 contentDescription = null,
                             )
                         }

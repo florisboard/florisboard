@@ -16,11 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 /**
  * Enum class defining the possible placements for the Smartbar extended actions.
  */
@@ -28,28 +23,4 @@ enum class ExtendedActionsPlacement {
     ABOVE_CANDIDATES,
     BELOW_CANDIDATES,
     OVERLAY_APP_UI;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = ABOVE_CANDIDATES,
-                label = stringRes(R.string.enum__extended_actions_placement__above_candidates),
-                description = stringRes(R.string.enum__extended_actions_placement__above_candidates__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-            entry(
-                key = BELOW_CANDIDATES,
-                label = stringRes(R.string.enum__extended_actions_placement__below_candidates),
-                description = stringRes(R.string.enum__extended_actions_placement__below_candidates__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-            entry(
-                key = OVERLAY_APP_UI,
-                label = stringRes(R.string.enum__extended_actions_placement__overlay_app_ui),
-                description = stringRes(R.string.enum__extended_actions_placement__overlay_app_ui__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-        }
-    }
 }

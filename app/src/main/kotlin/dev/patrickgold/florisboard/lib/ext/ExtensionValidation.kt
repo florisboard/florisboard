@@ -17,30 +17,29 @@
 package dev.patrickgold.florisboard.lib.ext
 
 import androidx.core.text.trimmedLength
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.lib.ValidationRule
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggDpShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggPercentShapeValue
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.value.SnyggDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.lib.validate
+import org.florisboard.lib.snygg.value.SnyggVarValue
 
-// TODO: (priority=medium)
-//  make all strings available for localize
 object ExtensionValidation {
     private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*${'$'}""".toRegex()
     private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
     private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*${'$'}""".toRegex()
-    val ThemeComponentVariableNameRegex = """^[a-zA-Z0-9-_]+${'$'}""".toRegex()
 
     val MetaId = ValidationRule<String> {
         forKlass = ExtensionMeta::class
         forProperty = "id"
         validator { str ->
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a package name")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_package_name)
                 MetaIdRegex.matches(str) -> resultValid()
-                else -> resultInvalid("Package name does not match regex $MetaIdRegex")
+                else -> resultInvalid(error = R.string.ext__validation__error_package_name, "id_regex" to MetaIdRegex)
             }
         }
     }
@@ -50,7 +49,7 @@ object ExtensionValidation {
         forProperty = "version"
         validator { str ->
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a version")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_version)
                 else -> resultValid()
             }
         }
@@ -61,7 +60,7 @@ object ExtensionValidation {
         forProperty = "title"
         validator { str ->
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a title")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_title)
                 else -> resultValid()
             }
         }
@@ -73,7 +72,7 @@ object ExtensionValidation {
         validator { str ->
             val maintainers = str.lines().filter { it.isNotBlank() }
             when {
-                maintainers.isEmpty() -> resultInvalid(error = "Please enter at least one valid maintainer")
+                maintainers.isEmpty() -> resultInvalid(error = R.string.ext__validation__enter_maintainer)
                 else -> resultValid()
             }
         }
@@ -84,7 +83,7 @@ object ExtensionValidation {
         forProperty = "license"
         validator { str ->
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a license identifier")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_license)
                 else -> resultValid()
             }
         }
@@ -95,8 +94,8 @@ object ExtensionValidation {
         forProperty = "id"
         validator { str ->
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a component ID")
-                !ComponentIdRegex.matches(str) -> resultInvalid(error = "Please enter a component ID matching $ComponentIdRegex")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_component_id)
+                !ComponentIdRegex.matches(str) -> resultInvalid(error = R.string.ext__validation__error_component_id, "component_id_regex" to ComponentIdRegex)
                 else -> resultValid()
             }
         }
@@ -107,8 +106,8 @@ object ExtensionValidation {
         forProperty = "label"
         validator { str ->
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a component label")
-                str.trimmedLength() > 30 -> resultValid(hint = "Your component label is quite long, which may lead to clipping in the UI")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_component_label)
+                str.trimmedLength() > 30 -> resultValid(hint = R.string.ext__validation__hint_component_label_to_long)
                 else -> resultValid()
             }
         }
@@ -120,7 +119,7 @@ object ExtensionValidation {
         validator { str ->
             val authors = str.lines().filter { it.isNotBlank() }
             when {
-                authors.isEmpty() -> resultInvalid(error = "Please enter at least one valid author")
+                authors.isEmpty() -> resultInvalid(error = R.string.ext__validation__error_author)
                 else -> resultValid()
             }
         }
@@ -132,9 +131,9 @@ object ExtensionValidation {
         validator { str ->
             when {
                 str.isEmpty() -> resultValid()
-                str.isBlank() -> resultInvalid(error = "The stylesheet path must not be blank")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__error_stylesheet_path_blank)
                 !ThemeComponentStylesheetPathRegex.matches(str) -> {
-                    resultInvalid(error = "Please enter a valid stylesheet path matching $ThemeComponentStylesheetPathRegex")
+                    resultInvalid(error = R.string.ext__validation__error_stylesheet_path, "stylesheet_path_regex" to ThemeComponentStylesheetPathRegex)
                 }
                 else -> resultValid()
             }
@@ -147,12 +146,12 @@ object ExtensionValidation {
         validator { input ->
             val str = input.trim()
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a variable name")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_property)
                 str == "-" || str.startsWith("--") -> resultValid()
-                !ThemeComponentVariableNameRegex.matches(str) -> {
-                    resultInvalid(error = "Please enter a valid variable name matching $ThemeComponentVariableNameRegex")
+                !SnyggVarValue.VariableNameRegex.matches(str) -> {
+                    resultInvalid(error = R.string.ext__validation__error_property, "variable_name_regex" to SnyggVarValue.VariableNameRegex)
                 }
-                else -> resultValid(hint = "By convention a FlorisCSS variable name starts with two dashes (--)")
+                else -> resultValid(hint = R.string.ext__validation__hint_property)
             }
         }
     }
@@ -163,9 +162,9 @@ object ExtensionValidation {
         validator { input ->
             val str = input.trim()
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a color string")
-                dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
-                    resultInvalid(error = "Please enter a valid color string")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_color)
+                org.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                    resultInvalid(error = R.string.ext__validation__error_color)
                 }
                 else -> resultValid()
             }
@@ -178,9 +177,9 @@ object ExtensionValidation {
         validator { str ->
             val floatValue = str.toFloatOrNull()
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a dp size")
-                floatValue == null -> resultInvalid(error = "Please enter a valid number")
-                floatValue < 0f -> resultInvalid(error = "Please enter a positive number (>=0)")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_dp_size)
+                floatValue == null -> resultInvalid(error = R.string.ext__validation__enter_valid_number)
+                floatValue < 0f -> resultInvalid(error = R.string.ext__validation__enter_positive_number)
                 else -> resultValid()
             }
         }
@@ -192,10 +191,10 @@ object ExtensionValidation {
         validator { str ->
             val intValue = str.toIntOrNull()
             when {
-                str.isBlank() -> resultInvalid(error = "Please enter a percent size")
-                intValue == null -> resultInvalid(error = "Please enter a valid number")
-                intValue < 0 || intValue > 100 -> resultInvalid(error = "Please enter a positive number between 0 and 100")
-                intValue > 50 -> resultValid(hint = "Any value above 50% will behave as if you set 50%, consider lowering your percent size")
+                str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_percent_size)
+                intValue == null -> resultInvalid(error = R.string.ext__validation__enter_valid_number)
+                intValue < 0 || intValue > 100 -> resultInvalid(error = R.string.ext__validation__enter_number_between_0_100)
+                intValue > 50 -> resultValid(hint = R.string.ext__validation__hint_value_above_50_percent)
                 else -> resultValid()
             }
         }

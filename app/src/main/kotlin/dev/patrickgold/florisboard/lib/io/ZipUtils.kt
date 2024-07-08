@@ -18,9 +18,10 @@ package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.lib.android.copyRecursively
-import dev.patrickgold.florisboard.lib.android.write
+import org.florisboard.lib.android.copyRecursively
+import org.florisboard.lib.android.write
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
@@ -28,10 +29,9 @@ import java.util.zip.ZipOutputStream
 
 object ZipUtils {
     fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String) = runCatching<String> {
-        val assetManager by context.assetManager()
         when {
             zipRef.isAssets -> {
-                assetManager.loadTextAsset(zipRef.subRef(relPath)).getOrThrow()
+                zipRef.subRef(relPath).loadTextAsset(context).getOrThrow()
             }
             zipRef.isCache || zipRef.isInternal -> {
                 val flexHandle = FsFile(zipRef.absolutePath(context))
@@ -141,7 +141,18 @@ object ZipUtils {
             val flexEntries = flexFile.entries()
             while (flexEntries.hasMoreElements()) {
                 val flexEntry = flexEntries.nextElement()
+                if (flexEntry.name.length > 255) {
+                    continue
+                }
                 val flexEntryFile = FsFile(dstDir, flexEntry.name)
+                val canonicalDestinationDirPath = dstDir.canonicalPath
+                val canonicalDestinationFilePath = flexEntryFile.canonicalPath
+                if (canonicalDestinationFilePath.length > 1023) {
+                    continue
+                }
+                if (!canonicalDestinationFilePath.startsWith(canonicalDestinationDirPath + FsFile.separator)) {
+                    continue
+                }
                 if (flexEntry.isDirectory) {
                     flexEntryFile.mkdir()
                 } else {
@@ -153,6 +164,9 @@ object ZipUtils {
 
     private fun ZipFile.copy(srcEntry: ZipEntry, dstFile: FsFile) {
         dstFile.outputStream().use { outStream ->
+            if (srcEntry.size > 100000000) {
+                return
+            }
             this.getInputStream(srcEntry).use { inStream ->
                 inStream.copyTo(outStream)
             }
