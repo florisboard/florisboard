@@ -114,10 +114,9 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                         BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
                         RoundedCornerShape(8.dp)
                     )
+                    .clickable { keyboardManager.commitPaste() }
                     .padding(8.dp)
-                    .align(Alignment.CenterVertically)
-                    .clickable {
-                    },
+                    .align(Alignment.CenterVertically),
                 text = clipboardItem!!.text.toString(),
                 color = FlorisImeTheme.fallbackContentColor(),
                 style = MaterialTheme.typography.titleMedium,
@@ -155,9 +154,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             if (displayMode == CandidatesDisplayMode.CLASSIC) {
                                 Modifier.weight(1f)
                             } else {
-                                Modifier
-                                    .wrapContentWidth()
-                                    .widthIn(max = 160.dp)
+                                Modifier.wrapContentWidth().widthIn(max = 160.dp)
                             }
                         )
                 }

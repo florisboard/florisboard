@@ -292,6 +292,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         editorInstance.commitGesture(fixCase(word))
     }
 
+    fun commitPaste() {
+        editorInstance.performClipboardPaste()
+    }
+
     /**
      * Changes a word to the current case.
      * eg if [KeyboardState.isUppercase] is true, abc -> ABC
