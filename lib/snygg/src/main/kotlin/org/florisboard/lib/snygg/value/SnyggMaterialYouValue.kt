@@ -21,10 +21,13 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.ui.graphics.Color
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.value.MaterialYouColor.ColorName
 import org.florisboard.lib.snygg.value.MaterialYouColor.ColorNameId
 import org.florisboard.lib.snygg.value.MaterialYouColor.darkColorName
 import org.florisboard.lib.snygg.value.MaterialYouColor.lightColorName
+import org.florisboard.lib.theme.darkFlorisColorScheme
+import org.florisboard.lib.theme.lightFlorisColorScheme
 
 sealed interface SnyggMaterialYouValue : SnyggValue {
     val colorName: String
@@ -78,12 +81,20 @@ object MaterialYouColor {
     private fun getAndCacheColorScheme(context: Context, dark: Boolean): ColorScheme {
         return if (dark) {
             if (darkColorScheme == null) {
-                darkColorScheme = dynamicDarkColorScheme(context)
+                darkColorScheme = if (AndroidVersion.ATLEAST_API31_S) {
+                     dynamicDarkColorScheme(context)
+                } else {
+                    darkFlorisColorScheme
+                }
             }
             darkColorScheme!!
         } else {
             if (lightColorScheme == null) {
-                lightColorScheme = dynamicLightColorScheme(context)
+                lightColorScheme = if (AndroidVersion.ATLEAST_API31_S) {
+                    dynamicLightColorScheme(context)
+                } else {
+                    lightFlorisColorScheme
+                }
             }
             lightColorScheme!!
         }
@@ -138,6 +149,8 @@ object MaterialYouColor {
     fun loadColor(context: Context, colorName: String, dark: Boolean): Color {
         val colorScheme = getAndCacheColorScheme(context, dark)
 
+        println(colorName)
+
         return when (colorName) {
             ColorPalette.Primary.id -> colorScheme.primary
             ColorPalette.OnPrimary.id -> colorScheme.onPrimary
@@ -176,6 +189,9 @@ object MaterialYouColor {
             ColorPalette.SurfaceContainerLow.id -> colorScheme.surfaceContainerLow
             ColorPalette.SurfaceContainerLowest.id -> colorScheme.surfaceContainerLowest
             else -> colorScheme.primary
+        }.let {
+            println(it)
+            it
         }
     }
 }

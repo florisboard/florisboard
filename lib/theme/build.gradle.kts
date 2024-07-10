@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.agp.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
 
 android {
-    namespace = "org.florisboard.lib.snygg"
+    namespace = "org.florisboard.lib.theme"
     compileSdk = projectCompileSdk.toInt()
 
     defaultConfig {
@@ -18,19 +17,10 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
-    }
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -43,12 +33,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":lib:android"))
-    implementation(project(":lib:kotlin"))
-    implementation(project(":lib:theme"))
-
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material3)
 }

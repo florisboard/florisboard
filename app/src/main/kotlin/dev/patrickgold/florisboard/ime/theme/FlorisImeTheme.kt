@@ -40,6 +40,8 @@ import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.ui.ProvideSnyggUiDefaults
 import org.florisboard.lib.snygg.ui.SnyggUiDefaults
+import org.florisboard.lib.theme.darkFlorisColorScheme
+import org.florisboard.lib.theme.lightFlorisColorScheme
 
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionComponent> { error("not init") }
 private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not init") }
@@ -119,13 +121,13 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
         if (AndroidVersion.ATLEAST_API31_S) {
             dynamicDarkColorScheme(context)
         } else {
-            MaterialDarkFallbackPalette
+            darkFlorisColorScheme
         }
     } else {
         if (AndroidVersion.ATLEAST_API31_S) {
             dynamicLightColorScheme(context)
         } else {
-            MaterialLightFallbackPalette
+            lightFlorisColorScheme
         }
     }
     MaterialTheme(materialColors) {
