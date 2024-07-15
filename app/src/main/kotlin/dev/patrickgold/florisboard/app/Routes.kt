@@ -16,11 +16,15 @@
 
 package dev.patrickgold.florisboard.app
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import dev.patrickgold.florisboard.app.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
@@ -152,6 +156,17 @@ object Routes {
         navController: NavHostController,
         startDestination: String,
     ) {
+        fun NavGraphBuilder.composableWithDeepLink(
+            route: String,
+            content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit),
+        ) {
+            composable(
+                route = route,
+                deepLinks = listOf(navDeepLink { uriPattern = "ui://florisboard/$route" }),
+                content = content,
+            )
+        }
+
         NavHost(
             modifier = modifier,
             navController = navController,
@@ -159,76 +174,76 @@ object Routes {
         ) {
             composable(Setup.Screen) { SetupScreen() }
 
-            composable(Settings.Home) { HomeScreen() }
+            composableWithDeepLink(Settings.Home) { HomeScreen() }
 
-            composable(Settings.Localization) { LocalizationScreen() }
-            composable(Settings.SelectLocale) { SelectLocaleScreen() }
-            composable(Settings.LanguagePackManager) { navBackStack ->
+            composableWithDeepLink(Settings.Localization) { LocalizationScreen() }
+            composableWithDeepLink(Settings.SelectLocale) { SelectLocaleScreen() }
+            composableWithDeepLink(Settings.LanguagePackManager) { navBackStack ->
                 val action = navBackStack.arguments?.getString("action")?.let { actionId ->
                     LanguagePackManagerScreenAction.entries.firstOrNull { it.id == actionId }
                 }
                 LanguagePackManagerScreen(action)
             }
-            composable(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
-            composable(Settings.SubtypeEdit) { navBackStack ->
+            composableWithDeepLink(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
+            composableWithDeepLink(Settings.SubtypeEdit) { navBackStack ->
                 val id = navBackStack.arguments?.getString("id")?.toLongOrNull()
                 SubtypeEditorScreen(id)
             }
 
-            composable(Settings.Theme) { ThemeScreen() }
-            composable(Settings.ThemeManager) { navBackStack ->
+            composableWithDeepLink(Settings.Theme) { ThemeScreen() }
+            composableWithDeepLink(Settings.ThemeManager) { navBackStack ->
                 val action = navBackStack.arguments?.getString("action")?.let { actionId ->
                     ThemeManagerScreenAction.entries.firstOrNull { it.id == actionId }
                 }
                 ThemeManagerScreen(action)
             }
 
-            composable(Settings.Keyboard) { KeyboardScreen() }
-            composable(Settings.InputFeedback) { InputFeedbackScreen() }
+            composableWithDeepLink(Settings.Keyboard) { KeyboardScreen() }
+            composableWithDeepLink(Settings.InputFeedback) { InputFeedbackScreen() }
 
-            composable(Settings.Smartbar) { SmartbarScreen() }
+            composableWithDeepLink(Settings.Smartbar) { SmartbarScreen() }
 
-            composable(Settings.Typing) { TypingScreen() }
+            composableWithDeepLink(Settings.Typing) { TypingScreen() }
 
-            composable(Settings.Dictionary) { DictionaryScreen() }
-            composable(Settings.UserDictionary) { navBackStack ->
+            composableWithDeepLink(Settings.Dictionary) { DictionaryScreen() }
+            composableWithDeepLink(Settings.UserDictionary) { navBackStack ->
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
                     UserDictionaryType.entries.firstOrNull { it.id == typeId }
                 }
                 UserDictionaryScreen(type!!)
             }
 
-            composable(Settings.Gestures) { GesturesScreen() }
+            composableWithDeepLink(Settings.Gestures) { GesturesScreen() }
 
-            composable(Settings.Clipboard) { ClipboardScreen() }
+            composableWithDeepLink(Settings.Clipboard) { ClipboardScreen() }
 
-            composable(Settings.Media) { MediaScreen() }
+            composableWithDeepLink(Settings.Media) { MediaScreen() }
 
-            composable(Settings.Advanced) { AdvancedScreen() }
-            composable(Settings.Backup) { BackupScreen() }
-            composable(Settings.Restore) { RestoreScreen() }
+            composableWithDeepLink(Settings.Advanced) { AdvancedScreen() }
+            composableWithDeepLink(Settings.Backup) { BackupScreen() }
+            composableWithDeepLink(Settings.Restore) { RestoreScreen() }
 
-            composable(Settings.About) { AboutScreen() }
-            composable(Settings.ProjectLicense) { ProjectLicenseScreen() }
-            composable(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+            composableWithDeepLink(Settings.About) { AboutScreen() }
+            composableWithDeepLink(Settings.ProjectLicense) { ProjectLicenseScreen() }
+            composableWithDeepLink(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
 
-            composable(Devtools.Home) { DevtoolsScreen() }
-            composable(Devtools.AndroidLocales) { AndroidLocalesScreen() }
-            composable(Devtools.AndroidSettings) { navBackStack ->
+            composableWithDeepLink(Devtools.Home) { DevtoolsScreen() }
+            composableWithDeepLink(Devtools.AndroidLocales) { AndroidLocalesScreen() }
+            composableWithDeepLink(Devtools.AndroidSettings) { navBackStack ->
                 val name = navBackStack.arguments?.getString("name")
                 AndroidSettingsScreen(name)
             }
-            composable(Devtools.ExportDebugLog) { ExportDebugLogScreen() }
+            composableWithDeepLink(Devtools.ExportDebugLog) { ExportDebugLogScreen() }
 
-            composable(Ext.Home) { ExtensionHomeScreen() }
-            composable(Ext.List) { navBackStack ->
+            composableWithDeepLink(Ext.Home) { ExtensionHomeScreen() }
+            composableWithDeepLink(Ext.List) { navBackStack ->
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
                     ExtensionListScreenType.entries.firstOrNull { it.id == typeId }
                 } ?: error("unknown type")
                 val showUpdate = navBackStack.arguments?.getString("showUpdate")
                 ExtensionListScreen(type, showUpdate == "true")
             }
-            composable(Ext.Edit) { navBackStack ->
+            composableWithDeepLink(Ext.Edit) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 val serialType = navBackStack.arguments?.getString("serial_type")
                 ExtensionEditScreen(
@@ -236,18 +251,18 @@ object Routes {
                     createSerialType = serialType.takeIf { !it.isNullOrBlank() },
                 )
             }
-            composable(Ext.Export) { navBackStack ->
+            composableWithDeepLink(Ext.Export) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionExportScreen(id = extensionId.toString())
             }
-            composable(Ext.Import) { navBackStack ->
+            composableWithDeepLink(Ext.Import) { navBackStack ->
                 val type = navBackStack.arguments?.getString("type")?.let { typeId ->
                     ExtensionImportScreenType.entries.firstOrNull { it.id == typeId }
                 } ?: ExtensionImportScreenType.EXT_ANY
                 val uuid = navBackStack.arguments?.getString("uuid")?.takeIf { it != "null" }
                 ExtensionImportScreen(type, uuid)
             }
-            composable(Ext.View) { navBackStack ->
+            composableWithDeepLink(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionViewScreen(id = extensionId.toString())
             }
