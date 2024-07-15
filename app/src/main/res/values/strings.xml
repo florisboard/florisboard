@@ -706,6 +706,7 @@
     <string name="ext__home__visit_store">Visit Addons Store</string>
     <string name="ext__home__manage_extensions">Manage installed extensions</string>
     <string name="ext__list__view_details">View details</string>
+    <string name="ext__check_updates__title">Check for Updates</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>

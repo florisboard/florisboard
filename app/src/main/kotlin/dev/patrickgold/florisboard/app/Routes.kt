@@ -29,6 +29,7 @@ import dev.patrickgold.florisboard.app.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
+import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
@@ -148,6 +149,8 @@ object Routes {
 
         const val View = "ext/view/{id}"
         fun View(id: String) = View.curlyFormat("id" to id)
+
+        const val CheckUpdates = "ext/check-updates"
     }
 
     @Composable
@@ -265,6 +268,9 @@ object Routes {
             composableWithDeepLink(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
                 ExtensionViewScreen(id = extensionId.toString())
+            }
+            composableWithDeepLink(Ext.CheckUpdates) {
+                CheckUpdatesScreen()
             }
         }
     }
