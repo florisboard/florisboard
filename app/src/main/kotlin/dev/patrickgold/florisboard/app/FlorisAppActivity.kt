@@ -76,7 +76,7 @@ class FlorisAppActivity : ComponentActivity() {
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
-    private var fileImportIntent by mutableStateOf<Intent?>(null)
+    private var intentToBeHandled by mutableStateOf<Intent?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash screen should be installed before calling super.onCreate()
@@ -145,15 +145,19 @@ class FlorisAppActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
 
+        if (intent?.action == Intent.ACTION_VIEW && intent.categories.contains(Intent.CATEGORY_BROWSABLE)) {
+            intentToBeHandled = intent
+            return
+        }
         if (intent?.action == Intent.ACTION_VIEW && intent.data != null) {
-            fileImportIntent = intent
+            intentToBeHandled = intent
             return
         }
         if (intent?.action == Intent.ACTION_SEND && intent.clipData != null) {
-            fileImportIntent = intent
+            intentToBeHandled = intent
             return
         }
-        fileImportIntent = null
+        intentToBeHandled = null
     }
 
     @Composable
@@ -188,18 +192,22 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
-        LaunchedEffect(fileImportIntent) {
-            val intent = fileImportIntent
+        LaunchedEffect(intentToBeHandled) {
+            val intent = intentToBeHandled
             if (intent != null) {
-                val data = if (intent.action == Intent.ACTION_VIEW) {
-                    intent.data!!
+                if (intent.action == Intent.ACTION_VIEW && intent.categories.contains(Intent.CATEGORY_BROWSABLE)) {
+                    navController.handleDeepLink(intent)
                 } else {
-                    intent.clipData!!.getItemAt(0).uri
+                    val data = if (intent.action == Intent.ACTION_VIEW) {
+                        intent.data!!
+                    } else {
+                        intent.clipData!!.getItemAt(0).uri
+                    }
+                    val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
+                    navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
                 }
-                val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
-                navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
             }
-            fileImportIntent = null
+            intentToBeHandled = null
         }
 
         SideEffect {
