@@ -25,7 +25,8 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: gradle/wrapper-validation-action@v1
+      - uses: gradle/actions/wrapper-validation@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
