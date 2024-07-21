@@ -40,7 +40,7 @@ jobs:
         # MUST call gradlew separately because of an OSS license plugin issue.
         # See https://github.com/google/play-services-plugins/issues/199
         run: ./gradlew clean && ./gradlew assembleDebug
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
