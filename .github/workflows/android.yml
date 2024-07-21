@@ -28,11 +28,12 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v3
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: '17'
           distribution: temurin
           cache: gradle
+
       - name: Set up CMake and Ninja
         uses: lukka/get-cmake@latest
       - name: Build with Gradle
