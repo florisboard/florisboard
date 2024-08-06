@@ -207,7 +207,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     var layoutMap by subtypeEditor.layoutMap
     var nlpProviders by subtypeEditor.nlpProviders
 
-    var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(false) }
+    var showSubtypePresetsDialog by rememberSaveable { mutableStateOf(id == null) }
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var errorDialogStrId by rememberSaveable { mutableStateOf<Int?>(null) }
 
@@ -223,6 +223,24 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
         }
         selectLocaleScreenResult?.observe(lifecycleOwner, observer)
         onDispose { selectLocaleScreenResult?.removeObserver(observer) }
+    }
+
+
+    @Composable
+    fun SubtypePropertyDropdown(
+        title: String,
+        layoutType: LayoutType
+    ) {
+        SubtypeProperty(title) {
+            SubtypeLayoutDropdown(
+                layoutType = layoutType,
+                layouts = layoutExtensions[layoutType] ?: mapOf(),
+                showSelectAsError = showSelectAsError,
+                layoutMap = layoutMap,
+                onLayoutMapChanged = { layoutMap = it },
+                selectListValues = selectListValues,
+            )
+        }
     }
 
     actions {
@@ -362,17 +380,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     onDismissRequest = { expanded = false },
                 )
             }
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_characters_layout)) {
-                val layoutType = LayoutType.CHARACTERS
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_characters_layout), LayoutType.CHARACTERS)
 
             SubtypeGroupSpacer()
 
@@ -408,28 +416,9 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeGroupSpacer()
 
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_symbols_layout)) {
-                val layoutType = LayoutType.SYMBOLS
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_symbols2_layout)) {
-                val layoutType = LayoutType.SYMBOLS2
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_symbols_layout), LayoutType.SYMBOLS)
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_symbols2_layout), LayoutType.SYMBOLS2)
+
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_composer)) {
                 val composerIds = remember(composers) {
                     SelectListKeys + composers.keys
@@ -469,64 +458,17 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeGroupSpacer()
 
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_numeric_layout)) {
-                val layoutType = LayoutType.NUMERIC
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_numeric_advanced_layout)) {
-                val layoutType = LayoutType.NUMERIC_ADVANCED
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_numeric_row_layout)) {
-                val layoutType = LayoutType.NUMERIC_ROW
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_layout), LayoutType.NUMERIC)
+
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_advanced_layout), LayoutType.NUMERIC_ADVANCED)
+
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_row_layout), LayoutType.NUMERIC_ROW)
 
             SubtypeGroupSpacer()
 
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_phone_layout)) {
-                val layoutType = LayoutType.PHONE
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
-            SubtypeProperty(stringRes(R.string.settings__localization__subtype_phone2_layout)) {
-                val layoutType = LayoutType.PHONE2
-                SubtypeLayoutDropdown(
-                    layoutType = layoutType,
-                    layouts = layoutExtensions[layoutType] ?: mapOf(),
-                    showSelectAsError = showSelectAsError,
-                    layoutMap = layoutMap,
-                    onLayoutMapChanged = { layoutMap = it },
-                    selectListValues = selectListValues,
-                )
-            }
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_phone_layout), LayoutType.PHONE)
+
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_phone2_layout), LayoutType.PHONE2)
         }
 
         if (showSubtypePresetsDialog) {
