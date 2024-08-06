@@ -1,6 +1,6 @@
 [versions]
 # Main
-android-gradle-plugin = "8.3.1"
+android-gradle-plugin = "8.5.1"
 androidx-activity = "1.8.2"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.4.0"
@@ -24,7 +24,6 @@ mannodermaus-android-junit5 = "1.10.0.0"
 mikepenz-aboutlibraries = "10.10.0"
 patrickgold-compose-tooltip = "0.1.0"
 patrickgold-jetpref = "0.2.0-beta01"
-xmlutil = "0.86.3"
 
 # Testing
 androidx-benchmark = "1.1.0"
@@ -64,8 +63,6 @@ patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:toolti
 patrickgold-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-material-ui = { module = "dev.patrickgold.jetpref:jetpref-material-ui", version.ref = "patrickgold-jetpref" }
-xmlutil-core = { module = "io.github.pdvrieze.xmlutil:core-android", version.ref = "xmlutil" }
-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization-android", version.ref = "xmlutil" }
 
 # Testing
 androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }
